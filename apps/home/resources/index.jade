@@ -1,19 +1,41 @@
 extends ../../../shared/client/views/templates/app-view-layout.jade
-
+extends ../../kiss/resources/index.jade
 block view-content
   .container
     //include includes/program_list.jade
-    
+
     .homeTitle
       img(src='./KIPR-Logo-white.png' style="width:180px;height:180px;")
       H1 Software Suite
-      
+
     br
 
     .startColumn 
       H3 Start
       .startOptions   
         .startOptionRows
-      
-          H4 New File...
+          table
+            tr
+              td(colspan='2')
+              i.fas.fa-fw.fa-user-plus &nbsp;
+             
+              a.startLinks(id='newFileStart' ng-controller='homeCtrl' onclick="myFunction()")  New User...
+            br
+            tr
+              td(colspan='2')
+              i.fas.fa-fw.fa-file-circle-plus &nbsp;
+              a.startLinks(id='newFileStart' href='/#/apps/kiss')  New File...
+            br
+            tr
+              td(colspan='2')
+              i.fas.fa-file-pen &nbsp;
+              
+              
+              a.startLinks(type="button" ng-controller='homeCtrl' ) Open File...
+    
+              
+
+              
+
+              
 

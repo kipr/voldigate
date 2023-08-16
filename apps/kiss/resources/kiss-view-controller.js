@@ -1,5 +1,5 @@
 var code_mirror;
-var dark_mode;
+var open_file;
 require('codemirror/mode/clike/clike'); // allows c/c++ highlighting
 require('codemirror/mode/python/python'); // allows real python highlighting
 
@@ -22,7 +22,32 @@ exports.inject = function (app) {
         'DownloadProjectModalFactory',
         'FilenameModalFactory',
         exports.controller
+        
     ]);
+};
+//console.log("hello");
+// module.exports = () => 
+
+exports.sim = function() {
+    var once = 'helllooooo';
+    console.log("Hello from kiss-view-controller");
+    
+    return once;
+}
+
+
+exports.simple = "hello world";
+
+exports.controller =('mainctrl', function($scope, $rootScope, $location, $http, $timeout, AppCatalogProvider, ProgramService, ButtonsOnlyModalFactory, DownloadProjectModalFactory, FilenameModalFactory){
+    $scope.kissController = function($scope) {
+        console.log("kissController mainCtrl");
+    }
+  
+});
+
+exports.Person = {
+    firstName:"Erin",
+    lastName: "Harrington"
 };
 
 exports.controller = function ($scope, $rootScope, $location, $http, $timeout, AppCatalogProvider, ProgramService, ButtonsOnlyModalFactory, DownloadProjectModalFactory, FilenameModalFactory) {
@@ -34,12 +59,15 @@ exports.controller = function ($scope, $rootScope, $location, $http, $timeout, A
         saving,
         mode;
     mode = "text/x-csrc" // c by default
+    console.log(mode);
+    simFunction = function() {
+        console.log("inside simFunction");
+    };
     $scope.is_compiling = false;
     $scope.documentChanged = false;
     $scope.ProgramService = ProgramService;
-
+    let open_file = 1;
     const DarkModeToggleButton = document.getElementById('darkModeBtn');
-
     DarkModeToggleButton.addEventListener("click", () => { // $scope.reload_ws();
         if ($scope.runner == true) {
             var runnerOutput = document.querySelectorAll('.cm-s-material-palenight')[0];
@@ -59,6 +87,13 @@ exports.controller = function ($scope, $rootScope, $location, $http, $timeout, A
 
         $scope.reload_ws();
     });
+
+   
+    function controllerFunction() {
+        console.log("Hello from kiss-view-controller inside exports.controller");
+    }
+
+    const exportedObject = {controllerFunction};
     $scope.$on('$routeUpdate', function (next, current) {
         var ref,
             ref1;
@@ -645,7 +680,7 @@ exports.controller = function ($scope, $rootScope, $location, $http, $timeout, A
         }];
     $scope.active_user = $scope.users[0];
 
-    $scope.show_new_user_modal = function () {
+    show_new_user_modal = function () {
         $('#new-user').modal('show');
     };
     $scope.hide_new_user_modal = function () {

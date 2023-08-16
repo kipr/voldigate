@@ -1,5 +1,5 @@
-const {controller} = require('../../../apps/kiss/resources/kiss-view-controller.js');
-
+var controller = require('../../../apps/kiss/resources/kiss-view-controller.js');
+var dt = require('../../../apps/kiss/resources/kiss-view-controller.js');
 var angular,
     app,
     app_name,
@@ -103,6 +103,31 @@ app.controller('statusBarCtrl', [
 
     }
 ]);
+
+app.controller('homeCtrl', [
+    '$scope', '$http', 'UserManagerService', function ($scope, $http, UserManagerService) {
+      //dt.simFunction('Aloha');
+      console.log(dt.Person.firstName + ' ' + dt.Person.lastName);
+      
+      $scope.myFunction = function() {
+        console.log(dt.name);
+       }   
+    }
+]);
+
+app.controller('userCtrl', [
+    '$scope', '$http', 'UserManagerService', function ($scope, $http, UserManagerService) {
+      //dt.simFunction('Aloha');
+     
+      $scope.myFunction = function() {
+        console.log(dt.Person.firstName + ' ' + dt.Person.lastName);
+       }   
+    }
+]);
+
+
+
+
 
 app.controller('darkModeCtrl', [
     '$scope', '$http', 'UserManagerService', function ($scope, $http, UserManagerService) {

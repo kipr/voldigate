@@ -68,7 +68,11 @@ nav.navbar.navbar-default.navbar-fixed-bottom.desktop-only#status-bar(ng-control
 //        |  
 //        |  {{current_user ? current_user.login : ""}}
 
-
+.left-nav
+  button.btn.left-nav-button-top(type='button' ng-click='alert')
+    i.fas.fa-xl.fa-folder-tree
+  button.btn.left-nav-button-bottom(type='button' ng-click='alert')
+    i.fas.fa-xl.fa-gear
 
 nav.btn-group.btn-group-justified.compact-only#bottom-compact-navbar
   block bottom-compact-navbar-buttons
