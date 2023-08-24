@@ -1,9 +1,0 @@
-{
-  "name": "Home",
-  "exec": "exec.js",
-  "fonticon": "fa-home",
-  "description": "The launchpad",
-  "category": "System Tools",
-  "hidden": true,
-  "view": true
-}

@@ -1,3 +1,0 @@
-@echo off
-CALL "%VS120COMNTOOLS%VSVARS32.BAT"
-cl %*

@@ -1,44 +1,42 @@
-var Fs, Os, Path, config, version;
+/* eslint-env node */
 
-Fs = require('fs');
+const fs = require('fs');
 
-Os = require('os');
+let dependencies = {};
+try {
+  dependencies = JSON.parse(fs.readFileSync('dependencies/dependencies.json', 'utf8'));
+} catch (e) {
+  console.error('Error reading dependencies/dependencies.json! The server will be crippled.');
+  console.error('Please run python3 dependencies/build.py to generate.');
+  console.error(e);
+}
 
-Path = require('path');
-
-version = require('./package.json').version.split('.');
-
-config = {
-  version: {
-    major: version[0],
-    minor: version[1],
-    build_number: version[2]
-  }
+module.exports = {
+  get: () => {
+    return {
+      server: {
+        port: getEnvVarOrDefault('SERVER_PORT', 3000),
+        feedbackWebhookURL: getEnvVarOrDefault('FEEDBACK_WEBHOOK_URL', ''),
+        dependencies
+      },
+      caching: {
+        staticMaxAge: getEnvVarOrDefault('CACHING_STATIC_MAX_AGE', 60 * 60 * 1000),
+      },
+      dbUrl: getEnvVarOrDefault('API_URL', 'https://db-prerelease.botballacademy.org'),
+    };
+  },
 };
 
-// Botball board firmware version
-if (Os.platform() === 'linux') {
-  try {
-    version = Fs.readFileSync('/usr/share/kipr/board_fw_version.txt', 'utf8');
-    config.botball_fw_version = version;
-  } catch (undefined) {}
+function getEnvVarOrDefault(variableName, defaultValue) {
+  return process.env[variableName] !== undefined
+    ? process.env[variableName]
+    : defaultValue;
 }
 
-if (Os.platform() === 'win32') {
-  config.ext_deps = {
-    include_path: Path.join(__dirname, '..', 'shared', 'include'),
-    lib_path: Path.join(__dirname, '..', 'shared', 'lib'),
-    bin_path: Path.join(__dirname, '..', 'shared', 'bin'),
-    min_gw: {
-      bin_path: Path.join(__dirname, '..', 'MinGW', 'bin')
-    }
-  };
-} else {
-  config.ext_deps = {
-    include_path: Path.join('/usr', 'local', 'include', 'include'),
-    lib_path: Path.join('/usr', 'local', 'lib'),
-    bin_path: Path.join('/usr', 'local', 'bin')
-  };
-}
+// function getEnvVarOrThrow(variableName) {
+//   if (process.env[variableName] === undefined) {
+//     throw new Error(`Required environment variable is not set: ${variableName}`);
+//   }
 
-module.exports = config;
+//   return process.env[variableName];
+// }
