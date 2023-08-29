@@ -154,6 +154,13 @@ declare module 'simulator/App' {
   export default _default;
 
 }
+declare module 'simulator/CreateUser' {
+  export interface CreateUser {
+      userName: string;
+  }
+  export const DEFAULT_CREATEUSER: CreateUser;
+
+}
 declare module 'simulator/CustomShapeMetadata' {
   interface CustomShapeMetadata {
       __marker__: 'CustomShapeMetadata';
@@ -1680,6 +1687,34 @@ declare module 'simulator/components/Console/index' {
   export default Console;
 
 }
+declare module 'simulator/components/CreateUserDialog' {
+  import { ThemeProps } from 'simulator/components/theme';
+  import { StyleProps } from 'simulator/style';
+  import { Settings } from 'simulator/Settings';
+  import LocalizedString from 'simulator/util/LocalizedString';
+  import * as React from 'react';
+  export interface CreateUserDialogPublicProps extends ThemeProps, StyleProps {
+      onClose: () => void;
+      settings: Settings;
+  }
+  interface CreateUserDialogPrivateProps {
+      locale: LocalizedString.Language;
+      onLocaleChange: (locale: LocalizedString.Language) => void;
+  }
+  interface CreateUserDialogState {
+  }
+  type Props = CreateUserDialogPublicProps & CreateUserDialogPrivateProps;
+  type State = CreateUserDialogState;
+  export class CreateUserDialog extends React.PureComponent<Props, State> {
+      constructor(props: Props);
+      private onLocaleSelect_;
+      private onFinalize_;
+      render(): JSX.Element;
+  }
+  const _default: React.ComponentType<CreateUserDialogPublicProps>;
+  export default _default;
+
+}
 declare module 'simulator/components/DeleteDialog' {
   import * as React from 'react';
   import { StyleProps } from 'simulator/style';
@@ -2101,6 +2136,7 @@ declare module 'simulator/components/Form' {
       const email: (id: string, text: string, tooltip?: string, assist?: () => void, assistText?: string) => Item<string>;
       const password: (id: string, text: string, tooltip?: string, assist?: () => void, assistText?: string, shouldValidate?: boolean) => Item<string>;
       const verifier: (id: string, text: string, validType: Validators.Types, tooltip?: string) => Item<string>;
+      const username: (id: string, text: string) => Item<string>;
   }
   export default Form;
 
@@ -2133,17 +2169,45 @@ declare module 'simulator/components/HomeStartOptions' {
   import { StyleProps } from 'simulator/style';
   import { ThemeProps } from 'simulator/components/theme';
   import LocalizedString from 'simulator/util/LocalizedString';
+  import { Settings } from 'simulator/Settings';
+  import { CreateUser } from 'simulator/CreateUser';
+  namespace Modal {
+      enum Type {
+          Settings = 0,
+          CreateUser = 1,
+          None = 2
+      }
+      interface None {
+          type: Type.None;
+      }
+      const NONE: None;
+      interface Settings {
+          type: Type.Settings;
+      }
+      const SETTINGS: Settings;
+      interface CreateUser {
+          type: Type.CreateUser;
+      }
+      const CREATEUSER: CreateUser;
+  }
+  export type Modal = (Modal.Settings | Modal.CreateUser | Modal.None);
   export interface HomeStartOptionsPublicProps extends StyleProps, ThemeProps {
   }
   interface HomeStartOptionsPrivateProps {
       locale: LocalizedString.Language;
   }
   interface HomeStartOptionsState {
+      modal: Modal;
+      settings: Settings;
+      createUser: CreateUser;
   }
   type Props = HomeStartOptionsPublicProps & HomeStartOptionsPrivateProps;
   type State = HomeStartOptionsState;
   export class HomeStartOptions extends React.Component<Props, State> {
       constructor(props: Props);
+      private onSettingsChange_;
+      private onModalClick_;
+      private onModalClose_;
       render(): JSX.Element;
   }
   const _default: React.ComponentType<HomeStartOptionsPublicProps>;

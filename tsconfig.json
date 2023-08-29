@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "module": "es2020",
+    "allowJs": true,
+    "outDir": "dist",
+    "jsx": "react",
+    "target": "es6",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "baseUrl": "src",
+    "paths": {
+      "@i18n": ["i18n"],
+    }
+  },
+  "types": [
+    "babylonjs",
+    "babylonjs-loaders",
+    "babylonjs-gltf2interface"
+  ],
+  "include": [
+    "src/**/*"
+  ],
+}

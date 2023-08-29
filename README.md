@@ -1,11 +1,10 @@
-# Simulator
+# Voldigate
 
 ![CD staging status](https://github.com/kipr/simulator/actions/workflows/cd-staging.yml/badge.svg)
 
 ![CD prod status](https://github.com/kipr/simulator/actions/workflows/cd-prod.yml/badge.svg)
 
-A Robotics Simulator built in TypeScript.
-Simulates a botball/JBC style demobot with a built in IDE.
+The IDE for the Wombat Controller
 
 # Development
 

@@ -87,7 +87,7 @@ const StartOptionContainer = styled('div', (props: ThemeProps) => ({
 
 const Logo = styled('img', (props: ThemeProps) => ({
   position: 'relative',
-  top: '15%',
+  top: '14%',
   alignItems:'flex-end',
   width: '250px',
   height: '250px',
