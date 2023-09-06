@@ -14,7 +14,7 @@ import tr from '@i18n';
 import LocalizedString from '../util/LocalizedString';
 import { State } from '../state';
 import { normalize } from 'node:path/win32';
-
+import HomeNavigation from '../components/HomeNavigation';
 
 export interface DashboardPublicProps extends RouteComponentProps, ThemeProps, StyleProps {
 
@@ -40,15 +40,7 @@ const Container = styled('div', (props: ThemeProps) => ({
 }));
 
 
-const HomeNavigationContainer = styled('div', (props: ThemeProps) => ({
- 
-  alignItems: 'left',
-  justifyContent: 'center',
-  width: '100%',
-  height: '100vh',
-  backgroundColor: props.theme.backgroundColor,
-  color: props.theme.color,
-}));
+
 
 const cardContainerMargin = () => {
   const windowWidth = window.innerWidth;
@@ -88,7 +80,7 @@ const StartOptionContainer = styled('div', (props: ThemeProps) => ({
 const Logo = styled('img', (props: ThemeProps) => ({
   position: 'relative',
   top: '14%',
-  alignItems:'flex-end',
+  alignItems: 'flex-end',
   width: '250px',
   height: '250px',
   marginLeft: '10%',
@@ -152,24 +144,21 @@ class Dashboard extends React.PureComponent<Props> {
     const theme = DARK;
 
     return (
-      <HomeNavigationContainer theme={theme}>
-        <Container className={className} style={style} theme={theme}>
-          <MainMenu theme={theme}/>
-          
-          <LeftBar theme={theme}/> 
-        </Container>
+      <>
 
-    
         <LogoContainer theme={theme}>
           <Logo  src={KIPR_LOGO_WHITE as string} style= {{marginBottom:'10px'}}theme={theme}/>
           <IDEName style={{fontSize: 50}}theme={theme}>KISS IDE</IDEName>
         </LogoContainer>
-
         <StartOptionContainer theme={theme}>
           <HomeStartOptions theme={theme}></HomeStartOptions>
         </StartOptionContainer>
+        <HomeNavigation theme={theme} history={undefined} location={undefined} match={undefined}>
+        
 
-      </HomeNavigationContainer>
+      </HomeNavigation>
+      </>
+      
     );
   }
 }
