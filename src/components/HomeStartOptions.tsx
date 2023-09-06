@@ -122,7 +122,8 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
     marginBottom: '12px',
     height: '45px',
     userSelect: 'none',
-    transition: 'background-color 0.2s, opacity 0.2s'
+    transition: 'background-color 0.2s, opacity 0.2s',
+    cursor: 'grab'
 }));
 const Title = styled('div', (props: ThemeProps & ClickProps) => ({
     display: 'flex',
@@ -144,6 +145,7 @@ const ItemIcon = styled(Fa, {
 
 
 export class HomeStartOptions extends React.Component<Props, State> {
+   
     constructor(props: Props) {
         super(props);
         this.state = {
@@ -155,6 +157,10 @@ export class HomeStartOptions extends React.Component<Props, State> {
         }
     }
 
+    private onCreateUser_ = () => {
+
+        console.log('Created User: ');
+    };
 
     private onSettingsChange_ = (changedSettings: Partial<Settings>) => {
         const nextSettings: Settings = {
@@ -210,6 +216,7 @@ export class HomeStartOptions extends React.Component<Props, State> {
                         theme={theme}
                         settings={settings}
                         onClose={this.onModalClose_}
+
                     />
                 )}
             </>
