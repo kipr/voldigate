@@ -8,7 +8,7 @@ import { Button } from '../Button';
 import { Console, createConsoleBarComponents } from '../Console';
 import { Editor, createEditorBarComponents, EditorBarTarget } from '../Editor';
 import World, { createWorldBarComponents } from '../World';
-
+import Dashboard from 'pages/Dashboard';
 import { Info } from '../Info';
 import { LayoutEditorTarget, LayoutProps } from './Layout';
 import SimulatorArea from '../SimulatorArea';
@@ -72,12 +72,13 @@ type State = SideLayoutState;
 const Container = styled('div', {
   display: 'flex',
   flex: '1 1',
-  position: 'relative'
+  position: 'relative',
+  width: '100%'
 });
 
 const SidePanelContainer = styled('div', {
   display: 'flex',
-  flex: '1 1',
+  width: '100%',
   flexDirection: 'row',
 });
 
@@ -120,7 +121,7 @@ export class SideLayout extends React.PureComponent<Props & ReduxSideLayoutProps
     super(props);
 
     this.state = {
-      sidePanelSize: Size.Type.Miniature,
+      sidePanelSize: Size.Type.Maximized,
       activePanel: 0,
     };
 
@@ -135,24 +136,21 @@ export class SideLayout extends React.PureComponent<Props & ReduxSideLayoutProps
     // window.addEventListener('orientationchange', () => { console.log('deprecated orientation change'); this.render(); });
   }
   private onSideBarSizeChange_ = (index: number) => {
-    if (SIDEBAR_SIZES[index].type === Size.Type.Minimized) {
-      // unset active tab if minimizing
-      this.setState({ activePanel: SideBarMinimizedTab });
-    }
+   
     this.setState({
-      sidePanelSize: SIDEBAR_SIZES[index].type,
+      sidePanelSize: Size.Type.Maximized,
     });
   };
   private onTabBarIndexChange_ = (index: number) => {
     if (index === this.state.activePanel) {
       // collapse instead
-      this.onSideBarSizeChange_(SIDEBAR_SIZE[Size.Type.Minimized]);
+      this.onSideBarSizeChange_(SIDEBAR_SIZE[Size.Type.Maximized]);
     } else {
       this.setState({ activePanel: index });
     }
   };
   private onTabBarExpand_ = (index: number) => {
-    this.onSideBarSizeChange_(Size.Type.Miniature);
+    this.onSideBarSizeChange_(Size.Type.Maximized);
     this.setState({ activePanel: index });
   };
 
@@ -260,7 +258,7 @@ export class SideLayout extends React.PureComponent<Props & ReduxSideLayoutProps
           <Slider 
             isVertical={false} 
             theme={theme}
-            minSizes={[100, 100]}
+            minSizes={[10, 600]}
             sizes={[3, 1]}
             visible={[true, true]}
           >
@@ -291,92 +289,15 @@ export class SideLayout extends React.PureComponent<Props & ReduxSideLayoutProps
         );
         break;
       }
-      case 1: {
-        const latestScene = Async.latestValue(scene);
-        let robotNode: Node.Robot;
-        if (latestScene) {
-          const robots = Scene.robots(latestScene);
-          robotNode = Dict.unique(robots);
-        }
-        if (robotNode) {
-          content = (
-            <SimulatorWidget
-              theme={theme}
-              name={LocalizedString.lookup(tr('Robot'), locale)}
-              mode={Mode.Sidebar}
-            >
-              <Info
-                theme={theme}
-                node={robotNode}
-                onOriginChange={this.onRobotOriginChange_}
-              />
-            </SimulatorWidget>
-          );
-        } else {
-          content = null;
-        }
-        break;
-      }
-      case 2: {
-        content = (
-          <SimulatorWidget
-            theme={theme}
-            name={LocalizedString.lookup(tr('World'), locale)}
-            mode={Mode.Sidebar}
-          >
-            <World
-              theme={theme}
-              scene={scene}
-              onNodeAdd={onNodeAdd}
-              onNodeChange={onNodeChange}
-              onNodeRemove={onNodeRemove}
-              onGeometryAdd={onGeometryAdd}
-              onGeometryChange={onGeometryChange}
-              onGeometryRemove={onGeometryRemove}
-              onScriptAdd={onScriptAdd}
-              onScriptChange={onScriptChange}
-              onScriptRemove={onScriptRemove}
-              onObjectAdd={onObjectAdd}
-              capabilities={worldCapabilities}
-            />
-          </SimulatorWidget>
-        );
-        break;
-      }
-      case 3: {
-        content = (
-          <SimulatorWidget
-            theme={theme}
-            name={LocalizedString.lookup(tr('Challenge', 'A predefined task for the user to complete'), locale)}
-            mode={Mode.Sidebar}
-          >
-            <Challenge
-              theme={theme}
-              challenge={challengeState.challenge}
-              challengeCompletion={challengeState.challengeCompletion}
-            />
-          </SimulatorWidget>
-        );
-      }
+      
+ 
     }
 
     const tabs = [{
       name: LocalizedString.lookup(tr('Editor'), locale),
       icon: faCode,
-    }, {
-      name: LocalizedString.lookup(tr('Robot'), locale),
-      icon: faRobot,
-    }, {
-      name: LocalizedString.lookup(tr('World'), locale),
-      icon: faGlobeAmericas,
     }];
 
-    if (challengeState) {
-      tabs.push({
-        name: LocalizedString.lookup(tr('Challenge', 'A predefined task for the user to complete'), locale),
-        icon: faFlagCheckered,
-      });
-    }
 
 
     const simulator = <SimulatorAreaContainer>
@@ -389,25 +310,8 @@ export class SideLayout extends React.PureComponent<Props & ReduxSideLayoutProps
     </SimulatorAreaContainer>;
 
     return <Container style={style} className={className}>
-      <SidePanelContainer>
-        <TabBar 
-          theme={theme} isVertical={true} tabs={tabs} index={activePanel} 
-          onIndexChange={sidePanelSize === Size.Type.Minimized 
-            ? this.onTabBarExpand_
-            : this.onTabBarIndexChange_ 
-          }  
-        />
-        <Slider 
-          isVertical={true}
-          theme={theme}
-          minSizes={[50, 50]}
-          sizes={[1.2, 3]}
-          visible={[sidePanelSize !== Size.Type.Minimized, true]}
-        >
-          {content}
+      {content}
           {simulator}
-        </Slider>
-      </SidePanelContainer>
     </Container>;
   }
 }

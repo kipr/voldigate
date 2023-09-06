@@ -205,7 +205,7 @@ export class OverlayLayout extends React.PureComponent<Props & ReduxOverlayLayou
     super(props);
 
     this.state = {
-      editorSize: Size.Type.Miniature,
+      editorSize: Size.Type.Maximized,
       infoSize: Size.Type.Partial,
       consoleSize: Size.Type.Miniature,
       worldSize: Size.Type.Partial,
@@ -237,7 +237,7 @@ export class OverlayLayout extends React.PureComponent<Props & ReduxOverlayLayou
     }
 
     this.setState({
-      editorSize: EDITOR_SIZES[index].type,
+      editorSize: Size.Type.Maximized,
       infoSize,
       consoleSize,
       worldSize,
@@ -271,7 +271,7 @@ export class OverlayLayout extends React.PureComponent<Props & ReduxOverlayLayou
     switch (size.type) {
       case Size.Type.Maximized: {
         infoSize = Size.Type.Minimized;
-        editorSize = Size.Type.Minimized;
+        editorSize = Size.Type.Maximized,
         worldSize = Size.Type.Minimized;
         challengeSize = Size.Type.Minimized;
         break;
@@ -296,7 +296,7 @@ export class OverlayLayout extends React.PureComponent<Props & ReduxOverlayLayou
 
   public showAll() {
     this.setState({
-      editorSize: Size.Type.Miniature,
+      editorSize: Size.Type.Maximized,
       infoSize: Size.Type.Partial,
       consoleSize: Size.Type.Miniature,
       worldSize: Size.Type.Partial,
@@ -306,7 +306,7 @@ export class OverlayLayout extends React.PureComponent<Props & ReduxOverlayLayou
 
   public hideAll() {
     this.setState({
-      editorSize: Size.Type.Minimized,
+      editorSize: Size.Type.Maximized,
       infoSize: Size.Type.Minimized,
       consoleSize: Size.Type.Minimized,
       worldSize: Size.Type.Minimized,
@@ -428,92 +428,23 @@ export class OverlayLayout extends React.PureComponent<Props & ReduxOverlayLayou
 
     return (
       <Container style={style} className={className}>
-        <SimulatorAreaContainer>
-          <SimulatorArea
-            theme={theme}
-            key='simulator'
-            isSensorNoiseEnabled={settings.simulationSensorNoise}
-            isRealisticSensorsEnabled={settings.simulationRealisticSensors}
-          />
-        </SimulatorAreaContainer>
+  
         <Overlay theme={theme} $challenge={!!challengeState}>
           <EditorWidget
             {...commonProps}
             name={LocalizedString.lookup(tr('Editor'), locale)}
             sizes={EDITOR_SIZES}
-            size={EDITOR_SIZE[editorSize]}
+            size={Size.Type.Maximized}
             onSizeChange={this.onEditorSizeChange_}
             barComponents={editorBar}
             $challenge={!!challengeState}
           >
             {editor}
           </EditorWidget>
-          <ConsoleWidget
-            {...commonProps}
-            name={LocalizedString.lookup(tr('Console', 'Computer text command line (e.g., DOS)'), locale)}
-            sizes={CONSOLE_SIZES}
-            size={CONSOLE_SIZE[consoleSize]}
-            onSizeChange={this.onConsoleSizeChange_}
-            barComponents={consoleBar}
-            $challenge={!!challengeState}
-          >
-            <FlexConsole theme={theme} text={console} />
-          </ConsoleWidget>
-          {robotNode ? (
-            <InfoWidget
-              {...commonProps}
-              name={LocalizedString.lookup(tr('Robot'), locale)}
-              sizes={INFO_SIZES}
-              size={INFO_SIZE[infoSize]}
-              onSizeChange={this.onInfoSizeChange_}
-              $challenge={!!challengeState}
-            >
-              <Info
-                theme={theme}
-                node={robotNode}
-                onOriginChange={this.onRobotOriginChange_}
-              />
-            </InfoWidget>
-          ) : null}
-          {challengeState ? (
-            <ChallengeWidget
-              {...commonProps}
-              name={LocalizedString.lookup(tr('Challenge', 'A predefined task for the user to complete'), locale)}
-              sizes={CHALLENGE_SIZES}
-              size={CHALLENGE_SIZE[challengeSize]}
-              onSizeChange={this.onChallengeSizeChange_}
-            >
-              <Challenge
-                theme={theme}
-                challenge={challengeState.challenge}
-                challengeCompletion={challengeState.challengeCompletion}
-              />
-            </ChallengeWidget>
-          ) : undefined}
-          <WorldWidget
-            {...commonProps}
-            name={LocalizedString.lookup(tr('World'), locale)}
-            sizes={WORLD_SIZES}
-            size={WORLD_SIZE[worldSize]}
-            onSizeChange={this.onWorldSizeChange_}
-            $challenge={!!challengeState}
-          >
-            <World
-              theme={theme}
-              scene={scene}
-              onNodeAdd={onNodeAdd}
-              onNodeChange={onNodeChange}
-              onNodeRemove={onNodeRemove}
-              onGeometryAdd={onGeometryAdd}
-              onGeometryChange={onGeometryChange}
-              onGeometryRemove={onGeometryRemove}
-              onScriptAdd={onScriptAdd}
-              onScriptChange={onScriptChange}
-              onScriptRemove={onScriptRemove}
-              onObjectAdd={onObjectAdd}
-              capabilities={worldCapabilities}
-            />
-          </WorldWidget>
+          
+        
+  
+          
         </Overlay>
       </Container>
     );
