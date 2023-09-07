@@ -28,6 +28,7 @@ import { ReferenceFrame } from '../../unit-math';
 
 import tr from '@i18n';
 import LocalizedString from '../../util/LocalizedString';
+import { ThemeProps } from 'components/theme';
 
 
 
@@ -108,7 +109,16 @@ const SimulatorWidget = styled(Widget, {
   height: '100%',
   width: '100%',
 });
+const TestBoxContainer = styled('div', (props: ThemeProps) => ({
+  width: '800px',
+  height: `100px`, // fix for mobile, see https://chanind.github.io/javascript/2019/09/28/avoid-100vh-on-mobile-web.html
+  display: 'flex',
+  flexDirection: 'row',
+  marginTop: '45px',
+  justifyContent: 'flex-start',
+  backgroundColor: 'green'
 
+}));
 
 const FlexConsole = styled(Console, {
   flex: '1 1',
@@ -136,21 +146,24 @@ export class SideLayout extends React.PureComponent<Props & ReduxSideLayoutProps
     // window.addEventListener('orientationchange', () => { console.log('deprecated orientation change'); this.render(); });
   }
   private onSideBarSizeChange_ = (index: number) => {
-   
+    if (SIDEBAR_SIZES[index].type === Size.Type.Minimized) {
+      // unset active tab if minimizing
+      this.setState({ activePanel: SideBarMinimizedTab });
+    }
     this.setState({
-      sidePanelSize: Size.Type.Maximized,
+      sidePanelSize: SIDEBAR_SIZES[index].type,
     });
   };
   private onTabBarIndexChange_ = (index: number) => {
     if (index === this.state.activePanel) {
       // collapse instead
-      this.onSideBarSizeChange_(SIDEBAR_SIZE[Size.Type.Maximized]);
+      this.onSideBarSizeChange_(SIDEBAR_SIZE[Size.Type.Minimized]);
     } else {
       this.setState({ activePanel: index });
     }
   };
   private onTabBarExpand_ = (index: number) => {
-    this.onSideBarSizeChange_(Size.Type.Maximized);
+    this.onSideBarSizeChange_(Size.Type.Miniature);
     this.setState({ activePanel: index });
   };
 
@@ -190,7 +203,6 @@ export class SideLayout extends React.PureComponent<Props & ReduxSideLayoutProps
       onResetCode,
       editorRef,
       robots,
-      sceneId,
       scene,
       onNodeAdd,
       onNodeChange,
@@ -199,7 +211,6 @@ export class SideLayout extends React.PureComponent<Props & ReduxSideLayoutProps
       onGeometryChange,
       onGeometryRemove,
       onScriptAdd,
-      onScriptChange,
       onScriptRemove,
       onObjectAdd,
       challengeState,
@@ -296,8 +307,13 @@ export class SideLayout extends React.PureComponent<Props & ReduxSideLayoutProps
     const tabs = [{
       name: LocalizedString.lookup(tr('Editor'), locale),
       icon: faCode,
+    }, {
+      name: LocalizedString.lookup(tr('Robot'), locale),
+      icon: faRobot,
+    }, {
+      name: LocalizedString.lookup(tr('World'), locale),
+      icon: faGlobeAmericas,
     }];
-
 
 
     const simulator = <SimulatorAreaContainer>
@@ -309,21 +325,28 @@ export class SideLayout extends React.PureComponent<Props & ReduxSideLayoutProps
       />
     </SimulatorAreaContainer>;
 
-    return <Container style={style} className={className}>
-      {content}
-          {simulator}
+     return <Container style={style} className={className}>
+      <SidePanelContainer>
+        <TabBar 
+          theme={theme} isVertical={true} tabs={tabs} index={activePanel} 
+          onIndexChange={sidePanelSize === Size.Type.Minimized 
+            ? this.onTabBarExpand_
+            : this.onTabBarIndexChange_ 
+          }  
+        >
+        </TabBar>
+        {content}
+
+      </SidePanelContainer>
     </Container>;
   }
 }
 
-export const SideLayoutRedux = connect((state: ReduxState, { sceneId }: LayoutProps) => {
-  const asyncScene = state.scenes[sceneId];
-  const scene = Async.latestValue(asyncScene);
-  let robots: Dict<Node.Robot> = EMPTY_OBJECT;
-  if (scene) robots = Scene.robots(scene);
+export const SideLayoutRedux = connect((state: ReduxState, {  }: LayoutProps) => {
+
   
   return {
-    robots,
+    
     locale: state.i18n.locale,
   };
 }, dispatch => ({
