@@ -113,7 +113,7 @@ const Container = styled('div', (props: ThemeProps) => ({
   alignItems: 'center',
   flexDirection: 'row',
   borderBottom: `1px solid ${props.theme.borderColor}`,
-  zIndex: 1,
+  zIndex: 12,
 }));
 
 interface ClickProps {
@@ -341,60 +341,10 @@ class SimMenu extends React.PureComponent<Props, State> {
 
           {runOrStopItem}
 
-          <Item theme={theme} onClick={onResetWorldClick}><ItemIcon icon={faSync} />
-            {LocalizedString.lookup(tr('Reset World'), locale)}
-          </Item>
 
           <Spacer style={{ borderRight: `1px solid ${theme.borderColor}` }} />
 
-          <Item
-            theme={theme}
-            onClick={onStartChallengeClick}
-            style={{ position: 'relative' }}
-          >
-            <ItemIcon icon={faFlagCheckered} /> {LocalizedString.lookup(tr('Start Challenge'), locale)}
-             
-          </Item>
-
-          <Item 
-            theme={theme} 
-            onClick={this.onLayoutClick_} 
-            style={{ position: 'relative' }}
-          >
-            <ItemIcon icon={faClone} /> {LocalizedString.lookup(tr('Layout'), locale)}
-
-            {subMenu.type === SubMenu.Type.LayoutPicker ? (
-              <LayoutPicker
-                style={{ zIndex: 9 }}
-                onLayoutChange={onLayoutChange}
-                onShowAll={onShowAll}
-                onHideAll={onHideAll}
-                layout={layout}
-                theme={theme}
-              />
-            ) : undefined}
-          </Item>
-          
-          <Item 
-            theme={theme} 
-            onClick={this.onSceneClick_} 
-            style={{ position: 'relative' }}
-          >
-            <ItemIcon icon={faGlobeAmericas} /> {LocalizedString.lookup(tr('World'), locale)}
-
-            {subMenu.type === SubMenu.Type.SceneMenu ? (
-              <SceneMenu
-                style={{ zIndex: 9 }}
-                theme={theme}
-                onSaveAsScene={onCopySceneClick}
-                onNewScene={onNewSceneClick}
-                onSaveScene={onSaveSceneClick}
-                onOpenScene={onOpenSceneClick}
-                onSettingsScene={onSettingsSceneClick}
-                onDeleteScene={onDeleteSceneClick}
-              />
-            ) : undefined}
-          </Item>
+     
 
           <Item
             theme={theme}

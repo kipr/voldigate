@@ -31,7 +31,7 @@ export namespace LayoutEditorTarget {
 export type LayoutEditorTarget = LayoutEditorTarget.Robot;
 
 export interface LayoutProps extends StyleProps, ThemeProps {
-  sceneId: string;
+
   editorTarget: LayoutEditorTarget;
   console: StyledText;
   messages: Message[];
@@ -56,8 +56,7 @@ export interface LayoutProps extends StyleProps, ThemeProps {
 
   onScriptAdd: (scriptId: string, script: Script) => void;
   onScriptRemove: (scriptId: string) => void;
-  onScriptChange: (scriptId: string, script: Script) => void;
-
+ 
   challengeState?: ChallengeState;
   worldCapabilities?: Capabilities;
   onDocumentationGoToFuzzy?: (query: string, language: 'c' | 'python') => void;

@@ -54,7 +54,7 @@ type Props = EditorPublicProps;
 type State = EditorState;
 
 const Container = styled('div', (props: ThemeProps) => ({
-  flex: '1 1',
+  flex: '1',
   backgroundColor: props.theme.backgroundColor,
   color: props.theme.color,
   resize: 'none',
@@ -62,7 +62,8 @@ const Container = styled('div', (props: ThemeProps) => ({
   ':focus': {
     outline: 'none'
   },
-  height: '100%'
+  height: '100%',
+  width: '100%'
 }));
 
 export namespace EditorBarTarget {

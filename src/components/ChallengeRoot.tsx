@@ -933,7 +933,6 @@ class Root extends React.Component<Props, State> {
       onIndentCode: this.onIndentCode_,
       onDownloadCode: this.onDownloadClick_,
       editorRef: this.editorRef,
-      sceneId: undefined,
       scene: workingScene,
       onNodeAdd: this.onNodeAdd_,
       onNodeChange: this.onNodeChange_,
@@ -942,7 +941,6 @@ class Root extends React.Component<Props, State> {
       onGeometryChange: this.onGeometryChange_,
       onGeometryRemove: this.onGeometryRemove_,
       onScriptAdd: this.onScriptAdd_,
-      onScriptChange: this.onScriptChange_,
       onScriptRemove: this.onScriptRemove_,
       onObjectAdd: this.onObjectAdd_,
       onResetCode: this.onResetCode_,
@@ -957,12 +955,7 @@ class Root extends React.Component<Props, State> {
 
     let impl: JSX.Element;
     switch (layout) {
-      case Layout.Overlay: {
-        impl = (
-          <OverlayLayoutRedux ref={this.overlayLayoutRef} {...commonLayoutProps} />
-        );
-        break;
-      }
+      
       case Layout.Side: {
         impl = (
           <SideLayoutRedux {...commonLayoutProps} />

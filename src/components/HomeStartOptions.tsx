@@ -166,14 +166,6 @@ export class HomeStartOptions extends React.Component<Props, State> {
         const nextSettings: Settings = {
           ...this.state.settings,
           ...changedSettings
-        };
-    
-        if ('simulationRealisticSensors' in changedSettings) {
-          Space.getInstance().realisticSensors = changedSettings.simulationRealisticSensors;
-        }
-        
-        if ('simulationSensorNoise' in changedSettings) {
-          Space.getInstance().noisySensors = changedSettings.simulationSensorNoise;
         }
     
         this.setState({ settings: nextSettings });

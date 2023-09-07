@@ -155,13 +155,7 @@ class SettingsDialog extends React.PureComponent<Props, State> {
             >
               {LocalizedString.lookup(tr('User Interface'), locale)}
             </SectionName>
-            <SectionName
-              theme={theme}
-              selected={selectedSection === 'simulation'}
-              onClick={() => this.setSelectedSection('simulation')}
-            >
-              {LocalizedString.lookup(tr('Simulation'), locale)}
-            </SectionName>
+            
             <SectionName
               theme={theme}
               selected={selectedSection === 'editor'}
@@ -187,22 +181,7 @@ class SettingsDialog extends React.PureComponent<Props, State> {
                 </SettingContainer>
               </>
             )}
-            {selectedSection === 'simulation' && (
-              <>
-                {this.createBooleanSetting(
-                  LocalizedString.lookup(tr('Sensor noise'), locale),
-                  LocalizedString.lookup(tr('Controls whether sensor outputs are affected by random noise'), locale),
-                  (settings: Settings) => settings.simulationSensorNoise,
-                  (newValue: boolean) => ({ simulationSensorNoise: newValue })
-                )}
-                {this.createBooleanSetting(
-                  LocalizedString.lookup(tr('Realistic sensors'), locale),
-                  LocalizedString.lookup(tr('Controls whether sensors behave like real-world sensors instead of like ideal sensors. For example, real-world ET sensors are nonlinear'), locale),
-                  (settings: Settings) => settings.simulationRealisticSensors,
-                  (newValue: boolean) => ({ simulationRealisticSensors: newValue })
-                )}
-              </>
-            )}
+       
             {selectedSection === 'editor' && (
               <>
                 {this.createBooleanSetting(

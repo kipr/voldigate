@@ -350,7 +350,7 @@ export class OverlayLayout extends React.PureComponent<Props & ReduxOverlayLayou
       onResetCode,
       editorRef,
       robots,
-      sceneId,
+ 
       scene,
       onNodeAdd,
       onNodeChange,
@@ -359,7 +359,6 @@ export class OverlayLayout extends React.PureComponent<Props & ReduxOverlayLayou
       onGeometryChange,
       onGeometryRemove,
       onScriptAdd,
-      onScriptChange,
       onScriptRemove,
       onObjectAdd,
       challengeState,
@@ -451,14 +450,10 @@ export class OverlayLayout extends React.PureComponent<Props & ReduxOverlayLayou
   }
 }
 
-export const OverlayLayoutRedux = connect((state: ReduxState, { sceneId }: LayoutProps) => {
-  const asyncScene = state.scenes[sceneId];
-  const scene = Async.latestValue(asyncScene);
-  let robots: Dict<Node.Robot> = EMPTY_OBJECT;
-  if (scene) robots = Scene.robots(scene);
-  
+export const OverlayLayoutRedux = connect((state: ReduxState, { }: LayoutProps) => {
+
   return {
-    robots,
+   
     locale: state.i18n.locale,
   };
 }, dispatch => ({
