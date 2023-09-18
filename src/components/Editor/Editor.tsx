@@ -3,9 +3,10 @@ import * as React from 'react';
 import { styled } from 'styletron-react';
 import { StyleProps } from '../../style';
 import { Theme, ThemeProps } from '../theme';
-
+import { Spacer, leftBarSpacer, middleBarSpacer, rightBarSpacer } from '../common';
 import { Fa } from '../Fa';
 import { Button } from '../Button';
+import { Text } from '../Text';
 import { BarComponent } from '../Widget';
 import { WarningCharm, ErrorCharm } from './';
 
@@ -13,7 +14,7 @@ import { Ivygate, Message } from 'ivygate';
 import LanguageSelectCharm from './LanguageSelectCharm';
 import ProgrammingLanguage from '../../ProgrammingLanguage';
 
-import { faArrowsRotate, faFileDownload, faIndent } from '@fortawesome/free-solid-svg-icons';
+import { faArrowsRotate, faFile, faFileDownload, faIndent } from '@fortawesome/free-solid-svg-icons';
 import Script from '../../state/State/Scene/Script';
 import Dict from '../../Dict';
 
@@ -84,7 +85,35 @@ export namespace EditorBarTarget {
   }
 }
 
+export namespace NavBarTarget {
+  export enum Type {
+    Title
+  }
+
+  export interface Navigation{
+    type: Type.Title;
+  }
+}
+
+
+
 export type EditorBarTarget = EditorBarTarget.Robot;
+
+
+export const createNavigationNamesBar = (
+  theme: Theme, 
+  onClearConsole: () => void,
+  locale: LocalizedString.Language
+) => {
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  const consoleBar: BarComponent<object>[] = [];
+
+  consoleBar.push(BarComponent.create(Text, {
+    text: 'File Name'
+  }));
+
+  return consoleBar;
+};
 
 export const createEditorBarComponents = ({
   theme,
@@ -110,6 +139,30 @@ export const createEditorBarComponents = ({
         onLanguageChange: target.onLanguageChange,
       }));
 
+      editorBar.push(BarComponent.create(leftBarSpacer, {
+        
+      }));
+      editorBar.push(BarComponent.create(Text, {
+        text: 'File Name',
+      
+      }));
+      
+      editorBar.push(BarComponent.create(middleBarSpacer, {
+        
+      })); 
+
+      editorBar.push(BarComponent.create(Text, {
+        text: 'Project Name'
+      }));
+      editorBar.push(BarComponent.create(middleBarSpacer, {
+        
+      })); 
+      editorBar.push(BarComponent.create(Text, {
+        text: 'User Name'
+      }));
+      editorBar.push(BarComponent.create(rightBarSpacer, {
+        
+      })); 
       editorBar.push(BarComponent.create(Button, {
         theme,
         onClick: target.onIndentCode,

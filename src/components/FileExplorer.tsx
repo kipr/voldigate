@@ -6,7 +6,7 @@ import { styled } from 'styletron-react';
 import { Button } from './Button';
 
 import { Console, createConsoleBarComponents } from './Console';
-import { Editor, createEditorBarComponents, EditorBarTarget } from './Editor';
+import { Editor, createEditorBarComponents, EditorBarTarget, createNavigationNamesBar } from './Editor';
 import World, { createWorldBarComponents } from './World';
 import Dashboard from 'pages/Dashboard';
 import { Info } from './Info';
@@ -20,9 +20,9 @@ import { State as ReduxState } from '../state';
 import Node from '../state/State/Scene/Node';
 import Dict from '../Dict';
 import Scene from '../state/State/Scene';
-import { faCode, faFlagCheckered, faGlobeAmericas, faRobot } from '@fortawesome/free-solid-svg-icons';
+import { faCode, faFlagCheckered, faFolderTree, faGlobeAmericas, faRobot } from '@fortawesome/free-solid-svg-icons';
 import Async from '../state/State/Async';
-import { EMPTY_OBJECT } from '../util';
+import { EMPTY_OBJECT, StyledText } from '../util';
 
 import { ReferenceFrame } from '../unit-math';
 
@@ -32,6 +32,8 @@ import { ThemeProps } from 'components/theme';
 import EditorConsoleArea from './EditorConsoleArea';
 import Geometry from 'state/State/Scene/Geometry';
 import Script from 'state/State/Scene/Script';
+import { Fa } from './Fa';
+import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 
 
 
@@ -99,17 +101,26 @@ const EditorConsoleAreaContainer = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     flex: '1 1',
+    width: '100vw'
 });
 const SimulatorAreaContainer = styled('div', {
     display: 'flex',
     flex: '1 1',
 });
+const StyledToolIcon = styled(Fa, (props: ThemeProps & { withBorder?: boolean }) => ({
+    userSelect: 'none',
+    paddingLeft: !props.withBorder ? `${props.theme.itemPadding}px` : undefined,
+    paddingRight: props.withBorder ? `${props.theme.itemPadding}px` : undefined,
+    borderRight: props.withBorder ? `1px solid ${props.theme.borderColor}` : undefined,
+}));
+
 const SimultorWidgetContainer = styled('div', {
     display: 'flex',
     flex: '1 0 0',
     height: '100%',
     width: '100%',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    flexDirection: 'column'
 
 });
 const SimulatorWidget = styled(Widget, {
@@ -270,16 +281,18 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
             target: editorBarTarget,
             locale
         });
+
         const consoleBar = createConsoleBarComponents(theme, onClearConsole, locale);
 
+            
         let content: JSX.Element;
         switch (activePanel) {
             case 0: {
                 content = (
-                   <TestBoxContainer theme={theme}>
+                    <TestBoxContainer theme={theme}>
 
-                   </TestBoxContainer>
-        
+                    </TestBoxContainer>
+
                 );
                 break;
             }
@@ -289,16 +302,11 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
 
         const tabs = [{
             name: LocalizedString.lookup(tr('Editor'), locale),
-            icon: faCode,
-        }, {
-            name: LocalizedString.lookup(tr('Robot'), locale),
-            icon: faRobot,
-        }, {
-            name: LocalizedString.lookup(tr('World'), locale),
-            icon: faGlobeAmericas,
+            icon: faFolderTree,
+
         }];
 
-
+    
         const simulator = <SimulatorAreaContainer>
             <SimulatorArea
                 theme={theme}
@@ -334,7 +342,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                 </SimultorWidgetContainer>
 
             </EditorConsoleAreaContainer>
-    
+
         </Container>
 
 
@@ -345,17 +353,15 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                         theme={theme} isVertical={true} tabs={tabs} index={activePanel}
                         onIndexChange={sidePanelSize === Size.Type.Minimized
                             ? this.onTabBarExpand_
-                            : this.onTabBarIndexChange_
-                        }
-                    >
+                            : this.onTabBarIndexChange_} modal={undefined} settings={undefined}                    >
                     </TabBar>
-                      <SimulatorAreaContainer>
-                      {content}
-                      {editorConsole}
-                        </SimulatorAreaContainer>  
-                       
-                        
-                    
+                    <SimulatorAreaContainer>
+                        {content}
+                        {editorConsole}
+                    </SimulatorAreaContainer>
+
+
+
 
                 </SidePanelContainer>
 
