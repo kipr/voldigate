@@ -9,28 +9,34 @@ import ComboBox from './ComboBox';
 import { styled } from 'styletron-react';
 import ScrollArea from './ScrollArea';
 import { Dialog } from './Dialog';
-import { Switch } from './Switch';
 import Dict from '../Dict';
 import { State as ReduxState } from '../state';
 import { I18nAction } from '../state/reducer';
 import { connect } from 'react-redux';
 import Form from './Form';
+import User from './User';
+import { push } from 'connected-react-router';
 
+import Root from './Root';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 type SettingsSection = 'user-interface' | 'simulation' | 'editor';
 
 
 export interface CreateUserDialogPublicProps extends ThemeProps, StyleProps {
     onClose: () => void;
-    settings: Settings;
+
+    userName: string;
 
 }
 
 interface CreateUserDialogPrivateProps {
     locale: LocalizedString.Language;
     onLocaleChange: (locale: LocalizedString.Language) => void;
+    onUserCreation: (userName: string) => void;
 }
 
 interface CreateUserDialogState {
+    userName: string;
 }
 
 
@@ -109,8 +115,13 @@ const StyledForm = styled(Form, (props: ThemeProps) => ({
 }));
 
 export class CreateUserDialog extends React.PureComponent<Props, State>{
+    //state = {userName: ''};
+
     constructor(props: Props) {
         super(props);
+        this.state = {
+            userName: ''
+        }
     }
 
 
@@ -118,18 +129,34 @@ export class CreateUserDialog extends React.PureComponent<Props, State>{
     private onLocaleSelect_ = (index: number, option: ComboBox.Option) => {
         this.props.onLocaleChange(option.data as LocalizedString.Language);
     };
-    private onFinalize_ = (values: { [id: string]: string }) => {
+    onFinalize_ = (values: { [id: string]: string }) => {
+
+        // this.setState({userName: values.userName}, () => {
+        //     console.log(this.state.userName);
+        // });
+
+        let newUser = new User(this.props, values.userName, []);
+        console.log(newUser);
+
+        this.props.onUserCreation(newUser.name);
+
 
     };
+
+    public myComponent(props: CreateUserDialogPublicProps) {
+        return (props.userName)
+    }
+
 
     render() {
         const { props, state } = this;
         const { style, className, theme, onClose, locale } = props;
+        //const {userName} = this.state;
         const CREATEUSER_FORM_ITEMS: Form.Item[] = [
             //Form.email('email', 'Email'),
             //Form.password('password', 'Password', undefined, this.onForgotPasswordClick_, 'Forgot?', false),
-            Form.username('username', 'User Name')
-        
+            Form.username('userName', 'User Name')
+
         ];
 
         const FORMS = [CREATEUSER_FORM_ITEMS];
@@ -156,4 +183,7 @@ export default connect((state: ReduxState) => ({
     locale: state.i18n.locale
 }), dispatch => ({
     onLocaleChange: (locale: LocalizedString.Language) => dispatch(I18nAction.setLocale({ locale })),
+    onUserCreation: (userName: string) => {
+        dispatch(push(`/scene/${userName}`));
+    }
 }))(CreateUserDialog) as React.ComponentType<CreateUserDialogPublicProps>;

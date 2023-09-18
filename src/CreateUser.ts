@@ -3,5 +3,5 @@ export interface CreateUser {
 }
 
 export const DEFAULT_CREATEUSER: CreateUser = {
-    userName: null,
+    userName: 'Enter Here',
 };
