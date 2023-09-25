@@ -12,7 +12,7 @@ import { ScenesAction } from "../state/reducer";
 import DialogBar from "./DialogBar";
 import ScrollArea from "./ScrollArea";
 import { Fa } from "./Fa";
-
+import { Route, Switch } from 'react-router';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { push } from 'connected-react-router';
 import LocalizedString from '../util/LocalizedString';

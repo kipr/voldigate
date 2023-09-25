@@ -347,6 +347,8 @@ export class OverlayLayout extends React.PureComponent<Props & ReduxOverlayLayou
       onClearConsole,
       onIndentCode,
       onDownloadCode,
+      onCreateUser,
+      onGetUser,
       onResetCode,
       editorRef,
       robots,
@@ -392,6 +394,8 @@ export class OverlayLayout extends React.PureComponent<Props & ReduxOverlayLayou
           onLanguageChange: editorTarget.onLanguageChange,
           onIndentCode,
           onDownloadCode,
+          onCreateUser,
+          onGetUser,
           onResetCode,
           onErrorClick: this.onErrorClick_
         };
@@ -404,8 +408,7 @@ export class OverlayLayout extends React.PureComponent<Props & ReduxOverlayLayou
             onCodeChange={editorTarget.onCodeChange}
             messages={messages}
             autocomplete={settings.editorAutoComplete}
-            onDocumentationGoToFuzzy={onDocumentationGoToFuzzy}
-          />
+            onDocumentationGoToFuzzy={onDocumentationGoToFuzzy} username={''}          />
         );
         break;
       }

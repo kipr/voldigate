@@ -1,7 +1,7 @@
-import Dashboard from '../pages/Dashboard';
+const path = require('path');
 import { ThemeProps } from './theme';
 import { StyleProps } from '../style';
-import { Settings } from '../Settings';
+
 import tr from '@i18n';
 import LocalizedString from '../util/LocalizedString';
 import * as React from 'react';
@@ -9,16 +9,35 @@ import ComboBox from './ComboBox';
 import { styled } from 'styletron-react';
 import ScrollArea from './ScrollArea';
 import { Dialog } from './Dialog';
-import Dict from '../Dict';
 import { State as ReduxState } from '../state';
 import { I18nAction } from '../state/reducer';
 import { connect } from 'react-redux';
 import Form from './Form';
-import User from './User';
-import { push } from 'connected-react-router';
 
-import Root from './Root';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { push } from 'connected-react-router';
+import { readFile } from 'fs/promises';
+import { ReadFile, ReadFileError } from '@babylonjs/core';
+import { Readable } from 'stream';
+//import path from 'path';
+
+import fs from 'fs';
+async function userReadFile() {
+    try {
+        // ✅ Read contents of directory
+        const dirContents = await fsPromises.readdir(__dirname);
+        console.log(dirContents);
+    
+        // ✅ Read contents of `another-file.ts` in the same directory
+        const fileContents = await fsPromises.readFile(
+          path.join(__dirname, './another-file.ts'),
+          { encoding: 'utf-8' },
+        );
+        console.log(fileContents);
+      } catch (err) {
+        console.log('error is: ', err);
+      }
+  }
+  
 type SettingsSection = 'user-interface' | 'simulation' | 'editor';
 
 
@@ -40,6 +59,7 @@ interface CreateUserDialogState {
 }
 
 
+  
 type Props = CreateUserDialogPublicProps & CreateUserDialogPrivateProps;
 type State = CreateUserDialogState;
 
@@ -116,7 +136,7 @@ const StyledForm = styled(Form, (props: ThemeProps) => ({
 
 export class CreateUserDialog extends React.PureComponent<Props, State>{
     //state = {userName: ''};
-
+   
     constructor(props: Props) {
         super(props);
         this.state = {
@@ -133,14 +153,22 @@ export class CreateUserDialog extends React.PureComponent<Props, State>{
 
         // this.setState({userName: values.userName}, () => {
         //     console.log(this.state.userName);
-        // });
+    //     // });
+    //     let path = '~/Documents/wombatBotuiCP3.img';
+    
+    //   //  const words = fs.readFileSync('./words.txt', 'utf-8');
+    //     // if (fs.existsSync(path)){
+    //     //     console.log("File Does exist");
+    //     // }
+    //     // else {
+    //     //     console.log('File DOES NOT exist');
+    //     // }
+    //   // this.props.onUserCreation(values.userName);
 
-        let newUser = new User(this.props, values.userName, []);
-        console.log(newUser);
 
-        this.props.onUserCreation(newUser.name);
-
-
+    //   var fileWriter = new File([], path);
+    
+        userReadFile();
     };
 
     public myComponent(props: CreateUserDialogPublicProps) {

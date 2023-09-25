@@ -4,6 +4,8 @@
     "allowJs": true,
     "outDir": "dist",
     "jsx": "react",
+    "typeRoots": ["node_modules/@types", "src/typings"],
+    "types": ["node"],
     "target": "es6",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
@@ -19,6 +21,7 @@
     "babylonjs-gltf2interface"
   ],
   "include": [
-    "src/**/*"
+    "src/**/*",
+   
   ],
 }

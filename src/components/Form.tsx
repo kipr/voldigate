@@ -87,10 +87,11 @@ class Form extends React.PureComponent<Form.Props, Form.State> {
     const { props, state } = this;
     const { items } = props;
     const { values } = state;
-
+    console.log('Inside onFinalizeClick_');
     const ret = {};
     for (const item of items) {
       ret[item.id] = item.finalizer(values[item.id].text);
+     
     }
     
     this.props.onFinalize(ret);
@@ -254,6 +255,7 @@ namespace Form {
   export const username = (id: string, text: string): Item<string> => ({
     id,
     text,
+    finalizer: IDENTITY_FINALIZER
   });
 }
 

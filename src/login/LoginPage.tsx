@@ -385,7 +385,7 @@ class LoginPage extends React.Component<Props, State> {
                 <Text key={i} text={item} />
               ))}/>
           </SocialContainer>
-          <StyledTabBar theme={theme} tabs={TABS} index={index} onIndexChange={this.onTabIndexChange_} />
+          <StyledTabBar theme={theme} tabs={TABS} index={index} onIndexChange={this.onTabIndexChange_} modal={undefined} settings={undefined} />
         </Card>
       </Container>
     );

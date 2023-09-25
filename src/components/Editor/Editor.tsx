@@ -13,8 +13,8 @@ import { WarningCharm, ErrorCharm } from './';
 import { Ivygate, Message } from 'ivygate';
 import LanguageSelectCharm from './LanguageSelectCharm';
 import ProgrammingLanguage from '../../ProgrammingLanguage';
-
-import { faArrowsRotate, faFile, faFileDownload, faIndent } from '@fortawesome/free-solid-svg-icons';
+import { CreateUserDialog } from 'components/CreateUserDialog';
+import { faArrowsRotate, faFile, faFileDownload, faFloppyDisk, faIndent } from '@fortawesome/free-solid-svg-icons';
 import Script from '../../state/State/Scene/Script';
 import Dict from '../../Dict';
 
@@ -40,7 +40,7 @@ export interface EditorPublicProps extends StyleProps, ThemeProps {
   onCodeChange: (code: string) => void;
   messages?: Message[];
   autocomplete: boolean;
-
+  username: string;
   onDocumentationGoToFuzzy?: (query: string, language: 'c' | 'python') => void;
 }
 
@@ -67,10 +67,13 @@ const Container = styled('div', (props: ThemeProps) => ({
   width: '100%'
 }));
 
+
+
 export namespace EditorBarTarget {
   export enum Type {
     Robot,
-    Script
+    Script,
+  
   }
 
   export interface Robot {
@@ -79,23 +82,13 @@ export namespace EditorBarTarget {
     language: ProgrammingLanguage;
     onLanguageChange: (language: ProgrammingLanguage) => void;
     onIndentCode: () => void;
+    onGetUser: () => void;
+    onCreateUser: () => void;
     onDownloadCode: () => void;
     onResetCode: () => void;
     onErrorClick: (event: React.MouseEvent<HTMLDivElement>) => void;
   }
 }
-
-export namespace NavBarTarget {
-  export enum Type {
-    Title
-  }
-
-  export interface Navigation{
-    type: Type.Title;
-  }
-}
-
-
 
 export type EditorBarTarget = EditorBarTarget.Robot;
 
@@ -118,16 +111,20 @@ export const createNavigationNamesBar = (
 export const createEditorBarComponents = ({
   theme,
   target,
-  locale
+  locale,
+
 }: {
   theme: Theme, 
   target: EditorBarTarget,
-  locale: LocalizedString.Language
+  locale: LocalizedString.Language,
+  
 }) => {
   
   // eslint-disable-next-line @typescript-eslint/ban-types
   const editorBar: BarComponent<object>[] = [];
-  
+  let wn = `${window.location.pathname}`;
+  let windowName = wn.split("/", 3);
+
   switch (target.type) {
     case EditorBarTarget.Type.Robot: {
       let errors = 0;
@@ -158,11 +155,22 @@ export const createEditorBarComponents = ({
         
       })); 
       editorBar.push(BarComponent.create(Text, {
-        text: 'User Name'
+        text: `${windowName[2]}`
       }));
+
       editorBar.push(BarComponent.create(rightBarSpacer, {
         
       })); 
+      editorBar.push(BarComponent.create(Button, {
+        theme,
+        onClick: target.onCreateUser,
+        children:
+          <>
+            <Fa icon={faFloppyDisk} />
+            {' '} {LocalizedString.lookup(tr('Save'), locale)}
+          </>
+      }));
+
       editorBar.push(BarComponent.create(Button, {
         theme,
         onClick: target.onIndentCode,

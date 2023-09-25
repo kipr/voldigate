@@ -3,7 +3,7 @@ import { signOutOfApp } from '../firebase/modules/auth';
 import WorkerInstance from '../WorkerInstance';
 
 import { State as ReduxState } from '../state';
-import LeftBar from '../components/LeftBar';
+
 
 import SimMenu from './SimMenu';
 
@@ -25,7 +25,7 @@ import { Message } from 'ivygate';
 import parseMessages, { hasErrors, hasWarnings, sort, toStyledText } from '../util/parse-messages';
 
 import { Space } from '../Sim';
-import { RobotPosition } from '../RobotPosition';
+
 import { DEFAULT_SETTINGS, Settings } from '../Settings';
 import { DEFAULT_FEEDBACK, Feedback } from '../Feedback';
 import ExceptionDialog from './ExceptionDialog';
@@ -43,32 +43,20 @@ import { RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
 import Async from '../state/State/Async';
 import construct from '../util/construct';
-import NewSceneDialog from './NewSceneDialog';
+
 import DeleteDialog from './DeleteDialog';
 import Record from '../db/Record';
 import Selector from '../db/Selector';
 
-import * as uuid from 'uuid';
-import Author from '../db/Author';
-import db from '../db';
-import { auth } from '../firebase/firebase';
-import SaveAsSceneDialog from './SaveAsSceneDialog';
-import SceneErrorDialog from './SceneErrorDialog';
-import { push } from 'connected-react-router';
-import Loading from './Loading';
+
 import LocalizedString from '../util/LocalizedString';
-import SceneSettingsDialog from './SceneSettingsDialog';
+
 
 import { Vector3 } from '../unit-math';
 import { LayoutEditorTarget } from './Layout/Layout';
 import { AsyncChallenge } from '../state/State/Challenge';
 import Builder from '../db/Builder';
 import ChallengeCompletion, { AsyncChallengeCompletion } from '../state/State/ChallengeCompletion';
-import Patch from '../util/Patch';
-import PredicateCompletion from '../state/State/ChallengeCompletion/PredicateCompletion';
-import LoadingOverlay from './Challenge/LoadingOverlay';
-import DbError from '../db/Error';
-import { applyObjectPatch, applyPatch, createObjectPatch, createPatch, ObjectPatch, OuterObjectPatch } from 'symmetry';
 
 import DocumentationLocation from '../state/State/Documentation/DocumentationLocation';
 
@@ -76,10 +64,11 @@ import tr from '@i18n';
 import Geometry from 'state/State/Scene/Geometry';
 import Node from 'state/State/Scene/Node';
 import Script from 'state/State/Scene/Script';
-import HomeNavigation from './HomeNavigation';
 import Widget, { Mode } from './Widget';
 import { Console, createConsoleBarComponents } from './Console';
 import { FileExplorerSideLayoutRedux } from './FileExplorer';
+import User from './User';
+import fs from 'fs';
 
 
 namespace Modal {
@@ -636,6 +625,10 @@ class Root extends React.Component<Props, State> {
     });
   };
 
+  private onGetUser_ = () => {
+    console.log("Hello");
+  };
+
   private onIndentCode_ = () => {
     if (this.editorRef.current) this.editorRef.current.ivygate.formatCode();
   };
@@ -671,6 +664,12 @@ class Root extends React.Component<Props, State> {
     window.location.href = '/';
   };
 
+  onCreateUser = () => {
+    let wn = `${window.location.pathname}`;
+    let windowName = wn.split("/", 3);
+    let newUser = new User(this.state, windowName[2], []);
+    console.log(newUser);
+  };
 
   private onSettingsChange_ = (changedSettings: Partial<Settings>) => {
     const nextSettings: Settings = {
@@ -800,6 +799,8 @@ class Root extends React.Component<Props, State> {
       onClearConsole: this.onClearConsole_,
       onIndentCode: this.onIndentCode_,
       onDownloadCode: this.onDownloadClick_,
+      onGetUser: this.onGetUser_,
+      onCreateUser: this.onCreateUser,
       onResetCode: this.onResetCode_,
       editorRef: this.editorRef,
       scene,

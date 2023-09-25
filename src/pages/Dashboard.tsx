@@ -156,7 +156,7 @@ class Dashboard extends React.PureComponent<Props> {
         <HomeNavigation theme={theme} history={undefined} location={undefined} match={undefined}>
         
 
-      </HomeNavigation>
+         </HomeNavigation>
       </>
       
     );

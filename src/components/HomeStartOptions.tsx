@@ -145,6 +145,7 @@ const ItemIcon = styled(Fa, {
 
 
 export class HomeStartOptions extends React.Component<Props, State> {
+    static username: string;
    
     constructor(props: Props) {
         super(props);
@@ -206,9 +207,8 @@ export class HomeStartOptions extends React.Component<Props, State> {
                 {modal.type === Modal.Type.CreateUser && (
                     <CreateUserDialog
                         theme={theme}
-                        settings={settings}
-                        onClose={this.onModalClose_}
-
+                        onClose={this.onModalClose_} 
+                        userName={''}
                     />
                 )}
             </>

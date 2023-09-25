@@ -199,6 +199,8 @@ export class SideLayout extends React.PureComponent<Props & ReduxSideLayoutProps
       settings,
       onClearConsole,
       onIndentCode,
+      onGetUser,
+      onCreateUser,
       onDownloadCode,
       onResetCode,
       editorRef,
@@ -235,6 +237,8 @@ export class SideLayout extends React.PureComponent<Props & ReduxSideLayoutProps
           language: editorTarget.language,
           onLanguageChange: editorTarget.onLanguageChange,
           onIndentCode,
+          onGetUser,
+          onCreateUser,
           onDownloadCode,
           onResetCode,
           onErrorClick: this.onErrorClick_
@@ -248,8 +252,7 @@ export class SideLayout extends React.PureComponent<Props & ReduxSideLayoutProps
             onCodeChange={editorTarget.onCodeChange}
             messages={messages}
             autocomplete={settings.editorAutoComplete}
-            onDocumentationGoToFuzzy={onDocumentationGoToFuzzy}
-          />
+            onDocumentationGoToFuzzy={onDocumentationGoToFuzzy} username={''}          />
         );
         break;
       }
@@ -328,12 +331,10 @@ export class SideLayout extends React.PureComponent<Props & ReduxSideLayoutProps
      return <Container style={style} className={className}>
       <SidePanelContainer>
         <TabBar 
-          theme={theme} isVertical={true} tabs={tabs} index={activePanel} 
-          onIndexChange={sidePanelSize === Size.Type.Minimized 
-            ? this.onTabBarExpand_
-            : this.onTabBarIndexChange_ 
-          }  
-        >
+           theme={theme} isVertical={true} tabs={tabs} index={activePanel}
+           onIndexChange={sidePanelSize === Size.Type.Minimized
+             ? this.onTabBarExpand_
+             : this.onTabBarIndexChange_} modal={undefined} settings={undefined}        >
         </TabBar>
         {content}
 

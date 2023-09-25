@@ -15,7 +15,7 @@ import SimulatorArea from './SimulatorArea';
 import { TabBar } from './TabBar';
 import Widget, { BarComponent, Mode, Size } from './Widget';
 import { Slider } from './Slider';
-
+import CreateUserDialog from './CreateUserDialog';
 import { State as ReduxState } from '../state';
 import Node from '../state/State/Scene/Node';
 import Dict from '../Dict';
@@ -29,7 +29,7 @@ import { ReferenceFrame } from '../unit-math';
 import tr from '@i18n';
 import LocalizedString from '../util/LocalizedString';
 import { ThemeProps } from 'components/theme';
-import EditorConsoleArea from './EditorConsoleArea';
+
 import Geometry from 'state/State/Scene/Geometry';
 import Script from 'state/State/Scene/Script';
 import { Fa } from './Fa';
@@ -69,6 +69,7 @@ interface FileExplorerState {
     activePanel: number;
     sidePanelSize: Size.Type;
     workingScriptCode?: string;
+    userName: string;
 }
 
 type Props = FileExplorerProps;
@@ -153,6 +154,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
         this.state = {
             sidePanelSize: Size.Type.Miniature,
             activePanel: null,
+            userName: ''
         };
 
         // TODO: this isn't working yet. Needs more tinkering
@@ -165,6 +167,9 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
         // // this is not deprecated, but not supported in safari iOS
         // window.addEventListener('orientationchange', () => { console.log('deprecated orientation change'); this.render(); });
     }
+
+    
+
     private onSideBarSizeChange_ = (index: number) => {
         if (SIDEBAR_SIZES[index].type === Size.Type.Minimized) {
             // unset active tab if minimizing
@@ -220,6 +225,8 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
             onClearConsole,
             onIndentCode,
             onDownloadCode,
+            onGetUser,
+            onCreateUser,
             onResetCode,
             editorRef,
             robots,
@@ -257,6 +264,8 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                     onLanguageChange: editorTarget.onLanguageChange,
                     onIndentCode,
                     onDownloadCode,
+                    onGetUser,
+                    onCreateUser,
                     onResetCode,
                     onErrorClick: this.onErrorClick_
                 };
@@ -269,8 +278,8 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                         onCodeChange={editorTarget.onCodeChange}
                         messages={messages}
                         autocomplete={settings.editorAutoComplete}
-                        onDocumentationGoToFuzzy={onDocumentationGoToFuzzy}
-                    />
+                        onDocumentationGoToFuzzy={onDocumentationGoToFuzzy} 
+                        username={''}                    />
                 );
                 break;
             }
@@ -348,6 +357,9 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
 
         return (
             <Container style={style} className={className}>
+                <div>
+                    {this.state.userName}
+                </div>
                 <SidePanelContainer>
                     <TabBar
                         theme={theme} isVertical={true} tabs={tabs} index={activePanel}

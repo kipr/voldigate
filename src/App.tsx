@@ -68,7 +68,7 @@ class App extends React.Component<Props, State> {
         <Switch>
           <Route path="/" exact component={Dashboard} />
           <Route path="/tutorials" exact component={Tutorials} />
-          <Route path="/scene/:sceneId" component={Root} />
+          <Route path="/scene/:userName" component={Root} />
           <Route path="/challenge/:challengeId" component={ChallengeRoot} />
         </Switch>
         <DocumentationWindow theme={DARK} />

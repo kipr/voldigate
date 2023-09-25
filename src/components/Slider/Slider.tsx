@@ -39,6 +39,7 @@ const SliderItem = styled('div', (props: SliderItemProps) => ({
   overflow: 'auto',
   flexGrow: props.$flexGrow,
   flexBasis: '0',
+  width: '100%'
 }));
 
 export const Slider = function (props: SliderProps) {

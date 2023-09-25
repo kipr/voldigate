@@ -932,6 +932,8 @@ class Root extends React.Component<Props, State> {
       onClearConsole: this.onClearConsole_,
       onIndentCode: this.onIndentCode_,
       onDownloadCode: this.onDownloadClick_,
+      onCreateUser:this.onClearConsole_ ,
+      onGetUser:this.onClearConsole_ ,
       editorRef: this.editorRef,
       scene: workingScene,
       onNodeAdd: this.onNodeAdd_,

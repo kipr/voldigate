@@ -1690,25 +1690,29 @@ declare module 'simulator/components/Console/index' {
 declare module 'simulator/components/CreateUserDialog' {
   import { ThemeProps } from 'simulator/components/theme';
   import { StyleProps } from 'simulator/style';
-  import { Settings } from 'simulator/Settings';
   import LocalizedString from 'simulator/util/LocalizedString';
   import * as React from 'react';
   export interface CreateUserDialogPublicProps extends ThemeProps, StyleProps {
       onClose: () => void;
-      settings: Settings;
+      userName: string;
   }
   interface CreateUserDialogPrivateProps {
       locale: LocalizedString.Language;
       onLocaleChange: (locale: LocalizedString.Language) => void;
+      onUserCreation: (userName: string) => void;
   }
   interface CreateUserDialogState {
+      userName: string;
   }
   type Props = CreateUserDialogPublicProps & CreateUserDialogPrivateProps;
   type State = CreateUserDialogState;
   export class CreateUserDialog extends React.PureComponent<Props, State> {
       constructor(props: Props);
       private onLocaleSelect_;
-      private onFinalize_;
+      onFinalize_: (values: {
+          [id: string]: string;
+      }) => void;
+      myComponent(props: CreateUserDialogPublicProps): string;
       render(): JSX.Element;
   }
   const _default: React.ComponentType<CreateUserDialogPublicProps>;
@@ -1794,6 +1798,7 @@ declare module 'simulator/components/Editor/Editor' {
       onCodeChange: (code: string) => void;
       messages?: Message[];
       autocomplete: boolean;
+      username: string;
       onDocumentationGoToFuzzy?: (query: string, language: 'c' | 'python') => void;
   }
   interface EditorState {
@@ -1811,13 +1816,16 @@ declare module 'simulator/components/Editor/Editor' {
           language: ProgrammingLanguage;
           onLanguageChange: (language: ProgrammingLanguage) => void;
           onIndentCode: () => void;
+          onGetUser: () => void;
+          onCreateUser: () => void;
           onDownloadCode: () => void;
           onResetCode: () => void;
           onErrorClick: (event: React.MouseEvent<HTMLDivElement>) => void;
       }
   }
   export type EditorBarTarget = EditorBarTarget.Robot;
-  export const createEditorBarComponents: ({ theme, target, locale }: {
+  export const createNavigationNamesBar: (theme: Theme, onClearConsole: () => void, locale: LocalizedString.Language) => BarComponent<object>[];
+  export const createEditorBarComponents: ({ theme, target, locale, }: {
       theme: Theme;
       target: EditorBarTarget;
       locale: LocalizedString.Language;
@@ -2083,6 +2091,40 @@ declare module 'simulator/components/Field' {
   export default Field;
 
 }
+declare module 'simulator/components/FileExplorer' {
+  import * as React from 'react';
+  import { LayoutProps } from 'simulator/components/Layout/Layout';
+  import { Size } from 'simulator/components/Widget';
+  import Node from 'simulator/state/State/Scene/Node';
+  import Dict from 'simulator/Dict';
+  import LocalizedString from 'simulator/util/LocalizedString';
+  export interface FileExplorerProps extends LayoutProps {
+  }
+  interface FileExplorerReduxSideLayoutProps {
+      robots: Dict<Node.Robot>;
+      locale: LocalizedString.Language;
+  }
+  interface FileExplorerState {
+      activePanel: number;
+      sidePanelSize: Size.Type;
+      workingScriptCode?: string;
+      userName: string;
+  }
+  type Props = FileExplorerProps;
+  type State = FileExplorerState;
+  export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxSideLayoutProps, State> {
+      constructor(props: Props & FileExplorerReduxSideLayoutProps);
+      private onSideBarSizeChange_;
+      private onTabBarIndexChange_;
+      private onTabBarExpand_;
+      private onErrorClick_;
+      private onRobotOriginChange_;
+      render(): JSX.Element;
+  }
+  export const FileExplorerSideLayoutRedux: React.ComponentType<FileExplorerProps>;
+  export {};
+
+}
 declare module 'simulator/components/Form' {
   import { IconProp } from '@fortawesome/fontawesome-svg-core';
   import * as React from 'react';
@@ -2164,6 +2206,17 @@ declare module 'simulator/components/HTree' {
   export default HTree;
 
 }
+declare module 'simulator/components/HomeNavigation' {
+  import * as React from 'react';
+  import { ThemeProps } from 'simulator/components/theme';
+  import { StyleProps } from 'simulator/style';
+  import { RouteComponentProps } from 'react-router';
+  export interface HomeNavigationPublicProps extends RouteComponentProps, ThemeProps, StyleProps {
+  }
+  const _default: React.ComponentType<HomeNavigationPublicProps>;
+  export default _default;
+
+}
 declare module 'simulator/components/HomeStartOptions' {
   import * as React from 'react';
   import { StyleProps } from 'simulator/style';
@@ -2204,7 +2257,9 @@ declare module 'simulator/components/HomeStartOptions' {
   type Props = HomeStartOptionsPublicProps & HomeStartOptionsPrivateProps;
   type State = HomeStartOptionsState;
   export class HomeStartOptions extends React.Component<Props, State> {
+      static username: string;
       constructor(props: Props);
+      private onCreateUser_;
       private onSettingsChange_;
       private onModalClick_;
       private onModalClose_;
@@ -2368,7 +2423,6 @@ declare module 'simulator/components/Layout/Layout' {
   }
   export type LayoutEditorTarget = LayoutEditorTarget.Robot;
   export interface LayoutProps extends StyleProps, ThemeProps {
-      sceneId: string;
       editorTarget: LayoutEditorTarget;
       console: StyledText;
       messages: Message[];
@@ -2376,6 +2430,8 @@ declare module 'simulator/components/Layout/Layout' {
       onClearConsole: () => void;
       onIndentCode: () => void;
       onDownloadCode: () => void;
+      onGetUser: () => void;
+      onCreateUser: () => void;
       onResetCode: () => void;
       editorRef: React.MutableRefObject<Editor>;
       scene: AsyncScene;
@@ -2388,7 +2444,6 @@ declare module 'simulator/components/Layout/Layout' {
       onGeometryChange: (geometryId: string, geometry: Geometry) => void;
       onScriptAdd: (scriptId: string, script: Script) => void;
       onScriptRemove: (scriptId: string) => void;
-      onScriptChange: (scriptId: string, script: Script) => void;
       challengeState?: ChallengeState;
       worldCapabilities?: Capabilities;
       onDocumentationGoToFuzzy?: (query: string, language: 'c' | 'python') => void;
@@ -2466,20 +2521,41 @@ declare module 'simulator/components/LeftBar' {
   import * as React from 'react';
   import { StyleProps } from 'simulator/style';
   import { ThemeProps } from 'simulator/components/theme';
+  import { Settings } from 'simulator/Settings';
   import LocalizedString from 'simulator/util/LocalizedString';
+  namespace Modal {
+      enum Type {
+          Settings = 0,
+          None = 1
+      }
+      interface None {
+          type: Type.None;
+      }
+      const NONE: None;
+      interface Settings {
+          type: Type.Settings;
+      }
+      const SETTINGS: Settings;
+  }
+  export type Modal = (Modal.Settings | Modal.None);
   export interface LeftBarPublicProps extends StyleProps, ThemeProps {
   }
   interface LeftBarPrivateProps {
       locale: LocalizedString.Language;
   }
-  interface LeftState {
+  interface LeftBarState {
+      modal: Modal;
+      settings: Settings;
   }
   type Props = LeftBarPublicProps & LeftBarPrivateProps;
-  type State = LeftState;
+  type State = LeftBarState;
   export class LeftBar extends React.Component<Props, State> {
       constructor(props: Props);
       private onLogoutClick_;
-      private onDashboardClick_;
+      private onFileExplorerClick_;
+      private onSettingsChange_;
+      private onModalClick_;
+      private onModalClose_;
       render(): JSX.Element;
   }
   const _default: React.ComponentType<LeftBarPublicProps>;
@@ -2670,7 +2746,7 @@ declare module 'simulator/components/Root' {
       }
       const RESET_CODE: ResetCode;
   }
-  export type Modal = (Modal.Settings | Modal.About | Modal.Exception | Modal.SelectScene | Modal.Feedback | Modal.FeedbackSuccess | Modal.None | Modal.NewScene | Modal.CopyScene | Modal.DeleteRecord | Modal.SettingsScene | Modal.ResetCode);
+  export type Modal = (Modal.Settings | Modal.About | Modal.Exception | Modal.SelectScene | Modal.Feedback | Modal.FeedbackSuccess | Modal.None | Modal.NewScene | Modal.DeleteRecord | Modal.SettingsScene | Modal.ResetCode);
   interface RootParams {
       sceneId?: string;
       challengeId?: string;
@@ -3198,6 +3274,7 @@ declare module 'simulator/components/TabBar' {
   import * as React from 'react';
   import { StyleProps } from 'simulator/style';
   import { ThemeProps } from 'simulator/components/theme';
+  import { Settings } from 'simulator/Settings';
   export interface TabProps extends ThemeProps, StyleProps {
       description: TabBar.TabDescription;
       selected?: boolean;
@@ -3210,12 +3287,38 @@ declare module 'simulator/components/TabBar' {
   export interface TabBarProps extends ThemeProps, StyleProps {
       tabs: TabBar.TabDescription[];
       index: number;
+      modal: Modal;
+      settings: Settings;
       isVertical?: boolean;
       onIndexChange: (index: number, event: React.MouseEvent<HTMLDivElement>) => void;
   }
+  interface TabBarState {
+      modal: Modal;
+      settings: Settings;
+  }
   type Props = TabBarProps;
-  export class TabBar extends React.PureComponent<Props> {
+  type State = TabBarState;
+  namespace Modal {
+      enum Type {
+          Settings = 0,
+          None = 1
+      }
+      interface None {
+          type: Type.None;
+      }
+      const NONE: None;
+      interface Settings {
+          type: Type.Settings;
+      }
+      const SETTINGS: Settings;
+  }
+  export type Modal = (Modal.Settings | Modal.None);
+  export class TabBar extends React.Component<Props, State> {
       private onClick_;
+      onSettingsChange_: (settings: Partial<Settings>) => void;
+      constructor(props: Props);
+      private onModalClick_;
+      private onModalClose_;
       render(): JSX.Element;
   }
   export namespace TabBar {
@@ -3328,6 +3431,25 @@ declare module 'simulator/components/Tooltip' {
       type ContentHint = ContentHint.NonInteractive | ContentHint.Interactive;
   }
   export default Tooltip;
+
+}
+declare module 'simulator/components/User' {
+  import { ThemeProps } from 'simulator/components/theme';
+  import * as React from 'react';
+  import { StyleProps } from 'simulator/style';
+  export interface UserProps extends StyleProps, ThemeProps {
+  }
+  interface UserState {
+  }
+  type Props = UserProps;
+  type State = UserState;
+  export class User extends React.PureComponent<Props, State> {
+      name: string;
+      projects: string[];
+      constructor(props: Props, name: string, projects: string[]);
+      render(): JSX.Element;
+  }
+  export default User;
 
 }
 declare module 'simulator/components/ValueEdit/index' {
@@ -3672,6 +3794,9 @@ declare module 'simulator/components/charm-util' {
 declare module 'simulator/components/common' {
   /// <reference types="react" />
   export const Spacer: import("styletron-react").StyletronComponent<Pick<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, keyof import("react").ClassAttributes<HTMLDivElement> | keyof import("react").HTMLAttributes<HTMLDivElement>>>;
+  export const leftBarSpacer: import("styletron-react").StyletronComponent<Pick<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, keyof import("react").ClassAttributes<HTMLDivElement> | keyof import("react").HTMLAttributes<HTMLDivElement>>>;
+  export const middleBarSpacer: import("styletron-react").StyletronComponent<Pick<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, keyof import("react").ClassAttributes<HTMLDivElement> | keyof import("react").HTMLAttributes<HTMLDivElement>>>;
+  export const rightBarSpacer: import("styletron-react").StyletronComponent<Pick<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, keyof import("react").ClassAttributes<HTMLDivElement> | keyof import("react").HTMLAttributes<HTMLDivElement>>>;
 
 }
 declare module 'simulator/components/documentation/DocumentationRoot' {
@@ -6772,7 +6897,7 @@ declare module 'simulator/unit-math' {
       const metersZ: (z: number) => Vector3;
       const toRaw: (v: Vector3, type: Distance.Type) => RawVector3;
       const toRawGranular: (v: Vector3, x: Distance.Type, y: Distance.Type, z: Distance.Type) => RawVector3;
-      const toBabylon: (v: Vector3, type: Distance.Type) => import("@babylonjs/core/Maths/math.vector").Vector3;
+      const toBabylon: (v: Vector3, type: Distance.Type) => import("@babylonjs/core").Vector3;
       const fromRaw: (raw: RawVector3, type: Distance.Type) => {
           x: {
               type: Distance.Type;
