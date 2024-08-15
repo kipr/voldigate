@@ -1,4 +1,4 @@
-const path = require('path');
+
 import { ThemeProps } from './theme';
 import { StyleProps } from '../style';
 
@@ -15,35 +15,16 @@ import { connect } from 'react-redux';
 import Form from './Form';
 
 import { push } from 'connected-react-router';
-import { readFile } from 'fs/promises';
-import { ReadFile, ReadFileError } from '@babylonjs/core';
-import { Readable } from 'stream';
-//import path from 'path';
 
-import fs from 'fs';
-async function userReadFile() {
-    try {
-        // ✅ Read contents of directory
-        const dirContents = await fsPromises.readdir(__dirname);
-        console.log(dirContents);
-    
-        // ✅ Read contents of `another-file.ts` in the same directory
-        const fileContents = await fsPromises.readFile(
-          path.join(__dirname, './another-file.ts'),
-          { encoding: 'utf-8' },
-        );
-        console.log(fileContents);
-      } catch (err) {
-        console.log('error is: ', err);
-      }
-  }
-  
-type SettingsSection = 'user-interface' | 'simulation' | 'editor';
+
+import { DatabaseService } from './DatabaseService';
+import RepeatUserDialog from './RepeatUserDialog';
+
 
 
 export interface CreateUserDialogPublicProps extends ThemeProps, StyleProps {
     onClose: () => void;
-
+    showRepeatUserDialog: boolean;
     userName: string;
 
 }
@@ -56,10 +37,12 @@ interface CreateUserDialogPrivateProps {
 
 interface CreateUserDialogState {
     userName: string;
+    modal: Modal;
+    showRepeatUserDialog: boolean;
 }
 
 
-  
+
 type Props = CreateUserDialogPublicProps & CreateUserDialogPrivateProps;
 type State = CreateUserDialogState;
 
@@ -69,6 +52,45 @@ const Container = styled('div', (props: ThemeProps) => ({
     color: props.theme.color,
     minHeight: '200px',
 }));
+namespace Modal {
+    export enum Type {
+        Settings,
+        CreateUser,
+        RepeatUser,
+        None,
+        OpenUser
+    }
+    export interface None {
+        type: Type.None;
+    }
+
+    export const NONE: None = { type: Type.None };
+
+    export interface Settings {
+        type: Type.Settings;
+    }
+
+    export const SETTINGS: Settings = { type: Type.Settings };
+
+    export interface CreateUser {
+        type: Type.CreateUser;
+    }
+
+    export const CREATEUSER: CreateUser = { type: Type.CreateUser };
+
+    export interface RepeatUser {
+        type: Type.RepeatUser;
+    }
+
+    export const REPEATUSER: RepeatUser = { type: Type.RepeatUser };
+}
+
+export type Modal = (
+    Modal.Settings |
+    Modal.CreateUser |
+    Modal.None |
+    Modal.RepeatUser
+);
 
 const SectionsColumn = styled('div', (props: ThemeProps) => ({
     display: 'flex',
@@ -134,41 +156,67 @@ const StyledForm = styled(Form, (props: ThemeProps) => ({
     paddingRight: `${props.theme.itemPadding * 2}px`,
 }));
 
-export class CreateUserDialog extends React.PureComponent<Props, State>{
+
+const OverlayContainer = styled('div', {
+    position: 'relative',
+});
+
+const OverlayDialog = styled('div', {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1000, // Ensure this is above the CreateUserDialog
+});
+
+export class CreateUserDialog extends React.PureComponent<Props, State> {
     //state = {userName: ''};
-   
+
     constructor(props: Props) {
         super(props);
         this.state = {
-            userName: ''
+            modal: Modal.NONE,
+            userName: '',
+            showRepeatUserDialog: false
         }
     }
-
-
-
+    private onModalClick_ = (modal: Modal) => () => this.setState({ modal });
+    private onModalClose_ = () => this.setState({ modal: Modal.NONE });
+    private closeRepeatUserDialog_ = () => {
+        // 
+        // 
+        //  this.setState({modal:Modal.NONE});
+        this.setState({ showRepeatUserDialog: false });
+    };
     private onLocaleSelect_ = (index: number, option: ComboBox.Option) => {
         this.props.onLocaleChange(option.data as LocalizedString.Language);
     };
-    onFinalize_ = (values: { [id: string]: string }) => {
-
-        // this.setState({userName: values.userName}, () => {
-        //     console.log(this.state.userName);
-    //     // });
-    //     let path = '~/Documents/wombatBotuiCP3.img';
-    
-    //   //  const words = fs.readFileSync('./words.txt', 'utf-8');
-    //     // if (fs.existsSync(path)){
-    //     //     console.log("File Does exist");
-    //     // }
-    //     // else {
-    //     //     console.log('File DOES NOT exist');
-    //     // }
-    //   // this.props.onUserCreation(values.userName);
 
 
-    //   var fileWriter = new File([], path);
-    
-        userReadFile();
+    onFinalize_ = async (values: { [id: string]: string }) => {
+
+        console.log('Inside onFinalizeClick_ in CreateUserDialog.tsx with values:', values);
+
+        try {
+            const result = DatabaseService.addUsertoDatabase(values.userName);
+
+            if (await result == -1) {
+                this.setState({ showRepeatUserDialog: true });
+            }
+            else {
+                this.props.onClose();
+            }
+        }
+        catch (error) {
+            console.error('Error adding user to database:', error);
+        }
+
+
+
     };
 
     public myComponent(props: CreateUserDialogPublicProps) {
@@ -176,10 +224,13 @@ export class CreateUserDialog extends React.PureComponent<Props, State>{
     }
 
 
+
     render() {
         const { props, state } = this;
         const { style, className, theme, onClose, locale } = props;
-        //const {userName} = this.state;
+        const { modal } = state;
+
+        const { showRepeatUserDialog } = state;
         const CREATEUSER_FORM_ITEMS: Form.Item[] = [
             //Form.email('email', 'Email'),
             //Form.password('password', 'Password', undefined, this.onForgotPasswordClick_, 'Forgot?', false),
@@ -189,20 +240,32 @@ export class CreateUserDialog extends React.PureComponent<Props, State>{
 
         const FORMS = [CREATEUSER_FORM_ITEMS];
         return (
-            <Dialog
-                theme={theme}
-                name={LocalizedString.lookup(tr('Create New User'), locale)}
-                onClose={onClose}
-            >
-                <Container theme={theme} style={style} className={className}>
-                    <StyledForm
+            <div>
+                {!showRepeatUserDialog && (
+                    <Dialog
                         theme={theme}
-                        onFinalize={this.onFinalize_}
-                        items={FORMS[0]}
-                        finalizeText='Create'
+                        name={LocalizedString.lookup(tr('Create New User'), locale)}
+                        onClose={onClose} 
+                    >
+                        <Container theme={theme} style={style} className={className}>
+                            <StyledForm
+                                theme={theme}
+                                onFinalize={this.onFinalize_}
+                                items={CREATEUSER_FORM_ITEMS}
+                                finalizeText="Create"
+                            />
+                        </Container>
+                    </Dialog>)}
+
+
+                {showRepeatUserDialog && (
+                    <RepeatUserDialog
+                        onClose={this.closeRepeatUserDialog_} 
+                        theme={theme}
                     />
-                </Container>
-            </Dialog>
+                )}
+            </div>
+
         );
     }
 }
@@ -215,3 +278,5 @@ export default connect((state: ReduxState) => ({
         dispatch(push(`/scene/${userName}`));
     }
 }))(CreateUserDialog) as React.ComponentType<CreateUserDialogPublicProps>;
+
+
