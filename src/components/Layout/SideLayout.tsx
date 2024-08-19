@@ -33,7 +33,7 @@ import { ThemeProps } from 'components/theme';
 
 
 // 3 panes:
-// Editor / console
+// Editor / editorConsole
 // Robot Info
 // World
 
@@ -171,20 +171,7 @@ export class SideLayout extends React.PureComponent<Props & ReduxSideLayoutProps
     // not implemented
   };
 
-  private onRobotOriginChange_ = (origin: ReferenceFrame) => {
-    const { scene, onNodeChange } = this.props;
-    
-    const latestScene = Async.latestValue(scene);
 
-    if (!latestScene) return;
-
-    const robots = Scene.robots(latestScene);
-    const robotId = Object.keys(robots)[0];
-    this.props.onNodeChange(robotId, {
-      ...robots[robotId],
-      origin
-    });
-  };
 
 
   render() {
@@ -194,29 +181,16 @@ export class SideLayout extends React.PureComponent<Props & ReduxSideLayoutProps
       className,
       theme,
       editorTarget,
-      console,
+      editorConsole,
       messages,
       settings,
       onClearConsole,
       onIndentCode,
-      onGetUser,
-      onCreateUser,
+
       onDownloadCode,
       onResetCode,
       editorRef,
       robots,
-      scene,
-      onNodeAdd,
-      onNodeChange,
-      onNodeRemove,
-      onGeometryAdd,
-      onGeometryChange,
-      onGeometryRemove,
-      onScriptAdd,
-      onScriptRemove,
-      onObjectAdd,
-      challengeState,
-      worldCapabilities,
       onDocumentationGoToFuzzy,
       locale
     } = props;
@@ -237,8 +211,6 @@ export class SideLayout extends React.PureComponent<Props & ReduxSideLayoutProps
           language: editorTarget.language,
           onLanguageChange: editorTarget.onLanguageChange,
           onIndentCode,
-          onGetUser,
-          onCreateUser,
           onDownloadCode,
           onResetCode,
           onErrorClick: this.onErrorClick_
@@ -252,7 +224,7 @@ export class SideLayout extends React.PureComponent<Props & ReduxSideLayoutProps
             onCodeChange={editorTarget.onCodeChange}
             messages={messages}
             autocomplete={settings.editorAutoComplete}
-            onDocumentationGoToFuzzy={onDocumentationGoToFuzzy} username={''}          />
+            onDocumentationGoToFuzzy={onDocumentationGoToFuzzy}       />
         );
         break;
       }
@@ -263,7 +235,7 @@ export class SideLayout extends React.PureComponent<Props & ReduxSideLayoutProps
       target: editorBarTarget,
       locale
     });
-    const consoleBar = createConsoleBarComponents(theme, onClearConsole, locale);
+    const editorConsoleBar = createConsoleBarComponents(theme, onClearConsole, locale);
 
     let content: JSX.Element;
     switch (activePanel) {
@@ -291,11 +263,11 @@ export class SideLayout extends React.PureComponent<Props & ReduxSideLayoutProps
               <SimulatorWidget
                 theme={theme}
                 name={LocalizedString.lookup(tr('Console'), locale)}
-                barComponents={consoleBar}
+                barComponents={editorConsoleBar}
                 mode={Mode.Sidebar}
                 hideActiveSize={true}
               >
-                <FlexConsole theme={theme} text={console}/>
+                <FlexConsole theme={theme} text={editorConsole}/>
               </SimulatorWidget>
             </SimultorWidgetContainer>
           </Slider>

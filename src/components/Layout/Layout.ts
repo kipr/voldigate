@@ -33,34 +33,16 @@ export type LayoutEditorTarget = LayoutEditorTarget.Robot;
 export interface LayoutProps extends StyleProps, ThemeProps {
 
   editorTarget: LayoutEditorTarget;
-  console: StyledText;
+  editorConsole: StyledText;
   messages: Message[];
   settings: Settings;
   onClearConsole: () => void;
   onIndentCode: () => void;
   onDownloadCode: () => void;
-  onGetUser: () => void;
-  onCreateUser: () => void;
+
   onResetCode: () => void;
   editorRef: React.MutableRefObject<Editor>;
 
-  scene: AsyncScene;
-
-  onNodeAdd: (nodeId: string, node: Node) => void;
-  onNodeRemove: (nodeId: string) => void;
-  onNodeChange: (nodeId: string, node: Node) => void;
-
-  onObjectAdd: (nodeId: string, object: Node.Obj, geometry: Geometry) => void;
-
-  onGeometryAdd: (geometryId: string, geometry: Geometry) => void;
-  onGeometryRemove: (geometryId: string) => void;
-  onGeometryChange: (geometryId: string, geometry: Geometry) => void;
-
-  onScriptAdd: (scriptId: string, script: Script) => void;
-  onScriptRemove: (scriptId: string) => void;
- 
-  challengeState?: ChallengeState;
-  worldCapabilities?: Capabilities;
   onDocumentationGoToFuzzy?: (query: string, language: 'c' | 'python') => void;
 }
 
@@ -70,7 +52,3 @@ export enum Layout {
   Bottom
 }
 
-export interface ChallengeState {
-  challenge: AsyncChallenge;
-  challengeCompletion: AsyncChallengeCompletion;
-}

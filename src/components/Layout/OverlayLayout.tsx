@@ -318,20 +318,6 @@ export class OverlayLayout extends React.PureComponent<Props & ReduxOverlayLayou
     // not implemented
   };
 
-  private onRobotOriginChange_ = (origin: ReferenceFrame) => {
-    const { scene, onNodeChange } = this.props;
-    
-    const latestScene = Async.latestValue(scene);
-
-    if (!latestScene) return;
-
-    const robots = Scene.robots(latestScene);
-    const robotId = Object.keys(robots)[0];
-    this.props.onNodeChange(robotId, {
-      ...robots[robotId],
-      origin
-    });
-  };
 
   render() {
     const { props } = this;
@@ -341,30 +327,17 @@ export class OverlayLayout extends React.PureComponent<Props & ReduxOverlayLayou
       className,
       theme,
       editorTarget,
-      console,
+      editorConsole,
       messages,
       settings,
       onClearConsole,
       onIndentCode,
       onDownloadCode,
-      onCreateUser,
-      onGetUser,
+
       onResetCode,
       editorRef,
       robots,
- 
-      scene,
-      onNodeAdd,
-      onNodeChange,
-      onNodeRemove,
-      onGeometryAdd,
-      onGeometryChange,
-      onGeometryRemove,
-      onScriptAdd,
-      onScriptRemove,
-      onObjectAdd,
-      challengeState,
-      worldCapabilities,
+
       onDocumentationGoToFuzzy,
       locale
     } = props;
@@ -394,8 +367,6 @@ export class OverlayLayout extends React.PureComponent<Props & ReduxOverlayLayou
           onLanguageChange: editorTarget.onLanguageChange,
           onIndentCode,
           onDownloadCode,
-          onCreateUser,
-          onGetUser,
           onResetCode,
           onErrorClick: this.onErrorClick_
         };
@@ -408,7 +379,7 @@ export class OverlayLayout extends React.PureComponent<Props & ReduxOverlayLayou
             onCodeChange={editorTarget.onCodeChange}
             messages={messages}
             autocomplete={settings.editorAutoComplete}
-            onDocumentationGoToFuzzy={onDocumentationGoToFuzzy} username={''}          />
+            onDocumentationGoToFuzzy={onDocumentationGoToFuzzy}           />
         );
         break;
       }
@@ -421,17 +392,12 @@ export class OverlayLayout extends React.PureComponent<Props & ReduxOverlayLayou
     });
     const consoleBar = createConsoleBarComponents(theme, onClearConsole, locale);
 
-    const latestScene = Async.latestValue(scene);
-    let robotNode: Node.Robot;
-    if (latestScene) {
-      const robots = Scene.robots(latestScene);
-      robotNode = Dict.unique(robots);
-    }
+
 
     return (
       <Container style={style} className={className}>
   
-        <Overlay theme={theme} $challenge={!!challengeState}>
+        <Overlay theme={theme} >
           <EditorWidget
             {...commonProps}
             name={LocalizedString.lookup(tr('Editor'), locale)}
@@ -439,7 +405,7 @@ export class OverlayLayout extends React.PureComponent<Props & ReduxOverlayLayou
             size={Size.Type.Maximized}
             onSizeChange={this.onEditorSizeChange_}
             barComponents={editorBar}
-            $challenge={!!challengeState}
+            
           >
             {editor}
           </EditorWidget>
