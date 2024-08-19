@@ -1421,172 +1421,6 @@ declare module 'simulator/components/Challenge/index' {
   export default _default;
 
 }
-declare module 'simulator/components/ChallengeMenu' {
-  import * as React from 'react';
-  import { StyleProps } from 'simulator/style';
-  import { Layout } from 'simulator/components/Layout/index';
-  import { SimulatorState } from 'simulator/components/SimulatorState';
-  import { ThemeProps } from 'simulator/components/theme';
-  namespace SubMenu {
-      enum Type {
-          None = 0,
-          LayoutPicker = 1,
-          SceneMenu = 2,
-          ExtraMenu = 3
-      }
-      interface None {
-          type: Type.None;
-      }
-      const NONE: None;
-      interface LayoutPicker {
-          type: Type.LayoutPicker;
-      }
-      const LAYOUT_PICKER: LayoutPicker;
-      interface SceneMenu {
-          type: Type.SceneMenu;
-      }
-      const SCENE_MENU: SceneMenu;
-      interface ExtraMenu {
-          type: Type.ExtraMenu;
-      }
-      const EXTRA_MENU: ExtraMenu;
-  }
-  type SubMenu = SubMenu.None | SubMenu.LayoutPicker | SubMenu.SceneMenu | SubMenu.ExtraMenu;
-  export interface MenuProps extends StyleProps, ThemeProps {
-      layout: Layout;
-      onLayoutChange: (layout: Layout) => void;
-      onShowAll: () => void;
-      onHideAll: () => void;
-      onRunClick: () => void;
-      onStopClick: () => void;
-      onResetChallengeClick: () => void;
-      onSettingsClick: () => void;
-      onAboutClick: () => void;
-      onDocumentationClick: () => void;
-      onDashboardClick: () => void;
-      onLogoutClick: () => void;
-      simulatorState: SimulatorState;
-  }
-  interface MenuState {
-      subMenu: SubMenu;
-  }
-  type Props = MenuProps;
-  type State = MenuState;
-  class ChallengeMenu extends React.PureComponent<Props, State> {
-      constructor(props: Props);
-      private onLayoutClick_;
-      private onSceneClick_;
-      private onExtraClick_;
-      private onClickOutside_;
-      render(): JSX.Element;
-  }
-  export default ChallengeMenu;
-
-}
-declare module 'simulator/components/ChallengeRoot' {
-  import * as React from 'react';
-  import { Theme } from 'simulator/components/theme';
-  import { Layout } from 'simulator/components/Layout/index';
-  import { SimulatorState } from 'simulator/components/SimulatorState';
-  import { StyledText } from 'simulator/util/index';
-  import { Message } from 'ivygate';
-  import { Settings } from 'simulator/Settings';
-  import { Feedback } from 'simulator/Feedback';
-  import Scene from 'simulator/state/State/Scene/index';
-  import { RouteComponentProps } from 'react-router';
-  import Record from 'simulator/db/Record';
-  namespace Modal {
-      enum Type {
-          Settings = 0,
-          About = 1,
-          Exception = 2,
-          OpenScene = 3,
-          Feedback = 4,
-          FeedbackSuccess = 5,
-          None = 6,
-          NewScene = 7,
-          CopyScene = 8,
-          SettingsScene = 9,
-          DeleteRecord = 10,
-          ResetCode = 11
-      }
-      interface Settings {
-          type: Type.Settings;
-      }
-      const SETTINGS: Settings;
-      interface About {
-          type: Type.About;
-      }
-      const ABOUT: About;
-      interface Feedback {
-          type: Type.Feedback;
-      }
-      const FEEDBACK: Feedback;
-      interface FeedbackSuccess {
-          type: Type.FeedbackSuccess;
-      }
-      const FEEDBACKSUCCESS: FeedbackSuccess;
-      interface Exception {
-          type: Type.Exception;
-          error: Error;
-          info?: React.ErrorInfo;
-      }
-      const exception: (error: Error, info?: React.ErrorInfo) => Exception;
-      interface SelectScene {
-          type: Type.OpenScene;
-      }
-      const SELECT_SCENE: SelectScene;
-      interface None {
-          type: Type.None;
-      }
-      const NONE: None;
-      interface NewScene {
-          type: Type.NewScene;
-      }
-      const NEW_SCENE: NewScene;
-      interface CopyScene {
-          type: Type.CopyScene;
-          scene: Scene;
-      }
-      const copyScene: (params: Omit<CopyScene, "type">) => CopyScene;
-      interface DeleteRecord {
-          type: Type.DeleteRecord;
-          record: Record;
-      }
-      const deleteRecord: (params: Omit<DeleteRecord, "type">) => DeleteRecord;
-      interface SettingsScene {
-          type: Type.SettingsScene;
-      }
-      const SETTINGS_SCENE: SettingsScene;
-      interface ResetCode {
-          type: Type.ResetCode;
-      }
-      const RESET_CODE: ResetCode;
-  }
-  export type Modal = (Modal.Settings | Modal.About | Modal.Exception | Modal.SelectScene | Modal.Feedback | Modal.FeedbackSuccess | Modal.None | Modal.NewScene | Modal.CopyScene | Modal.DeleteRecord | Modal.SettingsScene | Modal.ResetCode);
-  interface RootParams {
-      challengeId: string;
-  }
-  export interface RootPublicProps extends RouteComponentProps<RootParams> {
-  }
-  interface RootState {
-      layout: Layout;
-      simulatorState: SimulatorState;
-      modal: Modal;
-      console: StyledText;
-      messages: Message[];
-      theme: Theme;
-      settings: Settings;
-      feedback: Feedback;
-      windowInnerHeight: number;
-      challengeStarted?: boolean;
-      nonce: number;
-  }
-  const _default: React.ComponentType<RootPublicProps>;
-  export default _default;
-  export { RootState };
-
-}
 declare module 'simulator/components/Charm' {
   import { ThemeProps } from 'simulator/components/theme';
   import * as React from 'react';
@@ -1687,6 +1521,73 @@ declare module 'simulator/components/Console/index' {
   export default Console;
 
 }
+declare module 'simulator/components/CreateProjectDialog' {
+  import { ThemeProps } from 'simulator/components/theme';
+  import { StyleProps } from 'simulator/style';
+  import LocalizedString from 'simulator/util/LocalizedString';
+  import * as React from 'react';
+  export interface CreateProjectDialogPublicProps extends ThemeProps, StyleProps {
+      onClose: () => void;
+      showRepeatUserDialog: boolean;
+      userName: string;
+      projectName: string;
+      onChangeProjectName: (name: string) => void;
+      closeProjectDialog: () => void;
+  }
+  interface CreateProjectDialogPrivateProps {
+      locale: LocalizedString.Language;
+      onLocaleChange: (locale: LocalizedString.Language) => void;
+      onUserCreation: (userName: string) => void;
+  }
+  interface CreateProjectDialogState {
+      userName: string;
+      modal: Modal;
+      showRepeatUserDialog: boolean;
+  }
+  type Props = CreateProjectDialogPublicProps & CreateProjectDialogPrivateProps;
+  type State = CreateProjectDialogState;
+  namespace Modal {
+      enum Type {
+          Settings = 0,
+          CreateUser = 1,
+          RepeatUser = 2,
+          None = 3,
+          OpenUser = 4
+      }
+      interface None {
+          type: Type.None;
+      }
+      const NONE: None;
+      interface Settings {
+          type: Type.Settings;
+      }
+      const SETTINGS: Settings;
+      interface CreateUser {
+          type: Type.CreateUser;
+      }
+      const CREATEUSER: CreateUser;
+      interface RepeatUser {
+          type: Type.RepeatUser;
+      }
+      const REPEATUSER: RepeatUser;
+  }
+  export type Modal = (Modal.Settings | Modal.CreateUser | Modal.None | Modal.RepeatUser);
+  export class CreateProjectDialog extends React.PureComponent<Props, State> {
+      constructor(props: Props);
+      private onModalClick_;
+      private onModalClose_;
+      private closeRepeatUserDialog_;
+      private onLocaleSelect_;
+      onFinalize_: (values: {
+          [id: string]: string;
+      }) => Promise<void>;
+      myComponent(props: CreateProjectDialogPublicProps): string;
+      render(): JSX.Element;
+  }
+  const _default: React.ComponentType<CreateProjectDialogPublicProps>;
+  export default _default;
+
+}
 declare module 'simulator/components/CreateUserDialog' {
   import { ThemeProps } from 'simulator/components/theme';
   import { StyleProps } from 'simulator/style';
@@ -1694,7 +1595,9 @@ declare module 'simulator/components/CreateUserDialog' {
   import * as React from 'react';
   export interface CreateUserDialogPublicProps extends ThemeProps, StyleProps {
       onClose: () => void;
+      showRepeatUserDialog: boolean;
       userName: string;
+      onCreateProjectDialog: (userName: string) => void;
   }
   interface CreateUserDialogPrivateProps {
       locale: LocalizedString.Language;
@@ -1703,20 +1606,78 @@ declare module 'simulator/components/CreateUserDialog' {
   }
   interface CreateUserDialogState {
       userName: string;
+      modal: Modal;
+      showRepeatUserDialog: boolean;
   }
   type Props = CreateUserDialogPublicProps & CreateUserDialogPrivateProps;
   type State = CreateUserDialogState;
+  namespace Modal {
+      enum Type {
+          Settings = 0,
+          CreateUser = 1,
+          RepeatUser = 2,
+          None = 3,
+          OpenUser = 4
+      }
+      interface None {
+          type: Type.None;
+      }
+      const NONE: None;
+      interface Settings {
+          type: Type.Settings;
+      }
+      const SETTINGS: Settings;
+      interface CreateUser {
+          type: Type.CreateUser;
+      }
+      const CREATEUSER: CreateUser;
+      interface RepeatUser {
+          type: Type.RepeatUser;
+      }
+      const REPEATUSER: RepeatUser;
+  }
+  export type Modal = (Modal.Settings | Modal.CreateUser | Modal.None | Modal.RepeatUser);
   export class CreateUserDialog extends React.PureComponent<Props, State> {
       constructor(props: Props);
+      private onModalClick_;
+      private onModalClose_;
+      private closeRepeatUserDialog_;
       private onLocaleSelect_;
       onFinalize_: (values: {
           [id: string]: string;
-      }) => void;
+      }) => Promise<void>;
       myComponent(props: CreateUserDialogPublicProps): string;
       render(): JSX.Element;
   }
   const _default: React.ComponentType<CreateUserDialogPublicProps>;
   export default _default;
+
+}
+declare module 'simulator/components/Database' {
+  export const db: any;
+  export const userDB: any;
+
+}
+declare module 'simulator/components/DatabaseService' {
+  interface DatabaseType {
+      _id: string;
+      title: string;
+  }
+  export class DatabaseService {
+      private name;
+      private dataBase;
+      constructor(name: string);
+      addDatabase: (dataBase: DatabaseType) => Promise<void>;
+      static getDatabase: (name: string) => Promise<void>;
+      static checkForUserDatabase: () => Promise<boolean>;
+      static createUserDatabase: () => Promise<void>;
+      static addUsertoDatabase: (name: string) => Promise<number>;
+      static addSrcContent: (userName: string, projectId: string, fileName: string, content: string) => Promise<void>;
+      static updateSrcContent: (projectId: string, fileName: string, newContent: string) => Promise<void>;
+      static addProjectToUser: (userName: string, projectName: string) => Promise<number>;
+      static getAllUsers: () => Promise<any[]>;
+  }
+  export default DatabaseService;
 
 }
 declare module 'simulator/components/DeleteDialog' {
@@ -1798,7 +1759,6 @@ declare module 'simulator/components/Editor/Editor' {
       onCodeChange: (code: string) => void;
       messages?: Message[];
       autocomplete: boolean;
-      username: string;
       onDocumentationGoToFuzzy?: (query: string, language: 'c' | 'python') => void;
   }
   interface EditorState {
@@ -1814,10 +1774,11 @@ declare module 'simulator/components/Editor/Editor' {
           type: Type.Robot;
           messages: Message[];
           language: ProgrammingLanguage;
+          projectName: string;
+          fileName: string;
+          userName: string;
           onLanguageChange: (language: ProgrammingLanguage) => void;
           onIndentCode: () => void;
-          onGetUser: () => void;
-          onCreateUser: () => void;
           onDownloadCode: () => void;
           onResetCode: () => void;
           onErrorClick: (event: React.MouseEvent<HTMLDivElement>) => void;
@@ -1924,6 +1885,100 @@ declare module 'simulator/components/Editor/index' {
   export { default as PerfectCharm } from 'simulator/components/Editor/PerfectCharm';
 
 }
+declare module 'simulator/components/EditorPage' {
+  import * as React from 'react';
+  import { LayoutProps } from 'simulator/components/Layout/Layout';
+  import { Size } from 'simulator/components/Widget';
+  import Dict from 'simulator/Dict';
+  import { StyledText } from 'simulator/util/index';
+  import LocalizedString from 'simulator/util/LocalizedString';
+  import ProgrammingLanguage from 'simulator/ProgrammingLanguage';
+  export interface EditorPageProps extends LayoutProps {
+      language: ProgrammingLanguage;
+      projectName: string;
+      fileName: string;
+      userName: string;
+      onDocumentationSetLanguage: (language: 'c' | 'python') => void;
+  }
+  interface ReduxEditorPageProps {
+      locale: LocalizedString.Language;
+  }
+  interface EditorPageState {
+      activePanel: number;
+      sidePanelSize: Size.Type;
+      language: ProgrammingLanguage;
+      code: Dict<string>;
+      workingScriptCode?: string;
+      editorConsole: StyledText;
+      modal: Modal;
+  }
+  type Props = EditorPageProps;
+  type State = EditorPageState;
+  namespace Modal {
+      enum Type {
+          Settings = 0,
+          About = 1,
+          Exception = 2,
+          OpenScene = 3,
+          Feedback = 4,
+          FeedbackSuccess = 5,
+          None = 6,
+          NewScene = 7,
+          CopyScene = 8,
+          SettingsScene = 9,
+          DeleteRecord = 10,
+          ResetCode = 11
+      }
+      interface Settings {
+          type: Type.Settings;
+      }
+      const SETTINGS: Settings;
+      interface About {
+          type: Type.About;
+      }
+      const ABOUT: About;
+      interface Feedback {
+          type: Type.Feedback;
+      }
+      const FEEDBACK: Feedback;
+      interface FeedbackSuccess {
+          type: Type.FeedbackSuccess;
+      }
+      const FEEDBACKSUCCESS: FeedbackSuccess;
+      interface Exception {
+          type: Type.Exception;
+          error: Error;
+          info?: React.ErrorInfo;
+      }
+      interface None {
+          type: Type.None;
+      }
+      const NONE: None;
+      const exception: (error: Error, info?: React.ErrorInfo) => Exception;
+      interface ResetCode {
+          type: Type.ResetCode;
+      }
+      const RESET_CODE: ResetCode;
+  }
+  export type Modal = (Modal.Settings | Modal.About | Modal.Exception | Modal.None | Modal.Feedback | Modal.FeedbackSuccess | Modal.ResetCode);
+  export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps, State> {
+      private editorRef;
+      constructor(props: Props & ReduxEditorPageProps);
+      private onSideBarSizeChange_;
+      private onTabBarIndexChange_;
+      private onTabBarExpand_;
+      private onErrorClick_;
+      private onActiveLanguageChange_;
+      private onIndentCode_;
+      private onDownloadClick_;
+      private onResetCodeAccept_;
+      private onCodeChange_;
+      render(): JSX.Element;
+  }
+  const _default: React.ComponentType<EditorPageProps>;
+  export default _default;
+
+}
 declare module 'simulator/components/ExceptionDialog' {
   import * as React from "react";
   import { ThemeProps } from "simulator/components/theme";
@@ -1944,7 +1999,6 @@ declare module 'simulator/components/ExtraMenu' {
   import { StyleProps } from 'simulator/style';
   import { ThemeProps } from 'simulator/components/theme';
   export interface ExtraMenuPublicProps extends StyleProps, ThemeProps {
-      onLogoutClick: (event: React.MouseEvent) => void;
       onFeedbackClick?: (event: React.MouseEvent) => void;
       onDocumentationClick: (event: React.MouseEvent) => void;
       onSettingsClick: (event: React.MouseEvent) => void;
@@ -2118,7 +2172,6 @@ declare module 'simulator/components/FileExplorer' {
       private onTabBarIndexChange_;
       private onTabBarExpand_;
       private onErrorClick_;
-      private onRobotOriginChange_;
       render(): JSX.Element;
   }
   export const FileExplorerSideLayoutRedux: React.ComponentType<FileExplorerProps>;
@@ -2179,6 +2232,8 @@ declare module 'simulator/components/Form' {
       const password: (id: string, text: string, tooltip?: string, assist?: () => void, assistText?: string, shouldValidate?: boolean) => Item<string>;
       const verifier: (id: string, text: string, validType: Validators.Types, tooltip?: string) => Item<string>;
       const username: (id: string, text: string) => Item<string>;
+      const fileName: (id: string, text: string) => Item<string>;
+      const projectName: (id: string, text: string) => Item<string>;
   }
   export default Form;
 
@@ -2218,17 +2273,20 @@ declare module 'simulator/components/HomeNavigation' {
 
 }
 declare module 'simulator/components/HomeStartOptions' {
-  import * as React from 'react';
   import { StyleProps } from 'simulator/style';
   import { ThemeProps } from 'simulator/components/theme';
+  import React from 'react';
   import LocalizedString from 'simulator/util/LocalizedString';
   import { Settings } from 'simulator/Settings';
-  import { CreateUser } from 'simulator/CreateUser';
+  import ProgrammingLanguage from 'ProgrammingLanguage';
   namespace Modal {
       enum Type {
           Settings = 0,
           CreateUser = 1,
-          None = 2
+          RepeatUser = 2,
+          None = 3,
+          OpenUsers = 4,
+          CreateNewFile = 5
       }
       interface None {
           type: Type.None;
@@ -2242,31 +2300,49 @@ declare module 'simulator/components/HomeStartOptions' {
           type: Type.CreateUser;
       }
       const CREATEUSER: CreateUser;
+      interface RepeatUser {
+          type: Type.RepeatUser;
+      }
+      const REPEATUSER: RepeatUser;
+      interface OpenUsers {
+          type: Type.OpenUsers;
+      }
+      const OPENUSERS: OpenUsers;
+      interface CreateNewFile {
+          type: Type.CreateNewFile;
+      }
+      const CREATENEWFILE: CreateNewFile;
   }
-  export type Modal = (Modal.Settings | Modal.CreateUser | Modal.None);
+  export type Modal = (Modal.Settings | Modal.CreateUser | Modal.None | Modal.OpenUsers | Modal.CreateNewFile);
   export interface HomeStartOptionsPublicProps extends StyleProps, ThemeProps {
+      onClearConsole: () => void;
+      activeLanguage: ProgrammingLanguage;
+      onEditorPageOpen: () => void;
+      onChangeProjectName: (projectName: string) => void;
+      onCreateProjectDialog: (name: string) => void;
   }
   interface HomeStartOptionsPrivateProps {
       locale: LocalizedString.Language;
   }
   interface HomeStartOptionsState {
       modal: Modal;
+      language: ProgrammingLanguage;
       settings: Settings;
-      createUser: CreateUser;
   }
   type Props = HomeStartOptionsPublicProps & HomeStartOptionsPrivateProps;
   type State = HomeStartOptionsState;
   export class HomeStartOptions extends React.Component<Props, State> {
       static username: string;
       constructor(props: Props);
-      private onCreateUser_;
+      handleNewFileClick: () => void;
       private onSettingsChange_;
       private onModalClick_;
       private onModalClose_;
+      private handleDatabaseClick_;
+      private onCreateProject;
       render(): JSX.Element;
   }
-  const _default: React.ComponentType<HomeStartOptionsPublicProps>;
-  export default _default;
+  export {};
 
 }
 declare module 'simulator/components/IFrame' {
@@ -2402,13 +2478,6 @@ declare module 'simulator/components/Layout/Layout' {
   import { StyledText } from "simulator/util/index";
   import { Editor } from "simulator/components/Editor/index";
   import { ThemeProps } from "simulator/components/theme";
-  import { AsyncChallenge } from 'simulator/state/State/Challenge/index';
-  import { AsyncChallengeCompletion } from 'simulator/state/State/ChallengeCompletion/index';
-  import { AsyncScene } from 'simulator/state/State/Scene/index';
-  import Node from 'simulator/state/State/Scene/Node';
-  import Geometry from 'simulator/state/State/Scene/Geometry';
-  import Script from 'simulator/state/State/Scene/Script';
-  import { Capabilities } from 'simulator/components/World/index';
   export namespace LayoutEditorTarget {
       enum Type {
           Robot = "robot"
@@ -2424,38 +2493,20 @@ declare module 'simulator/components/Layout/Layout' {
   export type LayoutEditorTarget = LayoutEditorTarget.Robot;
   export interface LayoutProps extends StyleProps, ThemeProps {
       editorTarget: LayoutEditorTarget;
-      console: StyledText;
+      editorConsole: StyledText;
       messages: Message[];
       settings: Settings;
       onClearConsole: () => void;
       onIndentCode: () => void;
       onDownloadCode: () => void;
-      onGetUser: () => void;
-      onCreateUser: () => void;
       onResetCode: () => void;
       editorRef: React.MutableRefObject<Editor>;
-      scene: AsyncScene;
-      onNodeAdd: (nodeId: string, node: Node) => void;
-      onNodeRemove: (nodeId: string) => void;
-      onNodeChange: (nodeId: string, node: Node) => void;
-      onObjectAdd: (nodeId: string, object: Node.Obj, geometry: Geometry) => void;
-      onGeometryAdd: (geometryId: string, geometry: Geometry) => void;
-      onGeometryRemove: (geometryId: string) => void;
-      onGeometryChange: (geometryId: string, geometry: Geometry) => void;
-      onScriptAdd: (scriptId: string, script: Script) => void;
-      onScriptRemove: (scriptId: string) => void;
-      challengeState?: ChallengeState;
-      worldCapabilities?: Capabilities;
       onDocumentationGoToFuzzy?: (query: string, language: 'c' | 'python') => void;
   }
   export enum Layout {
       Overlay = 0,
       Side = 1,
       Bottom = 2
-  }
-  export interface ChallengeState {
-      challenge: AsyncChallenge;
-      challengeCompletion: AsyncChallengeCompletion;
   }
 
 }
@@ -2500,7 +2551,6 @@ declare module 'simulator/components/Layout/SideLayout' {
       private onTabBarIndexChange_;
       private onTabBarExpand_;
       private onErrorClick_;
-      private onRobotOriginChange_;
       render(): JSX.Element;
   }
   export const SideLayoutRedux: React.ComponentType<SideLayoutProps>;
@@ -2523,6 +2573,7 @@ declare module 'simulator/components/LeftBar' {
   import { ThemeProps } from 'simulator/components/theme';
   import { Settings } from 'simulator/Settings';
   import LocalizedString from 'simulator/util/LocalizedString';
+  import { LayoutProps } from 'simulator/components/Layout/index';
   namespace Modal {
       enum Type {
           Settings = 0,
@@ -2538,7 +2589,7 @@ declare module 'simulator/components/LeftBar' {
       const SETTINGS: Settings;
   }
   export type Modal = (Modal.Settings | Modal.None);
-  export interface LeftBarPublicProps extends StyleProps, ThemeProps {
+  export interface LeftBarPublicProps extends StyleProps, ThemeProps, LayoutProps {
   }
   interface LeftBarPrivateProps {
       locale: LocalizedString.Language;
@@ -2550,12 +2601,16 @@ declare module 'simulator/components/LeftBar' {
   type Props = LeftBarPublicProps & LeftBarPrivateProps;
   type State = LeftBarState;
   export class LeftBar extends React.Component<Props, State> {
+      onIndentCode_: () => void;
+      onDownloadClick_: () => void;
+      onResetCode_: () => void;
+      private editorRef;
       constructor(props: Props);
       private onLogoutClick_;
-      private onFileExplorerClick_;
       private onSettingsChange_;
       private onModalClick_;
       private onModalClose_;
+      private onClearConsole_;
       render(): JSX.Element;
   }
   const _default: React.ComponentType<LeftBarPublicProps>;
@@ -2629,6 +2684,102 @@ declare module 'simulator/components/MotorsSwappedDialog' {
   export default _default;
 
 }
+declare module 'simulator/components/NewFileDialog' {
+  import { ThemeProps } from 'simulator/components/theme';
+  import { StyleProps } from 'simulator/style';
+  import LocalizedString from 'simulator/util/LocalizedString';
+  import * as React from 'react';
+  import { StyledText } from 'simulator/util/index';
+  import { EditorBarTarget } from 'simulator/components/Editor/index';
+  import { Message } from "ivygate";
+  import ProgrammingLanguage from 'ProgrammingLanguage';
+  import { Settings } from 'simulator/Settings';
+  export interface NewFileDialogPublicProps extends ThemeProps, StyleProps {
+      onClose: () => void;
+      showRepeatUserDialog: boolean;
+      fileName: string;
+      editorTarget: EditorBarTarget;
+      messages: Message[];
+      onIndentCode: () => void;
+      onDownloadCode: () => void;
+      onResetCode: () => void;
+      onClearConsole: () => void;
+      language: ProgrammingLanguage;
+      editorConsole: StyledText;
+      onDocumentationGoToFuzzy?: (query: string, language: 'c' | 'python') => void;
+      onEditorPageOpen: () => void;
+      onChangeProjectName: (projectName: string) => void;
+  }
+  export enum Type {
+      Robot = "robot"
+  }
+  export interface Robot {
+      type: Type.Robot;
+      language: ProgrammingLanguage;
+      onLanguageChange: (language: ProgrammingLanguage) => void;
+      code: string;
+      onCodeChange: (code: string) => void;
+  }
+  interface NewFileDialogPrivateProps {
+      locale: LocalizedString.Language;
+      onLocaleChange: (locale: LocalizedString.Language) => void;
+      onUserCreation: (fileName: string) => void;
+  }
+  interface NewFileDialogState {
+      fileName: string;
+      modal: Modal;
+      settings: Settings;
+      showRepeatUserDialog: boolean;
+      editorTarget: EditorBarTarget;
+      showEditorPage: boolean;
+      language: ProgrammingLanguage;
+  }
+  type Props = NewFileDialogPublicProps & NewFileDialogPrivateProps;
+  type State = NewFileDialogState;
+  namespace Modal {
+      enum Type {
+          Settings = 0,
+          CreateUser = 1,
+          RepeatUser = 2,
+          None = 3,
+          OpenUser = 4
+      }
+      interface None {
+          type: Type.None;
+      }
+      const NONE: None;
+      interface Settings {
+          type: Type.Settings;
+      }
+      const SETTINGS: Settings;
+      interface CreateUser {
+          type: Type.CreateUser;
+      }
+      const CREATEUSER: CreateUser;
+      interface RepeatUser {
+          type: Type.RepeatUser;
+      }
+      const REPEATUSER: RepeatUser;
+  }
+  export type Modal = (Modal.Settings | Modal.CreateUser | Modal.None | Modal.RepeatUser);
+  export class NewFileDialog extends React.PureComponent<Props, State> {
+      private editorRef;
+      constructor(props: Props);
+      private onModalClick_;
+      private onModalClose_;
+      private closeRepeatUserDialog_;
+      private onLocaleSelect_;
+      private onIndentCode_;
+      myComponent(props: NewFileDialogPublicProps): string;
+      private onErrorClick_;
+      private onCodeChange;
+      private onFinalize_;
+      render(): JSX.Element;
+  }
+  const _default: React.ComponentType<NewFileDialogPublicProps>;
+  export default _default;
+
+}
 declare module 'simulator/components/NewSceneDialog' {
   import * as React from 'react';
   import { StyleProps } from 'simulator/style';
@@ -2649,6 +2800,87 @@ declare module 'simulator/components/OpenSceneDialog' {
       onClose: () => void;
   }
   const _default: React.ComponentType<OpenSceneDialogPublicProps>;
+  export default _default;
+
+}
+declare module 'simulator/components/OpenUsersDialog' {
+  import * as React from 'react';
+  import { StyleProps } from 'simulator/style';
+  import { ThemeProps } from 'simulator/components/theme';
+  import { Settings } from 'simulator/Settings';
+  export interface OpenUsersDialogPublicProps extends ThemeProps, StyleProps {
+      onClose: () => void;
+      settings: Settings;
+      onSettingsChange: (settings: Partial<Settings>) => void;
+  }
+  namespace Modal {
+      enum Type {
+          Settings = 0,
+          CreateUser = 1,
+          RepeatUser = 2,
+          None = 3,
+          OpenUsers = 4
+      }
+      interface None {
+          type: Type.None;
+      }
+      const NONE: None;
+      interface Settings {
+          type: Type.Settings;
+      }
+      const SETTINGS: Settings;
+      interface CreateUser {
+          type: Type.CreateUser;
+      }
+      const CREATEUSER: CreateUser;
+      interface RepeatUser {
+          type: Type.RepeatUser;
+      }
+      const REPEATUSER: RepeatUser;
+      interface OpenUsers {
+          type: Type.OpenUsers;
+      }
+      const OPENUSERS: OpenUsers;
+  }
+  export type Modal = (Modal.Settings | Modal.CreateUser | Modal.None | Modal.RepeatUser);
+  const _default: React.ComponentType<OpenUsersDialogPublicProps>;
+  export default _default;
+
+}
+declare module 'simulator/components/RepeatUserDialog' {
+  import * as React from 'react';
+  import { StyleProps } from 'simulator/style';
+  import { ThemeProps } from 'simulator/components/theme';
+  export interface RepeatUserDialogPublicProps extends ThemeProps, StyleProps {
+      onClose: () => void;
+  }
+  namespace Modal {
+      enum Type {
+          Settings = 0,
+          CreateUser = 1,
+          RepeatUser = 2,
+          None = 3,
+          OpenUser = 4
+      }
+      interface None {
+          type: Type.None;
+      }
+      const NONE: None;
+      interface Settings {
+          type: Type.Settings;
+      }
+      const SETTINGS: Settings;
+      interface CreateUser {
+          type: Type.CreateUser;
+      }
+      const CREATEUSER: CreateUser;
+      interface RepeatUser {
+          type: Type.RepeatUser;
+      }
+      const REPEATUSER: RepeatUser;
+  }
+  export type Modal = (Modal.Settings | Modal.CreateUser | Modal.None | Modal.RepeatUser);
+  const _default: React.ComponentType<RepeatUserDialogPublicProps>;
   export default _default;
 
 }
@@ -2759,12 +2991,20 @@ declare module 'simulator/components/Root' {
       code: Dict<string>;
       simulatorState: SimulatorState;
       modal: Modal;
-      console: StyledText;
+      editorConsole: StyledText;
       messages: Message[];
       theme: Theme;
       settings: Settings;
       feedback: Feedback;
       windowInnerHeight: number;
+      isHomeStartOptionsVisible: boolean;
+      isNewFileDialogVisible: boolean;
+      isEditorPageVisible: boolean;
+      isCreateProjectDialogVisible: boolean;
+      isCreateNewUserDialogVisible: boolean;
+      projectName: string;
+      fileName: string;
+      userName: string;
   }
   const _default: React.ComponentType<RootPublicProps>;
   export default _default;
@@ -3053,23 +3293,15 @@ declare module 'simulator/components/SimMenu' {
   export interface MenuPublicProps extends StyleProps, ThemeProps {
       layout: Layout;
       onLayoutChange: (layout: Layout) => void;
-      onNewSceneClick?: (event: React.MouseEvent) => void;
-      onSaveSceneClick?: (event: React.MouseEvent) => void;
-      onSaveAsSceneClick?: (event: React.MouseEvent) => void;
-      onOpenSceneClick?: (event: React.MouseEvent) => void;
       onSettingsSceneClick?: (event: React.MouseEvent) => void;
-      onDeleteSceneClick?: (event: React.MouseEvent) => void;
-      onStartChallengeClick: () => void;
       onShowAll: () => void;
       onHideAll: () => void;
       onRunClick: () => void;
       onStopClick: () => void;
-      onResetWorldClick: () => void;
       onSettingsClick: () => void;
       onAboutClick: () => void;
       onDocumentationClick: () => void;
       onDashboardClick: () => void;
-      onLogoutClick: () => void;
       onFeedbackClick: () => void;
       simulatorState: SimulatorState;
   }
@@ -6897,7 +7129,7 @@ declare module 'simulator/unit-math' {
       const metersZ: (z: number) => Vector3;
       const toRaw: (v: Vector3, type: Distance.Type) => RawVector3;
       const toRawGranular: (v: Vector3, x: Distance.Type, y: Distance.Type, z: Distance.Type) => RawVector3;
-      const toBabylon: (v: Vector3, type: Distance.Type) => import("@babylonjs/core").Vector3;
+      const toBabylon: (v: Vector3, type: Distance.Type) => import("@babylonjs/core/Maths/math.vector").Vector3;
       const fromRaw: (raw: RawVector3, type: Distance.Type) => {
           x: {
               type: Distance.Type;
