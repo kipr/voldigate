@@ -5,16 +5,17 @@ import { styled } from 'styletron-react';
 import { Card } from '../components/Card';
 import MainMenu from '../components/MainMenu';
 import LeftBar from '../components/LeftBar';
-import HomeStartOptions from '../components/HomeStartOptions';
+import { HomeStartOptions } from '../components/HomeStartOptions';
 import { RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-import KIPR_LOGO_WHITE from '../assets/KIPR-Logo-White-Text-Clear-Large.png';
+
 import tr from '@i18n';
 import LocalizedString from '../util/LocalizedString';
 import { State } from '../state';
 import { normalize } from 'node:path/win32';
 import HomeNavigation from '../components/HomeNavigation';
+import Root from '../components/Root';
 
 export interface DashboardPublicProps extends RouteComponentProps, ThemeProps, StyleProps {
 
@@ -77,47 +78,22 @@ const StartOptionContainer = styled('div', (props: ThemeProps) => ({
   height: '40%',
 }));
 
-const Logo = styled('img', (props: ThemeProps) => ({
-  position: 'relative',
-  top: '14%',
-  alignItems: 'flex-end',
-  width: '250px',
-  height: '250px',
-  marginLeft: '10%',
-  marginRight: '10px',
-  userSelect: 'none',
-  transition: 'background-color 0.2s, opacity 0.2s'
-}));
-const IDEName = styled('div', (props: ThemeProps) => ({
-  position: 'absolute',
-  top: '40%',
-  display: 'flex',
-  flexWrap: 'wrap',
-  marginLeft: '60%',
-  flexDirection: 'row',
-  justifyContent: 'start',
-  fontFamily: "bebas-neue-pro-semiexpanded, sans-serif",
-  fontStyle: 'normal',
-  fontWeight: 600,
-  fontSize: "500",
-  width: '500px',
-  height: '100%',
-  zIndex: 0,
-}));
 
-const LogoContainer = styled('div', (props: ThemeProps) => ({
+
+
+const RootContainer = styled('div', (props: ThemeProps) => ({
   position: 'absolute',
-  top: '4px',
+  top: '4%',
   display: 'flex',
   flexWrap: 'wrap',
-  marginLeft: '30%',
+  marginLeft: '4%',
   flexDirection: 'row',
   justifyContent: 'start',
-  backgroundColor: '#373737',
   width: '30%',
   height: '30%',
   zIndex: 0,
 }));
+
 
 const Item = styled('div', (props: ThemeProps) => ({
   display: 'flex',
@@ -146,19 +122,17 @@ class Dashboard extends React.PureComponent<Props> {
     return (
       <>
 
-        <LogoContainer theme={theme}>
-          <Logo  src={KIPR_LOGO_WHITE as string} style= {{marginBottom:'10px'}}theme={theme}/>
-          <IDEName style={{fontSize: 50}}theme={theme}>KISS IDE</IDEName>
-        </LogoContainer>
-        <StartOptionContainer theme={theme}>
-          <HomeStartOptions theme={theme}></HomeStartOptions>
-        </StartOptionContainer>
-        <HomeNavigation theme={theme} history={undefined} location={undefined} match={undefined}>
         
 
-         </HomeNavigation>
+        <RootContainer theme={theme}>
+          <Root history={undefined} location={undefined} match={undefined}/>
+        </RootContainer>
+        <HomeNavigation theme={theme} history={undefined} location={undefined} match={undefined}>
+
+
+        </HomeNavigation>
       </>
-      
+
     );
   }
 }
@@ -166,6 +140,5 @@ class Dashboard extends React.PureComponent<Props> {
 export default connect((state: State) => ({
   locale: state.i18n.locale,
 }), dispatch => ({
-  onTutorialsClick: () => dispatch(push('/tutorials')),
-  onSimulatorClick: () => dispatch(push('/scene/jbcSandboxA')),
+
 }))(Dashboard) as React.ComponentType<DashboardPublicProps>;
