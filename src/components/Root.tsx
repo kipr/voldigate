@@ -69,6 +69,11 @@ import { Console, createConsoleBarComponents } from './Console';
 import { FileExplorerSideLayoutRedux } from './FileExplorer';
 import User from './User';
 import fs from 'fs';
+import { HomeStartOptions } from './HomeStartOptions';
+import NewFileDialog from './NewFileDialog';
+import EditorPage from './EditorPage';
+import CreateProjectDialog from './CreateProjectDialog';
+import CreateUserDialog from './CreateUserDialog';
 
 
 namespace Modal {
@@ -199,18 +204,7 @@ interface RootPrivateProps {
   onDownloadCode: () => void;
   onResetCode: () => void;
   editorRef: React.MutableRefObject<Editor>;
-  onNodeAdd: (id: string, node: Node) => void;
-  onNodeRemove: (id: string) => void;
-  onNodeChange: (id: string, node: Node) => void;
 
-  onNodesChange: (nodes: Dict<Node>) => void;
-
-  onGeometryRemove: (id: string) => void;
-
-  onGravityChange: (gravity: Vector3) => void;
-  onSelectNodeId: (id: string) => void;
-  onSetNodeBatch: (setNodeBatch: Omit<ScenesAction.SetNodeBatch, 'type' | 'sceneId'>) => void;
-  onResetScene: () => void;
 
   onDocumentationClick: () => void;
   onDocumentationPush: (location: DocumentationLocation) => void;
@@ -218,16 +212,7 @@ interface RootPrivateProps {
   onDocumentationGoToFuzzy: (query: string, language: 'c' | 'python') => void;
 
 
-  onSaveScene: (id: string) => void;
-  onDeleteRecord: (selector: Selector) => void;
 
-  unfailScene: (id: string) => void;
-
-  goToLogin: () => void;
-
-  selectedScriptId?: string;
-
-  onScriptRemove: (scriptId: string) => void;
 }
 
 interface RootState {
@@ -242,7 +227,7 @@ interface RootState {
 
   modal: Modal;
 
-  console: StyledText;
+  editorConsole: StyledText;
   messages: Message[];
 
   theme: Theme;
@@ -252,7 +237,15 @@ interface RootState {
   feedback: Feedback;
 
   windowInnerHeight: number;
+  isHomeStartOptionsVisible: boolean;
+  isNewFileDialogVisible: boolean;
+  isEditorPageVisible: boolean;
+  isCreateProjectDialogVisible: boolean;
+  isCreateNewUserDialogVisible: boolean;
+  projectName: string;
+  fileName: string;
 
+  userName: string;
 
 }
 
@@ -365,6 +358,18 @@ const SimultorWidgetContainer = styled('div', {
 
 
 });
+const StartOptionContainer = styled('div', (props: ThemeProps) => ({
+  position: 'absolute',
+  display: 'flex',
+  flexWrap: 'wrap',
+  flexDirection: 'row',
+  justifyContent: 'start',
+  top: '36%',
+  marginLeft: '20%',
+  backgroundColor: 'green',
+  width: '50%',
+  height: '40%',
+}));
 class Root extends React.Component<Props, State> {
   private editorRef: React.MutableRefObject<Editor>;
   private overlayLayoutRef: React.MutableRefObject<OverlayLayout>;
@@ -383,12 +388,20 @@ class Root extends React.Component<Props, State> {
       },
       modal: Modal.NONE,
       simulatorState: SimulatorState.STOPPED,
-      console: StyledText.text({ text: LocalizedString.lookup(tr('Welcome to the KIPR Simulator!\n'), props.locale), style: STDOUT_STYLE(DARK) }),
+      editorConsole: StyledText.text({ text: LocalizedString.lookup(tr('Welcome to the KIPR Simulator!\n'), props.locale), style: STDOUT_STYLE(DARK) }),
       theme: DARK,
       messages: [],
       settings: DEFAULT_SETTINGS,
       feedback: DEFAULT_FEEDBACK,
       windowInnerHeight: window.innerHeight,
+      isHomeStartOptionsVisible: true,
+      isNewFileDialogVisible: false,
+      isEditorPageVisible: false,
+      isCreateProjectDialogVisible: false,
+      isCreateNewUserDialogVisible: false,
+      projectName: '',
+      fileName: 'main.cpp',
+      userName: ''
 
     };
 
@@ -400,15 +413,6 @@ class Root extends React.Component<Props, State> {
   componentDidMount() {
     WorkerInstance.onStopped = this.onStopped_;
 
-    const space = Space.getInstance();
-    space.onSetNodeBatch = this.props.onSetNodeBatch;
-    space.onSelectNodeId = this.props.onSelectNodeId;
-    space.onNodeAdd = this.props.onNodeAdd;
-    space.onNodeRemove = this.props.onNodeRemove;
-    space.onNodeChange = this.props.onNodeChange;
-
-    space.onGeometryRemove = this.props.onGeometryRemove;
-    space.onGravityChange = this.props.onGravityChange;
 
 
     this.scheduleUpdateConsole_();
@@ -441,6 +445,37 @@ class Root extends React.Component<Props, State> {
     });
   };
 
+  private onCloseProjectDialog_ = () => {
+    this.setState({
+      isCreateProjectDialogVisible: false
+
+    });
+    this.onEditorPageOpen_();
+  }
+  private onCreateProjectDialogOpen_ = (name: string) => {
+
+    this.setState({
+      userName: name,
+      isCreateNewUserDialogVisible: false,
+      isCreateProjectDialogVisible: true,
+    });
+
+    console.log("userName: ", this.state.userName);
+  }
+  private onEditorPageOpen_ = () => {
+    this.setState({
+      isHomeStartOptionsVisible: false,
+      isNewFileDialogVisible: false,
+      isEditorPageVisible: true
+    });
+  };
+
+  private onChangeProjectName = (name: string) => {
+
+    this.setState({
+      projectName: name
+    });
+  }
   private onCodeChange_ = (code: string) => {
     const { activeLanguage } = this.state;
     this.setState({
@@ -475,7 +510,7 @@ class Root extends React.Component<Props, State> {
     const text = WorkerInstance.sharedConsole.popString();
     if (text.length > 0) {
       this.setState({
-        console: StyledText.extend(this.state.console, StyledText.text({
+        editorConsole: StyledText.extend(this.state.editorConsole, StyledText.text({
           text,
           style: STDOUT_STYLE(this.state.theme)
         }), 300)
@@ -496,25 +531,25 @@ class Root extends React.Component<Props, State> {
   private onRunClick_ = () => {
     const { props, state } = this;
     const { locale } = props;
-    const { activeLanguage, code, console, theme } = state;
+    const { activeLanguage, code, editorConsole, theme } = state;
 
     const activeCode = code[activeLanguage];
 
     switch (activeLanguage) {
       case 'c':
       case 'cpp': {
-        let nextConsole: StyledText = StyledText.extend(console, StyledText.text({
+        let nextConsole: StyledText = StyledText.extend(editorConsole, StyledText.text({
           text: LocalizedString.lookup(tr('Compiling...\n'), locale),
           style: STDOUT_STYLE(this.state.theme)
         }));
 
         this.setState({
           simulatorState: SimulatorState.COMPILING,
-          console: nextConsole
+          editorConsole: nextConsole
         }, () => {
           compile(activeCode, activeLanguage)
             .then(compileResult => {
-              nextConsole = this.state.console;
+              nextConsole = this.state.editorConsole;
               const messages = sort(parseMessages(compileResult.stderr));
               const compileSucceeded = compileResult.result && compileResult.result.length > 0;
 
@@ -560,7 +595,7 @@ class Root extends React.Component<Props, State> {
               this.setState({
                 simulatorState: compileSucceeded ? SimulatorState.RUNNING : SimulatorState.STOPPED,
                 messages,
-                console: nextConsole
+                editorConsole: nextConsole
               });
             })
             .catch((e: unknown) => {
@@ -573,7 +608,7 @@ class Root extends React.Component<Props, State> {
               this.setState({
                 simulatorState: SimulatorState.STOPPED,
                 messages: [],
-                console: nextConsole
+                editorConsole: nextConsole
               });
             });
         });
@@ -599,39 +634,29 @@ class Root extends React.Component<Props, State> {
     WorkerInstance.stop();
   };
 
-  private onDownloadClick_ = () => {
-    const { activeLanguage } = this.state;
+  // private onDownloadClick_ = () => {
+  //   const { activeLanguage } = this.state;
 
-    const element = document.createElement('a');
-    element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(this.state.code[activeLanguage])}`);
-    element.setAttribute('download', `program.${ProgrammingLanguage.FILE_EXTENSION[activeLanguage]}`);
-    element.style.display = 'none';
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
-  };
+  //   const element = document.createElement('a');
+  //   element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(this.state.code[activeLanguage])}`);
+  //   element.setAttribute('download', `program.${ProgrammingLanguage.FILE_EXTENSION[activeLanguage]}`);
+  //   element.style.display = 'none';
+  //   document.body.appendChild(element);
+  //   element.click();
+  //   document.body.removeChild(element);
+  // };
 
-  private onResetWorldClick_ = () => {
-    this.props.onResetScene();
-  };
-
-  private onStartChallengeClick_ = () => {
-    window.location.href = `/challenge/${this.props.match.params.sceneId}`;
-  };
 
   private onClearConsole_ = () => {
     this.setState({
-      console: StyledText.compose({ items: [] })
+      editorConsole: StyledText.compose({ items: [] })
     });
   };
 
-  private onGetUser_ = () => {
-    console.log("Hello");
-  };
 
-  private onIndentCode_ = () => {
-    if (this.editorRef.current) this.editorRef.current.ivygate.formatCode();
-  };
+  // private onIndentCode_ = () => {
+  //   if (this.editorRef.current) this.editorRef.current.ivygate.formatCode();
+  // };
 
   private onResetCode_ = () => {
     this.setState({
@@ -654,22 +679,12 @@ class Root extends React.Component<Props, State> {
     window.open("https://www.kipr.org/doc/index.html");
   };
 
-  onLogoutClick = () => {
-    void signOutOfApp().then(() => {
-      this.props.goToLogin();
-    });
-  };
 
   onDashboardClick = () => {
     window.location.href = '/';
   };
 
-  onCreateUser = () => {
-    let wn = `${window.location.pathname}`;
-    let windowName = wn.split("/", 3);
-    let newUser = new User(this.state, windowName[2], []);
-    console.log(newUser);
-  };
+
 
   private onSettingsChange_ = (changedSettings: Partial<Settings>) => {
     const nextSettings: Settings = {
@@ -708,11 +723,7 @@ class Root extends React.Component<Props, State> {
       });
   };
 
-  private onOpenSceneClick_ = () => {
-    this.setState({
-      modal: Modal.SELECT_SCENE
-    });
-  };
+
 
   private onSettingsSceneClick_ = () => {
     this.setState({
@@ -727,34 +738,20 @@ class Root extends React.Component<Props, State> {
   }
 
 
-  private onDeleteRecordAccept_ = (selector: Selector) => () => {
-    this.props.onDeleteRecord(selector);
-  };
 
   private onErrorClick_ = (event: React.MouseEvent<HTMLDivElement>) => {
     // not implemented
   };
 
-  private onSceneErrorResolved_ = () => {
-    this.props.unfailScene(this.props.match.params.sceneId);
-  };
 
-  private onSaveSceneClick_ = () => {
-    this.props.onSaveScene(this.props.match.params.sceneId);
-  };
-  private onPageClick = () => {
-    console.log("Clicked page 3");
-  };
+
 
   render() {
     const { props, state } = this;
 
     const {
-      match: { params: { sceneId, challengeId } },
+
       scene,
-      challenge,
-      challengeCompletion,
-      selectedScriptId,
       onClearConsole,
       onIndentCode,
       onDownloadCode,
@@ -772,129 +769,30 @@ class Root extends React.Component<Props, State> {
       code,
       modal,
       simulatorState,
-      console,
+      editorConsole,
       messages,
       settings,
       feedback,
       windowInnerHeight,
+      isHomeStartOptionsVisible,
+      isNewFileDialogVisible,
+      projectName,
+      fileName,
+      isEditorPageVisible,
+      isCreateNewUserDialogVisible,
+      isCreateProjectDialogVisible
 
     } = state;
 
     const theme = DARK;
 
-    const editorTarget: LayoutEditorTarget = {
-      type: LayoutEditorTarget.Type.Robot,
-      code: code[activeLanguage],
-      language: activeLanguage,
-      onCodeChange: this.onCodeChange_,
-      onLanguageChange: this.onActiveLanguageChange_,
-    };
 
-    const commonLayoutProps: LayoutProps = {
-      theme,
-      console,
-      messages,
-      settings,
-      editorTarget,
-      onClearConsole: this.onClearConsole_,
-      onIndentCode: this.onIndentCode_,
-      onDownloadCode: this.onDownloadClick_,
-      onGetUser: this.onGetUser_,
-      onCreateUser: this.onCreateUser,
-      onResetCode: this.onResetCode_,
-      editorRef: this.editorRef,
-      scene,
-
-      onNodeRemove: this.props.onNodeRemove,
-
-      onGeometryRemove: this.props.onGeometryRemove,
-
-      onScriptRemove: this.props.onScriptRemove,
-
-      challengeState: challenge ? {
-        challenge,
-        challengeCompletion: challengeCompletion || Async.unloaded({ brief: {} }),
-      } : undefined,
-      onDocumentationGoToFuzzy,
-
-      onNodeAdd: function (nodeId: string, node: Node): void {
-        throw new Error('Function not implemented.');
-      },
-      onNodeChange: function (nodeId: string, node: Node): void {
-        throw new Error('Function not implemented.');
-      },
-      onObjectAdd: function (nodeId: string, object: Node.Obj, geometry: Geometry): void {
-        throw new Error('Function not implemented.');
-      },
-      onGeometryAdd: function (geometryId: string, geometry: Geometry): void {
-        throw new Error('Function not implemented.');
-      },
-      onGeometryChange: function (geometryId: string, geometry: Geometry): void {
-        throw new Error('Function not implemented.');
-      },
-      onScriptAdd: function (scriptId: string, script: Script): void {
-        throw new Error('Function not implemented.');
-      },
-    };
-
-
-
-
-    let impl: JSX.Element;
-    switch (layout) {
-      case Layout.Overlay: {
-        impl = (
-          <OverlayLayoutRedux robots={{}} ref={this.overlayLayoutRef} {...commonLayoutProps} />
-        );
-        break;
-      }
-      case Layout.Side: {
-        impl = (
-          <FileExplorerSideLayoutRedux {...commonLayoutProps} />
-        );
-        break;
-      }
-      default: {
-        return null;
-      }
-    }
 
 
 
     return (
       <RootContainer $windowInnerHeight={windowInnerHeight}>
 
-
-        <SimMenu
-          layout={Layout.Side}
-          onLayoutChange={this.onLayoutChange_}
-          theme={theme}
-          onShowAll={this.onShowAll_}
-          onHideAll={this.onHideAll_}
-          onSettingsClick={this.onModalClick_(Modal.SETTINGS)}
-          onAboutClick={this.onModalClick_(Modal.ABOUT)}
-          onResetWorldClick={this.onResetWorldClick_}
-          onStartChallengeClick={this.onStartChallengeClick_}
-          onRunClick={this.onRunClick_}
-          onStopClick={this.onStopClick_}
-          onDocumentationClick={onDocumentationClick}
-          onDashboardClick={this.onDashboardClick}
-          onLogoutClick={this.onLogoutClick}
-          onFeedbackClick={this.onModalClick_(Modal.FEEDBACK)}
-          onOpenSceneClick={this.onOpenSceneClick_}
-          simulatorState={simulatorState}
-          onNewSceneClick={!challenge && this.onModalClick_(Modal.NEW_SCENE)}
-
-        />
-
-        <Container $windowInnerHeight={windowInnerHeight}>
-          <SidePanelContainer>
-            {impl}
-          </SidePanelContainer>
-
-
-
-        </Container>
 
 
         {modal.type === Modal.Type.Settings && (
@@ -933,22 +831,7 @@ class Root extends React.Component<Props, State> {
             onClose={this.onModalClose_}
           />
         )}
-        {modal.type === Modal.Type.OpenScene && (
-          <OpenSceneDialog
-            theme={theme}
-            onClose={this.onModalClose_}
-          />
-        )}
 
-
-        {modal.type === Modal.Type.DeleteRecord && modal.record.type === Record.Type.Scene && (
-          <DeleteDialog
-            name={Record.latestName(modal.record)}
-            theme={theme}
-            onClose={this.onModalClose_}
-            onAccept={this.onDeleteRecordAccept_(Record.selector(modal.record))}
-          />
-        )}
         {
           modal.type === Modal.Type.ResetCode && (
             <DeleteDialog
@@ -960,6 +843,77 @@ class Root extends React.Component<Props, State> {
 
           )
         }
+        {
+          isHomeStartOptionsVisible && (
+            <HomeStartOptions
+              theme={theme}
+              locale={locale}
+              onClearConsole={this.onClearConsole_}
+              activeLanguage={activeLanguage}
+              onEditorPageOpen={this.onEditorPageOpen_}
+              onChangeProjectName={this.onChangeProjectName}
+              onCreateProjectDialog={this.onCreateProjectDialogOpen_}
+            />
+          )
+        }
+        {isNewFileDialogVisible && (
+          <NewFileDialog
+            onClose={function (): void {
+              throw new Error('Function not implemented.');
+            }} showRepeatUserDialog={false} fileName={this.state.projectName} editorTarget={undefined} messages={[]} onIndentCode={function (): void {
+              throw new Error('Function not implemented.');
+            }} onDownloadCode={function (): void {
+              throw new Error('Function not implemented.');
+            }} onResetCode={function (): void {
+              throw new Error('Function not implemented.');
+            }} onClearConsole={function (): void {
+              throw new Error('Function not implemented.');
+            }} language={'c'} editorConsole={undefined}
+            theme={undefined} onEditorPageOpen={this.onEditorPageOpen_}
+            onChangeProjectName={this.onChangeProjectName}
+          >
+
+
+          </NewFileDialog>
+        )
+        }
+        {isEditorPageVisible && (
+
+          <EditorPage
+            editorTarget={undefined}
+            editorConsole={undefined}
+            messages={[]}
+            language={activeLanguage}
+            settings={DEFAULT_SETTINGS}
+            onClearConsole={props.onClearConsole}
+            onIndentCode={() => { }}
+            onDownloadCode={() => { }}
+            onResetCode={() => { }}
+            editorRef={undefined}
+            theme={theme}
+            onDocumentationSetLanguage={() => { }}
+            projectName={this.state.projectName}
+            fileName={this.state.fileName}
+            userName={this.state.userName}
+
+
+          />
+
+        )}
+        {isCreateProjectDialogVisible && (
+
+          <CreateProjectDialog onClose={this.onModalClose_}
+            showRepeatUserDialog={false} projectName={this.state.projectName} theme={theme}
+            closeProjectDialog={this.onCloseProjectDialog_}
+            onChangeProjectName={this.onChangeProjectName}
+            userName={this.state.userName}>
+          </CreateProjectDialog>
+
+        )}
+
+
+
+
 
       </RootContainer>
 
@@ -967,26 +921,13 @@ class Root extends React.Component<Props, State> {
   }
 }
 
-export default connect((state: ReduxState, { match: { params: { sceneId, challengeId } } }: RootPublicProps) => {
-  const builder = new Builder(state);
+export default connect((state: ReduxState) => {
 
-  if (challengeId) {
-    const challenge = builder.challenge(challengeId);
-
-    challenge.completion();
-  } else {
-
-  }
-
-  builder.dispatchLoads();
 
   return {
-
-    challenge: Dict.unique(builder.challenges),
-    challengeCompletion: Dict.unique(builder.challengeCompletions),
     locale: state.i18n.locale,
   };
-}, (dispatch, { match: { params: { sceneId } } }: RootPublicProps) => ({
+}, dispatch => ({
 
 }))(Root) as React.ComponentType<RootPublicProps>;
 
