@@ -14,7 +14,6 @@ import { State as ReduxState } from '../state';
 import LocalizedString from '../util/LocalizedString';
 
 export interface ExtraMenuPublicProps extends StyleProps, ThemeProps {
-  onLogoutClick: (event: React.MouseEvent) => void;
   onFeedbackClick?: (event: React.MouseEvent) => void;
   onDocumentationClick: (event: React.MouseEvent) => void;
   onSettingsClick: (event: React.MouseEvent) => void;
@@ -96,7 +95,6 @@ class ExtraMenu extends React.PureComponent<Props, State> {
       className,
       style,
       theme,
-      onLogoutClick,
       onAboutClick,
       onDocumentationClick,
       onFeedbackClick,
@@ -109,7 +107,7 @@ class ExtraMenu extends React.PureComponent<Props, State> {
         <Item theme={theme} onClick={onSettingsClick}><ItemIcon icon={faCogs} /> {LocalizedString.lookup(tr('Settings'), locale)}</Item>
         <Item theme={theme} onClick={onAboutClick}><ItemIcon icon={faQuestion} /> {LocalizedString.lookup(tr('About'), locale)}</Item>
         {onFeedbackClick && <Item theme={theme} onClick={onFeedbackClick}><ItemIcon icon={faCommentDots} /> {LocalizedString.lookup(tr('Feedback'), locale)}</Item>}
-        <Item theme={theme} onClick={onLogoutClick}><ItemIcon icon={faSignOutAlt} /> {LocalizedString.lookup(tr('Logout'), locale)}</Item>
+        
       </Container>
     );
   }
