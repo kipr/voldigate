@@ -5,7 +5,7 @@ import { styled } from 'styletron-react';
 import { Card } from '../components/Card';
 import MainMenu from '../components/MainMenu';
 import LeftBar from '../components/LeftBar';
-import HomeStartOptions from '../components/HomeStartOptions';
+import {HomeStartOptions} from './HomeStartOptions';
 import { RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
@@ -74,7 +74,15 @@ class HomeNavigation extends React.PureComponent<Props> {
         <Container className={className} style={style} theme={theme}>
           <MainMenu theme={theme}/>
           
-          <LeftBar theme={theme}/> 
+          <LeftBar theme={theme} editorTarget={undefined} editorConsole={undefined} messages={[]} settings={undefined} onClearConsole={function (): void {
+            throw new Error('Function not implemented.');
+          } } onIndentCode={function (): void {
+            throw new Error('Function not implemented.');
+          } } onDownloadCode={function (): void {
+            throw new Error('Function not implemented.');
+          } } onResetCode={function (): void {
+            throw new Error('Function not implemented.');
+          } } editorRef={undefined}/> 
         </Container>
 
       </HomeNavigationContainer>
