@@ -40,7 +40,7 @@ export interface EditorPublicProps extends StyleProps, ThemeProps {
   onCodeChange: (code: string) => void;
   messages?: Message[];
   autocomplete: boolean;
-  username: string;
+
   onDocumentationGoToFuzzy?: (query: string, language: 'c' | 'python') => void;
 }
 
@@ -80,10 +80,11 @@ export namespace EditorBarTarget {
     type: Type.Robot;
     messages: Message[];
     language: ProgrammingLanguage;
+    projectName: string;
+    fileName: string;
+    userName: string;
     onLanguageChange: (language: ProgrammingLanguage) => void;
     onIndentCode: () => void;
-    onGetUser: () => void;
-    onCreateUser: () => void;
     onDownloadCode: () => void;
     onResetCode: () => void;
     onErrorClick: (event: React.MouseEvent<HTMLDivElement>) => void;
@@ -139,23 +140,47 @@ export const createEditorBarComponents = ({
       editorBar.push(BarComponent.create(leftBarSpacer, {
         
       }));
+   
+
       editorBar.push(BarComponent.create(Text, {
-        text: 'File Name',
-      
+        text: 'User:'
       }));
-      
+
       editorBar.push(BarComponent.create(middleBarSpacer, {
         
       })); 
 
       editorBar.push(BarComponent.create(Text, {
-        text: 'Project Name'
+        text: target.userName
+      }));
+
+      editorBar.push(BarComponent.create(middleBarSpacer, {
+        
+      })); 
+
+
+      editorBar.push(BarComponent.create(Text, {
+        text: 'Project Name:'
+      }));
+      
+      editorBar.push(BarComponent.create(middleBarSpacer, {
+        
+      })); 
+      editorBar.push(BarComponent.create(Text, {
+        text: target.projectName
       }));
       editorBar.push(BarComponent.create(middleBarSpacer, {
         
       })); 
       editorBar.push(BarComponent.create(Text, {
-        text: `${windowName[2]}`
+        text: 'File Name:',
+      
+      }));
+      editorBar.push(BarComponent.create(middleBarSpacer, {
+        
+      })); 
+      editorBar.push(BarComponent.create(Text, {
+        text: target.fileName
       }));
 
       editorBar.push(BarComponent.create(rightBarSpacer, {
@@ -163,7 +188,7 @@ export const createEditorBarComponents = ({
       })); 
       editorBar.push(BarComponent.create(Button, {
         theme,
-        onClick: target.onCreateUser,
+  
         children:
           <>
             <Fa icon={faFloppyDisk} />
