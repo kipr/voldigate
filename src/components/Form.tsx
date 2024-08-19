@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import * as React from 'react';
@@ -11,7 +10,6 @@ import { Fa } from './Fa';
 import Input from './Input';
 import { Text } from './Text';
 import { GREEN, RED, ThemeProps } from './theme';
-
 const Container = styled('div', (props: ThemeProps) => ({
   color: props.theme.color,
   width: '100%',
@@ -87,7 +85,7 @@ class Form extends React.PureComponent<Form.Props, Form.State> {
     const { props, state } = this;
     const { items } = props;
     const { values } = state;
-    console.log('Inside onFinalizeClick_');
+   // console.log('Inside onFinalizeClick_ in Form.tsx');
     const ret = {};
     for (const item of items) {
       ret[item.id] = item.finalizer(values[item.id].text);
@@ -257,6 +255,18 @@ namespace Form {
     text,
     finalizer: IDENTITY_FINALIZER
   });
+
+  export const fileName = (id: string, text: string): Item<string> => ({
+    id,
+    text,
+    finalizer: IDENTITY_FINALIZER
+  });
+  export const projectName = (id: string, text: string): Item<string> => ({
+    id,
+    text,
+    finalizer: IDENTITY_FINALIZER
+  });
+
 }
 
 export default Form;
