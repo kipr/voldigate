@@ -19,6 +19,12 @@ import KIPR_LOGO_BLACK from '../assets/KIPR-Logo-Black-Text-Clear-Large.png';
 import KIPR_LOGO_WHITE from '../assets/KIPR-Logo-White-Text-Clear-Large.png';
 import { signOutOfApp } from '../firebase/modules/auth';
 import LocalizedString from '../util/LocalizedString';
+import { LayoutProps } from './Layout';
+import { StyledText } from 'util/StyledText';
+import { Editor } from './Editor';
+import Node from 'state/State/Scene/Node';
+import Script from 'state/State/Scene/Script';
+import Geometry from 'state/State/Robot/Geometry';
 
 namespace Modal {
   export enum Type {
@@ -43,7 +49,7 @@ export type Modal = (
   Modal.None
 );
 
-export interface LeftBarPublicProps extends StyleProps, ThemeProps { }
+export interface LeftBarPublicProps extends StyleProps, ThemeProps, LayoutProps { }
 
 interface LeftBarPrivateProps {
   locale: LocalizedString.Language;
@@ -52,7 +58,7 @@ interface LeftBarPrivateProps {
 interface LeftBarState {
   modal: Modal;
   settings: Settings;
- }
+}
 
 type Props = LeftBarPublicProps & LeftBarPrivateProps;
 type State = LeftBarState;
@@ -107,6 +113,10 @@ const ItemIcon = styled(Fa, {
 });
 
 export class LeftBar extends React.Component<Props, State> {
+  onIndentCode_: () => void;
+  onDownloadClick_: () => void;
+  onResetCode_: () => void;
+  private editorRef: React.MutableRefObject<Editor>;
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -121,10 +131,10 @@ export class LeftBar extends React.Component<Props, State> {
     void signOutOfApp();
   };
 
-  private onFileExplorerClick_ = (event: React.MouseEvent<HTMLDivElement>) => {
-    console.log("onFileExplorerClick_");
 
-  };
+  
+
+
 
 
   private onSettingsChange_ = (changedSettings: Partial<Settings>) => {
@@ -135,21 +145,54 @@ export class LeftBar extends React.Component<Props, State> {
 
     this.setState({ settings: nextSettings });
   };
-  
+
   private onModalClick_ = (modal: Modal) => () => this.setState({ modal });
   private onModalClose_ = () => this.setState({ modal: Modal.NONE });
-
+  private onClearConsole_ = () => {
+    this.setState({
+      //editorConsole: StyledText.compose({ items: [] })
+    });
+  };
   render() {
-    const { className, style, locale } = this.props;
+    const { className, style, locale,editorConsole, messages, editorTarget,onClearConsole, editorRef} = this.props;
     const theme = DARK;
     const {
       settings,
       modal
+      
     } = this.state;
+
+
+    const commonLayoutProps: LayoutProps = {
+      theme,
+      editorConsole,
+      messages,
+      settings,
+      editorTarget,
+      onClearConsole: this.onClearConsole_,
+      onIndentCode: this.onIndentCode_,
+      onDownloadCode: this.onDownloadClick_,
+      onResetCode: this.onResetCode_,
+      editorRef: this.editorRef,
+
+
+    };
+
+    const onFileExplorerClick_ = (event: React.MouseEvent<HTMLDivElement>) => {
+     // console.log("onFileExplorerClick_");
+      return (
+  
+        <FileExplorer robots={{}} locale={'en-US'} {...commonLayoutProps} />
+  
+      );
+  
+    };
+    
+
     return (
       <>
         <Container className={className} style={style} theme={theme}>
-          <Item theme={theme} onClick={this.onFileExplorerClick_}><ItemIcon icon={faFolderTree} /> </Item>
+          <Item theme={theme} onClick={onFileExplorerClick_}><ItemIcon icon={faFolderTree} /> </Item>
 
           <Spacer style={{ marginBottom: '200px', borderBottom: `1px solid ${theme.borderColor}` }} />
           <Item style={{ marginBottom: '10px' }} theme={theme} onClick={this.onModalClick_(Modal.SETTINGS)}><ItemIcon icon={faCog} /> </Item>
@@ -162,7 +205,7 @@ export class LeftBar extends React.Component<Props, State> {
             onClose={this.onModalClose_}
           />
         )}
-    
+
       </>
     );
   }
