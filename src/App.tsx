@@ -8,7 +8,6 @@ import Dashboard from './pages/Dashboard';
 import Tutorials from './pages/Tutorials';
 import Root from './components/Root';
 import { connect } from 'react-redux';
-import ChallengeRoot from './components/ChallengeRoot';
 import DocumentationWindow from './components/documentation/DocumentationWindow';
 import { State as ReduxState } from './state';
 import { DARK } from './components/theme';
@@ -67,9 +66,6 @@ class App extends React.Component<Props, State> {
       <>
         <Switch>
           <Route path="/" exact component={Dashboard} />
-          <Route path="/tutorials" exact component={Tutorials} />
-          <Route path="/scene/:userName" component={Root} />
-          <Route path="/challenge/:challengeId" component={ChallengeRoot} />
         </Switch>
         <DocumentationWindow theme={DARK} />
       </>
