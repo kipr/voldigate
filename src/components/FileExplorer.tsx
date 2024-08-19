@@ -38,7 +38,7 @@ import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 
 
 // 3 panes:
-// Editor / console
+// Editor / editorConsole
 // Robot Info
 // World
 
@@ -168,7 +168,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
         // window.addEventListener('orientationchange', () => { console.log('deprecated orientation change'); this.render(); });
     }
 
-    
+
 
     private onSideBarSizeChange_ = (index: number) => {
         if (SIDEBAR_SIZES[index].type === Size.Type.Minimized) {
@@ -196,21 +196,6 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
         // not implemented
     };
 
-    private onRobotOriginChange_ = (origin: ReferenceFrame) => {
-        const { scene, onNodeChange } = this.props;
-
-        const latestScene = Async.latestValue(scene);
-
-        if (!latestScene) return;
-
-        const robots = Scene.robots(latestScene);
-        const robotId = Object.keys(robots)[0];
-        this.props.onNodeChange(robotId, {
-            ...robots[robotId],
-            origin
-        });
-    };
-
 
     render() {
         const { props } = this;
@@ -219,30 +204,17 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
             className,
             theme,
             editorTarget,
-            console,
+            editorConsole,
             messages,
             settings,
             onClearConsole,
             onIndentCode,
             onDownloadCode,
-            onGetUser,
-            onCreateUser,
+
             onResetCode,
             editorRef,
             robots,
-            scene,
-            onNodeAdd,
-            onNodeChange,
-            onNodeRemove,
-            onGeometryAdd,
-            onGeometryChange,
-            onGeometryRemove,
-            onScriptAdd,
 
-            onScriptRemove,
-            onObjectAdd,
-            challengeState,
-            worldCapabilities,
             onDocumentationGoToFuzzy,
             locale
         } = props;
@@ -255,35 +227,28 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
 
         let editorBarTarget: EditorBarTarget;
         let editor: JSX.Element;
-        switch (editorTarget.type) {
-            case LayoutEditorTarget.Type.Robot: {
-                editorBarTarget = {
-                    type: EditorBarTarget.Type.Robot,
-                    messages,
-                    language: editorTarget.language,
-                    onLanguageChange: editorTarget.onLanguageChange,
-                    onIndentCode,
-                    onDownloadCode,
-                    onGetUser,
-                    onCreateUser,
-                    onResetCode,
-                    onErrorClick: this.onErrorClick_
-                };
-                editor = (
-                    <Editor
-                        theme={theme}
-                        ref={editorRef}
-                        code={editorTarget.code}
-                        language={editorTarget.language}
-                        onCodeChange={editorTarget.onCodeChange}
-                        messages={messages}
-                        autocomplete={settings.editorAutoComplete}
-                        onDocumentationGoToFuzzy={onDocumentationGoToFuzzy} 
-                        username={''}                    />
-                );
-                break;
-            }
-        }
+        editorBarTarget = {
+            type: EditorBarTarget.Type.Robot,
+            messages,
+            language: editorTarget.language,
+            onLanguageChange: editorTarget.onLanguageChange,
+            onIndentCode,
+            onDownloadCode,
+            onResetCode,
+            onErrorClick: this.onErrorClick_
+        };
+        editor = (
+            <Editor
+                theme={theme}
+                ref={editorRef}
+                code={editorTarget.code}
+                language={editorTarget.language}
+                onCodeChange={editorTarget.onCodeChange}
+                messages={messages}
+                autocomplete={settings.editorAutoComplete}
+                onDocumentationGoToFuzzy={onDocumentationGoToFuzzy}
+            />
+        );
 
         const editorBar = createEditorBarComponents({
             theme,
@@ -291,9 +256,9 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
             locale
         });
 
-        const consoleBar = createConsoleBarComponents(theme, onClearConsole, locale);
+        const editorConsoleBar = createConsoleBarComponents(theme, onClearConsole, locale);
 
-            
+
         let content: JSX.Element;
         switch (activePanel) {
             case 0: {
@@ -315,7 +280,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
 
         }];
 
-    
+
         const simulator = <SimulatorAreaContainer>
             <SimulatorArea
                 theme={theme}
@@ -325,7 +290,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
             />
         </SimulatorAreaContainer>;
 
-        const editorConsole = <Container>
+        const editorConsoleObject = <Container>
             <EditorConsoleAreaContainer>
                 <SimultorWidgetContainer>
                     <SimulatorWidget
@@ -342,11 +307,11 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                     <SimulatorWidget
                         theme={theme}
                         name={LocalizedString.lookup(tr('Console'), locale)}
-                        barComponents={consoleBar}
+                        barComponents={editorConsoleBar}
                         mode={Mode.Sidebar}
                         hideActiveSize={true}
                     >
-                        <FlexConsole theme={theme} text={console} />
+                        <FlexConsole theme={theme} text={editorConsole} />
                     </SimulatorWidget>
                 </SimultorWidgetContainer>
 
@@ -369,7 +334,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                     </TabBar>
                     <SimulatorAreaContainer>
                         {content}
-                        {editorConsole}
+                        {editorConsoleObject}
                     </SimulatorAreaContainer>
 
 
