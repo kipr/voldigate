@@ -26,6 +26,7 @@ export interface CreateUserDialogPublicProps extends ThemeProps, StyleProps {
     onClose: () => void;
     showRepeatUserDialog: boolean;
     userName: string;
+    onCreateProjectDialog: (userName: string) => void;
 
 }
 
@@ -209,6 +210,7 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
             }
             else {
                 this.props.onClose();
+                this.props.onCreateProjectDialog(values.userName);
             }
         }
         catch (error) {
