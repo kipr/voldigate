@@ -64,26 +64,18 @@ export interface MenuPublicProps extends StyleProps, ThemeProps {
   layout: Layout;
   onLayoutChange: (layout: Layout) => void;
 
-  onNewSceneClick?: (event: React.MouseEvent) => void;
-  onSaveSceneClick?: (event: React.MouseEvent) => void;
-  onSaveAsSceneClick?: (event: React.MouseEvent) => void;
-  onOpenSceneClick?: (event: React.MouseEvent) => void;
   onSettingsSceneClick?: (event: React.MouseEvent) => void;
-  onDeleteSceneClick?: (event: React.MouseEvent) => void;
 
-  onStartChallengeClick: () => void;
   onShowAll: () => void;
   onHideAll: () => void;
 
   onRunClick: () => void;
   onStopClick: () => void;
-  onResetWorldClick: () => void;
 
   onSettingsClick: () => void;
   onAboutClick: () => void;
   onDocumentationClick: () => void;
   onDashboardClick: () => void;
-  onLogoutClick: () => void;
 
   onFeedbackClick: () => void;
 
@@ -285,18 +277,10 @@ class SimMenu extends React.PureComponent<Props, State> {
       onAboutClick,
       onRunClick,
       onStopClick,
-      onResetWorldClick,
       onDocumentationClick,
       onDashboardClick,
-      onLogoutClick,
       onFeedbackClick,
-      onOpenSceneClick,
-      onSaveSceneClick,
-      onNewSceneClick,
-      onSaveAsSceneClick: onCopySceneClick,
       onSettingsSceneClick,
-      onStartChallengeClick,
-      onDeleteSceneClick,
       simulatorState,
       locale
 
@@ -356,7 +340,6 @@ class SimMenu extends React.PureComponent<Props, State> {
               <ExtraMenu
                 style={{ zIndex: 9 }}
                 theme={theme}
-                onLogoutClick={onLogoutClick}
                 onDocumentationClick={onDocumentationClick}
                 onAboutClick={onAboutClick}
                 onFeedbackClick={onFeedbackClick}
