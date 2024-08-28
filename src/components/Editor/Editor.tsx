@@ -3,7 +3,7 @@ import * as React from 'react';
 import { styled } from 'styletron-react';
 import { StyleProps } from '../../style';
 import { Theme, ThemeProps } from '../theme';
-import { Spacer, leftBarSpacer, middleBarSpacer, rightBarSpacer } from '../common';
+import { Spacer, middleBarSpacer, rightBarSpacerOpen, rightBarSpacerClosed, leftBarSpacerOpen, leftBarSpacerClosed } from '../common';
 import { Fa } from '../Fa';
 import { Button } from '../Button';
 import { Text } from '../Text';
@@ -14,7 +14,7 @@ import { Ivygate, Message } from 'ivygate';
 import LanguageSelectCharm from './LanguageSelectCharm';
 import ProgrammingLanguage from '../../ProgrammingLanguage';
 import { CreateUserDialog } from 'components/CreateUserDialog';
-import { faArrowsRotate, faFile, faFileDownload, faFloppyDisk, faIndent } from '@fortawesome/free-solid-svg-icons';
+import { faArrowsRotate, faFile, faFileDownload, faFloppyDisk, faIndent, faPlay } from '@fortawesome/free-solid-svg-icons';
 import Script from '../../state/State/Scene/Script';
 import Dict from '../../Dict';
 
@@ -27,6 +27,7 @@ import { State as ReduxState } from '../../state';
 import LocalizedString from '../../util/LocalizedString';
 import DeleteDialog from 'components/DeleteDialog';
 
+
 export enum EditorActionState {
   None,
   Compiling,
@@ -36,12 +37,12 @@ export enum EditorActionState {
 export interface EditorPublicProps extends StyleProps, ThemeProps {
   language: ProgrammingLanguage | Script.Language;
   code: string;
-
   onCodeChange: (code: string) => void;
+  onSaveCode: () => void;
   messages?: Message[];
   autocomplete: boolean;
-
-  onDocumentationGoToFuzzy?: (query: string, language: 'c' | 'python') => void;
+  isleftbaropen: boolean;
+  onDocumentationGoToFuzzy?: (query: string, language: 'c' | 'python' | 'plaintext') => void;
 }
 
 interface EditorPrivateProps {
@@ -49,12 +50,13 @@ interface EditorPrivateProps {
 }
 
 interface EditorState {
+  isleftbaropen: boolean;
 }
 
 type Props = EditorPublicProps;
 type State = EditorState;
 
-const Container = styled('div', (props: ThemeProps) => ({
+const Container = styled('div', (props: {theme: Theme; isleftbaropen: string}) => ({
   flex: '1',
   backgroundColor: props.theme.backgroundColor,
   color: props.theme.color,
@@ -64,7 +66,8 @@ const Container = styled('div', (props: ThemeProps) => ({
     outline: 'none'
   },
   height: '100%',
-  width: '100%'
+  width: props.isleftbaropen == "true" ? '87%' : '97%',
+
 }));
 
 
@@ -80,13 +83,15 @@ export namespace EditorBarTarget {
     type: Type.Robot;
     messages: Message[];
     language: ProgrammingLanguage;
+    isleftbaropen_: boolean;
     projectName: string;
     fileName: string;
     userName: string;
     onLanguageChange: (language: ProgrammingLanguage) => void;
     onIndentCode: () => void;
+    onSaveCode: () => void;
+    onRunClick: () => void;
     onDownloadCode: () => void;
-    onResetCode: () => void;
     onErrorClick: (event: React.MouseEvent<HTMLDivElement>) => void;
   }
 }
@@ -114,6 +119,7 @@ export const createEditorBarComponents = ({
   target,
   locale,
 
+
 }: {
   theme: Theme, 
   target: EditorBarTarget,
@@ -131,15 +137,26 @@ export const createEditorBarComponents = ({
       let errors = 0;
       let warnings = 0;
 
-      editorBar.push(BarComponent.create(LanguageSelectCharm, {
+      editorBar.push(BarComponent.create(Button, {
         theme,
-        language: target.language,
-        onLanguageChange: target.onLanguageChange,
+        onClick: target.onRunClick,
+        children:
+          <>
+            <Fa icon={faPlay} />
+            {' '} {LocalizedString.lookup(tr('Run'), locale)}
+          </>
       }));
 
-      editorBar.push(BarComponent.create(leftBarSpacer, {
-        
+
+     if(target.isleftbaropen_){
+      editorBar.push(BarComponent.create(leftBarSpacerOpen, {
       }));
+     }
+     else{
+      editorBar.push(BarComponent.create(leftBarSpacerClosed, {
+      }));
+
+     }
    
 
       editorBar.push(BarComponent.create(Text, {
@@ -183,12 +200,23 @@ export const createEditorBarComponents = ({
         text: target.fileName
       }));
 
-      editorBar.push(BarComponent.create(rightBarSpacer, {
+      if(target.isleftbaropen_.toString() === 'true'){
+        console.log("Left bar is open");
+        editorBar.push(BarComponent.create(rightBarSpacerOpen, {
         
-      })); 
+        }));
+
+      }
+      else {
+        console.log("Left bar is closed");
+        editorBar.push(BarComponent.create(rightBarSpacerClosed, {
+        
+        }));
+      }
+      
       editorBar.push(BarComponent.create(Button, {
         theme,
-  
+        onClick: target.onSaveCode,
         children:
           <>
             <Fa icon={faFloppyDisk} />
@@ -213,16 +241,6 @@ export const createEditorBarComponents = ({
           <>
             <Fa icon={faFileDownload} />
             {' '} {LocalizedString.lookup(tr('Download'), locale)}
-          </>
-      }));
-
-      editorBar.push(BarComponent.create(Button, {
-        theme,
-        onClick: target.onResetCode,
-        children:
-          <>
-            <Fa icon={faArrowsRotate} />
-            {' '} {LocalizedString.lookup(tr('Reset'), locale)}
           </>
       }));
 
@@ -263,18 +281,35 @@ export const IVYGATE_LANGUAGE_MAPPING: Dict<string> = {
   'ecmascript': 'javascript',
 };
 
-const DOCUMENTATION_LANGUAGE_MAPPING: { [key in ProgrammingLanguage | Script.Language]: 'c' | 'python' | undefined } = {
+const DOCUMENTATION_LANGUAGE_MAPPING: { [key in ProgrammingLanguage | Script.Language]: 'c' | 'python' | 'plaintext' } = {
   'ecmascript': undefined,
   'python': 'python',
   'c': 'c',
   'cpp': 'c',
+  'plaintext': 'plaintext',
 };
 
 class Editor extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
+    this.state = {
+
+      isleftbaropen: props.isleftbaropen,
+    };
   }
 
+  componentDidMount() {
+    
+  }
+
+  componentDidUpdate() {
+
+    if(this.props.isleftbaropen !== this.state.isleftbaropen){
+      this.setState({isleftbaropen: this.props.isleftbaropen});
+    }
+
+
+  }
   private openDocumentation_ = () => {
     const { word } = this.ivygate_.editor.getModel().getWordAtPosition(this.ivygate_.editor.getPosition());
     const language = DOCUMENTATION_LANGUAGE_MAPPING[this.props.language];
@@ -328,7 +363,7 @@ class Editor extends React.PureComponent<Props, State> {
     } = this.props;
 
     return (
-      <Container theme={theme} style={style} className={className}>
+      <Container theme={theme} style={style} className={className} isleftbaropen={this.state.isleftbaropen ? "true" : "false"}>
         <Ivygate
           ref={this.bindIvygate_}
           code={code}
