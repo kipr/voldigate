@@ -112,7 +112,7 @@ export class MainMenu extends React.Component<Props, State> {
         <Logo theme={theme} src={theme.foreground === 'white' ? KIPR_LOGO_BLACK as string : KIPR_LOGO_WHITE as string} onClick={this.onDashboardClick_}/>
         <Spacer style={{ borderRight: `1px solid ${theme.borderColor}` }} />
         {/* <Item theme={theme} onClick={this.onDashboardClick_}><ItemIcon icon='compass'/> Dashboard</Item> */}
-        <Item theme={theme} onClick={this.onLogoutClick_}><ItemIcon icon={faSignOutAlt} /> {LocalizedString.lookup(tr('Logout'), locale)}</Item>
+
       </Container>
     );
   }
