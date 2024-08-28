@@ -122,14 +122,7 @@ class Dashboard extends React.PureComponent<Props> {
     return (
       <>
 
-        
-
-        <RootContainer theme={theme}>
-          <Root history={undefined} location={undefined} match={undefined}/>
-        </RootContainer>
         <HomeNavigation theme={theme} history={undefined} location={undefined} match={undefined}>
-
-
         </HomeNavigation>
       </>
 
