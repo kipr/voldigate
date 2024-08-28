@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled } from 'styletron-react';
 import { StyleProps } from '../style';
 import { Dialog } from './Dialog';
@@ -10,16 +10,18 @@ import { connect } from 'react-redux';
 import { State as ReduxState } from '../state';
 import LocalizedString from '../util/LocalizedString';
 import ScrollArea from './ScrollArea';
-import { DatabaseService } from './DatabaseService';
+import { ProjectType, DatabaseService } from './DatabaseService';
 import ComboBox from './ComboBox';
-import { Switch } from './Switch';
 import { Settings } from '../Settings';
-type SettingsSection = 'user-interface' | 'simulation' | 'editor' | string;
+import ProgrammingLanguage from '../ProgrammingLanguage';
+type SettingsSection = string;
 
 
 export interface OpenUsersDialogPublicProps extends ThemeProps, StyleProps {
   onClose: () => void;
+  projectLanguage: ProgrammingLanguage;
   settings: Settings;
+  onOpenUserProject: (name: string, projectName: string, fileName: string, projectLanguage: string) => void;
   onSettingsChange: (settings: Partial<Settings>) => void;
 }
 
@@ -31,6 +33,15 @@ interface OpenUsersDialogPrivateProps {
 interface OpenUsersDialogState {
   selectedSection: SettingsSection;
   users: string[];
+  projects: ProjectType[] | null;
+  loading: boolean;
+  error: string | null;
+  selectedProject: string | null;
+  projectName: string;
+  activeLanguage: ProgrammingLanguage;
+
+ 
+
 }
 interface SectionProps {
   selected?: boolean;
@@ -90,9 +101,6 @@ const Logo = styled('img', {
   height: 'auto',
 });
 
-const LogoContainer = styled('div', {
-  flex: '1 1'
-});
 
 const Container = styled('div', (props: ThemeProps) => ({
   display: 'flex',
@@ -101,24 +109,8 @@ const Container = styled('div', (props: ThemeProps) => ({
   minHeight: '300px',
 }));
 
-const Bold = styled('span', {
-  fontWeight: 400
-});
 
-const Link = styled('a', (props: ThemeProps) => ({
-  color: props.theme.color,
-}));
 
-const LogoRow = styled('div', {
-  display: 'flex',
-  flexDirection: 'row',
-  marginBottom: '10px',
-  alignItems: 'center',
-});
-
-const CopyrightContainer = styled('div', {
-  flex: '1 1'
-});
 const SettingContainer = styled('div', (props: ThemeProps) => ({
   display: 'flex',
   flexDirection: 'row',
@@ -129,31 +121,13 @@ const SettingInfoContainer = styled('div', {
   flexDirection: 'column',
   flex: '1 0',
 });
-const SettingInfoText = styled('span', {
-  userSelect: 'none',
-});
-const SettingInfoSubtext = styled(SettingInfoText, {
-  fontSize: '10pt',
-});
+
+
 interface SectionProps {
   selected?: boolean;
 }
-const LOCALE_OPTIONS: ComboBox.Option[] = (() => {
-  const ret: ComboBox.Option[] = [];
-  for (const locale of [LocalizedString.EN_US]) {
-    ret.push(ComboBox.option(LocalizedString.NATIVE_LOCALE_NAMES[locale], locale));
-  }
-  return ret;
-})();
 
-const CenteredContainer = styled('div', {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  textAlign: 'center', // Ensures that text within the Bold component is centered
-  width: '100%', // Ensures the container takes up the full width of its parent
-  height: '100%', // Ensures the container takes up the full height of its parent (if required)
-});
+
 const SectionsColumn = styled('div', (props: ThemeProps) => ({
   display: 'flex',
   flexDirection: 'column',
@@ -176,88 +150,135 @@ const SectionName = styled('span', (props: ThemeProps & SectionProps) => ({
 const SettingsColumn = styled(ScrollArea, {
   flex: '1 1',
 });
-const StyledComboBox = styled(ComboBox, {
-  flex: '1 1',
+
+const ProjectTitle = styled('h2', {
+  marginTop: '0px', 
+  marginBottom: '10px', 
+  fontSize: '1.2em',
+  textAlign: 'center', // 
 });
+const ProjectItem = styled('li', (props: { selected: boolean }) => ({
+  cursor: 'pointer',
+  backgroundColor: props.selected ? `rgba(255, 255, 255, 0.1)` : undefined,  // Highlight selected project
+  padding: '5px',
+  margin: '5px 0',
+  borderRadius: '5px',
+  ':hover': {
+    cursor: 'pointer',
+    backgroundColor: `rgba(255, 255, 255, 0.1)`
+  },
+}));
+const BottomButtonContainer = styled('div', {
+  display: 'flex',
+  justifyContent: 'center',
+  marginTop: '20px', // Add some space above the button
+});
+
 
 class OpenUsersDialog extends React.PureComponent<Props, State> {
 
   constructor(props: Props) {
     super(props);
     this.state = {
-      selectedSection: 'user-interface',
+      selectedSection: 'Default User',
       users: [],
+      projects: null,
+      loading: true,
+      error: null,
+      selectedProject: null,
+      projectName: '',
+      activeLanguage: 'c'
+   
     };
   }
   private setSelectedSection = (selectedSection: SettingsSection) => {
-    this.setState({ selectedSection });
+    this.setState({ selectedSection }, this.getProjects);
+    this.setState({ selectedProject: null });
   };
   private onLocaleSelect_ = (index: number, option: ComboBox.Option) => {
     this.props.onLocaleChange(option.data as LocalizedString.Language);
   };
-  private createBooleanSetting = (text: string, subtext: string, getValue: (settings: Settings) => boolean, getUpdatedSettings: (newValue: boolean) => Partial<Settings>) => {
-    const { theme, settings: currentSettings, onSettingsChange } = this.props;
 
-    return (
-      <SettingContainer theme={theme}>
-        <SettingInfoContainer>
-          <SettingInfoText>{text}</SettingInfoText>
-          <SettingInfoSubtext>{subtext}</SettingInfoSubtext>
-        </SettingInfoContainer>
-        <Switch theme={theme} value={getValue(currentSettings)} onValueChange={(value) => {
-          onSettingsChange(getUpdatedSettings(value));
-        }} />
-      </SettingContainer>
-    );
+  private handleProjectClick = async(projectId: string) => {
+    const projectInfo = await DatabaseService.getProjectInfo(this.state.selectedSection,projectId);
+    console.log("Project Info: ", projectInfo);
+    console.log("Project ID: ", projectInfo.project_id);
+    console.log("Project activeLanguage: ", projectInfo.language);
+    this.setState({ 
+      selectedProject: projectId,
+      projectName: projectInfo.project_id,
+      activeLanguage: projectInfo.language
+    });
+
+    //console.log("handleProjectClick activeLanguage: ", this.props.projectLanguage);
+   
   };
-  // private createUserSection = async () => {
-  //   const { theme, settings: currentSettings, locale } = this.props;
-  //   const{selectedSection} = this.state;
-  //   const retrievedUserList = DatabaseService.getAllUsers();
-
-
-  //   for(const user of await retrievedUserList){
-  //     return (
-  //       <SectionName
-  //         theme={theme}
-  //         selected={selectedSection === user}
-  //         onClick={() => this.setSelectedSection(user)}
-  //       >
-  //         {LocalizedString.lookup(tr(user), locale)}
-  //       </SectionName>
-  //     );
-  //   }
-
-  // };
-
-  private createUserSection = async () => {
-    const { theme, locale } = this.props;
-    const { selectedSection } = this.state;
-
-    // Retrieve the list of users
-    const retrievedUserList = await DatabaseService.getAllUsers();
-
-    // Map the user list to an array of JSX elements
-    return retrievedUserList.map((user) => (
-      <SectionName
-        key={user} // Add a unique key for each item in the list
-        theme={theme}
-        selected={selectedSection === user}
-        onClick={() => this.setSelectedSection(user)}
-      >
-        {LocalizedString.lookup(tr(user), locale)}
-      </SectionName>
-    ));
-  };
+  private getProjects = async () => {
+    this.setState({ loading: true, error: null });
+    try {
+      const projects = await DatabaseService.getAllProjectsFromUser(this.state.selectedSection);
+      this.setState({ projects });
+    }
+    catch (error) {
+      this.setState({ error: 'Failed to fetch projects' });
+      console.error(error);
+    }
+    finally {
+      this.setState({ loading: false });
+    }
+  }
 
   componentDidMount() {
     this.loadUsers();
+    this.getProjects();
   }
 
   private async loadUsers() {
     const users = await DatabaseService.getAllUsers();
     this.setState({ users }); // Store users in state
   }
+
+  renderProjects() {
+    const { projects, loading, error, selectedProject } = this.state;
+
+    if (loading) {
+      return <div>Loading...</div>;
+    }
+
+    if (error) {
+      return <div>Error: {error}</div>;
+    }
+
+    if (!projects || projects.length === 0) {
+      return <div>No projects found.</div>;
+    }
+
+    return (
+      <div>
+        <ProjectTitle>Projects for {this.state.selectedSection}</ProjectTitle>
+        <ul>
+          {projects.map((project) => (
+            <ProjectItem
+              key={project.project_id}
+              selected = {selectedProject === project.project_id}
+              onClick={() => this.handleProjectClick(project.project_id)}>
+                {project.project_id}
+            </ProjectItem>
+          ))}
+        </ul>
+        {
+          selectedProject && (
+            <BottomButtonContainer>
+              <button onClick={() => this.props.onOpenUserProject(this.state.selectedSection, this.state.selectedProject, `main.${ProgrammingLanguage.FILE_EXTENSION[this.state.activeLanguage]}`,this.state.activeLanguage )}>
+                Open Project
+              </button>
+            </BottomButtonContainer>
+          )
+        }
+      </div>
+    );
+  }
+
   render() {
     const { props, state } = this;
     const { style, className, theme, onClose, locale } = props;
@@ -289,6 +310,7 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
       </SectionName>
     ));
 
+
     return (
       <Dialog
         theme={theme}
@@ -297,53 +319,16 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
       >
         <Container theme={theme} style={style} className={className}>
           <SectionsColumn theme={theme}>
- 
+
             {userSections}
-          
+
           </SectionsColumn>
           <SettingsColumn theme={theme}>
-            {selectedSection === 'user-interface' && (
-              <>
-                <SettingContainer theme={theme}>
-                  <SettingInfoContainer>
-                    <SettingInfoText>{LocalizedString.lookup(tr('Locale'), locale)}</SettingInfoText>
-                    <SettingInfoSubtext>{LocalizedString.lookup(tr('Switch languages'), locale)}</SettingInfoSubtext>
-                  </SettingInfoContainer>
-                  <StyledComboBox
-                    options={LOCALE_OPTIONS}
-                    index={LOCALE_OPTIONS.findIndex(opt => opt.data === locale)}
-                    onSelect={this.onLocaleSelect_}
-                    theme={theme}
-                  />
-                </SettingContainer>
-              </>
-            )}
-            {selectedSection === 'simulation' && (
-              <>
-                {this.createBooleanSetting(
-                  LocalizedString.lookup(tr('Sensor noise'), locale),
-                  LocalizedString.lookup(tr('Controls whether sensor outputs are affected by random noise'), locale),
-                  (settings: Settings) => settings.simulationSensorNoise,
-                  (newValue: boolean) => ({ simulationSensorNoise: newValue })
-                )}
-                {this.createBooleanSetting(
-                  LocalizedString.lookup(tr('Realistic sensors'), locale),
-                  LocalizedString.lookup(tr('Controls whether sensors behave like real-world sensors instead of like ideal sensors. For example, real-world ET sensors are nonlinear'), locale),
-                  (settings: Settings) => settings.simulationRealisticSensors,
-                  (newValue: boolean) => ({ simulationRealisticSensors: newValue })
-                )}
-              </>
-            )}
-            {selectedSection === 'editor' && (
-              <>
-                {this.createBooleanSetting(
-                  LocalizedString.lookup(tr('Autocomplete'), locale),
-                  LocalizedString.lookup(tr('Controls autocompletion of code, brackets, and quotes'), locale),
-                  (settings: Settings) => settings.editorAutoComplete,
-                  (newValue: boolean) => ({ editorAutoComplete: newValue })
-                )}
-              </>
-            )}
+            <SettingContainer theme={theme}>
+              <SettingInfoContainer>
+                {this.renderProjects()}
+              </SettingInfoContainer>
+            </SettingContainer>
           </SettingsColumn>
         </Container>
       </Dialog>
