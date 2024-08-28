@@ -31,20 +31,15 @@ import ProgrammingLanguage from 'ProgrammingLanguage';
 import { DEFAULT_SETTINGS, Settings } from '../Settings';
 
 export interface NewFileDialogPublicProps extends ThemeProps, StyleProps {
-  onClose: () => void;
+  
   showRepeatUserDialog: boolean;
   fileName: string;
-  editorTarget: EditorBarTarget;
-  messages: Message[];
-  onIndentCode: () => void;
-  onDownloadCode: () => void;
-  onResetCode: () => void;
-  onClearConsole: () => void;
   language: ProgrammingLanguage;
-  editorConsole: StyledText;
-  onDocumentationGoToFuzzy?: (query: string, language: 'c' | 'python') => void;
+  otherFileType?: string;
+
+  onClose: () => void;
   onEditorPageOpen: () => void;
-  onChangeProjectName: (projectName: string) => void;
+  onCloseNewFileDialog: (newFileName: string) => void;
 }
 export enum Type {
   Robot = 'robot',
@@ -67,7 +62,6 @@ interface NewFileDialogState {
   modal: Modal;
   settings: Settings;
   showRepeatUserDialog: boolean;
-  editorTarget: EditorBarTarget;
   showEditorPage: boolean;
   language: ProgrammingLanguage;
 }
@@ -77,12 +71,7 @@ interface NewFileDialogState {
 type Props = NewFileDialogPublicProps & NewFileDialogPrivateProps;
 type State = NewFileDialogState;
 
-const Container = styled('div', (props: ThemeProps) => ({
-  display: 'flex',
-  flexDirection: 'row',
-  color: props.theme.color,
-  minHeight: '200px',
-}));
+
 namespace Modal {
   export enum Type {
     Settings,
@@ -123,64 +112,12 @@ export type Modal = (
   Modal.RepeatUser
 );
 
-const SectionsColumn = styled('div', (props: ThemeProps) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  flex: '0 0 150px',
-  borderRight: `1px solid ${props.theme.borderColor}`,
-}));
-
-const SectionName = styled('span', (props: ThemeProps & SectionProps) => ({
-  backgroundColor: props.selected ? `rgba(255, 255, 255, 0.1)` : undefined,
-  ':hover': {
-    cursor: 'pointer',
-    backgroundColor: `rgba(255, 255, 255, 0.1)`
-  },
-  transition: 'background-color 0.2s, opacity 0.2s',
-  padding: `${props.theme.itemPadding * 2}px`,
-  fontWeight: props.selected ? 400 : undefined,
-  userSelect: 'none',
-}));
-
-const SettingsColumn = styled(ScrollArea, {
-  flex: '1 1',
-});
-
-const SettingContainer = styled('div', (props: ThemeProps) => ({
+const Container = styled('div', (props: ThemeProps) => ({
   display: 'flex',
   flexDirection: 'row',
-  padding: `${props.theme.itemPadding * 2}px`,
+  color: props.theme.color,
+  minHeight: '200px',
 }));
-
-const SettingInfoContainer = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  flex: '1 0',
-});
-
-const SettingInfoText = styled('span', {
-  userSelect: 'none',
-});
-
-const SettingInfoSubtext = styled(SettingInfoText, {
-  fontSize: '10pt',
-});
-
-interface SectionProps {
-  selected?: boolean;
-}
-
-const LOCALE_OPTIONS: ComboBox.Option[] = (() => {
-  const ret: ComboBox.Option[] = [];
-  for (const locale of [LocalizedString.EN_US]) {
-    ret.push(ComboBox.option(LocalizedString.NATIVE_LOCALE_NAMES[locale], locale));
-  }
-  return ret;
-})();
-
-const StyledComboBox = styled(ComboBox, {
-  flex: '1 1',
-});
 
 const StyledForm = styled(Form, (props: ThemeProps) => ({
   paddingLeft: `${props.theme.itemPadding * 2}px`,
@@ -188,41 +125,23 @@ const StyledForm = styled(Form, (props: ThemeProps) => ({
 }));
 
 
-const OverlayContainer = styled('div', {
-  position: 'relative',
-});
 
-const OverlayDialog = styled('div', {
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
+const NewFileContainer = styled('div', (props: ThemeProps) => ({
   display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  zIndex: 1000
-});
-const SimultorWidgetContainer = styled('div', {
-  display: 'flex',
-  flex: '1 0 0',
-  height: '100%',
-  width: '100%',
-  overflow: 'hidden'
+  flexDirection: 'column',
+  color: props.theme.color,
+  minHeight: '200px',
+  paddingLeft: `${props.theme.itemPadding * 2}px`,
+  paddingRight: `${props.theme.itemPadding * 2}px`,
+}));
 
-});
-
-const SimulatorWidget = styled(Widget, {
-  display: 'flex',
-  flex: '1 1 0',
-  height: '100%',
-  width: '100%',
-});
-
-const FlexConsole = styled(Console, {
-  flex: '1 1',
-});
-
+const OPTIONS: ComboBox.Option[] = [{
+  text: 'H',
+  data: 'h'
+}, {
+  text: 'Txt',
+  data: 'txt'
+}];
 
 
 export class NewFileDialog extends React.PureComponent<Props, State> {
@@ -235,7 +154,6 @@ export class NewFileDialog extends React.PureComponent<Props, State> {
       fileName: '',
       showRepeatUserDialog: false,
       settings: DEFAULT_SETTINGS,
-      editorTarget: props.editorTarget,
       showEditorPage: false,
       language: props.language,
     }
@@ -248,25 +166,17 @@ export class NewFileDialog extends React.PureComponent<Props, State> {
 
     this.setState({ showRepeatUserDialog: false });
   };
-  private onLocaleSelect_ = (index: number, option: ComboBox.Option) => {
-    this.props.onLocaleChange(option.data as LocalizedString.Language);
-  };
-
-  private onIndentCode_ = () => {
-    if (this.editorRef.current) this.editorRef.current.ivygate.formatCode();
-  };
 
 
   public myComponent(props: NewFileDialogPublicProps) {
     return (props.fileName)
   }
-  private onErrorClick_ = (event: React.MouseEvent<HTMLDivElement>) => {
-    // not implemented
-  };
-  private onCodeChange = (newCode: string) => {
-    console.log('Code changed:', newCode);
-    // Handle code change logic
-  };
+
+
+  componentDidMount() {
+   console.log("Inside componentDidMount in NewFileDialog.tsx with state:", this.state);
+  }
+
 
   private onFinalize_ = async (values: { [id: string]: string }) => {
 
@@ -276,9 +186,8 @@ export class NewFileDialog extends React.PureComponent<Props, State> {
       //
       // this.props.onShowEditorPage();
       //this.setState({ showEditorPage: true });
-     // this.setState({ fileName: values.fileName });
-      this.props.onChangeProjectName(values.fileName);
-      this.props.onEditorPageOpen();
+      // this.setState({ fileName: values.fileName });
+     this.props.onCloseNewFileDialog(values.fileName);
 
     }
     catch (error) {
@@ -293,15 +202,8 @@ export class NewFileDialog extends React.PureComponent<Props, State> {
       className,
       theme,
       onClose,
-      editorConsole,
       locale,
-      editorTarget,
-      messages,
-      onDocumentationGoToFuzzy,
-      onClearConsole,
-      onIndentCode,
-      onDownloadCode,
-      onResetCode
+
     } = props;
     const { modal, settings, language, showEditorPage } = state;
 
@@ -314,6 +216,7 @@ export class NewFileDialog extends React.PureComponent<Props, State> {
 
 
     const FORMS = [CREATE_NEW_FILE_FORM_ITEMS];
+    const index = OPTIONS.findIndex(option => option.data === this.state.language);
     return (
       <div>
         <Dialog
@@ -321,14 +224,18 @@ export class NewFileDialog extends React.PureComponent<Props, State> {
           name={LocalizedString.lookup(tr('Create New File'), locale)}
           onClose={onClose}
         >
-          <Container theme={theme} style={style} className={className}>
-            <StyledForm
-              theme={theme}
-              onFinalize={this.onFinalize_}
-              items={CREATE_NEW_FILE_FORM_ITEMS}
-              finalizeText="Create"
-            />
-          </Container>
+          <NewFileContainer theme={theme} style={style} className={className}>
+            <Container theme={theme} style={style} className={className}>
+              <StyledForm
+                theme={theme}
+                onFinalize={this.onFinalize_}
+                items={CREATE_NEW_FILE_FORM_ITEMS}
+                finalizeText="Create"
+              />
+            </Container>
+
+          </NewFileContainer>
+
         </Dialog>
 
       </div>
