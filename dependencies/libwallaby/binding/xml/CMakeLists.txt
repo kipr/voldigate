@@ -15,7 +15,7 @@ if(with_xml_binding)
       -outdir ${CMAKE_CURRENT_BINARY_DIR}
       ${KIPR_SWIG_OPTIONS}
       ${KIPR_SWIG_WRAPPER}
-    SOURCES ${KIPR_SWIG_WRAPPER} ${CMAKE_BINARY_DIR}/include/kipr/config.h
+    SOURCES ${KIPR_SWIG_WRAPPER} ../../../include/kipr/config.h
     BYPRODUCTS ${CMAKE_CURRENT_BINARY_DIR}/kipr.xml
   )
 endif()

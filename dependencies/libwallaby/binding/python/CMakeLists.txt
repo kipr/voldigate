@@ -2,7 +2,9 @@ option(with_python_binding "Build python bindings" ON)
 
 if(with_python_binding)
   find_package(SWIG REQUIRED)
-  find_package(PythonLibs 3 REQUIRED)
+  find_package(PythonLibs REQUIRED)
+
+  include_directories(${PYTHON_INCLUDE_DIRS})
 
   set(KIPR_PYTHON_WRAPPER ${CMAKE_CURRENT_BINARY_DIR}/kipr_python.cpp)
 
@@ -21,10 +23,10 @@ if(with_python_binding)
       -outdir ${PACKAGE_DIR}/src/kipr
       ${KIPR_SWIG_OPTIONS}
       ${KIPR_SWIG_WRAPPER}
-    SOURCES ${KIPR_SWIG_WRAPPER} ${CMAKE_BINARY_DIR}/include/kipr/config.h
-    BYPRODUCTS ${KIPR_PYTHON_WRAPPER} ${PACKAGE_DIR}/src/kipr/kipr.py
+    SOURCES ${KIPR_SWIG_WRAPPER} ../../../include/kipr/config.h
+    BYPRODUCTS ${KIPR_PYTHON_WRAPPER} ${PACKAGE_DIR}/src/kipr/kipr_python.py
   )
-  
+  message(STATUS "Python binding will be installed to ${PACKAGE_DIR}")
   add_library(kipr_python STATIC ${KIPR_PYTHON_WRAPPER})
   add_dependencies(kipr_python swig_kipr_python)
   if (NOT EMSCRIPTEN)
