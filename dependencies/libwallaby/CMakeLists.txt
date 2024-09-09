@@ -85,7 +85,7 @@ if(EMSCRIPTEN)
   
   target_link_libraries(kipr PRIVATE ${STATIC_KIPR_MODULES})
 else()
-  add_library(kipr SHARED ${CMAKE_CURRENT_BINARY_DIR}/empty.cpp ${KIPR_MODULE_OBJECTS})
+  add_library(kipr STATIC ${CMAKE_CURRENT_BINARY_DIR}/empty.cpp ${KIPR_MODULE_OBJECTS})
   if (UNIX AND NOT APPLE)
     target_link_libraries(kipr PRIVATE "-Wl,-Bsymbolic" ${STATIC_KIPR_MODULES})
   endif()
