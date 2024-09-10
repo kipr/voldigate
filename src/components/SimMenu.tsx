@@ -342,8 +342,7 @@ class SimMenu extends React.PureComponent<Props, State> {
                 theme={theme}
                 onDocumentationClick={onDocumentationClick}
                 onAboutClick={onAboutClick}
-                onFeedbackClick={onFeedbackClick}
-                onSettingsClick={onSettingsClick}
+      
               />
             ) : undefined}
           </Item>

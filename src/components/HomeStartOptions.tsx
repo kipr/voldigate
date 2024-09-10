@@ -1,92 +1,27 @@
 
 import { styled } from 'styletron-react';
 import { StyleProps } from '../style';
-import { Spacer } from './common';
+
 import { Fa } from './Fa';
 import { DARK, ThemeProps } from './theme';
 import CreateUserDialog from './CreateUserDialog';
-import { faBookReader, faCirclePlus, faCog, faFileCirclePlus, faFilePen, faFolderTree, faSignOutAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons';
-import { Space } from '../Sim';
+import { faBookReader, faFileCirclePlus, faFilePen, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+
 import tr from '@i18n';
 import KIPR_LOGO_WHITE from '../assets/KIPR-Logo-White-Text-Clear-Large.png';
-import { connect } from 'react-redux';
 
-import { State as ReduxState } from '../state';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-import { signOutOfApp } from '../firebase/modules/auth';
 import LocalizedString from '../util/LocalizedString';
 import { DEFAULT_SETTINGS, Settings } from '../Settings';
-import { DEFAULT_CREATEUSER, CreateUser } from '../CreateUser';
+
 import SettingsDialog from './SettingsDialog';
-
-
-
-import PouchDB from 'pouchdb';
 
 import { DatabaseService } from './DatabaseService';
 import OpenUsersDialog from './OpenUsersDialog';
-import NewFileDialog from './NewFileDialog';
+
 import ProgrammingLanguage from 'ProgrammingLanguage';
-import { set } from 'immer/dist/internal';
-import EditorPage from './EditorPage';
-import CreateProjectDialog from './CreateProjectDialog';
-
-
-namespace Modal {
-    export enum Type {
-        Settings,
-        CreateUser,
-        RepeatUser,
-        None,
-        OpenUsers,
-        CreateNewFile
-    }
-    export interface None {
-        type: Type.None;
-    }
-
-    export const NONE: None = { type: Type.None };
-
-    export interface Settings {
-        type: Type.Settings;
-    }
-
-    export const SETTINGS: Settings = { type: Type.Settings };
-
-    export interface CreateUser {
-        type: Type.CreateUser;
-    }
-
-    export const CREATEUSER: CreateUser = { type: Type.CreateUser };
-
-    export interface RepeatUser {
-        type: Type.RepeatUser;
-    }
-
-    export const REPEATUSER: RepeatUser = { type: Type.RepeatUser };
-
-
-    export interface OpenUsers {
-        type: Type.OpenUsers;
-    }
-
-    export const OPENUSERS: OpenUsers = { type: Type.OpenUsers };
-
-
-    export interface CreateNewFile {
-        type: Type.CreateNewFile;
-    }
-
-    export const CREATENEWFILE: CreateNewFile = { type: Type.CreateNewFile };
-}
-export type Modal = (
-    Modal.Settings |
-    Modal.CreateUser |
-    Modal.None |
-    Modal.OpenUsers |
-    Modal.CreateNewFile
-);
+import { Modal } from '../pages/Modal';
 
 export interface HomeStartOptionsPublicProps extends StyleProps, ThemeProps {
     onClearConsole: () => void;
@@ -94,7 +29,8 @@ export interface HomeStartOptionsPublicProps extends StyleProps, ThemeProps {
     onEditorPageOpen: () => void;
     onChangeProjectName: (projectName: string) => void;
     onCreateProjectDialog: (name: string) => void;
-
+    onOpenUserProject: (name: string, projectName: string, fileName: string, projectLanguage: string) => void;
+    //onNewFileName: (name: string) => void;
 }
 
 interface HomeStartOptionsPrivateProps {
@@ -248,6 +184,8 @@ export class HomeStartOptions extends React.Component<Props, State> {
             language: props.activeLanguage
 
         }
+
+        console.log("HomeStartOptions constructor language: ", this.state.language);
     }
 
     handleNewFileClick = () => {
@@ -280,12 +218,12 @@ export class HomeStartOptions extends React.Component<Props, State> {
             className,
             style,
             locale,
-            onClearConsole } = this.props;
+             } = this.props;
         const theme = DARK;
         const {
             settings,
             modal,
-            language
+            
         } = this.state;
 
 
@@ -302,8 +240,7 @@ export class HomeStartOptions extends React.Component<Props, State> {
                     </LogoContainer>
                     <StartContainer theme={theme}>
                         <Title theme={theme} style={{ fontSize: 35 }}>Start</Title>
-                        <Item onClick={this.onModalClick_(Modal.CREATENEWFILE)} theme={theme}><ItemIcon style={{ paddingRight: '8%' }} icon={faFileCirclePlus}></ItemIcon>{LocalizedString.lookup(tr('New File...'), locale)}</Item>
-                        <Item onClick={this.onModalClick_(Modal.CREATEUSER)} theme={theme}><ItemIcon icon={faUserPlus}></ItemIcon>{LocalizedString.lookup(tr('New User...'), locale)}</Item>
+                         <Item onClick={this.onModalClick_(Modal.CREATEUSER)} theme={theme}><ItemIcon icon={faUserPlus}></ItemIcon>{LocalizedString.lookup(tr('New User...'), locale)}</Item>
                         <Item theme={theme}><ItemIcon style={{ paddingRight: '7%' }} icon={faFilePen}></ItemIcon>{LocalizedString.lookup(tr('Open File...'), locale)}</Item>
                         <Item onClick={this.onModalClick_(Modal.OPENUSERS)} theme={theme}><ItemIcon style={{ paddingRight: '9%' }} icon={faBookReader}></ItemIcon>{LocalizedString.lookup(tr('Open User...'), locale)}</Item>
 
@@ -334,31 +271,10 @@ export class HomeStartOptions extends React.Component<Props, State> {
                         onClose={this.onModalClose_}
                         settings={settings}
                         onSettingsChange={this.onSettingsChange_}
-                    />
+                        onOpenUserProject={this.props.onOpenUserProject}
+                        projectLanguage={this.props.activeLanguage}                    />
                 )}
-                {modal.type === Modal.Type.CreateNewFile && (
-                    <NewFileDialog
-                        theme={theme}
-                        onClose={this.onModalClose_}
-                        fileName={''}
-                        showRepeatUserDialog={false}
-                        editorTarget={undefined}
-                        messages={[]}
-                        language={language}
-                        onIndentCode={function (): void {
-                            throw new Error('Function not implemented.');
-                        }} onDownloadCode={function (): void {
-                            throw new Error('Function not implemented.');
-                        }} onResetCode={function (): void {
-                            throw new Error('Function not implemented.');
-                        }}
-                        onClearConsole={onClearConsole}
-                        editorConsole={undefined}
-                        onEditorPageOpen={this.props.onEditorPageOpen}
-                        onChangeProjectName={this.props.onChangeProjectName}
-                    />
-                )}
-
+               
 
             </>
 

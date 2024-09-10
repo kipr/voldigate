@@ -2,8 +2,6 @@ import { Size } from '../../components/Widget';
 import LocalizedString from '../../util/LocalizedString';
 import Dict from '../../Dict';
 import Async from "./Async";
-import { AsyncChallenge } from './Challenge';
-import { AsyncChallengeCompletion } from './ChallengeCompletion';
 import Documentation from './Documentation';
 import DocumentationLocation from './Documentation/DocumentationLocation';
 import Robot from './Robot';
@@ -13,18 +11,6 @@ export type Scenes = Dict<AsyncScene>;
 
 export namespace Scenes {
   export const EMPTY: Scenes = {};
-}
-
-export type Challenges = Dict<AsyncChallenge>;
-
-export namespace Challenges {
-  export const EMPTY: Challenges = {};
-}
-
-export type ChallengeCompletions = Dict<AsyncChallengeCompletion>;
-
-export namespace ChallengeCompletions {
-  export const EMPTY: ChallengeCompletions = {};
 }
 
 export interface Robots {

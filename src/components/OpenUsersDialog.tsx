@@ -195,10 +195,7 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
     this.setState({ selectedSection }, this.getProjects);
     this.setState({ selectedProject: null });
   };
-  private onLocaleSelect_ = (index: number, option: ComboBox.Option) => {
-    this.props.onLocaleChange(option.data as LocalizedString.Language);
-  };
-
+ 
   private handleProjectClick = async(projectId: string) => {
     const projectInfo = await DatabaseService.getProjectInfo(this.state.selectedSection,projectId);
     console.log("Project Info: ", projectInfo);

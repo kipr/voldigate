@@ -6,13 +6,7 @@ import { StyleProps } from "../../style";
 import { StyledText } from "../../util";
 import { Editor } from "../Editor";
 import { ThemeProps } from "../theme";
-import Challenge, { AsyncChallenge } from '../../state/State/Challenge';
-import ChallengeCompletion, { AsyncChallengeCompletion } from '../../state/State/ChallengeCompletion';
-import { AsyncScene } from '../../state/State/Scene';
-import Node from '../../state/State/Scene/Node';
-import Geometry from '../../state/State/Scene/Geometry';
-import Script from '../../state/State/Scene/Script';
-import { Capabilities } from '../World';
+
 
 export namespace LayoutEditorTarget {
   export enum Type {
@@ -39,8 +33,6 @@ export interface LayoutProps extends StyleProps, ThemeProps {
   onClearConsole: () => void;
   onIndentCode: () => void;
   onDownloadCode: () => void;
-
-  onResetCode: () => void;
   editorRef: React.MutableRefObject<Editor>;
 
   onDocumentationGoToFuzzy?: (query: string, language: 'c' | 'python') => void;

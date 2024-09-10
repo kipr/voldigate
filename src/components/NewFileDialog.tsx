@@ -7,28 +7,19 @@ import LocalizedString from '../util/LocalizedString';
 import * as React from 'react';
 import ComboBox from './ComboBox';
 import { styled } from 'styletron-react';
-import ScrollArea from './ScrollArea';
 import { Dialog } from './Dialog';
 import { State as ReduxState } from '../state';
 import { I18nAction } from '../state/reducer';
 import { connect } from 'react-redux';
 import Form from './Form';
-import { StyledText } from '../util';
+
 import { push } from 'connected-react-router';
 
-import { DatabaseService } from './DatabaseService';
-import { Editor, createEditorBarComponents, EditorBarTarget } from './Editor';
-import { EditorPage } from './EditorPage';
-import Geometry from 'state/State/Scene/Geometry';
-import Node from 'state/State/Scene/Node';
-import Script from 'state/State/Scene/Script';
-import { LayoutProps, SideLayout } from './Layout';
-import { Slider } from './Slider';
-import Widget, { Mode } from './Widget';
-import { Console, createConsoleBarComponents } from './Console';
-import { Message } from "ivygate";
+import { Editor} from './Editor';
+
 import ProgrammingLanguage from 'ProgrammingLanguage';
 import { DEFAULT_SETTINGS, Settings } from '../Settings';
+import { Modal } from '../pages/Modal';
 
 export interface NewFileDialogPublicProps extends ThemeProps, StyleProps {
   
@@ -39,7 +30,7 @@ export interface NewFileDialogPublicProps extends ThemeProps, StyleProps {
 
   onClose: () => void;
   onEditorPageOpen: () => void;
-  onCloseNewFileDialog: (newFileName: string) => void;
+  onCloseNewFileDialog: (newFileName: string, fileType: string) => void;
 }
 export enum Type {
   Robot = 'robot',
@@ -66,51 +57,10 @@ interface NewFileDialogState {
   language: ProgrammingLanguage;
 }
 
-
-
 type Props = NewFileDialogPublicProps & NewFileDialogPrivateProps;
 type State = NewFileDialogState;
 
 
-namespace Modal {
-  export enum Type {
-    Settings,
-    CreateUser,
-    RepeatUser,
-    None,
-    OpenUser
-  }
-  export interface None {
-    type: Type.None;
-  }
-
-  export const NONE: None = { type: Type.None };
-
-  export interface Settings {
-    type: Type.Settings;
-  }
-
-  export const SETTINGS: Settings = { type: Type.Settings };
-
-  export interface CreateUser {
-    type: Type.CreateUser;
-  }
-
-  export const CREATEUSER: CreateUser = { type: Type.CreateUser };
-
-  export interface RepeatUser {
-    type: Type.RepeatUser;
-  }
-
-  export const REPEATUSER: RepeatUser = { type: Type.RepeatUser };
-}
-
-export type Modal = (
-  Modal.Settings |
-  Modal.CreateUser |
-  Modal.None |
-  Modal.RepeatUser
-);
 
 const Container = styled('div', (props: ThemeProps) => ({
   display: 'flex',
@@ -175,6 +125,7 @@ export class NewFileDialog extends React.PureComponent<Props, State> {
 
   componentDidMount() {
    console.log("Inside componentDidMount in NewFileDialog.tsx with state:", this.state);
+   console.log("Inside compondidMount in NewFileDialog.tsx with props:", this.props);
   }
 
 
@@ -187,7 +138,7 @@ export class NewFileDialog extends React.PureComponent<Props, State> {
       // this.props.onShowEditorPage();
       //this.setState({ showEditorPage: true });
       // this.setState({ fileName: values.fileName });
-     this.props.onCloseNewFileDialog(values.fileName);
+     this.props.onCloseNewFileDialog(values.fileName, this.props.otherFileType);
 
     }
     catch (error) {

@@ -4,7 +4,7 @@ import { styled } from 'styletron-react';
 import { StyleProps } from '../style';
 import { Fa } from './Fa';
 import { ThemeProps } from './theme';
-import { faBook, faCaretSquareLeft, faClone, faCogs, faCommentDots, faCopy, faEye, faEyeSlash, faFolderOpen, faPlus, faQuestion, faSave, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faBook, faQuestion } from '@fortawesome/free-solid-svg-icons';
 
 import tr from '@i18n';
 
@@ -14,9 +14,8 @@ import { State as ReduxState } from '../state';
 import LocalizedString from '../util/LocalizedString';
 
 export interface ExtraMenuPublicProps extends StyleProps, ThemeProps {
-  onFeedbackClick?: (event: React.MouseEvent) => void;
+
   onDocumentationClick: (event: React.MouseEvent) => void;
-  onSettingsClick: (event: React.MouseEvent) => void;
   onAboutClick: (event: React.MouseEvent) => void;
 }
 
@@ -33,14 +32,13 @@ type State = ExtraMenuState;
 
 const Container = styled('div', (props: ThemeProps) => ({
   position: 'absolute',
-  top: '100%',
-  right: `0px`,
+  right: `${(window.innerWidth * 0.03)}px`,
   width: '200px',
   backgroundColor: props.theme.backgroundColor,
   color: props.theme.color,
   
   display: 'flex',
-  flexDirection: 'column',
+  flexDirection: 'row',
   borderBottomLeftRadius: `${props.theme.borderRadius}px`,
   borderBottomRightRadius: `${props.theme.borderRadius}px`,
   borderRight: `1px solid ${props.theme.borderColor}`,
@@ -97,17 +95,14 @@ class ExtraMenu extends React.PureComponent<Props, State> {
       theme,
       onAboutClick,
       onDocumentationClick,
-      onFeedbackClick,
-      onSettingsClick,
+
       locale,
     } = props;
     return (
       <Container theme={theme} style={style} className={className}>
         <Item theme={theme} onClick={onDocumentationClick}><ItemIcon icon={faBook} /> {LocalizedString.lookup(tr('Documentation'), locale)}</Item>
-        <Item theme={theme} onClick={onSettingsClick}><ItemIcon icon={faCogs} /> {LocalizedString.lookup(tr('Settings'), locale)}</Item>
-        <Item theme={theme} onClick={onAboutClick}><ItemIcon icon={faQuestion} /> {LocalizedString.lookup(tr('About'), locale)}</Item>
-        {onFeedbackClick && <Item theme={theme} onClick={onFeedbackClick}><ItemIcon icon={faCommentDots} /> {LocalizedString.lookup(tr('Feedback'), locale)}</Item>}
-        
+         <Item theme={theme} onClick={onAboutClick}><ItemIcon icon={faQuestion} /> {LocalizedString.lookup(tr('About'), locale)}</Item>
+       
       </Container>
     );
   }

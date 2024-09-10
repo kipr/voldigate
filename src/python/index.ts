@@ -29,7 +29,6 @@ if (SIMULATOR_HAS_CPYTHON) {
   python = async (params: PythonParams) => {
     const libkipr = await fetch('/libkipr/python/kipr.wasm');
     const libkiprBuffer = await libkipr.arrayBuffer();
-
     const kiprPy = await fetch('/libkipr/python/binding/python/package/src/kipr/kipr.py');
     const kiprPyBuffer = await kiprPy.text();
 

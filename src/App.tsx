@@ -5,8 +5,6 @@ import { auth } from './firebase/firebase';
 import { Route, Switch } from 'react-router';
 import Loading from './components/Loading';
 import Dashboard from './pages/Dashboard';
-import Tutorials from './pages/Tutorials';
-import Root from './components/Root';
 import { connect } from 'react-redux';
 import DocumentationWindow from './components/documentation/DocumentationWindow';
 import { State as ReduxState } from './state';
