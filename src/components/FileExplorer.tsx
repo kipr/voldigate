@@ -29,8 +29,9 @@ type UsersSection = string;
 
 export interface FileExplorerProps extends ThemeProps, StyleProps {
     onProjectSelected?: (userName: string, projectName: string, fileName: string, activeLanguage: ProgrammingLanguage, fileType: string) => void;
+    onFileSelected?: (userName: string, projectName: string, fileName: string, activeLanguage: ProgrammingLanguage, fileType: string) => void;
     onUserSelected?: (userName: string) => void;
-    onAddNewProject?: (userName: string, activeLanguage: ProgrammingLanguage) => void;
+    onAddNewProject?: (userName: string) => void;
     onAddNewFile?: (userName: string, activeLanguage: ProgrammingLanguage, fileType: string) => void;
 
     propsSelectedProjectName?: string;
@@ -110,10 +111,12 @@ const SectionsColumn = styled('div', (props: ThemeProps) => ({
 }));
 const SidePanel = styled('div', (props: ThemeProps) => ({
     position: 'absolute',
-    left: '4%',
+    display: 'flex',
+    flexWrap: 'wrap',
+    left: '3.5%',
     top: '6%',
     height: '94%',
-    width: '220px', // Adjust width as needed
+    width: '10%', // Adjust width as needed
     backgroundColor: 'purple', // Customize as needed
     zIndex: 1,
     boxShadow: '2px 0 5px rgba(0,0,0,0.2)',
@@ -162,9 +165,16 @@ const AddProjectItemIcon = styled(Fa, {
     height: '15px'
 });
 const ProjectItem = styled('li', (props: { selected: boolean }) => ({
+    display: 'flex',
+    flexDirection: 'column',
+    flexWrap: 'wrap',
     cursor: 'pointer',
     backgroundColor: props.selected ? `rgba(255, 255, 255, 0.1)` : undefined,  // Highlight selected project
     padding: '1px',
+    width: '100%',
+    boxSizing: 'border-box',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'normal',
     borderRadius: '5px',
     ':hover': {
         cursor: 'pointer',
@@ -173,6 +183,15 @@ const ProjectItem = styled('li', (props: { selected: boolean }) => ({
 }));
 
 
+const Container = styled('ul', {
+    display: 'flex',
+    flexDirection: 'column', /* Change to row if you want horizontal layout */
+    flexWrap: 'wrap',
+    overflow: 'hidden', /* Hide any overflow within the container */
+    padding: '0',
+    margin: '0',
+    listStyleType: 'none',
+});
 
 
 
@@ -260,6 +279,15 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                 selectedProject: this.state.projectName
             });
         }
+        if (prevProps.addProjectFlag !== this.props.addProjectFlag) {
+            if (this.props.addProjectFlag == false) {
+                this.getProjects(this.state.selectedSection);
+                console.log("fileExplorer componentDidUpdate propProjectName: ", this.props.propProjectName);
+                console.log("fileExplorer componentDidUpdate prevProps.propProjectName: ", prevProps.propProjectName);
+                console.log("fileExplorer componentDidUpdate projects: ", this.state.projects);
+            }
+        }
+
         if (
             prevProps.propFileName !== this.props.propFileName ||
             prevProps.propProjectName !== this.props.propProjectName ||
@@ -278,12 +306,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
             console.log("inside componentDidUpdate FileExplorer.tsx with props: ", this.props);
 
 
-            if (this.props.addProjectFlag == false) {
-                this.getProjects(this.state.selectedSection);
-                console.log("fileExplorer componentDidUpdate propProjectName: ", this.props.propProjectName);
-                console.log("fileExplorer componentDidUpdate prevProps.propProjectName: ", prevProps.propProjectName);
-                console.log("fileExplorer componentDidUpdate projects: ", this.state.projects);
-            }
+
 
             if (this.props.addFileFlag == false) {
 
@@ -352,7 +375,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
             fileType: extension
         });
 
-        if(extension == 'txt'){
+        if (extension == 'txt') {
             this.setState({
                 activeLanguage: 'plaintext'
             });
@@ -366,9 +389,9 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
         console.log("handleFileClick current fileType: ", this.state.fileType);
         console.log("Project Info inside handleFileclick: ", projectInfo);
 
-        if (this.props.onProjectSelected) {
+        if (this.props.onFileSelected) {
 
-            this.props.onProjectSelected(userName, projectInfo.project_id, fileName, this.state.activeLanguage, this.state.fileType);
+            this.props.onFileSelected(userName, projectInfo.project_id, fileName, this.state.activeLanguage, this.state.fileType);
         }
     }
 
@@ -380,7 +403,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
         const { userName, projectName, activeLanguage, selectedSection } = this.state;
 
         if (this.props.onAddNewProject) {
-            this.props.onAddNewProject(selectedSection, activeLanguage);
+            this.props.onAddNewProject(selectedSection);
         }
 
     }
@@ -557,7 +580,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                         {this.state.projects.map((project) => (
 
 
-                            <div key={project.project_id}>
+                            <Container key={project.project_id}>
                                 <ProjectItem
 
                                     selected={this.state.selectedProject === project.project_id}
@@ -612,7 +635,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
 
                                 }
 
-                            </div>
+                            </Container>
 
                         ))}
                     </ul>
