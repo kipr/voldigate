@@ -5,51 +5,23 @@ import { StyleProps } from '../style';
 import { Spacer } from './common';
 import { Fa } from './Fa';
 import { DARK, ThemeProps } from './theme';
-import { FileExplorer } from './FileExplorer';
-import { faCog, faFolderTree, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
-import tr from '@i18n';
+import {faCog, faFolderTree } from '@fortawesome/free-solid-svg-icons';
 
 import { connect } from 'react-redux';
 import { DEFAULT_SETTINGS, Settings } from '../Settings';
 import SettingsDialog from './SettingsDialog';
 import { State as ReduxState } from '../state';
+import { Modal } from '../pages/Modal';
 
-import KIPR_LOGO_BLACK from '../assets/KIPR-Logo-Black-Text-Clear-Large.png';
-import KIPR_LOGO_WHITE from '../assets/KIPR-Logo-White-Text-Clear-Large.png';
-import { signOutOfApp } from '../firebase/modules/auth';
 import LocalizedString from '../util/LocalizedString';
-import { LayoutProps } from './Layout';
-import { StyledText } from 'util/StyledText';
-import { Editor } from './Editor';
-import Node from 'state/State/Scene/Node';
-import Script from 'state/State/Scene/Script';
-import Geometry from 'state/State/Robot/Geometry';
 
-namespace Modal {
-  export enum Type {
-    Settings,
-    None
-  }
-  export interface None {
-    type: Type.None;
-  }
+import { Size } from './Widget';
 
-  export const NONE: None = { type: Type.None };
+export interface LeftBarPublicProps extends StyleProps, ThemeProps {
 
-  export interface Settings {
-    type: Type.Settings;
-  }
-
-  export const SETTINGS: Settings = { type: Type.Settings };
-
-}
-export type Modal = (
-  Modal.Settings |
-  Modal.None
-);
-
-export interface LeftBarPublicProps extends StyleProps, ThemeProps, LayoutProps { }
+  onToggle: () => void;
+ }
 
 interface LeftBarPrivateProps {
   locale: LocalizedString.Language;
@@ -58,15 +30,29 @@ interface LeftBarPrivateProps {
 interface LeftBarState {
   modal: Modal;
   settings: Settings;
+  activePanel: number;
+  sidePanelSize: Size.Type;
+
 }
 
 type Props = LeftBarPublicProps & LeftBarPrivateProps;
 type State = LeftBarState;
+const sizeDict = (sizes: Size[]) => {
+  const forward: { [type: number]: number } = {};
 
+  for (let i = 0; i < sizes.length; ++i) {
+    const size = sizes[i];
+    forward[size.type] = i;
+  }
+
+  return forward;
+};
+const SIDEBAR_SIZES: Size[] = [Size.MINIMIZED, Size.PARTIAL_RIGHT, Size.MAXIMIZED];
+const SIDEBAR_SIZE = sizeDict(SIDEBAR_SIZES);
 const Container = styled('div', (props: ThemeProps) => ({
   backgroundColor: props.theme.backgroundColor,
   color: props.theme.color,
-  width: '48px',
+  width: '3%',
   height: '100%',
   lineHeight: '28px',
   display: 'flex',
@@ -74,7 +60,7 @@ const Container = styled('div', (props: ThemeProps) => ({
 
   flexDirection: 'column',
   borderRight: `1px solid ${props.theme.borderColor}`,
-  zIndex: 4,
+  zIndex: 1,
 
 
 }));
@@ -112,30 +98,20 @@ const ItemIcon = styled(Fa, {
   height: '30px'
 });
 
+const SideBarMinimizedTab = -1;
+
 export class LeftBar extends React.Component<Props, State> {
-  onIndentCode_: () => void;
-  onDownloadClick_: () => void;
-  onResetCode_: () => void;
-  private editorRef: React.MutableRefObject<Editor>;
+
   constructor(props: Props) {
     super(props);
     this.state = {
       modal: Modal.NONE,
       settings: DEFAULT_SETTINGS,
-
+      activePanel: 0,
+      sidePanelSize: Size.Type.Minimized,
 
     }
   }
-
-  private onLogoutClick_ = (event: React.MouseEvent<HTMLDivElement>) => {
-    void signOutOfApp();
-  };
-
-
-  
-
-
-
 
   private onSettingsChange_ = (changedSettings: Partial<Settings>) => {
     const nextSettings: Settings = {
@@ -148,51 +124,34 @@ export class LeftBar extends React.Component<Props, State> {
 
   private onModalClick_ = (modal: Modal) => () => this.setState({ modal });
   private onModalClose_ = () => this.setState({ modal: Modal.NONE });
-  private onClearConsole_ = () => {
-    this.setState({
-      //editorConsole: StyledText.compose({ items: [] })
-    });
-  };
+
+
+
   render() {
-    const { className, style, locale,editorConsole, messages, editorTarget,onClearConsole, editorRef} = this.props;
+    const { className, style, locale,  } = this.props;
     const theme = DARK;
     const {
       settings,
-      modal
-      
+      modal,
+      activePanel,
+      sidePanelSize,
+
     } = this.state;
 
 
-    const commonLayoutProps: LayoutProps = {
-      theme,
-      editorConsole,
-      messages,
-      settings,
-      editorTarget,
-      onClearConsole: this.onClearConsole_,
-      onIndentCode: this.onIndentCode_,
-      onDownloadCode: this.onDownloadClick_,
-      onResetCode: this.onResetCode_,
-      editorRef: this.editorRef,
-
-
-    };
-
-    const onFileExplorerClick_ = (event: React.MouseEvent<HTMLDivElement>) => {
-     // console.log("onFileExplorerClick_");
-      return (
-  
-        <FileExplorer robots={{}} locale={'en-US'} {...commonLayoutProps} />
-  
-      );
-  
+    const handleToggle = () => {
+      console.log("LeftBar clicked, triggering toggle");
+      if (this.props.onToggle) {
+        this.props.onToggle(); // Call the passed `onToggle` prop
+      }
     };
     
+
 
     return (
       <>
         <Container className={className} style={style} theme={theme}>
-          <Item theme={theme} onClick={onFileExplorerClick_}><ItemIcon icon={faFolderTree} /> </Item>
+          <Item theme={theme} onClick={handleToggle}><ItemIcon icon={faFolderTree} /> </Item>
 
           <Spacer style={{ marginBottom: '200px', borderBottom: `1px solid ${theme.borderColor}` }} />
           <Item style={{ marginBottom: '10px' }} theme={theme} onClick={this.onModalClick_(Modal.SETTINGS)}><ItemIcon icon={faCog} /> </Item>
