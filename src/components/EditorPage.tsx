@@ -7,30 +7,28 @@ import { styled } from 'styletron-react';
 
 import { Console, createConsoleBarComponents } from './Console';
 import { Editor, createEditorBarComponents, EditorBarTarget } from './Editor';
-import World, { createWorldBarComponents } from './World';
+;
 
-import { Info } from './Info';
-import { LayoutEditorTarget, LayoutProps } from './Layout/Layout';
-import SimulatorArea from './SimulatorArea';
-import { TabBar } from './TabBar';
-import Widget, { BarComponent, Mode, Size } from './Widget';
+
+import { LayoutProps } from './Layout/Layout';
+
+import Widget, { Mode, Size } from './Widget';
 import { Slider } from './Slider';
 
 import { State as ReduxState } from '../state';
-import Node from '../state/State/Scene/Node';
+
 import Dict from '../Dict';
-import Scene from '../state/State/Scene';
-import { faCode, faFlagCheckered, faGlobeAmericas, faRobot } from '@fortawesome/free-solid-svg-icons';
-import Async from '../state/State/Async';
-import { EMPTY_OBJECT, StyledText } from '../util';
-import Challenge from './Challenge';
-import { ReferenceFrame } from '../unit-math';
+
+import { StyledText } from '../util';
 
 import tr from '@i18n';
 import LocalizedString from '../util/LocalizedString';
 import ProgrammingLanguage from '../ProgrammingLanguage';
-import { DARK, Theme } from './theme';
-import construct from 'util/construct';
+import { Theme } from './theme';
+
+import DatabaseService from './DatabaseService';
+import { Modal } from '../pages/Modal';
+
 
 
 const sizeDict = (sizes: Size[]) => {
@@ -51,7 +49,17 @@ export interface EditorPageProps extends LayoutProps {
   projectName: string;
   fileName: string;
   userName: string;
+  code: Dict<string>;
+  isleftbaropen: boolean;
+  onCodeChange: (code: string) => void;
+  onRunClick: () => void;
+  onCompileClick: () => void;
+  onSaveCode: () => void;
   onDocumentationSetLanguage: (language: 'c' | 'python') => void;
+  onFileNameChange: (newFileName: string) => void;
+  onClearConsole: () => void;
+  editorConsole: StyledText;
+
 }
 
 interface ReduxEditorPageProps {
@@ -66,85 +74,13 @@ interface EditorPageState {
   workingScriptCode?: string;
   editorConsole: StyledText;
   modal: Modal;
-
+  fileName: string;
+  resetCodeAccept: boolean;
 }
 
 type Props = EditorPageProps;
 type State = EditorPageState;
 
-
-namespace Modal {
-  export enum Type {
-    Settings,
-    About,
-    Exception,
-    OpenScene,
-    Feedback,
-    FeedbackSuccess,
-    None,
-    NewScene,
-    CopyScene,
-    SettingsScene,
-    DeleteRecord,
-    ResetCode
-  }
-
-  export interface Settings {
-    type: Type.Settings;
-  }
-
-  export const SETTINGS: Settings = { type: Type.Settings };
-
-  export interface About {
-    type: Type.About;
-  }
-
-  export const ABOUT: About = { type: Type.About };
-
-  export interface Feedback {
-    type: Type.Feedback;
-  }
-
-  export const FEEDBACK: Feedback = { type: Type.Feedback };
-
-  export interface FeedbackSuccess {
-    type: Type.FeedbackSuccess;
-  }
-
-  export const FEEDBACKSUCCESS: FeedbackSuccess = { type: Type.FeedbackSuccess };
-
-  export interface Exception {
-    type: Type.Exception;
-    error: Error;
-    info?: React.ErrorInfo;
-  }
-
-  export interface None {
-    type: Type.None;
-  }
-
-  export const NONE: None = { type: Type.None };
-
-  export const exception = (error: Error, info?: React.ErrorInfo): Exception => ({ type: Type.Exception, error, info });
-
-
-  export interface ResetCode {
-    type: Type.ResetCode;
-  }
-
-  export const RESET_CODE: ResetCode = { type: Type.ResetCode };
-}
-
-export type Modal = (
-  Modal.Settings |
-  Modal.About |
-  Modal.Exception |
-  Modal.None |
-  Modal.Feedback |
-  Modal.FeedbackSuccess |
-
-  Modal.ResetCode
-);
 
 const Container = styled('div', {
   display: 'flex',
@@ -158,18 +94,7 @@ const SidePanelContainer = styled('div', {
   flexDirection: 'row',
 });
 
-const SideBar = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'stretch',
-  flex: '1 1 auto',
-  width: '100%',
-});
 
-const SimulatorAreaContainer = styled('div', {
-  display: 'flex',
-  flex: '1 1',
-});
 const SimultorWidgetContainer = styled('div', {
   display: 'flex',
   flex: '1 0 0',
@@ -205,59 +130,120 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
       modal: Modal.NONE,
       language: props.language,
       code: {
-        'c': window.localStorage.getItem('code-c') || ProgrammingLanguage.DEFAULT_CODE['c'],
+        'c': ProgrammingLanguage.DEFAULT_CODE['c'],
         'cpp': window.localStorage.getItem('code-cpp') || ProgrammingLanguage.DEFAULT_CODE['cpp'],
         'python': window.localStorage.getItem('code-python') || ProgrammingLanguage.DEFAULT_CODE['python'],
-      },
-      editorConsole: StyledText.text({ text: LocalizedString.lookup(tr('Welcome to the KIPR Simulator!\n'), props.locale), style: STDOUT_STYLE(DARK) }),
-  
-    };
+        'plaintext': ProgrammingLanguage.DEFAULT_CODE['plaintext'],
 
-    // TODO: this isn't working yet. Needs more tinkering
-    // on an orientation change, trigger a rerender
-    // this is deprecated, but supported in safari iOS
-    // screen.orientation.onchange = () => {
-    //   console.log('orientation change')
-    //   this.render();
-    // };
-    // // this is not deprecated, but not supported in safari iOS
-    // window.addEventListener('orientationchange', () => { console.log('deprecated orientation change'); this.render(); });
+      },
+      editorConsole: props.editorConsole,
+      fileName: props.fileName,
+      resetCodeAccept: false,
+    };
   }
-  private onSideBarSizeChange_ = (index: number) => {
-    if (SIDEBAR_SIZES[index].type === Size.Type.Minimized) {
-      // unset active tab if minimizing
-      this.setState({ activePanel: SideBarMinimizedTab });
+
+  async componentDidUpdate(prevProps: Props, prevState: State) {
+
+
+    if (this.props.fileName !== prevProps.fileName) {
+      console.log("Editor page current state:", this.state);
+
+      console.log("Editor page proped this.props:", this.props);
+      this.setState({
+
+        code: {
+          ...this.state.code,
+          [this.props.language]: this.props.code[this.props.language]
+        },
+        language: this.props.language,
+        fileName: this.props.fileName
+      }, () => {
+        console.log("EditorPage updated state:", this.state);
+      });
+
     }
-    this.setState({
-      sidePanelSize: SIDEBAR_SIZES[index].type,
-    });
-  };
-  private onTabBarIndexChange_ = (index: number) => {
-    if (index === this.state.activePanel) {
-      // collapse instead
-      this.onSideBarSizeChange_(SIDEBAR_SIZE[Size.Type.Minimized]);
-    } else {
-      this.setState({ activePanel: index });
+    else if (this.props.code !== prevProps.code) {
+      console.log("EditorPage previous props code:", prevProps.code);
+      console.log("EditorPage updated props code:", this.props.code);
+
+      this.setState({
+        code: {
+          ...this.state.code,
+          [this.state.language]: this.props.code[this.state.language]
+        }
+
+      });
     }
-  };
-  private onTabBarExpand_ = (index: number) => {
-    this.onSideBarSizeChange_(Size.Type.Miniature);
-    this.setState({ activePanel: index });
-  };
+
+    if (this.props.editorConsole !== prevProps.editorConsole) {
+      console.log("EditorPage previous props console:", prevProps.editorConsole);
+      console.log("EditorPage updated props console:", this.props.editorConsole);
+
+      this.setState({
+
+        editorConsole: this.props.editorConsole
+      });
+
+    }
+
+  }
+  async componentDidMount() {
+
+    console.log("current activeLanguage:", this.state.language);
+    console.log("current user name:", this.props.userName);
+    console.log("current project name:", this.props.projectName);
+    console.log("current file name:", this.props.fileName);
+    console.log("Editor page current code:", this.state.code);
+
+    console.log("EditorPage mounted console:", this.state.editorConsole);
+    try {
+      const content = await DatabaseService.getContentFromSrcFile(this.props.userName, this.props.projectName, this.props.fileName);
+      // console.log("Content from src file:", content);
+      if (content === null) {
+        this.setState({
+          code: {
+            ...this.state.code,
+            [this.state.language]: ProgrammingLanguage.DEFAULT_CODE[this.state.language]
+          }
+
+        });
+      }
+      else {
+        this.setState({
+          code: {
+            ...this.state.code,
+            [this.state.language]: content
+          }
+        });
+
+      }
+      this.props.onFileNameChange(this.state.fileName);
+    }
+    catch (error) {
+      console.error('Error getting content from src file:', error);
+    }
+
+  }
+
 
   private onErrorClick_ = (event: React.MouseEvent<HTMLDivElement>) => {
     // not implemented
   };
+
+
   private onActiveLanguageChange_ = (language: ProgrammingLanguage) => {
     this.setState({
       language: language
     }, () => {
+
       this.props.onDocumentationSetLanguage(language === 'python' ? 'python' : 'c');
     });
+
   };
   private onIndentCode_ = () => {
     if (this.editorRef.current) this.editorRef.current.ivygate.formatCode();
   };
+
   private onDownloadClick_ = () => {
     const { language } = this.state;
 
@@ -269,27 +255,6 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
     element.click();
     document.body.removeChild(element);
   };
-  private onResetCodeAccept_ = () => {
-    const { language } = this.state;
-    this.setState({
-      code: {
-        ...this.state.code,
-        [language]: ProgrammingLanguage.DEFAULT_CODE[language]
-      },
-      modal: Modal.NONE,
-    });
-  };
-  private onCodeChange_ = (code: string) => {
-    const { language } = this.state;
-    this.setState({
-      code: {
-        ...this.state.code,
-        [language]: code,
-      }
-    }, () => {
-      window.localStorage.setItem(`code-${language}`, code);
-    });
-  };
 
 
   render() {
@@ -298,41 +263,42 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
       style,
       className,
       theme,
-      editorTarget,
 
       messages,
       settings,
       onClearConsole,
       onIndentCode,
       onDownloadCode,
-      onResetCode,
+      onSaveCode,
       editorRef,
       onDocumentationGoToFuzzy,
       locale,
-      language,
+      isleftbaropen,
       projectName,
       fileName,
       userName
     } = props;
 
     const {
-      activePanel,
-      sidePanelSize,
+      language,
       code,
-
       editorConsole,
     } = this.state;
 
+    console.log("EditorPage render state:", this.state);
     let editorBarTarget: EditorBarTarget;
     let editor: JSX.Element;
     editorBarTarget = {
       type: EditorBarTarget.Type.Robot,
       messages,
+      isleftbaropen_: isleftbaropen,
       language: language,
+      onRunClick: this.props.onRunClick,
+      onCompileClick: this.props.onCompileClick,
       onLanguageChange: this.onActiveLanguageChange_,
       onIndentCode,
       onDownloadCode,
-      onResetCode,
+      onSaveCode,
       onErrorClick: this.onErrorClick_,
       userName: userName,
       projectName: projectName,
@@ -341,10 +307,12 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
     editor = (
       <Editor
         theme={theme}
+        isleftbaropen={isleftbaropen}
         ref={editorRef}
         code={code[language]}
         language={language}
-        onCodeChange={this.onCodeChange_}
+        onCodeChange={this.props.onCodeChange}
+        onSaveCode={this.props.onSaveCode}
         messages={messages}
         autocomplete={settings.editorAutoComplete}
         onDocumentationGoToFuzzy={onDocumentationGoToFuzzy}
@@ -355,7 +323,7 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
       target: editorBarTarget,
       locale
     });
-    const editorConsoleBar = createConsoleBarComponents(theme, onClearConsole, locale);
+    const editorConsoleBar = createConsoleBarComponents(theme, this.props.onClearConsole, locale);
 
     let content: JSX.Element;
     content = (
@@ -384,6 +352,7 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
             barComponents={editorConsoleBar}
             mode={Mode.Sidebar}
             hideActiveSize={true}
+            style={{ height: '85%' }}
           >
             <FlexConsole theme={theme} text={editorConsole} />
           </SimulatorWidget>
@@ -392,7 +361,7 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
 
     );
 
-  
+
 
     return <Container style={style} className={className}>
       <SidePanelContainer>
