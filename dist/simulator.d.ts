@@ -206,7 +206,7 @@ declare module 'simulator/Feedback' {
 
 }
 declare module 'simulator/ProgrammingLanguage' {
-  type ProgrammingLanguage = 'c' | 'cpp' | 'python';
+  type ProgrammingLanguage = 'c' | 'cpp' | 'python' | 'plaintext';
   namespace ProgrammingLanguage {
       const FILE_EXTENSION: {
           [key in ProgrammingLanguage]: string;
@@ -214,6 +214,8 @@ declare module 'simulator/ProgrammingLanguage' {
       const DEFAULT_CODE: {
           [key in ProgrammingLanguage]: string;
       };
+      const DEFAULT_HEADER_CODE = "#include <kipr/wombat.h>\n";
+      const DEFAULT_USER_DATA_CODE = "*Your User Data Here*";
   }
   export default ProgrammingLanguage;
 
@@ -1166,18 +1168,6 @@ declare module 'simulator/WorkerProtocol' {
   export default Protocol;
 
 }
-declare module 'simulator/challenges/jbc6c' {
-  import Challenge from 'simulator/state/State/Challenge/index';
-  const _default: Challenge;
-  export default _default;
-
-}
-declare module 'simulator/challenges/test' {
-  import Challenge from 'simulator/state/State/Challenge/index';
-  const _default: Challenge;
-  export default _default;
-
-}
 declare module 'simulator/compile' {
   import ProgrammingLanguage from "simulator/ProgrammingLanguage";
   const _default: (code: string, language: ProgrammingLanguage) => Promise<CompileResult>;
@@ -1325,102 +1315,6 @@ declare module 'simulator/components/Card' {
   export default Card;
 
 }
-declare module 'simulator/components/Challenge/EventSettings' {
-  import * as React from "react";
-  import { ThemeProps } from "simulator/components/theme";
-  import Event from 'simulator/state/State/Challenge/Event';
-  export interface EventSettingsProps extends ThemeProps {
-      onEventChange: (event: Event) => void;
-      event: Event;
-  }
-  const EventSettings: React.FC<EventSettingsProps>;
-  export default EventSettings;
-
-}
-declare module 'simulator/components/Challenge/EventSettingsDialog' {
-  import * as React from 'react';
-  import Event from 'simulator/state/State/Challenge/Event';
-  import { ThemeProps } from 'simulator/components/theme';
-  export interface EventSettingsDialogProps extends ThemeProps {
-      event: Event;
-      onChange: (event: Event) => void;
-      onClose: () => void;
-  }
-  const EventSettingsDialog: React.FC<EventSettingsDialogProps>;
-  export default EventSettingsDialog;
-
-}
-declare module 'simulator/components/Challenge/EventViewer' {
-  import * as React from 'react';
-  import Event from 'simulator/state/State/Challenge/Event';
-  import { StyleProps } from 'simulator/style';
-  import LocalizedString from 'simulator/util/LocalizedString';
-  interface EventViewerProps extends StyleProps {
-      event: Event;
-      eventState?: boolean;
-      locale: LocalizedString.Language;
-  }
-  const EventViewer: React.FC<EventViewerProps>;
-  export default EventViewer;
-
-}
-declare module 'simulator/components/Challenge/LoadingOverlay' {
-  import * as React from 'react';
-  import { AsyncChallenge } from 'simulator/state/State/Challenge/index';
-  const _default: React.ComponentType<{
-      challenge: AsyncChallenge;
-      onStartClick: () => void;
-      loading: boolean;
-  }>;
-  export default _default;
-
-}
-declare module 'simulator/components/Challenge/Operator' {
-  import * as React from 'react';
-  import LocalizedString from 'simulator/util/LocalizedString';
-  import Expr from 'simulator/state/State/Challenge/Expr';
-  import { StyleProps } from 'simulator/style';
-  export interface OperatorProps extends StyleProps {
-      type: Expr.Type.And | Expr.Type.Or | Expr.Type.Xor | Expr.Type.Once | Expr.Type.Not;
-      locale: LocalizedString.Language;
-  }
-  type Props = OperatorProps;
-  const Operator: React.FC<Props>;
-  export default Operator;
-
-}
-declare module 'simulator/components/Challenge/PredicateEditor' {
-  import * as React from 'react';
-  import LocalizedString from 'simulator/util/LocalizedString';
-  import Dict from 'simulator/Dict';
-  import Event from 'simulator/state/State/Challenge/Event';
-  import Predicate from 'simulator/state/State/Challenge/Predicate';
-  import PredicateCompletion from 'simulator/state/State/ChallengeCompletion/PredicateCompletion';
-  import { StyleProps } from 'simulator/style';
-  export interface PredicateEditorProps extends StyleProps {
-      predicate: Predicate;
-      predicateCompletion?: PredicateCompletion;
-      events: Dict<Event>;
-      locale: LocalizedString.Language;
-  }
-  const PredicateEditor: React.FC<PredicateEditorProps>;
-  export default PredicateEditor;
-
-}
-declare module 'simulator/components/Challenge/index' {
-  import * as React from 'react';
-  import { StyleProps } from 'simulator/style';
-  import { ThemeProps } from 'simulator/components/theme';
-  import { AsyncChallenge } from 'simulator/state/State/Challenge/index';
-  import { AsyncChallengeCompletion } from 'simulator/state/State/ChallengeCompletion/index';
-  export interface ChallengePublicProps extends StyleProps, ThemeProps {
-      challenge: AsyncChallenge;
-      challengeCompletion: AsyncChallengeCompletion;
-  }
-  const _default: React.ComponentType<ChallengePublicProps>;
-  export default _default;
-
-}
 declare module 'simulator/components/Charm' {
   import { ThemeProps } from 'simulator/components/theme';
   import * as React from 'react';
@@ -1526,13 +1420,18 @@ declare module 'simulator/components/CreateProjectDialog' {
   import { StyleProps } from 'simulator/style';
   import LocalizedString from 'simulator/util/LocalizedString';
   import * as React from 'react';
+  import { Modal } from 'simulator/pages/Modal';
+  import ProgrammingLanguage from 'simulator/ProgrammingLanguage';
   export interface CreateProjectDialogPublicProps extends ThemeProps, StyleProps {
       onClose: () => void;
       showRepeatUserDialog: boolean;
       userName: string;
+      language: string;
       projectName: string;
       onChangeProjectName: (name: string) => void;
-      closeProjectDialog: () => void;
+      onLanguageChange: (language: ProgrammingLanguage) => void;
+      closeProjectDialog: (newProjName: string, newProjLanguage: ProgrammingLanguage) => void;
+      onDocumentationSetLanguage: (language: 'c' | 'python') => void;
   }
   interface CreateProjectDialogPrivateProps {
       locale: LocalizedString.Language;
@@ -1543,41 +1442,15 @@ declare module 'simulator/components/CreateProjectDialog' {
       userName: string;
       modal: Modal;
       showRepeatUserDialog: boolean;
+      language: string;
   }
   type Props = CreateProjectDialogPublicProps & CreateProjectDialogPrivateProps;
   type State = CreateProjectDialogState;
-  namespace Modal {
-      enum Type {
-          Settings = 0,
-          CreateUser = 1,
-          RepeatUser = 2,
-          None = 3,
-          OpenUser = 4
-      }
-      interface None {
-          type: Type.None;
-      }
-      const NONE: None;
-      interface Settings {
-          type: Type.Settings;
-      }
-      const SETTINGS: Settings;
-      interface CreateUser {
-          type: Type.CreateUser;
-      }
-      const CREATEUSER: CreateUser;
-      interface RepeatUser {
-          type: Type.RepeatUser;
-      }
-      const REPEATUSER: RepeatUser;
-  }
-  export type Modal = (Modal.Settings | Modal.CreateUser | Modal.None | Modal.RepeatUser);
   export class CreateProjectDialog extends React.PureComponent<Props, State> {
       constructor(props: Props);
-      private onModalClick_;
-      private onModalClose_;
-      private closeRepeatUserDialog_;
-      private onLocaleSelect_;
+      componentDidMount(): void;
+      private onSelect_;
+      private onLanguageChange;
       onFinalize_: (values: {
           [id: string]: string;
       }) => Promise<void>;
@@ -1659,9 +1532,39 @@ declare module 'simulator/components/Database' {
 
 }
 declare module 'simulator/components/DatabaseService' {
+  import ProgrammingLanguage from 'simulator/ProgrammingLanguage';
   interface DatabaseType {
       _id: string;
       title: string;
+  }
+  export interface ProjectType {
+      project_id: string;
+      language: string;
+      include: IncludeType;
+      description: string;
+      src: SrcType;
+      userData: UserDataType;
+  }
+  export interface IncludeType {
+      includeFiles: IncludeData[];
+  }
+  export interface IncludeData {
+      fileName: string;
+      content: string;
+  }
+  export interface SrcType {
+      srcFiles: SrcData[];
+  }
+  export interface SrcData {
+      fileName: string;
+      content: string;
+  }
+  export interface UserDataType {
+      userDataFiles: UserData[];
+  }
+  export interface UserData {
+      fileName: string;
+      content: string;
   }
   export class DatabaseService {
       private name;
@@ -1669,12 +1572,23 @@ declare module 'simulator/components/DatabaseService' {
       constructor(name: string);
       addDatabase: (dataBase: DatabaseType) => Promise<void>;
       static getDatabase: (name: string) => Promise<void>;
+      static getUserInfo: (name: string) => Promise<any>;
       static checkForUserDatabase: () => Promise<boolean>;
       static createUserDatabase: () => Promise<void>;
       static addUsertoDatabase: (name: string) => Promise<number>;
-      static addSrcContent: (userName: string, projectId: string, fileName: string, content: string) => Promise<void>;
-      static updateSrcContent: (projectId: string, fileName: string, newContent: string) => Promise<void>;
-      static addProjectToUser: (userName: string, projectName: string) => Promise<number>;
+      static getProjectInfo: (userName: string, projectId: string) => Promise<any>;
+      static getContentFromSrcFile: (userName: string, projectId: string, fileName: string) => Promise<any>;
+      static getContentfromIncludeFile: (userName: string, projectId: string, fileName: string) => Promise<any>;
+      static getContentFromUserDataFile: (userName: string, projectId: string, fileName: string) => Promise<any>;
+      static addIncludeContent: (userName: string, projectId: string, fileName: string, content: string) => Promise<1 | -1>;
+      static updateIncludeContent: (userName: string, projectId: string, fileName: string, newContent: string) => Promise<void>;
+      static addSrcContent: (userName: string, projectId: string, fileName: string, content: string) => Promise<1 | -1>;
+      static updateSrcContent: (userName: string, projectId: string, fileName: string, newContent: string) => Promise<void>;
+      static updateUserDataContent: (userName: string, projectId: string, fileName: string, newContent: string) => Promise<void>;
+      static addUserDataContent: (userName: string, projectId: string, fileName: string, content: string) => Promise<1 | -1>;
+      static addProjectToUser: (userName: string, projectName: string, language: ProgrammingLanguage) => Promise<1 | -1>;
+      static getAllProjectsFromUser: (userName: string) => Promise<any>;
+      static getSrcFileNameFromProject: (userName: string, projectId: string) => Promise<any>;
       static getAllUsers: () => Promise<any[]>;
   }
   export default DatabaseService;
@@ -1757,11 +1671,14 @@ declare module 'simulator/components/Editor/Editor' {
       language: ProgrammingLanguage | Script.Language;
       code: string;
       onCodeChange: (code: string) => void;
+      onSaveCode: () => void;
       messages?: Message[];
       autocomplete: boolean;
-      onDocumentationGoToFuzzy?: (query: string, language: 'c' | 'python') => void;
+      isleftbaropen: boolean;
+      onDocumentationGoToFuzzy?: (query: string, language: 'c' | 'python' | 'plaintext') => void;
   }
   interface EditorState {
+      isleftbaropen: boolean;
   }
   type Props = EditorPublicProps;
   type State = EditorState;
@@ -1774,13 +1691,16 @@ declare module 'simulator/components/Editor/Editor' {
           type: Type.Robot;
           messages: Message[];
           language: ProgrammingLanguage;
+          isleftbaropen_: boolean;
           projectName: string;
           fileName: string;
           userName: string;
           onLanguageChange: (language: ProgrammingLanguage) => void;
           onIndentCode: () => void;
+          onSaveCode: () => void;
+          onRunClick: () => void;
+          onCompileClick: () => void;
           onDownloadCode: () => void;
-          onResetCode: () => void;
           onErrorClick: (event: React.MouseEvent<HTMLDivElement>) => void;
       }
   }
@@ -1794,6 +1714,8 @@ declare module 'simulator/components/Editor/Editor' {
   export const IVYGATE_LANGUAGE_MAPPING: Dict<string>;
   class Editor extends React.PureComponent<Props, State> {
       constructor(props: Props);
+      componentDidMount(): void;
+      componentDidUpdate(prevProps: Props): Promise<void>;
       private openDocumentation_;
       private openDocumentationAction_?;
       private setupCodeEditor_;
@@ -1893,12 +1815,22 @@ declare module 'simulator/components/EditorPage' {
   import { StyledText } from 'simulator/util/index';
   import LocalizedString from 'simulator/util/LocalizedString';
   import ProgrammingLanguage from 'simulator/ProgrammingLanguage';
+  import { Modal } from 'simulator/pages/Modal';
   export interface EditorPageProps extends LayoutProps {
       language: ProgrammingLanguage;
       projectName: string;
       fileName: string;
       userName: string;
+      code: Dict<string>;
+      isleftbaropen: boolean;
+      onCodeChange: (code: string) => void;
+      onRunClick: () => void;
+      onCompileClick: () => void;
+      onSaveCode: () => void;
       onDocumentationSetLanguage: (language: 'c' | 'python') => void;
+      onFileNameChange: (newFileName: string) => void;
+      onClearConsole: () => void;
+      editorConsole: StyledText;
   }
   interface ReduxEditorPageProps {
       locale: LocalizedString.Language;
@@ -1911,68 +1843,20 @@ declare module 'simulator/components/EditorPage' {
       workingScriptCode?: string;
       editorConsole: StyledText;
       modal: Modal;
+      fileName: string;
+      resetCodeAccept: boolean;
   }
   type Props = EditorPageProps;
   type State = EditorPageState;
-  namespace Modal {
-      enum Type {
-          Settings = 0,
-          About = 1,
-          Exception = 2,
-          OpenScene = 3,
-          Feedback = 4,
-          FeedbackSuccess = 5,
-          None = 6,
-          NewScene = 7,
-          CopyScene = 8,
-          SettingsScene = 9,
-          DeleteRecord = 10,
-          ResetCode = 11
-      }
-      interface Settings {
-          type: Type.Settings;
-      }
-      const SETTINGS: Settings;
-      interface About {
-          type: Type.About;
-      }
-      const ABOUT: About;
-      interface Feedback {
-          type: Type.Feedback;
-      }
-      const FEEDBACK: Feedback;
-      interface FeedbackSuccess {
-          type: Type.FeedbackSuccess;
-      }
-      const FEEDBACKSUCCESS: FeedbackSuccess;
-      interface Exception {
-          type: Type.Exception;
-          error: Error;
-          info?: React.ErrorInfo;
-      }
-      interface None {
-          type: Type.None;
-      }
-      const NONE: None;
-      const exception: (error: Error, info?: React.ErrorInfo) => Exception;
-      interface ResetCode {
-          type: Type.ResetCode;
-      }
-      const RESET_CODE: ResetCode;
-  }
-  export type Modal = (Modal.Settings | Modal.About | Modal.Exception | Modal.None | Modal.Feedback | Modal.FeedbackSuccess | Modal.ResetCode);
   export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps, State> {
       private editorRef;
       constructor(props: Props & ReduxEditorPageProps);
-      private onSideBarSizeChange_;
-      private onTabBarIndexChange_;
-      private onTabBarExpand_;
+      componentDidUpdate(prevProps: Props, prevState: State): Promise<void>;
+      componentDidMount(): Promise<void>;
       private onErrorClick_;
       private onActiveLanguageChange_;
       private onIndentCode_;
       private onDownloadClick_;
-      private onResetCodeAccept_;
-      private onCodeChange_;
       render(): JSX.Element;
   }
   const _default: React.ComponentType<EditorPageProps>;
@@ -1999,9 +1883,7 @@ declare module 'simulator/components/ExtraMenu' {
   import { StyleProps } from 'simulator/style';
   import { ThemeProps } from 'simulator/components/theme';
   export interface ExtraMenuPublicProps extends StyleProps, ThemeProps {
-      onFeedbackClick?: (event: React.MouseEvent) => void;
       onDocumentationClick: (event: React.MouseEvent) => void;
-      onSettingsClick: (event: React.MouseEvent) => void;
       onAboutClick: (event: React.MouseEvent) => void;
   }
   const _default: React.ComponentType<ExtraMenuPublicProps>;
@@ -2147,31 +2029,68 @@ declare module 'simulator/components/Field' {
 }
 declare module 'simulator/components/FileExplorer' {
   import * as React from 'react';
-  import { LayoutProps } from 'simulator/components/Layout/Layout';
-  import { Size } from 'simulator/components/Widget';
+  import { ThemeProps } from 'simulator/components/theme';
+  import { StyleProps } from 'simulator/style';
   import Node from 'simulator/state/State/Scene/Node';
   import Dict from 'simulator/Dict';
   import LocalizedString from 'simulator/util/LocalizedString';
-  export interface FileExplorerProps extends LayoutProps {
+  import { ProjectType, SrcData, UserData, IncludeData } from 'simulator/components/DatabaseService';
+  import ProgrammingLanguage from 'simulator/ProgrammingLanguage';
+  type UsersSection = string;
+  export interface FileExplorerProps extends ThemeProps, StyleProps {
+      onProjectSelected?: (userName: string, projectName: string, fileName: string, activeLanguage: ProgrammingLanguage, fileType: string) => void;
+      onFileSelected?: (userName: string, projectName: string, fileName: string, activeLanguage: ProgrammingLanguage, fileType: string) => void;
+      onUserSelected?: (userName: string) => void;
+      onAddNewProject?: (userName: string) => void;
+      onAddNewFile?: (userName: string, activeLanguage: ProgrammingLanguage, fileType: string) => void;
+      propsSelectedProjectName?: string;
+      propFileName?: string;
+      propProjectName?: string;
+      propActiveLanguage?: ProgrammingLanguage;
+      propUserName?: string;
+      addProjectFlag?: boolean;
+      addFileFlag?: boolean;
   }
   interface FileExplorerReduxSideLayoutProps {
       robots: Dict<Node.Robot>;
       locale: LocalizedString.Language;
   }
-  interface FileExplorerState {
-      activePanel: number;
-      sidePanelSize: Size.Type;
-      workingScriptCode?: string;
-      userName: string;
+  interface FileExplorerPrivateProps {
+      locale: LocalizedString.Language;
   }
-  type Props = FileExplorerProps;
+  interface FileExplorerState {
+      includeFiles: IncludeData[];
+      srcFiles: SrcData[];
+      userDataFiles: UserData[];
+      userName: string;
+      users: string[];
+      selectedSection: UsersSection;
+      selectedProject: string;
+      projects: ProjectType[] | null;
+      error: string | null;
+      projectName: string;
+      fileType: string;
+      activeLanguage: ProgrammingLanguage;
+      showProjectFiles: boolean;
+      currentUserSelected: boolean;
+  }
+  type Props = FileExplorerProps & FileExplorerPrivateProps;
   type State = FileExplorerState;
   export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxSideLayoutProps, State> {
       constructor(props: Props & FileExplorerReduxSideLayoutProps);
-      private onSideBarSizeChange_;
-      private onTabBarIndexChange_;
-      private onTabBarExpand_;
-      private onErrorClick_;
+      componentDidMount(): void;
+      componentDidUpdate(prevProps: Props, prevState: State): Promise<void>;
+      private handleProjectClick;
+      private handleFileClick;
+      private addNewProject;
+      private addNewFile;
+      private loadUsers;
+      private setSelectedSection;
+      private getProjects;
+      renderSrcFiles(): JSX.Element;
+      renderIncludeFiles(): JSX.Element;
+      renderUserDataFiles(): JSX.Element;
+      renderProjects: (selectedSection: UsersSection | null) => JSX.Element;
       render(): JSX.Element;
   }
   export const FileExplorerSideLayoutRedux: React.ComponentType<FileExplorerProps>;
@@ -2279,47 +2198,14 @@ declare module 'simulator/components/HomeStartOptions' {
   import LocalizedString from 'simulator/util/LocalizedString';
   import { Settings } from 'simulator/Settings';
   import ProgrammingLanguage from 'ProgrammingLanguage';
-  namespace Modal {
-      enum Type {
-          Settings = 0,
-          CreateUser = 1,
-          RepeatUser = 2,
-          None = 3,
-          OpenUsers = 4,
-          CreateNewFile = 5
-      }
-      interface None {
-          type: Type.None;
-      }
-      const NONE: None;
-      interface Settings {
-          type: Type.Settings;
-      }
-      const SETTINGS: Settings;
-      interface CreateUser {
-          type: Type.CreateUser;
-      }
-      const CREATEUSER: CreateUser;
-      interface RepeatUser {
-          type: Type.RepeatUser;
-      }
-      const REPEATUSER: RepeatUser;
-      interface OpenUsers {
-          type: Type.OpenUsers;
-      }
-      const OPENUSERS: OpenUsers;
-      interface CreateNewFile {
-          type: Type.CreateNewFile;
-      }
-      const CREATENEWFILE: CreateNewFile;
-  }
-  export type Modal = (Modal.Settings | Modal.CreateUser | Modal.None | Modal.OpenUsers | Modal.CreateNewFile);
+  import { Modal } from 'simulator/pages/Modal';
   export interface HomeStartOptionsPublicProps extends StyleProps, ThemeProps {
       onClearConsole: () => void;
       activeLanguage: ProgrammingLanguage;
       onEditorPageOpen: () => void;
       onChangeProjectName: (projectName: string) => void;
       onCreateProjectDialog: (name: string) => void;
+      onOpenUserProject: (name: string, projectName: string, fileName: string, projectLanguage: string) => void;
   }
   interface HomeStartOptionsPrivateProps {
       locale: LocalizedString.Language;
@@ -2499,7 +2385,6 @@ declare module 'simulator/components/Layout/Layout' {
       onClearConsole: () => void;
       onIndentCode: () => void;
       onDownloadCode: () => void;
-      onResetCode: () => void;
       editorRef: React.MutableRefObject<Editor>;
       onDocumentationGoToFuzzy?: (query: string, language: 'c' | 'python') => void;
   }
@@ -2525,46 +2410,10 @@ declare module 'simulator/components/Layout/LayoutPicker' {
   export default _default;
 
 }
-declare module 'simulator/components/Layout/SideLayout' {
-  import * as React from 'react';
-  import { LayoutProps } from 'simulator/components/Layout/Layout';
-  import { Size } from 'simulator/components/Widget';
-  import Node from 'simulator/state/State/Scene/Node';
-  import Dict from 'simulator/Dict';
-  import LocalizedString from 'simulator/util/LocalizedString';
-  export interface SideLayoutProps extends LayoutProps {
-  }
-  interface ReduxSideLayoutProps {
-      robots: Dict<Node.Robot>;
-      locale: LocalizedString.Language;
-  }
-  interface SideLayoutState {
-      activePanel: number;
-      sidePanelSize: Size.Type;
-      workingScriptCode?: string;
-  }
-  type Props = SideLayoutProps;
-  type State = SideLayoutState;
-  export class SideLayout extends React.PureComponent<Props & ReduxSideLayoutProps, State> {
-      constructor(props: Props & ReduxSideLayoutProps);
-      private onSideBarSizeChange_;
-      private onTabBarIndexChange_;
-      private onTabBarExpand_;
-      private onErrorClick_;
-      render(): JSX.Element;
-  }
-  export const SideLayoutRedux: React.ComponentType<SideLayoutProps>;
-  export {};
-
-}
 declare module 'simulator/components/Layout/index' {
   export { Layout, LayoutProps } from 'simulator/components/Layout/Layout';
   export * from 'simulator/components/Layout/LayoutPicker';
   export { default as LayoutPicker } from 'simulator/components/Layout/LayoutPicker';
-  export * from 'simulator/components/Layout/OverlayLayout/index';
-  export { OverlayLayout, OverlayLayoutRedux } from 'simulator/components/Layout/OverlayLayout/index';
-  export * from 'simulator/components/Layout/SideLayout';
-  export { SideLayout, SideLayoutRedux } from 'simulator/components/Layout/SideLayout';
 
 }
 declare module 'simulator/components/LeftBar' {
@@ -2572,24 +2421,11 @@ declare module 'simulator/components/LeftBar' {
   import { StyleProps } from 'simulator/style';
   import { ThemeProps } from 'simulator/components/theme';
   import { Settings } from 'simulator/Settings';
+  import { Modal } from 'simulator/pages/Modal';
   import LocalizedString from 'simulator/util/LocalizedString';
-  import { LayoutProps } from 'simulator/components/Layout/index';
-  namespace Modal {
-      enum Type {
-          Settings = 0,
-          None = 1
-      }
-      interface None {
-          type: Type.None;
-      }
-      const NONE: None;
-      interface Settings {
-          type: Type.Settings;
-      }
-      const SETTINGS: Settings;
-  }
-  export type Modal = (Modal.Settings | Modal.None);
-  export interface LeftBarPublicProps extends StyleProps, ThemeProps, LayoutProps {
+  import { Size } from 'simulator/components/Widget';
+  export interface LeftBarPublicProps extends StyleProps, ThemeProps {
+      onToggle: () => void;
   }
   interface LeftBarPrivateProps {
       locale: LocalizedString.Language;
@@ -2597,20 +2433,16 @@ declare module 'simulator/components/LeftBar' {
   interface LeftBarState {
       modal: Modal;
       settings: Settings;
+      activePanel: number;
+      sidePanelSize: Size.Type;
   }
   type Props = LeftBarPublicProps & LeftBarPrivateProps;
   type State = LeftBarState;
   export class LeftBar extends React.Component<Props, State> {
-      onIndentCode_: () => void;
-      onDownloadClick_: () => void;
-      onResetCode_: () => void;
-      private editorRef;
       constructor(props: Props);
-      private onLogoutClick_;
       private onSettingsChange_;
       private onModalClick_;
       private onModalClose_;
-      private onClearConsole_;
       render(): JSX.Element;
   }
   const _default: React.ComponentType<LeftBarPublicProps>;
@@ -2648,7 +2480,9 @@ declare module 'simulator/components/MainMenu' {
   type State = MenuState;
   export class MainMenu extends React.Component<Props, State> {
       constructor(props: Props);
+      private onDocumentationClick_;
       private onLogoutClick_;
+      private onModalClick_;
       private onDashboardClick_;
       render(): JSX.Element;
   }
@@ -2689,26 +2523,17 @@ declare module 'simulator/components/NewFileDialog' {
   import { StyleProps } from 'simulator/style';
   import LocalizedString from 'simulator/util/LocalizedString';
   import * as React from 'react';
-  import { StyledText } from 'simulator/util/index';
-  import { EditorBarTarget } from 'simulator/components/Editor/index';
-  import { Message } from "ivygate";
   import ProgrammingLanguage from 'ProgrammingLanguage';
   import { Settings } from 'simulator/Settings';
+  import { Modal } from 'simulator/pages/Modal';
   export interface NewFileDialogPublicProps extends ThemeProps, StyleProps {
-      onClose: () => void;
       showRepeatUserDialog: boolean;
       fileName: string;
-      editorTarget: EditorBarTarget;
-      messages: Message[];
-      onIndentCode: () => void;
-      onDownloadCode: () => void;
-      onResetCode: () => void;
-      onClearConsole: () => void;
       language: ProgrammingLanguage;
-      editorConsole: StyledText;
-      onDocumentationGoToFuzzy?: (query: string, language: 'c' | 'python') => void;
+      otherFileType?: string;
+      onClose: () => void;
       onEditorPageOpen: () => void;
-      onChangeProjectName: (projectName: string) => void;
+      onCloseNewFileDialog: (newFileName: string, fileType: string) => void;
   }
   export enum Type {
       Robot = "robot"
@@ -2730,49 +2555,19 @@ declare module 'simulator/components/NewFileDialog' {
       modal: Modal;
       settings: Settings;
       showRepeatUserDialog: boolean;
-      editorTarget: EditorBarTarget;
       showEditorPage: boolean;
       language: ProgrammingLanguage;
   }
   type Props = NewFileDialogPublicProps & NewFileDialogPrivateProps;
   type State = NewFileDialogState;
-  namespace Modal {
-      enum Type {
-          Settings = 0,
-          CreateUser = 1,
-          RepeatUser = 2,
-          None = 3,
-          OpenUser = 4
-      }
-      interface None {
-          type: Type.None;
-      }
-      const NONE: None;
-      interface Settings {
-          type: Type.Settings;
-      }
-      const SETTINGS: Settings;
-      interface CreateUser {
-          type: Type.CreateUser;
-      }
-      const CREATEUSER: CreateUser;
-      interface RepeatUser {
-          type: Type.RepeatUser;
-      }
-      const REPEATUSER: RepeatUser;
-  }
-  export type Modal = (Modal.Settings | Modal.CreateUser | Modal.None | Modal.RepeatUser);
   export class NewFileDialog extends React.PureComponent<Props, State> {
       private editorRef;
       constructor(props: Props);
       private onModalClick_;
       private onModalClose_;
       private closeRepeatUserDialog_;
-      private onLocaleSelect_;
-      private onIndentCode_;
       myComponent(props: NewFileDialogPublicProps): string;
-      private onErrorClick_;
-      private onCodeChange;
+      componentDidMount(): void;
       private onFinalize_;
       render(): JSX.Element;
   }
@@ -2804,13 +2599,16 @@ declare module 'simulator/components/OpenSceneDialog' {
 
 }
 declare module 'simulator/components/OpenUsersDialog' {
-  import * as React from 'react';
+  import React from 'react';
   import { StyleProps } from 'simulator/style';
   import { ThemeProps } from 'simulator/components/theme';
   import { Settings } from 'simulator/Settings';
+  import ProgrammingLanguage from 'simulator/ProgrammingLanguage';
   export interface OpenUsersDialogPublicProps extends ThemeProps, StyleProps {
       onClose: () => void;
+      projectLanguage: ProgrammingLanguage;
       settings: Settings;
+      onOpenUserProject: (name: string, projectName: string, fileName: string, projectLanguage: string) => void;
       onSettingsChange: (settings: Partial<Settings>) => void;
   }
   namespace Modal {
@@ -2907,83 +2705,26 @@ declare module 'simulator/components/Root' {
   import { Feedback } from 'simulator/Feedback';
   import Dict from 'simulator/Dict';
   import ProgrammingLanguage from 'simulator/ProgrammingLanguage';
-  import Scene from 'simulator/state/State/Scene/index';
   import { RouteComponentProps } from 'react-router';
-  import Record from 'simulator/db/Record';
-  namespace Modal {
-      enum Type {
-          Settings = 0,
-          About = 1,
-          Exception = 2,
-          OpenScene = 3,
-          Feedback = 4,
-          FeedbackSuccess = 5,
-          None = 6,
-          NewScene = 7,
-          CopyScene = 8,
-          SettingsScene = 9,
-          DeleteRecord = 10,
-          ResetCode = 11
-      }
-      interface Settings {
-          type: Type.Settings;
-      }
-      const SETTINGS: Settings;
-      interface About {
-          type: Type.About;
-      }
-      const ABOUT: About;
-      interface Feedback {
-          type: Type.Feedback;
-      }
-      const FEEDBACK: Feedback;
-      interface FeedbackSuccess {
-          type: Type.FeedbackSuccess;
-      }
-      const FEEDBACKSUCCESS: FeedbackSuccess;
-      interface Exception {
-          type: Type.Exception;
-          error: Error;
-          info?: React.ErrorInfo;
-      }
-      const exception: (error: Error, info?: React.ErrorInfo) => Exception;
-      interface SelectScene {
-          type: Type.OpenScene;
-      }
-      const SELECT_SCENE: SelectScene;
-      interface None {
-          type: Type.None;
-      }
-      const NONE: None;
-      interface NewScene {
-          type: Type.NewScene;
-      }
-      const NEW_SCENE: NewScene;
-      interface CopyScene {
-          type: Type.CopyScene;
-          scene: Scene;
-      }
-      const copyScene: (params: Omit<CopyScene, "type">) => CopyScene;
-      interface DeleteRecord {
-          type: Type.DeleteRecord;
-          record: Record;
-      }
-      const deleteRecord: (params: Omit<DeleteRecord, "type">) => DeleteRecord;
-      interface SettingsScene {
-          type: Type.SettingsScene;
-      }
-      const SETTINGS_SCENE: SettingsScene;
-      interface ResetCode {
-          type: Type.ResetCode;
-      }
-      const RESET_CODE: ResetCode;
-  }
-  export type Modal = (Modal.Settings | Modal.About | Modal.Exception | Modal.SelectScene | Modal.Feedback | Modal.FeedbackSuccess | Modal.None | Modal.NewScene | Modal.DeleteRecord | Modal.SettingsScene | Modal.ResetCode);
+  import { Modal } from 'simulator/pages/Modal';
   interface RootParams {
       sceneId?: string;
       challengeId?: string;
   }
   export interface RootPublicProps extends RouteComponentProps<RootParams> {
+      propFileName: string;
+      propProjectName: string;
+      propActiveLanguage: ProgrammingLanguage;
+      propUserName: string;
+      addNewProject: boolean;
+      addNewFile: boolean;
+      clickFile: boolean;
+      otherFileType?: string;
+      isLeftBarOpen: boolean;
+      changeProjectName: (projectName: string) => void;
+      setAddNewProject: (addNewProject: boolean) => void;
+      setAddNewFile: (addNewFile: boolean) => void;
+      setClickFile: (clickFile: boolean) => void;
   }
   interface RootState {
       layout: Layout;
@@ -3002,8 +2743,13 @@ declare module 'simulator/components/Root' {
       isEditorPageVisible: boolean;
       isCreateProjectDialogVisible: boolean;
       isCreateNewUserDialogVisible: boolean;
+      isOpenUserProject: boolean;
       projectName: string;
       fileName: string;
+      addNewProject: boolean;
+      addNewFile: boolean;
+      clickFileState: boolean;
+      otherFileType?: string;
       userName: string;
   }
   const _default: React.ComponentType<RootPublicProps>;
@@ -3813,212 +3559,6 @@ declare module 'simulator/components/Widget' {
   export default Widget;
 
 }
-declare module 'simulator/components/World/AddNodeDialog' {
-  import * as React from "react";
-  import { ThemeProps } from "simulator/components/theme";
-  import Node from "simulator/state/State/Scene/Node";
-  import Scene from "simulator/state/State/Scene/index";
-  import Geometry from "simulator/state/State/Scene/Geometry";
-  export interface AddNodeAcceptance {
-      node: Node;
-      geometry?: Geometry;
-  }
-  export interface AddNodeDialogPublicProps extends ThemeProps {
-      scene: Scene;
-      onAccept: (acceptance: AddNodeAcceptance) => void;
-      onClose: () => void;
-  }
-  const _default: React.ComponentType<AddNodeDialogPublicProps>;
-  export default _default;
-
-}
-declare module 'simulator/components/World/AddScriptDialog' {
-  import * as React from "react";
-  import { ThemeProps } from "simulator/components/theme";
-  import Script from "simulator/state/State/Scene/Script";
-  export interface AddScriptAcceptance {
-      script: Script;
-  }
-  export interface AddScriptDialogPublicProps extends ThemeProps {
-      onAccept: (acceptance: AddScriptAcceptance) => void;
-      onClose: () => void;
-  }
-  const _default: React.ComponentType<AddScriptDialogPublicProps>;
-  export default _default;
-
-}
-declare module 'simulator/components/World/Item' {
-  import * as React from 'react';
-  import EditableList from 'simulator/components/EditableList/index';
-  import { ThemeProps } from 'simulator/components/theme';
-  export interface ItemProps extends EditableList.StandardItem.ComponentProps, ThemeProps {
-      name: string;
-      onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
-      selected?: boolean;
-  }
-  type Props = ItemProps;
-  class Item extends React.PureComponent<Props> {
-      constructor(props: Props);
-      render(): JSX.Element;
-  }
-  export default Item;
-
-}
-declare module 'simulator/components/World/NodeSettings' {
-  import * as React from "react";
-  import { ReferenceFrame } from "simulator/unit-math";
-  import { ThemeProps } from "simulator/components/theme";
-  import Geometry from 'simulator/state/State/Scene/Geometry';
-  import Node from "simulator/state/State/Scene/Node";
-  import Scene from "simulator/state/State/Scene/index";
-  export interface NodeSettingsPublicProps extends ThemeProps {
-      onNodeChange: (node: Node) => void;
-      onNodeOriginChange: (origin: ReferenceFrame) => void;
-      node: Node;
-      id: string;
-      onGeometryAdd: (id: string, geometry: Geometry) => void;
-      onGeometryChange: (id: string, geometry: Geometry) => void;
-      onGeometryRemove: (id: string) => void;
-      scene: Scene;
-  }
-  const _default: React.ComponentType<NodeSettingsPublicProps>;
-  export default _default;
-
-}
-declare module 'simulator/components/World/NodeSettingsDialog' {
-  import * as React from "react";
-  import { ReferenceFrame } from "simulator/unit-math";
-  import { ThemeProps } from "simulator/components/theme";
-  import Node from 'simulator/state/State/Scene/Node';
-  import Scene from "simulator/state/State/Scene/index";
-  import Geometry from "simulator/state/State/Scene/Geometry";
-  export type NodeSettingsAcceptance = Node;
-  export interface NodeSettingsDialogPublicProps extends ThemeProps {
-      node: Node;
-      id: string;
-      scene: Scene;
-      onChange: (node: Node) => void;
-      onOriginChange: (origin: ReferenceFrame) => void;
-      onGeometryAdd: (id: string, geometry: Geometry) => void;
-      onGeometryChange: (id: string, geometry: Geometry) => void;
-      onGeometryRemove: (id: string) => void;
-      onClose: () => void;
-  }
-  const _default: React.ComponentType<NodeSettingsDialogPublicProps>;
-  export default _default;
-
-}
-declare module 'simulator/components/World/SceneMenu' {
-  import * as React from 'react';
-  import { StyleProps } from 'simulator/style';
-  import { ThemeProps } from 'simulator/components/theme';
-  export interface SceneMenuPublicProps extends StyleProps, ThemeProps {
-      onSaveScene?: (event: React.MouseEvent) => void;
-      onNewScene?: (event: React.MouseEvent) => void;
-      onSaveAsScene?: (event: React.MouseEvent) => void;
-      onOpenScene?: (event: React.MouseEvent) => void;
-      onSettingsScene?: (event: React.MouseEvent) => void;
-      onDeleteScene?: (event: React.MouseEvent) => void;
-  }
-  const _default: React.ComponentType<SceneMenuPublicProps>;
-  export default _default;
-
-}
-declare module 'simulator/components/World/ScriptSettings' {
-  import * as React from "react";
-  import { ThemeProps } from "simulator/components/theme";
-  import Script from "simulator/state/State/Scene/Script";
-  export interface ScriptSettingsPublicProps extends ThemeProps {
-      onScriptChange: (script: Script) => void;
-      script: Script;
-      id: string;
-  }
-  const _default: React.ComponentType<ScriptSettingsPublicProps>;
-  export default _default;
-
-}
-declare module 'simulator/components/World/ScriptSettingsDialog' {
-  import * as React from "react";
-  import { ThemeProps } from "simulator/components/theme";
-  import Script from 'simulator/state/State/Scene/Script';
-  export type ScriptSettingsAcceptance = Script;
-  export interface ScriptSettingsDialogPublicProps extends ThemeProps {
-      script: Script;
-      id: string;
-      onClose: () => void;
-      onAccept: (acceptance: ScriptSettingsAcceptance) => void;
-  }
-  const _default: React.ComponentType<ScriptSettingsDialogPublicProps>;
-  export default _default;
-
-}
-declare module 'simulator/components/World/index' {
-  import * as React from 'react';
-  import { StyleProps } from 'simulator/style';
-  import { Theme, ThemeProps } from 'simulator/components/theme';
-  import Node from 'simulator/state/State/Scene/Node';
-  import Geometry from 'simulator/state/State/Scene/Geometry';
-  import { BarComponent } from 'simulator/components/Widget';
-  import { AsyncScene } from 'simulator/state/State/Scene/index';
-  import LocalizedString from 'simulator/util/LocalizedString';
-  import Script from 'simulator/state/State/Scene/Script';
-  namespace SceneState {
-      enum Type {
-          Clean = 0,
-          Saveable = 1,
-          Copyable = 2
-      }
-      interface Clean {
-          type: Type.Clean;
-      }
-      const CLEAN: Clean;
-      interface Saveable {
-          type: Type.Saveable;
-      }
-      const SAVEABLE: Saveable;
-      interface Copyable {
-          type: Type.Copyable;
-      }
-      const COPYABLE: Copyable;
-  }
-  export type SceneState = SceneState.Clean | SceneState.Saveable | SceneState.Copyable;
-  export const createWorldBarComponents: ({ theme, saveable, onSelectScene, onSaveScene, onCopyScene, locale }: {
-      theme: Theme;
-      saveable: boolean;
-      onSelectScene: () => void;
-      onSaveScene: () => void;
-      onCopyScene: () => void;
-      locale: LocalizedString.Language;
-  }) => BarComponent<object>[];
-  export interface Capabilities {
-      addNode?: boolean;
-      addScript?: boolean;
-      scriptSettings?: boolean;
-      removeNode?: boolean;
-      removeScript?: boolean;
-      nodeSettings?: boolean;
-      nodeVisibility?: boolean;
-      nodeReset?: boolean;
-  }
-  export const DEFAULT_CAPABILITIES: Capabilities;
-  export interface WorldPublicProps extends StyleProps, ThemeProps {
-      scene: AsyncScene;
-      onNodeAdd: (nodeId: string, node: Node) => void;
-      onNodeRemove: (nodeId: string) => void;
-      onNodeChange: (nodeId: string, node: Node) => void;
-      onObjectAdd: (nodeId: string, object: Node.Obj, geometry: Geometry) => void;
-      onGeometryAdd: (geometryId: string, geometry: Geometry) => void;
-      onGeometryRemove: (geometryId: string) => void;
-      onGeometryChange: (geometryId: string, geometry: Geometry) => void;
-      onScriptAdd: (scriptId: string, script: Script) => void;
-      onScriptRemove: (scriptId: string) => void;
-      onScriptChange: (scriptId: string, script: Script) => void;
-      capabilities?: Capabilities;
-  }
-  const _default: React.ComponentType<WorldPublicProps>;
-  export default _default;
-
-}
 declare module 'simulator/components/charm-util' {
   export const charmColor: (hue: number) => string;
 
@@ -4026,9 +3566,11 @@ declare module 'simulator/components/charm-util' {
 declare module 'simulator/components/common' {
   /// <reference types="react" />
   export const Spacer: import("styletron-react").StyletronComponent<Pick<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, keyof import("react").ClassAttributes<HTMLDivElement> | keyof import("react").HTMLAttributes<HTMLDivElement>>>;
-  export const leftBarSpacer: import("styletron-react").StyletronComponent<Pick<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, keyof import("react").ClassAttributes<HTMLDivElement> | keyof import("react").HTMLAttributes<HTMLDivElement>>>;
+  export const leftBarSpacerOpen: import("styletron-react").StyletronComponent<Pick<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, keyof import("react").ClassAttributes<HTMLDivElement> | keyof import("react").HTMLAttributes<HTMLDivElement>>>;
+  export const leftBarSpacerClosed: import("styletron-react").StyletronComponent<Pick<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, keyof import("react").ClassAttributes<HTMLDivElement> | keyof import("react").HTMLAttributes<HTMLDivElement>>>;
   export const middleBarSpacer: import("styletron-react").StyletronComponent<Pick<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, keyof import("react").ClassAttributes<HTMLDivElement> | keyof import("react").HTMLAttributes<HTMLDivElement>>>;
-  export const rightBarSpacer: import("styletron-react").StyletronComponent<Pick<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, keyof import("react").ClassAttributes<HTMLDivElement> | keyof import("react").HTMLAttributes<HTMLDivElement>>>;
+  export const rightBarSpacerOpen: import("styletron-react").StyletronComponent<Pick<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, keyof import("react").ClassAttributes<HTMLDivElement> | keyof import("react").HTMLAttributes<HTMLDivElement>>>;
+  export const rightBarSpacerClosed: import("styletron-react").StyletronComponent<Pick<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, keyof import("react").ClassAttributes<HTMLDivElement> | keyof import("react").HTMLAttributes<HTMLDivElement>>>;
 
 }
 declare module 'simulator/components/documentation/DocumentationRoot' {
@@ -4330,6 +3872,12 @@ declare module 'simulator/components/theme' {
   }
 
 }
+declare module 'simulator/database_js/Database' {
+  export const __esModule: true;
+  export const db: any;
+  export const userDB: any;
+
+}
 declare module 'simulator/db/Author' {
   namespace Author {
       enum Type {
@@ -4349,52 +3897,6 @@ declare module 'simulator/db/Author' {
   }
   type Author = Author.User | Author.Organization;
   export default Author;
-
-}
-declare module 'simulator/db/Builder' {
-  import Dict from 'simulator/Dict';
-  import { State } from 'simulator/state/index';
-  import { AsyncChallenge } from 'simulator/state/State/Challenge/index';
-  import { AsyncChallengeCompletion } from 'simulator/state/State/ChallengeCompletion/index';
-  import { AsyncScene } from 'simulator/state/State/Scene/index';
-  export class ChallengeBuilder {
-      private id_;
-      private builder_;
-      private challenge_;
-      constructor(id: string, builder: Builder);
-      scene(): SceneBuilder;
-      completion(): ChallengeCompletionBuilder;
-  }
-  export class ChallengeCompletionBuilder {
-      constructor(id: string | undefined, builder: Builder);
-  }
-  export class SceneBuilder {
-      constructor(id: string | undefined, builder: Builder);
-  }
-  class Builder {
-      private state_;
-      get state(): State;
-      private scenes_;
-      get scenes(): Dict<AsyncScene>;
-      private scenesToLoad_;
-      private challenges_;
-      get challenges(): Dict<AsyncChallenge>;
-      private challengesToLoad_;
-      private challengeCompletions_;
-      get challengeCompletions(): Dict<AsyncChallengeCompletion>;
-      private challengeCompletionsToLoad_;
-      constructor(state: State);
-      challenge(id: string): ChallengeBuilder;
-      scene(id: string): SceneBuilder;
-      addScene_(id: string, scene: AsyncScene): void;
-      addChallenge_(id: string, challenge: AsyncChallenge): void;
-      addChallengeCompletion_(id: string, challengeCompletion: AsyncChallengeCompletion): void;
-      loadScene_(id: string): void;
-      loadChallenge_(id: string): void;
-      loadChallengeCompletion_(id: string): void;
-      dispatchLoads(): void;
-  }
-  export default Builder;
 
 }
 declare module 'simulator/db/Db' {
@@ -4436,39 +3938,6 @@ declare module 'simulator/db/Error' {
       const is: (error: unknown) => error is Error;
   }
   export default Error;
-
-}
-declare module 'simulator/db/Record' {
-  import { AsyncChallenge } from 'simulator/state/State/Challenge/index';
-  import { AsyncChallengeCompletion } from 'simulator/state/State/ChallengeCompletion/index';
-  import { AsyncScene } from 'simulator/state/State/Scene/index';
-  import Selector from 'simulator/db/Selector';
-  namespace Record {
-      export enum Type {
-          Scene = "scene",
-          Challenge = "challenge",
-          ChallengeCompletion = "challenge-completion"
-      }
-      interface Base<T> {
-          id: string;
-          value: T;
-      }
-      export interface Scene extends Base<AsyncScene> {
-          type: Type.Scene;
-      }
-      export interface Challenge extends Base<AsyncChallenge> {
-          type: Type.Challenge;
-      }
-      export interface ChallengeCompletion extends Base<AsyncChallengeCompletion> {
-          type: Type.ChallengeCompletion;
-      }
-      export const selector: (record: Record) => Selector;
-      export const latestName: (record: Record) => import("simulator/util/LocalizedString").default;
-      export const latestDescription: (record: Record) => import("simulator/util/LocalizedString").default;
-      export {};
-  }
-  type Record = (Record.Scene | Record.Challenge | Record.ChallengeCompletion);
-  export default Record;
 
 }
 declare module 'simulator/db/Selector' {
@@ -4815,6 +4284,73 @@ declare module 'simulator/pages/Dashboard' {
   }
   const _default: React.ComponentType<DashboardPublicProps>;
   export default _default;
+
+}
+declare module 'simulator/pages/Modal' {
+  /// <reference types="react" />
+  export namespace Modal {
+      enum Type {
+          Settings = 0,
+          About = 1,
+          Exception = 2,
+          OpenScene = 3,
+          Feedback = 4,
+          FeedbackSuccess = 5,
+          None = 6,
+          NewScene = 7,
+          CopyScene = 8,
+          SettingsScene = 9,
+          DeleteRecord = 10,
+          ResetCode = 11,
+          CreateFile = 12,
+          CreateUser = 13,
+          CreateProject = 14,
+          OpenUsers = 15
+      }
+      interface Settings {
+          type: Type.Settings;
+      }
+      const SETTINGS: Settings;
+      interface About {
+          type: Type.About;
+      }
+      const ABOUT: About;
+      interface Feedback {
+          type: Type.Feedback;
+      }
+      const FEEDBACK: Feedback;
+      interface FeedbackSuccess {
+          type: Type.FeedbackSuccess;
+      }
+      const FEEDBACKSUCCESS: FeedbackSuccess;
+      interface Exception {
+          type: Type.Exception;
+          error: Error;
+          info?: React.ErrorInfo;
+      }
+      const exception: (error: Error, info?: React.ErrorInfo) => Exception;
+      interface None {
+          type: Type.None;
+      }
+      const NONE: None;
+      interface CreateProject {
+          type: Type.CreateProject;
+      }
+      const CREATEPROJECT: CreateProject;
+      interface CreateFile {
+          type: Type.CreateFile;
+      }
+      const CREATEFILE: CreateFile;
+      interface CreateUser {
+          type: Type.CreateUser;
+      }
+      const CREATEUSER: CreateUser;
+      interface OpenUsers {
+          type: Type.OpenUsers;
+      }
+      const OPENUSERS: OpenUsers;
+  }
+  export type Modal = (Modal.Settings | Modal.About | Modal.Exception | Modal.Feedback | Modal.FeedbackSuccess | Modal.None | Modal.CreateProject | Modal.CreateFile | Modal.CreateUser | Modal.OpenUsers);
 
 }
 declare module 'simulator/pages/Tutorials' {
@@ -5274,172 +4810,6 @@ declare module 'simulator/state/State/Async' {
   }
   type Async<B, T> = (Async.Unloaded<B> | Async.Creating<T> | Async.CreateFailed<T> | Async.Loading<B> | Async.LoadFailed<B> | Async.Loaded<B, T> | Async.Saveable<B, T> | Async.Saving<B, T> | Async.SaveFailed<B, T> | Async.Deleting<B, T> | Async.DeleteFailed<B, T>);
   export default Async;
-
-}
-declare module 'simulator/state/State/Challenge/Event' {
-  import LocalizedString from 'simulator/util/LocalizedString';
-  interface Event {
-      name: LocalizedString;
-      description: LocalizedString;
-  }
-  export default Event;
-
-}
-declare module 'simulator/state/State/Challenge/Expr' {
-  import Dict from 'simulator/Dict';
-  namespace Expr {
-      interface EvaluationContext {
-          exprs: Dict<Expr>;
-          eventStates: Dict<boolean>;
-          exprStates: Dict<boolean>;
-      }
-      enum Type {
-          Event = "event",
-          And = "and",
-          Or = "or",
-          Xor = "xor",
-          Not = "not",
-          Once = "once"
-      }
-      interface Event {
-          type: Type.Event;
-          eventId: string;
-      }
-      interface And {
-          type: Type.And;
-          argIds: string[];
-      }
-      namespace And {
-          const evaluate: (and: And, context: EvaluationContext) => boolean;
-      }
-      interface Or {
-          type: Type.Or;
-          argIds: string[];
-      }
-      namespace Or {
-          const evaluate: (or: Or, context: EvaluationContext) => boolean;
-      }
-      interface Xor {
-          type: Type.Xor;
-          argIds: string[];
-      }
-      namespace Xor {
-          const evaluate: (xor: Xor, context: EvaluationContext) => boolean;
-      }
-      interface Not {
-          type: Type.Not;
-          argId: string;
-      }
-      namespace Not {
-          const evaluate: (not: Not, context: EvaluationContext) => boolean;
-      }
-      interface Once {
-          type: Type.Once;
-          argId: string;
-      }
-      namespace Once {
-          const evaluate: (once: Once, context: EvaluationContext) => boolean;
-      }
-      const evaluate: (exprId: string, context: EvaluationContext) => boolean;
-  }
-  type Expr = (Expr.Event | Expr.And | Expr.Or | Expr.Xor | Expr.Not | Expr.Once);
-  export default Expr;
-
-}
-declare module 'simulator/state/State/Challenge/Predicate' {
-  import Dict from 'simulator/Dict';
-  import Expr from 'simulator/state/State/Challenge/Expr';
-  interface Predicate {
-      exprs: Dict<Expr>;
-      rootId: string;
-  }
-  namespace Predicate {
-      const evaluate: (predicate: Predicate, eventStates: Dict<boolean>, lastExprStates?: Dict<boolean>) => boolean;
-      const evaluateAll: (predicate: Predicate, eventStates: Dict<boolean>, lastExprStates?: Dict<boolean>) => Dict<boolean>;
-  }
-  export default Predicate;
-
-}
-declare module 'simulator/state/State/Challenge/index' {
-  import Author from 'simulator/db/Author';
-  import Dict from 'simulator/Dict';
-  import ProgrammingLanguage from 'simulator/ProgrammingLanguage';
-  import LocalizedString from 'simulator/util/LocalizedString';
-  import Async from 'simulator/state/State/Async';
-  import Event from 'simulator/state/State/Challenge/Event';
-  import Predicate from 'simulator/state/State/Challenge/Predicate';
-  interface Challenge {
-      name: LocalizedString;
-      description: LocalizedString;
-      author: Author;
-      code: {
-          [language in ProgrammingLanguage]: string;
-      };
-      defaultLanguage: ProgrammingLanguage;
-      events: Dict<Event>;
-      success?: Predicate;
-      failure?: Predicate;
-      sceneId: string;
-  }
-  export interface ChallengeBrief {
-      name: LocalizedString;
-      description: LocalizedString;
-      author: Author;
-  }
-  export namespace ChallengeBrief {
-      const fromChallenge: (challenge: Challenge) => ChallengeBrief;
-  }
-  export type AsyncChallenge = Async<ChallengeBrief, Challenge>;
-  export namespace AsyncChallenge {
-      const unloaded: (brief: ChallengeBrief) => AsyncChallenge;
-      const loaded: (challenge: Challenge) => AsyncChallenge;
-  }
-  export default Challenge;
-
-}
-declare module 'simulator/state/State/ChallengeCompletion/PredicateCompletion' {
-  import Dict from 'simulator/Dict';
-  import Predicate from 'simulator/state/State/Challenge/Predicate';
-  interface PredicateCompletion {
-      exprStates: Dict<boolean>;
-  }
-  namespace PredicateCompletion {
-      const EMPTY: PredicateCompletion;
-      const update: (predicateCompletion: PredicateCompletion, predicate: Predicate, eventStates: Dict<boolean>) => PredicateCompletion;
-  }
-  export default PredicateCompletion;
-
-}
-declare module 'simulator/state/State/ChallengeCompletion/index' {
-  import Dict from 'simulator/Dict';
-  import Async from 'simulator/state/State/Async';
-  import PredicateCompletion from 'simulator/state/State/ChallengeCompletion/PredicateCompletion';
-  import ProgrammingLanguage from 'simulator/ProgrammingLanguage';
-  import { ReferenceFrame } from 'simulator/unit-math';
-  interface ChallengeCompletion {
-      code: {
-          [language in ProgrammingLanguage]: string;
-      };
-      currentLanguage: ProgrammingLanguage;
-      serializedSceneDiff: string;
-      robotLinkOrigins?: Dict<Dict<ReferenceFrame>>;
-      eventStates: Dict<boolean>;
-      success?: PredicateCompletion;
-      failure?: PredicateCompletion;
-  }
-  namespace ChallengeCompletion {
-      const EMPTY: ChallengeCompletion;
-  }
-  export interface ChallengeCompletionBrief {
-  }
-  export namespace ChallengeCompletionBrief {
-  }
-  export type AsyncChallengeCompletion = Async<ChallengeCompletionBrief, ChallengeCompletion>;
-  export namespace AsyncChallenge {
-      const unloaded: (brief: ChallengeCompletionBrief) => AsyncChallengeCompletion;
-      const loaded: (challenge: ChallengeCompletion) => AsyncChallengeCompletion;
-  }
-  export default ChallengeCompletion;
 
 }
 declare module 'simulator/state/State/Documentation/DocumentationLocation' {
@@ -6489,8 +5859,6 @@ declare module 'simulator/state/State/index' {
   import LocalizedString from 'simulator/util/LocalizedString';
   import Dict from 'simulator/Dict';
   import Async from "simulator/state/State/Async";
-  import { AsyncChallenge } from 'simulator/state/State/Challenge/index';
-  import { AsyncChallengeCompletion } from 'simulator/state/State/ChallengeCompletion/index';
   import Documentation from 'simulator/state/State/Documentation/index';
   import DocumentationLocation from 'simulator/state/State/Documentation/DocumentationLocation';
   import Robot from 'simulator/state/State/Robot/index';
@@ -6498,14 +5866,6 @@ declare module 'simulator/state/State/index' {
   export type Scenes = Dict<AsyncScene>;
   export namespace Scenes {
       const EMPTY: Scenes;
-  }
-  export type Challenges = Dict<AsyncChallenge>;
-  export namespace Challenges {
-      const EMPTY: Challenges;
-  }
-  export type ChallengeCompletions = Dict<AsyncChallengeCompletion>;
-  export namespace ChallengeCompletions {
-      const EMPTY: ChallengeCompletions;
   }
   export interface Robots {
       robots: Dict<Async<Record<string, never>, Robot>>;
@@ -6534,211 +5894,17 @@ declare module 'simulator/state/history' {
 
 }
 declare module 'simulator/state/index' {
-  import { DocumentationState, ChallengeCompletions, Challenges, I18n, Robots, Scenes } from 'simulator/state/State/index';
+  import { DocumentationState, I18n, Robots, Scenes } from 'simulator/state/State/index';
   import { RouterState } from 'connected-react-router';
-  import Record from 'simulator/db/Record';
-  import Selector from 'simulator/db/Selector';
   const _default: import("redux").Store<import("redux").EmptyObject & State, import("redux").AnyAction>;
   export default _default;
   export interface State {
       scenes: Scenes;
-      challenges: Challenges;
-      challengeCompletions: ChallengeCompletions;
       robots: Robots;
       documentation: DocumentationState;
       router: RouterState;
       i18n: I18n;
   }
-  export namespace State {
-      const lookup: (state: State, selector: Selector) => Record | undefined;
-  }
-
-}
-declare module 'simulator/state/reducer/challengeCompletions' {
-  import { ChallengeCompletions } from 'simulator/state/State/index';
-  import ChallengeCompletion, { AsyncChallengeCompletion } from 'simulator/state/State/ChallengeCompletion/index';
-  import PredicateCompletion from 'simulator/state/State/ChallengeCompletion/PredicateCompletion';
-  import Scene from 'simulator/state/State/Scene/index';
-  import Dict from 'simulator/Dict';
-  import { OuterObjectPatch } from 'symmetry/dist';
-  import ProgrammingLanguage from 'simulator/ProgrammingLanguage';
-  import { ReferenceFrame } from 'simulator/unit-math';
-  export namespace ChallengeCompletionsAction {
-      interface LoadChallengeCompletion {
-          type: 'challenge-completions/load-challenge-completion';
-          challengeId: string;
-      }
-      const loadChallengeCompletion: (params: Omit<LoadChallengeCompletion, "type">) => LoadChallengeCompletion;
-      interface CreateChallengeCompletion {
-          type: 'challenge-completions/create-challenge-completion';
-          challengeId: string;
-          challengeCompletion: ChallengeCompletion;
-      }
-      const createChallengeCompletion: (params: Omit<CreateChallengeCompletion, "type">) => CreateChallengeCompletion;
-      interface SaveChallengeCompletion {
-          type: 'challenge-completions/save-challenge-completion';
-          challengeId: string;
-      }
-      const saveChallengeCompletion: (params: Omit<SaveChallengeCompletion, "type">) => SaveChallengeCompletion;
-      interface RemoveChallengeCompletion {
-          type: 'challenge-completions/remove-challenge-completion';
-          challengeId: string;
-      }
-      const removeChallenge: (params: Omit<RemoveChallengeCompletion, "type">) => RemoveChallengeCompletion;
-      interface SetChallengeCompletionInternal {
-          type: 'challenge-completions/set-challenge-completion-internal';
-          challengeId: string;
-          challengeCompletion: AsyncChallengeCompletion;
-      }
-      const setChallengeCompletionInternal: (params: Omit<SetChallengeCompletionInternal, "type">) => SetChallengeCompletionInternal;
-      interface SetSuccessPredicateCompletion {
-          type: 'challenge-completions/set-success-predicate-completion';
-          challengeId: string;
-          success?: PredicateCompletion;
-      }
-      const setSuccessPredicateCompletion: (params: Omit<SetSuccessPredicateCompletion, "type">) => SetSuccessPredicateCompletion;
-      interface SetFailurePredicateCompletion {
-          type: 'challenge-completions/set-failure-predicate-completion';
-          challengeId: string;
-          failure?: PredicateCompletion;
-      }
-      const setFailurePredicateCompletion: (params: Omit<SetFailurePredicateCompletion, "type">) => SetFailurePredicateCompletion;
-      interface RemoveEventState {
-          type: 'challenge-completions/remove-event-state';
-          challengeId: string;
-          eventId: string;
-      }
-      const removeEventState: (params: Omit<RemoveEventState, "type">) => RemoveEventState;
-      interface SetEventState {
-          type: 'challenge-completions/set-event-state';
-          challengeId: string;
-          eventId: string;
-          eventState: boolean;
-      }
-      const setEventState: (params: Omit<SetEventState, "type">) => SetEventState;
-      interface SetEventStates {
-          type: 'challenge-completions/set-event-states';
-          challengeId: string;
-          eventStates: Dict<boolean>;
-      }
-      const setEventStates: (params: Omit<SetEventStates, "type">) => SetEventStates;
-      interface SetEventStatesAndPredicateCompletions {
-          type: 'challenge-completions/set-event-states-and-predicate-completions';
-          challengeId: string;
-          eventStates: Dict<boolean>;
-          success?: PredicateCompletion;
-          failure?: PredicateCompletion;
-      }
-      const setEventStatesAndPredicateCompletions: (params: Omit<SetEventStatesAndPredicateCompletions, "type">) => SetEventStatesAndPredicateCompletions;
-      interface SetSceneDiff {
-          type: 'challenge-completions/set-scene-diff';
-          challengeId: string;
-          sceneDiff: OuterObjectPatch<Scene>;
-      }
-      const setSceneDiff: (params: Omit<SetSceneDiff, "type">) => SetSceneDiff;
-      interface ResetChallengeCompletion {
-          type: 'challenge-completions/reset-challenge-completion';
-          challengeId: string;
-      }
-      const resetChallengeCompletion: (params: Omit<ResetChallengeCompletion, "type">) => ResetChallengeCompletion;
-      interface SetCode {
-          type: 'challenge-completions/set-code';
-          challengeId: string;
-          language: ProgrammingLanguage;
-          code: string;
-      }
-      const setCode: (params: Omit<SetCode, "type">) => SetCode;
-      interface SetCurrentLanguage {
-          type: 'challenge-completions/set-current-language';
-          challengeId: string;
-          language: ProgrammingLanguage;
-      }
-      const setCurrentLanguage: (params: Omit<SetCurrentLanguage, "type">) => SetCurrentLanguage;
-      interface SetRobotLinkOrigins {
-          type: 'challenge-completions/set-robot-link-origins';
-          challengeId: string;
-          robotLinkOrigins: Dict<Dict<ReferenceFrame>>;
-      }
-      const setRobotLinkOrigins: (params: Omit<SetRobotLinkOrigins, "type">) => SetRobotLinkOrigins;
-  }
-  export type ChallengeCompletionsAction = (ChallengeCompletionsAction.LoadChallengeCompletion | ChallengeCompletionsAction.CreateChallengeCompletion | ChallengeCompletionsAction.SaveChallengeCompletion | ChallengeCompletionsAction.RemoveChallengeCompletion | ChallengeCompletionsAction.SetChallengeCompletionInternal | ChallengeCompletionsAction.SetSuccessPredicateCompletion | ChallengeCompletionsAction.SetFailurePredicateCompletion | ChallengeCompletionsAction.RemoveEventState | ChallengeCompletionsAction.SetEventState | ChallengeCompletionsAction.SetEventStates | ChallengeCompletionsAction.SetEventStatesAndPredicateCompletions | ChallengeCompletionsAction.SetSceneDiff | ChallengeCompletionsAction.ResetChallengeCompletion | ChallengeCompletionsAction.SetCode | ChallengeCompletionsAction.SetCurrentLanguage | ChallengeCompletionsAction.SetRobotLinkOrigins);
-  export const reduceChallengeCompletions: (state: ChallengeCompletions, action: ChallengeCompletionsAction) => ChallengeCompletions;
-
-}
-declare module 'simulator/state/reducer/challenges' {
-  import { Challenges } from 'simulator/state/State/index';
-  import Challenge, { AsyncChallenge } from 'simulator/state/State/Challenge/index';
-  import Predicate from 'simulator/state/State/Challenge/Predicate';
-  import Event from 'simulator/state/State/Challenge/Event';
-  import LocalizedString from 'simulator/util/LocalizedString';
-  export namespace ChallengesAction {
-      interface LoadChallenge {
-          type: 'challenges/load-challenge';
-          challengeId: string;
-      }
-      const loadChallenge: (params: Omit<LoadChallenge, "type">) => LoadChallenge;
-      interface CreateChallenge {
-          type: 'challenges/create-challenge';
-          challengeId: string;
-          challenge: Challenge;
-      }
-      const createChallenge: (params: Omit<CreateChallenge, "type">) => CreateChallenge;
-      interface SaveChallenge {
-          type: 'challenges/save-challenge';
-          challengeId: string;
-      }
-      const saveChallenge: (params: Omit<SaveChallenge, "type">) => SaveChallenge;
-      interface RemoveChallenge {
-          type: 'challenges/remove-challenge';
-          challengeId: string;
-      }
-      const removeChallenge: (params: Omit<RemoveChallenge, "type">) => RemoveChallenge;
-      interface SetChallengeInternal {
-          type: 'challenges/set-challenge-internal';
-          challengeId: string;
-          challenge: AsyncChallenge;
-      }
-      const setChallengeInternal: (params: Omit<SetChallengeInternal, "type">) => SetChallengeInternal;
-      interface SetSuccessPredicate {
-          type: 'challenges/set-success-predicate';
-          challengeId: string;
-          success?: Predicate;
-      }
-      const setSuccessPredicate: (params: Omit<SetSuccessPredicate, "type">) => SetSuccessPredicate;
-      interface SetFailurePredicate {
-          type: 'challenges/set-failure-predicate';
-          challengeId: string;
-          failure?: Predicate;
-      }
-      const setFailurePredicate: (params: Omit<SetFailurePredicate, "type">) => SetFailurePredicate;
-      interface RemoveEvent {
-          type: 'challenges/remove-event';
-          challengeId: string;
-          eventId: string;
-      }
-      const removeEvent: (params: Omit<RemoveEvent, "type">) => RemoveEvent;
-      interface SetEvent {
-          type: 'challenges/set-event';
-          challengeId: string;
-          eventId: string;
-          event: Event;
-      }
-      const setEvent: (params: Omit<SetEvent, "type">) => SetEvent;
-      interface SetName {
-          type: 'challenges/set-name';
-          challengeId: string;
-          name: LocalizedString;
-      }
-      const setName: (params: Omit<SetName, "type">) => SetName;
-      interface SetDescription {
-          type: 'challenges/set-description';
-          challengeId: string;
-          description: LocalizedString;
-      }
-      const setDescription: (params: Omit<SetDescription, "type">) => SetDescription;
-  }
-  export type ChallengesAction = (ChallengesAction.LoadChallenge | ChallengesAction.CreateChallenge | ChallengesAction.SaveChallenge | ChallengesAction.RemoveChallenge | ChallengesAction.SetChallengeInternal | ChallengesAction.SetSuccessPredicate | ChallengesAction.SetFailurePredicate | ChallengesAction.RemoveEvent | ChallengesAction.SetEvent | ChallengesAction.SetName | ChallengesAction.SetDescription);
-  export const reduceChallenges: (state: Challenges, action: ChallengesAction) => Challenges;
 
 }
 declare module 'simulator/state/reducer/documentation' {
@@ -6820,8 +5986,6 @@ declare module 'simulator/state/reducer/i18n' {
 declare module 'simulator/state/reducer/index' {
   export * from 'simulator/state/reducer/scenes';
   export * from 'simulator/state/reducer/robots';
-  export * from 'simulator/state/reducer/challenges';
-  export * from 'simulator/state/reducer/challengeCompletions';
   export * from 'simulator/state/reducer/documentation';
   export * from 'simulator/state/reducer/i18n';
 
