@@ -28,6 +28,7 @@ interface HomeNavigationState {
   isPanelVisible: boolean;
   isAddNewProject: boolean;
   isAddNewFile: boolean;
+  isClickFile: boolean;
   selectedProject: string;
   fileName: string;
   userName: string;
@@ -61,17 +62,31 @@ const HomeNavigationContainer = styled('div', (props: ThemeProps) => ({
   color: props.theme.color,
 }));
 
+const LeftBarContainer = styled('div', (props: ThemeProps) => ({
+
+  alignItems: 'left',
+  justifyContent: 'center',
+  width: '100%',
+  height: '100vh',
+  backgroundColor: props.theme.backgroundColor,
+  color: props.theme.color,
+}));
+
 
 const RootContainer = styled('div', (props: { theme: any; isleftbaropen_: string }) => {
-    //const marginLeft = props.isleftbaropen_ ? '15%' : '4%';
+  //const marginLeft = props.isleftbaropen_ ? '15%' : '4%';
+  const marginLeft = props.isleftbaropen_ === "true"
+    ? `${(window.innerWidth * 0.12)}px` // 13% of window.innerWidth
+    : `${(window.innerWidth * 0.04)}px`; // 4% of window.innerWidth
+
   return {
     position: 'absolute',
     top: '4%',
     left: '2%',
     display: 'flex',
     flexWrap: 'wrap',
-    marginLeft: props.isleftbaropen_ == "true" ? '15%' : '4%', // Shift based on LeftBar state
-   
+    // marginLeft: props.isleftbaropen_ == "true" ? '13%' : '4%', // Shift based on LeftBar state
+    marginLeft: marginLeft,
     flexDirection: 'row',
     justifyContent: 'start',
     width: '30%',
@@ -89,6 +104,7 @@ class HomeNavigation extends React.PureComponent<Props, State> {
       isPanelVisible: false,
       isAddNewProject: false,
       isAddNewFile: false,
+      isClickFile: false,
       fileName: '',
       userName: '',
       activeLanguage: 'c',
@@ -128,11 +144,36 @@ class HomeNavigation extends React.PureComponent<Props, State> {
       fileName: fileName,
       activeLanguage: activeLanguage,
       selectedProject: projectName
+    }, () => {
+      console.log('Inside onProjectSelected in HomeNavigation.tsx with state:', this.state);
     });
 
-   // console.log('Inside onProjectSelected in HomeNavigation.tsx with userName:', userName, 'projectName:', projectName, 'fileName:', fileName, 'activeLanguage:', activeLanguage);
-    console.log('Inside onProjectSelected in HomeNavigation.tsx with state:', this.state);
+    // console.log('Inside onProjectSelected in HomeNavigation.tsx with userName:', userName, 'projectName:', projectName, 'fileName:', fileName, 'activeLanguage:', activeLanguage);
 
+
+  };
+
+  private onFileSelected = (selectedUserName: string, selectedProjectName: string, selectedFileName: string, selectedLanguage: ProgrammingLanguage, selectedFileType: string) => {
+    console.log("Selected project:", selectedProjectName);
+    console.log("Selected file:", selectedFileName);
+    console.log("Selected language:", selectedLanguage);
+    console.log("Selected fileType:", selectedFileType);
+
+    console.log("onFileSelected current state:", this.state);
+    console.log("previous state fileName:", this.state.fileName);
+
+    this.setState({
+      userName: selectedUserName,
+      projectName: selectedProjectName,
+      fileName: selectedFileName,
+      activeLanguage: selectedLanguage,
+      fileType: selectedFileType,
+      isClickFile: true
+    }, () => {
+      console.log('Inside onFileSelected in HomeNavigation.tsx with state:', this.state);
+    });
+
+    // console.log('Inside onProjectSelected in HomeNavigation.tsx with userName:', userName, 'projectName:', projectName, 'fileName:', fileName, 'activeLanguage:', activeLanguage);
   };
 
   private onChangeProjectName_ = (projectName: string) => {
@@ -142,16 +183,14 @@ class HomeNavigation extends React.PureComponent<Props, State> {
       projectName
     });
   }
-  private onAddNewProject_ = (userName: string, activeLanguage: ProgrammingLanguage) => {
+  private onAddNewProject_ = (userName: string) => {
 
     console.log("homeNavigation onAddNewProject_ passed userName:", userName);
-    console.log("homeNavigation onAddNewProject_ passed activeLanguage:", activeLanguage);
+
     this.setState({
       isAddNewProject: true,
       userName: userName,
-      // fileName: `main.${ProgrammingLanguage.FILE_EXTENSION[activeLanguage]}`,
-      activeLanguage: activeLanguage
-    }); 
+    });
 
   };
 
@@ -183,6 +222,13 @@ class HomeNavigation extends React.PureComponent<Props, State> {
     console.log("setAddNewFile_ isAddNewFile:", isAddNewFile);
   }
 
+  private setClickFile_ = (isClickFile: boolean) => {
+    this.setState({
+      isClickFile: isClickFile
+    });
+
+    console.log("setClickFile_ isClickFile:", isClickFile);
+  }
 
   private onUserSelected = (userName: string) => {
     this.setState({
@@ -192,7 +238,7 @@ class HomeNavigation extends React.PureComponent<Props, State> {
 
   render() {
     const { props, state } = this;
-    const { className, style} = props;
+    const { className, style } = props;
     const {
       isPanelVisible,
       activeLanguage,
@@ -201,6 +247,7 @@ class HomeNavigation extends React.PureComponent<Props, State> {
       userName,
       isAddNewProject,
       isAddNewFile,
+      isClickFile,
       fileType
     } = state;
     const theme = DARK;
@@ -209,27 +256,30 @@ class HomeNavigation extends React.PureComponent<Props, State> {
       <HomeNavigationContainer theme={theme}>
         <Container className={className} style={style} theme={theme}>
           <MainMenu theme={theme} />
+          <LeftBarContainer theme={theme}>
 
-          <LeftBar theme={theme} onToggle={this.toggleLeftBar_} />
+            <LeftBar theme={theme} onToggle={this.toggleLeftBar_} />
 
-          {isPanelVisible && (
-            <FileExplorer
-              theme={theme}
-              robots={{}}
-              locale={'en-US'}
-              propsSelectedProjectName={this.state.projectName}
-              onProjectSelected={this.onProjectSelected}
-              onUserSelected={this.onUserSelected}
-              onAddNewProject={this.onAddNewProject_}
-              onAddNewFile={this.onAddNewFile_}
-              addProjectFlag={isAddNewProject}
-              addFileFlag = {isAddNewFile}
-            />
+            {isPanelVisible && (
+              <FileExplorer
+                theme={theme}
+                robots={{}}
+                locale={'en-US'}
+                propsSelectedProjectName={this.state.projectName}
+                onProjectSelected={this.onProjectSelected}
+                onFileSelected={this.onFileSelected}
+                onUserSelected={this.onUserSelected}
+                onAddNewProject={this.onAddNewProject_}
+                onAddNewFile={this.onAddNewFile_}
+                addProjectFlag={isAddNewProject}
+                addFileFlag={isAddNewFile}
+              />
 
-          )}
+            )}
+          </LeftBarContainer>
 
           <RootContainer theme={theme} isleftbaropen_={this.state.isleftbaropen__ ? "true" : "false"}>
-            
+
             <Root
               key={this.state.selectedProject}
               isLeftBarOpen={this.state.isleftbaropen__}
@@ -242,11 +292,13 @@ class HomeNavigation extends React.PureComponent<Props, State> {
               propUserName={userName}
               addNewProject={isAddNewProject}
               addNewFile={isAddNewFile}
+              clickFile={isClickFile}
               otherFileType={fileType}
               setAddNewProject={this.setAddNewProject_}
               setAddNewFile={this.setAddNewFile_}
+              setClickFile={this.setClickFile_}
               changeProjectName={this.onChangeProjectName_}
-              />
+            />
           </RootContainer>
         </Container>
 
