@@ -3,7 +3,7 @@ import * as React from 'react';
 import { styled } from 'styletron-react';
 import { StyleProps } from '../../style';
 import { Theme, ThemeProps } from '../theme';
-import { Spacer, middleBarSpacer, rightBarSpacerOpen, rightBarSpacerClosed, leftBarSpacerOpen, leftBarSpacerClosed } from '../common';
+import {middleBarSpacer, rightBarSpacerOpen, rightBarSpacerClosed, leftBarSpacerOpen, leftBarSpacerClosed } from '../common';
 import { Fa } from '../Fa';
 import { Button } from '../Button';
 import { Text } from '../Text';
@@ -11,21 +11,17 @@ import { BarComponent } from '../Widget';
 import { WarningCharm, ErrorCharm } from './';
 
 import { Ivygate, Message } from 'ivygate';
-import LanguageSelectCharm from './LanguageSelectCharm';
+
 import ProgrammingLanguage from '../../ProgrammingLanguage';
-import { CreateUserDialog } from 'components/CreateUserDialog';
-import { faArrowsRotate, faFile, faFileDownload, faFloppyDisk, faIndent, faPlay } from '@fortawesome/free-solid-svg-icons';
+
+import { faFileDownload, faFloppyDisk, faIndent, faLink, faPlay } from '@fortawesome/free-solid-svg-icons';
 import Script from '../../state/State/Scene/Script';
 import Dict from '../../Dict';
-
 import * as monaco from 'monaco-editor';
-import DocumentationLocation from '../../state/State/Documentation/DocumentationLocation';
-import { DocumentationAction } from '../../state/reducer';
+
 import tr from '@i18n';
-import { connect } from 'react-redux';
-import { State as ReduxState } from '../../state';
+
 import LocalizedString from '../../util/LocalizedString';
-import DeleteDialog from 'components/DeleteDialog';
 
 
 export enum EditorActionState {
@@ -56,7 +52,7 @@ interface EditorState {
 type Props = EditorPublicProps;
 type State = EditorState;
 
-const Container = styled('div', (props: {theme: Theme; isleftbaropen: string}) => ({
+const Container = styled('div', (props: { theme: Theme; isleftbaropen: string }) => ({
   flex: '1',
   backgroundColor: props.theme.backgroundColor,
   color: props.theme.color,
@@ -76,7 +72,7 @@ export namespace EditorBarTarget {
   export enum Type {
     Robot,
     Script,
-  
+
   }
 
   export interface Robot {
@@ -91,6 +87,7 @@ export namespace EditorBarTarget {
     onIndentCode: () => void;
     onSaveCode: () => void;
     onRunClick: () => void;
+    onCompileClick: () => void;
     onDownloadCode: () => void;
     onErrorClick: (event: React.MouseEvent<HTMLDivElement>) => void;
   }
@@ -100,7 +97,7 @@ export type EditorBarTarget = EditorBarTarget.Robot;
 
 
 export const createNavigationNamesBar = (
-  theme: Theme, 
+  theme: Theme,
   onClearConsole: () => void,
   locale: LocalizedString.Language
 ) => {
@@ -121,12 +118,12 @@ export const createEditorBarComponents = ({
 
 
 }: {
-  theme: Theme, 
+  theme: Theme,
   target: EditorBarTarget,
   locale: LocalizedString.Language,
-  
+
 }) => {
-  
+
   // eslint-disable-next-line @typescript-eslint/ban-types
   const editorBar: BarComponent<object>[] = [];
   let wn = `${window.location.pathname}`;
@@ -147,73 +144,83 @@ export const createEditorBarComponents = ({
           </>
       }));
 
-
-     if(target.isleftbaropen_){
-      editorBar.push(BarComponent.create(leftBarSpacerOpen, {
+      editorBar.push(BarComponent.create(Button, {
+        theme,
+        onClick: target.onCompileClick,
+        children:
+          <>
+            <Fa icon={faLink} />
+            {' '} {LocalizedString.lookup(tr('Compile'), locale)}
+          </>
       }));
-     }
-     else{
-      editorBar.push(BarComponent.create(leftBarSpacerClosed, {
-      }));
 
-     }
-   
+
+      if (target.isleftbaropen_) {
+        editorBar.push(BarComponent.create(leftBarSpacerOpen, {
+        }));
+      }
+      else {
+        editorBar.push(BarComponent.create(leftBarSpacerClosed, {
+        }));
+
+      }
+
 
       editorBar.push(BarComponent.create(Text, {
         text: 'User:'
       }));
 
       editorBar.push(BarComponent.create(middleBarSpacer, {
-        
-      })); 
+
+      }));
 
       editorBar.push(BarComponent.create(Text, {
         text: target.userName
       }));
 
       editorBar.push(BarComponent.create(middleBarSpacer, {
-        
-      })); 
+
+      }));
 
 
       editorBar.push(BarComponent.create(Text, {
         text: 'Project Name:'
       }));
-      
+
       editorBar.push(BarComponent.create(middleBarSpacer, {
-        
-      })); 
+
+      }));
       editorBar.push(BarComponent.create(Text, {
         text: target.projectName
       }));
       editorBar.push(BarComponent.create(middleBarSpacer, {
-        
-      })); 
+
+      }));
       editorBar.push(BarComponent.create(Text, {
         text: 'File Name:',
-      
+
       }));
       editorBar.push(BarComponent.create(middleBarSpacer, {
-        
-      })); 
+
+      }));
       editorBar.push(BarComponent.create(Text, {
         text: target.fileName
       }));
 
-      if(target.isleftbaropen_.toString() === 'true'){
+      if (target.isleftbaropen_.toString() === 'true') {
         console.log("Left bar is open");
         editorBar.push(BarComponent.create(rightBarSpacerOpen, {
-        
+
         }));
 
       }
       else {
         console.log("Left bar is closed");
         editorBar.push(BarComponent.create(rightBarSpacerClosed, {
-        
+
         }));
       }
-      
+
       editorBar.push(BarComponent.create(Button, {
         theme,
         onClick: target.onSaveCode,
@@ -279,6 +286,10 @@ export const createEditorBarComponents = ({
 
 export const IVYGATE_LANGUAGE_MAPPING: Dict<string> = {
   'ecmascript': 'javascript',
+  'python': 'python',
+  'c': 'c',
+  'cpp': 'c',
+  'plaintext': 'plaintext',
 };
 
 const DOCUMENTATION_LANGUAGE_MAPPING: { [key in ProgrammingLanguage | Script.Language]: 'c' | 'python' | 'plaintext' } = {
@@ -299,13 +310,24 @@ class Editor extends React.PureComponent<Props, State> {
   }
 
   componentDidMount() {
-    
+    console.log("inside componentDidMount in Editor.tsx with props:", this.props);
+
   }
 
-  componentDidUpdate() {
+  async componentDidUpdate(prevProps: Props) {
 
-    if(this.props.isleftbaropen !== this.state.isleftbaropen){
-      this.setState({isleftbaropen: this.props.isleftbaropen});
+    if (this.props.isleftbaropen !== this.state.isleftbaropen) {
+      this.setState({ isleftbaropen: this.props.isleftbaropen });
+    }
+
+    if (this.props.language !== prevProps.language) {
+      console.log("Editor Language changed from: ", prevProps.language);
+      console.log("Editor Language changed to: ", this.props.language);
+    }
+
+    if(this.props.code !== prevProps.code){
+      console.log("Code changed from: ", prevProps.code);
+      console.log("Code changed to: ", this.props.code);
     }
 
 
@@ -315,7 +337,7 @@ class Editor extends React.PureComponent<Props, State> {
     const language = DOCUMENTATION_LANGUAGE_MAPPING[this.props.language];
     if (!language) return;
     this.props.onDocumentationGoToFuzzy?.(word, language);
-    
+
   };
 
   private openDocumentationAction_?: monaco.IDisposable;
@@ -351,6 +373,8 @@ class Editor extends React.PureComponent<Props, State> {
   }
 
   render() {
+
+    console.log("inside render in Editor.tsx with props:", this.props);
     const {
       style,
       className,
