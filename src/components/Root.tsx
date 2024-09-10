@@ -1,187 +1,50 @@
 import * as React from 'react';
-import { signOutOfApp } from '../firebase/modules/auth';
 import WorkerInstance from '../WorkerInstance';
 
 import { State as ReduxState } from '../state';
-
-
-import SimMenu from './SimMenu';
-
+import parseMessages, { hasErrors, hasWarnings, sort, toStyledText } from '../util/parse-messages';
 import { styled } from 'styletron-react';
-import { DARK, Theme, ThemeProps } from './theme';
-import { Layout, LayoutProps, OverlayLayout, OverlayLayoutRedux, SideLayoutRedux } from './Layout';
+import { DARK, Theme } from './theme';
+import { Layout } from './Layout';
 
 import SettingsDialog from './SettingsDialog';
 import AboutDialog from './AboutDialog';
 
-import FeedbackDialog from './Feedback';
-import { sendFeedback, FeedbackResponse } from './Feedback/SendFeedback';
-import FeedbackSuccessDialog from './Feedback/SuccessModal';
-
-import compile from '../compile';
 import { SimulatorState } from './SimulatorState';
-import { Angle, Distance, StyledText } from '../util';
+import { StyledText } from '../util';
 import { Message } from 'ivygate';
-import parseMessages, { hasErrors, hasWarnings, sort, toStyledText } from '../util/parse-messages';
 
 import { Space } from '../Sim';
-
+import axios from 'axios';
 import { DEFAULT_SETTINGS, Settings } from '../Settings';
 import { DEFAULT_FEEDBACK, Feedback } from '../Feedback';
-import ExceptionDialog from './ExceptionDialog';
-import OpenSceneDialog from './OpenSceneDialog';
 
-import { ChallengesAction, DocumentationAction, ScenesAction, ChallengeCompletionsAction } from '../state/reducer';
-import { createEditorBarComponents, Editor, EditorBarTarget } from './Editor';
+
+import { Editor } from './Editor';
 import Dict from '../Dict';
 import ProgrammingLanguage from '../ProgrammingLanguage';
 
 
-import Scene, { AsyncScene } from '../state/State/Scene';
+import { AsyncScene } from '../state/State/Scene';
 import { RouteComponentProps } from 'react-router';
 
 import { connect } from 'react-redux';
-import Async from '../state/State/Async';
-import construct from '../util/construct';
-
-import DeleteDialog from './DeleteDialog';
-import Record from '../db/Record';
-import Selector from '../db/Selector';
-
 
 import LocalizedString from '../util/LocalizedString';
-
-
-import { Vector3 } from '../unit-math';
-import { LayoutEditorTarget } from './Layout/Layout';
-import { AsyncChallenge } from '../state/State/Challenge';
-import Builder from '../db/Builder';
-import ChallengeCompletion, { AsyncChallengeCompletion } from '../state/State/ChallengeCompletion';
 
 import DocumentationLocation from '../state/State/Documentation/DocumentationLocation';
 
 import tr from '@i18n';
-import Geometry from 'state/State/Scene/Geometry';
-import Node from 'state/State/Scene/Node';
-import Script from 'state/State/Scene/Script';
-import Widget, { Mode } from './Widget';
-import { Console, createConsoleBarComponents } from './Console';
-import { FileExplorerSideLayoutRedux } from './FileExplorer';
-import User from './User';
-import fs from 'fs';
+
 import { HomeStartOptions } from './HomeStartOptions';
 import NewFileDialog from './NewFileDialog';
 import EditorPage from './EditorPage';
 import CreateProjectDialog from './CreateProjectDialog';
-import CreateUserDialog from './CreateUserDialog';
 
+import { DatabaseService } from './DatabaseService';
+import compile from '../compile';
+import { Modal } from '../pages/Modal';
 
-namespace Modal {
-  export enum Type {
-    Settings,
-    About,
-    Exception,
-    OpenScene,
-    Feedback,
-    FeedbackSuccess,
-    None,
-    NewScene,
-    CopyScene,
-    SettingsScene,
-    DeleteRecord,
-    ResetCode
-  }
-
-  export interface Settings {
-    type: Type.Settings;
-  }
-
-  export const SETTINGS: Settings = { type: Type.Settings };
-
-  export interface About {
-    type: Type.About;
-  }
-
-  export const ABOUT: About = { type: Type.About };
-
-  export interface Feedback {
-    type: Type.Feedback;
-  }
-
-  export const FEEDBACK: Feedback = { type: Type.Feedback };
-
-  export interface FeedbackSuccess {
-    type: Type.FeedbackSuccess;
-  }
-
-  export const FEEDBACKSUCCESS: FeedbackSuccess = { type: Type.FeedbackSuccess };
-
-  export interface Exception {
-    type: Type.Exception;
-    error: Error;
-    info?: React.ErrorInfo;
-  }
-
-  export const exception = (error: Error, info?: React.ErrorInfo): Exception => ({ type: Type.Exception, error, info });
-
-  export interface SelectScene {
-    type: Type.OpenScene;
-  }
-
-  export const SELECT_SCENE: SelectScene = { type: Type.OpenScene };
-
-  export interface None {
-    type: Type.None;
-  }
-
-  export const NONE: None = { type: Type.None };
-
-  export interface NewScene {
-    type: Type.NewScene;
-  }
-
-  export const NEW_SCENE: NewScene = { type: Type.NewScene };
-
-  export interface CopyScene {
-    type: Type.CopyScene;
-    scene: Scene;
-  }
-
-  export const copyScene = construct<CopyScene>(Type.CopyScene);
-  export interface DeleteRecord {
-    type: Type.DeleteRecord;
-    record: Record;
-  }
-
-  export const deleteRecord = construct<DeleteRecord>(Type.DeleteRecord);
-
-  export interface SettingsScene {
-    type: Type.SettingsScene;
-  }
-
-  export const SETTINGS_SCENE: SettingsScene = { type: Type.SettingsScene };
-
-  export interface ResetCode {
-    type: Type.ResetCode;
-  }
-
-  export const RESET_CODE: ResetCode = { type: Type.ResetCode };
-}
-
-export type Modal = (
-  Modal.Settings |
-  Modal.About |
-  Modal.Exception |
-  Modal.SelectScene |
-  Modal.Feedback |
-  Modal.FeedbackSuccess |
-  Modal.None |
-  Modal.NewScene |
-
-  Modal.DeleteRecord |
-  Modal.SettingsScene |
-  Modal.ResetCode
-);
 
 interface RootParams {
   sceneId?: string;
@@ -189,6 +52,19 @@ interface RootParams {
 }
 
 export interface RootPublicProps extends RouteComponentProps<RootParams> {
+  propFileName: string;
+  propProjectName: string;
+  propActiveLanguage: ProgrammingLanguage;
+  propUserName: string;
+  addNewProject: boolean;
+  addNewFile: boolean;
+  clickFile: boolean;
+  otherFileType?: string;
+  isLeftBarOpen: boolean;
+  changeProjectName: (projectName: string) => void;
+  setAddNewProject: (addNewProject: boolean) => void;
+  setAddNewFile: (addNewFile: boolean) => void;
+  setClickFile: (clickFile: boolean) => void;
 
 }
 
@@ -196,8 +72,6 @@ export interface RootPublicProps extends RouteComponentProps<RootParams> {
 
 interface RootPrivateProps {
   scene: AsyncScene;
-  challenge?: AsyncChallenge;
-  challengeCompletion?: AsyncChallengeCompletion;
   locale: LocalizedString.Language;
   onClearConsole: () => void;
   onIndentCode: () => void;
@@ -242,8 +116,14 @@ interface RootState {
   isEditorPageVisible: boolean;
   isCreateProjectDialogVisible: boolean;
   isCreateNewUserDialogVisible: boolean;
+  isOpenUserProject: boolean;
   projectName: string;
   fileName: string;
+  addNewProject: boolean;
+  addNewFile: boolean;
+  clickFileState: boolean;
+
+  otherFileType?: string;
 
   userName: string;
 
@@ -257,67 +137,13 @@ type State = RootState;
 interface ContainerProps {
   $windowInnerHeight: number
 }
-const FlexConsole = styled(Console, {
-  flex: 'auto',
-});
-
-const Container = styled('div', (props: ContainerProps) => ({
-  width: '100vw',
-  height: `${props.$windowInnerHeight}px`, // fix for mobile, see https://chanind.github.io/javascript/2019/09/28/avoid-100vh-on-mobile-web.html
-  display: 'flex',
-  flexDirection: 'row',
-  overflow: 'hidden',
-  position: 'fixed',
-  marginTop: '45px',
-  flex: 'auto',
-  justifyContent: 'flex-end',
 
 
-}));
 interface ClickProps {
   onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
   disabled?: boolean;
 }
 
-const TestBoxContainer = styled('div', (props: ContainerProps) => ({
-  width: '800px',
-  height: `100px`, // fix for mobile, see https://chanind.github.io/javascript/2019/09/28/avoid-100vh-on-mobile-web.html
-  display: 'flex',
-  flexDirection: 'row',
-  marginTop: '45px',
-  justifyContent: 'flex-start',
-  backgroundColor: 'green'
-
-}));
-
-const TestBoxContainerItem = styled('div', (props: ThemeProps & ClickProps) => ({
-  width: '150px',
-  height: `20px`, // fix for mobile, see https://chanind.github.io/javascript/2019/09/28/avoid-100vh-on-mobile-web.html
-  display: 'flex',
-  flexDirection: 'row',
-  poisition: 'relative',
-  overflow: 'hidden',
-  marginTop: '45px',
-  flex: 'auto',
-  backgroundColor: 'blue',
-  color: 'white',
-  borderColor: 'black',
-  borderStyle: 'solid',
-  borderWidth: '4px',
-  alignItems: 'start',
-
-}));
-
-const EditorConsoleContainer = styled('div', (props: ContainerProps) => ({
-
-  height: `${props.$windowInnerHeight}px`, // fix for mobile, see https://chanind.github.io/javascript/2019/09/28/avoid-100vh-on-mobile-web.html
-  display: 'flex',
-  flexDirection: 'column',
-  overflow: 'hidden',
-  position: 'fixed',
-  flex: 'auto'
-
-}));
 
 const RootContainer = styled('div', (props: ContainerProps) => ({
   width: '100vw',
@@ -335,44 +161,9 @@ const STDOUT_STYLE = (theme: Theme) => ({
 const STDERR_STYLE = (theme: Theme) => ({
   color: 'red'
 });
-const SidePanelContainer = styled('div', {
-  display: 'flex',
-  flex: 'auto',
-  position: 'relative',
-  width: '100vw'
 
-});
-
-const SimulatorWidget = styled(Widget, {
-  display: 'flex',
-  flex: 'auto',
-  height: '100%',
-  width: '100%',
-});
-const SimultorWidgetContainer = styled('div', {
-  display: 'flex',
-  flex: 'auto',
-  height: '100%',
-
-  overflow: 'hidden',
-
-
-});
-const StartOptionContainer = styled('div', (props: ThemeProps) => ({
-  position: 'absolute',
-  display: 'flex',
-  flexWrap: 'wrap',
-  flexDirection: 'row',
-  justifyContent: 'start',
-  top: '36%',
-  marginLeft: '20%',
-  backgroundColor: 'green',
-  width: '50%',
-  height: '40%',
-}));
 class Root extends React.Component<Props, State> {
   private editorRef: React.MutableRefObject<Editor>;
-  private overlayLayoutRef: React.MutableRefObject<OverlayLayout>;
 
 
   constructor(props: Props) {
@@ -388,7 +179,7 @@ class Root extends React.Component<Props, State> {
       },
       modal: Modal.NONE,
       simulatorState: SimulatorState.STOPPED,
-      editorConsole: StyledText.text({ text: LocalizedString.lookup(tr('Welcome to the KIPR Simulator!\n'), props.locale), style: STDOUT_STYLE(DARK) }),
+      editorConsole: StyledText.text({ text: LocalizedString.lookup(tr('Welcome to the KIPR IDE!\n'), props.locale), style: STDOUT_STYLE(DARK) }),
       theme: DARK,
       messages: [],
       settings: DEFAULT_SETTINGS,
@@ -399,25 +190,209 @@ class Root extends React.Component<Props, State> {
       isEditorPageVisible: false,
       isCreateProjectDialogVisible: false,
       isCreateNewUserDialogVisible: false,
+      isOpenUserProject: false,
       projectName: '',
-      fileName: 'main.cpp',
-      userName: ''
+      fileName: '',
+      userName: '',
+      addNewProject: this.props.addNewProject,
+      addNewFile: this.props.addNewFile,
+      clickFileState: this.props.clickFile,
+
 
     };
 
     this.editorRef = React.createRef();
-    this.overlayLayoutRef = React.createRef();
+
 
   }
 
   componentDidMount() {
     WorkerInstance.onStopped = this.onStopped_;
 
-
-
     this.scheduleUpdateConsole_();
     window.addEventListener('resize', this.onWindowResize_);
+    console.log("isAddNewProject in mount Root.tsx:", this.props.addNewProject);
+    console.log("Root.tsx: this.props:", this.props);
+    console.log("addNewProject in state:", this.state.addNewProject);
+
+    if (this.props.propUserName !== '' && this.props.propProjectName !== '' && this.props.propFileName !== '') {
+      this.setState({
+        userName: this.props.propUserName,
+        projectName: this.props.propProjectName,
+        fileName: this.props.propFileName,
+        activeLanguage: this.props.propActiveLanguage,
+        isOpenUserProject: true,
+        isHomeStartOptionsVisible: false,
+        isNewFileDialogVisible: false,
+        isEditorPageVisible: true
+      });
+    }
   }
+
+
+  componentDidUpdate = async (prevProps: Props, prevState: State) => {
+
+
+    if (prevProps.addNewProject !== this.props.addNewProject) {
+
+
+      if (this.props.addNewProject) {
+        console.log("addNewProject in update Root.tsx is true");
+        console.log("isAddNewProject in update Root.tsx with userName:", this.props.propUserName);
+        console.log("isAddNewProject in update Root.tsx with projectName:", this.state.projectName);
+        this.setState({
+          userName: this.props.propUserName,
+          modal: Modal.CREATEPROJECT,
+
+        });
+
+
+      }
+    }
+    else if (prevProps.addNewFile !== this.props.addNewFile) {
+
+      if (this.props.addNewFile) {
+        console.log("addNewFile in update Root.tsx is true");
+        console.log("Root update with propProjectName:", this.props.propProjectName);
+        console.log("Root update with otherFileType:", this.props.otherFileType);
+        switch (this.props.otherFileType) {
+          case 'h':
+          case 'c':
+            this.setState({
+              activeLanguage: 'c'
+            });
+            break;
+          case 'cpp':
+            this.setState({
+              activeLanguage: 'cpp'
+            });
+            break;
+          case 'py':
+            this.setState({
+              activeLanguage: 'python'
+            });
+            break;
+          case 'txt':
+            this.setState({
+              activeLanguage: 'plaintext' // Change to 'plaintext'
+            });
+            break;
+          // default:
+          //   this.setState({
+          //     activeLanguage: 'plaintext' // Fallback to 'plaintext' for unknown file types
+          //   });
+          //   break;
+        }
+
+        this.setState({
+          isNewFileDialogVisible: true,
+          modal: Modal.CREATEFILE,
+        })
+
+
+
+
+      }
+    }
+    else if (prevProps.clickFile !== this.props.clickFile) {
+      if (this.props.clickFile) {
+        console.log("clickFile in update Root.tsx is true");
+        console.log("Proped props from HomeNavigation:", this.props.propUserName, this.props.propProjectName, this.props.propActiveLanguage, this.props.propFileName, this.props.otherFileType);
+        await this.loadCodeBasedOnExtension();
+        //if proped active language is python and otherFileType is h, change activeLanguage to c 
+        //because of how h files are in c instead of python
+        if (this.props.propActiveLanguage === 'python' && this.props.otherFileType === 'h') {
+          console.log("Root.tsx: Changing activeLanguage to c because language is python and filetype is h");
+          this.setState({
+            activeLanguage: 'c'
+          }, () => {
+            console.log("New active language:", this.state.activeLanguage);
+          });
+        } else {
+          console.log("Root.tsx: Setting activeLanguage to propActiveLanguage");
+          this.setState({
+
+            activeLanguage: this.props.propActiveLanguage,
+
+          }, () => {
+            console.log("New active language:", this.state.activeLanguage);
+          });
+
+        }
+
+        this.setState({
+          userName: this.props.propUserName,
+          projectName: this.props.propProjectName,
+          fileName: this.props.propFileName,
+          otherFileType: this.props.otherFileType,
+          clickFileState: false,
+          code: {
+            ...this.state.code,
+            [this.props.propActiveLanguage]: this.state.code[this.props.propActiveLanguage]
+          }
+        }, () => {
+          console.log("new state code in clickFile:", this.state.code);
+        });
+
+        this.props.setClickFile(false);
+
+      }
+    }
+
+  }
+
+  private async loadCodeBasedOnExtension() {
+    const { propFileName, propUserName, propProjectName, propActiveLanguage } = this.props;
+    const [name, extension] = propFileName.split('.');
+    console.log("loadCodeBasedOnExtension propActiveLanguage:", propActiveLanguage);
+
+    let newCode = '';
+    console.log("extension is:", extension);
+    try {
+      switch (extension) {
+        case 'c':
+        case 'cpp':
+        case 'py':
+          newCode = await DatabaseService.getContentFromSrcFile(this.props.propUserName, this.props.propProjectName, this.props.propFileName);
+          break;
+        case 'h':
+          newCode = await DatabaseService.getContentfromIncludeFile(this.props.propUserName, this.props.propProjectName, this.props.propFileName);
+          break;
+        case 'txt':
+          newCode = await DatabaseService.getContentFromUserDataFile(this.props.propUserName, this.props.propProjectName, this.props.propFileName);
+          break;
+        default:
+          newCode = await DatabaseService.getContentFromUserDataFile(this.props.propUserName, this.props.propProjectName, this.props.propFileName);
+          break;
+      }
+      console.log("loadCodeBasedOnExtension newCode:", newCode);
+    }
+    catch (error) {
+      console.error('Error fetching code:', error);
+    }
+
+    if (propActiveLanguage === 'python' && extension === 'h') {
+      this.setState({
+        code: {
+          ...this.state.code,
+          ["c"]: newCode
+        }
+      }, () => {
+        console.log("loadCodeBasedOnExtension with new state code:", this.state.code);
+      });
+    }
+    else {
+      this.setState({
+        code: {
+          ...this.state.code,
+          [propActiveLanguage]: newCode
+        }
+      }, () => {
+        console.log("loadCodeBasedOnExtension with new state code:", this.state.code);
+      });
+    }
+  }
+
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.onWindowResize_);
@@ -445,12 +420,105 @@ class Root extends React.Component<Props, State> {
     });
   };
 
-  private onCloseProjectDialog_ = () => {
+  private onCloseProjectDialog_ = (newProjName: string, newProjLanguage: ProgrammingLanguage) => {
+    console.log("onCloseProjectDialog_ newProject and newLanguage:", newProjName, newProjLanguage);
+    console.log("inside onCloseProjectDialog_ in Root.tsx with before state:", this.state);
     this.setState({
-      isCreateProjectDialogVisible: false
+
+      modal: Modal.NONE,
+      userName: this.props.propUserName,
+      projectName: newProjName,
+      activeLanguage: newProjLanguage,
+      fileName: `main.${ProgrammingLanguage.FILE_EXTENSION[newProjLanguage]}`,
+      // code: {
+      //   ...this.state.code,
+      //   [newProjLanguage]: ProgrammingLanguage.DEFAULT_CODE[newProjLanguage]
+      // }
+    }, () => {
+      console.log("inside onCloseProjectDialog_ in Root.tsx with after state:", this.state);
+      if (this.props.addNewProject) {
+        this.setState({
+          addNewProject: false
+        });
+
+        if (this.state.isHomeStartOptionsVisible == true) {
+          this.setState({
+            isHomeStartOptionsVisible: false
+          });
+        }
+        if (this.state.isEditorPageVisible == false) {
+          this.setState({
+            isEditorPageVisible: true
+          });
+        }
+      }
+
+      this.props.setAddNewProject(false);
+      console.log("onCloseProjectDialog_ with new state fileName:", this.state.fileName);
+    });
+
+
+    //this.onEditorPageOpen_();
+  }
+
+  private onCloseNewFileDialog_ = async (newFileName: string, fileType: string) => {
+    switch (fileType) {
+      case 'h':
+        this.setState({
+
+          code: {
+            ...this.state.code,
+            [this.state.activeLanguage]: ProgrammingLanguage.DEFAULT_HEADER_CODE
+          }
+        }, () => {
+          console.log("onCloseNewFileDialog_ with new state code:", this.state.code);
+        });
+        await DatabaseService.addIncludeContent(this.state.userName, this.state.projectName, `${newFileName}.${fileType}`, ProgrammingLanguage.DEFAULT_HEADER_CODE);
+        break;
+      case 'c':
+      case 'cpp':
+      case 'py':
+        this.setState({
+          code: {
+            ...this.state.code,
+            [this.state.activeLanguage]: ProgrammingLanguage.DEFAULT_CODE[this.state.activeLanguage]
+          }
+        });
+        await DatabaseService.addSrcContent(this.state.userName, this.state.projectName, `${newFileName}.${fileType}`, ProgrammingLanguage.DEFAULT_CODE[this.state.activeLanguage]);
+        break;
+      case 'txt':
+        this.setState({
+          code: {
+            ...this.state.code,
+            [this.state.activeLanguage]: ProgrammingLanguage.DEFAULT_USER_DATA_CODE
+          }
+        });
+        await DatabaseService.addUserDataContent(this.state.userName, this.state.projectName, `${newFileName}.txt`, ProgrammingLanguage.DEFAULT_USER_DATA_CODE);
+        break;
+    }
+
+    this.setState({
+      isCreateProjectDialogVisible: false,
+      modal: Modal.NONE,
+      fileName: `${newFileName}.${fileType}`,
+      projectName: this.props.propProjectName,
+
+
+    }, async () => {
+      console.log("onCloseNewFileDialog_ with new state:", this.state);
+
+      if (this.props.addNewFile) {
+        this.setState({
+          addNewFile: false
+        });
+      }
+
+      this.props.setAddNewFile(false);
+      console.log("onCloseNewFileDialog_ with new state code:", this.state.code);
 
     });
-    this.onEditorPageOpen_();
+
+
   }
   private onCreateProjectDialogOpen_ = (name: string) => {
 
@@ -458,17 +526,56 @@ class Root extends React.Component<Props, State> {
       userName: name,
       isCreateNewUserDialogVisible: false,
       isCreateProjectDialogVisible: true,
+      modal: Modal.CREATEPROJECT
     });
 
     console.log("userName: ", this.state.userName);
   }
   private onEditorPageOpen_ = () => {
+    console.log("onEditorPageOpen_ clicked in Root with state fileName:", this.state.fileName);
     this.setState({
       isHomeStartOptionsVisible: false,
       isNewFileDialogVisible: false,
       isEditorPageVisible: true
     });
   };
+
+  private handleFileNameChange = (name: string) => {
+    this.setState({
+      fileName: name
+    });
+
+    console.log("handleFileNameChange with new state fileName:", this.state.fileName);
+  }
+
+  private onOpenUserProject_ = (name: string, projectName: string, fileName: string, projectLanguage: ProgrammingLanguage) => {
+    console.log("onOpenUserProject_ name:", name);
+    console.log("onOpenUserProject_ projectName:", projectName);
+    console.log("onOpenUserProject_ fileName:", fileName);
+    console.log("onOpenUserProject_ projectLanguage:", projectLanguage);
+
+
+    this.setState({
+      userName: name,
+      projectName: projectName,
+      activeLanguage: projectLanguage,
+      fileName: fileName,
+      isEditorPageVisible: true,
+    });
+
+    if (this.state.isHomeStartOptionsVisible == true) {
+      this.setState({
+        isHomeStartOptionsVisible: false
+      });
+    }
+    // if (this.state.isNewFileDialogVisible == true) {
+    //   this.setState({
+    //     isNewFileDialogVisible: false,
+    //     modal: Modal.NONE
+    //   });
+    // }
+
+  }
 
   private onChangeProjectName = (name: string) => {
 
@@ -484,62 +591,32 @@ class Root extends React.Component<Props, State> {
         [activeLanguage]: code,
       }
     }, () => {
+      //DatabaseService.updateSrcContent(this.state.userName, this.state.projectName, this.state.fileName, code);
       window.localStorage.setItem(`code-${activeLanguage}`, code);
     });
   };
-
-  private onShowAll_ = () => {
-    if (this.overlayLayoutRef.current) this.overlayLayoutRef.current.showAll();
-  };
-
-  private onHideAll_ = () => {
-    if (this.overlayLayoutRef.current) this.overlayLayoutRef.current.hideAll();
-  };
-
-  private onLayoutChange_ = (layout: Layout) => {
-    this.setState({
-      layout
-    });
-  };
-
-  private onModalClick_ = (modal: Modal) => () => this.setState({ modal });
-
-  private onModalClose_ = () => this.setState({ modal: Modal.NONE });
-
-  private updateConsole_ = () => {
-    const text = WorkerInstance.sharedConsole.popString();
-    if (text.length > 0) {
-      this.setState({
-        editorConsole: StyledText.extend(this.state.editorConsole, StyledText.text({
-          text,
-          style: STDOUT_STYLE(this.state.theme)
-        }), 300)
-      });
-    }
-
-
-    this.scheduleUpdateConsole_();
-  };
-
-  private updateConsoleHandle_: number | undefined = undefined;
-  private scheduleUpdateConsole_ = () => this.updateConsoleHandle_ = requestAnimationFrame(this.updateConsole_);
-
   private onErrorMessageClick_ = (line: number) => () => {
     if (this.editorRef.current) this.editorRef.current.ivygate.revealLineInCenter(line);
   };
 
-  private onRunClick_ = () => {
+  private onRunClick_ = async () => {
+    console.log("onRunClick_ in Root");
     const { props, state } = this;
     const { locale } = props;
-    const { activeLanguage, code, editorConsole, theme } = state;
+    const { activeLanguage, code, editorConsole, theme, userName, projectName, fileName } = state;
 
+    this.onSaveCode_();
     const activeCode = code[activeLanguage];
+    console.log("onRunClick_ activeCode:", activeCode);
+    const response = await axios.post('/run-code', { userName, projectName, fileName, activeLanguage }); // This calls the backend route
+
+
 
     switch (activeLanguage) {
       case 'c':
       case 'cpp': {
         let nextConsole: StyledText = StyledText.extend(editorConsole, StyledText.text({
-          text: LocalizedString.lookup(tr('Compiling...\n'), locale),
+          text: LocalizedString.lookup(tr(''), locale),
           style: STDOUT_STYLE(this.state.theme)
         }));
 
@@ -549,11 +626,11 @@ class Root extends React.Component<Props, State> {
         }, () => {
           compile(activeCode, activeLanguage)
             .then(compileResult => {
-              nextConsole = this.state.editorConsole;
+              let nextConsole = this.state.editorConsole;
               const messages = sort(parseMessages(compileResult.stderr));
               const compileSucceeded = compileResult.result && compileResult.result.length > 0;
 
-              // Show all errors/warnings in console
+              // Show all errors/warnings in editorConsole
               for (const message of messages) {
                 nextConsole = StyledText.extend(nextConsole, toStyledText(message, {
                   onClick: message.ranges.length > 0
@@ -563,33 +640,22 @@ class Root extends React.Component<Props, State> {
               }
 
               if (compileSucceeded) {
-                // Show success in console and start running the program
-                const haveWarnings = hasWarnings(messages);
-                nextConsole = StyledText.extend(nextConsole, StyledText.text({
-                  text: haveWarnings
-                    ? LocalizedString.lookup(tr('Compilation succeeded with warnings.\n'), locale)
-                    : LocalizedString.lookup(tr('Compilation succeeded.\n'), locale),
-                  style: STDOUT_STYLE(this.state.theme)
-                }));
+                // Show success in editorConsole and start running the program
 
                 WorkerInstance.start({
                   language: activeLanguage,
                   code: compileResult.result
                 });
+
               } else {
                 if (!hasErrors(messages)) {
                   // Compile failed and there are no error messages; some weird underlying error occurred
-                  // We print the entire stderr to the console
+                  // We print the entire stderr to the editorConsole
                   nextConsole = StyledText.extend(nextConsole, StyledText.text({
                     text: `${compileResult.stderr}\n`,
                     style: STDERR_STYLE(this.state.theme)
                   }));
                 }
-
-                nextConsole = StyledText.extend(nextConsole, StyledText.text({
-                  text: LocalizedString.lookup(tr('Compilation failed.\n'), locale),
-                  style: STDERR_STYLE(this.state.theme)
-                }));
               }
 
               this.setState({
@@ -630,26 +696,226 @@ class Root extends React.Component<Props, State> {
 
   };
 
-  private onStopClick_ = () => {
-    WorkerInstance.stop();
+
+  private onCompileClick_ = async () => {
+    console.log("onCompileClick_ in Root");
+    const { locale } = this.props;
+    const { userName, projectName, fileName, activeLanguage, editorConsole, code } = this.state;
+    try {
+      await this.onSaveCode_();
+      const response = await axios.post('/compile-code', { userName, projectName, fileName, activeLanguage }); // This calls the backend route
+      console.log(response.data);  // Display the response from the backend
+
+      const activeCode = code[activeLanguage];
+
+      switch (activeLanguage) {
+        case 'c':
+        case 'cpp': {
+          let nextConsole: StyledText = StyledText.extend(editorConsole, StyledText.text({
+            text: LocalizedString.lookup(tr('Compiling...\n'), locale),
+            style: STDOUT_STYLE(this.state.theme)
+          }));
+
+          this.setState({
+            simulatorState: SimulatorState.COMPILING,
+            editorConsole: nextConsole
+          }, () => {
+
+            compile(activeCode, activeLanguage)
+              .then(compileResult => {
+                nextConsole = this.state.editorConsole;
+                const messages = sort(parseMessages(compileResult.stderr));
+                const compileSucceeded = compileResult.result && compileResult.result.length > 0;
+
+                // Show all errors/warnings in editorConsole
+                for (const message of messages) {
+                  nextConsole = StyledText.extend(nextConsole, toStyledText(message, {
+                    onClick: message.ranges.length > 0
+                      ? this.onErrorMessageClick_(message.ranges[0].start.line)
+                      : undefined
+                  }));
+                }
+
+                if (compileSucceeded) {
+                  // Show success in editorConsole and start running the program
+
+                  const haveWarnings = hasWarnings(messages);
+                  nextConsole = StyledText.extend(nextConsole, StyledText.text({
+                    text: haveWarnings
+                      ? LocalizedString.lookup(tr('Compilation succeeded with warnings.\n'), locale)
+                      : LocalizedString.lookup(tr('Compilation succeeded.\n'), locale),
+                    style: STDOUT_STYLE(this.state.theme)
+                  }));
+
+                  // WorkerInstance.start({
+                  //   language: activeLanguage,
+                  //   code: compileResult.result
+                  // });
+
+                } else {
+                  if (!hasErrors(messages)) {
+                    // Compile failed and there are no error messages; some weird underlying error occurred
+                    // We print the entire stderr to the editorConsole
+                    nextConsole = StyledText.extend(nextConsole, StyledText.text({
+                      text: `${compileResult.stderr}\n`,
+                      style: STDERR_STYLE(this.state.theme)
+                    }));
+                  }
+
+                  nextConsole = StyledText.extend(nextConsole, StyledText.text({
+                    text: LocalizedString.lookup(tr('Compilation failed.\n'), locale),
+                    style: STDERR_STYLE(this.state.theme)
+                  }));
+                }
+
+                this.setState({
+                  simulatorState: compileSucceeded ? SimulatorState.RUNNING : SimulatorState.STOPPED,
+                  messages,
+                  editorConsole: nextConsole
+                });
+
+              })
+              .catch((e: unknown) => {
+                window.console.error(e);
+                nextConsole = StyledText.extend(nextConsole, StyledText.text({
+                  text: LocalizedString.lookup(tr('Something went wrong during compilation.\n'), locale),
+                  style: STDERR_STYLE(this.state.theme)
+                }));
+
+                this.setState({
+                  simulatorState: SimulatorState.STOPPED,
+                  messages: [],
+                  editorConsole: nextConsole
+                });
+              });
+
+
+          });
+
+          break;
+
+        }
+        case 'python': {
+          let nextConsole: StyledText = StyledText.extend(editorConsole, StyledText.text({
+            text: LocalizedString.lookup(tr('Compiling...\n'), locale),
+            style: STDOUT_STYLE(this.state.theme)
+          }));
+          this.setState({
+            simulatorState: SimulatorState.RUNNING,
+            editorConsole: nextConsole
+          }, () => {
+            WorkerInstance.start({
+              language: 'python',
+              code: activeCode
+            });
+          });
+          break;
+        }
+
+      }
+
+    } catch (error) {
+      console.error('Error running the code:', error);
+    }
+
   };
 
-  // private onDownloadClick_ = () => {
-  //   const { activeLanguage } = this.state;
 
-  //   const element = document.createElement('a');
-  //   element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(this.state.code[activeLanguage])}`);
-  //   element.setAttribute('download', `program.${ProgrammingLanguage.FILE_EXTENSION[activeLanguage]}`);
-  //   element.style.display = 'none';
-  //   document.body.appendChild(element);
-  //   element.click();
-  //   document.body.removeChild(element);
-  // };
+  private onSaveCode_ = async () => {
+    const [name, extension] = this.props.propFileName.split('.');
+
+
+    console.log("extension is:", extension);
+
+    const { userName, activeLanguage, projectName, fileName, otherFileType } = this.state;
+    const newContent = this.state.code[activeLanguage];
+    console.log("OnSaveCode clicked in Root with newContent:", newContent);
+    console.log("onSaveCode otherFileType:", otherFileType);
+    console.log("onSaveCode fileName:", this.state.fileName);
+
+    switch (extension) {
+      case 'h':
+        DatabaseService.updateIncludeContent(userName, projectName, fileName, newContent);
+        break;
+      case 'c':
+      case 'cpp':
+      case 'py':
+        await DatabaseService.updateSrcContent(userName, projectName, fileName, newContent);
+        break;
+      case 'txt':
+        DatabaseService.updateUserDataContent(userName, projectName, fileName, newContent);
+        break;
+      default:
+        DatabaseService.updateUserDataContent(userName, projectName, fileName, newContent);
+        break;
+
+
+    }
+
+
+    this.setState({
+
+      code: {
+        ...this.state.code,
+        [this.state.activeLanguage]: newContent
+      }
+    }, () => {
+      console.log("onSaveCode_ with new state code:", this.state.code);
+    });
+  };
+
+
+  private onModalClick_ = (modal: Modal) => () => this.setState({ modal });
+
+  private onModalClose_ = () => {
+    this.setState({ modal: Modal.NONE });
+
+    if (this.props.addNewProject) {
+      this.props.setAddNewProject(false);
+      console.log("onModalClose_ with proped: ", this.props.propFileName);
+      console.log("onModalClose_ with state project: ", this.state.projectName);
+      this.setState({
+        projectName: this.props.propProjectName,
+        fileName: this.props.propFileName,
+        activeLanguage: this.props.propActiveLanguage
+      });
+    }
+
+    if (this.props.addNewFile) {
+      this.props.setAddNewFile(false);
+      this.setState({
+        projectName: this.props.propProjectName,
+        fileName: this.props.propFileName,
+        activeLanguage: this.props.propActiveLanguage
+      });
+    }
+
+  }
+
+  private updateConsole_ = () => {
+    const text = WorkerInstance.sharedConsole.popString();
+    if (text.length > 0) {
+      this.setState({
+        editorConsole: StyledText.extend(this.state.editorConsole, StyledText.text({
+          text,
+          style: STDOUT_STYLE(this.state.theme)
+        }), 300)
+      });
+    }
+
+
+    this.scheduleUpdateConsole_();
+  };
+
+  private updateConsoleHandle_: number | undefined = undefined;
+  private scheduleUpdateConsole_ = () => this.updateConsoleHandle_ = requestAnimationFrame(this.updateConsole_);
 
 
   private onClearConsole_ = () => {
+
+    console.log("onClearConsole_ clicked in Root");
     this.setState({
-      editorConsole: StyledText.compose({ items: [] })
+      editorConsole: StyledText.text({ text: LocalizedString.lookup(tr(''), this.props.locale), style: STDOUT_STYLE(DARK) }),
     });
   };
 
@@ -658,25 +924,19 @@ class Root extends React.Component<Props, State> {
   //   if (this.editorRef.current) this.editorRef.current.ivygate.formatCode();
   // };
 
-  private onResetCode_ = () => {
+  private onLanguageChange_ = (language: ProgrammingLanguage) => {
     this.setState({
-      modal: Modal.RESET_CODE
-    });
-  };
+      activeLanguage: language
+    }, () => {
 
-  private onResetCodeAccept_ = () => {
-    const { activeLanguage } = this.state;
-    this.setState({
-      code: {
-        ...this.state.code,
-        [activeLanguage]: ProgrammingLanguage.DEFAULT_CODE[activeLanguage]
-      },
-      modal: Modal.NONE,
+      console.log("In Root: Updated language to: ", this.state.activeLanguage);
+      //this.props.onDocumentationSetLanguage(language === 'python' ? 'python' : 'c');
     });
+
   };
 
   onDocumentationClick = () => {
-    window.open("https://www.kipr.org/doc/index.html");
+    //window.open("https://www.kipr.org/doc/index.html");
   };
 
 
@@ -703,46 +963,6 @@ class Root extends React.Component<Props, State> {
     this.setState({ settings: nextSettings });
   };
 
-  private onFeedbackChange_ = (changedFeedback: Partial<Feedback>) => {
-    this.setState({ feedback: { ...this.state.feedback, ...changedFeedback } });
-  };
-
-  private onFeedbackSubmit_ = () => {
-    sendFeedback(this.state)
-      .then((resp: FeedbackResponse) => {
-        this.onFeedbackChange_(({ message: resp.message }));
-        this.onFeedbackChange_(({ error: resp.networkError }));
-
-        this.onFeedbackChange_(DEFAULT_FEEDBACK);
-
-        this.onModalClick_(Modal.FEEDBACKSUCCESS)();
-      })
-      .catch((resp: FeedbackResponse) => {
-        this.onFeedbackChange_(({ message: resp.message }));
-        this.onFeedbackChange_(({ error: resp.networkError }));
-      });
-  };
-
-
-
-  private onSettingsSceneClick_ = () => {
-    this.setState({
-      modal: Modal.SETTINGS_SCENE
-    });
-  };
-
-  componentDidCatch(error: Error, info: React.ErrorInfo) {
-    this.setState({
-      modal: Modal.exception(error, info)
-    });
-  }
-
-
-
-  private onErrorClick_ = (event: React.MouseEvent<HTMLDivElement>) => {
-    // not implemented
-  };
-
 
 
 
@@ -750,45 +970,27 @@ class Root extends React.Component<Props, State> {
     const { props, state } = this;
 
     const {
-
-      scene,
-      onClearConsole,
-      onIndentCode,
-      onDownloadCode,
-      onResetCode,
-      onDocumentationClick,
-      onDocumentationGoToFuzzy,
-      editorRef,
+      otherFileType,
+      isLeftBarOpen,
       locale
     } = props;
 
 
     const {
-      layout,
       activeLanguage,
       code,
       modal,
-      simulatorState,
       editorConsole,
-      messages,
       settings,
-      feedback,
       windowInnerHeight,
       isHomeStartOptionsVisible,
-      isNewFileDialogVisible,
       projectName,
       fileName,
+      userName,
       isEditorPageVisible,
-      isCreateNewUserDialogVisible,
-      isCreateProjectDialogVisible
-
     } = state;
 
     const theme = DARK;
-
-
-
-
 
     return (
       <RootContainer $windowInnerHeight={windowInnerHeight}>
@@ -809,40 +1011,8 @@ class Root extends React.Component<Props, State> {
             onClose={this.onModalClose_}
           />
         )}
-        {modal.type === Modal.Type.Feedback && (
-          <FeedbackDialog
-            theme={theme}
-            feedback={feedback}
-            onFeedbackChange={this.onFeedbackChange_}
-            onClose={this.onModalClose_}
-            onSubmit={this.onFeedbackSubmit_}
-          />
-        )}
-        {modal.type === Modal.Type.FeedbackSuccess && (
-          <FeedbackSuccessDialog
-            theme={theme}
-            onClose={this.onModalClose_}
-          />
-        )}
-        {modal.type === Modal.Type.Exception && (
-          <ExceptionDialog
-            error={modal.error}
-            theme={theme}
-            onClose={this.onModalClose_}
-          />
-        )}
 
-        {
-          modal.type === Modal.Type.ResetCode && (
-            <DeleteDialog
-              name={tr('your current work')}
-              theme={theme}
-              onAccept={this.onResetCodeAccept_}
-              onClose={this.onModalClose_}
-            />
 
-          )
-        }
         {
           isHomeStartOptionsVisible && (
             <HomeStartOptions
@@ -853,24 +1023,21 @@ class Root extends React.Component<Props, State> {
               onEditorPageOpen={this.onEditorPageOpen_}
               onChangeProjectName={this.onChangeProjectName}
               onCreateProjectDialog={this.onCreateProjectDialogOpen_}
+              onOpenUserProject={this.onOpenUserProject_}
             />
           )
         }
-        {isNewFileDialogVisible && (
+        {modal.type === Modal.Type.CreateFile && (
           <NewFileDialog
-            onClose={function (): void {
-              throw new Error('Function not implemented.');
-            }} showRepeatUserDialog={false} fileName={this.state.projectName} editorTarget={undefined} messages={[]} onIndentCode={function (): void {
-              throw new Error('Function not implemented.');
-            }} onDownloadCode={function (): void {
-              throw new Error('Function not implemented.');
-            }} onResetCode={function (): void {
-              throw new Error('Function not implemented.');
-            }} onClearConsole={function (): void {
-              throw new Error('Function not implemented.');
-            }} language={'c'} editorConsole={undefined}
-            theme={undefined} onEditorPageOpen={this.onEditorPageOpen_}
-            onChangeProjectName={this.onChangeProjectName}
+            onClose={this.onModalClose_}
+            showRepeatUserDialog={false}
+            fileName={projectName}
+            language={activeLanguage}
+            theme={theme}
+            onEditorPageOpen={this.onEditorPageOpen_}
+            otherFileType={otherFileType}
+
+            onCloseNewFileDialog={this.onCloseNewFileDialog_}
           >
 
 
@@ -880,36 +1047,47 @@ class Root extends React.Component<Props, State> {
         {isEditorPageVisible && (
 
           <EditorPage
+            isleftbaropen={isLeftBarOpen}
             editorTarget={undefined}
-            editorConsole={undefined}
+            editorConsole={editorConsole}
             messages={[]}
+            code={code}
             language={activeLanguage}
             settings={DEFAULT_SETTINGS}
-            onClearConsole={props.onClearConsole}
+            onClearConsole={this.onClearConsole_}
+            onCodeChange={this.onCodeChange_}
+            onSaveCode={this.onSaveCode_}
+            onRunClick={this.onRunClick_}
+            onCompileClick={this.onCompileClick_}
             onIndentCode={() => { }}
             onDownloadCode={() => { }}
-            onResetCode={() => { }}
             editorRef={undefined}
             theme={theme}
             onDocumentationSetLanguage={() => { }}
-            projectName={this.state.projectName}
-            fileName={this.state.fileName}
-            userName={this.state.userName}
-
+            projectName={projectName}
+            fileName={fileName}
+            userName={userName}
+            onFileNameChange={this.handleFileNameChange}
 
           />
 
         )}
-        {isCreateProjectDialogVisible && (
 
-          <CreateProjectDialog onClose={this.onModalClose_}
-            showRepeatUserDialog={false} projectName={this.state.projectName} theme={theme}
+        {modal.type === Modal.Type.CreateProject && (
+
+          <CreateProjectDialog
+            onClose={this.onModalClose_}
+            showRepeatUserDialog={false} projectName={projectName} theme={theme}
             closeProjectDialog={this.onCloseProjectDialog_}
+            onDocumentationSetLanguage={this.onActiveLanguageChange_}
             onChangeProjectName={this.onChangeProjectName}
-            userName={this.state.userName}>
+            userName={userName}
+            language={activeLanguage}
+            onLanguageChange={this.onLanguageChange_}>
           </CreateProjectDialog>
 
         )}
+
 
 
 
