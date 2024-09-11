@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="structpoint3" kind="struct" language="C++" prot="public">
+    <compoundname>point3</compoundname>
+    <includes refid="geometry_8h" local="no">geometry.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structpoint3_1a617420d14db862c60053216fa72342de" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int point3::x</definition>
+        <argsstring></argsstring>
+        <name>x</name>
+        <briefdescription>
+<para>the x value of the point </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" line="26" column="7" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" bodystart="26" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structpoint3_1a87df35474bb5e0d5ba2d68c522842d0a" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int point3::y</definition>
+        <argsstring></argsstring>
+        <name>y</name>
+        <briefdescription>
+<para>the y value of the point </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" line="27" column="7" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structpoint3_1a0380e24b79b7c2576ea6dc79d5e2812b" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int point3::z</definition>
+        <argsstring></argsstring>
+        <name>z</name>
+        <briefdescription>
+<para>the z value of the point </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" line="28" column="7" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" bodystart="28" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>A 3D point; has x, y, and z. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" line="24" column="1" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" bodystart="25" bodyend="29"/>
+    <listofallmembers>
+      <member refid="structpoint3_1a617420d14db862c60053216fa72342de" prot="public" virt="non-virtual"><scope>point3</scope><name>x</name></member>
+      <member refid="structpoint3_1a87df35474bb5e0d5ba2d68c522842d0a" prot="public" virt="non-virtual"><scope>point3</scope><name>y</name></member>
+      <member refid="structpoint3_1a0380e24b79b7c2576ea6dc79d5e2812b" prot="public" virt="non-virtual"><scope>point3</scope><name>z</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

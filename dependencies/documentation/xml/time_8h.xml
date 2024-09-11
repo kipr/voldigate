@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="time_8h" kind="file" language="C++">
+    <compoundname>time.h</compoundname>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="time_8h_1af0c555a8582de02b428aa7b11735a45d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void msleep</definition>
+        <argsstring>(long msecs)</argsstring>
+        <name>msleep</name>
+        <param>
+          <type>long</type>
+          <declname>msecs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/time/public/kipr/time/time.h" line="8" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/time/public/kipr/time/time.h" declline="8" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="time_8h_1a74a833b476f3c37956abf6b4a0fa7989" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>unsigned long</type>
+        <definition>unsigned long systime</definition>
+        <argsstring>()</argsstring>
+        <name>systime</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/time/public/kipr/time/time.h" line="10" column="15" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/time/public/kipr/time/time.h" declline="10" declcolumn="15"/>
+      </memberdef>
+      <memberdef kind="function" id="time_8h_1a541442824a656f9c820631f4b8adf441" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double seconds</definition>
+        <argsstring>()</argsstring>
+        <name>seconds</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/time/public/kipr/time/time.h" line="12" column="8" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/time/public/kipr/time/time.h" declline="12" declcolumn="8"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>_KIPR_TIME_TIME_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_KIPR_TIME_TIME_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8" refid="time_8h_1af0c555a8582de02b428aa7b11735a45d" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="time_8h_1af0c555a8582de02b428aa7b11735a45d" kindref="member">msleep</ref>(</highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>msecs);</highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight></codeline>
+<codeline lineno="10" refid="time_8h_1a74a833b476f3c37956abf6b4a0fa7989" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="time_8h_1a74a833b476f3c37956abf6b4a0fa7989" kindref="member">systime</ref>();</highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight></codeline>
+<codeline lineno="12" refid="time_8h_1a541442824a656f9c820631f4b8adf441" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="time_8h_1a541442824a656f9c820631f4b8adf441" kindref="member">seconds</ref>();</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/time/public/kipr/time/time.h"/>
+  </compounddef>
+</doxygen>

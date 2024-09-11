@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classkipr_1_1accel_1_1Acceleration" kind="class" language="C++" prot="public">
+    <compoundname>kipr::accel::Acceleration</compoundname>
+    <includes refid="accel_8hpp" local="no">accel.hpp</includes>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classkipr_1_1accel_1_1Acceleration_1ae6e0db9ea15b22b5ebd3114370ece2d9" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>short</type>
+        <definition>static short kipr::accel::Acceleration::x</definition>
+        <argsstring>()</argsstring>
+        <name>x</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/accel/public/kipr/accel/accel.hpp" line="13" column="20"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1accel_1_1Acceleration_1a5c017e64bd9d0e55e025043a09c74de6" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>short</type>
+        <definition>static short kipr::accel::Acceleration::y</definition>
+        <argsstring>()</argsstring>
+        <name>y</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/accel/public/kipr/accel/accel.hpp" line="14" column="20"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1accel_1_1Acceleration_1a7ec550b429376d236673e2ad469ff671" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>short</type>
+        <definition>static short kipr::accel::Acceleration::z</definition>
+        <argsstring>()</argsstring>
+        <name>z</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/accel/public/kipr/accel/accel.hpp" line="15" column="20"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1accel_1_1Acceleration_1a03d128ef4c4451456cf4d4f1f9e695fe" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>static bool kipr::accel::Acceleration::calibrate</definition>
+        <argsstring>()</argsstring>
+        <name>calibrate</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/accel/public/kipr/accel/accel.hpp" line="16" column="19"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/accel/public/kipr/accel/accel.hpp" line="10" column="5" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/accel/public/kipr/accel/accel.hpp" bodystart="11" bodyend="19"/>
+    <listofallmembers>
+      <member refid="classkipr_1_1accel_1_1Acceleration_1a03d128ef4c4451456cf4d4f1f9e695fe" prot="public" virt="non-virtual"><scope>kipr::accel::Acceleration</scope><name>calibrate</name></member>
+      <member refid="classkipr_1_1accel_1_1Acceleration_1ae6e0db9ea15b22b5ebd3114370ece2d9" prot="public" virt="non-virtual"><scope>kipr::accel::Acceleration</scope><name>x</name></member>
+      <member refid="classkipr_1_1accel_1_1Acceleration_1a5c017e64bd9d0e55e025043a09c74de6" prot="public" virt="non-virtual"><scope>kipr::accel::Acceleration</scope><name>y</name></member>
+      <member refid="classkipr_1_1accel_1_1Acceleration_1a7ec550b429376d236673e2ad469ff671" prot="public" virt="non-virtual"><scope>kipr::accel::Acceleration</scope><name>z</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

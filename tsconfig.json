@@ -16,9 +16,7 @@
     }
   },
   "types": [
-    "babylonjs",
-    "babylonjs-loaders",
-    "babylonjs-gltf2interface"
+
   ],
   "include": [
     "src/**/*",

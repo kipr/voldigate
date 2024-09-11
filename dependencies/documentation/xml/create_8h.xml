@@ -1,0 +1,1665 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="create_8h" kind="file" language="C++">
+    <compoundname>create.h</compoundname>
+    <includes refid="export_8h" local="yes">kipr/export/export.h</includes>
+    <incdepgraph>
+      <node id="2">
+        <label>kipr/export/export.h</label>
+        <link refid="export_8h"/>
+      </node>
+      <node id="1">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h</label>
+        <link refid="create_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="enum">
+      <memberdef kind="enum" id="create_8h_1a7654bd82719bfde1c792d7828664dde2" prot="public" static="no" strong="no">
+        <type></type>
+        <name>BaudRate</name>
+        <enumvalue id="create_8h_1a7654bd82719bfde1c792d7828664dde2afa5801ed32e6bf3556cf937a2edc9e6d" prot="public">
+          <name>Baud57600</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+<para>Baudrate of 57600 times per second. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="create_8h_1a7654bd82719bfde1c792d7828664dde2af95051e227854027d600a358d5dbfb44" prot="public">
+          <name>Baud115200</name>
+          <initializer>= 1</initializer>
+          <briefdescription>
+<para>Baudrate of 115200 times per second. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+<para>The baudrate to use with the create. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>The baudrate can be thought of as the refresh rate, or how many times per second the wombat/wallaby checks the create&apos;s sensors and sends commands (if any) to the create </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="658" column="1" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" bodystart="659" bodyend="662"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="group__create_1ga38089f9eb9ffd84a2a58d5aa17460bab" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int create_connect</definition>
+        <argsstring>()</argsstring>
+        <name>create_connect</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Waits to establish a connection to the create. <simplesect kind="par"><title><bold>This</bold> function blocks until A connection to a create is established</title><para></para>
+</simplesect>
+<simplesect kind="return"><para>0 on success </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga51d8918cab636fb2b5d7b5d04e84a3ea" kindref="member">create_disconnect</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="69" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="69" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga22c6568527d452f33795413743c87180" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int create_connect_once</definition>
+        <argsstring>()</argsstring>
+        <name>create_connect_once</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Attempts to establish a connection to the create. <simplesect kind="return"><para>1 if connection succeeded, 0 if connection failed </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga51d8918cab636fb2b5d7b5d04e84a3ea" kindref="member">create_disconnect</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="77" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="77" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga51d8918cab636fb2b5d7b5d04e84a3ea" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void create_disconnect</definition>
+        <argsstring>()</argsstring>
+        <name>create_disconnect</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Disconnects the controller from the iRobot Create.</para>
+<para>ALWAYS disconnect from the iRobot Create before ending your program. <simplesect kind="see"><para><ref refid="group__create_1ga38089f9eb9ffd84a2a58d5aa17460bab" kindref="member">create_connect</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="85" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="85" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga55ccc83379a2eb11fc0e2861e381722c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void create_passive</definition>
+        <argsstring>()</argsstring>
+        <name>create_passive</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1gaa5a223071ed2d18caf9e52633ce8ccb5" kindref="member">create_safe</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1gaa0e5b432c32ceb3a3b3c01e0e767dba5" kindref="member">create_full</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1gaf69b8a95f668056f9cbf947c30f26829" kindref="member">get_create_mode</ref></para>
+</simplesect>
+When the Create is in Passive mode, you can request and receive sensor data using any of the sensor commands,</para>
+<para>but you cannot change the current command parameters for the actuators (motors, speaker, lights, low side drivers, digital outputs) to something else.</para>
+<para>To change how one of the actuators operates, you must switch from Passive mode to Full mode or Safe mode.</para>
+<para>While in Passive mode, you can read Roomba’s sensors, watch Roomba perform a cleaning cycle, and charge the battery.</para>
+<para>In Passive mode, Roomba will go into power saving mode to conserve battery power after five minutes of inactivity <simplesect kind="note"><para>Appears to crash controller, do not use or use serial communication. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="99" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="99" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1gaa5a223071ed2d18caf9e52633ce8ccb5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void create_safe</definition>
+        <argsstring>()</argsstring>
+        <name>create_safe</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1gaa0e5b432c32ceb3a3b3c01e0e767dba5" kindref="member">create_full</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga55ccc83379a2eb11fc0e2861e381722c" kindref="member">create_passive</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1gaf69b8a95f668056f9cbf947c30f26829" kindref="member">get_create_mode</ref></para>
+</simplesect>
+Puts the iRobot Create in &quot;Safe Mode&quot;</para>
+<para>Safe mode gives you full control of Roomba, with the exception of the following safety-related conditions.</para>
+<para>safety-related conditions include: Cliff detection, wheel drop, and charging.</para>
+<para>If your Create is refusing to move, try setting it to full mode. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="111" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="111" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1gaa0e5b432c32ceb3a3b3c01e0e767dba5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void create_full</definition>
+        <argsstring>()</argsstring>
+        <name>create_full</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1gaa5a223071ed2d18caf9e52633ce8ccb5" kindref="member">create_safe</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga55ccc83379a2eb11fc0e2861e381722c" kindref="member">create_passive</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1gaf69b8a95f668056f9cbf947c30f26829" kindref="member">get_create_mode</ref></para>
+</simplesect>
+Puts the iRobot Create in &quot;Full Mode&quot;</para>
+<para>&quot;Full Mode&quot; allows the programmer to completely control all functions of the Create (disables safety blocks).</para>
+<para>With this mode enabled, the Create will not prevent use of motors in situations where it detects an edge/cliff/etc.</para>
+<para>Use this if you are having issues with the Create not moving after lifting it, falling, etc. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="124" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="124" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1gaf69b8a95f668056f9cbf947c30f26829" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_mode</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_mode</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1gaa5a223071ed2d18caf9e52633ce8ccb5" kindref="member">create_safe</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga55ccc83379a2eb11fc0e2861e381722c" kindref="member">create_passive</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1gaa0e5b432c32ceb3a3b3c01e0e767dba5" kindref="member">create_full</ref></para>
+</simplesect>
+Gets the current mode of the Create OI</para>
+<para>Off: 0, Passive: 1, Safe: 2, Full: 3 </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="134" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="134" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1gab9e8f0c2dbbc3887da7607c7c1cb2afe" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_lbump</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_lbump</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1ga63e5aceaaf8d5a503c4fd237bc8f3f32" kindref="member">get_create_rbump</ref></para>
+</simplesect>
+Returns the status of the left bumper as a digital value (0 or 1). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="141" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="141" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga63e5aceaaf8d5a503c4fd237bc8f3f32" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_rbump</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_rbump</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1gab9e8f0c2dbbc3887da7607c7c1cb2afe" kindref="member">get_create_lbump</ref></para>
+</simplesect>
+Returns the status of the right bumper as a digital value (0 or 1). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="148" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="148" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga9f747bae96d90b52ff22f91a8285cdf2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_lwdrop</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_lwdrop</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1ga147c6631211760a905df8022b5562a0c" kindref="member">get_create_rwdrop</ref></para>
+</simplesect>
+Detects if the left wheel is dropped/lowered (the create is lifted) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="155" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="155" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga38f8a60c3cf319c9881a730e850d5258" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_cwdrop</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_cwdrop</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1ga147c6631211760a905df8022b5562a0c" kindref="member">get_create_rwdrop</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga9f747bae96d90b52ff22f91a8285cdf2" kindref="member">get_create_lwdrop</ref> </para>
+</simplesect>
+<simplesect kind="note"><para>Not Implemented </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="163" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="163" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga147c6631211760a905df8022b5562a0c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_rwdrop</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_rwdrop</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1ga9f747bae96d90b52ff22f91a8285cdf2" kindref="member">get_create_lwdrop</ref></para>
+</simplesect>
+Detects if the right wheel is dropped/lowered (the create is lifted) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="170" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="170" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga50cf91a1cc5ab08c9325dc9e00c1d381" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_wall</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_wall</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1gac133815157e1951484db164f4c67cb96" kindref="member">get_create_vwall</ref></para>
+</simplesect>
+Reports if the Create sees a physical wall. <simplesect kind="note"><para>The Create only detects walls on the right because Roombas only need it on the right side. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="178" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="178" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1gad28b55232fb19a4044dc4931b1a8d580" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_lcliff</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_lcliff</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1ga1d03b7e4bbdbd270aee98f21886b22f1" kindref="member">get_create_lfcliff</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1gaffec88876bd690aee900ca6d43b74d31" kindref="member">get_create_rfcliff</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga82fac0313225b3e7d7560484bdb1dfd3" kindref="member">get_create_rcliff</ref></para>
+</simplesect>
+reports if the left cliff/edge sensor is tripped. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="187" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="187" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga1d03b7e4bbdbd270aee98f21886b22f1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_lfcliff</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_lfcliff</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1gad28b55232fb19a4044dc4931b1a8d580" kindref="member">get_create_lcliff</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1gaffec88876bd690aee900ca6d43b74d31" kindref="member">get_create_rfcliff</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga82fac0313225b3e7d7560484bdb1dfd3" kindref="member">get_create_rcliff</ref></para>
+</simplesect>
+reports if the front-left cliff/edge sensor is tripped. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="196" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="196" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1gaffec88876bd690aee900ca6d43b74d31" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_rfcliff</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_rfcliff</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1gad28b55232fb19a4044dc4931b1a8d580" kindref="member">get_create_lcliff</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga82fac0313225b3e7d7560484bdb1dfd3" kindref="member">get_create_rcliff</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga1d03b7e4bbdbd270aee98f21886b22f1" kindref="member">get_create_lfcliff</ref></para>
+</simplesect>
+reports if the front-right cliff/edge sensor is tripped. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="205" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="205" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga82fac0313225b3e7d7560484bdb1dfd3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_rcliff</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_rcliff</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1gad28b55232fb19a4044dc4931b1a8d580" kindref="member">get_create_lcliff</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga1d03b7e4bbdbd270aee98f21886b22f1" kindref="member">get_create_lfcliff</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1gaffec88876bd690aee900ca6d43b74d31" kindref="member">get_create_rfcliff</ref></para>
+</simplesect>
+reports if the right cliff/edge sensor is tripped. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="214" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="214" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1gafb5c58dacb1d7d5935889f94b0c1569a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_llightbump</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_llightbump</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1ga849d6f0b05cf24e5b69e37afe896b59f" kindref="member">get_create_lflightbump</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga9a6ecec64354cf00836e52bebcd97b22" kindref="member">get_create_lclightbump</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1gaca772a76409a260343dfa364abec332e" kindref="member">get_create_rclightbump</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga42fac5203b8024de9fb958a0ea08df34" kindref="member">get_create_rflightbump</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga4e9778995c282b3ce4016b344be2f091" kindref="member">get_create_rlightbump</ref></para>
+</simplesect>
+returns the left light bumper sensor as described in the iRobot Create manual.</para>
+<para>returns a binary/digital value rather than the raw sensor data (on or off/1 or 0). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="226" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="226" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga849d6f0b05cf24e5b69e37afe896b59f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_lflightbump</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_lflightbump</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1gafb5c58dacb1d7d5935889f94b0c1569a" kindref="member">get_create_llightbump</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga9a6ecec64354cf00836e52bebcd97b22" kindref="member">get_create_lclightbump</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1gaca772a76409a260343dfa364abec332e" kindref="member">get_create_rclightbump</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga42fac5203b8024de9fb958a0ea08df34" kindref="member">get_create_rflightbump</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga4e9778995c282b3ce4016b344be2f091" kindref="member">get_create_rlightbump</ref></para>
+</simplesect>
+returns the left-front light bumper sensor as described in the iRobot Create manual.</para>
+<para>returns a binary/digital value rather than the raw sensor data (on or off/1 or 0). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="238" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="238" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga9a6ecec64354cf00836e52bebcd97b22" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_lclightbump</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_lclightbump</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1ga849d6f0b05cf24e5b69e37afe896b59f" kindref="member">get_create_lflightbump</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1gafb5c58dacb1d7d5935889f94b0c1569a" kindref="member">get_create_llightbump</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1gaca772a76409a260343dfa364abec332e" kindref="member">get_create_rclightbump</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga42fac5203b8024de9fb958a0ea08df34" kindref="member">get_create_rflightbump</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga4e9778995c282b3ce4016b344be2f091" kindref="member">get_create_rlightbump</ref></para>
+</simplesect>
+returns the left-center light bumper sensor as described in the iRobot Create manual.</para>
+<para>returns a binary/digital value rather than the raw sensor data (on or off/1 or 0). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="250" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="250" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1gaca772a76409a260343dfa364abec332e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_rclightbump</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_rclightbump</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1ga849d6f0b05cf24e5b69e37afe896b59f" kindref="member">get_create_lflightbump</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga9a6ecec64354cf00836e52bebcd97b22" kindref="member">get_create_lclightbump</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1gafb5c58dacb1d7d5935889f94b0c1569a" kindref="member">get_create_llightbump</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga42fac5203b8024de9fb958a0ea08df34" kindref="member">get_create_rflightbump</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga4e9778995c282b3ce4016b344be2f091" kindref="member">get_create_rlightbump</ref></para>
+</simplesect>
+returns the right-center light bumper sensor as described in the iRobot Create manual.</para>
+<para>returns a binary/digital value rather than the raw sensor data (on or off/1 or 0). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="262" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="262" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga42fac5203b8024de9fb958a0ea08df34" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_rflightbump</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_rflightbump</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1ga849d6f0b05cf24e5b69e37afe896b59f" kindref="member">get_create_lflightbump</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga9a6ecec64354cf00836e52bebcd97b22" kindref="member">get_create_lclightbump</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1gaca772a76409a260343dfa364abec332e" kindref="member">get_create_rclightbump</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1gafb5c58dacb1d7d5935889f94b0c1569a" kindref="member">get_create_llightbump</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga4e9778995c282b3ce4016b344be2f091" kindref="member">get_create_rlightbump</ref></para>
+</simplesect>
+returns the right-front light bumper sensor as described in the iRobot Create manual.</para>
+<para>returns a binary/digital value rather than the raw sensor data (on or off/1 or 0). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="274" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="274" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga4e9778995c282b3ce4016b344be2f091" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_rlightbump</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_rlightbump</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1ga849d6f0b05cf24e5b69e37afe896b59f" kindref="member">get_create_lflightbump</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga9a6ecec64354cf00836e52bebcd97b22" kindref="member">get_create_lclightbump</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1gaca772a76409a260343dfa364abec332e" kindref="member">get_create_rclightbump</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga42fac5203b8024de9fb958a0ea08df34" kindref="member">get_create_rflightbump</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1gafb5c58dacb1d7d5935889f94b0c1569a" kindref="member">get_create_llightbump</ref></para>
+</simplesect>
+returns the right light bumper sensor as described in the iRobot Create manual.</para>
+<para>returns a binary/digital value rather than the raw sensor data (on or off/1 or 0). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="286" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="286" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga0c6ef5d3da837fe93ee69b5a0a74c110" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_llightbump_amt</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_llightbump_amt</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1gaccf4491ac1108d2df2f32d47f1fa873f" kindref="member">get_create_lflightbump_amt</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga265ad18816253ec0fc9d9d993d873d30" kindref="member">get_create_lclightbump_amt</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga6f2f0bd305ca1efc90b4821b4530f011" kindref="member">get_create_rclightbump_amt</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga8e40b3bee79aceb797cbb24122cd17d9" kindref="member">get_create_rflightbump_amt</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga7616b97c9edb9dc9693b8c2b2bc44997" kindref="member">get_create_rlightbump_amt</ref></para>
+</simplesect>
+returns the left light bumper sensor as described in the iRobot Create manual.</para>
+<para>returns the amount the sensor is pressed, rather than a binary value. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="298" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="298" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga7616b97c9edb9dc9693b8c2b2bc44997" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_rlightbump_amt</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_rlightbump_amt</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1gaccf4491ac1108d2df2f32d47f1fa873f" kindref="member">get_create_lflightbump_amt</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga265ad18816253ec0fc9d9d993d873d30" kindref="member">get_create_lclightbump_amt</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga6f2f0bd305ca1efc90b4821b4530f011" kindref="member">get_create_rclightbump_amt</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga8e40b3bee79aceb797cbb24122cd17d9" kindref="member">get_create_rflightbump_amt</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga0c6ef5d3da837fe93ee69b5a0a74c110" kindref="member">get_create_llightbump_amt</ref></para>
+</simplesect>
+returns the right light bumper sensor as described in the iRobot Create manual.</para>
+<para>returns the amount the sensor is pressed, rather than a binary value. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="310" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="310" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1gaccf4491ac1108d2df2f32d47f1fa873f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_lflightbump_amt</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_lflightbump_amt</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1ga0c6ef5d3da837fe93ee69b5a0a74c110" kindref="member">get_create_llightbump_amt</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga265ad18816253ec0fc9d9d993d873d30" kindref="member">get_create_lclightbump_amt</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga6f2f0bd305ca1efc90b4821b4530f011" kindref="member">get_create_rclightbump_amt</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga8e40b3bee79aceb797cbb24122cd17d9" kindref="member">get_create_rflightbump_amt</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga7616b97c9edb9dc9693b8c2b2bc44997" kindref="member">get_create_rlightbump_amt</ref></para>
+</simplesect>
+returns the left-front light bumper sensor as described in the iRobot Create manual.</para>
+<para>returns the amount the sensor is pressed, rather than a binary value. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="322" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="322" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga265ad18816253ec0fc9d9d993d873d30" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_lclightbump_amt</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_lclightbump_amt</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1gaccf4491ac1108d2df2f32d47f1fa873f" kindref="member">get_create_lflightbump_amt</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga0c6ef5d3da837fe93ee69b5a0a74c110" kindref="member">get_create_llightbump_amt</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga6f2f0bd305ca1efc90b4821b4530f011" kindref="member">get_create_rclightbump_amt</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga8e40b3bee79aceb797cbb24122cd17d9" kindref="member">get_create_rflightbump_amt</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga7616b97c9edb9dc9693b8c2b2bc44997" kindref="member">get_create_rlightbump_amt</ref></para>
+</simplesect>
+returns the left-center light bumper sensor as described in the iRobot Create manual.</para>
+<para>returns the amount the sensor is pressed, rather than a binary value. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="334" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="334" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga6f2f0bd305ca1efc90b4821b4530f011" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_rclightbump_amt</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_rclightbump_amt</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1gaccf4491ac1108d2df2f32d47f1fa873f" kindref="member">get_create_lflightbump_amt</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga265ad18816253ec0fc9d9d993d873d30" kindref="member">get_create_lclightbump_amt</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga0c6ef5d3da837fe93ee69b5a0a74c110" kindref="member">get_create_llightbump_amt</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga8e40b3bee79aceb797cbb24122cd17d9" kindref="member">get_create_rflightbump_amt</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga7616b97c9edb9dc9693b8c2b2bc44997" kindref="member">get_create_rlightbump_amt</ref></para>
+</simplesect>
+returns the right-center light bumper sensor as described in the iRobot Create manual.</para>
+<para>returns the amount the sensor is pressed, rather than a binary value. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="346" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="346" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga8e40b3bee79aceb797cbb24122cd17d9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_rflightbump_amt</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_rflightbump_amt</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1gaccf4491ac1108d2df2f32d47f1fa873f" kindref="member">get_create_lflightbump_amt</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga265ad18816253ec0fc9d9d993d873d30" kindref="member">get_create_lclightbump_amt</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga6f2f0bd305ca1efc90b4821b4530f011" kindref="member">get_create_rclightbump_amt</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga0c6ef5d3da837fe93ee69b5a0a74c110" kindref="member">get_create_llightbump_amt</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga7616b97c9edb9dc9693b8c2b2bc44997" kindref="member">get_create_rlightbump_amt</ref></para>
+</simplesect>
+returns the right-front light bumper sensor as described in the iRobot Create manual.</para>
+<para>returns the amount the sensor is pressed, rather than a binary value. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="358" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="358" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1gac133815157e1951484db164f4c67cb96" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_vwall</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_vwall</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1ga50cf91a1cc5ab08c9325dc9e00c1d381" kindref="member">get_create_wall</ref></para>
+</simplesect>
+Reports if there is a virutal wall. <simplesect kind="note"><para>The botball kit does not contain a &quot;virtual wall&quot; unit as of Fall 2019. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="366" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="366" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga01349b8e960753b9aa09a14067236926" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_infrared</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_infrared</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>The Docks, Virutal Walls, etc. send out infrared signals that the Create can pick up.</para>
+<para>For example, Right of dock (&quot;Green Buoy&quot;): 164, Left of Dock (&quot;Red Buoy&quot;): 168, &quot;Force Field&quot;: 161</para>
+<para>You can also potentially control the Create with IR signals for forward, backward, etc.</para>
+<para>See iRobot Create Manual for more information (&quot;Characters sent by iRobot devices&quot;) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="375" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="375" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1gaa35c544a6ede27f552dfbd1c7f41eed6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_advance_button</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_advance_button</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Returns if the &quot;advance&quot; button is pressed. <simplesect kind="note"><para>&quot;Advance&quot; is not a button on the newer Creates. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="382" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="382" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1gad5846688c0a802619f7825b23b81fa2e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_play_button</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_play_button</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Returns if the &quot;play&quot; button is pressed. <simplesect kind="note"><para>&quot;Play&quot; is not a button on the newer Creates. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="389" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="389" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga250524753e18636ffbc0de77dad54ae6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_normalized_angle</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_normalized_angle</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1gadba9389f7fdd656686146ecdc7cc78bf" kindref="member">set_create_normalized_angle</ref></para>
+</simplesect>
+returns the normalized angle that the create is at in degrees (angle mod 360).</para>
+<para>&quot;Normalized&quot; means that the angle is converted to be between 0 and 360 degrees first. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="397" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="397" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1gadba9389f7fdd656686146ecdc7cc78bf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void set_create_normalized_angle</definition>
+        <argsstring>(int angle)</argsstring>
+        <name>set_create_normalized_angle</name>
+        <param>
+          <type>int</type>
+          <declname>angle</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1ga250524753e18636ffbc0de77dad54ae6" kindref="member">get_create_normalized_angle</ref></para>
+</simplesect>
+Set the current angle that the create is at.</para>
+<para>Sets what the create should use as a reference for its angle </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="405" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="405" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1gac78c5712b2968dafb8b10cfe2b71794e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_total_angle</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_total_angle</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1ga59605a67edf04e01f6b2c0deff9402d5" kindref="member">set_create_total_angle</ref></para>
+</simplesect>
+returns the angle the Create is currently turned to (does not &quot;normalize&quot;).</para>
+<para>This value is any value as it is not normalized to a range of [0,360) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="413" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="413" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga59605a67edf04e01f6b2c0deff9402d5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void set_create_total_angle</definition>
+        <argsstring>(int angle)</argsstring>
+        <name>set_create_total_angle</name>
+        <param>
+          <type>int</type>
+          <declname>angle</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1gac78c5712b2968dafb8b10cfe2b71794e" kindref="member">get_create_total_angle</ref></para>
+</simplesect>
+Set the current angle that the create is at for the total angle functions.</para>
+<para>Sets what the create should use as a reference for its angle </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="421" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="421" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1gac2bdacf3f40c31e169de5e59a2d03d1e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_distance</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_distance</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__create_1ga813f240a2fdf50cc5aa2aaa536ae113b" kindref="member">set_create_distance</ref></para>
+</simplesect>
+Gets the distance traveled based on encoder values in the wheels.</para>
+<para>Units should be in millimeters (mm) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="429" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="429" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga813f240a2fdf50cc5aa2aaa536ae113b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void set_create_distance</definition>
+        <argsstring>(int dist)</argsstring>
+        <name>set_create_distance</name>
+        <param>
+          <type>int</type>
+          <declname>dist</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Sets the current distance the create thinks it has traveled.</para>
+<para>Use this to set it&apos;s reference for where it is. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="436" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="436" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga25e5d6e6a7fa05a5269d4725ed2d2637" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_battery_charging_state</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_battery_charging_state</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para>get_create_battery_voltage </para>
+</simplesect>
+<simplesect kind="see"><para>get_create_battery_current</para>
+</simplesect>
+returns the current charging state of the battery.</para>
+<para>Not Charging: 0, Reconditioning Charging: 1, Full Charging: 2, Trickle Charging: 3, Waiting: 4, Charging Connection Fault: 5 </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="445" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="445" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1gacd2df04c6d2dab43cb36e4b05264ed13" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_battery_temp</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_battery_temp</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>returns the temperature of the battery in degrees Celcius </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="451" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="451" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga5cb63de68443ca53aed72c86eb4ab4b0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_battery_charge</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_battery_charge</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>returns the current charge on the battery in milliAmp-Hours (mAH) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="457" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="457" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga598d5e167b3682c4f617174b4d6c5235" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_battery_capacity</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_battery_capacity</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Returns the capacity of the battery in milliAmp-Hours (mAH) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="463" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="463" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga0db9183ac17e9cfdc46f5637568dda6f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_wall_amt</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_wall_amt</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Returns the wall signal sensed by the create. <simplesect kind="see"><para><ref refid="group__create_1ga50cf91a1cc5ab08c9325dc9e00c1d381" kindref="member">get_create_wall</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="470" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="470" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga706429aa16d3d26713cab419015c28da" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_lcliff_amt</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_lcliff_amt</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Returns the value measured by the left-most cliff sensor. <simplesect kind="note"><para>For line following purposes, this can be treated like a tophat sensor value. Lower values often indicate black, higher values often indicate white. </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1gad28b55232fb19a4044dc4931b1a8d580" kindref="member">get_create_lcliff</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="481" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="481" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga527feb72fe067841c1db447752faae14" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_lfcliff_amt</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_lfcliff_amt</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Returns the value measured by the left-front cliff sensor. <simplesect kind="note"><para>For line following purposes, this can be treated like a tophat sensor value. Lower values often indicate black, higher values often indicate white. </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga1d03b7e4bbdbd270aee98f21886b22f1" kindref="member">get_create_lfcliff</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="492" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="492" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga1a6f4380dc028e0391f0ff8ee37409e9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_rfcliff_amt</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_rfcliff_amt</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Returns the value measured by the right-front cliff sensor. <simplesect kind="note"><para>For line following purposes, this can be treated like a tophat sensor value. Lower values often indicate black, higher values often indicate white. </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1gaffec88876bd690aee900ca6d43b74d31" kindref="member">get_create_rfcliff</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="503" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="503" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga730c7c2551fc77aed9d0127f725a355a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_rcliff_amt</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_rcliff_amt</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Returns the value measured by the right-most cliff sensor. <simplesect kind="note"><para>For line following purposes, this can be treated like a tophat sensor value. Lower values often indicate black, higher values often indicate white. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="513" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="513" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1gab62a99b563ca1c55be16c2b35f9400d0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_song_number</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_song_number</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>The song slot of the current song </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="519" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="519" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga3a7e8ab9a265ecf27fabb7220006ad16" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_create_song_playing</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_song_playing</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>1 if it the create is playing a song, 0 if the create isn&apos;t playing a song </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="526" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="526" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1gabd9f5f33d06b8d5442ee0b6ec68ba350" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void create_stop</definition>
+        <argsstring>()</argsstring>
+        <name>create_stop</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Sets the create connection mode to off. No sensor data will be available, and the create will not respond to movement commands. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="534" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="534" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga632855d0a5f73552c6bd21d5fc27591a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void create_drive</definition>
+        <argsstring>(int speed, int radius)</argsstring>
+        <name>create_drive</name>
+        <param>
+          <type>int</type>
+          <declname>speed</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>radius</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Drive at the requested speed in an arc with the provided radius. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>speed</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The speed (in mm/s) to drive at. Range is -500 to 500. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>radius</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The radius (in mm) of the arc to drive through. Range is -2000 to 2000. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="544" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="544" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga2dc2c3c2b3ad84b80e8805cdae0b7850" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void create_drive_straight</definition>
+        <argsstring>(int speed)</argsstring>
+        <name>create_drive_straight</name>
+        <param>
+          <type>int</type>
+          <declname>speed</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Drive straight at the requested speed. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>speed</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The speed (in mm/s) to drive at. Range is -500 to 500. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="551" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="551" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1gac3e2e539c0b0b4cd8dddb37ce814980a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void create_spin_CW</definition>
+        <argsstring>(int speed)</argsstring>
+        <name>create_spin_CW</name>
+        <param>
+          <type>int</type>
+          <declname>speed</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Spin clockwise at the requested speed. Spins in place. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>speed</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The speed (in mm/s) to drive at. Range is -500 to 500. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="note"><para>negative speeds will result in spinning counter-clockwise </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="559" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="559" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1gabc7cfe822d49e56faba4f496e6c049fa" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void create_spin_CCW</definition>
+        <argsstring>(int speed)</argsstring>
+        <name>create_spin_CCW</name>
+        <param>
+          <type>int</type>
+          <declname>speed</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Spin counter-clockwise at the requested speed. Spins in place. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>speed</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The speed (in mm/s) to drive at. Range is -500 to 500. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="note"><para>negative speeds will result in spinning clockwise </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="567" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="567" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1gab94acab36e6a3d35be5fe8963d5ebe4c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void create_drive_direct</definition>
+        <argsstring>(int l_speed, int r_speed)</argsstring>
+        <name>create_drive_direct</name>
+        <param>
+          <type>int</type>
+          <declname>l_speed</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>r_speed</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Drive the create at the provided left wheel speed and right wheel speed. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>l_speed</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The speed (in mm/s) to drive the left wheel at. Range is -500 to 500 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>r_speed</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The speed (in mm/s) to drive the right wheel at. Range is -500 to 500 </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="575" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="575" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga3d435df0a00551084222914b79fda6da" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void create_spin_block</definition>
+        <argsstring>(int speed, int angle)</argsstring>
+        <name>create_spin_block</name>
+        <param>
+          <type>int</type>
+          <declname>speed</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>angle</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Turns the create the requested number of degrees at the requested speed. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>speed</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The speed (in mm/s) to turn at. Range is -500 to 500 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>angle</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The angle (in degrees) to turn. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="note"><para>This is a blocking function, so you DO NOT need an msleep after it. It already sleeps for the time that it needs to execute the turn and doesn&apos;t need extra msleeps. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="586" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="586" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga9b7f60ab670e5ede5bb85ea10458092e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int _create_get_raw_encoders</definition>
+        <argsstring>(long *lenc, long *renc)</argsstring>
+        <name>_create_get_raw_encoders</name>
+        <param>
+          <type>long *</type>
+          <declname>lenc</declname>
+        </param>
+        <param>
+          <type>long *</type>
+          <declname>renc</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the displacement of the left wheel and right wheel and puts that data into the <computeroutput>long</computeroutput>s provided <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="out">lenc</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>- where the left wheel&apos;s displacement is stored </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="out">renc</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>- where the right wheel&apos;s displacement is stored </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="note"><para>Not yet implemented </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="596" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="596" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga3893843fd78804fdc227ceb836f0314a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int create_load_song</definition>
+        <argsstring>(const unsigned char *song, const unsigned char length, const unsigned char num)</argsstring>
+        <name>create_load_song</name>
+        <param>
+          <type>const unsigned char *</type>
+          <declname>song</declname>
+        </param>
+        <param>
+          <type>const unsigned char</type>
+          <declname>length</declname>
+        </param>
+        <param>
+          <type>const unsigned char</type>
+          <declname>num</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Loads a song for playing on the create <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>song</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>It should be an array of unsigned chars (positive integers 0-255) The first value in a pair will be the midi value of the note the second value in the pair will be the duration (in 64ths of a second) for example, a song {88, 20, 91, 32, 70, 15} will play midi value 88 for 20/64ths of a second, midi value 91 for 32/64ths of a second, and midi value 70 for 15/64ths of a second. A full list of notes playable on the create is found at <ulink url="https://cdn-shop.adafruit.com/datasheets/create_2_Open_Interface_Spec.pdf">https://cdn-shop.adafruit.com/datasheets/create_2_Open_Interface_Spec.pdf</ulink> on page 34 <linebreak/>
+ </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>length</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The length of the song. It is how many notes are in the song, not how many items are in your song array. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>num</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The song slot to load the song into; valid values are 0, 1, 2, and 3 </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>1 on success, 0 on failure </para>
+</simplesect>
+<simplesect kind="note"><para>Example use: <computeroutput>unsigned char example_song[] = {88, 20, 91, 32, 70, 15}; create_load_song(example_song, 3, 0);</computeroutput> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="615" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="615" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga41feb40543d92bf1aff57d73263c9c74" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int create_play_song</definition>
+        <argsstring>(const unsigned char num)</argsstring>
+        <name>create_play_song</name>
+        <param>
+          <type>const unsigned char</type>
+          <declname>num</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Plays a song that has been loaded. Use create_load_song first. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>num</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The song slot to play from; valid values are 0, 1, 2, and 3 </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>1 on success, 0 on failure </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga3893843fd78804fdc227ceb836f0314a" kindref="member">create_load_song</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="624" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="624" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga706ecac088816976d13dded3e282a399" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int create_read_block</definition>
+        <argsstring>(char *data, int count)</argsstring>
+        <name>create_read_block</name>
+        <param>
+          <type>char *</type>
+          <declname>data</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>count</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Reads sensor data from the create. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>- This is where the read sensor data is stored </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>count</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>- How many bytes to read from the create. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>1 on success, 0 on failure. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="633" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="633" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1gad63ef62ce183cbad5ef8e63472676f1a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void create_write_byte</definition>
+        <argsstring>(char byte)</argsstring>
+        <name>create_write_byte</name>
+        <param>
+          <type>char</type>
+          <declname>byte</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Write a byte to the create. This is used to send commands directly to the create without using the functions provided in this library. <simplesect kind="note"><para>If you want to directly send bytes to the create, consider checking out the actual create oi specifications: <ulink url="https://cdn-shop.adafruit.com/datasheets/create_2_Open_Interface_Spec.pdf">https://cdn-shop.adafruit.com/datasheets/create_2_Open_Interface_Spec.pdf</ulink> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="642" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="642" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga51f19e3bbca222ed60467b810f30ccb7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void create_clear_serial_buffer</definition>
+        <argsstring>()</argsstring>
+        <name>create_clear_serial_buffer</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Flushes commands to the create. <simplesect kind="note"><para>This library already automatically flushes commands to the create </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="649" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="649" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1gae11567e2283f45237310b0233664799e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> enum <ref refid="create_8h_1a7654bd82719bfde1c792d7828664dde2" kindref="member">BaudRate</ref></type>
+        <definition>EXPORT_SYM enum BaudRate get_create_baud_rate</definition>
+        <argsstring>()</argsstring>
+        <name>get_create_baud_rate</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Returns the baud rate of the create. <simplesect kind="note"><para>The baud rate is how many times a second the create updates its sensors and receives commands. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="671" column="1" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="671" declcolumn="1"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1ga0f08747f2e06d61b9dbc16f02702a62f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void set_create_baud_rate</definition>
+        <argsstring>(const enum BaudRate baudRate)</argsstring>
+        <name>set_create_baud_rate</name>
+        <param>
+          <type>const enum <ref refid="create_8h_1a7654bd82719bfde1c792d7828664dde2" kindref="member">BaudRate</ref></type>
+          <declname>baudRate</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Sets the create&apos;s baud rate to the provided baud rate. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" line="677" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h" declline="677" declcolumn="17"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><simplesect kind="author"><para>Braden McDorman </para>
+</simplesect>
+<simplesect kind="copyright"><para>KISS Institute for Practical Robotics </para>
+</simplesect>
+</para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_KIPR_CREATE_CREATE_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_KIPR_CREATE_CREATE_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="export_8h" kindref="compound">kipr/export/export.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69" refid="group__create_1ga38089f9eb9ffd84a2a58d5aa17460bab" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga38089f9eb9ffd84a2a58d5aa17460bab" kindref="member">create_connect</ref>();</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="77" refid="group__create_1ga22c6568527d452f33795413743c87180" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga22c6568527d452f33795413743c87180" kindref="member">create_connect_once</ref>();</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight></codeline>
+<codeline lineno="85" refid="group__create_1ga51d8918cab636fb2b5d7b5d04e84a3ea" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga51d8918cab636fb2b5d7b5d04e84a3ea" kindref="member">create_disconnect</ref>();</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight></codeline>
+<codeline lineno="99" refid="group__create_1ga55ccc83379a2eb11fc0e2861e381722c" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga55ccc83379a2eb11fc0e2861e381722c" kindref="member">create_passive</ref>();</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight></codeline>
+<codeline lineno="111" refid="group__create_1gaa5a223071ed2d18caf9e52633ce8ccb5" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__create_1gaa5a223071ed2d18caf9e52633ce8ccb5" kindref="member">create_safe</ref>();</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight></codeline>
+<codeline lineno="124" refid="group__create_1gaa0e5b432c32ceb3a3b3c01e0e767dba5" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__create_1gaa0e5b432c32ceb3a3b3c01e0e767dba5" kindref="member">create_full</ref>();</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"></highlight></codeline>
+<codeline lineno="134" refid="group__create_1gaf69b8a95f668056f9cbf947c30f26829" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1gaf69b8a95f668056f9cbf947c30f26829" kindref="member">get_create_mode</ref>();</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"></highlight></codeline>
+<codeline lineno="141" refid="group__create_1gab9e8f0c2dbbc3887da7607c7c1cb2afe" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1gab9e8f0c2dbbc3887da7607c7c1cb2afe" kindref="member">get_create_lbump</ref>();</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"></highlight></codeline>
+<codeline lineno="148" refid="group__create_1ga63e5aceaaf8d5a503c4fd237bc8f3f32" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga63e5aceaaf8d5a503c4fd237bc8f3f32" kindref="member">get_create_rbump</ref>();</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"></highlight></codeline>
+<codeline lineno="155" refid="group__create_1ga9f747bae96d90b52ff22f91a8285cdf2" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga9f747bae96d90b52ff22f91a8285cdf2" kindref="member">get_create_lwdrop</ref>();</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"></highlight></codeline>
+<codeline lineno="163" refid="group__create_1ga38f8a60c3cf319c9881a730e850d5258" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga38f8a60c3cf319c9881a730e850d5258" kindref="member">get_create_cwdrop</ref>();</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"></highlight></codeline>
+<codeline lineno="170" refid="group__create_1ga147c6631211760a905df8022b5562a0c" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga147c6631211760a905df8022b5562a0c" kindref="member">get_create_rwdrop</ref>();</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"></highlight></codeline>
+<codeline lineno="178" refid="group__create_1ga50cf91a1cc5ab08c9325dc9e00c1d381" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga50cf91a1cc5ab08c9325dc9e00c1d381" kindref="member">get_create_wall</ref>();</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"></highlight></codeline>
+<codeline lineno="187" refid="group__create_1gad28b55232fb19a4044dc4931b1a8d580" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1gad28b55232fb19a4044dc4931b1a8d580" kindref="member">get_create_lcliff</ref>();</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"></highlight></codeline>
+<codeline lineno="196" refid="group__create_1ga1d03b7e4bbdbd270aee98f21886b22f1" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga1d03b7e4bbdbd270aee98f21886b22f1" kindref="member">get_create_lfcliff</ref>();</highlight></codeline>
+<codeline lineno="197"><highlight class="normal"></highlight></codeline>
+<codeline lineno="205" refid="group__create_1gaffec88876bd690aee900ca6d43b74d31" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1gaffec88876bd690aee900ca6d43b74d31" kindref="member">get_create_rfcliff</ref>();</highlight></codeline>
+<codeline lineno="206"><highlight class="normal"></highlight></codeline>
+<codeline lineno="214" refid="group__create_1ga82fac0313225b3e7d7560484bdb1dfd3" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga82fac0313225b3e7d7560484bdb1dfd3" kindref="member">get_create_rcliff</ref>();</highlight></codeline>
+<codeline lineno="215"><highlight class="normal"></highlight></codeline>
+<codeline lineno="226" refid="group__create_1gafb5c58dacb1d7d5935889f94b0c1569a" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1gafb5c58dacb1d7d5935889f94b0c1569a" kindref="member">get_create_llightbump</ref>();</highlight></codeline>
+<codeline lineno="227"><highlight class="normal"></highlight></codeline>
+<codeline lineno="238" refid="group__create_1ga849d6f0b05cf24e5b69e37afe896b59f" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga849d6f0b05cf24e5b69e37afe896b59f" kindref="member">get_create_lflightbump</ref>();</highlight></codeline>
+<codeline lineno="239"><highlight class="normal"></highlight></codeline>
+<codeline lineno="250" refid="group__create_1ga9a6ecec64354cf00836e52bebcd97b22" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga9a6ecec64354cf00836e52bebcd97b22" kindref="member">get_create_lclightbump</ref>();</highlight></codeline>
+<codeline lineno="251"><highlight class="normal"></highlight></codeline>
+<codeline lineno="262" refid="group__create_1gaca772a76409a260343dfa364abec332e" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1gaca772a76409a260343dfa364abec332e" kindref="member">get_create_rclightbump</ref>();</highlight></codeline>
+<codeline lineno="263"><highlight class="normal"></highlight></codeline>
+<codeline lineno="274" refid="group__create_1ga42fac5203b8024de9fb958a0ea08df34" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga42fac5203b8024de9fb958a0ea08df34" kindref="member">get_create_rflightbump</ref>();</highlight></codeline>
+<codeline lineno="275"><highlight class="normal"></highlight></codeline>
+<codeline lineno="286" refid="group__create_1ga4e9778995c282b3ce4016b344be2f091" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga4e9778995c282b3ce4016b344be2f091" kindref="member">get_create_rlightbump</ref>();</highlight></codeline>
+<codeline lineno="287"><highlight class="normal"></highlight></codeline>
+<codeline lineno="298" refid="group__create_1ga0c6ef5d3da837fe93ee69b5a0a74c110" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga0c6ef5d3da837fe93ee69b5a0a74c110" kindref="member">get_create_llightbump_amt</ref>();</highlight></codeline>
+<codeline lineno="299"><highlight class="normal"></highlight></codeline>
+<codeline lineno="310" refid="group__create_1ga7616b97c9edb9dc9693b8c2b2bc44997" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga7616b97c9edb9dc9693b8c2b2bc44997" kindref="member">get_create_rlightbump_amt</ref>();</highlight></codeline>
+<codeline lineno="311"><highlight class="normal"></highlight></codeline>
+<codeline lineno="322" refid="group__create_1gaccf4491ac1108d2df2f32d47f1fa873f" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1gaccf4491ac1108d2df2f32d47f1fa873f" kindref="member">get_create_lflightbump_amt</ref>();</highlight></codeline>
+<codeline lineno="323"><highlight class="normal"></highlight></codeline>
+<codeline lineno="334" refid="group__create_1ga265ad18816253ec0fc9d9d993d873d30" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga265ad18816253ec0fc9d9d993d873d30" kindref="member">get_create_lclightbump_amt</ref>();</highlight></codeline>
+<codeline lineno="335"><highlight class="normal"></highlight></codeline>
+<codeline lineno="346" refid="group__create_1ga6f2f0bd305ca1efc90b4821b4530f011" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga6f2f0bd305ca1efc90b4821b4530f011" kindref="member">get_create_rclightbump_amt</ref>();</highlight></codeline>
+<codeline lineno="347"><highlight class="normal"></highlight></codeline>
+<codeline lineno="358" refid="group__create_1ga8e40b3bee79aceb797cbb24122cd17d9" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga8e40b3bee79aceb797cbb24122cd17d9" kindref="member">get_create_rflightbump_amt</ref>();</highlight></codeline>
+<codeline lineno="359"><highlight class="normal"></highlight></codeline>
+<codeline lineno="366" refid="group__create_1gac133815157e1951484db164f4c67cb96" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1gac133815157e1951484db164f4c67cb96" kindref="member">get_create_vwall</ref>();</highlight></codeline>
+<codeline lineno="367"><highlight class="normal"></highlight></codeline>
+<codeline lineno="375" refid="group__create_1ga01349b8e960753b9aa09a14067236926" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga01349b8e960753b9aa09a14067236926" kindref="member">get_create_infrared</ref>();</highlight></codeline>
+<codeline lineno="376"><highlight class="normal"></highlight></codeline>
+<codeline lineno="382" refid="group__create_1gaa35c544a6ede27f552dfbd1c7f41eed6" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1gaa35c544a6ede27f552dfbd1c7f41eed6" kindref="member">get_create_advance_button</ref>();</highlight></codeline>
+<codeline lineno="383"><highlight class="normal"></highlight></codeline>
+<codeline lineno="389" refid="group__create_1gad5846688c0a802619f7825b23b81fa2e" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1gad5846688c0a802619f7825b23b81fa2e" kindref="member">get_create_play_button</ref>();</highlight></codeline>
+<codeline lineno="390"><highlight class="normal"></highlight></codeline>
+<codeline lineno="397" refid="group__create_1ga250524753e18636ffbc0de77dad54ae6" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga250524753e18636ffbc0de77dad54ae6" kindref="member">get_create_normalized_angle</ref>();</highlight></codeline>
+<codeline lineno="398"><highlight class="normal"></highlight></codeline>
+<codeline lineno="405" refid="group__create_1gadba9389f7fdd656686146ecdc7cc78bf" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__create_1gadba9389f7fdd656686146ecdc7cc78bf" kindref="member">set_create_normalized_angle</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>angle);</highlight></codeline>
+<codeline lineno="406"><highlight class="normal"></highlight></codeline>
+<codeline lineno="413" refid="group__create_1gac78c5712b2968dafb8b10cfe2b71794e" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1gac78c5712b2968dafb8b10cfe2b71794e" kindref="member">get_create_total_angle</ref>();</highlight></codeline>
+<codeline lineno="414"><highlight class="normal"></highlight></codeline>
+<codeline lineno="421" refid="group__create_1ga59605a67edf04e01f6b2c0deff9402d5" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga59605a67edf04e01f6b2c0deff9402d5" kindref="member">set_create_total_angle</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>angle);</highlight></codeline>
+<codeline lineno="422"><highlight class="normal"></highlight></codeline>
+<codeline lineno="429" refid="group__create_1gac2bdacf3f40c31e169de5e59a2d03d1e" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1gac2bdacf3f40c31e169de5e59a2d03d1e" kindref="member">get_create_distance</ref>();</highlight></codeline>
+<codeline lineno="430"><highlight class="normal"></highlight></codeline>
+<codeline lineno="436" refid="group__create_1ga813f240a2fdf50cc5aa2aaa536ae113b" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga813f240a2fdf50cc5aa2aaa536ae113b" kindref="member">set_create_distance</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>dist);</highlight></codeline>
+<codeline lineno="437"><highlight class="normal"></highlight></codeline>
+<codeline lineno="445" refid="group__create_1ga25e5d6e6a7fa05a5269d4725ed2d2637" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga25e5d6e6a7fa05a5269d4725ed2d2637" kindref="member">get_create_battery_charging_state</ref>();</highlight></codeline>
+<codeline lineno="446"><highlight class="normal"></highlight></codeline>
+<codeline lineno="451" refid="group__create_1gacd2df04c6d2dab43cb36e4b05264ed13" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1gacd2df04c6d2dab43cb36e4b05264ed13" kindref="member">get_create_battery_temp</ref>();</highlight></codeline>
+<codeline lineno="452"><highlight class="normal"></highlight></codeline>
+<codeline lineno="457" refid="group__create_1ga5cb63de68443ca53aed72c86eb4ab4b0" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga5cb63de68443ca53aed72c86eb4ab4b0" kindref="member">get_create_battery_charge</ref>();</highlight></codeline>
+<codeline lineno="458"><highlight class="normal"></highlight></codeline>
+<codeline lineno="463" refid="group__create_1ga598d5e167b3682c4f617174b4d6c5235" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga598d5e167b3682c4f617174b4d6c5235" kindref="member">get_create_battery_capacity</ref>();</highlight></codeline>
+<codeline lineno="464"><highlight class="normal"></highlight></codeline>
+<codeline lineno="470" refid="group__create_1ga0db9183ac17e9cfdc46f5637568dda6f" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga0db9183ac17e9cfdc46f5637568dda6f" kindref="member">get_create_wall_amt</ref>();</highlight></codeline>
+<codeline lineno="471"><highlight class="normal"></highlight></codeline>
+<codeline lineno="481" refid="group__create_1ga706429aa16d3d26713cab419015c28da" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga706429aa16d3d26713cab419015c28da" kindref="member">get_create_lcliff_amt</ref>();</highlight></codeline>
+<codeline lineno="482"><highlight class="normal"></highlight></codeline>
+<codeline lineno="492" refid="group__create_1ga527feb72fe067841c1db447752faae14" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga527feb72fe067841c1db447752faae14" kindref="member">get_create_lfcliff_amt</ref>();</highlight></codeline>
+<codeline lineno="493"><highlight class="normal"></highlight></codeline>
+<codeline lineno="503" refid="group__create_1ga1a6f4380dc028e0391f0ff8ee37409e9" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga1a6f4380dc028e0391f0ff8ee37409e9" kindref="member">get_create_rfcliff_amt</ref>();</highlight></codeline>
+<codeline lineno="504"><highlight class="normal"></highlight></codeline>
+<codeline lineno="513" refid="group__create_1ga730c7c2551fc77aed9d0127f725a355a" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga730c7c2551fc77aed9d0127f725a355a" kindref="member">get_create_rcliff_amt</ref>();</highlight></codeline>
+<codeline lineno="514"><highlight class="normal"></highlight></codeline>
+<codeline lineno="519" refid="group__create_1gab62a99b563ca1c55be16c2b35f9400d0" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1gab62a99b563ca1c55be16c2b35f9400d0" kindref="member">get_create_song_number</ref>();</highlight></codeline>
+<codeline lineno="520"><highlight class="normal"></highlight></codeline>
+<codeline lineno="526" refid="group__create_1ga3a7e8ab9a265ecf27fabb7220006ad16" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga3a7e8ab9a265ecf27fabb7220006ad16" kindref="member">get_create_song_playing</ref>();</highlight></codeline>
+<codeline lineno="527"><highlight class="normal"></highlight></codeline>
+<codeline lineno="534" refid="group__create_1gabd9f5f33d06b8d5442ee0b6ec68ba350" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__create_1gabd9f5f33d06b8d5442ee0b6ec68ba350" kindref="member">create_stop</ref>();</highlight></codeline>
+<codeline lineno="535"><highlight class="normal"></highlight></codeline>
+<codeline lineno="544" refid="group__create_1ga632855d0a5f73552c6bd21d5fc27591a" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga632855d0a5f73552c6bd21d5fc27591a" kindref="member">create_drive</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>speed,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>radius);</highlight></codeline>
+<codeline lineno="545"><highlight class="normal"></highlight></codeline>
+<codeline lineno="551" refid="group__create_1ga2dc2c3c2b3ad84b80e8805cdae0b7850" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga2dc2c3c2b3ad84b80e8805cdae0b7850" kindref="member">create_drive_straight</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>speed);</highlight></codeline>
+<codeline lineno="552"><highlight class="normal"></highlight></codeline>
+<codeline lineno="559" refid="group__create_1gac3e2e539c0b0b4cd8dddb37ce814980a" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__create_1gac3e2e539c0b0b4cd8dddb37ce814980a" kindref="member">create_spin_CW</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>speed);</highlight></codeline>
+<codeline lineno="560"><highlight class="normal"></highlight></codeline>
+<codeline lineno="567" refid="group__create_1gabc7cfe822d49e56faba4f496e6c049fa" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__create_1gabc7cfe822d49e56faba4f496e6c049fa" kindref="member">create_spin_CCW</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>speed);</highlight></codeline>
+<codeline lineno="568"><highlight class="normal"></highlight></codeline>
+<codeline lineno="575" refid="group__create_1gab94acab36e6a3d35be5fe8963d5ebe4c" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__create_1gab94acab36e6a3d35be5fe8963d5ebe4c" kindref="member">create_drive_direct</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>l_speed,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>r_speed);</highlight></codeline>
+<codeline lineno="576"><highlight class="normal"></highlight></codeline>
+<codeline lineno="586" refid="group__create_1ga3d435df0a00551084222914b79fda6da" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga3d435df0a00551084222914b79fda6da" kindref="member">create_spin_block</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>speed,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>angle);</highlight></codeline>
+<codeline lineno="587"><highlight class="normal"></highlight></codeline>
+<codeline lineno="596" refid="group__create_1ga9b7f60ab670e5ede5bb85ea10458092e" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga9b7f60ab670e5ede5bb85ea10458092e" kindref="member">_create_get_raw_encoders</ref>(</highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>*lenc,<sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>*renc);</highlight></codeline>
+<codeline lineno="597"><highlight class="normal"></highlight></codeline>
+<codeline lineno="615" refid="group__create_1ga3893843fd78804fdc227ceb836f0314a" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga3893843fd78804fdc227ceb836f0314a" kindref="member">create_load_song</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>song,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>length,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>num);</highlight></codeline>
+<codeline lineno="616"><highlight class="normal"></highlight></codeline>
+<codeline lineno="624" refid="group__create_1ga41feb40543d92bf1aff57d73263c9c74" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga41feb40543d92bf1aff57d73263c9c74" kindref="member">create_play_song</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>num);</highlight></codeline>
+<codeline lineno="625"><highlight class="normal"></highlight></codeline>
+<codeline lineno="633" refid="group__create_1ga706ecac088816976d13dded3e282a399" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga706ecac088816976d13dded3e282a399" kindref="member">create_read_block</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*data,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>count);</highlight></codeline>
+<codeline lineno="634"><highlight class="normal"></highlight></codeline>
+<codeline lineno="642" refid="group__create_1gad63ef62ce183cbad5ef8e63472676f1a" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__create_1gad63ef62ce183cbad5ef8e63472676f1a" kindref="member">create_write_byte</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">byte</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="643"><highlight class="normal"></highlight></codeline>
+<codeline lineno="649" refid="group__create_1ga51f19e3bbca222ed60467b810f30ccb7" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga51f19e3bbca222ed60467b810f30ccb7" kindref="member">create_clear_serial_buffer</ref>();</highlight></codeline>
+<codeline lineno="650"><highlight class="normal"></highlight></codeline>
+<codeline lineno="658" refid="create_8h_1a7654bd82719bfde1c792d7828664dde2" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="create_8h_1a7654bd82719bfde1c792d7828664dde2" kindref="member">BaudRate</ref></highlight></codeline>
+<codeline lineno="659"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="660" refid="create_8h_1a7654bd82719bfde1c792d7828664dde2afa5801ed32e6bf3556cf937a2edc9e6d" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="create_8h_1a7654bd82719bfde1c792d7828664dde2afa5801ed32e6bf3556cf937a2edc9e6d" kindref="member">Baud57600</ref><sp/>=<sp/>0,<sp/><sp/></highlight></codeline>
+<codeline lineno="661"><highlight class="normal"><sp/><sp/><ref refid="create_8h_1a7654bd82719bfde1c792d7828664dde2af95051e227854027d600a358d5dbfb44" kindref="member">Baud115200</ref><sp/>=<sp/>1<sp/><sp/></highlight></codeline>
+<codeline lineno="662" refid="create_8h_1a7654bd82719bfde1c792d7828664dde2af95051e227854027d600a358d5dbfb44" refkind="member"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="663"><highlight class="normal"></highlight></codeline>
+<codeline lineno="664"><highlight class="normal"></highlight></codeline>
+<codeline lineno="671" refid="group__create_1gae11567e2283f45237310b0233664799e" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="create_8h_1a7654bd82719bfde1c792d7828664dde2" kindref="member">BaudRate</ref><sp/><ref refid="group__create_1gae11567e2283f45237310b0233664799e" kindref="member">get_create_baud_rate</ref>();</highlight></codeline>
+<codeline lineno="672"><highlight class="normal"></highlight></codeline>
+<codeline lineno="677" refid="group__create_1ga0f08747f2e06d61b9dbc16f02702a62f" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__create_1ga0f08747f2e06d61b9dbc16f02702a62f" kindref="member">set_create_baud_rate</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="create_8h_1a7654bd82719bfde1c792d7828664dde2" kindref="member">BaudRate</ref><sp/>baudRate);</highlight></codeline>
+<codeline lineno="678"><highlight class="normal"></highlight></codeline>
+<codeline lineno="679"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="680"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="681"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="682"><highlight class="normal"></highlight></codeline>
+<codeline lineno="683"><highlight class="normal"></highlight></codeline>
+<codeline lineno="684"><highlight class="normal"></highlight></codeline>
+<codeline lineno="685"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>INCLUDE_WALLABY_CREATE_H_<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h"/>
+  </compounddef>
+</doxygen>

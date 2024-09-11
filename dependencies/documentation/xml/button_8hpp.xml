@@ -1,0 +1,156 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="button_8hpp" kind="file" language="C++">
+    <compoundname>button.hpp</compoundname>
+    <includes refid="sensor_8hpp" local="yes">kipr/sensor/sensor.hpp</includes>
+    <includes refid="button__ids_8hpp" local="yes">button_ids.hpp</includes>
+    <includes refid="export_8h" local="yes">kipr/export/export.h</includes>
+    <includedby refid="create_8hpp" local="yes">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp</includedby>
+    <incdepgraph>
+      <node id="3">
+        <label>kipr/export/export.h</label>
+        <link refid="export_8h"/>
+      </node>
+      <node id="4">
+        <label>button_ids.hpp</label>
+        <link refid="button__ids_8hpp"/>
+      </node>
+      <node id="1">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.hpp</label>
+        <link refid="button_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>kipr/sensor/sensor.hpp</label>
+        <link refid="sensor_8hpp"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp</label>
+        <link refid="create_8hpp"/>
+      </node>
+      <node id="1">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.hpp</label>
+        <link refid="button_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="classkipr_1_1button_1_1AbstractButton" prot="public">kipr::button::AbstractButton</innerclass>
+    <innerclass refid="classkipr_1_1button_1_1AbstractTextButton" prot="public">kipr::button::AbstractTextButton</innerclass>
+    <innerclass refid="classkipr_1_1button_1_1IdButton" prot="public">kipr::button::IdButton</innerclass>
+    <innerclass refid="classkipr_1_1button_1_1ExtraButtons" prot="public">kipr::button::ExtraButtons</innerclass>
+    <innernamespace refid="namespacekipr">kipr</innernamespace>
+    <innernamespace refid="namespacekipr_1_1button">kipr::button</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>_KIPR_BUTTON_BUTTON_HPP_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_KIPR_BUTTON_BUTTON_HPP_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="sensor_8hpp" kindref="compound">kipr/sensor/sensor.hpp</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="button__ids_8hpp" kindref="compound">button_ids.hpp</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="export_8h" kindref="compound">kipr/export/export.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal"><ref refid="namespacekipr" kindref="compound">kipr</ref></highlight></codeline>
+<codeline lineno="9"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="10" refid="namespacekipr_1_1button" refkind="compound"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">button</highlight></codeline>
+<codeline lineno="11"><highlight class="normal"><sp/><sp/>{</highlight></codeline>
+<codeline lineno="12" refid="classkipr_1_1button_1_1AbstractButton" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/><ref refid="classkipr_1_1button_1_1AbstractButton" kindref="compound">AbstractButton</ref><sp/>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt;bool&gt;</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="14"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="15" refid="classkipr_1_1button_1_1AbstractButton_1a3d431437a2dddb5aabce688c4cc09d18" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1button_1_1AbstractButton_1a3d431437a2dddb5aabce688c4cc09d18" kindref="member">~AbstractButton</ref>();</highlight></codeline>
+<codeline lineno="16" refid="classkipr_1_1button_1_1AbstractButton_1ab744b3181aa4ddccf16a1f9de2673cae" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1button_1_1AbstractButton_1ab744b3181aa4ddccf16a1f9de2673cae" kindref="member">setPressed</ref>(</highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>pressed)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight></codeline>
+<codeline lineno="18" refid="classkipr_1_1button_1_1AbstractButton_1a124cf2760816c85a0df82a95f092db10" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1button_1_1AbstractButton_1a124cf2760816c85a0df82a95f092db10" kindref="member">isPressed</ref>()</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>value();<sp/>};</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="20" refid="classkipr_1_1button_1_1AbstractButton_1af6f894ff83b02c2b6280d53a3848fc07" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1button_1_1AbstractButton_1af6f894ff83b02c2b6280d53a3848fc07" kindref="member">isNotPressed</ref>()</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>!isPressed();<sp/>}</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight></codeline>
+<codeline lineno="22" refid="classkipr_1_1button_1_1AbstractButton_1a8f579b7875a10b84752b9328b3b236f0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1button_1_1AbstractButton_1a8f579b7875a10b84752b9328b3b236f0" kindref="member">isClicked</ref>()</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="23"><highlight class="keyword"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>ret<sp/>=<sp/>isPressed();</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>waitUntilReleased();</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ret;</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29" refid="classkipr_1_1button_1_1AbstractButton_1a93a071b3b48adeddf7196b2ac4be580c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1button_1_1AbstractButton_1a93a071b3b48adeddf7196b2ac4be580c" kindref="member">waitUntilReleased</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight></codeline>
+<codeline lineno="31" refid="classkipr_1_1button_1_1AbstractButton_1a0755135f0b838a511b2c4ff10a754839" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1button_1_1AbstractButton_1a0755135f0b838a511b2c4ff10a754839" kindref="member">waitUntilPressed</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight></codeline>
+<codeline lineno="33" refid="classkipr_1_1button_1_1AbstractButton_1a5272a87a1d23dc58fc125caf84adaa4c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1button_1_1AbstractButton_1a5272a87a1d23dc58fc125caf84adaa4c" kindref="member">waitUntilClicked</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37" refid="classkipr_1_1button_1_1AbstractTextButton" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/><ref refid="classkipr_1_1button_1_1AbstractTextButton" kindref="compound">AbstractTextButton</ref><sp/>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1button_1_1AbstractButton" kindref="compound">AbstractButton</ref></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="40" refid="classkipr_1_1button_1_1AbstractTextButton_1ab3670fda7972700695e33e91a3485e6d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1button_1_1AbstractTextButton_1ab3670fda7972700695e33e91a3485e6d" kindref="member">~AbstractTextButton</ref>();</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42" refid="classkipr_1_1button_1_1AbstractTextButton_1a09b0dae10968d316eb5095dae58933e1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1button_1_1AbstractTextButton_1a09b0dae10968d316eb5095dae58933e1" kindref="member">setText</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/>text)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44" refid="classkipr_1_1button_1_1AbstractTextButton_1ace5ac331b051c11dccf44d08344faab1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/><ref refid="classkipr_1_1button_1_1AbstractTextButton_1ace5ac331b051c11dccf44d08344faab1" kindref="member">text</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46" refid="classkipr_1_1button_1_1AbstractTextButton_1aa31595efcff39e4f57748a518a409d19" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1button_1_1AbstractTextButton_1aa31595efcff39e4f57748a518a409d19" kindref="member">isTextDirty</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48" refid="classkipr_1_1button_1_1AbstractTextButton_1ac16e21eb25cdacb796d410b3a7e1c000" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1button_1_1AbstractTextButton_1ac16e21eb25cdacb796d410b3a7e1c000" kindref="member">resetText</ref>()<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51" refid="classkipr_1_1button_1_1IdButton" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/><ref refid="classkipr_1_1button_1_1IdButton" kindref="compound">IdButton</ref><sp/>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1button_1_1AbstractTextButton" kindref="compound">AbstractTextButton</ref></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="54" refid="classkipr_1_1button_1_1IdButton_1ae0ff6af79e67ad95ee0f376ec12e1bea" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classkipr_1_1button_1_1IdButton_1ae0ff6af79e67ad95ee0f376ec12e1bea" kindref="member">IdButton</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="namespacekipr_1_1button_1a46c17cd2d42572a5b00eebc23dc79507" kindref="member">Id</ref><sp/>&amp;<sp/></highlight><highlight class="keywordtype">id</highlight><highlight class="normal">,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/>defaultText);</highlight></codeline>
+<codeline lineno="55" refid="classkipr_1_1button_1_1IdButton_1a67b1d1ffbcdf862eeda4d652ac2628fb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classkipr_1_1button_1_1IdButton_1a67b1d1ffbcdf862eeda4d652ac2628fb" kindref="member">~IdButton</ref>();</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57" refid="classkipr_1_1button_1_1IdButton_1ac6cea0dd9f461e929ba35b755fe9e16c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1button_1_1IdButton_1ac6cea0dd9f461e929ba35b755fe9e16c" kindref="member">setText</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/>text);</highlight></codeline>
+<codeline lineno="58" refid="classkipr_1_1button_1_1IdButton_1a5ac78344ad2d2638005c475456242658" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/><ref refid="classkipr_1_1button_1_1IdButton_1a5ac78344ad2d2638005c475456242658" kindref="member">text</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="59" refid="classkipr_1_1button_1_1IdButton_1a790eaead998d029d7e4105b5013f14bc" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1button_1_1IdButton_1a790eaead998d029d7e4105b5013f14bc" kindref="member">isTextDirty</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="60" refid="classkipr_1_1button_1_1IdButton_1a96fd76a2831a56b9c383f04260067749" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1button_1_1IdButton_1a96fd76a2831a56b9c383f04260067749" kindref="member">setPressed</ref>(</highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>pressed);</highlight></codeline>
+<codeline lineno="61" refid="classkipr_1_1button_1_1IdButton_1a1efe92321fc819e139b353cabb0d6940" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1button_1_1IdButton_1a1efe92321fc819e139b353cabb0d6940" kindref="member">value</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="62" refid="classkipr_1_1button_1_1IdButton_1a1be37f44c07b4b7b58064c2f687d824b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1button_1_1IdButton_1a1be37f44c07b4b7b58064c2f687d824b" kindref="member">resetText</ref>();</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespacekipr_1_1button_1a46c17cd2d42572a5b00eebc23dc79507" kindref="member">Id</ref><sp/>m_id;</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/>m_defaultText;</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight></codeline>
+<codeline lineno="68" refid="classkipr_1_1button_1_1ExtraButtons" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/><ref refid="classkipr_1_1button_1_1ExtraButtons" kindref="compound">ExtraButtons</ref></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="71" refid="classkipr_1_1button_1_1ExtraButtons_1a82ab17ed40cae6dc9e9e1205bb483ed9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1button_1_1ExtraButtons_1a82ab17ed40cae6dc9e9e1205bb483ed9" kindref="member">show</ref>();</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight></codeline>
+<codeline lineno="73" refid="classkipr_1_1button_1_1ExtraButtons_1ada78ce01b359b3f577a49b79b27360a1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1button_1_1ExtraButtons_1ada78ce01b359b3f577a49b79b27360a1" kindref="member">hide</ref>();</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight></codeline>
+<codeline lineno="75" refid="classkipr_1_1button_1_1ExtraButtons_1ad1ffb74c5f8162bf95d02201938d749f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1button_1_1ExtraButtons_1ad1ffb74c5f8162bf95d02201938d749f" kindref="member">setShown</ref>(</highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>shown);</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="77" refid="classkipr_1_1button_1_1ExtraButtons_1a99aad2525dca151bb701e879414de60d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1button_1_1ExtraButtons_1a99aad2525dca151bb701e879414de60d" kindref="member">isShown</ref>();</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/><ref refid="classkipr_1_1button_1_1IdButton" kindref="compound">IdButton</ref><sp/><ref refid="namespacekipr_1_1button_1a42912de13a5cae830054fd2ac432fb18" kindref="member">A</ref>;</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/><ref refid="classkipr_1_1button_1_1IdButton" kindref="compound">IdButton</ref><sp/><ref refid="namespacekipr_1_1button_1a55aa9b0d1e50f8d3a6ba87e943778db4" kindref="member">B</ref>;</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/><ref refid="classkipr_1_1button_1_1IdButton" kindref="compound">IdButton</ref><sp/><ref refid="namespacekipr_1_1button_1a441c5591667c7a6d019cc327d6c412ad" kindref="member">C</ref>;</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/><ref refid="classkipr_1_1button_1_1IdButton" kindref="compound">IdButton</ref><sp/><ref refid="namespacekipr_1_1button_1a0d1572153bed9694d9b91eafc5dd92e5" kindref="member">X</ref>;</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/><ref refid="classkipr_1_1button_1_1IdButton" kindref="compound">IdButton</ref><sp/><ref refid="namespacekipr_1_1button_1a88643d1b09d22c8c87a72085e0bfd116" kindref="member">Y</ref>;</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/><ref refid="classkipr_1_1button_1_1IdButton" kindref="compound">IdButton</ref><sp/><ref refid="namespacekipr_1_1button_1a7ae075e0746698b77c0f848a7030e52e" kindref="member">Z</ref>;</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/><ref refid="classkipr_1_1button_1_1IdButton" kindref="compound">IdButton</ref><sp/><ref refid="namespacekipr_1_1button_1a778e4733b946a80ef7c13a157558e22a" kindref="member">Left</ref>;</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/><ref refid="classkipr_1_1button_1_1IdButton" kindref="compound">IdButton</ref><sp/><ref refid="namespacekipr_1_1button_1acfb2407b30b6a223b2f926ec60723bda" kindref="member">Right</ref>;</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/><ref refid="classkipr_1_1button_1_1IdButton" kindref="compound">IdButton</ref><sp/>*<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="namespacekipr_1_1button_1a3df9bc9522dfe24fb9ed619dc9d1ba14" kindref="member">all</ref>[8];</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="93"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.hpp"/>
+  </compounddef>
+</doxygen>

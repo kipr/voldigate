@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="sensors_tutorial" kind="page">
+    <compoundname>sensors_tutorial</compoundname>
+    <title>Sensors Tutorials</title>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Hewwo and welcome to the sensors tutorial! First, we&apos;ll start off with a detail on the types of sensors that there are. </para>
+<sect1 id="sensors_tutorial_1sensor_types">
+<title>Sensor Types</title>
+<sect2 id="sensors_tutorial_1analog_sensors">
+<title>Analog Sensors</title>
+<para><image type="html" name="analog_sensors.png"></image>
+ As the above image details, there are 5 primary types of analog sensors. These get plugged into the wombat&apos;s (or wallaby&apos;s) analog ports.<itemizedlist>
+<listitem><para>ET sensors - These are &quot;distance&quot; sensors; they return values based on the distance from the sensor&apos;s lens to the nearest object. The higher the value, the closer it is to an object. Note that these only detect objects in the direction of the lens.</para>
+</listitem><listitem><para>Tophat sensors and Small Tophat sensors - These sensors should be positioned facing the board. Their use is to detect the brightness of the floor, which means that most teams use them to detect whether there is tape on the board or not. Essentially, these are the sensors that you&apos;ll use if you want to line follow tape on the board.</para>
+</listitem><listitem><para>Light sensors - These are used for detecting the starting light. <simplesect kind="see"><para><ref refid="botball_8h_1a706027d852569bb8e4887c0919252150" kindref="member">wait_for_light</ref></para>
+</simplesect>
+</para>
+</listitem><listitem><para>Linear Slide sensors - These are slideable sensors. They read higher values the more that they are pushed in. Common use for these would be to get within a certain distance of a wall. </para>
+</listitem></itemizedlist>
+</para>
+</sect2>
+<sect2 id="sensors_tutorial_1digital_sensors">
+<title>Digital Sensors</title>
+<para><image type="html" name="digital_sensors.png"></image>
+ As the above image details, there are 3 primary types of digital sensors. These get plugged into the wombat&apos;s (or wallaby&apos;s) digital ports.<itemizedlist>
+<listitem><para>Lever - Also called a click sensor. Outputs 0 when not clicked and 1 when clicked.</para>
+</listitem><listitem><para>Small Touch and Large Touch - These are buttons. They output 0 when not pressed and 1 when pressed. </para>
+</listitem></itemizedlist>
+</para>
+</sect2>
+</sect1>
+    </detaileddescription>
+    <location file="pages/tutorials_page.h"/>
+  </compounddef>
+</doxygen>

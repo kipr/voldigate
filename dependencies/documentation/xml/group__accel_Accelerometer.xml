@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="group__accel_Accelerometer" kind="page">
+    <compoundname>Accelerometer</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>The functions here allow for reading the accelerometer. The accelerometer measures acceleration in the x, y, and z directions. </para>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/accel/public/kipr/accel/accel.h"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classkipr_1_1magneto_1_1MagnetoY" kind="class" language="C++" prot="public">
+    <compoundname>kipr::magneto::MagnetoY</compoundname>
+    <basecompoundref refid="classkipr_1_1sensor_1_1Sensor" prot="public" virt="non-virtual">kipr::sensor::Sensor&lt; short &gt;</basecompoundref>
+    <includes refid="magneto_8hpp" local="no">magneto.hpp</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classkipr_1_1magneto_1_1MagnetoY_1a673412aa9cdb70ed5316ca228a18c6cb" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+        <type>short</type>
+        <definition>virtual short kipr::magneto::MagnetoY::value</definition>
+        <argsstring>() const</argsstring>
+        <name>value</name>
+        <reimplements refid="classkipr_1_1sensor_1_1Sensor_1a6ccd0837f3e12090bed823f841d3e318">value</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/magneto/public/kipr/magneto/magneto.hpp" line="27" column="15"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>kipr::sensor::Sensor&lt; short &gt;</label>
+        <link refid="classkipr_1_1sensor_1_1Sensor"/>
+      </node>
+      <node id="1">
+        <label>kipr::magneto::MagnetoY</label>
+        <link refid="classkipr_1_1magneto_1_1MagnetoY"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>kipr::sensor::Sensor&lt; short &gt;</label>
+        <link refid="classkipr_1_1sensor_1_1Sensor"/>
+      </node>
+      <node id="1">
+        <label>kipr::magneto::MagnetoY</label>
+        <link refid="classkipr_1_1magneto_1_1MagnetoY"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/magneto/public/kipr/magneto/magneto.hpp" line="24" column="1" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/magneto/public/kipr/magneto/magneto.hpp" bodystart="25" bodyend="28"/>
+    <listofallmembers>
+      <member refid="classkipr_1_1magneto_1_1MagnetoY_1a673412aa9cdb70ed5316ca228a18c6cb" prot="public" virt="virtual"><scope>kipr::magneto::MagnetoY</scope><name>value</name></member>
+      <member refid="classkipr_1_1sensor_1_1Sensor_1a7a2997c6ede6b25603032f2b110e8cb5" prot="public" virt="virtual"><scope>kipr::magneto::MagnetoY</scope><name>~Sensor</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

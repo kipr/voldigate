@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="group__create_create" kind="page">
+    <compoundname>create</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>The functions here allow for communication with the Create (roomba). They only work when there is a Create cable plugged into the wombat and into the Create. </para>
+<sect1 id="group__create_1setup">
+<title>Setup</title>
+<para>Make sure to plug the usb side of the Create cable into the wombat and the other side into the Create. </para>
+</sect1>
+<sect1 id="group__create_1example_create_movement">
+<title>Movement Example</title>
+<para>Once you&apos;ve done that, you can now use the roomba. The following example moves the roomba forward, swerves left, swerves right, and finally drives backwards. <programlisting><codeline><highlight class="normal">#include<sp/>&lt;kipr/wombat.h&gt;</highlight></codeline>
+<codeline><highlight class="normal">#include<sp/>&lt;stdio.h&gt;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">int<sp/>main(){</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>//<sp/>connect<sp/>to<sp/>the<sp/>create<sp/>in<sp/>order<sp/>to<sp/>control<sp/>it</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>create_connect_once();</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>//<sp/>move<sp/>forward<sp/>for<sp/>1<sp/>second</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>create_drive_direct(200,<sp/>200);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>msleep(1000);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>//<sp/>swerve<sp/>left</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>create_drive_direct(100,<sp/>200);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>msleep(300);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>//<sp/>swerve<sp/>right</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>create_drive_direct(200,<sp/>100);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>msleep(300);</highlight></codeline>
+<codeline><highlight class="normal"><sp/></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>//<sp/>go<sp/>backwards<sp/>for<sp/>1<sp/>second</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>create_drive_direct(-100,<sp/>-100);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>msleep(1000);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>//<sp/>stop<sp/>moving</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>create_drive_direct(0,<sp/>0);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>//<sp/>disconnect<sp/>before<sp/>ending<sp/>the<sp/>program</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>create_disconnect();</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>return<sp/>0;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+</programlisting> </para>
+</sect1>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,340 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="wait__for_8h" kind="file" language="C++">
+    <compoundname>wait_for.h</compoundname>
+    <includes refid="export_8h" local="yes">kipr/export/export.h</includes>
+    <incdepgraph>
+      <node id="2">
+        <label>kipr/export/export.h</label>
+        <link refid="export_8h"/>
+      </node>
+      <node id="1">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h</label>
+        <link refid="wait__for_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="wait__for_8h_1a74acd89d9a666f725aaa1a476b0e365d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void wait_for_milliseconds</definition>
+        <argsstring>(long msecs)</argsstring>
+        <name>wait_for_milliseconds</name>
+        <param>
+          <type>long</type>
+          <declname>msecs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Waits (blocks) for the given number of milliseconds. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>msecs</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the number of milliseconds to sleep </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" line="14" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" declline="14" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="wait__for_8h_1a368e329006021dadff3cc5a242fa3496" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void wait_for_touch</definition>
+        <argsstring>(int port)</argsstring>
+        <name>wait_for_touch</name>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Waits (blocks) until the digital sensor on the given port has been activated. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>port</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The port to wait for activation on </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" line="20" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" declline="20" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="wait__for_8h_1ae05810376ef3be973a565af8b7470693" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void wait_for_a_button</definition>
+        <argsstring>()</argsstring>
+        <name>wait_for_a_button</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Waits (blocks) until the a button has been pressed. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" line="25" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" declline="25" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="wait__for_8h_1ae196d362dcc42731add42961d3af9c36" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void wait_for_b_button</definition>
+        <argsstring>()</argsstring>
+        <name>wait_for_b_button</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Waits (blocks) until the b button has been pressed. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" line="30" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" declline="30" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="wait__for_8h_1a8385c7f8de3278ffc64481beba49ffbf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void wait_for_c_button</definition>
+        <argsstring>()</argsstring>
+        <name>wait_for_c_button</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Waits (blocks) until the c button has been pressed. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" line="35" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" declline="35" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="wait__for_8h_1aee3cee1ad54ff82ed8953b7f4ce593a9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void wait_for_x_button</definition>
+        <argsstring>()</argsstring>
+        <name>wait_for_x_button</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Waits (blocks) until the x button has been pressed. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" line="40" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" declline="40" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="wait__for_8h_1ab8c44ae16043d54ba32460e33137495c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void wait_for_y_button</definition>
+        <argsstring>()</argsstring>
+        <name>wait_for_y_button</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Waits (blocks) until the y button has been pressed. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" line="45" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" declline="45" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="wait__for_8h_1a8b17289ed8940e950d6accf9347e6542" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void wait_for_z_button</definition>
+        <argsstring>()</argsstring>
+        <name>wait_for_z_button</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Waits (blocks) until the z button has been pressed. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" line="50" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" declline="50" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="wait__for_8h_1a94a83d05c1588cba3b2fa7b80e8f7ad0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void wait_for_side_button</definition>
+        <argsstring>()</argsstring>
+        <name>wait_for_side_button</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Waits (blocks) until the side button has been pressed. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" line="55" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" declline="55" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="wait__for_8h_1ab1c1b0de9d8cbfd8a7574b367d57f9f1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void wait_for_any_button</definition>
+        <argsstring>()</argsstring>
+        <name>wait_for_any_button</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Waits (blocks) until any system button has been pressed. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" line="60" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" declline="60" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="wait__for_8h_1af413b9f424f6f55b45805aa161125605" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void wait_for_a_button_clicked</definition>
+        <argsstring>()</argsstring>
+        <name>wait_for_a_button_clicked</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Waits (blocks) until the a button has been pressed and then subsequently released. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" line="65" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" declline="65" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="wait__for_8h_1ac1bc2051b8b966ab9e0d15a6dd6513db" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void wait_for_b_button_clicked</definition>
+        <argsstring>()</argsstring>
+        <name>wait_for_b_button_clicked</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Waits (blocks) until the b button has been pressed and then subsequently released. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" line="70" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" declline="70" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="wait__for_8h_1a868a70fc91aa446f8d719c6d13c5d9f2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void wait_for_c_button_clicked</definition>
+        <argsstring>()</argsstring>
+        <name>wait_for_c_button_clicked</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Waits (blocks) until the c button has been pressed and then subsequently released. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" line="75" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" declline="75" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="wait__for_8h_1aa02cf2ac3023fcfb71641e45e770d17e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void wait_for_x_button_clicked</definition>
+        <argsstring>()</argsstring>
+        <name>wait_for_x_button_clicked</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Waits (blocks) until the x button has been pressed and then subsequently released. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" line="80" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" declline="80" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="wait__for_8h_1abc3fd91fb30a4c67f83a8ed29685a843" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void wait_for_y_button_clicked</definition>
+        <argsstring>()</argsstring>
+        <name>wait_for_y_button_clicked</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Waits (blocks) until the y button has been pressed and then subsequently released. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" line="85" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" declline="85" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="wait__for_8h_1a6f2f765b38c4582e9580c3845993148b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void wait_for_z_button_clicked</definition>
+        <argsstring>()</argsstring>
+        <name>wait_for_z_button_clicked</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Waits (blocks) until the z button has been pressed and then subsequently released. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" line="90" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" declline="90" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="wait__for_8h_1a4df94b781ad03619d46d30dcbf08dd5a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void wait_for_side_button_clicked</definition>
+        <argsstring>()</argsstring>
+        <name>wait_for_side_button_clicked</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Waits (blocks) until the side button has been pressed and then subsequently released. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" line="95" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h" declline="95" declcolumn="17"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>_KIPR_WAIT_FOR_WAIT_FOR_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_KIPR_WAIT_FOR_WAIT_FOR_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="export_8h" kindref="compound">kipr/export/export.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14" refid="wait__for_8h_1a74acd89d9a666f725aaa1a476b0e365d" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="wait__for_8h_1a74acd89d9a666f725aaa1a476b0e365d" kindref="member">wait_for_milliseconds</ref>(</highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>msecs);</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight></codeline>
+<codeline lineno="20" refid="wait__for_8h_1a368e329006021dadff3cc5a242fa3496" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="wait__for_8h_1a368e329006021dadff3cc5a242fa3496" kindref="member">wait_for_touch</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>port);</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight></codeline>
+<codeline lineno="25" refid="wait__for_8h_1ae05810376ef3be973a565af8b7470693" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="wait__for_8h_1ae05810376ef3be973a565af8b7470693" kindref="member">wait_for_a_button</ref>();</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30" refid="wait__for_8h_1ae196d362dcc42731add42961d3af9c36" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="wait__for_8h_1ae196d362dcc42731add42961d3af9c36" kindref="member">wait_for_b_button</ref>();</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35" refid="wait__for_8h_1a8385c7f8de3278ffc64481beba49ffbf" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="wait__for_8h_1a8385c7f8de3278ffc64481beba49ffbf" kindref="member">wait_for_c_button</ref>();</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40" refid="wait__for_8h_1aee3cee1ad54ff82ed8953b7f4ce593a9" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="wait__for_8h_1aee3cee1ad54ff82ed8953b7f4ce593a9" kindref="member">wait_for_x_button</ref>();</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45" refid="wait__for_8h_1ab8c44ae16043d54ba32460e33137495c" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="wait__for_8h_1ab8c44ae16043d54ba32460e33137495c" kindref="member">wait_for_y_button</ref>();</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50" refid="wait__for_8h_1a8b17289ed8940e950d6accf9347e6542" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="wait__for_8h_1a8b17289ed8940e950d6accf9347e6542" kindref="member">wait_for_z_button</ref>();</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55" refid="wait__for_8h_1a94a83d05c1588cba3b2fa7b80e8f7ad0" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="wait__for_8h_1a94a83d05c1588cba3b2fa7b80e8f7ad0" kindref="member">wait_for_side_button</ref>();</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60" refid="wait__for_8h_1ab1c1b0de9d8cbfd8a7574b367d57f9f1" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="wait__for_8h_1ab1c1b0de9d8cbfd8a7574b367d57f9f1" kindref="member">wait_for_any_button</ref>();</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="65" refid="wait__for_8h_1af413b9f424f6f55b45805aa161125605" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="wait__for_8h_1af413b9f424f6f55b45805aa161125605" kindref="member">wait_for_a_button_clicked</ref>();</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight></codeline>
+<codeline lineno="70" refid="wait__for_8h_1ac1bc2051b8b966ab9e0d15a6dd6513db" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="wait__for_8h_1ac1bc2051b8b966ab9e0d15a6dd6513db" kindref="member">wait_for_b_button_clicked</ref>();</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight></codeline>
+<codeline lineno="75" refid="wait__for_8h_1a868a70fc91aa446f8d719c6d13c5d9f2" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="wait__for_8h_1a868a70fc91aa446f8d719c6d13c5d9f2" kindref="member">wait_for_c_button_clicked</ref>();</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="80" refid="wait__for_8h_1aa02cf2ac3023fcfb71641e45e770d17e" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="wait__for_8h_1aa02cf2ac3023fcfb71641e45e770d17e" kindref="member">wait_for_x_button_clicked</ref>();</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight></codeline>
+<codeline lineno="85" refid="wait__for_8h_1abc3fd91fb30a4c67f83a8ed29685a843" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="wait__for_8h_1abc3fd91fb30a4c67f83a8ed29685a843" kindref="member">wait_for_y_button_clicked</ref>();</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight></codeline>
+<codeline lineno="90" refid="wait__for_8h_1a6f2f765b38c4582e9580c3845993148b" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="wait__for_8h_1a6f2f765b38c4582e9580c3845993148b" kindref="member">wait_for_z_button_clicked</ref>();</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight></codeline>
+<codeline lineno="95" refid="wait__for_8h_1a4df94b781ad03619d46d30dcbf08dd5a" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="wait__for_8h_1a4df94b781ad03619d46d30dcbf08dd5a" kindref="member">wait_for_side_button_clicked</ref>();</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classkipr_1_1thread_1_1Mutex" kind="class" language="C++" prot="public">
+    <compoundname>kipr::thread::Mutex</compoundname>
+    <includes refid="thread_8hpp" local="no">thread.hpp</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classkipr_1_1thread_1_1Mutex_1a9bfbf3f67d7ac42c23b578c9a1aa0fc6" prot="private" static="no" mutable="no">
+        <type>pthread_mutex_t</type>
+        <definition>pthread_mutex_t kipr::thread::Mutex::m_handle</definition>
+        <argsstring></argsstring>
+        <name>m_handle</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread/thread.hpp" line="35" column="17" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread/thread.hpp" bodystart="35" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classkipr_1_1thread_1_1Mutex_1a12014aeebe3cb2e173ff2e9946a04a81" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>kipr::thread::Mutex::Mutex</definition>
+        <argsstring>()</argsstring>
+        <name>Mutex</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread/thread.hpp" line="21" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1thread_1_1Mutex_1a9955f4cb8fc5435f6a3606a7b6091e10" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>kipr::thread::Mutex::~Mutex</definition>
+        <argsstring>()</argsstring>
+        <name>~Mutex</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread/thread.hpp" line="22" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1thread_1_1Mutex_1a363e3e64aac8eaca485f7a4db80bbff4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::thread::Mutex::lock</definition>
+        <argsstring>()</argsstring>
+        <name>lock</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread/thread.hpp" line="24" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1thread_1_1Mutex_1aa37df0b1185b9953fd2ba0e1c9a1f14a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool kipr::thread::Mutex::tryLock</definition>
+        <argsstring>()</argsstring>
+        <name>tryLock</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread/thread.hpp" line="25" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1thread_1_1Mutex_1a44c57d9ba1bb8bd254101c5b73aa4e72" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::thread::Mutex::unlock</definition>
+        <argsstring>()</argsstring>
+        <name>unlock</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread/thread.hpp" line="27" column="6"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classkipr_1_1thread_1_1Mutex_1a43ccc5bc311c44b95eccbcfa5919c9f4" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>kipr::thread::Mutex::Mutex</definition>
+        <argsstring>(const Mutex &amp;rhs)</argsstring>
+        <name>Mutex</name>
+        <param>
+          <type>const <ref refid="classkipr_1_1thread_1_1Mutex" kindref="compound">Mutex</ref> &amp;</type>
+          <declname>rhs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread/thread.hpp" line="30" column="1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread/thread.hpp" line="18" column="1" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread/thread.hpp" bodystart="19" bodyend="37"/>
+    <listofallmembers>
+      <member refid="classkipr_1_1thread_1_1Mutex_1a363e3e64aac8eaca485f7a4db80bbff4" prot="public" virt="non-virtual"><scope>kipr::thread::Mutex</scope><name>lock</name></member>
+      <member refid="classkipr_1_1thread_1_1Mutex_1a9bfbf3f67d7ac42c23b578c9a1aa0fc6" prot="private" virt="non-virtual"><scope>kipr::thread::Mutex</scope><name>m_handle</name></member>
+      <member refid="classkipr_1_1thread_1_1Mutex_1a12014aeebe3cb2e173ff2e9946a04a81" prot="public" virt="non-virtual"><scope>kipr::thread::Mutex</scope><name>Mutex</name></member>
+      <member refid="classkipr_1_1thread_1_1Mutex_1a43ccc5bc311c44b95eccbcfa5919c9f4" prot="private" virt="non-virtual"><scope>kipr::thread::Mutex</scope><name>Mutex</name></member>
+      <member refid="classkipr_1_1thread_1_1Mutex_1aa37df0b1185b9953fd2ba0e1c9a1f14a" prot="public" virt="non-virtual"><scope>kipr::thread::Mutex</scope><name>tryLock</name></member>
+      <member refid="classkipr_1_1thread_1_1Mutex_1a44c57d9ba1bb8bd254101c5b73aa4e72" prot="public" virt="non-virtual"><scope>kipr::thread::Mutex</scope><name>unlock</name></member>
+      <member refid="classkipr_1_1thread_1_1Mutex_1a9955f4cb8fc5435f6a3606a7b6091e10" prot="public" virt="non-virtual"><scope>kipr::thread::Mutex</scope><name>~Mutex</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

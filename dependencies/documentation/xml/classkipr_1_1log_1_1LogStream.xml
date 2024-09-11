@@ -1,0 +1,185 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classkipr_1_1log_1_1LogStream" kind="class" language="C++" prot="public">
+    <compoundname>kipr::log::LogStream</compoundname>
+    <includes refid="log_8hpp" local="no">log.hpp</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classkipr_1_1log_1_1LogStream_1a01c9ae69dd58d39015810c8584f634e1" prot="private" static="no" mutable="no">
+        <type><ref refid="classkipr_1_1log_1_1Log" kindref="compound">Log</ref> &amp;</type>
+        <definition>Log&amp; kipr::log::LogStream::log_</definition>
+        <argsstring></argsstring>
+        <name>log_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/log/public/kipr/log/log.hpp" line="56" column="11" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/log/public/kipr/log/log.hpp" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1log_1_1LogStream_1a488fe5628db8a5fdb6f91c228e6d2a87" prot="private" static="no" mutable="no">
+        <type><ref refid="namespacekipr_1_1log_1ac448d0ee86b50f80a44a11636d65fe34" kindref="member">Level</ref></type>
+        <definition>Level kipr::log::LogStream::level_</definition>
+        <argsstring></argsstring>
+        <name>level_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/log/public/kipr/log/log.hpp" line="57" column="13" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/log/public/kipr/log/log.hpp" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1log_1_1LogStream_1a537a3633257d0b4a9b891274c227dea8" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool kipr::log::LogStream::flushed_</definition>
+        <argsstring></argsstring>
+        <name>flushed_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/log/public/kipr/log/log.hpp" line="58" column="12" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/log/public/kipr/log/log.hpp" bodystart="58" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1log_1_1LogStream_1aeed7daaeb6e157fa46dcd18350ae1c3c" prot="private" static="no" mutable="no">
+        <type>std::unique_ptr&lt; std::ostringstream &gt;</type>
+        <definition>std::unique_ptr&lt;std::ostringstream&gt; kipr::log::LogStream::stream_</definition>
+        <argsstring></argsstring>
+        <name>stream_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/log/public/kipr/log/log.hpp" line="60" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/log/public/kipr/log/log.hpp" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classkipr_1_1log_1_1LogStream_1a71c7daecda3ab1d003d723761dee5d1f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>kipr::log::LogStream::LogStream</definition>
+        <argsstring>(LogStream &amp;&amp;rhs)</argsstring>
+        <name>LogStream</name>
+        <param>
+          <type><ref refid="classkipr_1_1log_1_1LogStream" kindref="compound">LogStream</ref> &amp;&amp;</type>
+          <declname>rhs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/log/public/kipr/log/log.hpp" line="37" column="7"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1log_1_1LogStream_1ad9f265071a0f188a08b2095d80e3a97d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>kipr::log::LogStream::LogStream</definition>
+        <argsstring>(Log &amp;log, const Level level)</argsstring>
+        <name>LogStream</name>
+        <param>
+          <type><ref refid="classkipr_1_1log_1_1Log" kindref="compound">Log</ref> &amp;</type>
+          <declname>log</declname>
+        </param>
+        <param>
+          <type>const <ref refid="namespacekipr_1_1log_1ac448d0ee86b50f80a44a11636d65fe34" kindref="member">Level</ref></type>
+          <declname>level</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/log/public/kipr/log/log.hpp" line="38" column="7"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1log_1_1LogStream_1a2aecd058f7f3edbecb4b41553fc76601" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>kipr::log::LogStream::~LogStream</definition>
+        <argsstring>()</argsstring>
+        <name>~LogStream</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/log/public/kipr/log/log.hpp" line="39" column="7"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1log_1_1LogStream_1aae2707d3f30e9a633b922e8f00116767" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::log::LogStream::operator&lt;&lt;</definition>
+        <argsstring>(const Flush &amp;_)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <param>
+          <type>const <ref refid="structkipr_1_1log_1_1Flush" kindref="compound">Flush</ref> &amp;</type>
+          <declname>_</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/log/public/kipr/log/log.hpp" line="41" column="14" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/log/public/kipr/log/log.hpp" bodystart="41" bodyend="44"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1log_1_1LogStream_1a38c19acd716ac3de3d4d0865e018393e" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+        </templateparamlist>
+        <type><ref refid="classkipr_1_1log_1_1LogStream" kindref="compound">LogStream</ref> &amp;</type>
+        <definition>LogStream&amp; kipr::log::LogStream::operator&lt;&lt;</definition>
+        <argsstring>(const T &amp;t)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <param>
+          <type>const T &amp;</type>
+          <declname>t</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/log/public/kipr/log/log.hpp" line="47" column="14" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/log/public/kipr/log/log.hpp" bodystart="47" bodyend="51"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classkipr_1_1log_1_1LogStream_1ac638b33eabcf7bef9c5fa1394dce3e3c" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::log::LogStream::flush</definition>
+        <argsstring>()</argsstring>
+        <name>flush</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/log/public/kipr/log/log.hpp" line="54" column="12"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/log/public/kipr/log/log.hpp" line="34" column="5" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/log/public/kipr/log/log.hpp" bodystart="35" bodyend="61"/>
+    <listofallmembers>
+      <member refid="classkipr_1_1log_1_1LogStream_1ac638b33eabcf7bef9c5fa1394dce3e3c" prot="private" virt="non-virtual"><scope>kipr::log::LogStream</scope><name>flush</name></member>
+      <member refid="classkipr_1_1log_1_1LogStream_1a537a3633257d0b4a9b891274c227dea8" prot="private" virt="non-virtual"><scope>kipr::log::LogStream</scope><name>flushed_</name></member>
+      <member refid="classkipr_1_1log_1_1LogStream_1a488fe5628db8a5fdb6f91c228e6d2a87" prot="private" virt="non-virtual"><scope>kipr::log::LogStream</scope><name>level_</name></member>
+      <member refid="classkipr_1_1log_1_1LogStream_1a01c9ae69dd58d39015810c8584f634e1" prot="private" virt="non-virtual"><scope>kipr::log::LogStream</scope><name>log_</name></member>
+      <member refid="classkipr_1_1log_1_1LogStream_1a71c7daecda3ab1d003d723761dee5d1f" prot="public" virt="non-virtual"><scope>kipr::log::LogStream</scope><name>LogStream</name></member>
+      <member refid="classkipr_1_1log_1_1LogStream_1ad9f265071a0f188a08b2095d80e3a97d" prot="public" virt="non-virtual"><scope>kipr::log::LogStream</scope><name>LogStream</name></member>
+      <member refid="classkipr_1_1log_1_1LogStream_1aae2707d3f30e9a633b922e8f00116767" prot="public" virt="non-virtual"><scope>kipr::log::LogStream</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classkipr_1_1log_1_1LogStream_1a38c19acd716ac3de3d4d0865e018393e" prot="public" virt="non-virtual"><scope>kipr::log::LogStream</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classkipr_1_1log_1_1LogStream_1aeed7daaeb6e157fa46dcd18350ae1c3c" prot="private" virt="non-virtual"><scope>kipr::log::LogStream</scope><name>stream_</name></member>
+      <member refid="classkipr_1_1log_1_1LogStream_1a2aecd058f7f3edbecb4b41553fc76601" prot="public" virt="non-virtual"><scope>kipr::log::LogStream</scope><name>~LogStream</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

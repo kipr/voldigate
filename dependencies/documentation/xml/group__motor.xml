@@ -1,0 +1,1058 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="group__motor" kind="group">
+    <compoundname>motor</compoundname>
+    <title>Motors</title>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="group__motor_1ga5713dda57d3628366a0ee6fd5057400d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int get_motor_position_counter</definition>
+        <argsstring>(int motor)</argsstring>
+        <name>get_motor_position_counter</name>
+        <param>
+          <type>int</type>
+          <declname>motor</declname>
+        </param>
+        <briefdescription>
+<para>Gets the current motor position. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">motor</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The motor port.</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="group__motor_1ga4b767e80b3b1723b6720dd016cc1be1b" kindref="member">gmpc</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" line="20" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" declline="20" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__motor_1ga4b767e80b3b1723b6720dd016cc1be1b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int gmpc</definition>
+        <argsstring>(int motor)</argsstring>
+        <name>gmpc</name>
+        <param>
+          <type>int</type>
+          <declname>motor</declname>
+        </param>
+        <briefdescription>
+<para>Gets the current motor position. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">motor</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The motor port.</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="group__motor_1ga5713dda57d3628366a0ee6fd5057400d" kindref="member">get_motor_position_counter</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" line="28" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" declline="28" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__motor_1gab445096e12260140b6c0afc26d26b325" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void clear_motor_position_counter</definition>
+        <argsstring>(int motor)</argsstring>
+        <name>clear_motor_position_counter</name>
+        <param>
+          <type>int</type>
+          <declname>motor</declname>
+        </param>
+        <briefdescription>
+<para>Clears the motor position counter. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">motor</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The motor port.</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="group__motor_1ga3f000f325222eb01b69844290a654795" kindref="member">cmpc</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" line="37" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" declline="37" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__motor_1ga3f000f325222eb01b69844290a654795" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void cmpc</definition>
+        <argsstring>(int motor)</argsstring>
+        <name>cmpc</name>
+        <param>
+          <type>int</type>
+          <declname>motor</declname>
+        </param>
+        <briefdescription>
+<para>Clears the motor position counter. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">motor</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The motor port.</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="group__motor_1gab445096e12260140b6c0afc26d26b325" kindref="member">clear_motor_position_counter</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" line="46" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" declline="46" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__motor_1ga0e71753d12baa58e6093b9afd1e5fd7e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int move_at_velocity</definition>
+        <argsstring>(int motor, int velocity)</argsstring>
+        <name>move_at_velocity</name>
+        <param>
+          <type>int</type>
+          <declname>motor</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>velocity</declname>
+        </param>
+        <briefdescription>
+<para>Set a goal velocity in ticks per second. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>The range is -1500 to 1500, though motor position accuracy may be decreased outside of -1000 to 1000 <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">motor</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The motor port. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">velocity</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The goal velocity in -1500 to 1500 ticks / second</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="group__motor_1gabd36f01986c363f70d86c7a768ae1348" kindref="member">mav</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" line="58" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" declline="58" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__motor_1gabd36f01986c363f70d86c7a768ae1348" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int mav</definition>
+        <argsstring>(int motor, int velocity)</argsstring>
+        <name>mav</name>
+        <param>
+          <type>int</type>
+          <declname>motor</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>velocity</declname>
+        </param>
+        <briefdescription>
+<para>Set a goal velocity in ticks per second. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">motor</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The motor port. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">velocity</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The goal velocity in -1500 to 1500 ticks / second</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="group__motor_1ga0e71753d12baa58e6093b9afd1e5fd7e" kindref="member">move_at_velocity</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" line="67" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" declline="67" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__motor_1gafce5cf37833e487343ece5256fe66d37" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int move_to_position</definition>
+        <argsstring>(int motor, int speed, int goal_pos)</argsstring>
+        <name>move_to_position</name>
+        <param>
+          <type>int</type>
+          <declname>motor</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>speed</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>goal_pos</declname>
+        </param>
+        <briefdescription>
+<para>Set a goal position (in ticks) for the motor to move to. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>There are approximately 1500 ticks per motor revolution.</para>
+<para>This function is more accurate if speeds between -1000 and 1000 are used. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">motor</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The motor port. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">speed</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The speed to move at, between -1500 and 1500 ticks / second </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">goal_pos</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The position to move to (in ticks)</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="group__motor_1gafa2041480c9157d97c9c5845f775e5a7" kindref="member">mtp</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" line="80" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" declline="80" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__motor_1gafa2041480c9157d97c9c5845f775e5a7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int mtp</definition>
+        <argsstring>(int motor, int speed, int goal_pos)</argsstring>
+        <name>mtp</name>
+        <param>
+          <type>int</type>
+          <declname>motor</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>speed</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>goal_pos</declname>
+        </param>
+        <briefdescription>
+<para>Set a goal position (in ticks) for the motor to move to. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">motor</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The motor port. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">speed</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The speed to move at, between -1500 and 1500 ticks / second </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">goal_pos</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The position to move to (in ticks)</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="group__motor_1gafce5cf37833e487343ece5256fe66d37" kindref="member">move_to_position</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" line="91" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" declline="91" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__motor_1ga318f1b33ee4a41f44e10075a1ad0a90e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int move_relative_position</definition>
+        <argsstring>(int motor, int speed, int delta_pos)</argsstring>
+        <name>move_relative_position</name>
+        <param>
+          <type>int</type>
+          <declname>motor</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>speed</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>delta_pos</declname>
+        </param>
+        <briefdescription>
+<para>Set a goal position (in ticks) for the motor to move to, relative to the current position. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">motor</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The motor port. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">speed</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The speed to move at, between -1500 and 1500 ticks / second </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">delta_pos</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The position to move to (in ticks) given the current position</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="group__motor_1ga69b3d9b619cc00953a0b522dcac43771" kindref="member">mrp</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" line="101" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" declline="101" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__motor_1ga69b3d9b619cc00953a0b522dcac43771" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int mrp</definition>
+        <argsstring>(int motor, int speed, int delta_pos)</argsstring>
+        <name>mrp</name>
+        <param>
+          <type>int</type>
+          <declname>motor</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>speed</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>delta_pos</declname>
+        </param>
+        <briefdescription>
+<para>Set a goal position (in ticks) for the motor to move to, relative to the current position. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">motor</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The motor port. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">speed</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The speed to move at, between -1500 and 1500 ticks / second </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">delta_pos</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The position to move to (in ticks) given the current position</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="group__motor_1ga318f1b33ee4a41f44e10075a1ad0a90e" kindref="member">move_relative_position</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" line="111" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" declline="111" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__motor_1ga5ead4ef2e36ce78e8b247c54cc3418b0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void set_pid_gains</definition>
+        <argsstring>(int motor, short p, short i, short d, short pd, short id, short dd)</argsstring>
+        <name>set_pid_gains</name>
+        <param>
+          <type>int</type>
+          <declname>motor</declname>
+        </param>
+        <param>
+          <type>short</type>
+          <declname>p</declname>
+        </param>
+        <param>
+          <type>short</type>
+          <declname>i</declname>
+        </param>
+        <param>
+          <type>short</type>
+          <declname>d</declname>
+        </param>
+        <param>
+          <type>short</type>
+          <declname>pd</declname>
+        </param>
+        <param>
+          <type>short</type>
+          <declname>id</declname>
+        </param>
+        <param>
+          <type>short</type>
+          <declname>dd</declname>
+        </param>
+        <briefdescription>
+<para>Set the motor PID gains, represented as fractions. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">motor</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The motor port. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">p</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The P (proportional) gain numerator </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">i</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The I (integral) gain numerator </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">d</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The D (derivative) gain numerator </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">pd</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The P (proportional) gain denominator </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">id</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The I (integral) gain denominator </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">dd</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The D (derivative) gain denominator </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" line="124" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" declline="124" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__motor_1gab9dd99269c7f3584ca6f1277150f55f9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void get_pid_gains</definition>
+        <argsstring>(int motor, short *p, short *i, short *d, short *pd, short *id, short *dd)</argsstring>
+        <name>get_pid_gains</name>
+        <param>
+          <type>int</type>
+          <declname>motor</declname>
+        </param>
+        <param>
+          <type>short *</type>
+          <declname>p</declname>
+        </param>
+        <param>
+          <type>short *</type>
+          <declname>i</declname>
+        </param>
+        <param>
+          <type>short *</type>
+          <declname>d</declname>
+        </param>
+        <param>
+          <type>short *</type>
+          <declname>pd</declname>
+        </param>
+        <param>
+          <type>short *</type>
+          <declname>id</declname>
+        </param>
+        <param>
+          <type>short *</type>
+          <declname>dd</declname>
+        </param>
+        <briefdescription>
+<para>Set the motor PID gains, represented as fractions. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="out">motor</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The motor port. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="out">p</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The P (proportional) gain numerator </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="out">i</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The I (integral) gain numerator </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="out">d</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The D (derivative) gain numerator </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="out">pd</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The P (proportional) gain denominator </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="out">id</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The I (integral) gain denominator </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="out">dd</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The D (derivative) gain denominator </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" line="138" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" declline="138" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__motor_1ga50d36bdfccc143992c8ab51689536ecc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int freeze</definition>
+        <argsstring>(int motor)</argsstring>
+        <name>freeze</name>
+        <param>
+          <type>int</type>
+          <declname>motor</declname>
+        </param>
+        <briefdescription>
+<para>Active braking to stop a motor. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">motor</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The motor port. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" line="145" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" declline="145" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__motor_1ga242bcc237071dae3d5ee47107db7780d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int get_motor_done</definition>
+        <argsstring>(int motor)</argsstring>
+        <name>get_motor_done</name>
+        <param>
+          <type>int</type>
+          <declname>motor</declname>
+        </param>
+        <briefdescription>
+<para>Check if the motor has reached it&apos;s goal. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">motor</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The motor port.</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>1: at goal 0: not at goal </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" line="153" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" declline="153" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__motor_1ga51c44577ae12ad636e27a94899f73a11" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void block_motor_done</definition>
+        <argsstring>(int motor)</argsstring>
+        <name>block_motor_done</name>
+        <param>
+          <type>int</type>
+          <declname>motor</declname>
+        </param>
+        <briefdescription>
+<para>Wait until the motor is at it&apos;s goal. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">motor</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The motor port. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="group__motor_1gab9c5212ebf04366ae991deb14b570c58" kindref="member">bmd</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" line="161" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" declline="161" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__motor_1gab9c5212ebf04366ae991deb14b570c58" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void bmd</definition>
+        <argsstring>(int motor)</argsstring>
+        <name>bmd</name>
+        <param>
+          <type>int</type>
+          <declname>motor</declname>
+        </param>
+        <briefdescription>
+<para>Wait until the motor is at it&apos;s goal. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">motor</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The motor port. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="group__motor_1ga51c44577ae12ad636e27a94899f73a11" kindref="member">block_motor_done</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" line="169" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" declline="169" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__motor_1gaf5ff331a2b0412db0b18c7e067bd29ef" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int setpwm</definition>
+        <argsstring>(int motor, int pwm)</argsstring>
+        <name>setpwm</name>
+        <param>
+          <type>int</type>
+          <declname>motor</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>pwm</declname>
+        </param>
+        <briefdescription>
+<para>Set the motor pwm (percent power) command. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">motor</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The motor port. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">pwm</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A new motor pwm command between 0 and 100 </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" line="177" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" declline="177" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__motor_1gadd2d621ff37f83feee815eb5a398b10a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int getpwm</definition>
+        <argsstring>(int motor)</argsstring>
+        <name>getpwm</name>
+        <param>
+          <type>int</type>
+          <declname>motor</declname>
+        </param>
+        <briefdescription>
+<para>Get the current motor pwm command. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">motor</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The motor port. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" line="184" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" declline="184" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__motor_1ga55a302772158e1f15f1c90992f535272" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void fd</definition>
+        <argsstring>(int motor)</argsstring>
+        <name>fd</name>
+        <param>
+          <type>int</type>
+          <declname>motor</declname>
+        </param>
+        <briefdescription>
+<para>Moves the given motor forward at full power. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>motor</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the motor&apos;s port. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" line="192" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" declline="192" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__motor_1ga3f5edef0489aca523a64a40e8fe16320" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void bk</definition>
+        <argsstring>(int motor)</argsstring>
+        <name>bk</name>
+        <param>
+          <type>int</type>
+          <declname>motor</declname>
+        </param>
+        <briefdescription>
+<para>Moves the given motor backward at full power. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>motor</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the motor&apos;s port. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" line="200" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" declline="200" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__motor_1ga046127adcac7487b0bbaf0b1ee1d492b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void motor</definition>
+        <argsstring>(int motor, int percent)</argsstring>
+        <name>motor</name>
+        <param>
+          <type>int</type>
+          <declname>motor</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>percent</declname>
+        </param>
+        <briefdescription>
+<para>Moves a motor at a percent velocity. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">motor</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The motor port. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">percent</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The percent of the motors velocity, between -100 and 100. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" line="211" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" declline="211" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__motor_1gabe90111c4e73d8fc98c752bb13391cb8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void baasbennaguui</definition>
+        <argsstring>(int motor, int percent)</argsstring>
+        <name>baasbennaguui</name>
+        <param>
+          <type>int</type>
+          <declname>motor</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>percent</declname>
+        </param>
+        <briefdescription>
+<para>Moves a motor at a percent velocity. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">motor</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The motor port. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">percent</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The percent of the motors velocity, between -100 and 100.</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+The New Apache language function call to include Native Americans. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" line="222" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" declline="222" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__motor_1ga6711550d798f1d8ef279d08fab571b5e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void motor_power</definition>
+        <argsstring>(int motor, int percent)</argsstring>
+        <name>motor_power</name>
+        <param>
+          <type>int</type>
+          <declname>motor</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>percent</declname>
+        </param>
+        <briefdescription>
+<para>Moves a motor at a percent power. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">motor</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the motor port. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">percent</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The power of the motor, between -100 and 100. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" line="232" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" declline="232" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__motor_1gab32a8ae225a031b09e355e0813bec06f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void off</definition>
+        <argsstring>(int motor)</argsstring>
+        <name>off</name>
+        <param>
+          <type>int</type>
+          <declname>motor</declname>
+        </param>
+        <briefdescription>
+<para>Turns the specified motor off. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>motor</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the motor&apos;s port. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" line="240" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" declline="240" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__motor_1gad6cb702751d048f67025d99608424796" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void alloff</definition>
+        <argsstring>()</argsstring>
+        <name>alloff</name>
+        <briefdescription>
+<para>Turns all motors off. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__motor_1gae640dbf28bc931da0ff9d2369066c641" kindref="member">ao</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" line="247" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" declline="247" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__motor_1gae640dbf28bc931da0ff9d2369066c641" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void ao</definition>
+        <argsstring>()</argsstring>
+        <name>ao</name>
+        <briefdescription>
+<para>Turns all motors off. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__motor_1gad6cb702751d048f67025d99608424796" kindref="member">alloff</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" line="254" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.h" declline="254" declcolumn="6"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

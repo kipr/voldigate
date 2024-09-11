@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="dir_a7b0466279106ea0b8f86f609f621680" kind="dir">
+    <compoundname>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module</compoundname>
+    <innerdir refid="dir_d8796307b1567e91b93f05afaddcf003">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/accel</innerdir>
+    <innerdir refid="dir_9be8ca832c32f721de3116a8ff21f0b4">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog</innerdir>
+    <innerdir refid="dir_5ef2c19dcb937565b5afbf3c09686858">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/audio</innerdir>
+    <innerdir refid="dir_61a3a14084972094ac989f11cfaf4d89">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/battery</innerdir>
+    <innerdir refid="dir_dec599a3fc9e718f75895ff74fb96133">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/botball</innerdir>
+    <innerdir refid="dir_d7f72e822c4b5b4339f2b218b2b9cb50">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button</innerdir>
+    <innerdir refid="dir_45dcb3eba9df13cb6293f5b679bcad22">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color</innerdir>
+    <innerdir refid="dir_68186ab17aac88f8caab7770919f9baa">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/compass</innerdir>
+    <innerdir refid="dir_1bcefdeb28ddd377002c287402658c5c">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config</innerdir>
+    <innerdir refid="dir_4b11fbf8e835883e1c46d0d67b81fbe0">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/console</innerdir>
+    <innerdir refid="dir_f02a41efdae0e7ff9c127dccb82ff885">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/core</innerdir>
+    <innerdir refid="dir_edb14896185d4c165da1caacbc94a97f">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create</innerdir>
+    <innerdir refid="dir_d2ebfae8ef581557647880c020ae6714">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital</innerdir>
+    <innerdir refid="dir_f7b7aa3e62a854c418f6334ecbe58c1e">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/export</innerdir>
+    <innerdir refid="dir_f3ded07c4f2eecbfea4389ad19cf4641">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry</innerdir>
+    <innerdir refid="dir_0ba8d8261ce7322a1fd016c15dc3181e">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics</innerdir>
+    <innerdir refid="dir_e87517971a3294881321ea56e623364f">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/gyro</innerdir>
+    <innerdir refid="dir_e121555cc7cfc8b7e88711a960fd0175">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/log</innerdir>
+    <innerdir refid="dir_405bde4b88a7a6f20c29a4a1b700e145">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/magneto</innerdir>
+    <innerdir refid="dir_56e309bf51fbffeca19c0da45f55c9ad">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor</innerdir>
+    <innerdir refid="dir_9af8278a7df151ee47addfd2d0402c20">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network</innerdir>
+    <innerdir refid="dir_21984a45bab6d1265da5ad1b42de88b8">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/sensor</innerdir>
+    <innerdir refid="dir_b873e8620554479903d90eaff2da24af">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo</innerdir>
+    <innerdir refid="dir_e63e2c1edd3b016ece060dd3774b50b3">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread</innerdir>
+    <innerdir refid="dir_c6429732c8b4bfaeec8ab78b55f0f982">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/time</innerdir>
+    <innerdir refid="dir_1b520903068155304ad0c1700899e8fa">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for</innerdir>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/"/>
+  </compounddef>
+</doxygen>

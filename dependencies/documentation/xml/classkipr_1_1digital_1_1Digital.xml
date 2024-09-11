@@ -1,0 +1,173 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classkipr_1_1digital_1_1Digital" kind="class" language="C++" prot="public">
+    <compoundname>kipr::digital::Digital</compoundname>
+    <basecompoundref refid="classkipr_1_1sensor_1_1Sensor" prot="public" virt="non-virtual">kipr::sensor::Sensor&lt; bool &gt;</basecompoundref>
+    <includes refid="digital_8hpp" local="no">digital.hpp</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classkipr_1_1digital_1_1Digital_1a2968740809285ef257b9d3d78aaefa62" prot="private" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::digital::Digital::m_port</definition>
+        <argsstring></argsstring>
+        <name>m_port</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital/public/kipr/digital/digital.hpp" line="28" column="21" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital/public/kipr/digital/digital.hpp" bodystart="28" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classkipr_1_1digital_1_1Digital_1a3b52dea2037d97f4188678b4f6dffece" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>kipr::digital::Digital::Digital</definition>
+        <argsstring>(unsigned char port)</argsstring>
+        <name>Digital</name>
+        <param>
+          <type>unsigned char</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital/public/kipr/digital/digital.hpp" line="13" column="7"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1digital_1_1Digital_1ae14b0e5fc5995bc70a274b3087689b30" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::digital::Digital::setValue</definition>
+        <argsstring>(bool value)</argsstring>
+        <name>setValue</name>
+        <param>
+          <type>bool</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital/public/kipr/digital/digital.hpp" line="15" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1digital_1_1Digital_1a05203f9e1442d0ecf08758a0a3022b47" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::digital::Digital::setOutput</definition>
+        <argsstring>(bool output)</argsstring>
+        <name>setOutput</name>
+        <param>
+          <type>bool</type>
+          <declname>output</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital/public/kipr/digital/digital.hpp" line="17" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1digital_1_1Digital_1a8ccfa23990c4651d0c27c24205364ae7" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool kipr::digital::Digital::isOutput</definition>
+        <argsstring>() const</argsstring>
+        <name>isOutput</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital/public/kipr/digital/digital.hpp" line="19" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1digital_1_1Digital_1a5127cd341a5b467f2d8580c4f2eb9da9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::digital::Digital::setPullup</definition>
+        <argsstring>(bool pullup)</argsstring>
+        <name>setPullup</name>
+        <param>
+          <type>bool</type>
+          <declname>pullup</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital/public/kipr/digital/digital.hpp" line="21" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1digital_1_1Digital_1aa52921b84deb2ecd6344bf0b6d224c80" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool kipr::digital::Digital::pullup</definition>
+        <argsstring>() const</argsstring>
+        <name>pullup</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital/public/kipr/digital/digital.hpp" line="23" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1digital_1_1Digital_1a476a96b7ff6ad47a2893e33104f99edb" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+        <type>bool</type>
+        <definition>virtual bool kipr::digital::Digital::value</definition>
+        <argsstring>() const</argsstring>
+        <name>value</name>
+        <reimplements refid="classkipr_1_1sensor_1_1Sensor_1a6ccd0837f3e12090bed823f841d3e318">value</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital/public/kipr/digital/digital.hpp" line="25" column="20"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>kipr::sensor::Sensor&lt; bool &gt;</label>
+        <link refid="classkipr_1_1sensor_1_1Sensor"/>
+      </node>
+      <node id="1">
+        <label>kipr::digital::Digital</label>
+        <link refid="classkipr_1_1digital_1_1Digital"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>kipr::sensor::Sensor&lt; bool &gt;</label>
+        <link refid="classkipr_1_1sensor_1_1Sensor"/>
+      </node>
+      <node id="1">
+        <label>kipr::digital::Digital</label>
+        <link refid="classkipr_1_1digital_1_1Digital"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital/public/kipr/digital/digital.hpp" line="10" column="5" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital/public/kipr/digital/digital.hpp" bodystart="11" bodyend="29"/>
+    <listofallmembers>
+      <member refid="classkipr_1_1digital_1_1Digital_1a3b52dea2037d97f4188678b4f6dffece" prot="public" virt="non-virtual"><scope>kipr::digital::Digital</scope><name>Digital</name></member>
+      <member refid="classkipr_1_1digital_1_1Digital_1a8ccfa23990c4651d0c27c24205364ae7" prot="public" virt="non-virtual"><scope>kipr::digital::Digital</scope><name>isOutput</name></member>
+      <member refid="classkipr_1_1digital_1_1Digital_1a2968740809285ef257b9d3d78aaefa62" prot="private" virt="non-virtual"><scope>kipr::digital::Digital</scope><name>m_port</name></member>
+      <member refid="classkipr_1_1digital_1_1Digital_1aa52921b84deb2ecd6344bf0b6d224c80" prot="public" virt="non-virtual"><scope>kipr::digital::Digital</scope><name>pullup</name></member>
+      <member refid="classkipr_1_1digital_1_1Digital_1a05203f9e1442d0ecf08758a0a3022b47" prot="public" virt="non-virtual"><scope>kipr::digital::Digital</scope><name>setOutput</name></member>
+      <member refid="classkipr_1_1digital_1_1Digital_1a5127cd341a5b467f2d8580c4f2eb9da9" prot="public" virt="non-virtual"><scope>kipr::digital::Digital</scope><name>setPullup</name></member>
+      <member refid="classkipr_1_1digital_1_1Digital_1ae14b0e5fc5995bc70a274b3087689b30" prot="public" virt="non-virtual"><scope>kipr::digital::Digital</scope><name>setValue</name></member>
+      <member refid="classkipr_1_1digital_1_1Digital_1a476a96b7ff6ad47a2893e33104f99edb" prot="public" virt="virtual"><scope>kipr::digital::Digital</scope><name>value</name></member>
+      <member refid="classkipr_1_1sensor_1_1Sensor_1a7a2997c6ede6b25603032f2b110e8cb5" prot="public" virt="virtual"><scope>kipr::digital::Digital</scope><name>~Sensor</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

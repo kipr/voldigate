@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="structthread" kind="struct" language="C++" prot="public">
+    <compoundname>thread</compoundname>
+    <includes refid="thread_8h" local="no">thread.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structthread_1a950fee393b7c274d80cb5dcd97ed90f1" prot="public" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void* thread::data</definition>
+        <argsstring></argsstring>
+        <name>data</name>
+        <briefdescription>
+<para>a C++ Thread object cast to a <computeroutput>void*</computeroutput>. Not intended to be accessed. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread/thread.h" line="39" column="6" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread/thread.h" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>A thread, or separate process. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>a thread runs a function &quot;in the background&quot; (while another function is executing). <simplesect kind="see"><para><ref refid="group__thread_1gad2588e21e1b9643b6310da12d251d86a" kindref="member">thread_create</ref> </para>
+</simplesect>
+</para>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread/thread.h" line="37" column="1" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread/thread.h" bodystart="38" bodyend="40"/>
+    <listofallmembers>
+      <member refid="structthread_1a950fee393b7c274d80cb5dcd97ed90f1" prot="public" virt="non-virtual"><scope>thread</scope><name>data</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="dir_c6429732c8b4bfaeec8ab78b55f0f982" kind="dir">
+    <compoundname>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/time</compoundname>
+    <innerdir refid="dir_92b67f56a55a5ef04f4fb2dbad8d362e">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/time/public</innerdir>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/time/"/>
+  </compounddef>
+</doxygen>

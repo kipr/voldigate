@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="socket_8hpp" kind="file" language="C++">
+    <compoundname>socket.hpp</compoundname>
+    <includes local="no">netinet/in.h</includes>
+    <includes local="no">unistd.h</includes>
+    <incdepgraph>
+      <node id="2">
+        <label>netinet/in.h</label>
+      </node>
+      <node id="1">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp</label>
+        <link refid="socket_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>unistd.h</label>
+      </node>
+    </incdepgraph>
+    <innerclass refid="classAddress" prot="public">Address</innerclass>
+    <innerclass refid="classSocket" prot="public">Socket</innerclass>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="socket_8hpp_1ac5edad8c23925f7425866e7253f7f02a" prot="public" static="no">
+        <type>int</type>
+        <definition>typedef int socket_fd_t</definition>
+        <argsstring></argsstring>
+        <name>socket_fd_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="27" column="13" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>socket.hpp</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*<sp/><sp/>Created<sp/>on:<sp/>Nov<sp/>13,<sp/>2015</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/>Author:<sp/>Joshua<sp/>Southerland</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>INCLUDE_WALLABY_SOCKET_HPP_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>INCLUDE_WALLABY_SOCKET_HPP_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_WIN32</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_WIN32</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;netinet/in.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_WIN32_WINNT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_WIN32_WINNT<sp/>0x0501</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;winsock2.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;winsock.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>u_long<sp/>socklen_t;</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;unistd.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight></codeline>
+<codeline lineno="27" refid="socket_8hpp_1ac5edad8c23925f7425866e7253f7f02a" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="socket_8hpp_1ac5edad8c23925f7425866e7253f7f02a" kindref="member">socket_fd_t</ref>;</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">sockaddr;</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight></codeline>
+<codeline lineno="31" refid="classAddress" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classAddress" kindref="compound">Address</ref></highlight></codeline>
+<codeline lineno="32"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="34" refid="classAddress_1a48f07460b0e2f9c3363b15a4575f1246" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classAddress_1a48f07460b0e2f9c3363b15a4575f1246" kindref="member">Address</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>host,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="classAddress_1afcba3f4a73addfc2262b549ae62e7c8f" kindref="member">port</ref>);</highlight></codeline>
+<codeline lineno="35" refid="classAddress_1a7112bb43b003883514eebd942f3c88c5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classAddress_1a7112bb43b003883514eebd942f3c88c5" kindref="member">Address</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>sockaddr_in<sp/>&amp;<ref refid="classAddress_1a73558a7cf6c850ef548788f0bfa44131" kindref="member">addr</ref>);</highlight></codeline>
+<codeline lineno="36" refid="classAddress_1a63f910c09d93bdd16d3744e47d13dc0e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classAddress_1a63f910c09d93bdd16d3744e47d13dc0e" kindref="member">Address</ref>();</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38" refid="classAddress_1a854eed86c57d012930069daa8ec5d5b1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classAddress_1a854eed86c57d012930069daa8ec5d5b1" kindref="member">isValid</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40" refid="classAddress_1a46d0a5cd67550608d49e422bad632d09" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classAddress_1a46d0a5cd67550608d49e422bad632d09" kindref="member">setHost</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>host);</highlight></codeline>
+<codeline lineno="41" refid="classAddress_1a7c3715175945e8e1f7ff16e92ed0f85c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classAddress_1a7c3715175945e8e1f7ff16e92ed0f85c" kindref="member">setPort</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="classAddress_1afcba3f4a73addfc2262b549ae62e7c8f" kindref="member">port</ref>);</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43" refid="classAddress_1afcba3f4a73addfc2262b549ae62e7c8f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="classAddress_1afcba3f4a73addfc2262b549ae62e7c8f" kindref="member">port</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45" refid="classAddress_1a73558a7cf6c850ef548788f0bfa44131" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>sockaddr<sp/>*<ref refid="classAddress_1a73558a7cf6c850ef548788f0bfa44131" kindref="member">addr</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="46" refid="classAddress_1aa83a507a64bd8f7a7e3e8cb376b2e8d1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>socklen_t<sp/><ref refid="classAddress_1aa83a507a64bd8f7a7e3e8cb376b2e8d1" kindref="member">addrLength</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48" refid="classAddress_1aa081ca5bf0c19c6a9ef851e370009471" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="classAddress_1aa081ca5bf0c19c6a9ef851e370009471" kindref="member">ip</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>m_valid;</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/>sockaddr_in<sp/>m_addr;</highlight></codeline>
+<codeline lineno="53"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55" refid="classSocket" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classSocket" kindref="compound">Socket</ref></highlight></codeline>
+<codeline lineno="56"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="58" refid="classSocket_1a7c3256c4fc6e2c603df73201049fae5a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classSocket_1a7c3256c4fc6e2c603df73201049fae5a" kindref="member">Socket</ref>();</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60" refid="classSocket_1ac29147e85ea697c250cdb9f6bfdd72cb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classSocket_1ac29147e85ea697c250cdb9f6bfdd72cb" kindref="member">open</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>domain,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>type,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>protocol);</highlight></codeline>
+<codeline lineno="61" refid="classSocket_1a35d1ad03b3ae7ec106924e22c8c1b7d4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classSocket_1a35d1ad03b3ae7ec106924e22c8c1b7d4" kindref="member">isOpen</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="62" refid="classSocket_1a7f73007fafbe7745fb2176a209787457" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classSocket_1a7f73007fafbe7745fb2176a209787457" kindref="member">setBlocking</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>blocking);</highlight></codeline>
+<codeline lineno="63" refid="classSocket_1a5c3b3427993ca1382598783dec0544e2" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classSocket_1a5c3b3427993ca1382598783dec0544e2" kindref="member">setReusable</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>reusable);</highlight></codeline>
+<codeline lineno="64" refid="classSocket_1ac032166859151611d8f76308db2a13e5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classSocket_1ac032166859151611d8f76308db2a13e5" kindref="member">bind</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/>port);</highlight></codeline>
+<codeline lineno="65" refid="classSocket_1a9067acf8b3e2b5191fe191e3f376b319" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classSocket_1a9067acf8b3e2b5191fe191e3f376b319" kindref="member">connect</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="classAddress" kindref="compound">Address</ref><sp/>&amp;addr);</highlight></codeline>
+<codeline lineno="66" refid="classSocket_1af4e3f3b8001460ae2871f5374b70e3b8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classSocket_1af4e3f3b8001460ae2871f5374b70e3b8" kindref="member">disconnect</ref>();</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight></codeline>
+<codeline lineno="68" refid="classSocket_1a0c9750548d7cfc58390c35a513bc3a12" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classSocket_1a0c9750548d7cfc58390c35a513bc3a12" kindref="member">close</ref>();</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight></codeline>
+<codeline lineno="70" refid="classSocket_1a0a0ee366bc625b8f0d435cf68d083157" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>ssize_t<sp/><ref refid="classSocket_1a0a0ee366bc625b8f0d435cf68d083157" kindref="member">recv</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>buffer,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal"><sp/>length,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>flags<sp/>=<sp/>0);</highlight></codeline>
+<codeline lineno="71" refid="classSocket_1a1f9437723ddf95179268958407383f1c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>ssize_t<sp/><ref refid="classSocket_1a1f9437723ddf95179268958407383f1c" kindref="member">recvfrom</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>buffer,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal"><sp/>length,<sp/><ref refid="classAddress" kindref="compound">Address</ref><sp/>&amp;address,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>flags<sp/>=<sp/>0);</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight></codeline>
+<codeline lineno="73" refid="classSocket_1a0dd57cbcafcea8caaf0c86f66a0841b1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>ssize_t<sp/><ref refid="classSocket_1a0dd57cbcafcea8caaf0c86f66a0841b1" kindref="member">send</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>buffer,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal"><sp/>length,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>flags<sp/>=<sp/>0);</highlight></codeline>
+<codeline lineno="74" refid="classSocket_1acebd799182ee92f2d6c4c96bb67f63da" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>ssize_t<sp/><ref refid="classSocket_1acebd799182ee92f2d6c4c96bb67f63da" kindref="member">sendto</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>buffer,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal"><sp/>length,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="classAddress" kindref="compound">Address</ref><sp/>&amp;dest,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>flags<sp/>=<sp/>0);</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight></codeline>
+<codeline lineno="76" refid="classSocket_1af8da516631e03da69eb9cb5dfac46383" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="socket_8hpp_1ac5edad8c23925f7425866e7253f7f02a" kindref="member">socket_fd_t</ref><sp/><ref refid="classSocket_1af8da516631e03da69eb9cb5dfac46383" kindref="member">fd</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78" refid="classSocket_1a10087d3a3aa3eaa924302de3b7663299" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="classSocket" kindref="compound">Socket</ref><sp/><ref refid="classSocket_1a10087d3a3aa3eaa924302de3b7663299" kindref="member">udp</ref>();</highlight></codeline>
+<codeline lineno="79" refid="classSocket_1ac126b4d2350aba6c62fb58794fc8efe3" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="classSocket" kindref="compound">Socket</ref><sp/><ref refid="classSocket_1ac126b4d2350aba6c62fb58794fc8efe3" kindref="member">tcp</ref>();</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="socket_8hpp_1ac5edad8c23925f7425866e7253f7f02a" kindref="member">socket_fd_t</ref><sp/>m_fd;</highlight></codeline>
+<codeline lineno="83"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>INCLUDE_WALLABY_SOCKET_HPP_<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp"/>
+  </compounddef>
+</doxygen>

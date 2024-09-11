@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="dir_d8796307b1567e91b93f05afaddcf003" kind="dir">
+    <compoundname>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/accel</compoundname>
+    <innerdir refid="dir_effe5fb0962c555eb19a7b337e375db8">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/accel/public</innerdir>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/accel/"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,27 @@
+var searchData=
+[
+  ['r_648',['r',['../structRgb.html#a3da778daa4ccbc628c478b21d6093df5',1,'Rgb']]],
+  ['radius_649',['radius',['../structkipr_1_1create_1_1CreateState.html#afac9f5cf0c8ff835c2588f1ba6ad4304',1,'kipr::create::CreateState::radius()'],['../structkipr_1_1create_1_1CreatePackets_1_1__5.html#a29f094d582f2b54356b5b2ae42eb4121',1,'kipr::create::CreatePackets::_5::radius()']]],
+  ['rawpoweradc_650',['rawPowerADC',['../classkipr_1_1battery_1_1Battery.html#a90375a5cace301f92d1d4e8d4845fc26',1,'kipr::battery::Battery']]],
+  ['read_651',['read',['../classkipr_1_1create_1_1Create.html#adde30795fa14866ca044a5a84d416006',1,'kipr::create::Create::read()'],['../classkipr_1_1create_1_1Create.html#a54b4e8bd0573a5763b7f6f1b4732e601',1,'kipr::create::Create::read(unsigned char *data, const size_t &amp;len)']]],
+  ['rect_652',['Rect',['../classkipr_1_1geometry_1_1Rect.html',1,'kipr::geometry::Rect&lt; T &gt;'],['../classkipr_1_1geometry_1_1Rect.html#a5a7690cc2590b0455c6db7c5bd7e8a22',1,'kipr::geometry::Rect::Rect()']]],
+  ['rectangle_653',['rectangle',['../geometry_8h.html#ac05b76cb45185785dc024912b32b7b05',1,'rectangle():&#160;geometry.h'],['../structrectangle.html',1,'rectangle']]],
+  ['rectd_654',['Rectd',['../namespacekipr_1_1geometry.html#a03b09b8bf18b50e8789ddff275bfc944',1,'kipr::geometry']]],
+  ['rectf_655',['Rectf',['../namespacekipr_1_1geometry.html#a38c4dfe559219ca39db5b5d7f453b06e',1,'kipr::geometry']]],
+  ['recv_656',['recv',['../classSocket.html#a0a0ee366bc625b8f0d435cf68d083157',1,'Socket']]],
+  ['recvfrom_657',['recvfrom',['../classSocket.html#a1f9437723ddf95179268958407383f1c',1,'Socket']]],
+  ['red_658',['RED',['../colors_8h.html#a8d23feea868a983c8c2b661e1e16972f',1,'colors.h']]],
+  ['refreshrate_659',['refreshRate',['../classkipr_1_1create_1_1Create.html#a6e64e8ea6ee7600000fe8087c5a91003',1,'kipr::create::Create']]],
+  ['remove_660',['remove',['../classkipr_1_1create_1_1CreateScript.html#ab7408dcc25dd365cc6f6b58eff5b151c',1,'kipr::create::CreateScript']]],
+  ['resettext_661',['resetText',['../classkipr_1_1button_1_1IdButton.html#a1be37f44c07b4b7b58064c2f687d824b',1,'kipr::button::IdButton::resetText()'],['../classkipr_1_1button_1_1AbstractTextButton.html#ac16e21eb25cdacb796d410b3a7e1c000',1,'kipr::button::AbstractTextButton::resetText()']]],
+  ['rgb_662',['Rgb',['../structRgb.html',1,'']]],
+  ['rgb_663',['RGB',['../group__graphics.html#ggafb0564821f132bfe74508af8349a0faaa30447e9f6efa4afdd251f9afc1d5fb44',1,'graphics.h']]],
+  ['right_664',['Right',['../namespacekipr_1_1button.html#acfb2407b30b6a223b2f926ec60723bda',1,'kipr::button::Right()'],['../namespacekipr_1_1button.html#a46c17cd2d42572a5b00eebc23dc79507a92b09c7c48c520c3c55e497875da437c',1,'kipr::button::Right()']]],
+  ['right_5fbutton_665',['right_button',['../group__button.html#ga22b4859d4454499466dea2293d109d6d',1,'button.h']]],
+  ['rightencodercounts_666',['rightEncoderCounts',['../structkipr_1_1create_1_1CreatePackets_1_1__101.html#a1ed08b26b8cc371ef927409c9b96f2b6',1,'kipr::create::CreatePackets::_101']]],
+  ['rightmotorcurrent_667',['rightMotorCurrent',['../structkipr_1_1create_1_1CreatePackets_1_1__101.html#a7c4556fc8214e4c0ffb04498d9c97c6e',1,'kipr::create::CreatePackets::_101']]],
+  ['rightvelocity_668',['rightVelocity',['../structkipr_1_1create_1_1CreateState.html#a0da2624fe399f3753bf235776253c2e0',1,'kipr::create::CreateState::rightVelocity()'],['../structkipr_1_1create_1_1CreatePackets_1_1__5.html#adfa7a25f7d2e4bfbb4ed696b36989f6d',1,'kipr::create::CreatePackets::_5::rightVelocity()']]],
+  ['rose_669',['ROSE',['../colors_8h.html#a30283739677a9ab6664959f69e2d8dde',1,'colors.h']]],
+  ['row_670',['row',['../classkipr_1_1geometry_1_1Point2.html#a4e6aee197b3c5c6d1995eb0c51dac5c7',1,'kipr::geometry::Point2']]],
+  ['run_671',['run',['../classkipr_1_1thread_1_1Thread.html#aca98deefaf7e297cbf28191e95776587',1,'kipr::thread::Thread']]]
+];

@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="Tutorials" kind="page">
+    <compoundname>Tutorials</compoundname>
+    <title>Tutorials</title>
+    <innerpage refid="getting_started">Getting Started</innerpage>
+    <innerpage refid="sensors_tutorial">Sensors Tutorials</innerpage>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<sect1 id="Tutorials_1module_tutorials">
+<title>Module Tutorials</title>
+<para><itemizedlist>
+<listitem><para><ref refid="group__analog" kindref="compound">Analogs</ref> Analog Tutorial</para>
+</listitem></itemizedlist>
+</para>
+</sect1>
+<sect1 id="Tutorials_1complete_tutorials">
+<title>Comprehensive Tutorials</title>
+<para><itemizedlist>
+<listitem><para><ref refid="getting_started" kindref="compound">Getting Started</ref></para>
+</listitem><listitem><para><ref refid="sensors_tutorial" kindref="compound">Sensors Tutorials</ref> </para>
+</listitem></itemizedlist>
+</para>
+</sect1>
+    </detaileddescription>
+    <location file="pages/tutorials_page.h"/>
+  </compounddef>
+</doxygen>

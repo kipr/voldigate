@@ -1,0 +1,53 @@
+.TH "getting_started" 3 "Wed Sep 4 2024" "Version 1.0.0" "libkipr" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+getting_started \- Getting Started 
+ ~Hewwo~ and welcome to KIPR's libwallaby tutorial\&. This tutorial assumes that you know a bit of C\&. If you don't, there are many online resources for learning C\&.
+.PP
+Now, let's dive in\&.
+.PP
+Let's start with a simple robot with two wheels (depicted with W's) and two motors (depicted with M's) as shown\&.
+.PP
+.PP
+.nf
+----------
+|        |
+|        |
+W-M    M-W
+|        |
+|        |
+----------
+.fi
+.PP
+.PP
+In order to move our robot forward, we would first plug in the motors to ports 0 and 1\&. Then, run the following code snippet\&.
+.PP
+.PP
+.nf
+#include <kipr/wombat\&.h>  // this is the file with all the kipr functions
+#include <stdio\&.h>        // this is the file that allows for output
+
+int main(){
+     printf("Hello World! This is the Getting Started tutorial\&.\n");
+
+     // define our variables
+     int left_motor = 0;   // the port of the left motor
+     int right_motor = 1;  // the port of the right motor
+
+     // move forward
+     motor(left_motor, 100); // move at 100% forward
+     motor(right_motor, -100);  // move at 100% backward since this motor is facing the opposite direction as the left motor
+     msleep(1000);  // wait 1 second
+
+     // stop moving
+     ao();
+
+
+     printf("Congratulations! You finished the getting started tutorial\&.\n");
+     return 0;
+}
+.fi
+.PP
+.PP
+Just like that, you've got your robot moving! We'll continue in the next tutorial with distance sensors and line following\&. 

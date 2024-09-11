@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="namespacekipr_1_1motor" kind="namespace" language="C++">
+    <compoundname>kipr::motor</compoundname>
+    <innerclass refid="classkipr_1_1motor_1_1Motor" prot="public">kipr::motor::Motor</innerclass>
+    <innerclass refid="classkipr_1_1motor_1_1BackEMF" prot="public">kipr::motor::BackEMF</innerclass>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="namespacekipr_1_1motor_1aa56c71ecc5579a9d8838f42b908da6c4" prot="public" static="no" constexpr="yes" mutable="no">
+        <type>constexpr const std::uint8_t</type>
+        <definition>constexpr const std::uint8_t kipr::motor::MOTOR_COUNT</definition>
+        <argsstring></argsstring>
+        <name>MOTOR_COUNT</name>
+        <initializer>= 4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/constants.hpp" line="10" column="34" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/constants.hpp" bodystart="10" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/constants.hpp" line="8" column="3"/>
+  </compounddef>
+</doxygen>

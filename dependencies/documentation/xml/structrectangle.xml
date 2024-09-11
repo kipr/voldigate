@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="structrectangle" kind="struct" language="C++" prot="public">
+    <compoundname>rectangle</compoundname>
+    <includes refid="geometry_8h" local="no">geometry.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structrectangle_1a4feece2ec58d909444613177ec67e2bc" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int rectangle::ulx</definition>
+        <argsstring></argsstring>
+        <name>ulx</name>
+        <briefdescription>
+<para>the x value of the rectangle&apos;s upper left </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" line="37" column="7" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" bodystart="37" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structrectangle_1ac537f5c6afbda6ef42cc428540058ecb" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int rectangle::uly</definition>
+        <argsstring></argsstring>
+        <name>uly</name>
+        <briefdescription>
+<para>the y value of the rectangle&apos;s upper left </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" line="38" column="7" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" bodystart="38" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structrectangle_1a57a9b24a714057d8d2ca9a06333560d3" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int rectangle::width</definition>
+        <argsstring></argsstring>
+        <name>width</name>
+        <briefdescription>
+<para>the width of the rectangle </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" line="39" column="7" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structrectangle_1af460193d9a375b8e2813bf1fe6216cce" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int rectangle::height</definition>
+        <argsstring></argsstring>
+        <name>height</name>
+        <briefdescription>
+<para>the height of the rectangle </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" line="40" column="7" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>A rectangle object. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" line="35" column="1" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" bodystart="36" bodyend="41"/>
+    <listofallmembers>
+      <member refid="structrectangle_1af460193d9a375b8e2813bf1fe6216cce" prot="public" virt="non-virtual"><scope>rectangle</scope><name>height</name></member>
+      <member refid="structrectangle_1a4feece2ec58d909444613177ec67e2bc" prot="public" virt="non-virtual"><scope>rectangle</scope><name>ulx</name></member>
+      <member refid="structrectangle_1ac537f5c6afbda6ef42cc428540058ecb" prot="public" virt="non-virtual"><scope>rectangle</scope><name>uly</name></member>
+      <member refid="structrectangle_1a57a9b24a714057d8d2ca9a06333560d3" prot="public" virt="non-virtual"><scope>rectangle</scope><name>width</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="structkipr_1_1create_1_1CreatePackets_1_1__4" kind="struct" language="C++" prot="public">
+    <compoundname>kipr::create::CreatePackets::_4</compoundname>
+    <includes refid="create_8hpp" local="no">create.hpp</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__4_1a3a3b2fb131b855a9d707cfc4b4aab40c" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_4::wallSignal[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>wallSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="126" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="126" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__4_1a1483df2fc961addb716f8199616fce7e" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_4::cliffLeftSignal[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>cliffLeftSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="127" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="127" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__4_1ad2079b6d72c9116f6751b4ce8f878504" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_4::cliffFrontLeftSignal[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>cliffFrontLeftSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="128" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="128" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__4_1ad563283181a7d7b2cf2bd91a19ce790d" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_4::cliffFrontRightSignal[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>cliffFrontRightSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="129" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="129" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__4_1ac3b34b2d5f12e26aee81dff2ba70be0e" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_4::cliffRightSignal[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>cliffRightSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="130" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="130" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__4_1afb1cd7c49aa3713d6702536e9a0cabb8" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_4::userDigitalInputs</definition>
+        <argsstring></argsstring>
+        <name>userDigitalInputs</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="131" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="131" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__4_1ae3479f06571488e5a4abd25633ac695e" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_4::userAnalogInput[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>userAnalogInput</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="132" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="132" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__4_1a5e211cdf97324b5c9defbd04112eff65" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_4::chargingSourcesAvailable</definition>
+        <argsstring></argsstring>
+        <name>chargingSourcesAvailable</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="133" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="133" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><ref refid="classkipr_1_1create_1_1Create" kindref="compound">Create</ref> OI Packet 4 </para>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="124" column="7" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="125" bodyend="134"/>
+    <listofallmembers>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__4_1a5e211cdf97324b5c9defbd04112eff65" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_4</scope><name>chargingSourcesAvailable</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__4_1ad2079b6d72c9116f6751b4ce8f878504" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_4</scope><name>cliffFrontLeftSignal</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__4_1ad563283181a7d7b2cf2bd91a19ce790d" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_4</scope><name>cliffFrontRightSignal</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__4_1a1483df2fc961addb716f8199616fce7e" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_4</scope><name>cliffLeftSignal</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__4_1ac3b34b2d5f12e26aee81dff2ba70be0e" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_4</scope><name>cliffRightSignal</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__4_1ae3479f06571488e5a4abd25633ac695e" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_4</scope><name>userAnalogInput</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__4_1afb1cd7c49aa3713d6702536e9a0cabb8" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_4</scope><name>userDigitalInputs</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__4_1a3a3b2fb131b855a9d707cfc4b4aab40c" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_4</scope><name>wallSignal</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

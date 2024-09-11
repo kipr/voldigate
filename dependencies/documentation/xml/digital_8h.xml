@@ -1,0 +1,235 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="digital_8h" kind="file" language="C++">
+    <compoundname>digital.h</compoundname>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="group__digital_1ga3eb7db79d996b92f7063b65dc34b3484" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int digital</definition>
+        <argsstring>(int port)</argsstring>
+        <name>digital</name>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__digital_1ga4b672bd3758b1ff255b0bc51d6c9fd76" kindref="member">get_digital_value</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital/public/kipr/digital/digital.h" line="43" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital/public/kipr/digital/digital.h" declline="43" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__digital_1ga1e12c564407ca4edc4c833ddb9f0344f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void set_digital_value</definition>
+        <argsstring>(int port, int value)</argsstring>
+        <name>set_digital_value</name>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Sets the value of the digital port in output mode. <simplesect kind="see"><para><ref refid="group__digital_1ga4b672bd3758b1ff255b0bc51d6c9fd76" kindref="member">get_digital_value</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital/public/kipr/digital/digital.h" line="50" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital/public/kipr/digital/digital.h" declline="50" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__digital_1ga4b672bd3758b1ff255b0bc51d6c9fd76" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int get_digital_value</definition>
+        <argsstring>(int port)</argsstring>
+        <name>get_digital_value</name>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the current value of the digital port. <simplesect kind="return"><para>1 if the switch is closed, 0 if the switch is open </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__digital_1ga1e12c564407ca4edc4c833ddb9f0344f" kindref="member">set_digital_value</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital/public/kipr/digital/digital.h" line="59" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital/public/kipr/digital/digital.h" declline="59" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__digital_1gac6aacd543334547b664ff839888bfbe2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void set_digital_output</definition>
+        <argsstring>(int port, int out)</argsstring>
+        <name>set_digital_output</name>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>out</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Sets the digital mode. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">port</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The port to modify. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">out</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>1 for output mode, 0 for input mode. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital/public/kipr/digital/digital.h" line="67" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital/public/kipr/digital/digital.h" declline="67" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__digital_1ga865e9d1807739ddc9585c5665de1281c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int get_digital_output</definition>
+        <argsstring>(int port)</argsstring>
+        <name>get_digital_output</name>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the current digital mode <simplesect kind="return"><para>1 for output mode, 0 for input mode </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__digital_1ga1e12c564407ca4edc4c833ddb9f0344f" kindref="member">set_digital_value</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital/public/kipr/digital/digital.h" line="75" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital/public/kipr/digital/digital.h" declline="75" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__digital_1ga2d37bb1981515925418bd5a624eb1aa6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int get_digital_pullup</definition>
+        <argsstring>(int port)</argsstring>
+        <name>get_digital_pullup</name>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the current digital pullup state <simplesect kind="return"><para>1 for active, 0 for inactive </para>
+</simplesect>
+<xrefsect id="deprecated_1_deprecated000013"><xreftitle>Deprecated</xreftitle><xrefdescription><para>not applicable on the Wallaby</para>
+</xrefdescription></xrefsect></para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital/public/kipr/digital/digital.h" line="83" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital/public/kipr/digital/digital.h" declline="83" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__digital_1ga6f4483ed1b9532f7637d79255107d2e9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void set_digital_pullup</definition>
+        <argsstring>(int port, int pullup)</argsstring>
+        <name>set_digital_pullup</name>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>pullup</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Sets the current digital pullup state <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">port</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The port to modify </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">pullup</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The pullup state 1: active 0: inactive </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<xrefsect id="deprecated_1_deprecated000014"><xreftitle>Deprecated</xreftitle><xrefdescription><para>not applicable on the Wallaby</para>
+</xrefdescription></xrefsect></para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital/public/kipr/digital/digital.h" line="92" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital/public/kipr/digital/digital.h" declline="92" declcolumn="6"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><simplesect kind="copyright"><para>KISS Institute for Practical Robotics </para>
+</simplesect>
+</para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_KIPR_DIGITAL_DIGITAL_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_KIPR_DIGITAL_DIGITAL_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43" refid="group__digital_1ga3eb7db79d996b92f7063b65dc34b3484" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__digital_1ga3eb7db79d996b92f7063b65dc34b3484" kindref="member">digital</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>port);</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50" refid="group__digital_1ga1e12c564407ca4edc4c833ddb9f0344f" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__digital_1ga1e12c564407ca4edc4c833ddb9f0344f" kindref="member">set_digital_value</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>port,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>value);</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="59" refid="group__digital_1ga4b672bd3758b1ff255b0bc51d6c9fd76" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__digital_1ga4b672bd3758b1ff255b0bc51d6c9fd76" kindref="member">get_digital_value</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>port);</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight></codeline>
+<codeline lineno="67" refid="group__digital_1gac6aacd543334547b664ff839888bfbe2" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__digital_1gac6aacd543334547b664ff839888bfbe2" kindref="member">set_digital_output</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>port,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>out);</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="75" refid="group__digital_1ga865e9d1807739ddc9585c5665de1281c" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__digital_1ga865e9d1807739ddc9585c5665de1281c" kindref="member">get_digital_output</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>port);</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="83" refid="group__digital_1ga2d37bb1981515925418bd5a624eb1aa6" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__digital_1ga2d37bb1981515925418bd5a624eb1aa6" kindref="member">get_digital_pullup</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>port);</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight></codeline>
+<codeline lineno="92" refid="group__digital_1ga6f4483ed1b9532f7637d79255107d2e9" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__digital_1ga6f4483ed1b9532f7637d79255107d2e9" kindref="member">set_digital_pullup</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>port,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>pullup);</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital/public/kipr/digital/digital.h"/>
+  </compounddef>
+</doxygen>

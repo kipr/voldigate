@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="core_8h" kind="file" language="C++">
+    <compoundname>core.h</compoundname>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="core_8h_1ac1b158abd8977a7a47c57341884da0e1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char* kipr_git_branch</definition>
+        <argsstring>()</argsstring>
+        <name>kipr_git_branch</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/core/public/kipr/core/core.h" line="8" column="12" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/core/public/kipr/core/core.h" declline="8" declcolumn="12"/>
+      </memberdef>
+      <memberdef kind="function" id="core_8h_1a078b4d94ae27925754c8e2dbfdddf7a2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char* kipr_git_commit_hash</definition>
+        <argsstring>()</argsstring>
+        <name>kipr_git_commit_hash</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/core/public/kipr/core/core.h" line="10" column="12" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/core/public/kipr/core/core.h" declline="10" declcolumn="12"/>
+      </memberdef>
+      <memberdef kind="function" id="core_8h_1ac8383a59b1dae0edcfadc8d0c6a7f5b8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int kipr_version_major</definition>
+        <argsstring>()</argsstring>
+        <name>kipr_version_major</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/core/public/kipr/core/core.h" line="12" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/core/public/kipr/core/core.h" declline="12" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="core_8h_1a9477fdfa9af0446ef6a75afa16784063" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int kipr_version_minor</definition>
+        <argsstring>()</argsstring>
+        <name>kipr_version_minor</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/core/public/kipr/core/core.h" line="14" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/core/public/kipr/core/core.h" declline="14" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="core_8h_1a88391ac44169cedf09a70854c1dc6f2d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int kipr_version_patch</definition>
+        <argsstring>()</argsstring>
+        <name>kipr_version_patch</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/core/public/kipr/core/core.h" line="16" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/core/public/kipr/core/core.h" declline="16" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="core_8h_1a68e2b885bfc29b9d15eb7434e313217d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char* kipr_version</definition>
+        <argsstring>()</argsstring>
+        <name>kipr_version</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/core/public/kipr/core/core.h" line="18" column="12" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/core/public/kipr/core/core.h" declline="18" declcolumn="12"/>
+      </memberdef>
+      <memberdef kind="function" id="core_8h_1a3b11d13df2fb38ee31746362e189a287" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char* kipr_build_datetime</definition>
+        <argsstring>()</argsstring>
+        <name>kipr_build_datetime</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/core/public/kipr/core/core.h" line="20" column="12" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/core/public/kipr/core/core.h" declline="20" declcolumn="12"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>_KIPR_CORE_CORE_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_KIPR_CORE_CORE_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8" refid="core_8h_1ac1b158abd8977a7a47c57341884da0e1" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="core_8h_1ac1b158abd8977a7a47c57341884da0e1" kindref="member">kipr_git_branch</ref>();</highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight></codeline>
+<codeline lineno="10" refid="core_8h_1a078b4d94ae27925754c8e2dbfdddf7a2" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="core_8h_1a078b4d94ae27925754c8e2dbfdddf7a2" kindref="member">kipr_git_commit_hash</ref>();</highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight></codeline>
+<codeline lineno="12" refid="core_8h_1ac8383a59b1dae0edcfadc8d0c6a7f5b8" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="core_8h_1ac8383a59b1dae0edcfadc8d0c6a7f5b8" kindref="member">kipr_version_major</ref>();</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14" refid="core_8h_1a9477fdfa9af0446ef6a75afa16784063" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="core_8h_1a9477fdfa9af0446ef6a75afa16784063" kindref="member">kipr_version_minor</ref>();</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight></codeline>
+<codeline lineno="16" refid="core_8h_1a88391ac44169cedf09a70854c1dc6f2d" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="core_8h_1a88391ac44169cedf09a70854c1dc6f2d" kindref="member">kipr_version_patch</ref>();</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight></codeline>
+<codeline lineno="18" refid="core_8h_1a68e2b885bfc29b9d15eb7434e313217d" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="core_8h_1a68e2b885bfc29b9d15eb7434e313217d" kindref="member">kipr_version</ref>();</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="20" refid="core_8h_1a3b11d13df2fb38ee31746362e189a287" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="core_8h_1a3b11d13df2fb38ee31746362e189a287" kindref="member">kipr_build_datetime</ref>();</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/core/public/kipr/core/core.h"/>
+  </compounddef>
+</doxygen>

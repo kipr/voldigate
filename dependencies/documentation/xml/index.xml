@@ -1,0 +1,1735 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygenindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="index.xsd" version="1.9.1" xml:lang="en-US">
+  <compound refid="structkipr_1_1create_1_1CreatePackets_1_1__1" kind="struct"><name>kipr::create::CreatePackets::_1</name>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__1_1a153ee6bc0e148a129ab7d0adda859b3a" kind="variable"><name>bumpsAndWheelDrops</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__1_1a14175fc7bc9adacb3269fc71f8f62a3a" kind="variable"><name>wall</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__1_1a26ed9c7c5ab0a992690d0a5241fb79f8" kind="variable"><name>cliffLeft</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__1_1acd058aa56185edc023b822b06fa190d7" kind="variable"><name>cliffFrontLeft</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__1_1a47a8872b8b9b4d250cc00f26f9e165ad" kind="variable"><name>cliffFrontRight</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__1_1a6777d10850f73223aafec324f7ea729d" kind="variable"><name>cliffRight</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__1_1a15398b2f837f4fd50b1908fe1d3bb3d9" kind="variable"><name>virtualWall</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__1_1a87c81424392a23ff9a9aa9f889034f8e" kind="variable"><name>cargoBayDigitalInputs</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__1_1aa290b4879b0b91c84396909282485af3" kind="variable"><name>lowSideDriverAndWheelOvercurrents</name></member>
+  </compound>
+  <compound refid="structkipr_1_1create_1_1CreatePackets_1_1__101" kind="struct"><name>kipr::create::CreatePackets::_101</name>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__101_1abd175d3f0f247c3587bee4fc1426ae70" kind="variable"><name>leftEncoderCounts</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__101_1a1ed08b26b8cc371ef927409c9b96f2b6" kind="variable"><name>rightEncoderCounts</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__101_1ac54b84c4e01169307eb15152482bdfc3" kind="variable"><name>lightBumpBits</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__101_1aa9c10b2ad38882e04d49673a7dc1a48c" kind="variable"><name>lightBumpLeftSignal</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__101_1a7f97bcbbd1be9384205b645aede69e13" kind="variable"><name>lightBumpFrontLeftSignal</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__101_1aeefbb0e939ecd1e3548f9fef43266101" kind="variable"><name>lightBumpCenterLeftSignal</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__101_1a26dc3d20e8da55c6b2293bc7fb0f616f" kind="variable"><name>lightBumpCenterRightSignal</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__101_1acb22bb2faba42e0ca5fd8516e3567fea" kind="variable"><name>lightBumpFrontRightSignal</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__101_1a0114a80c832e2ecce3c82bf6cdfe8e2b" kind="variable"><name>lightBumpRightSignal</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__101_1ae1e5de7bc53fc50eb4d7f25c172e8e22" kind="variable"><name>leftMotorCurrent</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__101_1a7c4556fc8214e4c0ffb04498d9c97c6e" kind="variable"><name>rightMotorCurrent</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__101_1a32c55cb5c8409f20b688b09eba0055a8" kind="variable"><name>mainBrushMotorCurrent</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__101_1a943e23e55c6bfe066f933d6283105e2f" kind="variable"><name>sideBrushMotorCurrent</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__101_1ab56c5b32418341093e47698c39c61026" kind="variable"><name>stasis</name></member>
+  </compound>
+  <compound refid="structkipr_1_1create_1_1CreatePackets_1_1__2" kind="struct"><name>kipr::create::CreatePackets::_2</name>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__2_1a2dc25387dc7732397ee921696a1023f4" kind="variable"><name>ir</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__2_1a44febc62685bafda264471cfe9653fdd" kind="variable"><name>buttons</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__2_1af58f25943c9c27fdee9165ee086fa381" kind="variable"><name>distance</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__2_1a4a56857548f13dcdcdc4dcb2f203bd87" kind="variable"><name>angle</name></member>
+  </compound>
+  <compound refid="structkipr_1_1create_1_1CreatePackets_1_1__3" kind="struct"><name>kipr::create::CreatePackets::_3</name>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__3_1a5e2b2b8c731ddbd789dc65c53714336d" kind="variable"><name>chargingState</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__3_1ad9531c510a0ecf3fbeaca49ebe74c100" kind="variable"><name>voltage</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__3_1abca6b88153db86ee454cd2c9ed249200" kind="variable"><name>current</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__3_1a3ed52006b07963fc36d43fb76b9bea52" kind="variable"><name>batteryTemperature</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__3_1a8b36484d8da13bdc1622dcd5f0065fa5" kind="variable"><name>batteryCharge</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__3_1aa77d7747ceda73f3a6d771d14fe59533" kind="variable"><name>batteryCapacity</name></member>
+  </compound>
+  <compound refid="structkipr_1_1create_1_1CreatePackets_1_1__4" kind="struct"><name>kipr::create::CreatePackets::_4</name>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__4_1a3a3b2fb131b855a9d707cfc4b4aab40c" kind="variable"><name>wallSignal</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__4_1a1483df2fc961addb716f8199616fce7e" kind="variable"><name>cliffLeftSignal</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__4_1ad2079b6d72c9116f6751b4ce8f878504" kind="variable"><name>cliffFrontLeftSignal</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__4_1ad563283181a7d7b2cf2bd91a19ce790d" kind="variable"><name>cliffFrontRightSignal</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__4_1ac3b34b2d5f12e26aee81dff2ba70be0e" kind="variable"><name>cliffRightSignal</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__4_1afb1cd7c49aa3713d6702536e9a0cabb8" kind="variable"><name>userDigitalInputs</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__4_1ae3479f06571488e5a4abd25633ac695e" kind="variable"><name>userAnalogInput</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__4_1a5e211cdf97324b5c9defbd04112eff65" kind="variable"><name>chargingSourcesAvailable</name></member>
+  </compound>
+  <compound refid="structkipr_1_1create_1_1CreatePackets_1_1__5" kind="struct"><name>kipr::create::CreatePackets::_5</name>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__5_1a8b014d11b83159a5801ea91049a63cfb" kind="variable"><name>mode</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__5_1a46a2ae15f1fe54f42d163c8924b68bba" kind="variable"><name>songNumber</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__5_1afd57fbd17b67aa012b4be688c1278a54" kind="variable"><name>songPlaying</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__5_1a3adfda31b1536fa76a2638acf0293b2e" kind="variable"><name>numberOfStreamPackets</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__5_1a89b049afbd52b09591a5c3cf37da0a9c" kind="variable"><name>velocity</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__5_1a29f094d582f2b54356b5b2ae42eb4121" kind="variable"><name>radius</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__5_1adfa7a25f7d2e4bfbb4ed696b36989f6d" kind="variable"><name>rightVelocity</name></member>
+    <member refid="structkipr_1_1create_1_1CreatePackets_1_1__5_1a37f03a9d3628b51279185ae2ad9315fb" kind="variable"><name>leftVelocity</name></member>
+  </compound>
+  <compound refid="classkipr_1_1button_1_1AbstractButton" kind="class"><name>kipr::button::AbstractButton</name>
+    <member refid="classkipr_1_1button_1_1AbstractButton_1a3d431437a2dddb5aabce688c4cc09d18" kind="function"><name>~AbstractButton</name></member>
+    <member refid="classkipr_1_1button_1_1AbstractButton_1ab744b3181aa4ddccf16a1f9de2673cae" kind="function"><name>setPressed</name></member>
+    <member refid="classkipr_1_1button_1_1AbstractButton_1a124cf2760816c85a0df82a95f092db10" kind="function"><name>isPressed</name></member>
+    <member refid="classkipr_1_1button_1_1AbstractButton_1af6f894ff83b02c2b6280d53a3848fc07" kind="function"><name>isNotPressed</name></member>
+    <member refid="classkipr_1_1button_1_1AbstractButton_1a8f579b7875a10b84752b9328b3b236f0" kind="function"><name>isClicked</name></member>
+    <member refid="classkipr_1_1button_1_1AbstractButton_1a93a071b3b48adeddf7196b2ac4be580c" kind="function"><name>waitUntilReleased</name></member>
+    <member refid="classkipr_1_1button_1_1AbstractButton_1a0755135f0b838a511b2c4ff10a754839" kind="function"><name>waitUntilPressed</name></member>
+    <member refid="classkipr_1_1button_1_1AbstractButton_1a5272a87a1d23dc58fc125caf84adaa4c" kind="function"><name>waitUntilClicked</name></member>
+  </compound>
+  <compound refid="classkipr_1_1button_1_1AbstractTextButton" kind="class"><name>kipr::button::AbstractTextButton</name>
+    <member refid="classkipr_1_1button_1_1AbstractTextButton_1ab3670fda7972700695e33e91a3485e6d" kind="function"><name>~AbstractTextButton</name></member>
+    <member refid="classkipr_1_1button_1_1AbstractTextButton_1a09b0dae10968d316eb5095dae58933e1" kind="function"><name>setText</name></member>
+    <member refid="classkipr_1_1button_1_1AbstractTextButton_1ace5ac331b051c11dccf44d08344faab1" kind="function"><name>text</name></member>
+    <member refid="classkipr_1_1button_1_1AbstractTextButton_1aa31595efcff39e4f57748a518a409d19" kind="function"><name>isTextDirty</name></member>
+    <member refid="classkipr_1_1button_1_1AbstractTextButton_1ac16e21eb25cdacb796d410b3a7e1c000" kind="function"><name>resetText</name></member>
+  </compound>
+  <compound refid="classkipr_1_1accel_1_1Acceleration" kind="class"><name>kipr::accel::Acceleration</name>
+    <member refid="classkipr_1_1accel_1_1Acceleration_1ae6e0db9ea15b22b5ebd3114370ece2d9" kind="function"><name>x</name></member>
+    <member refid="classkipr_1_1accel_1_1Acceleration_1a5c017e64bd9d0e55e025043a09c74de6" kind="function"><name>y</name></member>
+    <member refid="classkipr_1_1accel_1_1Acceleration_1a7ec550b429376d236673e2ad469ff671" kind="function"><name>z</name></member>
+    <member refid="classkipr_1_1accel_1_1Acceleration_1a03d128ef4c4451456cf4d4f1f9e695fe" kind="function"><name>calibrate</name></member>
+  </compound>
+  <compound refid="classkipr_1_1accel_1_1AccelX" kind="class"><name>kipr::accel::AccelX</name>
+    <member refid="classkipr_1_1accel_1_1AccelX_1a0ffeee7629023a7999dd280dddfc33eb" kind="function"><name>value</name></member>
+  </compound>
+  <compound refid="classkipr_1_1accel_1_1AccelY" kind="class"><name>kipr::accel::AccelY</name>
+    <member refid="classkipr_1_1accel_1_1AccelY_1a9071fe4d711df8d6c4d6394aedafd35d" kind="function"><name>value</name></member>
+  </compound>
+  <compound refid="classkipr_1_1accel_1_1AccelZ" kind="class"><name>kipr::accel::AccelZ</name>
+    <member refid="classkipr_1_1accel_1_1AccelZ_1a69d636d692af591a9b61f6c73209f1be" kind="function"><name>value</name></member>
+  </compound>
+  <compound refid="classAddress" kind="class"><name>Address</name>
+    <member refid="classAddress_1a8380229567b6a97d4e5f7156b42d5bdd" kind="variable"><name>m_valid</name></member>
+    <member refid="classAddress_1ae8c3fa9435800dbda039314b4898b442" kind="variable"><name>m_addr</name></member>
+    <member refid="classAddress_1a48f07460b0e2f9c3363b15a4575f1246" kind="function"><name>Address</name></member>
+    <member refid="classAddress_1a7112bb43b003883514eebd942f3c88c5" kind="function"><name>Address</name></member>
+    <member refid="classAddress_1a63f910c09d93bdd16d3744e47d13dc0e" kind="function"><name>Address</name></member>
+    <member refid="classAddress_1a854eed86c57d012930069daa8ec5d5b1" kind="function"><name>isValid</name></member>
+    <member refid="classAddress_1a46d0a5cd67550608d49e422bad632d09" kind="function"><name>setHost</name></member>
+    <member refid="classAddress_1a7c3715175945e8e1f7ff16e92ed0f85c" kind="function"><name>setPort</name></member>
+    <member refid="classAddress_1afcba3f4a73addfc2262b549ae62e7c8f" kind="function"><name>port</name></member>
+    <member refid="classAddress_1a73558a7cf6c850ef548788f0bfa44131" kind="function"><name>addr</name></member>
+    <member refid="classAddress_1aa83a507a64bd8f7a7e3e8cb376b2e8d1" kind="function"><name>addrLength</name></member>
+    <member refid="classAddress_1aa081ca5bf0c19c6a9ef851e370009471" kind="function"><name>ip</name></member>
+  </compound>
+  <compound refid="classkipr_1_1analog_1_1Analog" kind="class"><name>kipr::analog::Analog</name>
+    <member refid="classkipr_1_1analog_1_1Analog_1af64a2e6929e27e3522999570cb8d9c82" kind="variable"><name>m_port</name></member>
+    <member refid="classkipr_1_1analog_1_1Analog_1a79dfbb210c8454b25f63e60122256cd5" kind="function"><name>Analog</name></member>
+    <member refid="classkipr_1_1analog_1_1Analog_1a39614c4ab6ce95748d67e34961446299" kind="function"><name>~Analog</name></member>
+    <member refid="classkipr_1_1analog_1_1Analog_1aa40bd208e1fb3048d93ef27d33615561" kind="function"><name>value</name></member>
+    <member refid="classkipr_1_1analog_1_1Analog_1ac995907cbcf7b3c19e43d703c56fc490" kind="function"><name>setPullup</name></member>
+    <member refid="classkipr_1_1analog_1_1Analog_1ab3badada2f9999109d61265e4ee9df82" kind="function"><name>pullup</name></member>
+    <member refid="classkipr_1_1analog_1_1Analog_1ab9b0dfe22f15f4ac1f4379de6d835b25" kind="function"><name>port</name></member>
+  </compound>
+  <compound refid="classkipr_1_1analog_1_1Analog10" kind="class"><name>kipr::analog::Analog10</name>
+    <member refid="classkipr_1_1analog_1_1Analog10_1a6e2a29ee884430ea8beb902f81d3a705" kind="function"><name>Analog10</name></member>
+    <member refid="classkipr_1_1analog_1_1Analog10_1acc16e06a298b07c5e7ab900d43c79221" kind="function"><name>~Analog10</name></member>
+    <member refid="classkipr_1_1analog_1_1Analog10_1a374d70c8d94a89d90864df00695e8104" kind="function"><name>value</name></member>
+  </compound>
+  <compound refid="classkipr_1_1analog_1_1Analog8" kind="class"><name>kipr::analog::Analog8</name>
+    <member refid="classkipr_1_1analog_1_1Analog8_1a260db1255df4c4e9db6e7ba2afce936c" kind="function"><name>Analog8</name></member>
+    <member refid="classkipr_1_1analog_1_1Analog8_1a404b3c15bf3fc0a0d7089c9ccad75169" kind="function"><name>~Analog8</name></member>
+    <member refid="classkipr_1_1analog_1_1Analog8_1a390fd4a5d702c872fd5cb5421b22ecf4" kind="function"><name>value</name></member>
+  </compound>
+  <compound refid="classkipr_1_1sensor_1_1logic_1_1And" kind="class"><name>kipr::sensor::logic::And</name>
+    <member refid="classkipr_1_1sensor_1_1logic_1_1And_1a7b35b68c06456f1105877b7f43da28d6" kind="function"><name>And</name></member>
+    <member refid="classkipr_1_1sensor_1_1logic_1_1And_1af1c92c299b735e63171cca6574602778" kind="function"><name>value</name></member>
+  </compound>
+  <compound refid="classkipr_1_1motor_1_1BackEMF" kind="class"><name>kipr::motor::BackEMF</name>
+    <member refid="classkipr_1_1motor_1_1BackEMF_1ade71583f4451dd64bcd3000cb7ac23f0" kind="variable"><name>m_port</name></member>
+    <member refid="classkipr_1_1motor_1_1BackEMF_1a58decb082f3349477f41d01907c70113" kind="function"><name>BackEMF</name></member>
+    <member refid="classkipr_1_1motor_1_1BackEMF_1abe55ef718fbcdf570020f981b0cc8dc8" kind="function"><name>value</name></member>
+    <member refid="classkipr_1_1motor_1_1BackEMF_1aaaaab063495c6d24dc984eca92dc83c4" kind="function"><name>port</name></member>
+  </compound>
+  <compound refid="classkipr_1_1sensor_1_1logic_1_1Base" kind="class"><name>kipr::sensor::logic::Base</name>
+    <member refid="classkipr_1_1sensor_1_1logic_1_1Base_1a23fe7e2ac577db11a9d5a8aa7f265850" kind="variable"><name>m_a</name></member>
+    <member refid="classkipr_1_1sensor_1_1logic_1_1Base_1a7c37063c352687ec2da1c5b3d8147c0c" kind="variable"><name>m_b</name></member>
+    <member refid="classkipr_1_1sensor_1_1logic_1_1Base_1a33d61ca46d477b151beeedcb5220dd02" kind="variable"><name>m_owns</name></member>
+    <member refid="classkipr_1_1sensor_1_1logic_1_1Base_1a548e5ee539641e77da36006126143653" kind="function"><name>Base</name></member>
+    <member refid="classkipr_1_1sensor_1_1logic_1_1Base_1aa77a1e19124fef7a5c69ca78513dc4eb" kind="function"><name>~Base</name></member>
+    <member refid="classkipr_1_1sensor_1_1logic_1_1Base_1a7fd896a29df08f20644219ee74ab7a74" kind="function"><name>a</name></member>
+    <member refid="classkipr_1_1sensor_1_1logic_1_1Base_1abb632f8d7609c9602edcbe10fdb398f2" kind="function"><name>b</name></member>
+    <member refid="classkipr_1_1sensor_1_1logic_1_1Base_1a37b8870bb7d84ed44788ba297826ad0e" kind="function"><name>owns</name></member>
+  </compound>
+  <compound refid="classkipr_1_1battery_1_1Battery" kind="class"><name>kipr::battery::Battery</name>
+    <member refid="classkipr_1_1battery_1_1Battery_1a269b2a7c61f0932572ad3ed4d39bc678" kind="function"><name>isCharging</name></member>
+    <member refid="classkipr_1_1battery_1_1Battery_1a53aceba0d53c91e872ec17ffbf7a1aa5" kind="function"><name>powerLevel</name></member>
+    <member refid="classkipr_1_1battery_1_1Battery_1a90375a5cace301f92d1d4e8d4845fc26" kind="function"><name>rawPowerADC</name></member>
+  </compound>
+  <compound refid="classkipr_1_1compass_1_1Compass" kind="class"><name>kipr::compass::Compass</name>
+    <member refid="classkipr_1_1compass_1_1Compass_1aee578bb4186b6934d11790d1f8f02c61" kind="function"><name>Compass</name></member>
+    <member refid="classkipr_1_1compass_1_1Compass_1ae5dffbd0a1095fcd61dbed3eddcecab2" kind="function"><name>~Compass</name></member>
+    <member refid="classkipr_1_1compass_1_1Compass_1a0ac286268d1181ae4f21a823d86655a1" kind="function"><name>calibrate</name></member>
+    <member refid="classkipr_1_1compass_1_1Compass_1a503a854f028f3d788a86b7164823cbc9" kind="function"><name>setParams</name></member>
+    <member refid="classkipr_1_1compass_1_1Compass_1ab1425b852d8ee66a3a77abec9bbb5396" kind="function"><name>getAngle</name></member>
+  </compound>
+  <compound refid="classkipr_1_1config_1_1Config" kind="class"><name>kipr::config::Config</name>
+    <member refid="classkipr_1_1config_1_1Config_1a0dd67dfea6faf9bb60d1f63bb50a41a6" kind="variable"><name>m_config</name></member>
+    <member refid="classkipr_1_1config_1_1Config_1adfa89e9b012033e1e47b876935b79e49" kind="variable"><name>m_groups</name></member>
+    <member refid="classkipr_1_1config_1_1Config_1ae2c11fdccd2bd9d4dd7b2addce3cc17c" kind="variable"><name>m_cachedGroup</name></member>
+    <member refid="classkipr_1_1config_1_1Config_1a4fc15e53891b0113d4c71df8589a2548" kind="function"><name>Config</name></member>
+    <member refid="classkipr_1_1config_1_1Config_1a575c880fe2d69b1eec56e1176855c383" kind="function"><name>Config</name></member>
+    <member refid="classkipr_1_1config_1_1Config_1a5ba7dd69ea1331bcc22882f17a37fd94" kind="function"><name>save</name></member>
+    <member refid="classkipr_1_1config_1_1Config_1af575df21f5acad1061f7dbf4adfa7100" kind="function"><name>beginGroup</name></member>
+    <member refid="classkipr_1_1config_1_1Config_1abf86d0aef4e7f522f6113271ab54d4d9" kind="function"><name>endGroup</name></member>
+    <member refid="classkipr_1_1config_1_1Config_1a32fd9cb3adddd8f134d75e2f47f1b04c" kind="function"><name>clearGroup</name></member>
+    <member refid="classkipr_1_1config_1_1Config_1a0a913c83b09df992585b8aef0876e924" kind="function"><name>clear</name></member>
+    <member refid="classkipr_1_1config_1_1Config_1a9b7fe1d78fb3708d2140e9b77d31c1c8" kind="function"><name>containsKey</name></member>
+    <member refid="classkipr_1_1config_1_1Config_1a5efc1ac1481cf923fa2dc677ecd27e86" kind="function"><name>boolValue</name></member>
+    <member refid="classkipr_1_1config_1_1Config_1aa016a2f09afed47286256313e5354a8a" kind="function"><name>intValue</name></member>
+    <member refid="classkipr_1_1config_1_1Config_1a07797cb29f7ddf6445e7a4b41f76fb72" kind="function"><name>doubleValue</name></member>
+    <member refid="classkipr_1_1config_1_1Config_1a06f87ecc9bd8dfa8376d79821e9c74ca" kind="function"><name>stringValue</name></member>
+    <member refid="classkipr_1_1config_1_1Config_1a9802d8fe1f629dd3417718e0a50ecc0a" kind="function"><name>setValue</name></member>
+    <member refid="classkipr_1_1config_1_1Config_1a0bcfbd79cff90d59829c119d5d6d28c2" kind="function"><name>setValue</name></member>
+    <member refid="classkipr_1_1config_1_1Config_1a294bd37dd1561154a38f9ea93d5b38cc" kind="function"><name>setValue</name></member>
+    <member refid="classkipr_1_1config_1_1Config_1a2113bbf845f75f53a8b9b3d8a9ffc008" kind="function"><name>setValue</name></member>
+    <member refid="classkipr_1_1config_1_1Config_1aa792d92d383a06411413025784e0a799" kind="function"><name>setValue</name></member>
+    <member refid="classkipr_1_1config_1_1Config_1a5c9f1d39c479025c2f359771942c395b" kind="function"><name>values</name></member>
+    <member refid="classkipr_1_1config_1_1Config_1a00705b41f801be5c219a0f7ab50e967f" kind="function"><name>addValues</name></member>
+    <member refid="classkipr_1_1config_1_1Config_1a2ab280ce77c5cd4c7035ed1eb840f43a" kind="function"><name>load</name></member>
+    <member refid="classkipr_1_1config_1_1Config_1a7fbfdc9eea75dffbfd8b4e6475ba884d" kind="function"><name>safeKey</name></member>
+    <member refid="classkipr_1_1config_1_1Config_1ae0dd544444efa509306acae3bef948e1" kind="function"><name>group</name></member>
+  </compound>
+  <compound refid="classkipr_1_1console_1_1Console" kind="class"><name>kipr::console::Console</name>
+    <member refid="classkipr_1_1console_1_1Console_1ab4ab86dd9e73ba1f736944906154eb29" kind="function"><name>clear</name></member>
+  </compound>
+  <compound refid="classkipr_1_1create_1_1Create" kind="class"><name>kipr::create::Create</name>
+    <member refid="classkipr_1_1create_1_1Create_1aa705f92c64f024ca75a4e7be32ff5aa5" kind="enum"><name>Mode</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1aa705f92c64f024ca75a4e7be32ff5aa5a9a8ef8921c0eb914995f1697c981c867" kind="enumvalue"><name>OffMode</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1aa705f92c64f024ca75a4e7be32ff5aa5ac37b1b453585b163235b882484432eb9" kind="enumvalue"><name>PassiveMode</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1aa705f92c64f024ca75a4e7be32ff5aa5ab6df5b1b041ef2284c0a034103fd5f06" kind="enumvalue"><name>SafeMode</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1aa705f92c64f024ca75a4e7be32ff5aa5a2e6ccf4636d4ae3dd6e210c6f179aaf9" kind="enumvalue"><name>FullMode</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a3159cdaf3d073e5ccd0427210a4e1cf4" kind="enum"><name>BaudRate</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a3159cdaf3d073e5ccd0427210a4e1cf4a68f620224821c445ced99a1690028898" kind="enumvalue"><name>Baud57600</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a3159cdaf3d073e5ccd0427210a4e1cf4a42528736339c0e4714e22942a69831f9" kind="enumvalue"><name>Baud115200</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a36fa5b829cc0245a02b21d10800f7601" kind="variable"><name>m_state</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a15a9b3c240d294ff8da4f89a4f1efb58" kind="variable"><name>m_refreshRate</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a7c1f68cfaf15f43fef2f90e1dbbe9676" kind="variable"><name>m_1</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1acb41c82c9fd323be6c96990d2e9bb7f3" kind="variable"><name>m_2</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a9000075a6f9198790ac08eca7874027e" kind="variable"><name>m_3</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a2693380af95bae6ec3f58ae014665fa2" kind="variable"><name>m_4</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1aa58fbcfe1b021b3a502cf36809f30032" kind="variable"><name>m_5</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a2f815122aafae4bddd520316a1019c3f" kind="variable"><name>m_101</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a3c8ffd0ad545666848c2a8724802afa6" kind="variable"><name>timestamps</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a2e2e33925088bc94df708ad23ea84700" kind="variable"><name>have_packet</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a382aebb94a0620c71670c9c61d47ddbf" kind="variable"><name>m_playButton</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a75d2e8a03fc8a1772956dc5bc4bf50a4" kind="variable"><name>m_advanceButton</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a2e9b4865cb996b5a3c83e86116673e6f" kind="variable"><name>m_wall</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a85d0fcb69f034e0739ad5229c7d9a596" kind="variable"><name>m_cliffLeft</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a8a6919866055b5d5872fa1bbe1d10b21" kind="variable"><name>m_cliffFrontLeft</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1ac519c81b1a11ce1946d1fc16cd3f0cb8" kind="variable"><name>m_cliffFrontRight</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a135f5e84020c261715d1a5036c153c79" kind="variable"><name>m_cliffRight</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a5d447106038a685f4145b07b268ee48f" kind="variable"><name>m_virtualWall</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1ae3fc1de85f7e78d53a4b469485192bad" kind="variable"><name>m_wallSignal</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a3e999f1e183b8ce22e1213161172f982" kind="variable"><name>m_cliffLeftSignal</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1af647611d53f718b336a630b2c7436e13" kind="variable"><name>m_cliffFrontLeftSignal</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a17eb4e7ca25a0334c1f54e82cc1e892b" kind="variable"><name>m_cliffFrontRightSignal</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a7dec57313b2986ab257e84ac59de0cc3" kind="variable"><name>m_cliffRightSignal</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1ae95373a6ede8d91ce19efe18611fc273" kind="variable"><name>m_cargoBayAnalogSignal</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a83b271ad7b1399d15f9e1aae3a765c67" kind="variable"><name>m_cargoBayDigitalInputs</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1aead596edac765f2184d00dca9ff7bd85" kind="variable"><name>m_lightBumpLeft</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a1c7f08e71d9bd6ae153f2ed683e42a41" kind="variable"><name>m_lightBumpFrontLeft</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a3fa357b4857c5c33c89f211aaee14c26" kind="variable"><name>m_lightBumpCenterLeft</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1aa6419293590b52ec6e94751e3421df52" kind="variable"><name>m_lightBumpCenterRight</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a464caba3609d68b61239c0d7e6db32cf" kind="variable"><name>m_lightBumpFrontRight</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a66309884d47554d6d04ba7efc29d126e" kind="variable"><name>m_lightBumpRight</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a65abc81588fbae7aebc51a1d1a083bc4" kind="variable"><name>m_lightBumpLeftSignal</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a56837257644995b56f32167489085de4" kind="variable"><name>m_lightBumpFrontLeftSignal</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1adf7bef7d61d92ae4ff211b17fa9e0301" kind="variable"><name>m_lightBumpCenterLeftSignal</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a8d154ce2ef024f08f21ae2e0a60b05ae" kind="variable"><name>m_lightBumpCenterRightSignal</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a2a3c54d9bd0a28042638d2659f01149b" kind="variable"><name>m_lightBumpFrontRightSignal</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1acac76ee89be25212fd2e4d51605e7f65" kind="variable"><name>m_lightBumpRightSignal</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a7d4d615b30332f03c5381a1600f36426" kind="variable"><name>m_ir</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a8aec3f21ecd8519cc017d9ee783cdf2d" kind="variable"><name>m_chargingState</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a03313e4dd4038ae1794f3b171425d647" kind="variable"><name>m_batteryTemperature</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a301ad6af6f149264dcc012a833b9c50c" kind="variable"><name>m_batteryCharge</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a5b74d4f9fc144bb2be34ecb2f9392a07" kind="variable"><name>m_batteryCapacity</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a39118b52a0cd553356c66c6cd12a4f4b" kind="variable"><name>m_angle</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a66bf66fd3b655dc6eb864ef7a2a2e5bb" kind="variable"><name>m_distance</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a47ddfa8bea0eb1e9cd77f93482fdef35" kind="variable"><name>m_bumpLeft</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a6e23c7195395c566d247677933af67f8" kind="variable"><name>m_bumpRight</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a183637a2995241986bf10f36541e7704" kind="variable"><name>m_wheelDropLeft</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1abba292ad31a7ddd166dd1b6884a4d7aa" kind="variable"><name>m_wheelDropRight</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a6d3198c45196aa4925d4083e7fe73661" kind="variable"><name>m_wheelDropCaster</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a51567f34c75d1401f171d4012a4d8236" kind="variable"><name>m_songPlaying</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a3b45ec019d2fc19c4c4d34c9726bedcf" kind="variable"><name>m_songNumber</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a4d22c221baba4a71622a319436a2d88d" kind="variable"><name>m_i</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a5f6b3228b4f83dc4033da21fbd38fff5" kind="variable"><name>m_script</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1ac798ec901df6eb17436977f4b4cd575a" kind="variable"><name>m_tty</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a753d23500282ec97014b686bacd37840" kind="variable"><name>m_mutex</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1aa1b1e6ec64c66028015f47627b7f4804" kind="variable"><name>m_defaultBaudRate</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1ac37178513c6c309a9f4b54b352441458" kind="function"><name>~Create</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1acbfdcc752c85c941e5ee8278811b0aba" kind="function"><name>connect</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a61ad114305904150661a269c4a1c1db7" kind="function"><name>connect</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1ae8c66e695f249785b8fef5de3ffcbbd6" kind="function"><name>disconnect</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1ad033d94e1e939c2e7b90c17b853d1a70" kind="function"><name>isConnected</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1ab7caffc0b7988ee93df27b73b5e88524" kind="function"><name>setOffMode</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a2ff108fd4001f00d402aede7013180f1" kind="function"><name>setPassiveMode</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1aafe274d519e8ec032e206ac97e8d833b" kind="function"><name>setSafeMode</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a9cb078bad6fdcd73c4358739fb4ed678" kind="function"><name>setFullMode</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1aa0b17bc856ee8fed06df0fe76f10c805" kind="function"><name>setMode</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a9c675f7bf0190eac6174a11d69799104" kind="function"><name>mode</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a09b5da68b8f95a57199a1f471a68e8b5" kind="function"><name>send</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1aabe0ea962f33ec277a65b0f18da9bb4b" kind="function"><name>write</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a1e6cd03e54ed1ede3113a7a5de86e608" kind="function"><name>write</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a535ceb95d037ccee233aaf119172f660" kind="function"><name>flush</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1adde30795fa14866ca044a5a84d416006" kind="function"><name>read</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a54b4e8bd0573a5763b7f6f1b4732e601" kind="function"><name>read</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1aca817780cf1a57d50ecb1b4eeed4babd" kind="function"><name>blockingRead</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a6a8618b8a541d2768338916e4259c19f" kind="function"><name>blockingRead</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a1307f8ba0c69c8cc6995933ef2d95b83" kind="function"><name>setLeds</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a7a1764740c4dadccaffb6340227b5b35" kind="function"><name>drive</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a9374d22857062833deacc875c94bef7b" kind="function"><name>driveDirect</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1ae83a0d9b843e1fe789efae0e397d4913" kind="function"><name>driveStraight</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a329c5f294be422112b025853f3b7fa70" kind="function"><name>stop</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a258d8684737e8e6ed4ede3f43cd15c88" kind="function"><name>turn</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a21a7148be57c6f364da35c69244fd364" kind="function"><name>move</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1aa2a2e5bbe6040e85a20ffb86f4a2f71c" kind="function"><name>spin</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a7f833e4675301564d0091e7a905251af" kind="function"><name>angularVelocity</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a7d0d5ee97562827b18b3c9dab436fa49" kind="function"><name>spinClockwise</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a188f91106a75d0c6ebe4931f479c5e88" kind="function"><name>spinCounterClockwise</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a36292ef9fa6a2918944f5c75a5818c44" kind="function"><name>setBaudRate</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a26586e7e74c33753e3fdb1ce615033f8" kind="function"><name>setDistance</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1aec020df613b42d1ceff4512fb166023b" kind="function"><name>setAngle</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a6b5c75b31115c4e24bb36b42edf5c41d" kind="function"><name>playButton</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a920843fcadaa34a05ac934dbc2f6b26e" kind="function"><name>advanceButton</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a0938789ad23f1411a0180e0fcea4d4af" kind="function"><name>wall</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1adc25e5cc07cfb1c16d7c7a88a9f3ef18" kind="function"><name>cliffLeft</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a592b6c5b96be4bc0d9f1150485e30d92" kind="function"><name>cliffFrontLeft</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a0220cdd5868fa3d738404276ac29a77d" kind="function"><name>cliffFrontRight</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a0df07543e0447bd49f602fd43fac2a9d" kind="function"><name>cliffRight</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1aabf97448c08f2974487ba873eb8bdd78" kind="function"><name>virtualWall</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a88029a763dd23c18ed57a5267ae8a0a8" kind="function"><name>wallSignal</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1aab2d898460a8973e273a3a0eb82985e8" kind="function"><name>cliffLeftSignal</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1ad8bc65b4bb93dec4b30bc9b0ee486da7" kind="function"><name>cliffFrontLeftSignal</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1aa73905651c3b04a2888f3bb6d2672ead" kind="function"><name>cliffFrontRightSignal</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a0ebd7bae9550b1436bd893c056280e59" kind="function"><name>cliffRightSignal</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a5ef417e298bab265fcbe0ab9020cbd06" kind="function"><name>cargoBayAnalogSignal</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a2c453a47255f0c6d474da7fd9d1a07ad" kind="function"><name>cargoBayDigitalInputs</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1ae3305abea01cb8a98aee37d834174b3c" kind="function"><name>ir</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a9adaa6bd50a508539d27c45ab10b0641" kind="function"><name>chargingState</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a778ad7f93df779ca17eff4a6d8cd9693" kind="function"><name>batteryTemperature</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1ab9cb06c24ccc1c59c18a737d4c7983aa" kind="function"><name>batteryCharge</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a792c58469c93d81bfa4d57144341b0db" kind="function"><name>batteryCapacity</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1ab3c2007c43e2f33f74f387aabde30ef6" kind="function"><name>angle</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a6810e87aa6fcefbe1324c1a909f0fabb" kind="function"><name>distance</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a1086cf3263b6e046255d33c00d618855" kind="function"><name>bumpLeft</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1af5036159b750432ffc13eee07945853c" kind="function"><name>bumpRight</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1aa48eb27d7d513e0d312a54d3365b96bd" kind="function"><name>wheelDropLeft</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1ae25d94869ce495dfafb38e9a27678b92" kind="function"><name>wheelDropRight</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1ab88719c42699b2aae57b1fbada37798a" kind="function"><name>wheelDropCaster</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a8f46920f5bd27b20fc17d15182b15424" kind="function"><name>lightBumpLeft</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1aa6abd8ea8ec1570b196beb8c6e7587ae" kind="function"><name>lightBumpFrontLeft</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a2bd1d6c20b0b5331cec143480e447f34" kind="function"><name>lightBumpCenterLeft</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a3344e9e4bc57a16601626d83eb2a5ac2" kind="function"><name>lightBumpCenterRight</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1afbdfa5444d10c5a90202962da5dfd412" kind="function"><name>lightBumpFrontRight</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a2adedf9b92d4e41f6ef57f12efe8d8f8" kind="function"><name>lightBumpRight</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1ac4cbf3db837d141a865337a185497cc8" kind="function"><name>lightBumpLeftSignal</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1afa280ba4fb60d62e38585a971d21631b" kind="function"><name>lightBumpFrontLeftSignal</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a84435eee5745732fb15890af9f014eb7" kind="function"><name>lightBumpCenterLeftSignal</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a2ecae817aeb6804373408a549d6dd2b0" kind="function"><name>lightBumpCenterRightSignal</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a9c5ad8cc3411f1290de973d54c3befe3" kind="function"><name>lightBumpFrontRightSignal</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a8258f751355a25e1d2d6034f0d4d53e2" kind="function"><name>lightBumpRightSignal</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a57156aa58f3d30539d0ab989ef7f9df9" kind="function"><name>songPlaying</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a286bc10e04107a42c958b363a7e02878" kind="function"><name>songNumber</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a9d5df1c1f1500ecf40a7642ca0da6e99" kind="function"><name>setRefreshRate</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a6e64e8ea6ee7600000fe8087c5a91003" kind="function"><name>refreshRate</name></member>
+    <member refid="group__create_1gadde31111a96ae9d1ad88b897f79d0fff" kind="function"><name>loadSong</name></member>
+    <member refid="group__create_1gae92e9562ccbf510058d365de97c2254d" kind="function"><name>playSong</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a99e6c0f2e53695b9a2a0e0096c6026bc" kind="function"><name>state</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1af6836f7a3b193d8841ea76628a0c38f1" kind="function"><name>sensorPacket1</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a80ddc4a6373f071b90e8ac44b71255f7" kind="function"><name>sensorPacket2</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1ac4dee07026e0ac14438f2020e97f4eac" kind="function"><name>sensorPacket3</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a66aff85b23d882c51d432abebc6a8258" kind="function"><name>sensorPacket4</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1ab059c8bb1b525a47092458469c1b9e43" kind="function"><name>sensorPacket5</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a9682f5de3ed1350286a4d83f40694579" kind="function"><name>sensorPacket101</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a4c4e89a36ab8fdac8a1d03ace963835a" kind="function"><name>beginAtomicOperation</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a56897361b8a54a61c58d5522c4737d20" kind="function"><name>endAtomicOperation</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1acbd2225b1728dd63b6bdfba8f5b5921a" kind="function"><name>setDefaultBaudRate</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a51b77549776e81c1e848a3efb76864c9" kind="function"><name>defaultBaudRate</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1aec7a9e82c4dbf9452cd59e680a81e52e" kind="function"><name>instance</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a37b2eea4be3245ec373541a87d0ce0d8" kind="function"><name>Create</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1ad587016c362f52073eebf560e3d478a3" kind="function"><name>Create</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1aad9193750e8611b173a22446cb6dbac9" kind="function"><name>operator=</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1ad256623af13b0fe6265c496095bfabc9" kind="function"><name>setLocalBaudRate</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1aae0c42790a0f4a790dd4c84ec35f6e61" kind="function"><name>start</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1afcde9943a33e2e563cdd5371badb4951" kind="function"><name>open</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1acb99c676b6aac0de1439f08ec8ebe540" kind="function"><name>close</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1af48bea2d82d940cf2e2722e9cc92cb5a" kind="function"><name>lazyDelete</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a9f21fd3d2a407fd6e10cdd72987e8746" kind="function"><name>timeOfDay</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1abc26c59b3d15a962727155b3a16ad575" kind="function"><name>hasRequiredTimePassed</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1af4ea8298fc28569f00ce2e2cd457d8cc" kind="function"><name>timevalToFloat</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a77040b70a83238fe305643601c0ec46c" kind="function"><name>deg2rad</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1ae2a0158e7f7b7fde88a618ba341d1526" kind="function"><name>updateState</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1ab39bef817bce18899f1d0e527b9d5a98" kind="function"><name>updateSensorPacket1</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a9eb31e0612ec605260476706b342540e" kind="function"><name>updateSensorPacket2</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a095726606b30206a53dcd5d3da737668" kind="function"><name>updateSensorPacket3</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a0cb02de81abf6625be881a49ec51682c" kind="function"><name>updateSensorPacket4</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1ae643f3522d3406fdbb05a51a3ab12651" kind="function"><name>updateSensorPacket5</name></member>
+    <member refid="classkipr_1_1create_1_1Create_1a2aa6b933b37b418f9ca7a857a88d99a4" kind="function"><name>updateSensorPacket101</name></member>
+  </compound>
+  <compound refid="classkipr_1_1create_1_1CreateScript" kind="class"><name>kipr::create::CreateScript</name>
+    <member refid="classkipr_1_1create_1_1CreateScript_1ad3da8df71079edd7ea8b52c94b54e633" kind="variable"><name>m_script</name></member>
+    <member refid="classkipr_1_1create_1_1CreateScript_1a079a6cb1b9df0270f9141ee3536686ce" kind="function"><name>CreateScript</name></member>
+    <member refid="classkipr_1_1create_1_1CreateScript_1acae1a39f7cef2b96403f8fe1cee22049" kind="function"><name>CreateScript</name></member>
+    <member refid="classkipr_1_1create_1_1CreateScript_1a8e25c11f78843f7a3e337499925cdf5a" kind="function"><name>append</name></member>
+    <member refid="classkipr_1_1create_1_1CreateScript_1af1a9380469d46c6704ca7d8423dca177" kind="function"><name>append</name></member>
+    <member refid="classkipr_1_1create_1_1CreateScript_1aa57db62dc24be36211808c0094633434" kind="function"><name>append</name></member>
+    <member refid="classkipr_1_1create_1_1CreateScript_1ab7408dcc25dd365cc6f6b58eff5b151c" kind="function"><name>remove</name></member>
+    <member refid="classkipr_1_1create_1_1CreateScript_1a5d12f64a68d760c6f3dff014364464d7" kind="function"><name>data</name></member>
+    <member refid="classkipr_1_1create_1_1CreateScript_1aa37d9d168864d3391a38902eb48e8ad4" kind="function"><name>size</name></member>
+    <member refid="classkipr_1_1create_1_1CreateScript_1afb55cbf000318092a64d26fd0163fee0" kind="function"><name>byte</name></member>
+    <member refid="classkipr_1_1create_1_1CreateScript_1ad76bddbdfbd1180309f02aa22a64eee7" kind="function"><name>operator=</name></member>
+  </compound>
+  <compound refid="structkipr_1_1create_1_1CreateState" kind="struct"><name>kipr::create::CreateState</name>
+    <member refid="structkipr_1_1create_1_1CreateState_1aff5312accc3d37fb3c142810d0c24692" kind="variable"><name>timestamp</name></member>
+    <member refid="structkipr_1_1create_1_1CreateState_1abf7892ddcaebc78a04e40590c008b97a" kind="variable"><name>distance</name></member>
+    <member refid="structkipr_1_1create_1_1CreateState_1a9e7d902602de78237b4c57ed30f2473a" kind="variable"><name>angle</name></member>
+    <member refid="structkipr_1_1create_1_1CreateState_1afac9f5cf0c8ff835c2588f1ba6ad4304" kind="variable"><name>radius</name></member>
+    <member refid="structkipr_1_1create_1_1CreateState_1a0da2624fe399f3753bf235776253c2e0" kind="variable"><name>rightVelocity</name></member>
+    <member refid="structkipr_1_1create_1_1CreateState_1adace48d28610a2d9d2637b5b48527554" kind="variable"><name>leftVelocity</name></member>
+  </compound>
+  <compound refid="classkipr_1_1digital_1_1Digital" kind="class"><name>kipr::digital::Digital</name>
+    <member refid="classkipr_1_1digital_1_1Digital_1a2968740809285ef257b9d3d78aaefa62" kind="variable"><name>m_port</name></member>
+    <member refid="classkipr_1_1digital_1_1Digital_1a3b52dea2037d97f4188678b4f6dffece" kind="function"><name>Digital</name></member>
+    <member refid="classkipr_1_1digital_1_1Digital_1ae14b0e5fc5995bc70a274b3087689b30" kind="function"><name>setValue</name></member>
+    <member refid="classkipr_1_1digital_1_1Digital_1a05203f9e1442d0ecf08758a0a3022b47" kind="function"><name>setOutput</name></member>
+    <member refid="classkipr_1_1digital_1_1Digital_1a8ccfa23990c4651d0c27c24205364ae7" kind="function"><name>isOutput</name></member>
+    <member refid="classkipr_1_1digital_1_1Digital_1a5127cd341a5b467f2d8580c4f2eb9da9" kind="function"><name>setPullup</name></member>
+    <member refid="classkipr_1_1digital_1_1Digital_1aa52921b84deb2ecd6344bf0b6d224c80" kind="function"><name>pullup</name></member>
+    <member refid="classkipr_1_1digital_1_1Digital_1a476a96b7ff6ad47a2893e33104f99edb" kind="function"><name>value</name></member>
+  </compound>
+  <compound refid="classkipr_1_1button_1_1ExtraButtons" kind="class"><name>kipr::button::ExtraButtons</name>
+    <member refid="classkipr_1_1button_1_1ExtraButtons_1a82ab17ed40cae6dc9e9e1205bb483ed9" kind="function"><name>show</name></member>
+    <member refid="classkipr_1_1button_1_1ExtraButtons_1ada78ce01b359b3f577a49b79b27360a1" kind="function"><name>hide</name></member>
+    <member refid="classkipr_1_1button_1_1ExtraButtons_1ad1ffb74c5f8162bf95d02201938d749f" kind="function"><name>setShown</name></member>
+    <member refid="classkipr_1_1button_1_1ExtraButtons_1a99aad2525dca151bb701e879414de60d" kind="function"><name>isShown</name></member>
+  </compound>
+  <compound refid="structkipr_1_1log_1_1Flush" kind="struct"><name>kipr::log::Flush</name>
+  </compound>
+  <compound refid="classkipr_1_1gyro_1_1Gyro" kind="class"><name>kipr::gyro::Gyro</name>
+    <member refid="classkipr_1_1gyro_1_1Gyro_1a321bf74624402d79afb0e22dd017b281" kind="function"><name>x</name></member>
+    <member refid="classkipr_1_1gyro_1_1Gyro_1acbc7282b8530e5651a4642a50c47fd82" kind="function"><name>y</name></member>
+    <member refid="classkipr_1_1gyro_1_1Gyro_1aef5cc12f902a47244680a5f218b40015" kind="function"><name>z</name></member>
+    <member refid="classkipr_1_1gyro_1_1Gyro_1a0ddad88dea4456c66539603877bcea51" kind="function"><name>calibrate</name></member>
+  </compound>
+  <compound refid="classkipr_1_1gyro_1_1GyroX" kind="class"><name>kipr::gyro::GyroX</name>
+    <member refid="classkipr_1_1gyro_1_1GyroX_1af27514e5549568170e0a172cf03a8747" kind="function"><name>value</name></member>
+  </compound>
+  <compound refid="classkipr_1_1gyro_1_1GyroY" kind="class"><name>kipr::gyro::GyroY</name>
+    <member refid="classkipr_1_1gyro_1_1GyroY_1aa812fc0d455d39d3f176b99f90f2cd89" kind="function"><name>value</name></member>
+  </compound>
+  <compound refid="classkipr_1_1gyro_1_1GyroZ" kind="class"><name>kipr::gyro::GyroZ</name>
+    <member refid="classkipr_1_1gyro_1_1GyroZ_1a23657e5b5705c62d9956468785d8403d" kind="function"><name>value</name></member>
+  </compound>
+  <compound refid="structstd_1_1hash_3_01kipr_1_1log_1_1Level_01_4" kind="struct"><name>std::hash&lt; kipr::log::Level &gt;</name>
+    <member refid="structstd_1_1hash_3_01kipr_1_1log_1_1Level_01_4_1a24cea8098fefc9aafed9b933ee20bf1f" kind="function"><name>operator()</name></member>
+  </compound>
+  <compound refid="structHsv" kind="struct"><name>Hsv</name>
+    <member refid="structHsv_1aff34d0070e8941ade8da7229d210fe2d" kind="variable"><name>h</name></member>
+    <member refid="structHsv_1a6f73894db95401d9e30c7c08f1f59b4b" kind="variable"><name>s</name></member>
+    <member refid="structHsv_1af5299857a2003d3fcb2ce00568f8c6bd" kind="variable"><name>v</name></member>
+  </compound>
+  <compound refid="classkipr_1_1button_1_1IdButton" kind="class"><name>kipr::button::IdButton</name>
+    <member refid="classkipr_1_1button_1_1IdButton_1a267115d34ddeb1bda0ca9108202ad79d" kind="variable"><name>m_id</name></member>
+    <member refid="classkipr_1_1button_1_1IdButton_1a0ea259feb509b853435912deaf6d2e31" kind="variable"><name>m_defaultText</name></member>
+    <member refid="classkipr_1_1button_1_1IdButton_1ae0ff6af79e67ad95ee0f376ec12e1bea" kind="function"><name>IdButton</name></member>
+    <member refid="classkipr_1_1button_1_1IdButton_1a67b1d1ffbcdf862eeda4d652ac2628fb" kind="function"><name>~IdButton</name></member>
+    <member refid="classkipr_1_1button_1_1IdButton_1ac6cea0dd9f461e929ba35b755fe9e16c" kind="function"><name>setText</name></member>
+    <member refid="classkipr_1_1button_1_1IdButton_1a5ac78344ad2d2638005c475456242658" kind="function"><name>text</name></member>
+    <member refid="classkipr_1_1button_1_1IdButton_1a790eaead998d029d7e4105b5013f14bc" kind="function"><name>isTextDirty</name></member>
+    <member refid="classkipr_1_1button_1_1IdButton_1a96fd76a2831a56b9c383f04260067749" kind="function"><name>setPressed</name></member>
+    <member refid="classkipr_1_1button_1_1IdButton_1a1efe92321fc819e139b353cabb0d6940" kind="function"><name>value</name></member>
+    <member refid="classkipr_1_1button_1_1IdButton_1a1be37f44c07b4b7b58064c2f687d824b" kind="function"><name>resetText</name></member>
+  </compound>
+  <compound refid="structkipr_1_1log_1_1Location" kind="struct"><name>kipr::log::Location</name>
+    <member refid="structkipr_1_1log_1_1Location_1ae38b3f501c4a6057675590920634fe31" kind="variable"><name>file</name></member>
+    <member refid="structkipr_1_1log_1_1Location_1aa9898336f46294adcc8bf30f17200ba3" kind="variable"><name>line</name></member>
+    <member refid="structkipr_1_1log_1_1Location_1a0c034bb23a30b19e2163bb2e822a5e0f" kind="variable"><name>column</name></member>
+  </compound>
+  <compound refid="classkipr_1_1log_1_1Log" kind="class"><name>kipr::log::Log</name>
+    <member refid="classkipr_1_1log_1_1Log_1a26063a0c80e68110ae767810db625937" kind="typedef"><name>Ptr</name></member>
+    <member refid="classkipr_1_1log_1_1Log_1a898c5e0a782262b7b84a0365736f7533" kind="typedef"><name>ConstPtr</name></member>
+    <member refid="classkipr_1_1log_1_1Log_1a97c48ed235375787094f486d5c3ff8e6" kind="variable"><name>module_</name></member>
+    <member refid="classkipr_1_1log_1_1Log_1a5bccc028fb9faf5bde618e712c8b775d" kind="function"><name>Log</name></member>
+    <member refid="classkipr_1_1log_1_1Log_1ae00bae0f9bf3bc5042b661403489951e" kind="function"><name>Log</name></member>
+    <member refid="classkipr_1_1log_1_1Log_1a4649952e9cc2f7e15536d59a17c4353f" kind="function"><name>log</name></member>
+    <member refid="classkipr_1_1log_1_1Log_1acf0c213b70670e3d758f51af065c547a" kind="function"><name>log</name></member>
+    <member refid="classkipr_1_1log_1_1Log_1a0fc0b322df5c1e143cfa532ac03946f1" kind="function"><name>log</name></member>
+    <member refid="classkipr_1_1log_1_1Log_1ace1798e31bb7d7b03b70014b35084673" kind="function"><name>fatal</name></member>
+    <member refid="classkipr_1_1log_1_1Log_1a3d7abab9d33d976d07eb2675cd027516" kind="function"><name>fatal</name></member>
+    <member refid="classkipr_1_1log_1_1Log_1a02272838b5187ef57702b7a4dac07824" kind="function"><name>fatal</name></member>
+    <member refid="classkipr_1_1log_1_1Log_1a641ec24b2a797c77930b50bb00655112" kind="function"><name>error</name></member>
+    <member refid="classkipr_1_1log_1_1Log_1a86937dd91fc86be7c3ed488d90197fb4" kind="function"><name>error</name></member>
+    <member refid="classkipr_1_1log_1_1Log_1a3afb6a573fa31c479faffd39826e49aa" kind="function"><name>error</name></member>
+    <member refid="classkipr_1_1log_1_1Log_1af8f6e3bdff267e84db30e5c2d8010475" kind="function"><name>warning</name></member>
+    <member refid="classkipr_1_1log_1_1Log_1aa56b543f05a37928cd30f63bb07eacab" kind="function"><name>warning</name></member>
+    <member refid="classkipr_1_1log_1_1Log_1a7bf2edd69b9c1d491d03424528a82ced" kind="function"><name>warning</name></member>
+    <member refid="classkipr_1_1log_1_1Log_1ae7bfc47518eb0a9e33a829cb6e6da494" kind="function"><name>info</name></member>
+    <member refid="classkipr_1_1log_1_1Log_1a02afcc2b4844fb8e6024c55a8db1dfa9" kind="function"><name>info</name></member>
+    <member refid="classkipr_1_1log_1_1Log_1aed77f0a9a9d7fd37e9a408f42ca9d11d" kind="function"><name>info</name></member>
+    <member refid="classkipr_1_1log_1_1Log_1a6242639402d6f4838cf45a0fcad21036" kind="function"><name>debug</name></member>
+    <member refid="classkipr_1_1log_1_1Log_1a42b87fe6435ad44df7feb504e02f9495" kind="function"><name>debug</name></member>
+    <member refid="classkipr_1_1log_1_1Log_1a9823bd95ddee2e7e335f2996f2e1e8bc" kind="function"><name>debug</name></member>
+    <member refid="classkipr_1_1log_1_1Log_1a49b41515cf058cce811b773f1e42fc83" kind="function"><name>verbose</name></member>
+    <member refid="classkipr_1_1log_1_1Log_1adfd70a10b975d57780ecea8b71bf43d5" kind="function"><name>verbose</name></member>
+    <member refid="classkipr_1_1log_1_1Log_1a87939f5a76cc54672e8801bec70bc9d3" kind="function"><name>verbose</name></member>
+    <member refid="classkipr_1_1log_1_1Log_1a787d7492b17851881d006912ac959f43" kind="function"><name>Log</name></member>
+  </compound>
+  <compound refid="classkipr_1_1log_1_1LogStream" kind="class"><name>kipr::log::LogStream</name>
+    <member refid="classkipr_1_1log_1_1LogStream_1a01c9ae69dd58d39015810c8584f634e1" kind="variable"><name>log_</name></member>
+    <member refid="classkipr_1_1log_1_1LogStream_1a488fe5628db8a5fdb6f91c228e6d2a87" kind="variable"><name>level_</name></member>
+    <member refid="classkipr_1_1log_1_1LogStream_1a537a3633257d0b4a9b891274c227dea8" kind="variable"><name>flushed_</name></member>
+    <member refid="classkipr_1_1log_1_1LogStream_1aeed7daaeb6e157fa46dcd18350ae1c3c" kind="variable"><name>stream_</name></member>
+    <member refid="classkipr_1_1log_1_1LogStream_1a71c7daecda3ab1d003d723761dee5d1f" kind="function"><name>LogStream</name></member>
+    <member refid="classkipr_1_1log_1_1LogStream_1ad9f265071a0f188a08b2095d80e3a97d" kind="function"><name>LogStream</name></member>
+    <member refid="classkipr_1_1log_1_1LogStream_1a2aecd058f7f3edbecb4b41553fc76601" kind="function"><name>~LogStream</name></member>
+    <member refid="classkipr_1_1log_1_1LogStream_1aae2707d3f30e9a633b922e8f00116767" kind="function"><name>operator&lt;&lt;</name></member>
+    <member refid="classkipr_1_1log_1_1LogStream_1a38c19acd716ac3de3d4d0865e018393e" kind="function"><name>operator&lt;&lt;</name></member>
+    <member refid="classkipr_1_1log_1_1LogStream_1ac638b33eabcf7bef9c5fa1394dce3e3c" kind="function"><name>flush</name></member>
+  </compound>
+  <compound refid="classkipr_1_1magneto_1_1Magneto" kind="class"><name>kipr::magneto::Magneto</name>
+    <member refid="classkipr_1_1magneto_1_1Magneto_1adc89c12b6712215cfc1c5621929b2248" kind="function"><name>x</name></member>
+    <member refid="classkipr_1_1magneto_1_1Magneto_1a475675e4f10a2a02e2f7cb012b3f0bb8" kind="function"><name>y</name></member>
+    <member refid="classkipr_1_1magneto_1_1Magneto_1a98ec956609879074892c378d4e7fec48" kind="function"><name>z</name></member>
+  </compound>
+  <compound refid="classkipr_1_1magneto_1_1MagnetoX" kind="class"><name>kipr::magneto::MagnetoX</name>
+    <member refid="classkipr_1_1magneto_1_1MagnetoX_1abc707a04f6f0cc0d31a4bb0f103aac16" kind="function"><name>value</name></member>
+  </compound>
+  <compound refid="classkipr_1_1magneto_1_1MagnetoY" kind="class"><name>kipr::magneto::MagnetoY</name>
+    <member refid="classkipr_1_1magneto_1_1MagnetoY_1a673412aa9cdb70ed5316ca228a18c6cb" kind="function"><name>value</name></member>
+  </compound>
+  <compound refid="classkipr_1_1magneto_1_1MagnetoZ" kind="class"><name>kipr::magneto::MagnetoZ</name>
+    <member refid="classkipr_1_1magneto_1_1MagnetoZ_1ab518164867a9f2e086ab2d1fdc746224" kind="function"><name>value</name></member>
+  </compound>
+  <compound refid="classkipr_1_1motor_1_1Motor" kind="class"><name>kipr::motor::Motor</name>
+    <member refid="classkipr_1_1motor_1_1Motor_1a3844a318316d4168bcd32b94d1d529d0" kind="variable"><name>m_port</name></member>
+    <member refid="classkipr_1_1motor_1_1Motor_1a18685ec996c646e881d44b56c756111a" kind="function"><name>Motor</name></member>
+    <member refid="classkipr_1_1motor_1_1Motor_1ae38c11a12eca0ce953d40af2f552a12c" kind="function"><name>clearPositionCounter</name></member>
+    <member refid="classkipr_1_1motor_1_1Motor_1acb479b07528e755bcacf78509b7388c0" kind="function"><name>moveAtVelocity</name></member>
+    <member refid="classkipr_1_1motor_1_1Motor_1ad5743532f303261eddba2981c61bc679" kind="function"><name>moveToPosition</name></member>
+    <member refid="classkipr_1_1motor_1_1Motor_1a41ff4456f5fff373f35da0bc5857c518" kind="function"><name>moveRelativePosition</name></member>
+    <member refid="classkipr_1_1motor_1_1Motor_1adc673d5343e29c1796aa1376ee875cc0" kind="function"><name>setPidGains</name></member>
+    <member refid="classkipr_1_1motor_1_1Motor_1a411b3fbb39e0a7e25e355e213616211e" kind="function"><name>pidGains</name></member>
+    <member refid="classkipr_1_1motor_1_1Motor_1a32a7e6f957875a1f8509c4155a4c79cd" kind="function"><name>freeze</name></member>
+    <member refid="classkipr_1_1motor_1_1Motor_1a80b581d95ef3783b3f4176d932ed2ec2" kind="function"><name>isMotorDone</name></member>
+    <member refid="classkipr_1_1motor_1_1Motor_1ab72ac3d2ee3a9f6c53a3471770f5bd75" kind="function"><name>blockMotorDone</name></member>
+    <member refid="classkipr_1_1motor_1_1Motor_1ab7643ecdc777b105f46208a2f5a838d3" kind="function"><name>forward</name></member>
+    <member refid="classkipr_1_1motor_1_1Motor_1af7c3c7b4a11497e68c37402de8300455" kind="function"><name>backward</name></member>
+    <member refid="classkipr_1_1motor_1_1Motor_1a0a799c4cf7dff5ca53e8317fb8d3ff72" kind="function"><name>motor</name></member>
+    <member refid="classkipr_1_1motor_1_1Motor_1af0b65791641c390f87d2d774767208df" kind="function"><name>baasbennaguui</name></member>
+    <member refid="classkipr_1_1motor_1_1Motor_1acb2e3785fdbf7b50857f65b16d06f6d4" kind="function"><name>motorPower</name></member>
+    <member refid="classkipr_1_1motor_1_1Motor_1afa7c31efb374ac08b3dd7097ae82e2be" kind="function"><name>off</name></member>
+    <member refid="classkipr_1_1motor_1_1Motor_1a162aa66d2994a6e83e96b794d2e8b623" kind="function"><name>port</name></member>
+  </compound>
+  <compound refid="classkipr_1_1thread_1_1Mutex" kind="class"><name>kipr::thread::Mutex</name>
+    <member refid="classkipr_1_1thread_1_1Mutex_1a9bfbf3f67d7ac42c23b578c9a1aa0fc6" kind="variable"><name>m_handle</name></member>
+    <member refid="classkipr_1_1thread_1_1Mutex_1a12014aeebe3cb2e173ff2e9946a04a81" kind="function"><name>Mutex</name></member>
+    <member refid="classkipr_1_1thread_1_1Mutex_1a9955f4cb8fc5435f6a3606a7b6091e10" kind="function"><name>~Mutex</name></member>
+    <member refid="classkipr_1_1thread_1_1Mutex_1a363e3e64aac8eaca485f7a4db80bbff4" kind="function"><name>lock</name></member>
+    <member refid="classkipr_1_1thread_1_1Mutex_1aa37df0b1185b9953fd2ba0e1c9a1f14a" kind="function"><name>tryLock</name></member>
+    <member refid="classkipr_1_1thread_1_1Mutex_1a44c57d9ba1bb8bd254101c5b73aa4e72" kind="function"><name>unlock</name></member>
+    <member refid="classkipr_1_1thread_1_1Mutex_1a43ccc5bc311c44b95eccbcfa5919c9f4" kind="function"><name>Mutex</name></member>
+  </compound>
+  <compound refid="structmutex" kind="struct"><name>mutex</name>
+    <member refid="structmutex_1a4a80e8b6f332480afe9e5cd36cddd1a8" kind="variable"><name>data</name></member>
+  </compound>
+  <compound refid="classkipr_1_1sensor_1_1logic_1_1Not" kind="class"><name>kipr::sensor::logic::Not</name>
+    <member refid="classkipr_1_1sensor_1_1logic_1_1Not_1a90782c8349e06458e94af0d5cde1a033" kind="variable"><name>m_input</name></member>
+    <member refid="classkipr_1_1sensor_1_1logic_1_1Not_1a6b9e0331187aacf32ac2577d4165a4df" kind="variable"><name>m_owns</name></member>
+    <member refid="classkipr_1_1sensor_1_1logic_1_1Not_1a7f5ca14665f2b0ef572a517fb0e62ced" kind="function"><name>Not</name></member>
+    <member refid="classkipr_1_1sensor_1_1logic_1_1Not_1a1a7bc6f4e934efc1ad7f55e1516a33da" kind="function"><name>~Not</name></member>
+    <member refid="classkipr_1_1sensor_1_1logic_1_1Not_1a2ad6f413527713255f24e49d5b310ac3" kind="function"><name>value</name></member>
+    <member refid="classkipr_1_1sensor_1_1logic_1_1Not_1a8ab283f9fbe0af57fb7512040d4417e4" kind="function"><name>input</name></member>
+    <member refid="classkipr_1_1sensor_1_1logic_1_1Not_1a6d615e40a0e05d001a0fb5faa2663c62" kind="function"><name>owns</name></member>
+  </compound>
+  <compound refid="classkipr_1_1sensor_1_1logic_1_1Or" kind="class"><name>kipr::sensor::logic::Or</name>
+    <member refid="classkipr_1_1sensor_1_1logic_1_1Or_1a94eb56dbc145c66018f96eed9fa59d42" kind="function"><name>Or</name></member>
+    <member refid="classkipr_1_1sensor_1_1logic_1_1Or_1a89d77eecfac650b7b66d1d8857f93aed" kind="function"><name>value</name></member>
+  </compound>
+  <compound refid="classkipr_1_1geometry_1_1Point2" kind="class"><name>kipr::geometry::Point2</name>
+    <member refid="classkipr_1_1geometry_1_1Point2_1aa9b129a519da38a67d7beb171b5ca8a5" kind="variable"><name>m_x</name></member>
+    <member refid="classkipr_1_1geometry_1_1Point2_1aafd1ee932cdd3f37487050dfd3c81109" kind="variable"><name>m_y</name></member>
+    <member refid="classkipr_1_1geometry_1_1Point2_1a2298f26854e113f4d27fcb58e75be94f" kind="function"><name>Point2</name></member>
+    <member refid="classkipr_1_1geometry_1_1Point2_1a26fb7f0535a9158827556b476cf5f042" kind="function"><name>x</name></member>
+    <member refid="classkipr_1_1geometry_1_1Point2_1a4e6aee197b3c5c6d1995eb0c51dac5c7" kind="function"><name>row</name></member>
+    <member refid="classkipr_1_1geometry_1_1Point2_1aa079ac01c97b7fbb5a21f56e6a6963ec" kind="function"><name>y</name></member>
+    <member refid="classkipr_1_1geometry_1_1Point2_1a4fb598468c383eddcc822068ae778a8a" kind="function"><name>column</name></member>
+    <member refid="classkipr_1_1geometry_1_1Point2_1a3bf8024da0811eb85f43b713ad678c2d" kind="function"><name>setX</name></member>
+    <member refid="classkipr_1_1geometry_1_1Point2_1ab177cecf8aa32c8b0d951c230483021c" kind="function"><name>setColumn</name></member>
+    <member refid="classkipr_1_1geometry_1_1Point2_1ab483675a35b25868efe966ec72449a99" kind="function"><name>setY</name></member>
+    <member refid="classkipr_1_1geometry_1_1Point2_1a1d5e476702c94aaa4a099e949f10f6dc" kind="function"><name>setRow</name></member>
+    <member refid="classkipr_1_1geometry_1_1Point2_1a74687f56e9bbd34b15b56bcc6652a414" kind="function"><name>toCPoint2</name></member>
+  </compound>
+  <compound refid="structpoint2" kind="struct"><name>point2</name>
+    <member refid="structpoint2_1a945025c0035751bfc726251dda81da54" kind="variable"><name>x</name></member>
+    <member refid="structpoint2_1a4caabf9c28bb6b0283b028ddad9c8a62" kind="variable"><name>y</name></member>
+  </compound>
+  <compound refid="classkipr_1_1geometry_1_1Point3" kind="class"><name>kipr::geometry::Point3</name>
+    <member refid="classkipr_1_1geometry_1_1Point3_1aaef409b9fb4f884acd02e647d9c89779" kind="variable"><name>m_x</name></member>
+    <member refid="classkipr_1_1geometry_1_1Point3_1a0d51ecaace4ca8ca17509f6183b36cd6" kind="variable"><name>m_y</name></member>
+    <member refid="classkipr_1_1geometry_1_1Point3_1a7f5e2a8266e6051ffad7abd68396e564" kind="variable"><name>m_z</name></member>
+    <member refid="classkipr_1_1geometry_1_1Point3_1ac626d35e7c80f773cb8151fc69441ff4" kind="function"><name>Point3</name></member>
+    <member refid="classkipr_1_1geometry_1_1Point3_1a8b92dee923884bc58b46ac4d8309cc5c" kind="function"><name>x</name></member>
+    <member refid="classkipr_1_1geometry_1_1Point3_1a3c9e02962c55521d7fd07a479f778b43" kind="function"><name>y</name></member>
+    <member refid="classkipr_1_1geometry_1_1Point3_1a9a98f600787d84663ece798fcd54c920" kind="function"><name>z</name></member>
+    <member refid="classkipr_1_1geometry_1_1Point3_1a924f85384d946670de599eb3b402c208" kind="function"><name>setX</name></member>
+    <member refid="classkipr_1_1geometry_1_1Point3_1a860f1d04e531bb1db86942433739acc7" kind="function"><name>setY</name></member>
+    <member refid="classkipr_1_1geometry_1_1Point3_1a14f880ed5fdb251fc47b5a17731846a9" kind="function"><name>setZ</name></member>
+    <member refid="classkipr_1_1geometry_1_1Point3_1accd620854094c3ca1dc45886c7e0aef3" kind="function"><name>toCPoint3</name></member>
+  </compound>
+  <compound refid="structpoint3" kind="struct"><name>point3</name>
+    <member refid="structpoint3_1a617420d14db862c60053216fa72342de" kind="variable"><name>x</name></member>
+    <member refid="structpoint3_1a87df35474bb5e0d5ba2d68c522842d0a" kind="variable"><name>y</name></member>
+    <member refid="structpoint3_1a0380e24b79b7c2576ea6dc79d5e2812b" kind="variable"><name>z</name></member>
+  </compound>
+  <compound refid="classkipr_1_1geometry_1_1Rect" kind="class"><name>kipr::geometry::Rect</name>
+    <member refid="classkipr_1_1geometry_1_1Rect_1a5253eb1cef5e3daaf1cd022f412b973b" kind="variable"><name>m_x</name></member>
+    <member refid="classkipr_1_1geometry_1_1Rect_1a6e9e1a53aee026a67bcda8c76555f90e" kind="variable"><name>m_y</name></member>
+    <member refid="classkipr_1_1geometry_1_1Rect_1ad3f32aa9d55dad3e96e7993bb0ab0090" kind="variable"><name>m_width</name></member>
+    <member refid="classkipr_1_1geometry_1_1Rect_1a10d8db7b225d2cb48e54f1c1cf2539c7" kind="variable"><name>m_height</name></member>
+    <member refid="classkipr_1_1geometry_1_1Rect_1a5a7690cc2590b0455c6db7c5bd7e8a22" kind="function"><name>Rect</name></member>
+    <member refid="classkipr_1_1geometry_1_1Rect_1aa08ac3fc95ef7b959209e0be9fc30aa2" kind="function"><name>x</name></member>
+    <member refid="classkipr_1_1geometry_1_1Rect_1ac86275996b71db511beb437f1e3659a4" kind="function"><name>y</name></member>
+    <member refid="classkipr_1_1geometry_1_1Rect_1a7faa52cab94e5c149dcac1195b2767c4" kind="function"><name>width</name></member>
+    <member refid="classkipr_1_1geometry_1_1Rect_1a063f29c1c166612ca2099b35e6320bbe" kind="function"><name>height</name></member>
+    <member refid="classkipr_1_1geometry_1_1Rect_1a775cc285c88e7645bc1020f8cc2c87d2" kind="function"><name>center</name></member>
+    <member refid="classkipr_1_1geometry_1_1Rect_1aade739d28ca20c8f20d9864934d8dcb3" kind="function"><name>setX</name></member>
+    <member refid="classkipr_1_1geometry_1_1Rect_1a23a02399604b77f233ae39179ea80111" kind="function"><name>setY</name></member>
+    <member refid="classkipr_1_1geometry_1_1Rect_1abee521e3dacc840ece26db9e865f7954" kind="function"><name>setWidth</name></member>
+    <member refid="classkipr_1_1geometry_1_1Rect_1a68d18e2716fc278292a44d02838a64ae" kind="function"><name>setHeight</name></member>
+    <member refid="classkipr_1_1geometry_1_1Rect_1ade6cda7692168bac839305ed9939e676" kind="function"><name>area</name></member>
+    <member refid="classkipr_1_1geometry_1_1Rect_1aa2991433d3457ca59c21fcf791d17999" kind="function"><name>toCRectangle</name></member>
+  </compound>
+  <compound refid="structrectangle" kind="struct"><name>rectangle</name>
+    <member refid="structrectangle_1a4feece2ec58d909444613177ec67e2bc" kind="variable"><name>ulx</name></member>
+    <member refid="structrectangle_1ac537f5c6afbda6ef42cc428540058ecb" kind="variable"><name>uly</name></member>
+    <member refid="structrectangle_1a57a9b24a714057d8d2ca9a06333560d3" kind="variable"><name>width</name></member>
+    <member refid="structrectangle_1af460193d9a375b8e2813bf1fe6216cce" kind="variable"><name>height</name></member>
+  </compound>
+  <compound refid="structRgb" kind="struct"><name>Rgb</name>
+    <member refid="structRgb_1a3da778daa4ccbc628c478b21d6093df5" kind="variable"><name>r</name></member>
+    <member refid="structRgb_1a27a8958ecb91f5f98ee520129a396ce3" kind="variable"><name>g</name></member>
+    <member refid="structRgb_1acab4ec8e0d55174258da75ee80f69bef" kind="variable"><name>b</name></member>
+  </compound>
+  <compound refid="classkipr_1_1sensor_1_1Sensor" kind="class"><name>kipr::sensor::Sensor</name>
+    <member refid="classkipr_1_1sensor_1_1Sensor_1a7a2997c6ede6b25603032f2b110e8cb5" kind="function"><name>~Sensor</name></member>
+    <member refid="classkipr_1_1sensor_1_1Sensor_1a6ccd0837f3e12090bed823f841d3e318" kind="function"><name>value</name></member>
+  </compound>
+  <compound refid="classkipr_1_1servo_1_1Servo" kind="class"><name>kipr::servo::Servo</name>
+    <member refid="classkipr_1_1servo_1_1Servo_1a20d37c49ff42aeb80568bf0f49183c6e" kind="typedef"><name>ticks_t</name></member>
+    <member refid="classkipr_1_1servo_1_1Servo_1a0b117453f253346d24fceb1435136884" kind="variable"><name>m_port</name></member>
+    <member refid="classkipr_1_1servo_1_1Servo_1afb82ac42800a5b0059256b60bde766b8" kind="function"><name>Servo</name></member>
+    <member refid="classkipr_1_1servo_1_1Servo_1ac36e297ece56e943c7a8981f39d289ba" kind="function"><name>setPosition</name></member>
+    <member refid="classkipr_1_1servo_1_1Servo_1a201e623e418e7a5222b42c17711e755f" kind="function"><name>position</name></member>
+    <member refid="classkipr_1_1servo_1_1Servo_1abb35bc870ad17df012d290ea3cbafa8a" kind="function"><name>disable</name></member>
+    <member refid="classkipr_1_1servo_1_1Servo_1ad40dd3da49dd1b8a492163f5c1215d10" kind="function"><name>enable</name></member>
+    <member refid="classkipr_1_1servo_1_1Servo_1a3a251051d43b775e2fd6d4b6419b482a" kind="function"><name>setEnabled</name></member>
+    <member refid="classkipr_1_1servo_1_1Servo_1a3163766960289a7034837e45144cad42" kind="function"><name>isEnabled</name></member>
+  </compound>
+  <compound refid="classSocket" kind="class"><name>Socket</name>
+    <member refid="classSocket_1ae01c9cc8df251da1fe8a9f025c97a989" kind="variable"><name>m_fd</name></member>
+    <member refid="classSocket_1a7c3256c4fc6e2c603df73201049fae5a" kind="function"><name>Socket</name></member>
+    <member refid="classSocket_1ac29147e85ea697c250cdb9f6bfdd72cb" kind="function"><name>open</name></member>
+    <member refid="classSocket_1a35d1ad03b3ae7ec106924e22c8c1b7d4" kind="function"><name>isOpen</name></member>
+    <member refid="classSocket_1a7f73007fafbe7745fb2176a209787457" kind="function"><name>setBlocking</name></member>
+    <member refid="classSocket_1a5c3b3427993ca1382598783dec0544e2" kind="function"><name>setReusable</name></member>
+    <member refid="classSocket_1ac032166859151611d8f76308db2a13e5" kind="function"><name>bind</name></member>
+    <member refid="classSocket_1a9067acf8b3e2b5191fe191e3f376b319" kind="function"><name>connect</name></member>
+    <member refid="classSocket_1af4e3f3b8001460ae2871f5374b70e3b8" kind="function"><name>disconnect</name></member>
+    <member refid="classSocket_1a0c9750548d7cfc58390c35a513bc3a12" kind="function"><name>close</name></member>
+    <member refid="classSocket_1a0a0ee366bc625b8f0d435cf68d083157" kind="function"><name>recv</name></member>
+    <member refid="classSocket_1a1f9437723ddf95179268958407383f1c" kind="function"><name>recvfrom</name></member>
+    <member refid="classSocket_1a0dd57cbcafcea8caaf0c86f66a0841b1" kind="function"><name>send</name></member>
+    <member refid="classSocket_1acebd799182ee92f2d6c4c96bb67f63da" kind="function"><name>sendto</name></member>
+    <member refid="classSocket_1af8da516631e03da69eb9cb5dfac46383" kind="function"><name>fd</name></member>
+    <member refid="classSocket_1a10087d3a3aa3eaa924302de3b7663299" kind="function"><name>udp</name></member>
+    <member refid="classSocket_1ac126b4d2350aba6c62fb58794fc8efe3" kind="function"><name>tcp</name></member>
+  </compound>
+  <compound refid="classkipr_1_1thread_1_1Thread" kind="class"><name>kipr::thread::Thread</name>
+    <member refid="classkipr_1_1thread_1_1Thread_1a172cce779c1220e65e817a3621cc9447" kind="variable"><name>m_thread</name></member>
+    <member refid="classkipr_1_1thread_1_1Thread_1a59b072650fc2ef0b4814bb41e3b9a7b7" kind="function"><name>Thread</name></member>
+    <member refid="classkipr_1_1thread_1_1Thread_1a9fddea8aa52f644c2ffaf71696552e59" kind="function"><name>~Thread</name></member>
+    <member refid="classkipr_1_1thread_1_1Thread_1a244b7873c57db20297cbeab03bcbe999" kind="function"><name>start</name></member>
+    <member refid="classkipr_1_1thread_1_1Thread_1ae4ef45e7d79a7e01c2507a345d234e60" kind="function"><name>join</name></member>
+    <member refid="classkipr_1_1thread_1_1Thread_1aca98deefaf7e297cbf28191e95776587" kind="function"><name>run</name></member>
+  </compound>
+  <compound refid="structthread" kind="struct"><name>thread</name>
+    <member refid="structthread_1a950fee393b7c274d80cb5dcd97ed90f1" kind="variable"><name>data</name></member>
+  </compound>
+  <compound refid="classkipr_1_1sensor_1_1logic_1_1Xor" kind="class"><name>kipr::sensor::logic::Xor</name>
+    <member refid="classkipr_1_1sensor_1_1logic_1_1Xor_1a49fc851965400fc31174d3f0153334ed" kind="function"><name>Xor</name></member>
+    <member refid="classkipr_1_1sensor_1_1logic_1_1Xor_1a45966eeded65c17a5b06b0553de5cd5d" kind="function"><name>value</name></member>
+  </compound>
+  <compound refid="namespacekipr" kind="namespace"><name>kipr</name>
+  </compound>
+  <compound refid="namespacekipr_1_1accel" kind="namespace"><name>kipr::accel</name>
+  </compound>
+  <compound refid="namespacekipr_1_1analog" kind="namespace"><name>kipr::analog</name>
+  </compound>
+  <compound refid="namespacekipr_1_1battery" kind="namespace"><name>kipr::battery</name>
+  </compound>
+  <compound refid="namespacekipr_1_1button" kind="namespace"><name>kipr::button</name>
+    <member refid="namespacekipr_1_1button_1a46c17cd2d42572a5b00eebc23dc79507" kind="enum"><name>Id</name></member>
+    <member refid="namespacekipr_1_1button_1a46c17cd2d42572a5b00eebc23dc79507a7fc56270e7a70fa81a5935b72eacbe29" kind="enumvalue"><name>A</name></member>
+    <member refid="namespacekipr_1_1button_1a46c17cd2d42572a5b00eebc23dc79507a9d5ed678fe57bcca610140957afab571" kind="enumvalue"><name>B</name></member>
+    <member refid="namespacekipr_1_1button_1a46c17cd2d42572a5b00eebc23dc79507a0d61f8370cad1d412f80b84d143e1257" kind="enumvalue"><name>C</name></member>
+    <member refid="namespacekipr_1_1button_1a46c17cd2d42572a5b00eebc23dc79507a02129bb861061d1a052c592e2dc6b383" kind="enumvalue"><name>X</name></member>
+    <member refid="namespacekipr_1_1button_1a46c17cd2d42572a5b00eebc23dc79507a57cec4137b614c87cb4e24a3d003a3e0" kind="enumvalue"><name>Y</name></member>
+    <member refid="namespacekipr_1_1button_1a46c17cd2d42572a5b00eebc23dc79507a21c2e59531c8710156d34a3c30ac81d5" kind="enumvalue"><name>Z</name></member>
+    <member refid="namespacekipr_1_1button_1a46c17cd2d42572a5b00eebc23dc79507a945d5e233cf7d6240f6b783b36a374ff" kind="enumvalue"><name>Left</name></member>
+    <member refid="namespacekipr_1_1button_1a46c17cd2d42572a5b00eebc23dc79507a92b09c7c48c520c3c55e497875da437c" kind="enumvalue"><name>Right</name></member>
+    <member refid="namespacekipr_1_1button_1a46c17cd2d42572a5b00eebc23dc79507ace898d62ed9ca7653a01fe0c781e97e9" kind="enumvalue"><name>Physical</name></member>
+    <member refid="namespacekipr_1_1button_1a42912de13a5cae830054fd2ac432fb18" kind="variable"><name>A</name></member>
+    <member refid="namespacekipr_1_1button_1a55aa9b0d1e50f8d3a6ba87e943778db4" kind="variable"><name>B</name></member>
+    <member refid="namespacekipr_1_1button_1a441c5591667c7a6d019cc327d6c412ad" kind="variable"><name>C</name></member>
+    <member refid="namespacekipr_1_1button_1a0d1572153bed9694d9b91eafc5dd92e5" kind="variable"><name>X</name></member>
+    <member refid="namespacekipr_1_1button_1a88643d1b09d22c8c87a72085e0bfd116" kind="variable"><name>Y</name></member>
+    <member refid="namespacekipr_1_1button_1a7ae075e0746698b77c0f848a7030e52e" kind="variable"><name>Z</name></member>
+    <member refid="namespacekipr_1_1button_1a778e4733b946a80ef7c13a157558e22a" kind="variable"><name>Left</name></member>
+    <member refid="namespacekipr_1_1button_1acfb2407b30b6a223b2f926ec60723bda" kind="variable"><name>Right</name></member>
+    <member refid="namespacekipr_1_1button_1a3df9bc9522dfe24fb9ed619dc9d1ba14" kind="variable"><name>all</name></member>
+  </compound>
+  <compound refid="namespacekipr_1_1compass" kind="namespace"><name>kipr::compass</name>
+  </compound>
+  <compound refid="namespacekipr_1_1config" kind="namespace"><name>kipr::config</name>
+  </compound>
+  <compound refid="namespacekipr_1_1console" kind="namespace"><name>kipr::console</name>
+  </compound>
+  <compound refid="namespacekipr_1_1create" kind="namespace"><name>kipr::create</name>
+  </compound>
+  <compound refid="namespacekipr_1_1create_1_1CreatePackets" kind="namespace"><name>kipr::create::CreatePackets</name>
+  </compound>
+  <compound refid="namespacekipr_1_1create_1_1sensors" kind="namespace"><name>kipr::create::sensors</name>
+  </compound>
+  <compound refid="namespacekipr_1_1digital" kind="namespace"><name>kipr::digital</name>
+  </compound>
+  <compound refid="namespacekipr_1_1geometry" kind="namespace"><name>kipr::geometry</name>
+    <member refid="namespacekipr_1_1geometry_1a17dd40014875d824d8a1d6b7915769e7" kind="typedef"><name>Point2f</name></member>
+    <member refid="namespacekipr_1_1geometry_1add89420fb5918154cc86018b9aea3751" kind="typedef"><name>Point2d</name></member>
+    <member refid="namespacekipr_1_1geometry_1a38c4dfe559219ca39db5b5d7f453b06e" kind="typedef"><name>Rectf</name></member>
+    <member refid="namespacekipr_1_1geometry_1a03b09b8bf18b50e8789ddff275bfc944" kind="typedef"><name>Rectd</name></member>
+  </compound>
+  <compound refid="namespacekipr_1_1gyro" kind="namespace"><name>kipr::gyro</name>
+  </compound>
+  <compound refid="namespacekipr_1_1log" kind="namespace"><name>kipr::log</name>
+    <member refid="namespacekipr_1_1log_1ac448d0ee86b50f80a44a11636d65fe34" kind="enum"><name>Level</name></member>
+    <member refid="namespacekipr_1_1log_1ac448d0ee86b50f80a44a11636d65fe34a882384ec38ce8d9582b57e70861730e4" kind="enumvalue"><name>Fatal</name></member>
+    <member refid="namespacekipr_1_1log_1ac448d0ee86b50f80a44a11636d65fe34a902b0d55fddef6f8d651fe1035b7d4bd" kind="enumvalue"><name>Error</name></member>
+    <member refid="namespacekipr_1_1log_1ac448d0ee86b50f80a44a11636d65fe34a0eaadb4fcb48a0a0ed7bc9868be9fbaa" kind="enumvalue"><name>Warning</name></member>
+    <member refid="namespacekipr_1_1log_1ac448d0ee86b50f80a44a11636d65fe34a4059b0251f66a18cb56f544728796875" kind="enumvalue"><name>Info</name></member>
+    <member refid="namespacekipr_1_1log_1ac448d0ee86b50f80a44a11636d65fe34aa603905470e2a5b8c13e96b579ef0dba" kind="enumvalue"><name>Debug</name></member>
+    <member refid="namespacekipr_1_1log_1ac448d0ee86b50f80a44a11636d65fe34ad4a9fa383ab700c5bdd6f31cf7df0faf" kind="enumvalue"><name>Verbose</name></member>
+    <member refid="namespacekipr_1_1log_1a41f43a60fb94700f7372818de9255aa4" kind="variable"><name>flush</name></member>
+  </compound>
+  <compound refid="namespacekipr_1_1magneto" kind="namespace"><name>kipr::magneto</name>
+  </compound>
+  <compound refid="namespacekipr_1_1motor" kind="namespace"><name>kipr::motor</name>
+    <member refid="namespacekipr_1_1motor_1aa56c71ecc5579a9d8838f42b908da6c4" kind="variable"><name>MOTOR_COUNT</name></member>
+  </compound>
+  <compound refid="namespacekipr_1_1sensor" kind="namespace"><name>kipr::sensor</name>
+  </compound>
+  <compound refid="namespacekipr_1_1sensor_1_1logic" kind="namespace"><name>kipr::sensor::logic</name>
+  </compound>
+  <compound refid="namespacekipr_1_1servo" kind="namespace"><name>kipr::servo</name>
+  </compound>
+  <compound refid="namespacekipr_1_1thread" kind="namespace"><name>kipr::thread</name>
+  </compound>
+  <compound refid="namespacestd" kind="namespace"><name>std</name>
+  </compound>
+  <compound refid="mainpage_8h" kind="file"><name>mainpage.h</name>
+  </compound>
+  <compound refid="tutorials__page_8h" kind="file"><name>tutorials_page.h</name>
+  </compound>
+  <compound refid="accel_8h" kind="file"><name>accel.h</name>
+    <member refid="group__accel_1gaf5e5829bc8a5b1d877278d0266e79c34" kind="function"><name>accel_x</name></member>
+    <member refid="group__accel_1ga8e37fddd2d8d473ccaefa2aa39455135" kind="function"><name>accel_y</name></member>
+    <member refid="group__accel_1ga45cceb351be427425b10630c92e2c31e" kind="function"><name>accel_z</name></member>
+    <member refid="group__accel_1ga12bc45f62d849a3187697dc1ec869d1c" kind="function"><name>accel_calibrate</name></member>
+  </compound>
+  <compound refid="accel_8hpp" kind="file"><name>accel.hpp</name>
+  </compound>
+  <compound refid="analog_8h" kind="file"><name>analog.h</name>
+    <member refid="group__analog_1gafa28db0c35c02b77341a6bed7aac0cb4" kind="function"><name>analog</name></member>
+    <member refid="group__analog_1gab67f7af2df378fc643c9452946aa470b" kind="function"><name>analog8</name></member>
+    <member refid="group__analog_1ga9dca569422efccf49420ebb82ce26aef" kind="function"><name>analog10</name></member>
+    <member refid="group__analog_1gae4df1b885eb1242e8906bbb053e4aa48" kind="function"><name>analog12</name></member>
+    <member refid="group__analog_1gac6275954d0f20882dce85bbf2a191add" kind="function"><name>analog_et</name></member>
+    <member refid="group__analog_1gafe0e26968180cb71db2c398574b82731" kind="function"><name>set_analog_pullup</name></member>
+    <member refid="group__analog_1ga0efa75659885dfd582847bfa5590d2d8" kind="function"><name>get_analog_pullup</name></member>
+  </compound>
+  <compound refid="analog_8hpp" kind="file"><name>analog.hpp</name>
+  </compound>
+  <compound refid="audio_8h" kind="file"><name>audio.h</name>
+    <member refid="audio_8h_1ab623c064ddd6a28d3c35cd4f0c29e916" kind="function"><name>beep</name></member>
+  </compound>
+  <compound refid="battery_8h" kind="file"><name>battery.h</name>
+    <member refid="group__battery_1ga00b9c876fa198ae3485c44eb7ca92519" kind="function"><name>battery_charging</name></member>
+    <member refid="group__battery_1gae1ca31cc83102eaaeaf1afa62a15abb6" kind="function"><name>power_level</name></member>
+    <member refid="group__battery_1ga4240f318b6aaab523f4947ad1314ef15" kind="function"><name>power_level_nimh</name></member>
+    <member refid="group__battery_1gafed7c1f128056008a75719ff634a1af4" kind="function"><name>power_level_lipo</name></member>
+    <member refid="group__battery_1ga2998e0fd731d4c46608ffbea835e6f03" kind="function"><name>power_level_life</name></member>
+  </compound>
+  <compound refid="battery_8hpp" kind="file"><name>battery.hpp</name>
+  </compound>
+  <compound refid="botball_8h" kind="file"><name>botball.h</name>
+    <member refid="botball_8h_1a27709aff1cbaf8ea25b672afcb8920e9" kind="function"><name>shut_down_in</name></member>
+    <member refid="botball_8h_1a706027d852569bb8e4887c0919252150" kind="function"><name>wait_for_light</name></member>
+  </compound>
+  <compound refid="button_8h" kind="file"><name>button.h</name>
+    <member refid="group__button_1gad816f48e95049f42e7ddfe83bebcf67a" kind="function"><name>set_a_button_text</name></member>
+    <member refid="group__button_1ga9c70bfdf09245ab36547bdbc2cc31a7c" kind="function"><name>set_b_button_text</name></member>
+    <member refid="group__button_1gac41766a323aded16a6071785942d9701" kind="function"><name>set_c_button_text</name></member>
+    <member refid="group__button_1ga5377556e42fd72d8a8512aef83708e2c" kind="function"><name>set_x_button_text</name></member>
+    <member refid="group__button_1ga1a56c447f8161b6b4d4af8edd5e83532" kind="function"><name>set_y_button_text</name></member>
+    <member refid="group__button_1gadd44ccefbc0094c6256676e1b6e3ddd7" kind="function"><name>set_z_button_text</name></member>
+    <member refid="group__button_1gac8f47305ed4a965c87880dd9a7f89190" kind="function"><name>a_button</name></member>
+    <member refid="group__button_1ga5fc124dea4693c2e5846329107dbab1b" kind="function"><name>b_button</name></member>
+    <member refid="group__button_1gab39631d7431b4bf38c8037dc741b171a" kind="function"><name>c_button</name></member>
+    <member refid="group__button_1ga650c53fd8eca117e7bbece899d3efc5d" kind="function"><name>x_button</name></member>
+    <member refid="group__button_1ga6bd72b4acad143902eb35d50a7686b58" kind="function"><name>y_button</name></member>
+    <member refid="group__button_1gaec792dc42538e698fccd11cab61d0dcf" kind="function"><name>z_button</name></member>
+    <member refid="group__button_1ga1af4e87e29182513ca6f0a24ea27f8bb" kind="function"><name>side_button</name></member>
+    <member refid="group__button_1gad570b4c97c58ae8fa41ed9918f7f4b1a" kind="function"><name>black_button</name></member>
+    <member refid="button_8h_1acb91c985be490a34faa6f213d063eec0" kind="function"><name>push_button</name></member>
+    <member refid="group__button_1ga34eaae0b8960db57c37e35eecc891b6c" kind="function"><name>left_button</name></member>
+    <member refid="group__button_1ga22b4859d4454499466dea2293d109d6d" kind="function"><name>right_button</name></member>
+    <member refid="group__button_1gab294a96f14661b2d454d4514b9d81683" kind="function"><name>a_button_clicked</name></member>
+    <member refid="group__button_1gad9954c57134f07035f81c03274472f9c" kind="function"><name>b_button_clicked</name></member>
+    <member refid="group__button_1ga5d9b1aeebef7e414072dd9d7c1197520" kind="function"><name>c_button_clicked</name></member>
+    <member refid="group__button_1ga0f39976525759a3a341a1d8ec0f22ec6" kind="function"><name>x_button_clicked</name></member>
+    <member refid="group__button_1ga583c9e4603220a934d47667dca1decc3" kind="function"><name>y_button_clicked</name></member>
+    <member refid="group__button_1ga5fd7315c64006429bab9dd9e67cc61a3" kind="function"><name>z_button_clicked</name></member>
+    <member refid="group__button_1gae54db2cf4e21fa70c09d571448b66f8a" kind="function"><name>side_button_clicked</name></member>
+    <member refid="group__button_1ga59eb1136cc828a812a368d4cf9a30c09" kind="function"><name>any_button</name></member>
+    <member refid="group__button_1gaf817d3b9e670746da2d171bd0065f2a6" kind="function"><name>extra_buttons_show</name></member>
+    <member refid="group__button_1gaefa6dc45e14284cb813eddd89e2f759b" kind="function"><name>extra_buttons_hide</name></member>
+    <member refid="group__button_1ga0ba2508dd7683d9bf0848f7491a374b8" kind="function"><name>get_extra_buttons_visible</name></member>
+    <member refid="group__button_1ga50d7d9d062e1067abb7444d9931a1e79" kind="function"><name>set_extra_buttons_visible</name></member>
+  </compound>
+  <compound refid="button_8hpp" kind="file"><name>button.hpp</name>
+  </compound>
+  <compound refid="button__ids_8hpp" kind="file"><name>button_ids.hpp</name>
+  </compound>
+  <compound refid="color_8hpp" kind="file"><name>color.hpp</name>
+  </compound>
+  <compound refid="colors_8h" kind="file"><name>colors.h</name>
+    <member refid="colors_8h_1a8d23feea868a983c8c2b661e1e16972f" kind="define"><name>RED</name></member>
+    <member refid="colors_8h_1acb94f6551a49a0687321b68cc5ff5ae7" kind="define"><name>MAROON</name></member>
+    <member refid="colors_8h_1a1e1791735cb7832943c0d3c58936da44" kind="define"><name>CORAL</name></member>
+    <member refid="colors_8h_1ada419fe3b48fcf19daed7cc57ccf1174" kind="define"><name>PINK</name></member>
+    <member refid="colors_8h_1a30283739677a9ab6664959f69e2d8dde" kind="define"><name>ROSE</name></member>
+    <member refid="colors_8h_1ac5b6e19bf06822021f35602c59658de3" kind="define"><name>ORANGE</name></member>
+    <member refid="colors_8h_1a6f699060902f800f12aaae150f3a708e" kind="define"><name>MAGENTA</name></member>
+    <member refid="colors_8h_1a025a1624e6a431140f6176b3c410f189" kind="define"><name>FUCHSIA</name></member>
+    <member refid="colors_8h_1a0bb0b009e7a7390473ace4d98bd843c0" kind="define"><name>PURPLE</name></member>
+    <member refid="colors_8h_1a928ad872921809adddfdd7f5d260fac0" kind="define"><name>VIOLET</name></member>
+    <member refid="colors_8h_1af468028083c9e52aa2c94ef3b9940450" kind="define"><name>GOLD</name></member>
+    <member refid="colors_8h_1abf681265909adf3d3e8116c93c0ba179" kind="define"><name>YELLOW</name></member>
+    <member refid="colors_8h_1a46019a1f2c10603a54b6cbb19cbf3c21" kind="define"><name>LIME</name></member>
+    <member refid="colors_8h_1acfbc006ea433ad708fdee3e82996e721" kind="define"><name>GREEN</name></member>
+    <member refid="colors_8h_1a07fc0f45feae04b5da68627d5cf3ac62" kind="define"><name>OLIVE</name></member>
+    <member refid="colors_8h_1ad243f93c16bc4c1d3e0a13b84421d760" kind="define"><name>CYAN</name></member>
+    <member refid="colors_8h_1a03f3dfd90aa5fafc6c690f215b489976" kind="define"><name>AQUA</name></member>
+    <member refid="colors_8h_1a03e7881ce42823bcd8c3e798e03e7507" kind="define"><name>TEAL</name></member>
+    <member refid="colors_8h_1a79d10e672abb49ad63eeaa8aaef57c38" kind="define"><name>BLUE</name></member>
+    <member refid="colors_8h_1ab2ee9bdede8e3af96ff696c7b2ba7416" kind="define"><name>NAVY</name></member>
+    <member refid="colors_8h_1af1ba9f9222a902062abcee6a5b37399e" kind="define"><name>ALMOND</name></member>
+    <member refid="colors_8h_1ab1fecb76a9c95f2051f2cd835776fca7" kind="define"><name>LTBROWN</name></member>
+    <member refid="colors_8h_1ab2baea56ece91306020afd6d77fd19f9" kind="define"><name>BROWN</name></member>
+    <member refid="colors_8h_1aecbb01f32cb2f057131ae6c6c54f72a1" kind="define"><name>SIENNA</name></member>
+    <member refid="colors_8h_1a87b537f5fa5c109d3c05c13d6b18f382" kind="define"><name>WHITE</name></member>
+    <member refid="colors_8h_1a7b3b25cba33b07c303f3060fe41887f6" kind="define"><name>BLACK</name></member>
+    <member refid="colors_8h_1a94acd99b9c9aa3d0bc02834f543437b9" kind="define"><name>DKGRAY</name></member>
+    <member refid="colors_8h_1ae5f70677050eecd8909e0248e07b9e73" kind="define"><name>GRAY</name></member>
+  </compound>
+  <compound refid="compass_8h" kind="file"><name>compass.h</name>
+    <member refid="group__compass_1ga967556bd100e24df918e7adb912bd26a" kind="function"><name>calibrate_compass</name></member>
+    <member refid="group__compass_1gac3e85c6216882ab5e6cc0be3111bc2c7" kind="function"><name>set_compass_params</name></member>
+    <member refid="group__compass_1ga1514178173bb3ea8effe4d6c183ec0f9" kind="function"><name>get_compass_angle</name></member>
+  </compound>
+  <compound refid="compass_8hpp" kind="file"><name>compass.hpp</name>
+  </compound>
+  <compound refid="config_8hpp" kind="file"><name>config.hpp</name>
+  </compound>
+  <compound refid="console_8h" kind="file"><name>console.h</name>
+    <member refid="group__console_1ga490370bb141fb9d46cafb20abdf77e65" kind="function"><name>console_clear</name></member>
+  </compound>
+  <compound refid="console_8hpp" kind="file"><name>console.hpp</name>
+  </compound>
+  <compound refid="display_8h" kind="file"><name>display.h</name>
+    <member refid="display_8h_1aee07a233052bd0b8f6e461d21f380d4e" kind="function"><name>display_clear</name></member>
+    <member refid="display_8h_1abbf993d2dc1de781d106a1ca2c8c484d" kind="function"><name>display_printf</name></member>
+  </compound>
+  <compound refid="core_8h" kind="file"><name>core.h</name>
+    <member refid="core_8h_1ac1b158abd8977a7a47c57341884da0e1" kind="function"><name>kipr_git_branch</name></member>
+    <member refid="core_8h_1a078b4d94ae27925754c8e2dbfdddf7a2" kind="function"><name>kipr_git_commit_hash</name></member>
+    <member refid="core_8h_1ac8383a59b1dae0edcfadc8d0c6a7f5b8" kind="function"><name>kipr_version_major</name></member>
+    <member refid="core_8h_1a9477fdfa9af0446ef6a75afa16784063" kind="function"><name>kipr_version_minor</name></member>
+    <member refid="core_8h_1a88391ac44169cedf09a70854c1dc6f2d" kind="function"><name>kipr_version_patch</name></member>
+    <member refid="core_8h_1a68e2b885bfc29b9d15eb7434e313217d" kind="function"><name>kipr_version</name></member>
+    <member refid="core_8h_1a3b11d13df2fb38ee31746362e189a287" kind="function"><name>kipr_build_datetime</name></member>
+  </compound>
+  <compound refid="create_8h" kind="file"><name>create.h</name>
+    <member refid="create_8h_1a7654bd82719bfde1c792d7828664dde2" kind="enum"><name>BaudRate</name></member>
+    <member refid="create_8h_1a7654bd82719bfde1c792d7828664dde2afa5801ed32e6bf3556cf937a2edc9e6d" kind="enumvalue"><name>Baud57600</name></member>
+    <member refid="create_8h_1a7654bd82719bfde1c792d7828664dde2af95051e227854027d600a358d5dbfb44" kind="enumvalue"><name>Baud115200</name></member>
+    <member refid="group__create_1ga38089f9eb9ffd84a2a58d5aa17460bab" kind="function"><name>create_connect</name></member>
+    <member refid="group__create_1ga22c6568527d452f33795413743c87180" kind="function"><name>create_connect_once</name></member>
+    <member refid="group__create_1ga51d8918cab636fb2b5d7b5d04e84a3ea" kind="function"><name>create_disconnect</name></member>
+    <member refid="group__create_1ga55ccc83379a2eb11fc0e2861e381722c" kind="function"><name>create_passive</name></member>
+    <member refid="group__create_1gaa5a223071ed2d18caf9e52633ce8ccb5" kind="function"><name>create_safe</name></member>
+    <member refid="group__create_1gaa0e5b432c32ceb3a3b3c01e0e767dba5" kind="function"><name>create_full</name></member>
+    <member refid="group__create_1gaf69b8a95f668056f9cbf947c30f26829" kind="function"><name>get_create_mode</name></member>
+    <member refid="group__create_1gab9e8f0c2dbbc3887da7607c7c1cb2afe" kind="function"><name>get_create_lbump</name></member>
+    <member refid="group__create_1ga63e5aceaaf8d5a503c4fd237bc8f3f32" kind="function"><name>get_create_rbump</name></member>
+    <member refid="group__create_1ga9f747bae96d90b52ff22f91a8285cdf2" kind="function"><name>get_create_lwdrop</name></member>
+    <member refid="group__create_1ga38f8a60c3cf319c9881a730e850d5258" kind="function"><name>get_create_cwdrop</name></member>
+    <member refid="group__create_1ga147c6631211760a905df8022b5562a0c" kind="function"><name>get_create_rwdrop</name></member>
+    <member refid="group__create_1ga50cf91a1cc5ab08c9325dc9e00c1d381" kind="function"><name>get_create_wall</name></member>
+    <member refid="group__create_1gad28b55232fb19a4044dc4931b1a8d580" kind="function"><name>get_create_lcliff</name></member>
+    <member refid="group__create_1ga1d03b7e4bbdbd270aee98f21886b22f1" kind="function"><name>get_create_lfcliff</name></member>
+    <member refid="group__create_1gaffec88876bd690aee900ca6d43b74d31" kind="function"><name>get_create_rfcliff</name></member>
+    <member refid="group__create_1ga82fac0313225b3e7d7560484bdb1dfd3" kind="function"><name>get_create_rcliff</name></member>
+    <member refid="group__create_1gafb5c58dacb1d7d5935889f94b0c1569a" kind="function"><name>get_create_llightbump</name></member>
+    <member refid="group__create_1ga849d6f0b05cf24e5b69e37afe896b59f" kind="function"><name>get_create_lflightbump</name></member>
+    <member refid="group__create_1ga9a6ecec64354cf00836e52bebcd97b22" kind="function"><name>get_create_lclightbump</name></member>
+    <member refid="group__create_1gaca772a76409a260343dfa364abec332e" kind="function"><name>get_create_rclightbump</name></member>
+    <member refid="group__create_1ga42fac5203b8024de9fb958a0ea08df34" kind="function"><name>get_create_rflightbump</name></member>
+    <member refid="group__create_1ga4e9778995c282b3ce4016b344be2f091" kind="function"><name>get_create_rlightbump</name></member>
+    <member refid="group__create_1ga0c6ef5d3da837fe93ee69b5a0a74c110" kind="function"><name>get_create_llightbump_amt</name></member>
+    <member refid="group__create_1ga7616b97c9edb9dc9693b8c2b2bc44997" kind="function"><name>get_create_rlightbump_amt</name></member>
+    <member refid="group__create_1gaccf4491ac1108d2df2f32d47f1fa873f" kind="function"><name>get_create_lflightbump_amt</name></member>
+    <member refid="group__create_1ga265ad18816253ec0fc9d9d993d873d30" kind="function"><name>get_create_lclightbump_amt</name></member>
+    <member refid="group__create_1ga6f2f0bd305ca1efc90b4821b4530f011" kind="function"><name>get_create_rclightbump_amt</name></member>
+    <member refid="group__create_1ga8e40b3bee79aceb797cbb24122cd17d9" kind="function"><name>get_create_rflightbump_amt</name></member>
+    <member refid="group__create_1gac133815157e1951484db164f4c67cb96" kind="function"><name>get_create_vwall</name></member>
+    <member refid="group__create_1ga01349b8e960753b9aa09a14067236926" kind="function"><name>get_create_infrared</name></member>
+    <member refid="group__create_1gaa35c544a6ede27f552dfbd1c7f41eed6" kind="function"><name>get_create_advance_button</name></member>
+    <member refid="group__create_1gad5846688c0a802619f7825b23b81fa2e" kind="function"><name>get_create_play_button</name></member>
+    <member refid="group__create_1ga250524753e18636ffbc0de77dad54ae6" kind="function"><name>get_create_normalized_angle</name></member>
+    <member refid="group__create_1gadba9389f7fdd656686146ecdc7cc78bf" kind="function"><name>set_create_normalized_angle</name></member>
+    <member refid="group__create_1gac78c5712b2968dafb8b10cfe2b71794e" kind="function"><name>get_create_total_angle</name></member>
+    <member refid="group__create_1ga59605a67edf04e01f6b2c0deff9402d5" kind="function"><name>set_create_total_angle</name></member>
+    <member refid="group__create_1gac2bdacf3f40c31e169de5e59a2d03d1e" kind="function"><name>get_create_distance</name></member>
+    <member refid="group__create_1ga813f240a2fdf50cc5aa2aaa536ae113b" kind="function"><name>set_create_distance</name></member>
+    <member refid="group__create_1ga25e5d6e6a7fa05a5269d4725ed2d2637" kind="function"><name>get_create_battery_charging_state</name></member>
+    <member refid="group__create_1gacd2df04c6d2dab43cb36e4b05264ed13" kind="function"><name>get_create_battery_temp</name></member>
+    <member refid="group__create_1ga5cb63de68443ca53aed72c86eb4ab4b0" kind="function"><name>get_create_battery_charge</name></member>
+    <member refid="group__create_1ga598d5e167b3682c4f617174b4d6c5235" kind="function"><name>get_create_battery_capacity</name></member>
+    <member refid="group__create_1ga0db9183ac17e9cfdc46f5637568dda6f" kind="function"><name>get_create_wall_amt</name></member>
+    <member refid="group__create_1ga706429aa16d3d26713cab419015c28da" kind="function"><name>get_create_lcliff_amt</name></member>
+    <member refid="group__create_1ga527feb72fe067841c1db447752faae14" kind="function"><name>get_create_lfcliff_amt</name></member>
+    <member refid="group__create_1ga1a6f4380dc028e0391f0ff8ee37409e9" kind="function"><name>get_create_rfcliff_amt</name></member>
+    <member refid="group__create_1ga730c7c2551fc77aed9d0127f725a355a" kind="function"><name>get_create_rcliff_amt</name></member>
+    <member refid="group__create_1gab62a99b563ca1c55be16c2b35f9400d0" kind="function"><name>get_create_song_number</name></member>
+    <member refid="group__create_1ga3a7e8ab9a265ecf27fabb7220006ad16" kind="function"><name>get_create_song_playing</name></member>
+    <member refid="group__create_1gabd9f5f33d06b8d5442ee0b6ec68ba350" kind="function"><name>create_stop</name></member>
+    <member refid="group__create_1ga632855d0a5f73552c6bd21d5fc27591a" kind="function"><name>create_drive</name></member>
+    <member refid="group__create_1ga2dc2c3c2b3ad84b80e8805cdae0b7850" kind="function"><name>create_drive_straight</name></member>
+    <member refid="group__create_1gac3e2e539c0b0b4cd8dddb37ce814980a" kind="function"><name>create_spin_CW</name></member>
+    <member refid="group__create_1gabc7cfe822d49e56faba4f496e6c049fa" kind="function"><name>create_spin_CCW</name></member>
+    <member refid="group__create_1gab94acab36e6a3d35be5fe8963d5ebe4c" kind="function"><name>create_drive_direct</name></member>
+    <member refid="group__create_1ga3d435df0a00551084222914b79fda6da" kind="function"><name>create_spin_block</name></member>
+    <member refid="group__create_1ga9b7f60ab670e5ede5bb85ea10458092e" kind="function"><name>_create_get_raw_encoders</name></member>
+    <member refid="group__create_1ga3893843fd78804fdc227ceb836f0314a" kind="function"><name>create_load_song</name></member>
+    <member refid="group__create_1ga41feb40543d92bf1aff57d73263c9c74" kind="function"><name>create_play_song</name></member>
+    <member refid="group__create_1ga706ecac088816976d13dded3e282a399" kind="function"><name>create_read_block</name></member>
+    <member refid="group__create_1gad63ef62ce183cbad5ef8e63472676f1a" kind="function"><name>create_write_byte</name></member>
+    <member refid="group__create_1ga51f19e3bbca222ed60467b810f30ccb7" kind="function"><name>create_clear_serial_buffer</name></member>
+    <member refid="group__create_1gae11567e2283f45237310b0233664799e" kind="function"><name>get_create_baud_rate</name></member>
+    <member refid="group__create_1ga0f08747f2e06d61b9dbc16f02702a62f" kind="function"><name>set_create_baud_rate</name></member>
+  </compound>
+  <compound refid="create_8hpp" kind="file"><name>create.hpp</name>
+    <member refid="create_8hpp_1a598a3330b3c21701223ee0ca14316eca" kind="define"><name>PI</name></member>
+  </compound>
+  <compound refid="create__codes_8h" kind="file"><name>create_codes.h</name>
+    <member refid="create__codes_8h_1a86a0bce6ec0ed06a4711304ece2ea5a6" kind="define"><name>OI_START</name></member>
+    <member refid="create__codes_8h_1a07a8fa72014acf411c7a0879a0153acf" kind="define"><name>OI_BAUD</name></member>
+    <member refid="create__codes_8h_1a4e7d1ba9386cf8430d16a95474e0063c" kind="define"><name>OI_SAFE</name></member>
+    <member refid="create__codes_8h_1abf7bdb0a8c5fb288b87a1e73782e0201" kind="define"><name>OI_FULL</name></member>
+    <member refid="create__codes_8h_1a82ccddb48c414b4c69bcba8b1a565208" kind="define"><name>OI_DEMO</name></member>
+    <member refid="create__codes_8h_1ab4646684a910c39066bd63c80d8031a2" kind="define"><name>OI_DRIVE</name></member>
+    <member refid="create__codes_8h_1a62fcd88b2eb8b4c01e52c31681b0a60f" kind="define"><name>OI_DRIVE_DIRECT</name></member>
+    <member refid="create__codes_8h_1a3a4f1ef934a634ff2e601efcbd7fe7be" kind="define"><name>OI_LEDS</name></member>
+    <member refid="create__codes_8h_1a294bffa74eb516fd8371ba2ae473e7df" kind="define"><name>OI_DIGITAL_OUTPUTS</name></member>
+    <member refid="create__codes_8h_1ab291a488d247c337dcf63ddc76fafd6a" kind="define"><name>OI_LOW_SIDE_DRIVERS</name></member>
+    <member refid="create__codes_8h_1a820d21a809086b87517e2333f8c8dad2" kind="define"><name>OI_SEND_IR</name></member>
+    <member refid="create__codes_8h_1a781acda4e6bcb725344bd0d4283f83be" kind="define"><name>OI_SONG</name></member>
+    <member refid="create__codes_8h_1aebdd1b6ecefc68f1c06a111133a1e9b3" kind="define"><name>OI_PLAY_SONG</name></member>
+    <member refid="create__codes_8h_1ac6d04d50c76feb4c312ac6e3677367c8" kind="define"><name>OI_SENSORS</name></member>
+    <member refid="create__codes_8h_1ac69ca6e64428dfdafa2b42f99d061bc2" kind="define"><name>OI_QUERY_LIST</name></member>
+    <member refid="create__codes_8h_1a3852a2a6b3c8c571913d8058fda76872" kind="define"><name>OI_STREAM</name></member>
+    <member refid="create__codes_8h_1a484e49a24d0c1b30e0bc7467355f768c" kind="define"><name>OI_PAUSE_RESUME_STREAM</name></member>
+    <member refid="create__codes_8h_1a0446501526372d4f98527cb9806118f5" kind="define"><name>OI_SCRIPT</name></member>
+    <member refid="create__codes_8h_1a60a59eec4860ad294579def6ba1f91bd" kind="define"><name>OI_PLAY_SCRIPT</name></member>
+    <member refid="create__codes_8h_1a66954024e8e71477f33a6c07dc9f1441" kind="define"><name>OI_SHOW_SCRIPT</name></member>
+    <member refid="create__codes_8h_1ab098283e44188befde206a835322d74f" kind="define"><name>OI_WAIT_TIME</name></member>
+    <member refid="create__codes_8h_1aa75f256466443324de418ef11b7b8666" kind="define"><name>OI_WAIT_DISTANCE</name></member>
+    <member refid="create__codes_8h_1a067f234cad70c4290827a148608b868a" kind="define"><name>OI_WAIT_ANGLE</name></member>
+    <member refid="create__codes_8h_1ae5c3183b747e09054b7c31e054b5d39c" kind="define"><name>OI_WAIT_EVENT</name></member>
+    <member refid="create__codes_8h_1a05174f0682f2728f2fd430d5d811054b" kind="define"><name>OI_BUMPS_AND_WHEEL_DROPS</name></member>
+    <member refid="create__codes_8h_1a432dc003337f6f6a309a0af7f7b80c48" kind="define"><name>OI_WALL</name></member>
+    <member refid="create__codes_8h_1a2c3864c2663ad88c9d026b4c5ff2122f" kind="define"><name>OI_CLIFF_LEFT</name></member>
+    <member refid="create__codes_8h_1aaf60598468f90c96b94db2c3a65fdf3e" kind="define"><name>OI_CLIFF_FRONT_LEFT</name></member>
+    <member refid="create__codes_8h_1ab2c57c1e02bdef5a89e1ec966e9fb5dc" kind="define"><name>OI_CLIFF_FRONT_RIGHT</name></member>
+    <member refid="create__codes_8h_1a848da0ac0ec57c592e3e5b6cfe2fcee9" kind="define"><name>OI_CLIFF_RIGHT</name></member>
+    <member refid="create__codes_8h_1ad2a18d306f807b902ad01a8ae2105f18" kind="define"><name>OI_VIRTUAL_WALL</name></member>
+    <member refid="create__codes_8h_1ae805927fabbbe949fb87138b049c296c" kind="define"><name>OI_LOW_SIDE_DRIVER_AND_WHEEL_OVERCURRENTS</name></member>
+    <member refid="create__codes_8h_1a172c7fbda90198da17bcb49b120711b1" kind="define"><name>OI_BUTTONS</name></member>
+    <member refid="create__codes_8h_1ace344f6a2e6ffe296ffca50ccd368ece" kind="define"><name>OI_DISTANCE</name></member>
+    <member refid="create__codes_8h_1ab2980159191d46db1eb320e53b700199" kind="define"><name>OI_ANGLE</name></member>
+    <member refid="create__codes_8h_1aac2bc3fbab88641586f87aa45b26da60" kind="define"><name>OI_CHARGING_STATE</name></member>
+    <member refid="create__codes_8h_1aee3a2e89948518d8a4f3e33d9116d9a5" kind="define"><name>OI_VOLTAGE</name></member>
+    <member refid="create__codes_8h_1aa14da68b9464ab95feb564bc2badaec9" kind="define"><name>OI_CURRENT</name></member>
+    <member refid="create__codes_8h_1a98a7017a1e0a1255faf1c8500ddaeff4" kind="define"><name>OI_CARGO_BAY_DIGITAL_INPUTS</name></member>
+  </compound>
+  <compound refid="digital_8h" kind="file"><name>digital.h</name>
+    <member refid="group__digital_1ga3eb7db79d996b92f7063b65dc34b3484" kind="function"><name>digital</name></member>
+    <member refid="group__digital_1ga1e12c564407ca4edc4c833ddb9f0344f" kind="function"><name>set_digital_value</name></member>
+    <member refid="group__digital_1ga4b672bd3758b1ff255b0bc51d6c9fd76" kind="function"><name>get_digital_value</name></member>
+    <member refid="group__digital_1gac6aacd543334547b664ff839888bfbe2" kind="function"><name>set_digital_output</name></member>
+    <member refid="group__digital_1ga865e9d1807739ddc9585c5665de1281c" kind="function"><name>get_digital_output</name></member>
+    <member refid="group__digital_1ga2d37bb1981515925418bd5a624eb1aa6" kind="function"><name>get_digital_pullup</name></member>
+    <member refid="group__digital_1ga6f4483ed1b9532f7637d79255107d2e9" kind="function"><name>set_digital_pullup</name></member>
+  </compound>
+  <compound refid="digital_8hpp" kind="file"><name>digital.hpp</name>
+  </compound>
+  <compound refid="export_8h" kind="file"><name>export.h</name>
+    <member refid="export_8h_1ad78259114e2822d9b93f376572655819" kind="define"><name>EXPORT_SYM</name></member>
+  </compound>
+  <compound refid="geometry_8h" kind="file"><name>geometry.h</name>
+    <member refid="geometry_8h_1a740b92e74889e69dc6fba3672ef007bf" kind="typedef"><name>point2</name></member>
+    <member refid="geometry_8h_1a2ce9ea0acb67122e9f6884b020263e9f" kind="typedef"><name>point3</name></member>
+    <member refid="geometry_8h_1ac05b76cb45185785dc024912b32b7b05" kind="typedef"><name>rectangle</name></member>
+    <member refid="geometry_8h_1ac1f6153905cf399f94735ed9e873ad99" kind="function"><name>create_point2</name></member>
+    <member refid="geometry_8h_1a857eaf4c97ea5a11cc8205d88cd97e96" kind="function"><name>create_point3</name></member>
+    <member refid="geometry_8h_1a16565d9e4cf25ba1a8b7efa988169fb3" kind="function"><name>create_rectangle</name></member>
+  </compound>
+  <compound refid="geometry_8hpp" kind="file"><name>geometry.hpp</name>
+  </compound>
+  <compound refid="graphics_8h" kind="file"><name>graphics.h</name>
+    <member refid="group__graphics_1gafb0564821f132bfe74508af8349a0faa" kind="enum"><name>Encoding</name></member>
+    <member refid="group__graphics_1ggafb0564821f132bfe74508af8349a0faaa30447e9f6efa4afdd251f9afc1d5fb44" kind="enumvalue"><name>RGB</name></member>
+    <member refid="group__graphics_1ggafb0564821f132bfe74508af8349a0faaa4a19a93c929964c201e01c8352dc8b9c" kind="enumvalue"><name>BGR</name></member>
+    <member refid="group__graphics_1ga08cafb219a227e701219541255fb77b4" kind="typedef"><name>Encoding</name></member>
+    <member refid="group__graphics_1gac9d7c4ff69254bd92cf968394eaa29d9" kind="function"><name>graphics_open</name></member>
+    <member refid="group__graphics_1ga7678bcc850c4da50ee71a4aabd052304" kind="function"><name>graphics_close</name></member>
+    <member refid="group__graphics_1gac0d7cb12c52179da9dac9ab705e722c2" kind="function"><name>graphics_update</name></member>
+    <member refid="group__graphics_1gabfee1317660a7674805bf4d56c23a2dc" kind="function"><name>graphics_clear</name></member>
+    <member refid="graphics_8h_1ab8841eeb200e88b462d527cc9ab45cb6" kind="function"><name>graphics_blit</name></member>
+    <member refid="graphics_8h_1a66db620a2f08f9ed91b2e9b3c206407c" kind="function"><name>graphics_blit_region</name></member>
+    <member refid="group__graphics_1gae9c15eab999556d3595c6ec59ed823fb" kind="function"><name>graphics_blit_enc</name></member>
+    <member refid="group__graphics_1ga8dde034ca28052432450dffd57d2a5ca" kind="function"><name>graphics_blit_region_enc</name></member>
+    <member refid="group__graphics_1ga857a974f8b4c33e7abfbdba39f283aa0" kind="function"><name>graphics_fill</name></member>
+    <member refid="group__graphics_1ga13e95732fd374201c6a7e572fde183f9" kind="function"><name>graphics_pixel</name></member>
+    <member refid="group__graphics_1ga83282f25b35d78f93ba2c65f265653df" kind="function"><name>graphics_line</name></member>
+    <member refid="group__graphics_1ga8d98440a493a62ea29daee0b1acf6b10" kind="function"><name>graphics_circle</name></member>
+    <member refid="group__graphics_1ga615b7a986f3e78c441adcc9394957993" kind="function"><name>graphics_circle_fill</name></member>
+    <member refid="group__graphics_1gace9bb9be0c182da1dd20cfc41be083e6" kind="function"><name>graphics_rectangle</name></member>
+    <member refid="group__graphics_1gaff056ff62a1ef05a38af8b7565bc8a64" kind="function"><name>graphics_rectangle_fill</name></member>
+    <member refid="group__graphics_1ga94825ba0f491ebeebf42d882f17d6ceb" kind="function"><name>graphics_triangle</name></member>
+    <member refid="group__graphics_1ga99ea53636f2bcb5e20f6fd96f2883a6f" kind="function"><name>graphics_triangle_fill</name></member>
+    <member refid="group__graphics_1gaa8cd41fec3b526e8cb48de1040ae45fe" kind="function"><name>get_key_state</name></member>
+    <member refid="group__graphics_1gaccc7319151e0ff91beabe06068a82471" kind="function"><name>get_mouse_position</name></member>
+    <member refid="group__graphics_1ga1bec0ed44c570403a77ccb351f351b98" kind="function"><name>get_mouse_middle_button</name></member>
+    <member refid="group__graphics_1ga509ecede60e1c150c46f88aec36876cc" kind="function"><name>get_mouse_left_button</name></member>
+    <member refid="group__graphics_1gac21888802b7312836315676b04397ad6" kind="function"><name>get_mouse_right_button</name></member>
+  </compound>
+  <compound refid="graphics__characters_8h" kind="file"><name>graphics_characters.h</name>
+    <member refid="graphics__characters_8h_1a0217cd28fb19053772dfe9df4c8276d4" kind="define"><name>NUMSEG</name></member>
+    <member refid="graphics__characters_8h_1ad3b15ff105e16268758a59e0b228827b" kind="define"><name>SEGL</name></member>
+    <member refid="graphics__characters_8h_1a30b74409594687262e85c1273457333d" kind="define"><name>SEGSP</name></member>
+    <member refid="graphics__characters_8h_1a26cdbb1a00213c810caccf21cd33a631" kind="define"><name>BOLD</name></member>
+    <member refid="graphics__characters_8h_1a6bf68eac37fdc98b9ee189b7fee29f69" kind="define"><name>NOBOLD</name></member>
+    <member refid="graphics__characters_8h_1aeecdf9fb2fee51ed741519397463031b" kind="define"><name>GXWINDOW</name></member>
+    <member refid="graphics__characters_8h_1a3135004fb6c11ea109090c92a2970250" kind="define"><name>GYWINDOW</name></member>
+    <member refid="graphics__characters_8h_1a3c9517bdfadb5efb1bbd0749da651af4" kind="variable"><name>__bold</name></member>
+    <member refid="group__graphics_1ga41cbbd1e9b6c9fd4586b5d451f9a1a97" kind="function"><name>graphics_segment_display</name></member>
+    <member refid="group__graphics_1gae617f52ed3909aef62a1e5ef3ed098e2" kind="function"><name>graphics_print_character</name></member>
+    <member refid="group__graphics_1ga135a7b8b7a66396caa2347a3fd15934d" kind="function"><name>graphics_print_string</name></member>
+    <member refid="group__graphics_1gad026f76f05f24e19827c9b0c3d6e5400" kind="function"><name>graphics_print_int</name></member>
+    <member refid="group__graphics_1ga52984fe99467614fe47b7a3f2c9e3dd7" kind="function"><name>graphics_print_float</name></member>
+  </compound>
+  <compound refid="graphics__key__code_8h" kind="file"><name>graphics_key_code.h</name>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2" kind="enum"><name>KeyCode</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa299655ae5f17ab61a534a75f69b3fa9" kind="enumvalue"><name>KeyEnter</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a396bff11179c00f3a3b39b811fcc2d5e" kind="enumvalue"><name>KeyBackSpace</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a51da587b611d1361fe3910ee42563f8b" kind="enumvalue"><name>KeyTab</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a13f69b5cd5b4cfd915d321742c242d3a" kind="enumvalue"><name>KeyCancel</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aba49fac8896869ecd88fc43858c14a06" kind="enumvalue"><name>KeyClear</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a4cea6508c6aefc6e40331a51cc120a59" kind="enumvalue"><name>KeyShift</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a1033ba597d93835580dcce249e6b74d5" kind="enumvalue"><name>KeyControl</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ac0dce66035ef95f08d610c3c0364962d" kind="enumvalue"><name>KeyAlt</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a6befdb227dcf424e8828b3ff6f19fd25" kind="enumvalue"><name>KeyPause</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae0fed15b76349c6d4a54a38a4ca12706" kind="enumvalue"><name>KeyCapsLock</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a82f371ce0cb848fe3934b8048e4a9d92" kind="enumvalue"><name>KeyEscape</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a82cb18dd6ef2d9721dcf85b92c30b4ab" kind="enumvalue"><name>KeySpace</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a9aae13b9f68e096444d1769f094fa992" kind="enumvalue"><name>KeyPageUp</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ad8ea0bebcc4991d7baa373eb7a5056a3" kind="enumvalue"><name>KeyPageDown</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a1a2b5704da0d7e32c4d32474fabbff1c" kind="enumvalue"><name>KeyEnd</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a96eb38c3b5e66972a4fdc46f0d982a28" kind="enumvalue"><name>KeyHome</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae64a8b7a14c41a6e6df1a424478d5004" kind="enumvalue"><name>KeyLeft</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa7effd93e048b37c190aebbebde2ba29" kind="enumvalue"><name>KeyUp</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a02213d17dc7f851e2b540e9f7297c4da" kind="enumvalue"><name>KeyRight</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ac8dc7cbe1a4eb52ce2200b33b59730ef" kind="enumvalue"><name>KeyDown</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ab60c5edd08bd0ca2b7e8d3216544eace" kind="enumvalue"><name>KeyComma</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ac53a8a98cefbd4c27a956672451adc9f" kind="enumvalue"><name>KeyPeriod</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae75992a2e6d0a62e97ec41c7216028de" kind="enumvalue"><name>KeySlash</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a2e39ce97ab24cdab08e7b3d069b81a14" kind="enumvalue"><name>KeyZero</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae226f3139853f4cea9a5c14a476c553d" kind="enumvalue"><name>KeyOne</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a225765f901c880f23cef69583e153b3e" kind="enumvalue"><name>KeyTwo</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a37eed363d454636eab753ffdaf23980d" kind="enumvalue"><name>KeyThree</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a7ff490c34d69e2ca0ea0ea66cd9bb387" kind="enumvalue"><name>KeyFour</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ac2f4ebe167e1bc2421e0cf229d400357" kind="enumvalue"><name>KeyFive</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a03eff5b04ceed14790e502ef62b9dd2d" kind="enumvalue"><name>KeySix</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a4e06f81b9becaecf653acaa52b64a86f" kind="enumvalue"><name>KeySeven</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a3a97c6e12a22c1445377743ce0d2004a" kind="enumvalue"><name>KeyEight</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a760e09e4b9a6ccd4c5f7aca76042a76c" kind="enumvalue"><name>KeyNine</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ac90ddfdcf6e5cc68806461b43e10c164" kind="enumvalue"><name>KeySemiColon</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae42f75cc5c041ae097e291aecf9ab37d" kind="enumvalue"><name>KeyEquals</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae2d5a749164d7df27006cff5e7a41864" kind="enumvalue"><name>KeyA</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa81f9caaf75beb2bb78ac56f923c4b01" kind="enumvalue"><name>KeyB</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2abf93aaa7d2f619e7c0b219d97b2124e8" kind="enumvalue"><name>KeyC</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a7dcdfbb10a01989000a0637ca37bec49" kind="enumvalue"><name>KeyD</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ac832fe4ae1d29373bddf80b081e6543e" kind="enumvalue"><name>KeyE</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ab2bca6bbb715009fae7256468230ad55" kind="enumvalue"><name>KeyF</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a22ba5fe527e7e61b0cef220e41a46db6" kind="enumvalue"><name>KeyG</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a6bf0a080ccfffdd03051579283cdbfd8" kind="enumvalue"><name>KeyH</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a3ebda3ed7241c90004eddf07dbed37d3" kind="enumvalue"><name>KeyI</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a807cc4da6393e5e3f42d4a3d0ee44784" kind="enumvalue"><name>KeyJ</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aeb1e61076beb0e328c0667df8908aaeb" kind="enumvalue"><name>KeyK</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa1c9bebc7412d7dcf6173173b0abf94f" kind="enumvalue"><name>KeyL</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aea4c638c3d4770199871bcd91c8edd18" kind="enumvalue"><name>KeyM</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a2d745d22b652f1cdf52006f21ec1d310" kind="enumvalue"><name>KeyN</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a2eac02bab0caff3f0ab6e8834056ddb6" kind="enumvalue"><name>KeyO</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aefeb29cd85c3abe892e91dd4cae5def8" kind="enumvalue"><name>KeyP</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ab54c97c02574889480fd911187b75906" kind="enumvalue"><name>KeyQ</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a5328a7df031480882802376df76445a2" kind="enumvalue"><name>KeyR</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ab185d05534828480b5c832ce4fd4a4cd" kind="enumvalue"><name>KeyS</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ab5810100c2fc527c7c0c986e955ee1fe" kind="enumvalue"><name>KeyT</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a71400855cd3ab3cbcbd93b90a3ca658d" kind="enumvalue"><name>KeyU</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a467f3d587b0cb80279f92f5ad8648ece" kind="enumvalue"><name>KeyV</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a20d458f0046df3eb50bbaf433bc05b12" kind="enumvalue"><name>KeyW</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a9bd4488034000a8352c9492ecf7cff03" kind="enumvalue"><name>KeyX</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a33c0013e1c679ce14345b32fdc6e29eb" kind="enumvalue"><name>KeyY</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2acb6ebb50429406f57c17e5d66a56ebba" kind="enumvalue"><name>KeyZ</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a64b6a5c25196b6251f965e7766daaf08" kind="enumvalue"><name>KeyOpenBracket</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a690c811a2e65da802d30804e6792a3f0" kind="enumvalue"><name>KeyBackSlash</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ad0ebcb157eab87624aaabd4329090728" kind="enumvalue"><name>KeyCloseBracket</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ab45e1cabe1aae100039e74ee7e503981" kind="enumvalue"><name>KeyNumPad0</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a14762572fafd899b5214422d48676b9e" kind="enumvalue"><name>KeyNumPad1</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aab632a3188e933f315c52b5d69115855" kind="enumvalue"><name>KeyNumPad2</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a91c2776ac9d98596606652a403d7c095" kind="enumvalue"><name>KeyNumPad3</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa4da25a5838f3d8daedf6186ef5bc169" kind="enumvalue"><name>KeyNumPad4</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a35ff35e8e93c6e20e1e5f6b8dfff0bec" kind="enumvalue"><name>KeyNumPad5</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a72d180be977a56121f378a3372b70e2f" kind="enumvalue"><name>KeyNumPad6</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2adc01f05089dbdde5b80b4e05975fa868" kind="enumvalue"><name>KeyNumPad7</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a47f2f518cb3d618f953b53afef94efc6" kind="enumvalue"><name>KeyNumPad8</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a4707b51bd1e3aa51dab59cfd1645140e" kind="enumvalue"><name>KeyNumPad9</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a8f23e578f13fe4c67e54786bb1ec74f6" kind="enumvalue"><name>KeyMultiply</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a88db7c0b1657e420ae36aa74e34a75a0" kind="enumvalue"><name>KeyAdd</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a8fe0d35c4dad9c448b3f2d162ef3531b" kind="enumvalue"><name>KeySeparator</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ac6dcce9847893032126bebe6b60785aa" kind="enumvalue"><name>KeySubtract</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae40164afa628fb2eee51c128fe4f328b" kind="enumvalue"><name>KeyDecimal</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a20aefbd4070de6ef490cbec86d287bc7" kind="enumvalue"><name>KeyDivide</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae7836ad3ac84f24cc1393468c21624a3" kind="enumvalue"><name>KeyF1</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2abe2d2ecaa29bf9e6d0f281184f8b1e20" kind="enumvalue"><name>KeyF2</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a93e711ad76aabf895e54f47f7dcb5574" kind="enumvalue"><name>KeyF3</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aaa1e7b05dc7d6d3dbb56aacf97af5916" kind="enumvalue"><name>KeyF4</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ad8d3b0cbdabc4914b37672de0096e606" kind="enumvalue"><name>KeyF5</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a5db519ab44242bc992c25989d0082201" kind="enumvalue"><name>KeyF6</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a3a19afb4dc55ac63f8dce05c6cc41750" kind="enumvalue"><name>KeyF7</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a59742f58301b7db06337e4d11090c841" kind="enumvalue"><name>KeyF8</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a136fb67c3d568d0dd4e3b9eabcf029da" kind="enumvalue"><name>KeyF9</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa6f6d74cb922d480e2e3c7c5e73dd062" kind="enumvalue"><name>KeyF10</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a702ca31c85c2e2dfad8e327d1e1cb9c7" kind="enumvalue"><name>KeyF11</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a40ea8f35e5d2069d9127f5dbe2fd44fb" kind="enumvalue"><name>KeyF12</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a6453259c4f57be6ff865fced839ce91f" kind="enumvalue"><name>KeyDelete</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa27211d21efde61f44d19219c43d0e85" kind="enumvalue"><name>KeyNumLock</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2af8cb4701a346b450a1b6cca1191caaad" kind="enumvalue"><name>KeyScrollLock</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a41e83fa6585a18a72cbff55b98e12565" kind="enumvalue"><name>KeyPrintScreen</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a32c56fc722e10081b935fc20d6cccddd" kind="enumvalue"><name>KeyInsert</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2acfab8e69b254414cb611c6ef814899f1" kind="enumvalue"><name>KeyHelp</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a9b0035e8ad8277eca884f23d227ee406" kind="enumvalue"><name>KeyMeta</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a97daf31a538a596f55978faa83d44985" kind="enumvalue"><name>KeyBackQuote</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a10750d8e8245591411a0406e5208dacc" kind="enumvalue"><name>KeyQuote</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae1153b1885cef5903c7ca5b1890e2671" kind="enumvalue"><name>KeyFinal</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae1b0cbc3181cba17babeb6e687cdb81a" kind="enumvalue"><name>KeyConvert</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a554cff2066ae2fce37b4a82052a6369c" kind="enumvalue"><name>KeyNonConvert</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a28d006081be0776c6681321eeda8b1a5" kind="enumvalue"><name>KeyAccept</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a24e709ee744cd5b0cb1010ace9a9848b" kind="enumvalue"><name>KeyModeChange</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa5b5a7cca72f01cde3869b247586d6a4" kind="enumvalue"><name>KeyKana</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a73e60940617b7c51f87231e1565cc153" kind="enumvalue"><name>KeyKanji</name></member>
+    <member refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2acf298d846200d0d38a8355a5c637d6ce" kind="enumvalue"><name>KeyUndefined</name></member>
+  </compound>
+  <compound refid="gyro_8h" kind="file"><name>gyro.h</name>
+    <member refid="group__gyro_1ga82db7c0ae49b907ee928cd0c187260f5" kind="function"><name>gyro_x</name></member>
+    <member refid="group__gyro_1gaf030d5700d20d3def7857762936ed29e" kind="function"><name>gyro_y</name></member>
+    <member refid="group__gyro_1ga5f23dcb4b7c0bc4c0cae7749e96c67d1" kind="function"><name>gyro_z</name></member>
+    <member refid="group__gyro_1ga0efcdfbafe6312deb924c1d9b37b6dd6" kind="function"><name>gyro_calibrate</name></member>
+  </compound>
+  <compound refid="gyro_8hpp" kind="file"><name>gyro.hpp</name>
+  </compound>
+  <compound refid="log_8hpp" kind="file"><name>log.hpp</name>
+  </compound>
+  <compound refid="magneto_8h" kind="file"><name>magneto.h</name>
+    <member refid="group__magneto_1gabec77e162ab72f3c63f91a006f51b2c4" kind="function"><name>magneto_x</name></member>
+    <member refid="group__magneto_1gab536ca9dc29118ba2f1231c011531e7b" kind="function"><name>magneto_y</name></member>
+    <member refid="group__magneto_1ga78e58e4d74bfe1767d090644010a574d" kind="function"><name>magneto_z</name></member>
+  </compound>
+  <compound refid="magneto_8hpp" kind="file"><name>magneto.hpp</name>
+  </compound>
+  <compound refid="constants_8hpp" kind="file"><name>constants.hpp</name>
+  </compound>
+  <compound refid="motor_8h" kind="file"><name>motor.h</name>
+    <member refid="group__motor_1ga5713dda57d3628366a0ee6fd5057400d" kind="function"><name>get_motor_position_counter</name></member>
+    <member refid="group__motor_1ga4b767e80b3b1723b6720dd016cc1be1b" kind="function"><name>gmpc</name></member>
+    <member refid="group__motor_1gab445096e12260140b6c0afc26d26b325" kind="function"><name>clear_motor_position_counter</name></member>
+    <member refid="group__motor_1ga3f000f325222eb01b69844290a654795" kind="function"><name>cmpc</name></member>
+    <member refid="group__motor_1ga0e71753d12baa58e6093b9afd1e5fd7e" kind="function"><name>move_at_velocity</name></member>
+    <member refid="group__motor_1gabd36f01986c363f70d86c7a768ae1348" kind="function"><name>mav</name></member>
+    <member refid="group__motor_1gafce5cf37833e487343ece5256fe66d37" kind="function"><name>move_to_position</name></member>
+    <member refid="group__motor_1gafa2041480c9157d97c9c5845f775e5a7" kind="function"><name>mtp</name></member>
+    <member refid="group__motor_1ga318f1b33ee4a41f44e10075a1ad0a90e" kind="function"><name>move_relative_position</name></member>
+    <member refid="group__motor_1ga69b3d9b619cc00953a0b522dcac43771" kind="function"><name>mrp</name></member>
+    <member refid="group__motor_1ga5ead4ef2e36ce78e8b247c54cc3418b0" kind="function"><name>set_pid_gains</name></member>
+    <member refid="group__motor_1gab9dd99269c7f3584ca6f1277150f55f9" kind="function"><name>get_pid_gains</name></member>
+    <member refid="group__motor_1ga50d36bdfccc143992c8ab51689536ecc" kind="function"><name>freeze</name></member>
+    <member refid="group__motor_1ga242bcc237071dae3d5ee47107db7780d" kind="function"><name>get_motor_done</name></member>
+    <member refid="group__motor_1ga51c44577ae12ad636e27a94899f73a11" kind="function"><name>block_motor_done</name></member>
+    <member refid="group__motor_1gab9c5212ebf04366ae991deb14b570c58" kind="function"><name>bmd</name></member>
+    <member refid="group__motor_1gaf5ff331a2b0412db0b18c7e067bd29ef" kind="function"><name>setpwm</name></member>
+    <member refid="group__motor_1gadd2d621ff37f83feee815eb5a398b10a" kind="function"><name>getpwm</name></member>
+    <member refid="group__motor_1ga55a302772158e1f15f1c90992f535272" kind="function"><name>fd</name></member>
+    <member refid="group__motor_1ga3f5edef0489aca523a64a40e8fe16320" kind="function"><name>bk</name></member>
+    <member refid="group__motor_1ga046127adcac7487b0bbaf0b1ee1d492b" kind="function"><name>motor</name></member>
+    <member refid="group__motor_1gabe90111c4e73d8fc98c752bb13391cb8" kind="function"><name>baasbennaguui</name></member>
+    <member refid="group__motor_1ga6711550d798f1d8ef279d08fab571b5e" kind="function"><name>motor_power</name></member>
+    <member refid="group__motor_1gab32a8ae225a031b09e355e0813bec06f" kind="function"><name>off</name></member>
+    <member refid="group__motor_1gad6cb702751d048f67025d99608424796" kind="function"><name>alloff</name></member>
+    <member refid="group__motor_1gae640dbf28bc931da0ff9d2369066c641" kind="function"><name>ao</name></member>
+  </compound>
+  <compound refid="motor_8hpp" kind="file"><name>motor.hpp</name>
+  </compound>
+  <compound refid="socket_8hpp" kind="file"><name>socket.hpp</name>
+    <member refid="socket_8hpp_1ac5edad8c23925f7425866e7253f7f02a" kind="typedef"><name>socket_fd_t</name></member>
+  </compound>
+  <compound refid="logic_8hpp" kind="file"><name>logic.hpp</name>
+  </compound>
+  <compound refid="sensor_8hpp" kind="file"><name>sensor.hpp</name>
+  </compound>
+  <compound refid="servo_8h" kind="file"><name>servo.h</name>
+    <member refid="group__servo_1ga74414a627ba987f929cb23de9173b056" kind="function"><name>enable_servo</name></member>
+    <member refid="group__servo_1ga04ea4f9bce0b434d3cc2f41fcda99c14" kind="function"><name>disable_servo</name></member>
+    <member refid="group__servo_1gad82d46ae912a2a0de1f942ce7e10bfbf" kind="function"><name>enable_servos</name></member>
+    <member refid="group__servo_1ga93b41914541860f719247c1f14a601ed" kind="function"><name>disable_servos</name></member>
+    <member refid="group__servo_1gaa8cb86f109b7d1eb497c90f0386eee9a" kind="function"><name>set_servo_enabled</name></member>
+    <member refid="group__servo_1ga63f2d035ad976f13423d3e046d456967" kind="function"><name>get_servo_enabled</name></member>
+    <member refid="group__servo_1ga7576c77d711e981259a7d67e4e304155" kind="function"><name>get_servo_position</name></member>
+    <member refid="group__servo_1ga7bd7903bca70212767182ff077b0b89f" kind="function"><name>set_servo_position</name></member>
+  </compound>
+  <compound refid="servo_8hpp" kind="file"><name>servo.hpp</name>
+  </compound>
+  <compound refid="thread_8h" kind="file"><name>thread.h</name>
+    <member refid="group__thread_1ga8e3564199059191e2e89c86bd95dfaed" kind="typedef"><name>thread_function</name></member>
+    <member refid="group__thread_1gac9c53fb550d97d6d0ee04f13957f18d0" kind="function"><name>mutex_create</name></member>
+    <member refid="group__thread_1gaa08ae0459f0e31b7c611ca81e285c273" kind="function"><name>mutex_lock</name></member>
+    <member refid="group__thread_1ga2c3ccecaebe15c1f43def485da2c399d" kind="function"><name>mutex_trylock</name></member>
+    <member refid="group__thread_1gaed6032809721c21f7aae938ee5cc2dff" kind="function"><name>mutex_unlock</name></member>
+    <member refid="group__thread_1ga62eb2dbc14e329e96bbf5691ec1dfee3" kind="function"><name>mutex_destroy</name></member>
+    <member refid="group__thread_1gad2588e21e1b9643b6310da12d251d86a" kind="function"><name>thread_create</name></member>
+    <member refid="group__thread_1gab1cab7238611cc0e8ecb6cedd8f3b4de" kind="function"><name>thread_start</name></member>
+    <member refid="group__thread_1gaae2fdbe256ab077842db9d1693ff2d01" kind="function"><name>thread_wait</name></member>
+    <member refid="group__thread_1gaaa9816237851d3dbae5e975be5701131" kind="function"><name>thread_destroy</name></member>
+  </compound>
+  <compound refid="thread_8hpp" kind="file"><name>thread.hpp</name>
+  </compound>
+  <compound refid="time_8h" kind="file"><name>time.h</name>
+    <member refid="time_8h_1af0c555a8582de02b428aa7b11735a45d" kind="function"><name>msleep</name></member>
+    <member refid="time_8h_1a74a833b476f3c37956abf6b4a0fa7989" kind="function"><name>systime</name></member>
+    <member refid="time_8h_1a541442824a656f9c820631f4b8adf441" kind="function"><name>seconds</name></member>
+  </compound>
+  <compound refid="wait__for_8h" kind="file"><name>wait_for.h</name>
+    <member refid="wait__for_8h_1a74acd89d9a666f725aaa1a476b0e365d" kind="function"><name>wait_for_milliseconds</name></member>
+    <member refid="wait__for_8h_1a368e329006021dadff3cc5a242fa3496" kind="function"><name>wait_for_touch</name></member>
+    <member refid="wait__for_8h_1ae05810376ef3be973a565af8b7470693" kind="function"><name>wait_for_a_button</name></member>
+    <member refid="wait__for_8h_1ae196d362dcc42731add42961d3af9c36" kind="function"><name>wait_for_b_button</name></member>
+    <member refid="wait__for_8h_1a8385c7f8de3278ffc64481beba49ffbf" kind="function"><name>wait_for_c_button</name></member>
+    <member refid="wait__for_8h_1aee3cee1ad54ff82ed8953b7f4ce593a9" kind="function"><name>wait_for_x_button</name></member>
+    <member refid="wait__for_8h_1ab8c44ae16043d54ba32460e33137495c" kind="function"><name>wait_for_y_button</name></member>
+    <member refid="wait__for_8h_1a8b17289ed8940e950d6accf9347e6542" kind="function"><name>wait_for_z_button</name></member>
+    <member refid="wait__for_8h_1a94a83d05c1588cba3b2fa7b80e8f7ad0" kind="function"><name>wait_for_side_button</name></member>
+    <member refid="wait__for_8h_1ab1c1b0de9d8cbfd8a7574b367d57f9f1" kind="function"><name>wait_for_any_button</name></member>
+    <member refid="wait__for_8h_1af413b9f424f6f55b45805aa161125605" kind="function"><name>wait_for_a_button_clicked</name></member>
+    <member refid="wait__for_8h_1ac1bc2051b8b966ab9e0d15a6dd6513db" kind="function"><name>wait_for_b_button_clicked</name></member>
+    <member refid="wait__for_8h_1a868a70fc91aa446f8d719c6d13c5d9f2" kind="function"><name>wait_for_c_button_clicked</name></member>
+    <member refid="wait__for_8h_1aa02cf2ac3023fcfb71641e45e770d17e" kind="function"><name>wait_for_x_button_clicked</name></member>
+    <member refid="wait__for_8h_1abc3fd91fb30a4c67f83a8ed29685a843" kind="function"><name>wait_for_y_button_clicked</name></member>
+    <member refid="wait__for_8h_1a6f2f765b38c4582e9580c3845993148b" kind="function"><name>wait_for_z_button_clicked</name></member>
+    <member refid="wait__for_8h_1a4df94b781ad03619d46d30dcbf08dd5a" kind="function"><name>wait_for_side_button_clicked</name></member>
+  </compound>
+  <compound refid="group__accel" kind="group"><name>accel</name>
+    <member refid="group__accel_1gaf5e5829bc8a5b1d877278d0266e79c34" kind="function"><name>accel_x</name></member>
+    <member refid="group__accel_1ga8e37fddd2d8d473ccaefa2aa39455135" kind="function"><name>accel_y</name></member>
+    <member refid="group__accel_1ga45cceb351be427425b10630c92e2c31e" kind="function"><name>accel_z</name></member>
+    <member refid="group__accel_1ga12bc45f62d849a3187697dc1ec869d1c" kind="function"><name>accel_calibrate</name></member>
+  </compound>
+  <compound refid="group__analog" kind="group"><name>analog</name>
+    <member refid="group__analog_1gafa28db0c35c02b77341a6bed7aac0cb4" kind="function"><name>analog</name></member>
+    <member refid="group__analog_1gab67f7af2df378fc643c9452946aa470b" kind="function"><name>analog8</name></member>
+    <member refid="group__analog_1ga9dca569422efccf49420ebb82ce26aef" kind="function"><name>analog10</name></member>
+    <member refid="group__analog_1gae4df1b885eb1242e8906bbb053e4aa48" kind="function"><name>analog12</name></member>
+    <member refid="group__analog_1gac6275954d0f20882dce85bbf2a191add" kind="function"><name>analog_et</name></member>
+    <member refid="group__analog_1gafe0e26968180cb71db2c398574b82731" kind="function"><name>set_analog_pullup</name></member>
+    <member refid="group__analog_1ga0efa75659885dfd582847bfa5590d2d8" kind="function"><name>get_analog_pullup</name></member>
+  </compound>
+  <compound refid="group__battery" kind="group"><name>battery</name>
+    <member refid="group__battery_1ga00b9c876fa198ae3485c44eb7ca92519" kind="function"><name>battery_charging</name></member>
+    <member refid="group__battery_1gae1ca31cc83102eaaeaf1afa62a15abb6" kind="function"><name>power_level</name></member>
+    <member refid="group__battery_1ga4240f318b6aaab523f4947ad1314ef15" kind="function"><name>power_level_nimh</name></member>
+    <member refid="group__battery_1gafed7c1f128056008a75719ff634a1af4" kind="function"><name>power_level_lipo</name></member>
+    <member refid="group__battery_1ga2998e0fd731d4c46608ffbea835e6f03" kind="function"><name>power_level_life</name></member>
+  </compound>
+  <compound refid="group__button" kind="group"><name>button</name>
+    <member refid="group__button_1gad816f48e95049f42e7ddfe83bebcf67a" kind="function"><name>set_a_button_text</name></member>
+    <member refid="group__button_1ga9c70bfdf09245ab36547bdbc2cc31a7c" kind="function"><name>set_b_button_text</name></member>
+    <member refid="group__button_1gac41766a323aded16a6071785942d9701" kind="function"><name>set_c_button_text</name></member>
+    <member refid="group__button_1ga5377556e42fd72d8a8512aef83708e2c" kind="function"><name>set_x_button_text</name></member>
+    <member refid="group__button_1ga1a56c447f8161b6b4d4af8edd5e83532" kind="function"><name>set_y_button_text</name></member>
+    <member refid="group__button_1gadd44ccefbc0094c6256676e1b6e3ddd7" kind="function"><name>set_z_button_text</name></member>
+    <member refid="group__button_1gac8f47305ed4a965c87880dd9a7f89190" kind="function"><name>a_button</name></member>
+    <member refid="group__button_1ga5fc124dea4693c2e5846329107dbab1b" kind="function"><name>b_button</name></member>
+    <member refid="group__button_1gab39631d7431b4bf38c8037dc741b171a" kind="function"><name>c_button</name></member>
+    <member refid="group__button_1ga650c53fd8eca117e7bbece899d3efc5d" kind="function"><name>x_button</name></member>
+    <member refid="group__button_1ga6bd72b4acad143902eb35d50a7686b58" kind="function"><name>y_button</name></member>
+    <member refid="group__button_1gaec792dc42538e698fccd11cab61d0dcf" kind="function"><name>z_button</name></member>
+    <member refid="group__button_1ga1af4e87e29182513ca6f0a24ea27f8bb" kind="function"><name>side_button</name></member>
+    <member refid="group__button_1gad570b4c97c58ae8fa41ed9918f7f4b1a" kind="function"><name>black_button</name></member>
+    <member refid="group__button_1ga34eaae0b8960db57c37e35eecc891b6c" kind="function"><name>left_button</name></member>
+    <member refid="group__button_1ga22b4859d4454499466dea2293d109d6d" kind="function"><name>right_button</name></member>
+    <member refid="group__button_1gab294a96f14661b2d454d4514b9d81683" kind="function"><name>a_button_clicked</name></member>
+    <member refid="group__button_1gad9954c57134f07035f81c03274472f9c" kind="function"><name>b_button_clicked</name></member>
+    <member refid="group__button_1ga5d9b1aeebef7e414072dd9d7c1197520" kind="function"><name>c_button_clicked</name></member>
+    <member refid="group__button_1ga0f39976525759a3a341a1d8ec0f22ec6" kind="function"><name>x_button_clicked</name></member>
+    <member refid="group__button_1ga583c9e4603220a934d47667dca1decc3" kind="function"><name>y_button_clicked</name></member>
+    <member refid="group__button_1ga5fd7315c64006429bab9dd9e67cc61a3" kind="function"><name>z_button_clicked</name></member>
+    <member refid="group__button_1gae54db2cf4e21fa70c09d571448b66f8a" kind="function"><name>side_button_clicked</name></member>
+    <member refid="group__button_1ga59eb1136cc828a812a368d4cf9a30c09" kind="function"><name>any_button</name></member>
+    <member refid="group__button_1gaf817d3b9e670746da2d171bd0065f2a6" kind="function"><name>extra_buttons_show</name></member>
+    <member refid="group__button_1gaefa6dc45e14284cb813eddd89e2f759b" kind="function"><name>extra_buttons_hide</name></member>
+    <member refid="group__button_1ga0ba2508dd7683d9bf0848f7491a374b8" kind="function"><name>get_extra_buttons_visible</name></member>
+    <member refid="group__button_1ga50d7d9d062e1067abb7444d9931a1e79" kind="function"><name>set_extra_buttons_visible</name></member>
+  </compound>
+  <compound refid="group__compass" kind="group"><name>compass</name>
+    <member refid="group__compass_1ga967556bd100e24df918e7adb912bd26a" kind="function"><name>calibrate_compass</name></member>
+    <member refid="group__compass_1gac3e85c6216882ab5e6cc0be3111bc2c7" kind="function"><name>set_compass_params</name></member>
+    <member refid="group__compass_1ga1514178173bb3ea8effe4d6c183ec0f9" kind="function"><name>get_compass_angle</name></member>
+  </compound>
+  <compound refid="group__console" kind="group"><name>console</name>
+    <member refid="group__console_1ga490370bb141fb9d46cafb20abdf77e65" kind="function"><name>console_clear</name></member>
+  </compound>
+  <compound refid="group__create" kind="group"><name>create</name>
+    <member refid="group__create_1ga38089f9eb9ffd84a2a58d5aa17460bab" kind="function"><name>create_connect</name></member>
+    <member refid="group__create_1ga22c6568527d452f33795413743c87180" kind="function"><name>create_connect_once</name></member>
+    <member refid="group__create_1ga51d8918cab636fb2b5d7b5d04e84a3ea" kind="function"><name>create_disconnect</name></member>
+    <member refid="group__create_1ga55ccc83379a2eb11fc0e2861e381722c" kind="function"><name>create_passive</name></member>
+    <member refid="group__create_1gaa5a223071ed2d18caf9e52633ce8ccb5" kind="function"><name>create_safe</name></member>
+    <member refid="group__create_1gaa0e5b432c32ceb3a3b3c01e0e767dba5" kind="function"><name>create_full</name></member>
+    <member refid="group__create_1gaf69b8a95f668056f9cbf947c30f26829" kind="function"><name>get_create_mode</name></member>
+    <member refid="group__create_1gab9e8f0c2dbbc3887da7607c7c1cb2afe" kind="function"><name>get_create_lbump</name></member>
+    <member refid="group__create_1ga63e5aceaaf8d5a503c4fd237bc8f3f32" kind="function"><name>get_create_rbump</name></member>
+    <member refid="group__create_1ga9f747bae96d90b52ff22f91a8285cdf2" kind="function"><name>get_create_lwdrop</name></member>
+    <member refid="group__create_1ga38f8a60c3cf319c9881a730e850d5258" kind="function"><name>get_create_cwdrop</name></member>
+    <member refid="group__create_1ga147c6631211760a905df8022b5562a0c" kind="function"><name>get_create_rwdrop</name></member>
+    <member refid="group__create_1ga50cf91a1cc5ab08c9325dc9e00c1d381" kind="function"><name>get_create_wall</name></member>
+    <member refid="group__create_1gad28b55232fb19a4044dc4931b1a8d580" kind="function"><name>get_create_lcliff</name></member>
+    <member refid="group__create_1ga1d03b7e4bbdbd270aee98f21886b22f1" kind="function"><name>get_create_lfcliff</name></member>
+    <member refid="group__create_1gaffec88876bd690aee900ca6d43b74d31" kind="function"><name>get_create_rfcliff</name></member>
+    <member refid="group__create_1ga82fac0313225b3e7d7560484bdb1dfd3" kind="function"><name>get_create_rcliff</name></member>
+    <member refid="group__create_1gafb5c58dacb1d7d5935889f94b0c1569a" kind="function"><name>get_create_llightbump</name></member>
+    <member refid="group__create_1ga849d6f0b05cf24e5b69e37afe896b59f" kind="function"><name>get_create_lflightbump</name></member>
+    <member refid="group__create_1ga9a6ecec64354cf00836e52bebcd97b22" kind="function"><name>get_create_lclightbump</name></member>
+    <member refid="group__create_1gaca772a76409a260343dfa364abec332e" kind="function"><name>get_create_rclightbump</name></member>
+    <member refid="group__create_1ga42fac5203b8024de9fb958a0ea08df34" kind="function"><name>get_create_rflightbump</name></member>
+    <member refid="group__create_1ga4e9778995c282b3ce4016b344be2f091" kind="function"><name>get_create_rlightbump</name></member>
+    <member refid="group__create_1ga0c6ef5d3da837fe93ee69b5a0a74c110" kind="function"><name>get_create_llightbump_amt</name></member>
+    <member refid="group__create_1ga7616b97c9edb9dc9693b8c2b2bc44997" kind="function"><name>get_create_rlightbump_amt</name></member>
+    <member refid="group__create_1gaccf4491ac1108d2df2f32d47f1fa873f" kind="function"><name>get_create_lflightbump_amt</name></member>
+    <member refid="group__create_1ga265ad18816253ec0fc9d9d993d873d30" kind="function"><name>get_create_lclightbump_amt</name></member>
+    <member refid="group__create_1ga6f2f0bd305ca1efc90b4821b4530f011" kind="function"><name>get_create_rclightbump_amt</name></member>
+    <member refid="group__create_1ga8e40b3bee79aceb797cbb24122cd17d9" kind="function"><name>get_create_rflightbump_amt</name></member>
+    <member refid="group__create_1gac133815157e1951484db164f4c67cb96" kind="function"><name>get_create_vwall</name></member>
+    <member refid="group__create_1ga01349b8e960753b9aa09a14067236926" kind="function"><name>get_create_infrared</name></member>
+    <member refid="group__create_1gaa35c544a6ede27f552dfbd1c7f41eed6" kind="function"><name>get_create_advance_button</name></member>
+    <member refid="group__create_1gad5846688c0a802619f7825b23b81fa2e" kind="function"><name>get_create_play_button</name></member>
+    <member refid="group__create_1ga250524753e18636ffbc0de77dad54ae6" kind="function"><name>get_create_normalized_angle</name></member>
+    <member refid="group__create_1gadba9389f7fdd656686146ecdc7cc78bf" kind="function"><name>set_create_normalized_angle</name></member>
+    <member refid="group__create_1gac78c5712b2968dafb8b10cfe2b71794e" kind="function"><name>get_create_total_angle</name></member>
+    <member refid="group__create_1ga59605a67edf04e01f6b2c0deff9402d5" kind="function"><name>set_create_total_angle</name></member>
+    <member refid="group__create_1gac2bdacf3f40c31e169de5e59a2d03d1e" kind="function"><name>get_create_distance</name></member>
+    <member refid="group__create_1ga813f240a2fdf50cc5aa2aaa536ae113b" kind="function"><name>set_create_distance</name></member>
+    <member refid="group__create_1ga25e5d6e6a7fa05a5269d4725ed2d2637" kind="function"><name>get_create_battery_charging_state</name></member>
+    <member refid="group__create_1gacd2df04c6d2dab43cb36e4b05264ed13" kind="function"><name>get_create_battery_temp</name></member>
+    <member refid="group__create_1ga5cb63de68443ca53aed72c86eb4ab4b0" kind="function"><name>get_create_battery_charge</name></member>
+    <member refid="group__create_1ga598d5e167b3682c4f617174b4d6c5235" kind="function"><name>get_create_battery_capacity</name></member>
+    <member refid="group__create_1ga0db9183ac17e9cfdc46f5637568dda6f" kind="function"><name>get_create_wall_amt</name></member>
+    <member refid="group__create_1ga706429aa16d3d26713cab419015c28da" kind="function"><name>get_create_lcliff_amt</name></member>
+    <member refid="group__create_1ga527feb72fe067841c1db447752faae14" kind="function"><name>get_create_lfcliff_amt</name></member>
+    <member refid="group__create_1ga1a6f4380dc028e0391f0ff8ee37409e9" kind="function"><name>get_create_rfcliff_amt</name></member>
+    <member refid="group__create_1ga730c7c2551fc77aed9d0127f725a355a" kind="function"><name>get_create_rcliff_amt</name></member>
+    <member refid="group__create_1gab62a99b563ca1c55be16c2b35f9400d0" kind="function"><name>get_create_song_number</name></member>
+    <member refid="group__create_1ga3a7e8ab9a265ecf27fabb7220006ad16" kind="function"><name>get_create_song_playing</name></member>
+    <member refid="group__create_1gabd9f5f33d06b8d5442ee0b6ec68ba350" kind="function"><name>create_stop</name></member>
+    <member refid="group__create_1ga632855d0a5f73552c6bd21d5fc27591a" kind="function"><name>create_drive</name></member>
+    <member refid="group__create_1ga2dc2c3c2b3ad84b80e8805cdae0b7850" kind="function"><name>create_drive_straight</name></member>
+    <member refid="group__create_1gac3e2e539c0b0b4cd8dddb37ce814980a" kind="function"><name>create_spin_CW</name></member>
+    <member refid="group__create_1gabc7cfe822d49e56faba4f496e6c049fa" kind="function"><name>create_spin_CCW</name></member>
+    <member refid="group__create_1gab94acab36e6a3d35be5fe8963d5ebe4c" kind="function"><name>create_drive_direct</name></member>
+    <member refid="group__create_1ga3d435df0a00551084222914b79fda6da" kind="function"><name>create_spin_block</name></member>
+    <member refid="group__create_1ga9b7f60ab670e5ede5bb85ea10458092e" kind="function"><name>_create_get_raw_encoders</name></member>
+    <member refid="group__create_1ga3893843fd78804fdc227ceb836f0314a" kind="function"><name>create_load_song</name></member>
+    <member refid="group__create_1ga41feb40543d92bf1aff57d73263c9c74" kind="function"><name>create_play_song</name></member>
+    <member refid="group__create_1ga706ecac088816976d13dded3e282a399" kind="function"><name>create_read_block</name></member>
+    <member refid="group__create_1gad63ef62ce183cbad5ef8e63472676f1a" kind="function"><name>create_write_byte</name></member>
+    <member refid="group__create_1ga51f19e3bbca222ed60467b810f30ccb7" kind="function"><name>create_clear_serial_buffer</name></member>
+    <member refid="group__create_1gae11567e2283f45237310b0233664799e" kind="function"><name>get_create_baud_rate</name></member>
+    <member refid="group__create_1ga0f08747f2e06d61b9dbc16f02702a62f" kind="function"><name>set_create_baud_rate</name></member>
+    <member refid="group__create_1gadde31111a96ae9d1ad88b897f79d0fff" kind="function"><name>loadSong</name></member>
+    <member refid="group__create_1gae92e9562ccbf510058d365de97c2254d" kind="function"><name>playSong</name></member>
+  </compound>
+  <compound refid="group__digital" kind="group"><name>digital</name>
+    <member refid="group__digital_1ga3eb7db79d996b92f7063b65dc34b3484" kind="function"><name>digital</name></member>
+    <member refid="group__digital_1ga1e12c564407ca4edc4c833ddb9f0344f" kind="function"><name>set_digital_value</name></member>
+    <member refid="group__digital_1ga4b672bd3758b1ff255b0bc51d6c9fd76" kind="function"><name>get_digital_value</name></member>
+    <member refid="group__digital_1gac6aacd543334547b664ff839888bfbe2" kind="function"><name>set_digital_output</name></member>
+    <member refid="group__digital_1ga865e9d1807739ddc9585c5665de1281c" kind="function"><name>get_digital_output</name></member>
+    <member refid="group__digital_1ga2d37bb1981515925418bd5a624eb1aa6" kind="function"><name>get_digital_pullup</name></member>
+    <member refid="group__digital_1ga6f4483ed1b9532f7637d79255107d2e9" kind="function"><name>set_digital_pullup</name></member>
+  </compound>
+  <compound refid="group__graphics" kind="group"><name>graphics</name>
+    <member refid="group__graphics_1gafb0564821f132bfe74508af8349a0faa" kind="enum"><name>Encoding</name></member>
+    <member refid="group__graphics_1ggafb0564821f132bfe74508af8349a0faaa30447e9f6efa4afdd251f9afc1d5fb44" kind="enumvalue"><name>RGB</name></member>
+    <member refid="group__graphics_1ggafb0564821f132bfe74508af8349a0faaa4a19a93c929964c201e01c8352dc8b9c" kind="enumvalue"><name>BGR</name></member>
+    <member refid="group__graphics_1ga08cafb219a227e701219541255fb77b4" kind="typedef"><name>Encoding</name></member>
+    <member refid="group__graphics_1gac9d7c4ff69254bd92cf968394eaa29d9" kind="function"><name>graphics_open</name></member>
+    <member refid="group__graphics_1ga7678bcc850c4da50ee71a4aabd052304" kind="function"><name>graphics_close</name></member>
+    <member refid="group__graphics_1gac0d7cb12c52179da9dac9ab705e722c2" kind="function"><name>graphics_update</name></member>
+    <member refid="group__graphics_1gabfee1317660a7674805bf4d56c23a2dc" kind="function"><name>graphics_clear</name></member>
+    <member refid="group__graphics_1gae9c15eab999556d3595c6ec59ed823fb" kind="function"><name>graphics_blit_enc</name></member>
+    <member refid="group__graphics_1ga8dde034ca28052432450dffd57d2a5ca" kind="function"><name>graphics_blit_region_enc</name></member>
+    <member refid="group__graphics_1ga857a974f8b4c33e7abfbdba39f283aa0" kind="function"><name>graphics_fill</name></member>
+    <member refid="group__graphics_1ga13e95732fd374201c6a7e572fde183f9" kind="function"><name>graphics_pixel</name></member>
+    <member refid="group__graphics_1ga83282f25b35d78f93ba2c65f265653df" kind="function"><name>graphics_line</name></member>
+    <member refid="group__graphics_1ga8d98440a493a62ea29daee0b1acf6b10" kind="function"><name>graphics_circle</name></member>
+    <member refid="group__graphics_1ga615b7a986f3e78c441adcc9394957993" kind="function"><name>graphics_circle_fill</name></member>
+    <member refid="group__graphics_1gace9bb9be0c182da1dd20cfc41be083e6" kind="function"><name>graphics_rectangle</name></member>
+    <member refid="group__graphics_1gaff056ff62a1ef05a38af8b7565bc8a64" kind="function"><name>graphics_rectangle_fill</name></member>
+    <member refid="group__graphics_1ga94825ba0f491ebeebf42d882f17d6ceb" kind="function"><name>graphics_triangle</name></member>
+    <member refid="group__graphics_1ga99ea53636f2bcb5e20f6fd96f2883a6f" kind="function"><name>graphics_triangle_fill</name></member>
+    <member refid="group__graphics_1gaa8cd41fec3b526e8cb48de1040ae45fe" kind="function"><name>get_key_state</name></member>
+    <member refid="group__graphics_1gaccc7319151e0ff91beabe06068a82471" kind="function"><name>get_mouse_position</name></member>
+    <member refid="group__graphics_1ga1bec0ed44c570403a77ccb351f351b98" kind="function"><name>get_mouse_middle_button</name></member>
+    <member refid="group__graphics_1ga509ecede60e1c150c46f88aec36876cc" kind="function"><name>get_mouse_left_button</name></member>
+    <member refid="group__graphics_1gac21888802b7312836315676b04397ad6" kind="function"><name>get_mouse_right_button</name></member>
+    <member refid="group__graphics_1ga41cbbd1e9b6c9fd4586b5d451f9a1a97" kind="function"><name>graphics_segment_display</name></member>
+    <member refid="group__graphics_1gae617f52ed3909aef62a1e5ef3ed098e2" kind="function"><name>graphics_print_character</name></member>
+    <member refid="group__graphics_1ga135a7b8b7a66396caa2347a3fd15934d" kind="function"><name>graphics_print_string</name></member>
+    <member refid="group__graphics_1gad026f76f05f24e19827c9b0c3d6e5400" kind="function"><name>graphics_print_int</name></member>
+    <member refid="group__graphics_1ga52984fe99467614fe47b7a3f2c9e3dd7" kind="function"><name>graphics_print_float</name></member>
+  </compound>
+  <compound refid="group__gyro" kind="group"><name>gyro</name>
+    <member refid="group__gyro_1ga82db7c0ae49b907ee928cd0c187260f5" kind="function"><name>gyro_x</name></member>
+    <member refid="group__gyro_1gaf030d5700d20d3def7857762936ed29e" kind="function"><name>gyro_y</name></member>
+    <member refid="group__gyro_1ga5f23dcb4b7c0bc4c0cae7749e96c67d1" kind="function"><name>gyro_z</name></member>
+    <member refid="group__gyro_1ga0efcdfbafe6312deb924c1d9b37b6dd6" kind="function"><name>gyro_calibrate</name></member>
+  </compound>
+  <compound refid="group__magneto" kind="group"><name>magneto</name>
+    <member refid="group__magneto_1gabec77e162ab72f3c63f91a006f51b2c4" kind="function"><name>magneto_x</name></member>
+    <member refid="group__magneto_1gab536ca9dc29118ba2f1231c011531e7b" kind="function"><name>magneto_y</name></member>
+    <member refid="group__magneto_1ga78e58e4d74bfe1767d090644010a574d" kind="function"><name>magneto_z</name></member>
+  </compound>
+  <compound refid="group__motor" kind="group"><name>motor</name>
+    <member refid="group__motor_1ga5713dda57d3628366a0ee6fd5057400d" kind="function"><name>get_motor_position_counter</name></member>
+    <member refid="group__motor_1ga4b767e80b3b1723b6720dd016cc1be1b" kind="function"><name>gmpc</name></member>
+    <member refid="group__motor_1gab445096e12260140b6c0afc26d26b325" kind="function"><name>clear_motor_position_counter</name></member>
+    <member refid="group__motor_1ga3f000f325222eb01b69844290a654795" kind="function"><name>cmpc</name></member>
+    <member refid="group__motor_1ga0e71753d12baa58e6093b9afd1e5fd7e" kind="function"><name>move_at_velocity</name></member>
+    <member refid="group__motor_1gabd36f01986c363f70d86c7a768ae1348" kind="function"><name>mav</name></member>
+    <member refid="group__motor_1gafce5cf37833e487343ece5256fe66d37" kind="function"><name>move_to_position</name></member>
+    <member refid="group__motor_1gafa2041480c9157d97c9c5845f775e5a7" kind="function"><name>mtp</name></member>
+    <member refid="group__motor_1ga318f1b33ee4a41f44e10075a1ad0a90e" kind="function"><name>move_relative_position</name></member>
+    <member refid="group__motor_1ga69b3d9b619cc00953a0b522dcac43771" kind="function"><name>mrp</name></member>
+    <member refid="group__motor_1ga5ead4ef2e36ce78e8b247c54cc3418b0" kind="function"><name>set_pid_gains</name></member>
+    <member refid="group__motor_1gab9dd99269c7f3584ca6f1277150f55f9" kind="function"><name>get_pid_gains</name></member>
+    <member refid="group__motor_1ga50d36bdfccc143992c8ab51689536ecc" kind="function"><name>freeze</name></member>
+    <member refid="group__motor_1ga242bcc237071dae3d5ee47107db7780d" kind="function"><name>get_motor_done</name></member>
+    <member refid="group__motor_1ga51c44577ae12ad636e27a94899f73a11" kind="function"><name>block_motor_done</name></member>
+    <member refid="group__motor_1gab9c5212ebf04366ae991deb14b570c58" kind="function"><name>bmd</name></member>
+    <member refid="group__motor_1gaf5ff331a2b0412db0b18c7e067bd29ef" kind="function"><name>setpwm</name></member>
+    <member refid="group__motor_1gadd2d621ff37f83feee815eb5a398b10a" kind="function"><name>getpwm</name></member>
+    <member refid="group__motor_1ga55a302772158e1f15f1c90992f535272" kind="function"><name>fd</name></member>
+    <member refid="group__motor_1ga3f5edef0489aca523a64a40e8fe16320" kind="function"><name>bk</name></member>
+    <member refid="group__motor_1ga046127adcac7487b0bbaf0b1ee1d492b" kind="function"><name>motor</name></member>
+    <member refid="group__motor_1gabe90111c4e73d8fc98c752bb13391cb8" kind="function"><name>baasbennaguui</name></member>
+    <member refid="group__motor_1ga6711550d798f1d8ef279d08fab571b5e" kind="function"><name>motor_power</name></member>
+    <member refid="group__motor_1gab32a8ae225a031b09e355e0813bec06f" kind="function"><name>off</name></member>
+    <member refid="group__motor_1gad6cb702751d048f67025d99608424796" kind="function"><name>alloff</name></member>
+    <member refid="group__motor_1gae640dbf28bc931da0ff9d2369066c641" kind="function"><name>ao</name></member>
+  </compound>
+  <compound refid="group__servo" kind="group"><name>servo</name>
+    <member refid="group__servo_1ga74414a627ba987f929cb23de9173b056" kind="function"><name>enable_servo</name></member>
+    <member refid="group__servo_1ga04ea4f9bce0b434d3cc2f41fcda99c14" kind="function"><name>disable_servo</name></member>
+    <member refid="group__servo_1gad82d46ae912a2a0de1f942ce7e10bfbf" kind="function"><name>enable_servos</name></member>
+    <member refid="group__servo_1ga93b41914541860f719247c1f14a601ed" kind="function"><name>disable_servos</name></member>
+    <member refid="group__servo_1gaa8cb86f109b7d1eb497c90f0386eee9a" kind="function"><name>set_servo_enabled</name></member>
+    <member refid="group__servo_1ga63f2d035ad976f13423d3e046d456967" kind="function"><name>get_servo_enabled</name></member>
+    <member refid="group__servo_1ga7576c77d711e981259a7d67e4e304155" kind="function"><name>get_servo_position</name></member>
+    <member refid="group__servo_1ga7bd7903bca70212767182ff077b0b89f" kind="function"><name>set_servo_position</name></member>
+  </compound>
+  <compound refid="group__thread" kind="group"><name>thread</name>
+    <member refid="group__thread_1ga8e3564199059191e2e89c86bd95dfaed" kind="typedef"><name>thread_function</name></member>
+    <member refid="group__thread_1gac9c53fb550d97d6d0ee04f13957f18d0" kind="function"><name>mutex_create</name></member>
+    <member refid="group__thread_1gaa08ae0459f0e31b7c611ca81e285c273" kind="function"><name>mutex_lock</name></member>
+    <member refid="group__thread_1ga2c3ccecaebe15c1f43def485da2c399d" kind="function"><name>mutex_trylock</name></member>
+    <member refid="group__thread_1gaed6032809721c21f7aae938ee5cc2dff" kind="function"><name>mutex_unlock</name></member>
+    <member refid="group__thread_1ga62eb2dbc14e329e96bbf5691ec1dfee3" kind="function"><name>mutex_destroy</name></member>
+    <member refid="group__thread_1gad2588e21e1b9643b6310da12d251d86a" kind="function"><name>thread_create</name></member>
+    <member refid="group__thread_1gab1cab7238611cc0e8ecb6cedd8f3b4de" kind="function"><name>thread_start</name></member>
+    <member refid="group__thread_1gaae2fdbe256ab077842db9d1693ff2d01" kind="function"><name>thread_wait</name></member>
+    <member refid="group__thread_1gaaa9816237851d3dbae5e975be5701131" kind="function"><name>thread_destroy</name></member>
+  </compound>
+  <compound refid="group__accel_Accelerometer" kind="page"><name>Accelerometer</name>
+  </compound>
+  <compound refid="group__analog_Analog" kind="page"><name>Analog</name>
+  </compound>
+  <compound refid="group__battery_battery" kind="page"><name>battery</name>
+  </compound>
+  <compound refid="group__button_button" kind="page"><name>button</name>
+  </compound>
+  <compound refid="group__compass_Compass" kind="page"><name>Compass</name>
+  </compound>
+  <compound refid="group__console_console" kind="page"><name>console</name>
+  </compound>
+  <compound refid="group__create_create" kind="page"><name>create</name>
+  </compound>
+  <compound refid="group__digital_digital" kind="page"><name>digital</name>
+  </compound>
+  <compound refid="Tutorials" kind="page"><name>Tutorials</name>
+  </compound>
+  <compound refid="getting_started" kind="page"><name>getting_started</name>
+  </compound>
+  <compound refid="sensors_tutorial" kind="page"><name>sensors_tutorial</name>
+  </compound>
+  <compound refid="deprecated" kind="page"><name>deprecated</name>
+  </compound>
+  <compound refid="dir_d8796307b1567e91b93f05afaddcf003" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/accel</name>
+  </compound>
+  <compound refid="dir_624c847bbe1163db01e13c36adaa063a" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/accel/public/kipr/accel</name>
+  </compound>
+  <compound refid="dir_9be8ca832c32f721de3116a8ff21f0b4" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog</name>
+  </compound>
+  <compound refid="dir_7df3fbfdec0ff5445026d64f470b7da0" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog</name>
+  </compound>
+  <compound refid="dir_5ef2c19dcb937565b5afbf3c09686858" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/audio</name>
+  </compound>
+  <compound refid="dir_29e02f088eb21b72b2129af5952a9271" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/audio/public/kipr/audio</name>
+  </compound>
+  <compound refid="dir_095f2741c66617fe164db9376ffd5091" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/battery/public/kipr/battery</name>
+  </compound>
+  <compound refid="dir_61a3a14084972094ac989f11cfaf4d89" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/battery</name>
+  </compound>
+  <compound refid="dir_5e8ff49cd29f025a1d21a602a6d26a20" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/botball/public/kipr/botball</name>
+  </compound>
+  <compound refid="dir_dec599a3fc9e718f75895ff74fb96133" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/botball</name>
+  </compound>
+  <compound refid="dir_d7f72e822c4b5b4339f2b218b2b9cb50" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button</name>
+  </compound>
+  <compound refid="dir_00fdffc9dd7b84dce2e13190cc8035c5" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button</name>
+  </compound>
+  <compound refid="dir_45dcb3eba9df13cb6293f5b679bcad22" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color</name>
+  </compound>
+  <compound refid="dir_5843750868c6d316fc5d1e5602c790e8" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color</name>
+  </compound>
+  <compound refid="dir_2465e5adbd8500fd879546a054950ed8" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/compass/public/kipr/compass</name>
+  </compound>
+  <compound refid="dir_68186ab17aac88f8caab7770919f9baa" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/compass</name>
+  </compound>
+  <compound refid="dir_1bcefdeb28ddd377002c287402658c5c" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config</name>
+  </compound>
+  <compound refid="dir_05c01e65d4a1408859c72bd5206fe4fe" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config</name>
+  </compound>
+  <compound refid="dir_4b11fbf8e835883e1c46d0d67b81fbe0" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/console</name>
+  </compound>
+  <compound refid="dir_ddc55d993bf21603b6df057cd5cdd42c" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/console/public/kipr/console</name>
+  </compound>
+  <compound refid="dir_f02a41efdae0e7ff9c127dccb82ff885" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/core</name>
+  </compound>
+  <compound refid="dir_77edd132cd5baa972d2ed0d6a3d19220" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/core/public/kipr/core</name>
+  </compound>
+  <compound refid="dir_19d9d37997aab9ae43e474024879cdf9" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create</name>
+  </compound>
+  <compound refid="dir_edb14896185d4c165da1caacbc94a97f" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create</name>
+  </compound>
+  <compound refid="dir_f6d9694d5644229736a2796e0149000b" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital/public/kipr/digital</name>
+  </compound>
+  <compound refid="dir_d2ebfae8ef581557647880c020ae6714" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital</name>
+  </compound>
+  <compound refid="dir_f7b7aa3e62a854c418f6334ecbe58c1e" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/export</name>
+  </compound>
+  <compound refid="dir_4b38c4082597f695b991a0435d96c431" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/export/public/kipr/export</name>
+  </compound>
+  <compound refid="dir_f3ded07c4f2eecbfea4389ad19cf4641" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry</name>
+  </compound>
+  <compound refid="dir_05f1269b8b2bbf3fa11e2beaeb052a49" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry</name>
+  </compound>
+  <compound refid="dir_999900ff9324a28c2652a487e1f9931d" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics</name>
+  </compound>
+  <compound refid="dir_0ba8d8261ce7322a1fd016c15dc3181e" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics</name>
+  </compound>
+  <compound refid="dir_8addf31db9362ed2bb2dda48b14fd294" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/gyro/public/kipr/gyro</name>
+  </compound>
+  <compound refid="dir_e87517971a3294881321ea56e623364f" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/gyro</name>
+  </compound>
+  <compound refid="dir_13e4a82ff442f7cd7fc81c2c732a212e" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/compass/public/kipr</name>
+  </compound>
+  <compound refid="dir_bcb61fe14227d1882267bbd9e4e9b108" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr</name>
+  </compound>
+  <compound refid="dir_5ce7940a5ab84d47d9289287a41f76c6" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/log/public/kipr</name>
+  </compound>
+  <compound refid="dir_834b7577b3739056c669cf051e1b213a" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/core/public/kipr</name>
+  </compound>
+  <compound refid="dir_4b50e2f63b89953fcf81864a3970d498" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr</name>
+  </compound>
+  <compound refid="dir_e94c28c82ec438088fb719ff8f84ea7d" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr</name>
+  </compound>
+  <compound refid="dir_5f101307d8c399ddcdcca97b77e51038" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/export/public/kipr</name>
+  </compound>
+  <compound refid="dir_95b156f08594208fe53b46b1b7eaac01" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/gyro/public/kipr</name>
+  </compound>
+  <compound refid="dir_58ed4c147cedd5630b13c4b8818af095" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital/public/kipr</name>
+  </compound>
+  <compound refid="dir_17800968817fcbae6f27f19c96606b90" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/botball/public/kipr</name>
+  </compound>
+  <compound refid="dir_9e322e4476e99c9d84f8bfced649e3b9" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr</name>
+  </compound>
+  <compound refid="dir_663d3be02c5e7b74b832ee0d33d8a143" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/time/public/kipr</name>
+  </compound>
+  <compound refid="dir_959b925764743f6ac78edd10f8c01b05" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/accel/public/kipr</name>
+  </compound>
+  <compound refid="dir_ab133d12ff7a46ae886937687deaeff2" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr</name>
+  </compound>
+  <compound refid="dir_2c0d06035c6d1316d3957dd68091431e" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr</name>
+  </compound>
+  <compound refid="dir_713a9eeb591f4ab201182f337de9a005" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr</name>
+  </compound>
+  <compound refid="dir_6eaef7b897da428a30dca38ddf38fa54" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/audio/public/kipr</name>
+  </compound>
+  <compound refid="dir_8cc1dff541dbf3c7a4b17d4def12dce5" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/sensor/public/kipr</name>
+  </compound>
+  <compound refid="dir_671bd19ce3ce27d652ded3bb772f9da6" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/battery/public/kipr</name>
+  </compound>
+  <compound refid="dir_ea0ad4fa5ddc5c9de2e8cddfedb512ed" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr</name>
+  </compound>
+  <compound refid="dir_61d504efc1c6c1b72819a38a06b23245" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/console/public/kipr</name>
+  </compound>
+  <compound refid="dir_4f62bf4b831d6c8b8ebed168ed0cf7f0" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr</name>
+  </compound>
+  <compound refid="dir_b817b398afc59aaee96ce5b4838aa249" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr</name>
+  </compound>
+  <compound refid="dir_91543fa18d94bc8d17305f2fcc006971" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr</name>
+  </compound>
+  <compound refid="dir_fe6c1daa28561e05b610f077ba014527" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/magneto/public/kipr</name>
+  </compound>
+  <compound refid="dir_edf4cc98dc9b7131aa8a8524d06fe079" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr</name>
+  </compound>
+  <compound refid="dir_e121555cc7cfc8b7e88711a960fd0175" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/log</name>
+  </compound>
+  <compound refid="dir_7c222f0c734a0cd2a99bd8a1ef944acb" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/log/public/kipr/log</name>
+  </compound>
+  <compound refid="dir_0cef646ea93e9a63aa191bb8626760ec" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/magneto/public/kipr/magneto</name>
+  </compound>
+  <compound refid="dir_405bde4b88a7a6f20c29a4a1b700e145" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/magneto</name>
+  </compound>
+  <compound refid="dir_a7b0466279106ea0b8f86f609f621680" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module</name>
+  </compound>
+  <compound refid="dir_ffee5f05dfaa6aed7d9b6690eb016f5d" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor</name>
+  </compound>
+  <compound refid="dir_56e309bf51fbffeca19c0da45f55c9ad" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor</name>
+  </compound>
+  <compound refid="dir_9af8278a7df151ee47addfd2d0402c20" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network</name>
+  </compound>
+  <compound refid="dir_cf4693934818726924038a7c9463fc14" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network</name>
+  </compound>
+  <compound refid="dir_31a378c84b956866319ca9d9294f1959" kind="dir"><name>pages</name>
+  </compound>
+  <compound refid="dir_b900be970f80b9d7909bdd35f6443a9a" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public</name>
+  </compound>
+  <compound refid="dir_445fbf71b6669b494b2edf002aa78674" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public</name>
+  </compound>
+  <compound refid="dir_d5b8d3560a14f9589cc843c7b5a921e3" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/audio/public</name>
+  </compound>
+  <compound refid="dir_d0435ad5b4c56e58a6310d55ec4abb79" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public</name>
+  </compound>
+  <compound refid="dir_a4d8dfe8a44c399c296adad72f566cd9" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/battery/public</name>
+  </compound>
+  <compound refid="dir_1ec74850c409138349a3175cb75edf61" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/sensor/public</name>
+  </compound>
+  <compound refid="dir_92b67f56a55a5ef04f4fb2dbad8d362e" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/time/public</name>
+  </compound>
+  <compound refid="dir_cf17621beb5f0b3af461a25203600b30" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/botball/public</name>
+  </compound>
+  <compound refid="dir_effe5fb0962c555eb19a7b337e375db8" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/accel/public</name>
+  </compound>
+  <compound refid="dir_60e2b455e85d05a9c9fd4ae68cafd5d4" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public</name>
+  </compound>
+  <compound refid="dir_ec21d9bac4f0a600727252bbf7b713e5" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public</name>
+  </compound>
+  <compound refid="dir_b216cd54ed1019f6d7de7963a1b577e8" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public</name>
+  </compound>
+  <compound refid="dir_806335cbf87c3ba27dff7596fbffb771" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/console/public</name>
+  </compound>
+  <compound refid="dir_f7d91b19ebd387b793e9fa5ae29a9209" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/export/public</name>
+  </compound>
+  <compound refid="dir_2db100e8439cbc564dd615406b7bfbbd" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital/public</name>
+  </compound>
+  <compound refid="dir_013ddeabe983496f3d024d284bdc939c" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/gyro/public</name>
+  </compound>
+  <compound refid="dir_ed74317a10e3d86c238e84ff70c29c70" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public</name>
+  </compound>
+  <compound refid="dir_0316c31be11a84b90a0ee1942454f0bd" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public</name>
+  </compound>
+  <compound refid="dir_94b3dd0e99ce408d899606d58a26e88d" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/log/public</name>
+  </compound>
+  <compound refid="dir_ca24f7bd2f16916665eb5498fdde9507" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public</name>
+  </compound>
+  <compound refid="dir_450934171d4230b07aa658392aa3397f" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/core/public</name>
+  </compound>
+  <compound refid="dir_eb56e17aec90a13afe11e3667080634f" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public</name>
+  </compound>
+  <compound refid="dir_471c39d78173deb32617f13096ce82ad" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/magneto/public</name>
+  </compound>
+  <compound refid="dir_8c5e7244493cb1d25858b8249943a4b9" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/compass/public</name>
+  </compound>
+  <compound refid="dir_2f8d273cd6f6a6e20fc168a8f2009401" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public</name>
+  </compound>
+  <compound refid="dir_398fd258f043230af438ed6b74af0a3e" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public</name>
+  </compound>
+  <compound refid="dir_d27129b8d398856e7122440405d66deb" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/sensor/public/kipr/sensor</name>
+  </compound>
+  <compound refid="dir_21984a45bab6d1265da5ad1b42de88b8" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/sensor</name>
+  </compound>
+  <compound refid="dir_b873e8620554479903d90eaff2da24af" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo</name>
+  </compound>
+  <compound refid="dir_2999932cb65479f4c2b33e956c2186f3" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo</name>
+  </compound>
+  <compound refid="dir_e63e2c1edd3b016ece060dd3774b50b3" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread</name>
+  </compound>
+  <compound refid="dir_4aa633ffae4e39b1efb85e47a52bd30f" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread</name>
+  </compound>
+  <compound refid="dir_f3336f889b0f3be355d57c9f444d3b0c" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/time/public/kipr/time</name>
+  </compound>
+  <compound refid="dir_c6429732c8b4bfaeec8ab78b55f0f982" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/time</name>
+  </compound>
+  <compound refid="dir_1b520903068155304ad0c1700899e8fa" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for</name>
+  </compound>
+  <compound refid="dir_b53956b0f067be187de424791604864c" kind="dir"><name>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for</name>
+  </compound>
+  <compound refid="indexpage" kind="page"><name>index</name>
+  </compound>
+</doxygenindex>

@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="namespacekipr_1_1sensor" kind="namespace" language="C++">
+    <compoundname>kipr::sensor</compoundname>
+    <innerclass refid="classkipr_1_1sensor_1_1Sensor" prot="public">kipr::sensor::Sensor</innerclass>
+    <innernamespace refid="namespacekipr_1_1sensor_1_1logic">kipr::sensor::logic</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/sensor/public/kipr/sensor/logic.hpp" line="9" column="3"/>
+  </compounddef>
+</doxygen>

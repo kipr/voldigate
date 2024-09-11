@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="servo_8hpp" kind="file" language="C++">
+    <compoundname>servo.hpp</compoundname>
+    <innerclass refid="classkipr_1_1servo_1_1Servo" prot="public">kipr::servo::Servo</innerclass>
+    <innernamespace refid="namespacekipr">kipr</innernamespace>
+    <innernamespace refid="namespacekipr_1_1servo">kipr::servo</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>_KIPR_SERVO_SERVO_HPP_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_KIPR_SERVO_SERVO_HPP_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal"><ref refid="namespacekipr" kindref="compound">kipr</ref></highlight></codeline>
+<codeline lineno="5"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="6" refid="namespacekipr_1_1servo" refkind="compound"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">servo</highlight></codeline>
+<codeline lineno="7"><highlight class="normal"><sp/><sp/>{</highlight></codeline>
+<codeline lineno="8" refid="classkipr_1_1servo_1_1Servo" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classkipr_1_1servo_1_1Servo" kindref="compound">Servo</ref></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="10"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="11" refid="classkipr_1_1servo_1_1Servo_1a20d37c49ff42aeb80568bf0f49183c6e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1servo_1_1Servo_1a20d37c49ff42aeb80568bf0f49183c6e" kindref="member">ticks_t</ref>;</highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight></codeline>
+<codeline lineno="13" refid="classkipr_1_1servo_1_1Servo_1afb82ac42800a5b0059256b60bde766b8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classkipr_1_1servo_1_1Servo_1afb82ac42800a5b0059256b60bde766b8" kindref="member">Servo</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>port);</highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight></codeline>
+<codeline lineno="15" refid="classkipr_1_1servo_1_1Servo_1ac36e297ece56e943c7a8981f39d289ba" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1servo_1_1Servo_1ac36e297ece56e943c7a8981f39d289ba" kindref="member">setPosition</ref>(<ref refid="classkipr_1_1servo_1_1Servo_1a20d37c49ff42aeb80568bf0f49183c6e" kindref="member">ticks_t</ref><sp/><ref refid="classkipr_1_1servo_1_1Servo_1a201e623e418e7a5222b42c17711e755f" kindref="member">position</ref>);</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight></codeline>
+<codeline lineno="17" refid="classkipr_1_1servo_1_1Servo_1a201e623e418e7a5222b42c17711e755f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classkipr_1_1servo_1_1Servo_1a20d37c49ff42aeb80568bf0f49183c6e" kindref="member">ticks_t</ref><sp/><ref refid="classkipr_1_1servo_1_1Servo_1a201e623e418e7a5222b42c17711e755f" kindref="member">position</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight></codeline>
+<codeline lineno="19" refid="classkipr_1_1servo_1_1Servo_1abb35bc870ad17df012d290ea3cbafa8a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1servo_1_1Servo_1abb35bc870ad17df012d290ea3cbafa8a" kindref="member">disable</ref>();</highlight></codeline>
+<codeline lineno="20" refid="classkipr_1_1servo_1_1Servo_1ad40dd3da49dd1b8a492163f5c1215d10" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1servo_1_1Servo_1ad40dd3da49dd1b8a492163f5c1215d10" kindref="member">enable</ref>();</highlight></codeline>
+<codeline lineno="21" refid="classkipr_1_1servo_1_1Servo_1a3a251051d43b775e2fd6d4b6419b482a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1servo_1_1Servo_1a3a251051d43b775e2fd6d4b6419b482a" kindref="member">setEnabled</ref>(</highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>enabled);</highlight></codeline>
+<codeline lineno="22" refid="classkipr_1_1servo_1_1Servo_1a3163766960289a7034837e45144cad42" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1servo_1_1Servo_1a3163766960289a7034837e45144cad42" kindref="member">isEnabled</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>m_port;</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="28"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo/servo.hpp"/>
+  </compounddef>
+</doxygen>

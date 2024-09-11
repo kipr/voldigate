@@ -1,0 +1,206 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classAddress" kind="class" language="C++" prot="public">
+    <compoundname>Address</compoundname>
+    <includes refid="socket_8hpp" local="no">socket.hpp</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classAddress_1a8380229567b6a97d4e5f7156b42d5bdd" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool Address::m_valid</definition>
+        <argsstring></argsstring>
+        <name>m_valid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="51" column="6" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classAddress_1ae8c3fa9435800dbda039314b4898b442" prot="private" static="no" mutable="no">
+        <type>sockaddr_in</type>
+        <definition>sockaddr_in Address::m_addr</definition>
+        <argsstring></argsstring>
+        <name>m_addr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="52" column="13" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classAddress_1a48f07460b0e2f9c3363b15a4575f1246" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>Address::Address</definition>
+        <argsstring>(const char *const host, const unsigned short port)</argsstring>
+        <name>Address</name>
+        <param>
+          <type>const char *const</type>
+          <declname>host</declname>
+        </param>
+        <param>
+          <type>const unsigned short</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="34" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="classAddress_1a7112bb43b003883514eebd942f3c88c5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>Address::Address</definition>
+        <argsstring>(const sockaddr_in &amp;addr)</argsstring>
+        <name>Address</name>
+        <param>
+          <type>const sockaddr_in &amp;</type>
+          <declname>addr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="35" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="classAddress_1a63f910c09d93bdd16d3744e47d13dc0e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>Address::Address</definition>
+        <argsstring>()</argsstring>
+        <name>Address</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="36" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="classAddress_1a854eed86c57d012930069daa8ec5d5b1" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool Address::isValid</definition>
+        <argsstring>() const</argsstring>
+        <name>isValid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="38" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classAddress_1a46d0a5cd67550608d49e422bad632d09" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool Address::setHost</definition>
+        <argsstring>(const char *const host)</argsstring>
+        <name>setHost</name>
+        <param>
+          <type>const char *const</type>
+          <declname>host</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="40" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classAddress_1a7c3715175945e8e1f7ff16e92ed0f85c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Address::setPort</definition>
+        <argsstring>(const unsigned short port)</argsstring>
+        <name>setPort</name>
+        <param>
+          <type>const unsigned short</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="41" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classAddress_1afcba3f4a73addfc2262b549ae62e7c8f" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>unsigned short</type>
+        <definition>unsigned short Address::port</definition>
+        <argsstring>() const</argsstring>
+        <name>port</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="43" column="16"/>
+      </memberdef>
+      <memberdef kind="function" id="classAddress_1a73558a7cf6c850ef548788f0bfa44131" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const sockaddr *</type>
+        <definition>const sockaddr* Address::addr</definition>
+        <argsstring>() const</argsstring>
+        <name>addr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="45" column="16"/>
+      </memberdef>
+      <memberdef kind="function" id="classAddress_1aa83a507a64bd8f7a7e3e8cb376b2e8d1" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>socklen_t</type>
+        <definition>socklen_t Address::addrLength</definition>
+        <argsstring>() const</argsstring>
+        <name>addrLength</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="46" column="11"/>
+      </memberdef>
+      <memberdef kind="function" id="classAddress_1aa081ca5bf0c19c6a9ef851e370009471" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char* Address::ip</definition>
+        <argsstring>() const</argsstring>
+        <name>ip</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="48" column="12"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="31" column="1" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" bodystart="32" bodyend="53"/>
+    <listofallmembers>
+      <member refid="classAddress_1a73558a7cf6c850ef548788f0bfa44131" prot="public" virt="non-virtual"><scope>Address</scope><name>addr</name></member>
+      <member refid="classAddress_1a48f07460b0e2f9c3363b15a4575f1246" prot="public" virt="non-virtual"><scope>Address</scope><name>Address</name></member>
+      <member refid="classAddress_1a7112bb43b003883514eebd942f3c88c5" prot="public" virt="non-virtual"><scope>Address</scope><name>Address</name></member>
+      <member refid="classAddress_1a63f910c09d93bdd16d3744e47d13dc0e" prot="public" virt="non-virtual"><scope>Address</scope><name>Address</name></member>
+      <member refid="classAddress_1aa83a507a64bd8f7a7e3e8cb376b2e8d1" prot="public" virt="non-virtual"><scope>Address</scope><name>addrLength</name></member>
+      <member refid="classAddress_1aa081ca5bf0c19c6a9ef851e370009471" prot="public" virt="non-virtual"><scope>Address</scope><name>ip</name></member>
+      <member refid="classAddress_1a854eed86c57d012930069daa8ec5d5b1" prot="public" virt="non-virtual"><scope>Address</scope><name>isValid</name></member>
+      <member refid="classAddress_1ae8c3fa9435800dbda039314b4898b442" prot="private" virt="non-virtual"><scope>Address</scope><name>m_addr</name></member>
+      <member refid="classAddress_1a8380229567b6a97d4e5f7156b42d5bdd" prot="private" virt="non-virtual"><scope>Address</scope><name>m_valid</name></member>
+      <member refid="classAddress_1afcba3f4a73addfc2262b549ae62e7c8f" prot="public" virt="non-virtual"><scope>Address</scope><name>port</name></member>
+      <member refid="classAddress_1a46d0a5cd67550608d49e422bad632d09" prot="public" virt="non-virtual"><scope>Address</scope><name>setHost</name></member>
+      <member refid="classAddress_1a7c3715175945e8e1f7ff16e92ed0f85c" prot="public" virt="non-virtual"><scope>Address</scope><name>setPort</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

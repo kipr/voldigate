@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="group__console_console" kind="page">
+    <compoundname>console</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>The functions defined here are functions relating to the console, or output window, of the UI. </para>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/console/public/kipr/console/console.h"/>
+  </compounddef>
+</doxygen>

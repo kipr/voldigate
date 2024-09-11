@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="namespacekipr_1_1accel" kind="namespace" language="C++">
+    <compoundname>kipr::accel</compoundname>
+    <innerclass refid="classkipr_1_1accel_1_1Acceleration" prot="public">kipr::accel::Acceleration</innerclass>
+    <innerclass refid="classkipr_1_1accel_1_1AccelX" prot="public">kipr::accel::AccelX</innerclass>
+    <innerclass refid="classkipr_1_1accel_1_1AccelY" prot="public">kipr::accel::AccelY</innerclass>
+    <innerclass refid="classkipr_1_1accel_1_1AccelZ" prot="public">kipr::accel::AccelZ</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/accel/public/kipr/accel/accel.hpp" line="8" column="3"/>
+  </compounddef>
+</doxygen>

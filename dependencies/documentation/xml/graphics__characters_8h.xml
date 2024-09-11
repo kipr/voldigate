@@ -1,0 +1,710 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="graphics__characters_8h" kind="file" language="C++">
+    <compoundname>graphics_characters.h</compoundname>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="graphics__characters_8h_1a0217cd28fb19053772dfe9df4c8276d4" prot="public" static="no">
+        <name>NUMSEG</name>
+        <initializer>30</initializer>
+        <briefdescription>
+<para>The number of segments in a character display. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" line="32" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" bodystart="32" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="graphics__characters_8h_1ad3b15ff105e16268758a59e0b228827b" prot="public" static="no">
+        <name>SEGL</name>
+        <initializer>5</initializer>
+        <briefdescription>
+<para>SEGL specifies the length of a vertical segment in pixels. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" line="34" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" bodystart="34" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="graphics__characters_8h_1a30b74409594687262e85c1273457333d" prot="public" static="no">
+        <name>SEGSP</name>
+        <initializer>7</initializer>
+        <briefdescription>
+<para>SEGSP is the spacing of characters. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" line="36" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="graphics__characters_8h_1a26cdbb1a00213c810caccf21cd33a631" prot="public" static="no">
+        <name>BOLD</name>
+        <initializer><ref refid="graphics__characters_8h_1a3c9517bdfadb5efb1bbd0749da651af4" kindref="member">__bold</ref>=1;</initializer>
+        <briefdescription>
+<para>BOLD means have bold text. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" line="41" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="graphics__characters_8h_1a6bf68eac37fdc98b9ee189b7fee29f69" prot="public" static="no">
+        <name>NOBOLD</name>
+        <initializer><ref refid="graphics__characters_8h_1a3c9517bdfadb5efb1bbd0749da651af4" kindref="member">__bold</ref>=0;</initializer>
+        <briefdescription>
+<para>NOBOLD means do not have bold text. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" line="43" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="graphics__characters_8h_1aeecdf9fb2fee51ed741519397463031b" prot="public" static="no">
+        <name>GXWINDOW</name>
+        <initializer>700</initializer>
+        <briefdescription>
+<para>The width in pixels of the window. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" line="47" column="11" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="graphics__characters_8h_1a3135004fb6c11ea109090c92a2970250" prot="public" static="no">
+        <name>GYWINDOW</name>
+        <initializer>500</initializer>
+        <briefdescription>
+<para>The height of the window. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" line="51" column="11" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="graphics__characters_8h_1a3c9517bdfadb5efb1bbd0749da651af4" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int __bold</definition>
+        <argsstring></argsstring>
+        <name>__bold</name>
+        <briefdescription>
+<para>the variable used to store whether or not characters should be bold </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" line="39" column="12" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" declline="39" declcolumn="12"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="group__graphics_1ga41cbbd1e9b6c9fd4586b5d451f9a1a97" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void graphics_segment_display</definition>
+        <argsstring>(int s[], int x, int y, int r, int g, int b, float size)</argsstring>
+        <name>graphics_segment_display</name>
+        <param>
+          <type>int</type>
+          <declname>s</declname>
+          <array>[]</array>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>r</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>g</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>b</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Draw a 16 segment character (alphameric - caps only)</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>s</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The segments to display </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The X coordinate of the first segment&apos;s top-left corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The Y coordinate of the first segment&apos;s top-left corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>r</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The red component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>g</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The green component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>b</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The blue component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>size</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The segment&apos;s size </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" line="76" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" declline="76" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__graphics_1gae617f52ed3909aef62a1e5ef3ed098e2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void graphics_print_character</definition>
+        <argsstring>(int n, int x, int y, int r, int g, int b, float size)</argsstring>
+        <name>graphics_print_character</name>
+        <param>
+          <type>int</type>
+          <declname>n</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>r</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>g</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>b</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Prints out a character in 16 segment characters</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>n</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The character to display </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The X coordinate of the character&apos;s top-left corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The Y coordinate of the character&apos;s top-left corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>r</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The red component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>g</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The green component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>b</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The blue component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>size</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The character&apos;s size </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" line="91" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" declline="91" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__graphics_1ga135a7b8b7a66396caa2347a3fd15934d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void graphics_print_string</definition>
+        <argsstring>(char s[], int x, int y, int r, int g, int b, float size)</argsstring>
+        <name>graphics_print_string</name>
+        <param>
+          <type>char</type>
+          <declname>s</declname>
+          <array>[]</array>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>r</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>g</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>b</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Prints out a text string in 16 segment characters</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>s</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The string to display </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The X coordinate of the first character&apos;s top-left corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The Y coordinate of the first character&apos;s top-left corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>r</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The red component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>g</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The green component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>b</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The blue component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>size</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The strings&apos;s size </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" line="106" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" declline="106" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__graphics_1gad026f76f05f24e19827c9b0c3d6e5400" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int graphics_print_int</definition>
+        <argsstring>(int n, int minNumDigits, int x, int y, int r, int g, int b, float size)</argsstring>
+        <name>graphics_print_int</name>
+        <param>
+          <type>int</type>
+          <declname>n</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>minNumDigits</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>r</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>g</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>b</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Prints out an integer in 16 segment characters</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>n</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The integer to display </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>minNumDigits</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>minNumDigits is normally 0, but can be larger if leading 0&apos;s are desired </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The X coordinate of the first character&apos;s top-left corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The Y coordinate of the first character&apos;s top-left corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>r</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The red component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>g</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The green component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>b</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The blue component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>size</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The strings&apos;s size </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" line="122" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" declline="122" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__graphics_1ga52984fe99467614fe47b7a3f2c9e3dd7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void graphics_print_float</definition>
+        <argsstring>(float n, int numDigits, int x, int y, int r, int g, int b, float size)</argsstring>
+        <name>graphics_print_float</name>
+        <param>
+          <type>float</type>
+          <declname>n</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>numDigits</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>r</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>g</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>b</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Prints out a float in 16 segment characters</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>n</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The float to display </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>numDigits</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>numDigits is the number of digits to right of decimal to be printed </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The X coordinate of the first character&apos;s top-left corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The Y coordinate of the first character&apos;s top-left corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>r</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The red component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>g</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The green component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>b</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The blue component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>size</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The strings&apos;s size </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" line="138" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" declline="138" declcolumn="6"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>functions for adding alphameric characters to graphics windows. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>These are functions for adding alphameric characters (caps only) to graphics windows. The functions were extracted from a graphing package written by D.Miller Oct 2008. Character generation capabilities were extended from 7-segment to 16-segment and enhanced to include basic punctuation characters, plus size and bold-face options by C.Winton Oct 2008. <simplesect kind="copyright"><para>KISS Insitute for Practical Robotics </para>
+</simplesect>
+</para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_KIPR_GRAPHICS_GRAPHICS_CHARACTERS_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_KIPR_GRAPHICS_GRAPHICS_CHARACTERS_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="18"><highlight class="comment">Segment<sp/>arrangement</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>--0-<sp/>-1--<sp/><sp/><sp/><sp/><sp/>---18----<sp/><sp/><sp/><sp/><sp/>--20<sp/>21--<sp/><sp/><sp/><sp/><sp/>----<sp/>----</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/><sp/><sp/><sp/>|\<sp/><sp/><sp/>|<sp/><sp/><sp/>/|<sp/><sp/><sp/>|\<sp/><sp/>18<sp/><sp/><sp/>/|<sp/><sp/><sp/>|\20<sp/><sp/><sp/>21/|<sp/><sp/><sp/>||<sp/><sp/><sp/>|<sp/><sp/><sp/>/|</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/><sp/><sp/><sp/>7<sp/>8<sp/><sp/>9<sp/>10<sp/>2<sp/><sp/><sp/>|<sp/>\<sp/><sp/>|<sp/><sp/>/<sp/>|<sp/><sp/><sp/>|24<sp/><sp/>|<sp/><sp/>26|<sp/><sp/><sp/>||\<sp/>29<sp/><sp/>/<sp/>|</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/><sp/><sp/><sp/>|<sp/><sp/><sp/>\|/<sp/><sp/><sp/>|<sp/><sp/><sp/>|<sp/><sp/><sp/>17/<sp/><sp/><sp/>|<sp/><sp/><sp/>24<sp/><sp/><sp/>|/<sp/><sp/>26<sp/><sp/><sp/>||<sp/>29|/<sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>-15-<sp/>-11-<sp/><sp/><sp/><sp/><sp/>---17----<sp/><sp/><sp/><sp/><sp/>----<sp/>----<sp/><sp/><sp/><sp/><sp/>|---<sp/>----</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/><sp/><sp/><sp/>|<sp/><sp/><sp/>/|\<sp/><sp/><sp/>|<sp/><sp/><sp/>|<sp/><sp/><sp/>/|\<sp/><sp/><sp/>|<sp/><sp/><sp/>25<sp/><sp/>/|\<sp/><sp/>27<sp/><sp/><sp/>|2<sp/><sp/>/|\<sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/><sp/><sp/><sp/>6<sp/>14<sp/>1<sp/>12<sp/>3<sp/><sp/><sp/>|<sp/><sp/>/<sp/>|<sp/><sp/>\<sp/>|<sp/><sp/><sp/>|25<sp/><sp/>|<sp/><sp/>27|<sp/><sp/><sp/>|8<sp/>/<sp/>|<sp/><sp/>\<sp/>|</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/><sp/><sp/><sp/>|/<sp/><sp/><sp/>3<sp/><sp/><sp/>\|<sp/><sp/><sp/>|/<sp/><sp/>16<sp/><sp/><sp/>\|<sp/><sp/><sp/>|/22<sp/><sp/><sp/>23\|<sp/><sp/><sp/>||<sp/><sp/><sp/>|<sp/><sp/><sp/>\|</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>--5-<sp/>-4--<sp/><sp/><sp/><sp/><sp/>---16----<sp/><sp/><sp/><sp/><sp/>--22<sp/>23--<sp/><sp/><sp/><sp/><sp/>----<sp/>----</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/<sp/>(19)</highlight></codeline>
+<codeline lineno="30"><highlight class="comment">*/</highlight></codeline>
+<codeline lineno="32" refid="graphics__characters_8h_1a0217cd28fb19053772dfe9df4c8276d4" refkind="member"><highlight class="preprocessor">#define<sp/>NUMSEG<sp/>30</highlight></codeline>
+<codeline lineno="34" refid="graphics__characters_8h_1ad3b15ff105e16268758a59e0b228827b" refkind="member"><highlight class="preprocessor">#define<sp/>SEGL<sp/>5</highlight></codeline>
+<codeline lineno="36" refid="graphics__characters_8h_1a30b74409594687262e85c1273457333d" refkind="member"><highlight class="preprocessor">#define<sp/>SEGSP<sp/>7</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="graphics__characters_8h_1a3c9517bdfadb5efb1bbd0749da651af4" kindref="member">__bold</ref>;</highlight></codeline>
+<codeline lineno="41" refid="graphics__characters_8h_1a26cdbb1a00213c810caccf21cd33a631" refkind="member"><highlight class="preprocessor">#define<sp/>BOLD<sp/>__bold=1;</highlight></codeline>
+<codeline lineno="43" refid="graphics__characters_8h_1a6bf68eac37fdc98b9ee189b7fee29f69" refkind="member"><highlight class="preprocessor">#define<sp/>NOBOLD<sp/>__bold=0;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="preprocessor">#ifndef<sp/>GXWINDOW</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47" refid="graphics__characters_8h_1aeecdf9fb2fee51ed741519397463031b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#define<sp/>GXWINDOW<sp/>700</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+<codeline lineno="50"><highlight class="preprocessor">#ifndef<sp/>GYWINDOW</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51" refid="graphics__characters_8h_1a3135004fb6c11ea109090c92a2970250" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#define<sp/>GYWINDOW<sp/>500</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="comment">//<sp/>****************<sp/>Function<sp/>Prototypes<sp/>******************</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Based<sp/>on<sp/>16<sp/>segment<sp/>characters:<sp/>draws<sp/>a<sp/>segment<sp/>for<sp/>each<sp/>s<sp/>value<sp/>that<sp/>gets<sp/>a<sp/>1<sp/>and<sp/>a<sp/>rectangle<sp/>if<sp/>the<sp/>value<sp/>is<sp/>2;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="comment">//<sp/>the<sp/>upper<sp/>left<sp/>corner<sp/>starts<sp/>at<sp/>x,y;<sp/>the<sp/>color<sp/>is<sp/>defined<sp/>by<sp/>the<sp/>vales<sp/>of<sp/>rgb;<sp/>multiplier<sp/>size<sp/>resizes<sp/>the<sp/>character;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="comment">//<sp/>there<sp/>are<sp/>added<sp/>segments<sp/>to<sp/>provide<sp/>for<sp/>.<sp/>:<sp/>,<sp/>;<sp/>and<sp/>other<sp/>non<sp/>alphameric<sp/>characters</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight><highlight class="comment">//<sp/>arrows<sp/>(l,r,u,d)<sp/>are<sp/>specified<sp/>by<sp/>numbers<sp/>11<sp/>,12,<sp/>13,<sp/>14</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight></codeline>
+<codeline lineno="76" refid="group__graphics_1ga41cbbd1e9b6c9fd4586b5d451f9a1a97" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__graphics_1ga41cbbd1e9b6c9fd4586b5d451f9a1a97" kindref="member">graphics_segment_display</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>s[],<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>y,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>r,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>g,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>b,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>size);</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight></codeline>
+<codeline lineno="91" refid="group__graphics_1gae617f52ed3909aef62a1e5ef3ed098e2" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__graphics_1gae617f52ed3909aef62a1e5ef3ed098e2" kindref="member">graphics_print_character</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>n,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>y,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>r,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>g,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>b,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>size);</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight></codeline>
+<codeline lineno="106" refid="group__graphics_1ga135a7b8b7a66396caa2347a3fd15934d" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__graphics_1ga135a7b8b7a66396caa2347a3fd15934d" kindref="member">graphics_print_string</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>s[],<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>y,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>r,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>g,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>b,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>size);</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight></codeline>
+<codeline lineno="122" refid="group__graphics_1gad026f76f05f24e19827c9b0c3d6e5400" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__graphics_1gad026f76f05f24e19827c9b0c3d6e5400" kindref="member">graphics_print_int</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>n,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>minNumDigits,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>y,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>r,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>g,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>b,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>size);</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"></highlight></codeline>
+<codeline lineno="138" refid="group__graphics_1ga52984fe99467614fe47b7a3f2c9e3dd7" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__graphics_1ga52984fe99467614fe47b7a3f2c9e3dd7" kindref="member">graphics_print_float</ref>(</highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>n,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>numDigits,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>y,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>r,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>g,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>b,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>size);</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"></highlight></codeline>
+<codeline lineno="140"><highlight class="normal"></highlight></codeline>
+<codeline lineno="141"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="142"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="144"><highlight class="normal"></highlight></codeline>
+<codeline lineno="145"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h"/>
+  </compounddef>
+</doxygen>

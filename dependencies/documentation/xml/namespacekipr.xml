@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="namespacekipr" kind="namespace" language="C++">
+    <compoundname>kipr</compoundname>
+    <innernamespace refid="namespacekipr_1_1accel">kipr::accel</innernamespace>
+    <innernamespace refid="namespacekipr_1_1analog">kipr::analog</innernamespace>
+    <innernamespace refid="namespacekipr_1_1battery">kipr::battery</innernamespace>
+    <innernamespace refid="namespacekipr_1_1button">kipr::button</innernamespace>
+    <innernamespace refid="namespacekipr_1_1compass">kipr::compass</innernamespace>
+    <innernamespace refid="namespacekipr_1_1config">kipr::config</innernamespace>
+    <innernamespace refid="namespacekipr_1_1console">kipr::console</innernamespace>
+    <innernamespace refid="namespacekipr_1_1create">kipr::create</innernamespace>
+    <innernamespace refid="namespacekipr_1_1digital">kipr::digital</innernamespace>
+    <innernamespace refid="namespacekipr_1_1geometry">kipr::geometry</innernamespace>
+    <innernamespace refid="namespacekipr_1_1gyro">kipr::gyro</innernamespace>
+    <innernamespace refid="namespacekipr_1_1log">kipr::log</innernamespace>
+    <innernamespace refid="namespacekipr_1_1magneto">kipr::magneto</innernamespace>
+    <innernamespace refid="namespacekipr_1_1motor">kipr::motor</innernamespace>
+    <innernamespace refid="namespacekipr_1_1sensor">kipr::sensor</innernamespace>
+    <innernamespace refid="namespacekipr_1_1servo">kipr::servo</innernamespace>
+    <innernamespace refid="namespacekipr_1_1thread">kipr::thread</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/accel/public/kipr/accel/accel.hpp" line="6" column="1"/>
+  </compounddef>
+</doxygen>

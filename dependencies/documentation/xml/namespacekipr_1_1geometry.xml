@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="namespacekipr_1_1geometry" kind="namespace" language="C++">
+    <compoundname>kipr::geometry</compoundname>
+    <innerclass refid="classkipr_1_1geometry_1_1Point2" prot="public">kipr::geometry::Point2</innerclass>
+    <innerclass refid="classkipr_1_1geometry_1_1Point3" prot="public">kipr::geometry::Point3</innerclass>
+    <innerclass refid="classkipr_1_1geometry_1_1Rect" prot="public">kipr::geometry::Rect</innerclass>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="namespacekipr_1_1geometry_1a17dd40014875d824d8a1d6b7915769e7" prot="public" static="no">
+        <type><ref refid="classkipr_1_1geometry_1_1Point2" kindref="compound">Point2</ref>&lt; float &gt;</type>
+        <definition>typedef Point2&lt;float&gt; kipr::geometry::Point2f</definition>
+        <argsstring></argsstring>
+        <name>Point2f</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" line="123" column="20" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" bodystart="123" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="namespacekipr_1_1geometry_1add89420fb5918154cc86018b9aea3751" prot="public" static="no">
+        <type><ref refid="classkipr_1_1geometry_1_1Point2" kindref="compound">Point2</ref>&lt; double &gt;</type>
+        <definition>typedef Point2&lt;double&gt; kipr::geometry::Point2d</definition>
+        <argsstring></argsstring>
+        <name>Point2d</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" line="124" column="20" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" bodystart="124" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="namespacekipr_1_1geometry_1a38c4dfe559219ca39db5b5d7f453b06e" prot="public" static="no">
+        <type><ref refid="classkipr_1_1geometry_1_1Rect" kindref="compound">Rect</ref>&lt; float &gt;</type>
+        <definition>typedef Rect&lt;float&gt; kipr::geometry::Rectf</definition>
+        <argsstring></argsstring>
+        <name>Rectf</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" line="200" column="18" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" bodystart="200" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="namespacekipr_1_1geometry_1a03b09b8bf18b50e8789ddff275bfc944" prot="public" static="no">
+        <type><ref refid="classkipr_1_1geometry_1_1Rect" kindref="compound">Rect</ref>&lt; double &gt;</type>
+        <definition>typedef Rect&lt;double&gt; kipr::geometry::Rectd</definition>
+        <argsstring></argsstring>
+        <name>Rectd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" line="201" column="18" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" bodystart="201" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" line="9" column="3"/>
+  </compounddef>
+</doxygen>

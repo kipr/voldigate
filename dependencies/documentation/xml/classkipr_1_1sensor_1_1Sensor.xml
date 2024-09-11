@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classkipr_1_1sensor_1_1Sensor" kind="class" language="C++" prot="public" abstract="yes">
+    <compoundname>kipr::sensor::Sensor</compoundname>
+    <includes refid="sensor_8hpp" local="no">sensor.hpp</includes>
+    <templateparamlist>
+      <param>
+        <type>typename T</type>
+      </param>
+    </templateparamlist>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classkipr_1_1sensor_1_1Sensor_1a7a2997c6ede6b25603032f2b110e8cb5" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type></type>
+        <definition>virtual kipr::sensor::Sensor&lt; T &gt;::~Sensor</definition>
+        <argsstring>()</argsstring>
+        <name>~Sensor</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/sensor/public/kipr/sensor/sensor.hpp" line="25" column="15" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/sensor/public/kipr/sensor/sensor.hpp" bodystart="25" bodyend="25"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1sensor_1_1Sensor_1a6ccd0837f3e12090bed823f841d3e318" prot="public" static="no" const="yes" explicit="no" inline="no" virt="pure-virtual">
+        <type>T</type>
+        <definition>virtual T kipr::sensor::Sensor&lt; T &gt;::value</definition>
+        <argsstring>() const =0</argsstring>
+        <name>value</name>
+        <reimplementedby refid="classkipr_1_1accel_1_1AccelX_1a0ffeee7629023a7999dd280dddfc33eb">value</reimplementedby>
+        <reimplementedby refid="classkipr_1_1accel_1_1AccelY_1a9071fe4d711df8d6c4d6394aedafd35d">value</reimplementedby>
+        <reimplementedby refid="classkipr_1_1accel_1_1AccelZ_1a69d636d692af591a9b61f6c73209f1be">value</reimplementedby>
+        <reimplementedby refid="classkipr_1_1analog_1_1Analog_1aa40bd208e1fb3048d93ef27d33615561">value</reimplementedby>
+        <reimplementedby refid="classkipr_1_1analog_1_1Analog8_1a390fd4a5d702c872fd5cb5421b22ecf4">value</reimplementedby>
+        <reimplementedby refid="classkipr_1_1analog_1_1Analog10_1a374d70c8d94a89d90864df00695e8104">value</reimplementedby>
+        <reimplementedby refid="classkipr_1_1button_1_1IdButton_1a1efe92321fc819e139b353cabb0d6940">value</reimplementedby>
+        <reimplementedby refid="classkipr_1_1digital_1_1Digital_1a476a96b7ff6ad47a2893e33104f99edb">value</reimplementedby>
+        <reimplementedby refid="classkipr_1_1gyro_1_1GyroX_1af27514e5549568170e0a172cf03a8747">value</reimplementedby>
+        <reimplementedby refid="classkipr_1_1gyro_1_1GyroY_1aa812fc0d455d39d3f176b99f90f2cd89">value</reimplementedby>
+        <reimplementedby refid="classkipr_1_1gyro_1_1GyroZ_1a23657e5b5705c62d9956468785d8403d">value</reimplementedby>
+        <reimplementedby refid="classkipr_1_1magneto_1_1MagnetoX_1abc707a04f6f0cc0d31a4bb0f103aac16">value</reimplementedby>
+        <reimplementedby refid="classkipr_1_1magneto_1_1MagnetoY_1a673412aa9cdb70ed5316ca228a18c6cb">value</reimplementedby>
+        <reimplementedby refid="classkipr_1_1magneto_1_1MagnetoZ_1ab518164867a9f2e086ab2d1fdc746224">value</reimplementedby>
+        <reimplementedby refid="classkipr_1_1sensor_1_1logic_1_1And_1af1c92c299b735e63171cca6574602778">value</reimplementedby>
+        <reimplementedby refid="classkipr_1_1sensor_1_1logic_1_1Or_1a89d77eecfac650b7b66d1d8857f93aed">value</reimplementedby>
+        <reimplementedby refid="classkipr_1_1sensor_1_1logic_1_1Xor_1a45966eeded65c17a5b06b0553de5cd5d">value</reimplementedby>
+        <reimplementedby refid="classkipr_1_1sensor_1_1logic_1_1Not_1a2ad6f413527713255f24e49d5b310ac3">value</reimplementedby>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/sensor/public/kipr/sensor/sensor.hpp" line="27" column="17"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/sensor/public/kipr/sensor/sensor.hpp" line="21" column="5" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/sensor/public/kipr/sensor/sensor.hpp" bodystart="23" bodyend="28"/>
+    <listofallmembers>
+      <member refid="classkipr_1_1sensor_1_1Sensor_1a6ccd0837f3e12090bed823f841d3e318" prot="public" virt="pure-virtual"><scope>kipr::sensor::Sensor</scope><name>value</name></member>
+      <member refid="classkipr_1_1sensor_1_1Sensor_1a7a2997c6ede6b25603032f2b110e8cb5" prot="public" virt="virtual"><scope>kipr::sensor::Sensor</scope><name>~Sensor</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

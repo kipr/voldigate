@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="structpoint2" kind="struct" language="C++" prot="public">
+    <compoundname>point2</compoundname>
+    <includes refid="geometry_8h" local="no">geometry.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structpoint2_1a945025c0035751bfc726251dda81da54" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int point2::x</definition>
+        <argsstring></argsstring>
+        <name>x</name>
+        <briefdescription>
+<para>the x value of the point </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" line="16" column="7" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" bodystart="16" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structpoint2_1a4caabf9c28bb6b0283b028ddad9c8a62" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int point2::y</definition>
+        <argsstring></argsstring>
+        <name>y</name>
+        <briefdescription>
+<para>the y value of the point </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" line="17" column="7" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" bodystart="17" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>A 2D point; has x and y. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" line="14" column="1" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" bodystart="15" bodyend="18"/>
+    <listofallmembers>
+      <member refid="structpoint2_1a945025c0035751bfc726251dda81da54" prot="public" virt="non-virtual"><scope>point2</scope><name>x</name></member>
+      <member refid="structpoint2_1a4caabf9c28bb6b0283b028ddad9c8a62" prot="public" virt="non-virtual"><scope>point2</scope><name>y</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

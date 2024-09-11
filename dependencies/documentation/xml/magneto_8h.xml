@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="magneto_8h" kind="file" language="C++">
+    <compoundname>magneto.h</compoundname>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="group__magneto_1gabec77e162ab72f3c63f91a006f51b2c4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>signed short</type>
+        <definition>signed short magneto_x</definition>
+        <argsstring>()</argsstring>
+        <name>magneto_x</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the sensed x magneto value <simplesect kind="return"><para>The latest signed x magneto value </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/magneto/public/kipr/magneto/magneto.h" line="19" column="14" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/magneto/public/kipr/magneto/magneto.h" declline="19" declcolumn="14"/>
+      </memberdef>
+      <memberdef kind="function" id="group__magneto_1gab536ca9dc29118ba2f1231c011531e7b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>signed short</type>
+        <definition>signed short magneto_y</definition>
+        <argsstring>()</argsstring>
+        <name>magneto_y</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the sensed x magneto value <simplesect kind="return"><para>The latest signed y magneto value </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/magneto/public/kipr/magneto/magneto.h" line="26" column="14" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/magneto/public/kipr/magneto/magneto.h" declline="26" declcolumn="14"/>
+      </memberdef>
+      <memberdef kind="function" id="group__magneto_1ga78e58e4d74bfe1767d090644010a574d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>signed short</type>
+        <definition>signed short magneto_z</definition>
+        <argsstring>()</argsstring>
+        <name>magneto_z</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the sensed x magneto value <simplesect kind="return"><para>The latest signed z magneto value </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/magneto/public/kipr/magneto/magneto.h" line="33" column="14" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/magneto/public/kipr/magneto/magneto.h" declline="33" declcolumn="14"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><simplesect kind="copyright"><para>KISS Institute for Practical Robotics </para>
+</simplesect>
+</para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_KIPR_MAGNETO_MAGNETO_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_KIPR_MAGNETO_MAGNETO_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="19" refid="group__magneto_1gabec77e162ab72f3c63f91a006f51b2c4" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">signed</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="group__magneto_1gabec77e162ab72f3c63f91a006f51b2c4" kindref="member">magneto_x</ref>();</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight></codeline>
+<codeline lineno="26" refid="group__magneto_1gab536ca9dc29118ba2f1231c011531e7b" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">signed</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="group__magneto_1gab536ca9dc29118ba2f1231c011531e7b" kindref="member">magneto_y</ref>();</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight></codeline>
+<codeline lineno="33" refid="group__magneto_1ga78e58e4d74bfe1767d090644010a574d" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">signed</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="group__magneto_1ga78e58e4d74bfe1767d090644010a574d" kindref="member">magneto_z</ref>();</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/magneto/public/kipr/magneto/magneto.h"/>
+  </compounddef>
+</doxygen>

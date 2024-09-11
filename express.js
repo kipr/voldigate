@@ -371,6 +371,12 @@ app.listen(config.server.port, () => {
   );
   console.log(`Serving content from /${sourceDir}/`);
 });
+app.use((req, res, next) => {
+  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+  res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+  next();
+});
+
 
 // Cross-origin isolation required for using features like SharedArrayBuffer
 function setCrossOriginIsolationHeaders(res) {

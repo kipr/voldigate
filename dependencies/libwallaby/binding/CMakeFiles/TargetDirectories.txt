@@ -1,0 +1,9 @@
+/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/binding/CMakeFiles/edit_cache.dir
+/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/binding/CMakeFiles/rebuild_cache.dir
+/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/binding/python/CMakeFiles/swig_kipr_python.dir
+/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/binding/python/CMakeFiles/kipr_python.dir
+/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/binding/python/CMakeFiles/edit_cache.dir
+/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/binding/python/CMakeFiles/rebuild_cache.dir
+/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/binding/xml/CMakeFiles/swig_kipr_xml.dir
+/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/binding/xml/CMakeFiles/edit_cache.dir
+/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/binding/xml/CMakeFiles/rebuild_cache.dir

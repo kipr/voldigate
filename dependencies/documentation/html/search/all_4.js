@@ -1,0 +1,27 @@
+var searchData=
+[
+  ['data_169',['data',['../structmutex.html#a4a80e8b6f332480afe9e5cd36cddd1a8',1,'mutex::data()'],['../structthread.html#a950fee393b7c274d80cb5dcd97ed90f1',1,'thread::data()'],['../classkipr_1_1create_1_1CreateScript.html#a5d12f64a68d760c6f3dff014364464d7',1,'kipr::create::CreateScript::data()']]],
+  ['debug_170',['Debug',['../namespacekipr_1_1log.html#ac448d0ee86b50f80a44a11636d65fe34aa603905470e2a5b8c13e96b579ef0dba',1,'kipr::log']]],
+  ['debug_171',['debug',['../classkipr_1_1log_1_1Log.html#a9823bd95ddee2e7e335f2996f2e1e8bc',1,'kipr::log::Log::debug()'],['../classkipr_1_1log_1_1Log.html#a42b87fe6435ad44df7feb504e02f9495',1,'kipr::log::Log::debug(const std::string &amp;message)'],['../classkipr_1_1log_1_1Log.html#a6242639402d6f4838cf45a0fcad21036',1,'kipr::log::Log::debug(const std::string &amp;message, const Location &amp;location)']]],
+  ['defaultbaudrate_172',['defaultBaudRate',['../classkipr_1_1create_1_1Create.html#a51b77549776e81c1e848a3efb76864c9',1,'kipr::create::Create']]],
+  ['deprecated_20list_173',['Deprecated List',['../deprecated.html',1,'']]],
+  ['digital_174',['Digital',['../classkipr_1_1digital_1_1Digital.html#a3b52dea2037d97f4188678b4f6dffece',1,'kipr::digital::Digital']]],
+  ['digital_175',['digital',['../group__digital.html#ga3eb7db79d996b92f7063b65dc34b3484',1,'digital.h']]],
+  ['digital_176',['Digital',['../classkipr_1_1digital_1_1Digital.html',1,'kipr::digital']]],
+  ['digital_2eh_177',['digital.h',['../digital_8h.html',1,'']]],
+  ['digital_2ehpp_178',['digital.hpp',['../digital_8hpp.html',1,'']]],
+  ['digitals_179',['Digitals',['../group__digital.html',1,'']]],
+  ['disable_180',['disable',['../classkipr_1_1servo_1_1Servo.html#abb35bc870ad17df012d290ea3cbafa8a',1,'kipr::servo::Servo']]],
+  ['disable_5fservo_181',['disable_servo',['../group__servo.html#ga04ea4f9bce0b434d3cc2f41fcda99c14',1,'servo.h']]],
+  ['disable_5fservos_182',['disable_servos',['../group__servo.html#ga93b41914541860f719247c1f14a601ed',1,'servo.h']]],
+  ['disconnect_183',['disconnect',['../classkipr_1_1create_1_1Create.html#ae8c66e695f249785b8fef5de3ffcbbd6',1,'kipr::create::Create::disconnect()'],['../classSocket.html#af4e3f3b8001460ae2871f5374b70e3b8',1,'Socket::disconnect()']]],
+  ['display_2eh_184',['display.h',['../display_8h.html',1,'']]],
+  ['display_5fclear_185',['display_clear',['../display_8h.html#aee07a233052bd0b8f6e461d21f380d4e',1,'display.h']]],
+  ['display_5fprintf_186',['display_printf',['../display_8h.html#abbf993d2dc1de781d106a1ca2c8c484d',1,'display.h']]],
+  ['distance_187',['distance',['../classkipr_1_1create_1_1Create.html#a6810e87aa6fcefbe1324c1a909f0fabb',1,'kipr::create::Create::distance()'],['../structkipr_1_1create_1_1CreatePackets_1_1__2.html#af58f25943c9c27fdee9165ee086fa381',1,'kipr::create::CreatePackets::_2::distance()'],['../structkipr_1_1create_1_1CreateState.html#abf7892ddcaebc78a04e40590c008b97a',1,'kipr::create::CreateState::distance()']]],
+  ['dkgray_188',['DKGRAY',['../colors_8h.html#a94acd99b9c9aa3d0bc02834f543437b9',1,'colors.h']]],
+  ['doublevalue_189',['doubleValue',['../classkipr_1_1config_1_1Config.html#a07797cb29f7ddf6445e7a4b41f76fb72',1,'kipr::config::Config']]],
+  ['drive_190',['drive',['../classkipr_1_1create_1_1Create.html#a7a1764740c4dadccaffb6340227b5b35',1,'kipr::create::Create']]],
+  ['drivedirect_191',['driveDirect',['../classkipr_1_1create_1_1Create.html#a9374d22857062833deacc875c94bef7b',1,'kipr::create::Create']]],
+  ['drivestraight_192',['driveStraight',['../classkipr_1_1create_1_1Create.html#ae83a0d9b843e1fe789efae0e397d4913',1,'kipr::create::Create']]]
+];

@@ -1,0 +1,1152 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="graphics__key__code_8h" kind="file" language="C++">
+    <compoundname>graphics_key_code.h</compoundname>
+    <includedby refid="graphics_8h" local="yes">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h</includedby>
+    <invincdepgraph>
+      <node id="1">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_key_code.h</label>
+        <link refid="graphics__key__code_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h</label>
+        <link refid="graphics_8h"/>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="enum">
+      <memberdef kind="enum" id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2" prot="public" static="no" strong="no">
+        <type></type>
+        <name>KeyCode</name>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa299655ae5f17ab61a534a75f69b3fa9" prot="public">
+          <name>KeyEnter</name>
+          <initializer>= &apos;\n&apos;</initializer>
+          <briefdescription>
+<para>enter key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a396bff11179c00f3a3b39b811fcc2d5e" prot="public">
+          <name>KeyBackSpace</name>
+          <initializer>= &apos;\b&apos;</initializer>
+          <briefdescription>
+<para>backspace key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a51da587b611d1361fe3910ee42563f8b" prot="public">
+          <name>KeyTab</name>
+          <initializer>= &apos;\t&apos;</initializer>
+          <briefdescription>
+<para>tab key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a13f69b5cd5b4cfd915d321742c242d3a" prot="public">
+          <name>KeyCancel</name>
+          <initializer>= 0x03</initializer>
+          <briefdescription>
+<para>cancel key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aba49fac8896869ecd88fc43858c14a06" prot="public">
+          <name>KeyClear</name>
+          <initializer>= 0x0C</initializer>
+          <briefdescription>
+<para>clear key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a4cea6508c6aefc6e40331a51cc120a59" prot="public">
+          <name>KeyShift</name>
+          <initializer>= 0x10</initializer>
+          <briefdescription>
+<para>shift key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a1033ba597d93835580dcce249e6b74d5" prot="public">
+          <name>KeyControl</name>
+          <initializer>= 0x11</initializer>
+          <briefdescription>
+<para>control key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ac0dce66035ef95f08d610c3c0364962d" prot="public">
+          <name>KeyAlt</name>
+          <initializer>= 0x12</initializer>
+          <briefdescription>
+<para>alt key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a6befdb227dcf424e8828b3ff6f19fd25" prot="public">
+          <name>KeyPause</name>
+          <initializer>= 0x13</initializer>
+          <briefdescription>
+<para>pause key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae0fed15b76349c6d4a54a38a4ca12706" prot="public">
+          <name>KeyCapsLock</name>
+          <initializer>= 0x14</initializer>
+          <briefdescription>
+<para>capslock key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a82f371ce0cb848fe3934b8048e4a9d92" prot="public">
+          <name>KeyEscape</name>
+          <initializer>= 0x1B</initializer>
+          <briefdescription>
+<para>escape key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a82cb18dd6ef2d9721dcf85b92c30b4ab" prot="public">
+          <name>KeySpace</name>
+          <initializer>= 0x20</initializer>
+          <briefdescription>
+<para>space key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a9aae13b9f68e096444d1769f094fa992" prot="public">
+          <name>KeyPageUp</name>
+          <initializer>= 0x21</initializer>
+          <briefdescription>
+<para>page up key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ad8ea0bebcc4991d7baa373eb7a5056a3" prot="public">
+          <name>KeyPageDown</name>
+          <initializer>= 0x22</initializer>
+          <briefdescription>
+<para>page down key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a1a2b5704da0d7e32c4d32474fabbff1c" prot="public">
+          <name>KeyEnd</name>
+          <initializer>= 0x23</initializer>
+          <briefdescription>
+<para>end key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a96eb38c3b5e66972a4fdc46f0d982a28" prot="public">
+          <name>KeyHome</name>
+          <initializer>= 0x24</initializer>
+          <briefdescription>
+<para>home key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae64a8b7a14c41a6e6df1a424478d5004" prot="public">
+          <name>KeyLeft</name>
+          <initializer>= 0x25</initializer>
+          <briefdescription>
+<para>left key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa7effd93e048b37c190aebbebde2ba29" prot="public">
+          <name>KeyUp</name>
+          <initializer>= 0x26</initializer>
+          <briefdescription>
+<para>up arrow key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a02213d17dc7f851e2b540e9f7297c4da" prot="public">
+          <name>KeyRight</name>
+          <initializer>= 0x27</initializer>
+          <briefdescription>
+<para>right arrow key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ac8dc7cbe1a4eb52ce2200b33b59730ef" prot="public">
+          <name>KeyDown</name>
+          <initializer>= 0x28</initializer>
+          <briefdescription>
+<para>down arrow key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ab60c5edd08bd0ca2b7e8d3216544eace" prot="public">
+          <name>KeyComma</name>
+          <initializer>= 0x2C</initializer>
+          <briefdescription>
+<para>comma key &apos;,&apos; </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ac53a8a98cefbd4c27a956672451adc9f" prot="public">
+          <name>KeyPeriod</name>
+          <initializer>= 0x2E</initializer>
+          <briefdescription>
+<para>period key &apos;.&apos; </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae75992a2e6d0a62e97ec41c7216028de" prot="public">
+          <name>KeySlash</name>
+          <initializer>= 0x2F</initializer>
+          <briefdescription>
+<para>slash key &apos;/&apos; </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a2e39ce97ab24cdab08e7b3d069b81a14" prot="public">
+          <name>KeyZero</name>
+          <initializer>= 0x30</initializer>
+          <briefdescription>
+<para>zero key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae226f3139853f4cea9a5c14a476c553d" prot="public">
+          <name>KeyOne</name>
+          <initializer>= 0x31</initializer>
+          <briefdescription>
+<para>one key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a225765f901c880f23cef69583e153b3e" prot="public">
+          <name>KeyTwo</name>
+          <initializer>= 0x32</initializer>
+          <briefdescription>
+<para>two key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a37eed363d454636eab753ffdaf23980d" prot="public">
+          <name>KeyThree</name>
+          <initializer>= 0x33</initializer>
+          <briefdescription>
+<para>three key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a7ff490c34d69e2ca0ea0ea66cd9bb387" prot="public">
+          <name>KeyFour</name>
+          <initializer>= 0x34</initializer>
+          <briefdescription>
+<para>four key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ac2f4ebe167e1bc2421e0cf229d400357" prot="public">
+          <name>KeyFive</name>
+          <initializer>= 0x35</initializer>
+          <briefdescription>
+<para>five key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a03eff5b04ceed14790e502ef62b9dd2d" prot="public">
+          <name>KeySix</name>
+          <initializer>= 0x36</initializer>
+          <briefdescription>
+<para>six key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a4e06f81b9becaecf653acaa52b64a86f" prot="public">
+          <name>KeySeven</name>
+          <initializer>= 0x37</initializer>
+          <briefdescription>
+<para>seven key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a3a97c6e12a22c1445377743ce0d2004a" prot="public">
+          <name>KeyEight</name>
+          <initializer>= 0x38</initializer>
+          <briefdescription>
+<para>eight key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a760e09e4b9a6ccd4c5f7aca76042a76c" prot="public">
+          <name>KeyNine</name>
+          <initializer>= 0x39</initializer>
+          <briefdescription>
+<para>nine key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ac90ddfdcf6e5cc68806461b43e10c164" prot="public">
+          <name>KeySemiColon</name>
+          <initializer>= 0x3B</initializer>
+          <briefdescription>
+<para>semicolon key &apos;;&apos; </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae42f75cc5c041ae097e291aecf9ab37d" prot="public">
+          <name>KeyEquals</name>
+          <initializer>= 0x3D</initializer>
+          <briefdescription>
+<para>equals key &apos;=&apos; </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae2d5a749164d7df27006cff5e7a41864" prot="public">
+          <name>KeyA</name>
+          <initializer>= 0x41</initializer>
+          <briefdescription>
+<para>a key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa81f9caaf75beb2bb78ac56f923c4b01" prot="public">
+          <name>KeyB</name>
+          <initializer>= 0x42</initializer>
+          <briefdescription>
+<para>b key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2abf93aaa7d2f619e7c0b219d97b2124e8" prot="public">
+          <name>KeyC</name>
+          <initializer>= 0x43</initializer>
+          <briefdescription>
+<para>c key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a7dcdfbb10a01989000a0637ca37bec49" prot="public">
+          <name>KeyD</name>
+          <initializer>= 0x44</initializer>
+          <briefdescription>
+<para>d key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ac832fe4ae1d29373bddf80b081e6543e" prot="public">
+          <name>KeyE</name>
+          <initializer>= 0x45</initializer>
+          <briefdescription>
+<para>e key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ab2bca6bbb715009fae7256468230ad55" prot="public">
+          <name>KeyF</name>
+          <initializer>= 0x46</initializer>
+          <briefdescription>
+<para>f key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a22ba5fe527e7e61b0cef220e41a46db6" prot="public">
+          <name>KeyG</name>
+          <initializer>= 0x47</initializer>
+          <briefdescription>
+<para>g key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a6bf0a080ccfffdd03051579283cdbfd8" prot="public">
+          <name>KeyH</name>
+          <initializer>= 0x48</initializer>
+          <briefdescription>
+<para>h key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a3ebda3ed7241c90004eddf07dbed37d3" prot="public">
+          <name>KeyI</name>
+          <initializer>= 0x49</initializer>
+          <briefdescription>
+<para>i key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a807cc4da6393e5e3f42d4a3d0ee44784" prot="public">
+          <name>KeyJ</name>
+          <initializer>= 0x4A</initializer>
+          <briefdescription>
+<para>j key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aeb1e61076beb0e328c0667df8908aaeb" prot="public">
+          <name>KeyK</name>
+          <initializer>= 0x4B</initializer>
+          <briefdescription>
+<para>k key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa1c9bebc7412d7dcf6173173b0abf94f" prot="public">
+          <name>KeyL</name>
+          <initializer>= 0x4C</initializer>
+          <briefdescription>
+<para>l key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aea4c638c3d4770199871bcd91c8edd18" prot="public">
+          <name>KeyM</name>
+          <initializer>= 0x4D</initializer>
+          <briefdescription>
+<para>m key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a2d745d22b652f1cdf52006f21ec1d310" prot="public">
+          <name>KeyN</name>
+          <initializer>= 0x4E</initializer>
+          <briefdescription>
+<para>n key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a2eac02bab0caff3f0ab6e8834056ddb6" prot="public">
+          <name>KeyO</name>
+          <initializer>= 0x4F</initializer>
+          <briefdescription>
+<para>o key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aefeb29cd85c3abe892e91dd4cae5def8" prot="public">
+          <name>KeyP</name>
+          <initializer>= 0x50</initializer>
+          <briefdescription>
+<para>p key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ab54c97c02574889480fd911187b75906" prot="public">
+          <name>KeyQ</name>
+          <initializer>= 0x51</initializer>
+          <briefdescription>
+<para>q key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a5328a7df031480882802376df76445a2" prot="public">
+          <name>KeyR</name>
+          <initializer>= 0x52</initializer>
+          <briefdescription>
+<para>r key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ab185d05534828480b5c832ce4fd4a4cd" prot="public">
+          <name>KeyS</name>
+          <initializer>= 0x53</initializer>
+          <briefdescription>
+<para>s key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ab5810100c2fc527c7c0c986e955ee1fe" prot="public">
+          <name>KeyT</name>
+          <initializer>= 0x54</initializer>
+          <briefdescription>
+<para>t key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a71400855cd3ab3cbcbd93b90a3ca658d" prot="public">
+          <name>KeyU</name>
+          <initializer>= 0x55</initializer>
+          <briefdescription>
+<para>u key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a467f3d587b0cb80279f92f5ad8648ece" prot="public">
+          <name>KeyV</name>
+          <initializer>= 0x56</initializer>
+          <briefdescription>
+<para>v key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a20d458f0046df3eb50bbaf433bc05b12" prot="public">
+          <name>KeyW</name>
+          <initializer>= 0x57</initializer>
+          <briefdescription>
+<para>w key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a9bd4488034000a8352c9492ecf7cff03" prot="public">
+          <name>KeyX</name>
+          <initializer>= 0x58</initializer>
+          <briefdescription>
+<para>x key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a33c0013e1c679ce14345b32fdc6e29eb" prot="public">
+          <name>KeyY</name>
+          <initializer>= 0x59</initializer>
+          <briefdescription>
+<para>y key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2acb6ebb50429406f57c17e5d66a56ebba" prot="public">
+          <name>KeyZ</name>
+          <initializer>= 0x5A</initializer>
+          <briefdescription>
+<para>z key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a64b6a5c25196b6251f965e7766daaf08" prot="public">
+          <name>KeyOpenBracket</name>
+          <initializer>= 0x5B</initializer>
+          <briefdescription>
+<para>open bracket key &apos;[&apos; </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a690c811a2e65da802d30804e6792a3f0" prot="public">
+          <name>KeyBackSlash</name>
+          <initializer>= 0x5C</initializer>
+          <briefdescription>
+<para>back slash key &apos;\&apos; </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ad0ebcb157eab87624aaabd4329090728" prot="public">
+          <name>KeyCloseBracket</name>
+          <initializer>= 0x5D</initializer>
+          <briefdescription>
+<para>close bracket key &apos;]&apos; </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ab45e1cabe1aae100039e74ee7e503981" prot="public">
+          <name>KeyNumPad0</name>
+          <initializer>= 0x60</initializer>
+          <briefdescription>
+<para>numpad 0 key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a14762572fafd899b5214422d48676b9e" prot="public">
+          <name>KeyNumPad1</name>
+          <initializer>= 0x61</initializer>
+          <briefdescription>
+<para>numpad 1 key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aab632a3188e933f315c52b5d69115855" prot="public">
+          <name>KeyNumPad2</name>
+          <initializer>= 0x62</initializer>
+          <briefdescription>
+<para>numpad 2 key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a91c2776ac9d98596606652a403d7c095" prot="public">
+          <name>KeyNumPad3</name>
+          <initializer>= 0x63</initializer>
+          <briefdescription>
+<para>numpad 3 key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa4da25a5838f3d8daedf6186ef5bc169" prot="public">
+          <name>KeyNumPad4</name>
+          <initializer>= 0x64</initializer>
+          <briefdescription>
+<para>numpad 4 key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a35ff35e8e93c6e20e1e5f6b8dfff0bec" prot="public">
+          <name>KeyNumPad5</name>
+          <initializer>= 0x65</initializer>
+          <briefdescription>
+<para>numpad 5 key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a72d180be977a56121f378a3372b70e2f" prot="public">
+          <name>KeyNumPad6</name>
+          <initializer>= 0x66</initializer>
+          <briefdescription>
+<para>numpad 6 key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2adc01f05089dbdde5b80b4e05975fa868" prot="public">
+          <name>KeyNumPad7</name>
+          <initializer>= 0x67</initializer>
+          <briefdescription>
+<para>numpad 7 key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a47f2f518cb3d618f953b53afef94efc6" prot="public">
+          <name>KeyNumPad8</name>
+          <initializer>= 0x68</initializer>
+          <briefdescription>
+<para>numpad 8 key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a4707b51bd1e3aa51dab59cfd1645140e" prot="public">
+          <name>KeyNumPad9</name>
+          <initializer>= 0x69</initializer>
+          <briefdescription>
+<para>numpad 9 key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a8f23e578f13fe4c67e54786bb1ec74f6" prot="public">
+          <name>KeyMultiply</name>
+          <initializer>= 0x6A</initializer>
+          <briefdescription>
+<para>multiply key &apos;*&apos; </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a88db7c0b1657e420ae36aa74e34a75a0" prot="public">
+          <name>KeyAdd</name>
+          <initializer>= 0x6B</initializer>
+          <briefdescription>
+<para>add key &apos;+&apos; </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a8fe0d35c4dad9c448b3f2d162ef3531b" prot="public">
+          <name>KeySeparator</name>
+          <initializer>= 0x6C</initializer>
+          <briefdescription>
+<para>separator key &apos;-&apos; </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ac6dcce9847893032126bebe6b60785aa" prot="public">
+          <name>KeySubtract</name>
+          <initializer>= 0x6D</initializer>
+          <briefdescription>
+<para>subtract key &apos;-&apos; </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae40164afa628fb2eee51c128fe4f328b" prot="public">
+          <name>KeyDecimal</name>
+          <initializer>= 0x6E</initializer>
+          <briefdescription>
+<para>decimal key &apos;.&apos; </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a20aefbd4070de6ef490cbec86d287bc7" prot="public">
+          <name>KeyDivide</name>
+          <initializer>= 0x6F</initializer>
+          <briefdescription>
+<para>divide key &apos;/&apos; </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae7836ad3ac84f24cc1393468c21624a3" prot="public">
+          <name>KeyF1</name>
+          <initializer>= 0x70</initializer>
+          <briefdescription>
+<para>F1 key. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2abe2d2ecaa29bf9e6d0f281184f8b1e20" prot="public">
+          <name>KeyF2</name>
+          <initializer>= 0x71</initializer>
+          <briefdescription>
+<para>F2 key. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a93e711ad76aabf895e54f47f7dcb5574" prot="public">
+          <name>KeyF3</name>
+          <initializer>= 0x72</initializer>
+          <briefdescription>
+<para>F3 key. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aaa1e7b05dc7d6d3dbb56aacf97af5916" prot="public">
+          <name>KeyF4</name>
+          <initializer>= 0x73</initializer>
+          <briefdescription>
+<para>F4 key. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ad8d3b0cbdabc4914b37672de0096e606" prot="public">
+          <name>KeyF5</name>
+          <initializer>= 0x74</initializer>
+          <briefdescription>
+<para>F5 key. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a5db519ab44242bc992c25989d0082201" prot="public">
+          <name>KeyF6</name>
+          <initializer>= 0x75</initializer>
+          <briefdescription>
+<para>F6 key. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a3a19afb4dc55ac63f8dce05c6cc41750" prot="public">
+          <name>KeyF7</name>
+          <initializer>= 0x76</initializer>
+          <briefdescription>
+<para>F7 key. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a59742f58301b7db06337e4d11090c841" prot="public">
+          <name>KeyF8</name>
+          <initializer>= 0x77</initializer>
+          <briefdescription>
+<para>F8 key. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a136fb67c3d568d0dd4e3b9eabcf029da" prot="public">
+          <name>KeyF9</name>
+          <initializer>= 0x78</initializer>
+          <briefdescription>
+<para>F9 key. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa6f6d74cb922d480e2e3c7c5e73dd062" prot="public">
+          <name>KeyF10</name>
+          <initializer>= 0x79</initializer>
+          <briefdescription>
+<para>F10 key. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a702ca31c85c2e2dfad8e327d1e1cb9c7" prot="public">
+          <name>KeyF11</name>
+          <initializer>= 0x7A</initializer>
+          <briefdescription>
+<para>F11 key. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a40ea8f35e5d2069d9127f5dbe2fd44fb" prot="public">
+          <name>KeyF12</name>
+          <initializer>= 0x7B</initializer>
+          <briefdescription>
+<para>F12 key. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a6453259c4f57be6ff865fced839ce91f" prot="public">
+          <name>KeyDelete</name>
+          <initializer>= 0x7F</initializer>
+          <briefdescription>
+<para>delete key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa27211d21efde61f44d19219c43d0e85" prot="public">
+          <name>KeyNumLock</name>
+          <initializer>= 0x90</initializer>
+          <briefdescription>
+<para>numlock key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2af8cb4701a346b450a1b6cca1191caaad" prot="public">
+          <name>KeyScrollLock</name>
+          <initializer>= 0x91</initializer>
+          <briefdescription>
+<para>scroll lock key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a41e83fa6585a18a72cbff55b98e12565" prot="public">
+          <name>KeyPrintScreen</name>
+          <initializer>= 0x9A</initializer>
+          <briefdescription>
+<para>print screen key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a32c56fc722e10081b935fc20d6cccddd" prot="public">
+          <name>KeyInsert</name>
+          <initializer>= 0x9B</initializer>
+          <briefdescription>
+<para>insert key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2acfab8e69b254414cb611c6ef814899f1" prot="public">
+          <name>KeyHelp</name>
+          <initializer>= 0x9C</initializer>
+          <briefdescription>
+<para>help key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a9b0035e8ad8277eca884f23d227ee406" prot="public">
+          <name>KeyMeta</name>
+          <initializer>= 0x9D</initializer>
+          <briefdescription>
+<para>meta key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a97daf31a538a596f55978faa83d44985" prot="public">
+          <name>KeyBackQuote</name>
+          <initializer>= 0xC0</initializer>
+          <briefdescription>
+<para>backquote key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a10750d8e8245591411a0406e5208dacc" prot="public">
+          <name>KeyQuote</name>
+          <initializer>= 0xDE</initializer>
+          <briefdescription>
+<para>quote key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae1153b1885cef5903c7ca5b1890e2671" prot="public">
+          <name>KeyFinal</name>
+          <initializer>= 0x18</initializer>
+          <briefdescription>
+<para>final key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae1b0cbc3181cba17babeb6e687cdb81a" prot="public">
+          <name>KeyConvert</name>
+          <initializer>= 0x1C</initializer>
+          <briefdescription>
+<para>convert key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a554cff2066ae2fce37b4a82052a6369c" prot="public">
+          <name>KeyNonConvert</name>
+          <initializer>= 0x1D</initializer>
+          <briefdescription>
+<para>non convert key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a28d006081be0776c6681321eeda8b1a5" prot="public">
+          <name>KeyAccept</name>
+          <initializer>= 0x1E</initializer>
+          <briefdescription>
+<para>accept key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a24e709ee744cd5b0cb1010ace9a9848b" prot="public">
+          <name>KeyModeChange</name>
+          <initializer>= 0x1F</initializer>
+          <briefdescription>
+<para>mode change key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa5b5a7cca72f01cde3869b247586d6a4" prot="public">
+          <name>KeyKana</name>
+          <initializer>= 0x15</initializer>
+          <briefdescription>
+<para>kana key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a73e60940617b7c51f87231e1565cc153" prot="public">
+          <name>KeyKanji</name>
+          <initializer>= 0x19</initializer>
+          <briefdescription>
+<para>kanji key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2acf298d846200d0d38a8355a5c637d6ce" prot="public">
+          <name>KeyUndefined</name>
+          <initializer>= 0x0</initializer>
+          <briefdescription>
+<para>undefined key </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+<para>All Key Codes. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_key_code.h" line="16" column="1" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_key_code.h" bodystart="17" bodyend="127"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>Key codes used in the graphics window. </para>
+    </briefdescription>
+    <detaileddescription>
+<para><simplesect kind="copyright"><para>KISS Insitute for Practical Robotics </para>
+</simplesect>
+</para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_KIPR_GRAPHICS_GRAPHICS_KEY_CODE_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_KIPR_GRAPHICS_GRAPHICS_KEY_CODE_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight></codeline>
+<codeline lineno="16" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2" refkind="member"><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2" kindref="member">KeyCode</ref></highlight></codeline>
+<codeline lineno="17"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="18" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa299655ae5f17ab61a534a75f69b3fa9" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa299655ae5f17ab61a534a75f69b3fa9" kindref="member">KeyEnter</ref><sp/>=<sp/></highlight><highlight class="charliteral">&apos;\n&apos;</highlight><highlight class="normal">,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="19" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a396bff11179c00f3a3b39b811fcc2d5e" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a396bff11179c00f3a3b39b811fcc2d5e" kindref="member">KeyBackSpace</ref><sp/>=<sp/></highlight><highlight class="charliteral">&apos;\b&apos;</highlight><highlight class="normal">,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="20" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a51da587b611d1361fe3910ee42563f8b" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a51da587b611d1361fe3910ee42563f8b" kindref="member">KeyTab</ref><sp/>=<sp/></highlight><highlight class="charliteral">&apos;\t&apos;</highlight><highlight class="normal">,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="21" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a13f69b5cd5b4cfd915d321742c242d3a" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a13f69b5cd5b4cfd915d321742c242d3a" kindref="member">KeyCancel</ref><sp/>=<sp/>0x03,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="22" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aba49fac8896869ecd88fc43858c14a06" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aba49fac8896869ecd88fc43858c14a06" kindref="member">KeyClear</ref><sp/>=<sp/>0x0C,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="23" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a4cea6508c6aefc6e40331a51cc120a59" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a4cea6508c6aefc6e40331a51cc120a59" kindref="member">KeyShift</ref><sp/>=<sp/>0x10,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="24" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a1033ba597d93835580dcce249e6b74d5" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a1033ba597d93835580dcce249e6b74d5" kindref="member">KeyControl</ref><sp/>=<sp/>0x11,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="25" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ac0dce66035ef95f08d610c3c0364962d" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ac0dce66035ef95f08d610c3c0364962d" kindref="member">KeyAlt</ref><sp/>=<sp/>0x12,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="26" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a6befdb227dcf424e8828b3ff6f19fd25" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a6befdb227dcf424e8828b3ff6f19fd25" kindref="member">KeyPause</ref><sp/>=<sp/>0x13,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="27" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae0fed15b76349c6d4a54a38a4ca12706" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae0fed15b76349c6d4a54a38a4ca12706" kindref="member">KeyCapsLock</ref><sp/>=<sp/>0x14,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="28" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a82f371ce0cb848fe3934b8048e4a9d92" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a82f371ce0cb848fe3934b8048e4a9d92" kindref="member">KeyEscape</ref><sp/>=<sp/>0x1B,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="29" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a82cb18dd6ef2d9721dcf85b92c30b4ab" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a82cb18dd6ef2d9721dcf85b92c30b4ab" kindref="member">KeySpace</ref><sp/>=<sp/>0x20,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="30" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a9aae13b9f68e096444d1769f094fa992" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a9aae13b9f68e096444d1769f094fa992" kindref="member">KeyPageUp</ref><sp/>=<sp/>0x21,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="31" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ad8ea0bebcc4991d7baa373eb7a5056a3" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ad8ea0bebcc4991d7baa373eb7a5056a3" kindref="member">KeyPageDown</ref><sp/>=<sp/>0x22,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="32" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a1a2b5704da0d7e32c4d32474fabbff1c" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a1a2b5704da0d7e32c4d32474fabbff1c" kindref="member">KeyEnd</ref><sp/>=<sp/>0x23,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="33" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a96eb38c3b5e66972a4fdc46f0d982a28" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a96eb38c3b5e66972a4fdc46f0d982a28" kindref="member">KeyHome</ref><sp/>=<sp/>0x24,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="34" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae64a8b7a14c41a6e6df1a424478d5004" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae64a8b7a14c41a6e6df1a424478d5004" kindref="member">KeyLeft</ref><sp/>=<sp/>0x25,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="35" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa7effd93e048b37c190aebbebde2ba29" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa7effd93e048b37c190aebbebde2ba29" kindref="member">KeyUp</ref><sp/>=<sp/>0x26,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="36" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a02213d17dc7f851e2b540e9f7297c4da" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a02213d17dc7f851e2b540e9f7297c4da" kindref="member">KeyRight</ref><sp/>=<sp/>0x27,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="37" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ac8dc7cbe1a4eb52ce2200b33b59730ef" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ac8dc7cbe1a4eb52ce2200b33b59730ef" kindref="member">KeyDown</ref><sp/>=<sp/>0x28,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="38" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ab60c5edd08bd0ca2b7e8d3216544eace" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ab60c5edd08bd0ca2b7e8d3216544eace" kindref="member">KeyComma</ref><sp/>=<sp/>0x2C,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="39" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ac53a8a98cefbd4c27a956672451adc9f" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ac53a8a98cefbd4c27a956672451adc9f" kindref="member">KeyPeriod</ref><sp/>=<sp/>0x2E,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="40" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae75992a2e6d0a62e97ec41c7216028de" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae75992a2e6d0a62e97ec41c7216028de" kindref="member">KeySlash</ref><sp/>=<sp/>0x2F,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="41" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a2e39ce97ab24cdab08e7b3d069b81a14" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a2e39ce97ab24cdab08e7b3d069b81a14" kindref="member">KeyZero</ref><sp/>=<sp/>0x30,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="42" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae226f3139853f4cea9a5c14a476c553d" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae226f3139853f4cea9a5c14a476c553d" kindref="member">KeyOne</ref><sp/>=<sp/>0x31,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="43" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a225765f901c880f23cef69583e153b3e" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a225765f901c880f23cef69583e153b3e" kindref="member">KeyTwo</ref><sp/>=<sp/>0x32,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="44" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a37eed363d454636eab753ffdaf23980d" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a37eed363d454636eab753ffdaf23980d" kindref="member">KeyThree</ref><sp/>=<sp/>0x33,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="45" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a7ff490c34d69e2ca0ea0ea66cd9bb387" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a7ff490c34d69e2ca0ea0ea66cd9bb387" kindref="member">KeyFour</ref><sp/>=<sp/>0x34,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="46" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ac2f4ebe167e1bc2421e0cf229d400357" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ac2f4ebe167e1bc2421e0cf229d400357" kindref="member">KeyFive</ref><sp/>=<sp/>0x35,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="47" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a03eff5b04ceed14790e502ef62b9dd2d" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a03eff5b04ceed14790e502ef62b9dd2d" kindref="member">KeySix</ref><sp/>=<sp/>0x36,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="48" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a4e06f81b9becaecf653acaa52b64a86f" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a4e06f81b9becaecf653acaa52b64a86f" kindref="member">KeySeven</ref><sp/>=<sp/>0x37,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="49" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a3a97c6e12a22c1445377743ce0d2004a" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a3a97c6e12a22c1445377743ce0d2004a" kindref="member">KeyEight</ref><sp/>=<sp/>0x38,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="50" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a760e09e4b9a6ccd4c5f7aca76042a76c" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a760e09e4b9a6ccd4c5f7aca76042a76c" kindref="member">KeyNine</ref><sp/>=<sp/>0x39,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="51" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ac90ddfdcf6e5cc68806461b43e10c164" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ac90ddfdcf6e5cc68806461b43e10c164" kindref="member">KeySemiColon</ref><sp/>=<sp/>0x3B,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="52" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae42f75cc5c041ae097e291aecf9ab37d" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae42f75cc5c041ae097e291aecf9ab37d" kindref="member">KeyEquals</ref><sp/>=<sp/>0x3D,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="53" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae2d5a749164d7df27006cff5e7a41864" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae2d5a749164d7df27006cff5e7a41864" kindref="member">KeyA</ref><sp/>=<sp/>0x41,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="54" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa81f9caaf75beb2bb78ac56f923c4b01" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa81f9caaf75beb2bb78ac56f923c4b01" kindref="member">KeyB</ref><sp/>=<sp/>0x42,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="55" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2abf93aaa7d2f619e7c0b219d97b2124e8" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2abf93aaa7d2f619e7c0b219d97b2124e8" kindref="member">KeyC</ref><sp/>=<sp/>0x43,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="56" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a7dcdfbb10a01989000a0637ca37bec49" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a7dcdfbb10a01989000a0637ca37bec49" kindref="member">KeyD</ref><sp/>=<sp/>0x44,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="57" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ac832fe4ae1d29373bddf80b081e6543e" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ac832fe4ae1d29373bddf80b081e6543e" kindref="member">KeyE</ref><sp/>=<sp/>0x45,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="58" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ab2bca6bbb715009fae7256468230ad55" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ab2bca6bbb715009fae7256468230ad55" kindref="member">KeyF</ref><sp/>=<sp/>0x46,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="59" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a22ba5fe527e7e61b0cef220e41a46db6" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a22ba5fe527e7e61b0cef220e41a46db6" kindref="member">KeyG</ref><sp/>=<sp/>0x47,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="60" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a6bf0a080ccfffdd03051579283cdbfd8" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a6bf0a080ccfffdd03051579283cdbfd8" kindref="member">KeyH</ref><sp/>=<sp/>0x48,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="61" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a3ebda3ed7241c90004eddf07dbed37d3" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a3ebda3ed7241c90004eddf07dbed37d3" kindref="member">KeyI</ref><sp/>=<sp/>0x49,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="62" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a807cc4da6393e5e3f42d4a3d0ee44784" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a807cc4da6393e5e3f42d4a3d0ee44784" kindref="member">KeyJ</ref><sp/>=<sp/>0x4A,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="63" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aeb1e61076beb0e328c0667df8908aaeb" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aeb1e61076beb0e328c0667df8908aaeb" kindref="member">KeyK</ref><sp/>=<sp/>0x4B,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="64" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa1c9bebc7412d7dcf6173173b0abf94f" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa1c9bebc7412d7dcf6173173b0abf94f" kindref="member">KeyL</ref><sp/>=<sp/>0x4C,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="65" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aea4c638c3d4770199871bcd91c8edd18" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aea4c638c3d4770199871bcd91c8edd18" kindref="member">KeyM</ref><sp/>=<sp/>0x4D,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="66" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a2d745d22b652f1cdf52006f21ec1d310" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a2d745d22b652f1cdf52006f21ec1d310" kindref="member">KeyN</ref><sp/>=<sp/>0x4E,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="67" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a2eac02bab0caff3f0ab6e8834056ddb6" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a2eac02bab0caff3f0ab6e8834056ddb6" kindref="member">KeyO</ref><sp/>=<sp/>0x4F,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="68" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aefeb29cd85c3abe892e91dd4cae5def8" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aefeb29cd85c3abe892e91dd4cae5def8" kindref="member">KeyP</ref><sp/>=<sp/>0x50,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="69" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ab54c97c02574889480fd911187b75906" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ab54c97c02574889480fd911187b75906" kindref="member">KeyQ</ref><sp/>=<sp/>0x51,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="70" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a5328a7df031480882802376df76445a2" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a5328a7df031480882802376df76445a2" kindref="member">KeyR</ref><sp/>=<sp/>0x52,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="71" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ab185d05534828480b5c832ce4fd4a4cd" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ab185d05534828480b5c832ce4fd4a4cd" kindref="member">KeyS</ref><sp/>=<sp/>0x53,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="72" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ab5810100c2fc527c7c0c986e955ee1fe" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ab5810100c2fc527c7c0c986e955ee1fe" kindref="member">KeyT</ref><sp/>=<sp/>0x54,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="73" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a71400855cd3ab3cbcbd93b90a3ca658d" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a71400855cd3ab3cbcbd93b90a3ca658d" kindref="member">KeyU</ref><sp/>=<sp/>0x55,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="74" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a467f3d587b0cb80279f92f5ad8648ece" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a467f3d587b0cb80279f92f5ad8648ece" kindref="member">KeyV</ref><sp/>=<sp/>0x56,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="75" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a20d458f0046df3eb50bbaf433bc05b12" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a20d458f0046df3eb50bbaf433bc05b12" kindref="member">KeyW</ref><sp/>=<sp/>0x57,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="76" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a9bd4488034000a8352c9492ecf7cff03" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a9bd4488034000a8352c9492ecf7cff03" kindref="member">KeyX</ref><sp/>=<sp/>0x58,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="77" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a33c0013e1c679ce14345b32fdc6e29eb" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a33c0013e1c679ce14345b32fdc6e29eb" kindref="member">KeyY</ref><sp/>=<sp/>0x59,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="78" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2acb6ebb50429406f57c17e5d66a56ebba" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2acb6ebb50429406f57c17e5d66a56ebba" kindref="member">KeyZ</ref><sp/>=<sp/>0x5A,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="79" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a64b6a5c25196b6251f965e7766daaf08" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a64b6a5c25196b6251f965e7766daaf08" kindref="member">KeyOpenBracket</ref><sp/>=<sp/>0x5B,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="80" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a690c811a2e65da802d30804e6792a3f0" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a690c811a2e65da802d30804e6792a3f0" kindref="member">KeyBackSlash</ref><sp/>=<sp/>0x5C,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="81" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ad0ebcb157eab87624aaabd4329090728" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ad0ebcb157eab87624aaabd4329090728" kindref="member">KeyCloseBracket</ref><sp/>=<sp/>0x5D,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="82" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ab45e1cabe1aae100039e74ee7e503981" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ab45e1cabe1aae100039e74ee7e503981" kindref="member">KeyNumPad0</ref><sp/>=<sp/>0x60,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="83" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a14762572fafd899b5214422d48676b9e" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a14762572fafd899b5214422d48676b9e" kindref="member">KeyNumPad1</ref><sp/>=<sp/>0x61,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="84" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aab632a3188e933f315c52b5d69115855" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aab632a3188e933f315c52b5d69115855" kindref="member">KeyNumPad2</ref><sp/>=<sp/>0x62,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="85" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a91c2776ac9d98596606652a403d7c095" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a91c2776ac9d98596606652a403d7c095" kindref="member">KeyNumPad3</ref><sp/>=<sp/>0x63,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="86" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa4da25a5838f3d8daedf6186ef5bc169" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa4da25a5838f3d8daedf6186ef5bc169" kindref="member">KeyNumPad4</ref><sp/>=<sp/>0x64,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="87" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a35ff35e8e93c6e20e1e5f6b8dfff0bec" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a35ff35e8e93c6e20e1e5f6b8dfff0bec" kindref="member">KeyNumPad5</ref><sp/>=<sp/>0x65,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="88" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a72d180be977a56121f378a3372b70e2f" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a72d180be977a56121f378a3372b70e2f" kindref="member">KeyNumPad6</ref><sp/>=<sp/>0x66,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="89" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2adc01f05089dbdde5b80b4e05975fa868" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2adc01f05089dbdde5b80b4e05975fa868" kindref="member">KeyNumPad7</ref><sp/>=<sp/>0x67,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="90" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a47f2f518cb3d618f953b53afef94efc6" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a47f2f518cb3d618f953b53afef94efc6" kindref="member">KeyNumPad8</ref><sp/>=<sp/>0x68,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="91" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a4707b51bd1e3aa51dab59cfd1645140e" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a4707b51bd1e3aa51dab59cfd1645140e" kindref="member">KeyNumPad9</ref><sp/>=<sp/>0x69,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="92" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a8f23e578f13fe4c67e54786bb1ec74f6" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a8f23e578f13fe4c67e54786bb1ec74f6" kindref="member">KeyMultiply</ref><sp/>=<sp/>0x6A,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="93" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a88db7c0b1657e420ae36aa74e34a75a0" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a88db7c0b1657e420ae36aa74e34a75a0" kindref="member">KeyAdd</ref><sp/>=<sp/>0x6B,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="94" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a8fe0d35c4dad9c448b3f2d162ef3531b" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a8fe0d35c4dad9c448b3f2d162ef3531b" kindref="member">KeySeparator</ref><sp/>=<sp/>0x6C,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="95" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ac6dcce9847893032126bebe6b60785aa" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ac6dcce9847893032126bebe6b60785aa" kindref="member">KeySubtract</ref><sp/>=<sp/>0x6D,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="96" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae40164afa628fb2eee51c128fe4f328b" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae40164afa628fb2eee51c128fe4f328b" kindref="member">KeyDecimal</ref><sp/>=<sp/>0x6E,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="97" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a20aefbd4070de6ef490cbec86d287bc7" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a20aefbd4070de6ef490cbec86d287bc7" kindref="member">KeyDivide</ref><sp/>=<sp/>0x6F,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="98" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae7836ad3ac84f24cc1393468c21624a3" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae7836ad3ac84f24cc1393468c21624a3" kindref="member">KeyF1</ref><sp/>=<sp/>0x70,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="99" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2abe2d2ecaa29bf9e6d0f281184f8b1e20" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2abe2d2ecaa29bf9e6d0f281184f8b1e20" kindref="member">KeyF2</ref><sp/>=<sp/>0x71,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="100" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a93e711ad76aabf895e54f47f7dcb5574" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a93e711ad76aabf895e54f47f7dcb5574" kindref="member">KeyF3</ref><sp/>=<sp/>0x72,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="101" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aaa1e7b05dc7d6d3dbb56aacf97af5916" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aaa1e7b05dc7d6d3dbb56aacf97af5916" kindref="member">KeyF4</ref><sp/>=<sp/>0x73,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="102" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ad8d3b0cbdabc4914b37672de0096e606" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ad8d3b0cbdabc4914b37672de0096e606" kindref="member">KeyF5</ref><sp/>=<sp/>0x74,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="103" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a5db519ab44242bc992c25989d0082201" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a5db519ab44242bc992c25989d0082201" kindref="member">KeyF6</ref><sp/>=<sp/>0x75,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="104" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a3a19afb4dc55ac63f8dce05c6cc41750" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a3a19afb4dc55ac63f8dce05c6cc41750" kindref="member">KeyF7</ref><sp/>=<sp/>0x76,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="105" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a59742f58301b7db06337e4d11090c841" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a59742f58301b7db06337e4d11090c841" kindref="member">KeyF8</ref><sp/>=<sp/>0x77,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="106" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a136fb67c3d568d0dd4e3b9eabcf029da" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a136fb67c3d568d0dd4e3b9eabcf029da" kindref="member">KeyF9</ref><sp/>=<sp/>0x78,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="107" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa6f6d74cb922d480e2e3c7c5e73dd062" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa6f6d74cb922d480e2e3c7c5e73dd062" kindref="member">KeyF10</ref><sp/>=<sp/>0x79,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="108" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a702ca31c85c2e2dfad8e327d1e1cb9c7" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a702ca31c85c2e2dfad8e327d1e1cb9c7" kindref="member">KeyF11</ref><sp/>=<sp/>0x7A,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="109" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a40ea8f35e5d2069d9127f5dbe2fd44fb" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a40ea8f35e5d2069d9127f5dbe2fd44fb" kindref="member">KeyF12</ref><sp/>=<sp/>0x7B,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="110" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a6453259c4f57be6ff865fced839ce91f" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a6453259c4f57be6ff865fced839ce91f" kindref="member">KeyDelete</ref><sp/>=<sp/>0x7F,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="111" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa27211d21efde61f44d19219c43d0e85" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa27211d21efde61f44d19219c43d0e85" kindref="member">KeyNumLock</ref><sp/>=<sp/>0x90,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="112" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2af8cb4701a346b450a1b6cca1191caaad" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2af8cb4701a346b450a1b6cca1191caaad" kindref="member">KeyScrollLock</ref><sp/>=<sp/>0x91,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="113" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a41e83fa6585a18a72cbff55b98e12565" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a41e83fa6585a18a72cbff55b98e12565" kindref="member">KeyPrintScreen</ref><sp/>=<sp/>0x9A,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="114" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a32c56fc722e10081b935fc20d6cccddd" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a32c56fc722e10081b935fc20d6cccddd" kindref="member">KeyInsert</ref><sp/>=<sp/>0x9B,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="115" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2acfab8e69b254414cb611c6ef814899f1" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2acfab8e69b254414cb611c6ef814899f1" kindref="member">KeyHelp</ref><sp/>=<sp/>0x9C,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="116" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a9b0035e8ad8277eca884f23d227ee406" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a9b0035e8ad8277eca884f23d227ee406" kindref="member">KeyMeta</ref><sp/>=<sp/>0x9D,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="117" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a97daf31a538a596f55978faa83d44985" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a97daf31a538a596f55978faa83d44985" kindref="member">KeyBackQuote</ref><sp/>=<sp/>0xC0,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="118" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a10750d8e8245591411a0406e5208dacc" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a10750d8e8245591411a0406e5208dacc" kindref="member">KeyQuote</ref><sp/>=<sp/>0xDE,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="119" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae1153b1885cef5903c7ca5b1890e2671" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae1153b1885cef5903c7ca5b1890e2671" kindref="member">KeyFinal</ref><sp/>=<sp/>0x18,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="120" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae1b0cbc3181cba17babeb6e687cdb81a" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2ae1b0cbc3181cba17babeb6e687cdb81a" kindref="member">KeyConvert</ref><sp/>=<sp/>0x1C,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="121" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a554cff2066ae2fce37b4a82052a6369c" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a554cff2066ae2fce37b4a82052a6369c" kindref="member">KeyNonConvert</ref><sp/>=<sp/>0x1D,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="122" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a28d006081be0776c6681321eeda8b1a5" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a28d006081be0776c6681321eeda8b1a5" kindref="member">KeyAccept</ref><sp/>=<sp/>0x1E,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="123" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a24e709ee744cd5b0cb1010ace9a9848b" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a24e709ee744cd5b0cb1010ace9a9848b" kindref="member">KeyModeChange</ref><sp/>=<sp/>0x1F,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="124" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa5b5a7cca72f01cde3869b247586d6a4" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2aa5b5a7cca72f01cde3869b247586d6a4" kindref="member">KeyKana</ref><sp/>=<sp/>0x15,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="125" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a73e60940617b7c51f87231e1565cc153" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2a73e60940617b7c51f87231e1565cc153" kindref="member">KeyKanji</ref><sp/>=<sp/>0x19,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2acf298d846200d0d38a8355a5c637d6ce" kindref="member">KeyUndefined</ref><sp/>=<sp/>0x0<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="127" refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2acf298d846200d0d38a8355a5c637d6ce" refkind="member"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="130"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="132"><highlight class="normal"></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"></highlight></codeline>
+<codeline lineno="134"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_key_code.h"/>
+  </compounddef>
+</doxygen>

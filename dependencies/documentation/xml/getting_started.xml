@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="getting_started" kind="page">
+    <compoundname>getting_started</compoundname>
+    <title>Getting Started</title>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><image type="html" name="botguy-red-stroke-235x300.png"></image>
+ ~Hewwo~ and welcome to KIPR&apos;s libwallaby tutorial. This tutorial assumes that you know a bit of C. If you don&apos;t, there are many online resources for learning C.</para>
+<para>Now, let&apos;s dive in.</para>
+<para>Let&apos;s start with a simple robot with two wheels (depicted with W&apos;s) and two motors (depicted with M&apos;s) as shown.</para>
+<para><programlisting><codeline><highlight class="normal">----------</highlight></codeline>
+<codeline><highlight class="normal">|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline><highlight class="normal">|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline><highlight class="normal">W-M<sp/><sp/><sp/><sp/>M-W</highlight></codeline>
+<codeline><highlight class="normal">|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline><highlight class="normal">|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline><highlight class="normal">----------</highlight></codeline>
+</programlisting></para>
+<para>In order to move our robot forward, we would first plug in the motors to ports 0 and 1. Then, run the following code snippet.</para>
+<para><programlisting><codeline><highlight class="normal">#include<sp/>&lt;kipr/wombat.h&gt;<sp/><sp/>//<sp/>this<sp/>is<sp/>the<sp/>file<sp/>with<sp/>all<sp/>the<sp/>kipr<sp/>functions</highlight></codeline>
+<codeline><highlight class="normal">#include<sp/>&lt;stdio.h&gt;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>this<sp/>is<sp/>the<sp/>file<sp/>that<sp/>allows<sp/>for<sp/>output</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">int<sp/>main(){</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>printf(&quot;Hello<sp/>World!<sp/>This<sp/>is<sp/>the<sp/>Getting<sp/>Started<sp/>tutorial.\n&quot;);</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>//<sp/>define<sp/>our<sp/>variables</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>int<sp/>left_motor<sp/>=<sp/>0;<sp/><sp/><sp/>//<sp/>the<sp/>port<sp/>of<sp/>the<sp/>left<sp/>motor</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>int<sp/>right_motor<sp/>=<sp/>1;<sp/><sp/>//<sp/>the<sp/>port<sp/>of<sp/>the<sp/>right<sp/>motor</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>//<sp/>move<sp/>forward</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>motor(left_motor,<sp/>100);<sp/>//<sp/>move<sp/>at<sp/>100%<sp/>forward</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>motor(right_motor,<sp/>-100);<sp/><sp/>//<sp/>move<sp/>at<sp/>100%<sp/>backward<sp/>since<sp/>this<sp/>motor<sp/>is<sp/>facing<sp/>the<sp/>opposite<sp/>direction<sp/>as<sp/>the<sp/>left<sp/>motor</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>msleep(1000);<sp/><sp/>//<sp/>wait<sp/>1<sp/>second</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>//<sp/>stop<sp/>moving</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>ao();</highlight></codeline>
+<codeline></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>printf(&quot;Congratulations!<sp/>You<sp/>finished<sp/>the<sp/>getting<sp/>started<sp/>tutorial.\n&quot;);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>return<sp/>0;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+</programlisting></para>
+<para>Just like that, you&apos;ve got your robot moving! We&apos;ll continue in the next tutorial with distance sensors and line following. </para>
+    </detaileddescription>
+    <location file="pages/tutorials_page.h"/>
+  </compounddef>
+</doxygen>

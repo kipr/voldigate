@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="structkipr_1_1create_1_1CreatePackets_1_1__2" kind="struct" language="C++" prot="public">
+    <compoundname>kipr::create::CreatePackets::_2</compoundname>
+    <includes refid="create_8hpp" local="no">create.hpp</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__2_1a2dc25387dc7732397ee921696a1023f4" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_2::ir</definition>
+        <argsstring></argsstring>
+        <name>ir</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="102" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="102" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__2_1a44febc62685bafda264471cfe9653fdd" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_2::buttons</definition>
+        <argsstring></argsstring>
+        <name>buttons</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="103" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="103" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__2_1af58f25943c9c27fdee9165ee086fa381" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_2::distance[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>distance</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="104" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="104" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__2_1a4a56857548f13dcdcdc4dcb2f203bd87" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_2::angle[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>angle</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="105" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="105" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><ref refid="classkipr_1_1create_1_1Create" kindref="compound">Create</ref> OI Packet 2 </para>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="100" column="7" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="101" bodyend="106"/>
+    <listofallmembers>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__2_1a4a56857548f13dcdcdc4dcb2f203bd87" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_2</scope><name>angle</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__2_1a44febc62685bafda264471cfe9653fdd" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_2</scope><name>buttons</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__2_1af58f25943c9c27fdee9165ee086fa381" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_2</scope><name>distance</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__2_1a2dc25387dc7732397ee921696a1023f4" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_2</scope><name>ir</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="group__magneto" kind="group">
+    <compoundname>magneto</compoundname>
+    <title>Magnetometer</title>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="group__magneto_1gabec77e162ab72f3c63f91a006f51b2c4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>signed short</type>
+        <definition>signed short magneto_x</definition>
+        <argsstring>()</argsstring>
+        <name>magneto_x</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the sensed x magneto value <simplesect kind="return"><para>The latest signed x magneto value </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/magneto/public/kipr/magneto/magneto.h" line="19" column="14" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/magneto/public/kipr/magneto/magneto.h" declline="19" declcolumn="14"/>
+      </memberdef>
+      <memberdef kind="function" id="group__magneto_1gab536ca9dc29118ba2f1231c011531e7b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>signed short</type>
+        <definition>signed short magneto_y</definition>
+        <argsstring>()</argsstring>
+        <name>magneto_y</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the sensed x magneto value <simplesect kind="return"><para>The latest signed y magneto value </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/magneto/public/kipr/magneto/magneto.h" line="26" column="14" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/magneto/public/kipr/magneto/magneto.h" declline="26" declcolumn="14"/>
+      </memberdef>
+      <memberdef kind="function" id="group__magneto_1ga78e58e4d74bfe1767d090644010a574d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>signed short</type>
+        <definition>signed short magneto_z</definition>
+        <argsstring>()</argsstring>
+        <name>magneto_z</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the sensed x magneto value <simplesect kind="return"><para>The latest signed z magneto value </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/magneto/public/kipr/magneto/magneto.h" line="33" column="14" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/magneto/public/kipr/magneto/magneto.h" declline="33" declcolumn="14"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

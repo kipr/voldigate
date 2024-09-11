@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="dir_f7b7aa3e62a854c418f6334ecbe58c1e" kind="dir">
+    <compoundname>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/export</compoundname>
+    <innerdir refid="dir_f7d91b19ebd387b793e9fa5ae29a9209">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/export/public</innerdir>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/export/"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classkipr_1_1analog_1_1Analog" kind="class" language="C++" prot="public">
+    <compoundname>kipr::analog::Analog</compoundname>
+    <basecompoundref refid="classkipr_1_1sensor_1_1Sensor" prot="public" virt="non-virtual">kipr::sensor::Sensor&lt; unsigned short &gt;</basecompoundref>
+    <derivedcompoundref refid="classkipr_1_1analog_1_1Analog10" prot="public" virt="non-virtual">kipr::analog::Analog10</derivedcompoundref>
+    <derivedcompoundref refid="classkipr_1_1analog_1_1Analog8" prot="public" virt="non-virtual">kipr::analog::Analog8</derivedcompoundref>
+    <includes refid="analog_8hpp" local="no">analog.hpp</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classkipr_1_1analog_1_1Analog_1af64a2e6929e27e3522999570cb8d9c82" prot="private" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::analog::Analog::m_port</definition>
+        <argsstring></argsstring>
+        <name>m_port</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog/analog.hpp" line="24" column="21" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog/analog.hpp" bodystart="24" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classkipr_1_1analog_1_1Analog_1a79dfbb210c8454b25f63e60122256cd5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>kipr::analog::Analog::Analog</definition>
+        <argsstring>(unsigned char port)</argsstring>
+        <name>Analog</name>
+        <param>
+          <type>unsigned char</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog/analog.hpp" line="13" column="7"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1analog_1_1Analog_1a39614c4ab6ce95748d67e34961446299" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type></type>
+        <definition>virtual kipr::analog::Analog::~Analog</definition>
+        <argsstring>()</argsstring>
+        <name>~Analog</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog/analog.hpp" line="14" column="15"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1analog_1_1Analog_1aa40bd208e1fb3048d93ef27d33615561" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+        <type>unsigned short</type>
+        <definition>virtual unsigned short kipr::analog::Analog::value</definition>
+        <argsstring>() const</argsstring>
+        <name>value</name>
+        <reimplements refid="classkipr_1_1sensor_1_1Sensor_1a6ccd0837f3e12090bed823f841d3e318">value</reimplements>
+        <reimplementedby refid="classkipr_1_1analog_1_1Analog8_1a390fd4a5d702c872fd5cb5421b22ecf4">value</reimplementedby>
+        <reimplementedby refid="classkipr_1_1analog_1_1Analog10_1a374d70c8d94a89d90864df00695e8104">value</reimplementedby>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog/analog.hpp" line="16" column="30"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1analog_1_1Analog_1ac995907cbcf7b3c19e43d703c56fc490" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>virtual void kipr::analog::Analog::setPullup</definition>
+        <argsstring>(bool pullup)</argsstring>
+        <name>setPullup</name>
+        <param>
+          <type>bool</type>
+          <declname>pullup</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog/analog.hpp" line="18" column="20"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1analog_1_1Analog_1ab3badada2f9999109d61265e4ee9df82" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool kipr::analog::Analog::pullup</definition>
+        <argsstring>() const</argsstring>
+        <name>pullup</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog/analog.hpp" line="19" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1analog_1_1Analog_1ab9b0dfe22f15f4ac1f4379de6d835b25" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::analog::Analog::port</definition>
+        <argsstring>() const</argsstring>
+        <name>port</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog/analog.hpp" line="21" column="21"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="4">
+        <label>kipr::analog::Analog8</label>
+        <link refid="classkipr_1_1analog_1_1Analog8"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>kipr::analog::Analog</label>
+        <link refid="classkipr_1_1analog_1_1Analog"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>kipr::sensor::Sensor&lt; unsigned short &gt;</label>
+        <link refid="classkipr_1_1sensor_1_1Sensor"/>
+      </node>
+      <node id="3">
+        <label>kipr::analog::Analog10</label>
+        <link refid="classkipr_1_1analog_1_1Analog10"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="1">
+        <label>kipr::analog::Analog</label>
+        <link refid="classkipr_1_1analog_1_1Analog"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>kipr::sensor::Sensor&lt; unsigned short &gt;</label>
+        <link refid="classkipr_1_1sensor_1_1Sensor"/>
+      </node>
+    </collaborationgraph>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog/analog.hpp" line="10" column="5" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog/analog.hpp" bodystart="11" bodyend="25"/>
+    <listofallmembers>
+      <member refid="classkipr_1_1analog_1_1Analog_1a79dfbb210c8454b25f63e60122256cd5" prot="public" virt="non-virtual"><scope>kipr::analog::Analog</scope><name>Analog</name></member>
+      <member refid="classkipr_1_1analog_1_1Analog_1af64a2e6929e27e3522999570cb8d9c82" prot="private" virt="non-virtual"><scope>kipr::analog::Analog</scope><name>m_port</name></member>
+      <member refid="classkipr_1_1analog_1_1Analog_1ab9b0dfe22f15f4ac1f4379de6d835b25" prot="public" virt="non-virtual"><scope>kipr::analog::Analog</scope><name>port</name></member>
+      <member refid="classkipr_1_1analog_1_1Analog_1ab3badada2f9999109d61265e4ee9df82" prot="public" virt="non-virtual"><scope>kipr::analog::Analog</scope><name>pullup</name></member>
+      <member refid="classkipr_1_1analog_1_1Analog_1ac995907cbcf7b3c19e43d703c56fc490" prot="public" virt="virtual"><scope>kipr::analog::Analog</scope><name>setPullup</name></member>
+      <member refid="classkipr_1_1analog_1_1Analog_1aa40bd208e1fb3048d93ef27d33615561" prot="public" virt="virtual"><scope>kipr::analog::Analog</scope><name>value</name></member>
+      <member refid="classkipr_1_1analog_1_1Analog_1a39614c4ab6ce95748d67e34961446299" prot="public" virt="virtual"><scope>kipr::analog::Analog</scope><name>~Analog</name></member>
+      <member refid="classkipr_1_1sensor_1_1Sensor_1a7a2997c6ede6b25603032f2b110e8cb5" prot="public" virt="virtual"><scope>kipr::analog::Analog</scope><name>~Sensor</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="structkipr_1_1create_1_1CreatePackets_1_1__5" kind="struct" language="C++" prot="public">
+    <compoundname>kipr::create::CreatePackets::_5</compoundname>
+    <includes refid="create_8hpp" local="no">create.hpp</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__5_1a8b014d11b83159a5801ea91049a63cfb" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_5::mode</definition>
+        <argsstring></argsstring>
+        <name>mode</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="141" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="141" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__5_1a46a2ae15f1fe54f42d163c8924b68bba" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_5::songNumber</definition>
+        <argsstring></argsstring>
+        <name>songNumber</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="142" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="142" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__5_1afd57fbd17b67aa012b4be688c1278a54" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_5::songPlaying</definition>
+        <argsstring></argsstring>
+        <name>songPlaying</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="143" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="143" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__5_1a3adfda31b1536fa76a2638acf0293b2e" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_5::numberOfStreamPackets</definition>
+        <argsstring></argsstring>
+        <name>numberOfStreamPackets</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="144" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="144" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__5_1a89b049afbd52b09591a5c3cf37da0a9c" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char kipr::create::CreatePackets::_5::velocity[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>velocity</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="145" column="14" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="145" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__5_1a29f094d582f2b54356b5b2ae42eb4121" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char kipr::create::CreatePackets::_5::radius[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>radius</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="146" column="14" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="146" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__5_1adfa7a25f7d2e4bfbb4ed696b36989f6d" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char kipr::create::CreatePackets::_5::rightVelocity[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>rightVelocity</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="147" column="14" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="147" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__5_1a37f03a9d3628b51279185ae2ad9315fb" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char kipr::create::CreatePackets::_5::leftVelocity[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>leftVelocity</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="148" column="14" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="148" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><ref refid="classkipr_1_1create_1_1Create" kindref="compound">Create</ref> OI Packet 5 </para>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="139" column="7" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="140" bodyend="149"/>
+    <listofallmembers>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__5_1a37f03a9d3628b51279185ae2ad9315fb" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_5</scope><name>leftVelocity</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__5_1a8b014d11b83159a5801ea91049a63cfb" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_5</scope><name>mode</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__5_1a3adfda31b1536fa76a2638acf0293b2e" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_5</scope><name>numberOfStreamPackets</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__5_1a29f094d582f2b54356b5b2ae42eb4121" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_5</scope><name>radius</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__5_1adfa7a25f7d2e4bfbb4ed696b36989f6d" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_5</scope><name>rightVelocity</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__5_1a46a2ae15f1fe54f42d163c8924b68bba" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_5</scope><name>songNumber</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__5_1afd57fbd17b67aa012b4be688c1278a54" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_5</scope><name>songPlaying</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__5_1a89b049afbd52b09591a5c3cf37da0a9c" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_5</scope><name>velocity</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

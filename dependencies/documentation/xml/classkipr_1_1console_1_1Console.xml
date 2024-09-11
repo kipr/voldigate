@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classkipr_1_1console_1_1Console" kind="class" language="C++" prot="public">
+    <compoundname>kipr::console::Console</compoundname>
+    <includes refid="console_8hpp" local="no">console.hpp</includes>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classkipr_1_1console_1_1Console_1ab4ab86dd9e73ba1f736944906154eb29" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>static void kipr::console::Console::clear</definition>
+        <argsstring>()</argsstring>
+        <name>clear</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Clears the console. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/console/public/kipr/console/console.hpp" line="28" column="19"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Methods for working with the console inside the UI </para>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/console/public/kipr/console/console.hpp" line="22" column="5" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/console/public/kipr/console/console.hpp" bodystart="23" bodyend="29"/>
+    <listofallmembers>
+      <member refid="classkipr_1_1console_1_1Console_1ab4ab86dd9e73ba1f736944906154eb29" prot="public" virt="non-virtual"><scope>kipr::console::Console</scope><name>clear</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

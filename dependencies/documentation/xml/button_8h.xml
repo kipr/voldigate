@@ -1,0 +1,721 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="button_8h" kind="file" language="C++">
+    <compoundname>button.h</compoundname>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="group__button_1gad816f48e95049f42e7ddfe83bebcf67a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void set_a_button_text</definition>
+        <argsstring>(const char *text)</argsstring>
+        <name>set_a_button_text</name>
+        <param>
+          <type>const char *</type>
+          <declname>text</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Updates the A button&apos;s text. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>text</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The text to display. Limit of 16 characters.</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<xrefsect id="deprecated_1_deprecated000005"><xreftitle>Deprecated</xreftitle><xrefdescription><para>not planned for the Wallaby </para>
+</xrefdescription></xrefsect></para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" line="29" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" declline="29" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__button_1ga9c70bfdf09245ab36547bdbc2cc31a7c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void set_b_button_text</definition>
+        <argsstring>(const char *text)</argsstring>
+        <name>set_b_button_text</name>
+        <param>
+          <type>const char *</type>
+          <declname>text</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Updates the B button&apos;s text. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>text</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The text to display. Limit of 16 characters.</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<xrefsect id="deprecated_1_deprecated000006"><xreftitle>Deprecated</xreftitle><xrefdescription><para>not planned for the Wallaby </para>
+</xrefdescription></xrefsect></para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" line="37" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" declline="37" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__button_1gac41766a323aded16a6071785942d9701" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void set_c_button_text</definition>
+        <argsstring>(const char *text)</argsstring>
+        <name>set_c_button_text</name>
+        <param>
+          <type>const char *</type>
+          <declname>text</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Updates the C button&apos;s text. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>text</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The text to display. Limit of 16 characters.</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<xrefsect id="deprecated_1_deprecated000007"><xreftitle>Deprecated</xreftitle><xrefdescription><para>not planned for the Wallaby </para>
+</xrefdescription></xrefsect></para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" line="45" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" declline="45" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__button_1ga5377556e42fd72d8a8512aef83708e2c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void set_x_button_text</definition>
+        <argsstring>(const char *text)</argsstring>
+        <name>set_x_button_text</name>
+        <param>
+          <type>const char *</type>
+          <declname>text</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Updates the X button&apos;s text. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>text</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The text to display. Limit of 16 characters.</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<xrefsect id="deprecated_1_deprecated000008"><xreftitle>Deprecated</xreftitle><xrefdescription><para>not planned for the Wallaby </para>
+</xrefdescription></xrefsect></para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" line="53" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" declline="53" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__button_1ga1a56c447f8161b6b4d4af8edd5e83532" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void set_y_button_text</definition>
+        <argsstring>(const char *text)</argsstring>
+        <name>set_y_button_text</name>
+        <param>
+          <type>const char *</type>
+          <declname>text</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Updates the Y button&apos;s text. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>text</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The text to display. Limit of 16 characters.</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<xrefsect id="deprecated_1_deprecated000009"><xreftitle>Deprecated</xreftitle><xrefdescription><para>not planned for the Wallaby </para>
+</xrefdescription></xrefsect></para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" line="61" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" declline="61" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__button_1gadd44ccefbc0094c6256676e1b6e3ddd7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void set_z_button_text</definition>
+        <argsstring>(const char *text)</argsstring>
+        <name>set_z_button_text</name>
+        <param>
+          <type>const char *</type>
+          <declname>text</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Updates the Z button&apos;s text. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>text</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The text to display. Limit of 16 characters.</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<xrefsect id="deprecated_1_deprecated000010"><xreftitle>Deprecated</xreftitle><xrefdescription><para>not planned for the Wallaby </para>
+</xrefdescription></xrefsect></para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" line="69" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" declline="69" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__button_1gac8f47305ed4a965c87880dd9a7f89190" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int a_button</definition>
+        <argsstring>()</argsstring>
+        <name>a_button</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the A button&apos;s state (pressed or not pressed.) <simplesect kind="return"><para>1 for pressed, 0 for not pressed </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__button_1gab294a96f14661b2d454d4514b9d81683" kindref="member">a_button_clicked</ref></para>
+</simplesect>
+<simplesect kind="note"><para>Not yet implemented </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" line="78" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" declline="78" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__button_1ga5fc124dea4693c2e5846329107dbab1b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int b_button</definition>
+        <argsstring>()</argsstring>
+        <name>b_button</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the B button&apos;s state (pressed or not pressed.) <simplesect kind="return"><para>1 for pressed, 0 for not pressed </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__button_1gab294a96f14661b2d454d4514b9d81683" kindref="member">a_button_clicked</ref></para>
+</simplesect>
+<simplesect kind="note"><para>Not yet implemented </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" line="87" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" declline="87" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__button_1gab39631d7431b4bf38c8037dc741b171a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int c_button</definition>
+        <argsstring>()</argsstring>
+        <name>c_button</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the C button&apos;s state (pressed or not pressed.) <simplesect kind="return"><para>1 for pressed, 0 for not pressed </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__button_1gab294a96f14661b2d454d4514b9d81683" kindref="member">a_button_clicked</ref></para>
+</simplesect>
+<simplesect kind="note"><para>Not yet implemented </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" line="96" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" declline="96" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__button_1ga650c53fd8eca117e7bbece899d3efc5d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int x_button</definition>
+        <argsstring>()</argsstring>
+        <name>x_button</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the C button&apos;s state (pressed or not pressed.) <simplesect kind="return"><para>1 for pressed, 0 for not pressed </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__button_1gab294a96f14661b2d454d4514b9d81683" kindref="member">a_button_clicked</ref></para>
+</simplesect>
+<simplesect kind="note"><para>Not yet implemented </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" line="105" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" declline="105" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__button_1ga6bd72b4acad143902eb35d50a7686b58" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int y_button</definition>
+        <argsstring>()</argsstring>
+        <name>y_button</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the Y button&apos;s state (pressed or not pressed.) <simplesect kind="return"><para>1 for pressed, 0 for not pressed </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__button_1gab294a96f14661b2d454d4514b9d81683" kindref="member">a_button_clicked</ref></para>
+</simplesect>
+<simplesect kind="note"><para>Not yet implemented </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" line="114" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" declline="114" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__button_1gaec792dc42538e698fccd11cab61d0dcf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int z_button</definition>
+        <argsstring>()</argsstring>
+        <name>z_button</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the Z button&apos;s state (pressed or not pressed.) <simplesect kind="return"><para>1 for pressed, 0 for not pressed </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__button_1gab294a96f14661b2d454d4514b9d81683" kindref="member">a_button_clicked</ref></para>
+</simplesect>
+<simplesect kind="note"><para>Not yet implemented </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" line="123" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" declline="123" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__button_1ga1af4e87e29182513ca6f0a24ea27f8bb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int side_button</definition>
+        <argsstring>()</argsstring>
+        <name>side_button</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the side button&apos;s state (pressed or not pressed.) <simplesect kind="return"><para>1 for pressed, 0 for not pressed </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__button_1gab294a96f14661b2d454d4514b9d81683" kindref="member">a_button_clicked</ref></para>
+</simplesect>
+<xrefsect id="deprecated_1_deprecated000011"><xreftitle>Deprecated</xreftitle><xrefdescription><para>Not present on the Wallaby </para>
+</xrefdescription></xrefsect></para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" line="132" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" declline="132" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__button_1gad570b4c97c58ae8fa41ed9918f7f4b1a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int black_button</definition>
+        <argsstring>()</argsstring>
+        <name>black_button</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the black button&apos;s state (pressed or not pressed.) <simplesect kind="return"><para>1 for pressed, 0 for not pressed </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__button_1gab294a96f14661b2d454d4514b9d81683" kindref="member">a_button_clicked</ref></para>
+</simplesect>
+<xrefsect id="deprecated_1_deprecated000012"><xreftitle>Deprecated</xreftitle><xrefdescription><para>Not present on the Wallaby </para>
+</xrefdescription></xrefsect></para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" line="141" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" declline="141" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="button_8h_1acb91c985be490a34faa6f213d063eec0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int push_button</definition>
+        <argsstring>()</argsstring>
+        <name>push_button</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the ousg button&apos;s state (pressed or not pressed.) <simplesect kind="return"><para>1 for pressed, 0 for not pressed </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__button_1gab294a96f14661b2d454d4514b9d81683" kindref="member">a_button_clicked</ref></para>
+</simplesect>
+The ousg button is the only physical button on the Wombat </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" line="150" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" declline="150" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__button_1ga34eaae0b8960db57c37e35eecc891b6c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int left_button</definition>
+        <argsstring>()</argsstring>
+        <name>left_button</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the left button&apos;s state (pressed or not pressed.) <simplesect kind="return"><para>1 for pressed, 0 for not pressed </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__button_1gab294a96f14661b2d454d4514b9d81683" kindref="member">a_button_clicked</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" line="159" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" declline="159" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__button_1ga22b4859d4454499466dea2293d109d6d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int right_button</definition>
+        <argsstring>()</argsstring>
+        <name>right_button</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the right button&apos;s state (pressed or not pressed.) <simplesect kind="return"><para>1 for pressed, 0 for not pressed (But returning flipped) </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__button_1gab294a96f14661b2d454d4514b9d81683" kindref="member">a_button_clicked</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" line="167" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" declline="167" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__button_1gab294a96f14661b2d454d4514b9d81683" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int a_button_clicked</definition>
+        <argsstring>()</argsstring>
+        <name>a_button_clicked</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the A button&apos;s state (pressed or not pressed.) <simplesect kind="par"><title><bold>This</bold> function blocks until the button is no longer pressed.</title><para></para>
+</simplesect>
+<simplesect kind="return"><para>1 for pressed, 0 for not pressed </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__button_1gac8f47305ed4a965c87880dd9a7f89190" kindref="member">a_button</ref></para>
+</simplesect>
+<simplesect kind="note"><para>Not yet implemented </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" line="177" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" declline="177" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__button_1gad9954c57134f07035f81c03274472f9c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int b_button_clicked</definition>
+        <argsstring>()</argsstring>
+        <name>b_button_clicked</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the A button&apos;s state (pressed or not pressed.) <simplesect kind="par"><title><bold>This</bold> function blocks until the button is no longer pressed.</title><para></para>
+</simplesect>
+<simplesect kind="return"><para>1 for pressed, 0 for not pressed </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__button_1gac8f47305ed4a965c87880dd9a7f89190" kindref="member">a_button</ref></para>
+</simplesect>
+<simplesect kind="note"><para>Not yet implemented </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" line="187" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" declline="187" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__button_1ga5d9b1aeebef7e414072dd9d7c1197520" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int c_button_clicked</definition>
+        <argsstring>()</argsstring>
+        <name>c_button_clicked</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the B button&apos;s state (pressed or not pressed.) <simplesect kind="par"><title><bold>This</bold> function blocks until the button is no longer pressed.</title><para></para>
+</simplesect>
+<simplesect kind="return"><para>1 for pressed, 0 for not pressed </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__button_1gac8f47305ed4a965c87880dd9a7f89190" kindref="member">a_button</ref></para>
+</simplesect>
+<simplesect kind="note"><para>Not yet implemented </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" line="197" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" declline="197" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__button_1ga0f39976525759a3a341a1d8ec0f22ec6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int x_button_clicked</definition>
+        <argsstring>()</argsstring>
+        <name>x_button_clicked</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the C button&apos;s state (pressed or not pressed.) <simplesect kind="par"><title><bold>This</bold> function blocks until the button is no longer pressed.</title><para></para>
+</simplesect>
+<simplesect kind="return"><para>1 for pressed, 0 for not pressed </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__button_1gac8f47305ed4a965c87880dd9a7f89190" kindref="member">a_button</ref></para>
+</simplesect>
+<simplesect kind="note"><para>Not yet implemented </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" line="207" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" declline="207" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__button_1ga583c9e4603220a934d47667dca1decc3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int y_button_clicked</definition>
+        <argsstring>()</argsstring>
+        <name>y_button_clicked</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the X button&apos;s state (pressed or not pressed.) <simplesect kind="par"><title><bold>This</bold> function blocks until the button is no longer pressed.</title><para></para>
+</simplesect>
+<simplesect kind="return"><para>1 for pressed, 0 for not pressed </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__button_1gac8f47305ed4a965c87880dd9a7f89190" kindref="member">a_button</ref></para>
+</simplesect>
+<simplesect kind="note"><para>Not yet implemented </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" line="217" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" declline="217" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__button_1ga5fd7315c64006429bab9dd9e67cc61a3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int z_button_clicked</definition>
+        <argsstring>()</argsstring>
+        <name>z_button_clicked</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the Y button&apos;s state (pressed or not pressed.) <simplesect kind="par"><title><bold>This</bold> function blocks until the button is no longer pressed.</title><para></para>
+</simplesect>
+<simplesect kind="return"><para>1 for pressed, 0 for not pressed </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__button_1gac8f47305ed4a965c87880dd9a7f89190" kindref="member">a_button</ref></para>
+</simplesect>
+<simplesect kind="note"><para>Not yet implemented </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" line="227" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" declline="227" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__button_1gae54db2cf4e21fa70c09d571448b66f8a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int side_button_clicked</definition>
+        <argsstring>()</argsstring>
+        <name>side_button_clicked</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the Z button&apos;s state (pressed or not pressed.) <simplesect kind="par"><title><bold>This</bold> function blocks until the button is no longer pressed.</title><para></para>
+</simplesect>
+<simplesect kind="return"><para>1 for pressed, 0 for not pressed </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__button_1gac8f47305ed4a965c87880dd9a7f89190" kindref="member">a_button</ref></para>
+</simplesect>
+<simplesect kind="note"><para>Not yet implemented </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" line="237" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" declline="237" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__button_1ga59eb1136cc828a812a368d4cf9a30c09" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int any_button</definition>
+        <argsstring>()</argsstring>
+        <name>any_button</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Determines whether or not any of the buttons are pressed. <simplesect kind="return"><para>1 for pressed, 0 for not pressed</para>
+</simplesect>
+<simplesect kind="note"><para>Not yet implemented </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" line="245" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" declline="245" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__button_1gaf817d3b9e670746da2d171bd0065f2a6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void extra_buttons_show</definition>
+        <argsstring>()</argsstring>
+        <name>extra_buttons_show</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Shows the X, Y, and Z buttons. <simplesect kind="see"><para><ref refid="group__button_1ga50d7d9d062e1067abb7444d9931a1e79" kindref="member">set_extra_buttons_visible</ref></para>
+</simplesect>
+<simplesect kind="note"><para>Not yet implemented </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" line="253" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" declline="253" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__button_1gaefa6dc45e14284cb813eddd89e2f759b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void extra_buttons_hide</definition>
+        <argsstring>()</argsstring>
+        <name>extra_buttons_hide</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Hides the X, Y, and Z buttons. This is the default. <simplesect kind="see"><para><ref refid="group__button_1ga50d7d9d062e1067abb7444d9931a1e79" kindref="member">set_extra_buttons_visible</ref></para>
+</simplesect>
+<simplesect kind="note"><para>Not yet implemented </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" line="262" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" declline="262" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__button_1ga0ba2508dd7683d9bf0848f7491a374b8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int get_extra_buttons_visible</definition>
+        <argsstring>()</argsstring>
+        <name>get_extra_buttons_visible</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Determines whether or not the X, Y, and Z buttons are visible. <simplesect kind="see"><para><ref refid="group__button_1ga50d7d9d062e1067abb7444d9931a1e79" kindref="member">set_extra_buttons_visible</ref></para>
+</simplesect>
+<simplesect kind="note"><para>Not yet implemented </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" line="270" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" declline="270" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__button_1ga50d7d9d062e1067abb7444d9931a1e79" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void set_extra_buttons_visible</definition>
+        <argsstring>(int visible)</argsstring>
+        <name>set_extra_buttons_visible</name>
+        <param>
+          <type>int</type>
+          <declname>visible</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Sets whether or not the X, Y, and Z buttons are visible. <simplesect kind="see"><para><ref refid="group__button_1ga0ba2508dd7683d9bf0848f7491a374b8" kindref="member">get_extra_buttons_visible</ref></para>
+</simplesect>
+<simplesect kind="note"><para>Not yet implemented </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" line="278" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h" declline="278" declcolumn="6"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><simplesect kind="copyright"><para>KISS Institute for Practical Robotics </para>
+</simplesect>
+</para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_KIPR_BUTTON_BUTTON_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_KIPR_BUTTON_BUTTON_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29" refid="group__button_1gad816f48e95049f42e7ddfe83bebcf67a" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__button_1gad816f48e95049f42e7ddfe83bebcf67a" kindref="member">set_a_button_text</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/>text);</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37" refid="group__button_1ga9c70bfdf09245ab36547bdbc2cc31a7c" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__button_1ga9c70bfdf09245ab36547bdbc2cc31a7c" kindref="member">set_b_button_text</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/>text);</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45" refid="group__button_1gac41766a323aded16a6071785942d9701" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__button_1gac41766a323aded16a6071785942d9701" kindref="member">set_c_button_text</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/>text);</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53" refid="group__button_1ga5377556e42fd72d8a8512aef83708e2c" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__button_1ga5377556e42fd72d8a8512aef83708e2c" kindref="member">set_x_button_text</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/>text);</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61" refid="group__button_1ga1a56c447f8161b6b4d4af8edd5e83532" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__button_1ga1a56c447f8161b6b4d4af8edd5e83532" kindref="member">set_y_button_text</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/>text);</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69" refid="group__button_1gadd44ccefbc0094c6256676e1b6e3ddd7" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__button_1gadd44ccefbc0094c6256676e1b6e3ddd7" kindref="member">set_z_button_text</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/>text);</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78" refid="group__button_1gac8f47305ed4a965c87880dd9a7f89190" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__button_1gac8f47305ed4a965c87880dd9a7f89190" kindref="member">a_button</ref>();</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight></codeline>
+<codeline lineno="87" refid="group__button_1ga5fc124dea4693c2e5846329107dbab1b" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__button_1ga5fc124dea4693c2e5846329107dbab1b" kindref="member">b_button</ref>();</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight></codeline>
+<codeline lineno="96" refid="group__button_1gab39631d7431b4bf38c8037dc741b171a" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__button_1gab39631d7431b4bf38c8037dc741b171a" kindref="member">c_button</ref>();</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight></codeline>
+<codeline lineno="105" refid="group__button_1ga650c53fd8eca117e7bbece899d3efc5d" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__button_1ga650c53fd8eca117e7bbece899d3efc5d" kindref="member">x_button</ref>();</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight></codeline>
+<codeline lineno="114" refid="group__button_1ga6bd72b4acad143902eb35d50a7686b58" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__button_1ga6bd72b4acad143902eb35d50a7686b58" kindref="member">y_button</ref>();</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight></codeline>
+<codeline lineno="123" refid="group__button_1gaec792dc42538e698fccd11cab61d0dcf" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__button_1gaec792dc42538e698fccd11cab61d0dcf" kindref="member">z_button</ref>();</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"></highlight></codeline>
+<codeline lineno="132" refid="group__button_1ga1af4e87e29182513ca6f0a24ea27f8bb" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__button_1ga1af4e87e29182513ca6f0a24ea27f8bb" kindref="member">side_button</ref>();</highlight></codeline>
+<codeline lineno="133"><highlight class="normal"></highlight></codeline>
+<codeline lineno="141" refid="group__button_1gad570b4c97c58ae8fa41ed9918f7f4b1a" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__button_1gad570b4c97c58ae8fa41ed9918f7f4b1a" kindref="member">black_button</ref>();</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"></highlight></codeline>
+<codeline lineno="143"><highlight class="normal"></highlight></codeline>
+<codeline lineno="150" refid="button_8h_1acb91c985be490a34faa6f213d063eec0" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="button_8h_1acb91c985be490a34faa6f213d063eec0" kindref="member">push_button</ref>();</highlight></codeline>
+<codeline lineno="151"><highlight class="normal"></highlight></codeline>
+<codeline lineno="152"><highlight class="normal"></highlight></codeline>
+<codeline lineno="159" refid="group__button_1ga34eaae0b8960db57c37e35eecc891b6c" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__button_1ga34eaae0b8960db57c37e35eecc891b6c" kindref="member">left_button</ref>();</highlight></codeline>
+<codeline lineno="160"><highlight class="normal"></highlight></codeline>
+<codeline lineno="167" refid="group__button_1ga22b4859d4454499466dea2293d109d6d" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__button_1ga22b4859d4454499466dea2293d109d6d" kindref="member">right_button</ref>();</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"></highlight></codeline>
+<codeline lineno="177" refid="group__button_1gab294a96f14661b2d454d4514b9d81683" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__button_1gab294a96f14661b2d454d4514b9d81683" kindref="member">a_button_clicked</ref>();</highlight></codeline>
+<codeline lineno="178"><highlight class="normal"></highlight></codeline>
+<codeline lineno="187" refid="group__button_1gad9954c57134f07035f81c03274472f9c" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__button_1gad9954c57134f07035f81c03274472f9c" kindref="member">b_button_clicked</ref>();</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"></highlight></codeline>
+<codeline lineno="197" refid="group__button_1ga5d9b1aeebef7e414072dd9d7c1197520" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__button_1ga5d9b1aeebef7e414072dd9d7c1197520" kindref="member">c_button_clicked</ref>();</highlight></codeline>
+<codeline lineno="198"><highlight class="normal"></highlight></codeline>
+<codeline lineno="207" refid="group__button_1ga0f39976525759a3a341a1d8ec0f22ec6" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__button_1ga0f39976525759a3a341a1d8ec0f22ec6" kindref="member">x_button_clicked</ref>();</highlight></codeline>
+<codeline lineno="208"><highlight class="normal"></highlight></codeline>
+<codeline lineno="217" refid="group__button_1ga583c9e4603220a934d47667dca1decc3" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__button_1ga583c9e4603220a934d47667dca1decc3" kindref="member">y_button_clicked</ref>();</highlight></codeline>
+<codeline lineno="218"><highlight class="normal"></highlight></codeline>
+<codeline lineno="227" refid="group__button_1ga5fd7315c64006429bab9dd9e67cc61a3" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__button_1ga5fd7315c64006429bab9dd9e67cc61a3" kindref="member">z_button_clicked</ref>();</highlight></codeline>
+<codeline lineno="228"><highlight class="normal"></highlight></codeline>
+<codeline lineno="237" refid="group__button_1gae54db2cf4e21fa70c09d571448b66f8a" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__button_1gae54db2cf4e21fa70c09d571448b66f8a" kindref="member">side_button_clicked</ref>();</highlight></codeline>
+<codeline lineno="238"><highlight class="normal"></highlight></codeline>
+<codeline lineno="245" refid="group__button_1ga59eb1136cc828a812a368d4cf9a30c09" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__button_1ga59eb1136cc828a812a368d4cf9a30c09" kindref="member">any_button</ref>();</highlight></codeline>
+<codeline lineno="246"><highlight class="normal"></highlight></codeline>
+<codeline lineno="253" refid="group__button_1gaf817d3b9e670746da2d171bd0065f2a6" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__button_1gaf817d3b9e670746da2d171bd0065f2a6" kindref="member">extra_buttons_show</ref>();</highlight></codeline>
+<codeline lineno="254"><highlight class="normal"></highlight></codeline>
+<codeline lineno="255"><highlight class="normal"></highlight></codeline>
+<codeline lineno="262" refid="group__button_1gaefa6dc45e14284cb813eddd89e2f759b" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__button_1gaefa6dc45e14284cb813eddd89e2f759b" kindref="member">extra_buttons_hide</ref>();</highlight></codeline>
+<codeline lineno="263"><highlight class="normal"></highlight></codeline>
+<codeline lineno="270" refid="group__button_1ga0ba2508dd7683d9bf0848f7491a374b8" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__button_1ga0ba2508dd7683d9bf0848f7491a374b8" kindref="member">get_extra_buttons_visible</ref>();</highlight></codeline>
+<codeline lineno="271"><highlight class="normal"></highlight></codeline>
+<codeline lineno="278" refid="group__button_1ga50d7d9d062e1067abb7444d9931a1e79" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__button_1ga50d7d9d062e1067abb7444d9931a1e79" kindref="member">set_extra_buttons_visible</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>visible);</highlight></codeline>
+<codeline lineno="279"><highlight class="normal"></highlight></codeline>
+<codeline lineno="280"><highlight class="normal"></highlight></codeline>
+<codeline lineno="281"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="282"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="283"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="284"><highlight class="normal"></highlight></codeline>
+<codeline lineno="285"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h"/>
+  </compounddef>
+</doxygen>

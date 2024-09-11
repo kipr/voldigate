@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="structkipr_1_1create_1_1CreatePackets_1_1__3" kind="struct" language="C++" prot="public">
+    <compoundname>kipr::create::CreatePackets::_3</compoundname>
+    <includes refid="create_8hpp" local="no">create.hpp</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__3_1a5e2b2b8c731ddbd789dc65c53714336d" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_3::chargingState</definition>
+        <argsstring></argsstring>
+        <name>chargingState</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="113" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="113" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__3_1ad9531c510a0ecf3fbeaca49ebe74c100" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_3::voltage[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>voltage</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="114" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="114" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__3_1abca6b88153db86ee454cd2c9ed249200" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char kipr::create::CreatePackets::_3::current[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>current</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="115" column="14" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="115" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__3_1a3ed52006b07963fc36d43fb76b9bea52" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char kipr::create::CreatePackets::_3::batteryTemperature</definition>
+        <argsstring></argsstring>
+        <name>batteryTemperature</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="116" column="14" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="116" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__3_1a8b36484d8da13bdc1622dcd5f0065fa5" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_3::batteryCharge[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>batteryCharge</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="117" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="117" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__3_1aa77d7747ceda73f3a6d771d14fe59533" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_3::batteryCapacity[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>batteryCapacity</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="118" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="118" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><ref refid="classkipr_1_1create_1_1Create" kindref="compound">Create</ref> OI Packet 3 </para>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="111" column="7" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="112" bodyend="119"/>
+    <listofallmembers>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__3_1aa77d7747ceda73f3a6d771d14fe59533" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_3</scope><name>batteryCapacity</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__3_1a8b36484d8da13bdc1622dcd5f0065fa5" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_3</scope><name>batteryCharge</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__3_1a3ed52006b07963fc36d43fb76b9bea52" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_3</scope><name>batteryTemperature</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__3_1a5e2b2b8c731ddbd789dc65c53714336d" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_3</scope><name>chargingState</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__3_1abca6b88153db86ee454cd2c9ed249200" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_3</scope><name>current</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__3_1ad9531c510a0ecf3fbeaca49ebe74c100" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_3</scope><name>voltage</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

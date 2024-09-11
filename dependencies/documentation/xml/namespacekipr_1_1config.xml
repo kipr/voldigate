@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="namespacekipr_1_1config" kind="namespace" language="C++">
+    <compoundname>kipr::config</compoundname>
+    <innerclass refid="classkipr_1_1config_1_1Config" prot="public">kipr::config::Config</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp" line="11" column="3"/>
+  </compounddef>
+</doxygen>

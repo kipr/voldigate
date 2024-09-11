@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="deprecated" kind="page">
+    <compoundname>deprecated</compoundname>
+    <title>Deprecated List</title>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><variablelist>
+<varlistentry><term>Member <ref refid="group__analog_1gac6275954d0f20882dce85bbf2a191add" kindref="member">analog_et</ref>  (int port)</term></varlistentry>
+<listitem><para><anchor id="deprecated_1_deprecated000001"/>defaulting to <ref refid="group__analog_1gafa28db0c35c02b77341a6bed7aac0cb4" kindref="member">analog()</ref> on the Wallaby  </para>
+</listitem>
+<varlistentry><term>Member <ref refid="group__battery_1ga00b9c876fa198ae3485c44eb7ca92519" kindref="member">battery_charging</ref>  ()</term></varlistentry>
+<listitem><para><anchor id="deprecated_1_deprecated000004"/>not applicable for the Wallaby controller</para>
+<para></para>
+</listitem>
+<varlistentry><term>Member <ref refid="group__button_1gad570b4c97c58ae8fa41ed9918f7f4b1a" kindref="member">black_button</ref>  ()</term></varlistentry>
+<listitem><para><anchor id="deprecated_1_deprecated000012"/>Not present on the Wallaby  </para>
+</listitem>
+<varlistentry><term>Member <ref refid="group__analog_1ga0efa75659885dfd582847bfa5590d2d8" kindref="member">get_analog_pullup</ref>  (int port)</term></varlistentry>
+<listitem><para><anchor id="deprecated_1_deprecated000003"/>no effect on the Wallaby  </para>
+</listitem>
+<varlistentry><term>Member <ref refid="group__digital_1ga2d37bb1981515925418bd5a624eb1aa6" kindref="member">get_digital_pullup</ref>  (int port)</term></varlistentry>
+<listitem><para><anchor id="deprecated_1_deprecated000013"/>not applicable on the Wallaby</para>
+<para></para>
+</listitem>
+<varlistentry><term>Member <ref refid="group__button_1gad816f48e95049f42e7ddfe83bebcf67a" kindref="member">set_a_button_text</ref>  (const char *text)</term></varlistentry>
+<listitem><para><anchor id="deprecated_1_deprecated000005"/>not planned for the Wallaby  </para>
+</listitem>
+<varlistentry><term>Member <ref refid="group__analog_1gafe0e26968180cb71db2c398574b82731" kindref="member">set_analog_pullup</ref>  (int port, int pullup)</term></varlistentry>
+<listitem><para><anchor id="deprecated_1_deprecated000002"/>no effect on the Wallaby  </para>
+</listitem>
+<varlistentry><term>Member <ref refid="group__button_1ga9c70bfdf09245ab36547bdbc2cc31a7c" kindref="member">set_b_button_text</ref>  (const char *text)</term></varlistentry>
+<listitem><para><anchor id="deprecated_1_deprecated000006"/>not planned for the Wallaby  </para>
+</listitem>
+<varlistentry><term>Member <ref refid="group__button_1gac41766a323aded16a6071785942d9701" kindref="member">set_c_button_text</ref>  (const char *text)</term></varlistentry>
+<listitem><para><anchor id="deprecated_1_deprecated000007"/>not planned for the Wallaby  </para>
+</listitem>
+<varlistentry><term>Member <ref refid="group__digital_1ga6f4483ed1b9532f7637d79255107d2e9" kindref="member">set_digital_pullup</ref>  (int port, int pullup)</term></varlistentry>
+<listitem><para><anchor id="deprecated_1_deprecated000014"/>not applicable on the Wallaby</para>
+<para></para>
+</listitem>
+<varlistentry><term>Member <ref refid="group__button_1ga5377556e42fd72d8a8512aef83708e2c" kindref="member">set_x_button_text</ref>  (const char *text)</term></varlistentry>
+<listitem><para><anchor id="deprecated_1_deprecated000008"/>not planned for the Wallaby  </para>
+</listitem>
+<varlistentry><term>Member <ref refid="group__button_1ga1a56c447f8161b6b4d4af8edd5e83532" kindref="member">set_y_button_text</ref>  (const char *text)</term></varlistentry>
+<listitem><para><anchor id="deprecated_1_deprecated000009"/>not planned for the Wallaby  </para>
+</listitem>
+<varlistentry><term>Member <ref refid="group__button_1gadd44ccefbc0094c6256676e1b6e3ddd7" kindref="member">set_z_button_text</ref>  (const char *text)</term></varlistentry>
+<listitem><para><anchor id="deprecated_1_deprecated000010"/>not planned for the Wallaby  </para>
+</listitem>
+<varlistentry><term>Member <ref refid="group__button_1ga1af4e87e29182513ca6f0a24ea27f8bb" kindref="member">side_button</ref>  ()</term></varlistentry>
+<listitem><para><anchor id="deprecated_1_deprecated000011"/>Not present on the Wallaby </para>
+</listitem>
+</variablelist>
+</para>
+    </detaileddescription>
+    <location file="deprecated"/>
+  </compounddef>
+</doxygen>
