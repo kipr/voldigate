@@ -1,6 +1,6 @@
-import { Unsubscribe } from 'firebase/auth';
+
 import * as React from 'react';
-import { auth } from './firebase/firebase';
+
 
 import { Route, Switch } from 'react-router';
 import Loading from './components/Loading';
@@ -34,23 +34,14 @@ class App extends React.Component<Props, State> {
     };
   }
 
-  private onAuthStateChangedSubscription_: Unsubscribe;
+
 
   componentDidMount() {
-    this.onAuthStateChangedSubscription_ = auth.onAuthStateChanged(user => {
-      if (user) {
-        console.log('User detected.');
-        this.setState({ loading: false });
-      } else {
-        console.log('No user detected');
-        this.props.login();
-      }
-    });
+  
   }
 
   componentWillUnmount(): void {
-    this.onAuthStateChangedSubscription_();
-    this.onAuthStateChangedSubscription_ = null;
+
   }
 
   render() {
@@ -58,7 +49,6 @@ class App extends React.Component<Props, State> {
 
     const { loading } = state;
 
-    if (loading) return <Loading />;
 
     return (
       <>
@@ -76,8 +66,5 @@ export default connect((state: ReduxState) => {
     
   };
 }, dispatch => ({
-  login: () => {
-    console.log('Redirecting to login page', window.location.pathname);
-    window.location.href = `/login${window.location.pathname === '/login' ? '' : `?from=${window.location.pathname}`}`;
-  }
+  
 }))(App) as React.ComponentType<AppPublicProps>;

@@ -6,6 +6,13 @@ import { Provider as StyletronProvider, DebugEngine } from "styletron-react";
 import { Client as Styletron } from "styletron-engine-atomic";
 
 import store from './state';
+import { db, userDB } from './database_js/Database';
+
+import DatabaseService from './database_js/DatabaseService';
+
+// Use them somewhere in your code
+
+const dbService = new DatabaseService();
 
 const reactRoot = document.getElementById('reactRoot');
 

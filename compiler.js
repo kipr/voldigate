@@ -21,9 +21,12 @@ console.log("envLanguage: ", envLanguage);
 
 // Define the compilation command (gcc for C files)
 const bin_directory = path.resolve(__dirname, "tempBin");
-const sourceFilePath = path.resolve(__dirname, "source_file.c"); // Adjust the path as needed
+const sourceFilePathC = path.resolve(__dirname, "source_file.c"); // Adjust the path as needed
+const sourceFilePathCpp = path.resolve(__dirname, "source_file.cpp"); // Adjust the path as needed
+const sourceFilePathPy = path.resolve(__dirname, "source_file.py"); // Adjust the path as needed
 const outputBinaryPath = path.resolve(bin_directory, "output_binary");
-
+const outputBinaryPathCpp = path.resolve(bin_directory, "output_binary_cpp");
+let sourceFilePath;
 let config;
 try {
   config = getConfig();
@@ -34,6 +37,20 @@ try {
 getContentFromSrcFile(envProjectUsername, envProjectName, envFileName)
   .then((content) => {
     console.log("Writing content to source file:", content);
+    switch(envLanguage) {
+      case "c":
+        sourceFilePath = sourceFilePathC;
+        break;
+      case "cpp":
+        sourceFilePath = sourceFilePathCpp;
+        break;
+      case "python":
+        sourceFilePath = sourceFilePathPy;
+        break;
+      default:
+        console.error("Invalid language selection");
+        process.exit(1);
+    }
     return fs.writeFile(sourceFilePath, content);
   })
   .then(() => {
@@ -44,10 +61,9 @@ getContentFromSrcFile(envProjectUsername, envProjectName, envFileName)
     var chmod_cmd, cp_cmd, i, len, ln_cmd, pyc_cmd, src;
     switch (envLanguage) {
       case "c":
-      case "cpp":
         try {
           const outputBinaryPathC = path.resolve(outputBinaryPath);
-          const sourceFilePathC = path.resolve(sourceFilePath);
+    
           const stats = fs.lstatSync(outputBinaryPathC);
           if (stats.isSymbolicLink()) {
             const linkTarget = fs.readlinkSync(outputBinaryPathC); // Get the linked file
@@ -64,12 +80,34 @@ getContentFromSrcFile(envProjectUsername, envProjectName, envFileName)
             err.message
           );
         }
+        console.log("_dirname: ", __dirname);
+        compileCommand = `gcc -o "${outputBinaryPath}" "${sourceFilePathC}" -I"${__dirname}/libkipr_voldigate/libkipr_install_c/include" -L"${__dirname}/libkipr_voldigate/libkipr_install_c/lib" -lkipr`;
+        break;
+      case "cpp":
+        try {
+          const outputBinaryPathCpp = path.resolve(outputBinaryPath);
+          const stats = fs.lstatSync(outputBinaryPathCpp);
+          if (stats.isSymbolicLink()) {
+            const linkTarget = fs.readlinkSync(outputBinaryPathCpp); // Get the linked file
 
-        compileCommand = `gcc -o ${outputBinaryPath} ${sourceFilePath} -I${__dirname}/libkipr_voldigate/libkipr_install_c/include -L${__dirname}/libkipr_voldigate/libkipr_install_c/lib -lkipr`;
+            // If the link target matches the source file path, unlink it
+            if (linkTarget === sourceFilePathC) {
+              console.log("Unlinking the existing symbolic link...");
+              fs.unlinkSync(outputBinaryPathCpp);
+            }
+          }
+        } catch (err) {
+          console.log(
+            "No symbolic link found or error checking symbolic link:",
+            err.message
+          );
+        }
+
+        compileCommand = `clang++ -std=c++17 -o "${outputBinaryPathCpp}" "${sourceFilePathCpp}" -I"${__dirname}/libkipr_voldigate/libkipr_install_c/include" -L"${__dirname}/libkipr_voldigate/libkipr_install_c/lib" -lkipr`;
         break;
       case "python":
         const outputBinaryPathPy = path.resolve(outputBinaryPath);
-        const sourceFilePathPy = path.resolve(sourceFilePath);
+
         // Unlink any existing binary or symbolic link before creating a new one
         try {
           fs.unlinkSync(outputBinaryPathPy); // Remove the previous binary (C/ELF)
@@ -87,7 +125,9 @@ getContentFromSrcFile(envProjectUsername, envProjectName, envFileName)
           if (err) {
             console.error(`Error creating symbolic link: ${err.message}`);
           } else {
-            console.log(`Symbolic link created: ${sourceFilePathPy} -> ${outputBinaryPathPy}`);
+            console.log(
+              `Symbolic link created: ${sourceFilePathPy} -> ${outputBinaryPathPy}`
+            );
           }
         });
         break;
@@ -110,7 +150,7 @@ getContentFromSrcFile(envProjectUsername, envProjectName, envFileName)
         return;
       }
       if (stderr) {
-        console.error(`Compilation warnings/errors: ${stderr}`);
+        console.error(`Compilation warnings/errors in compiler.js: ${stderr}`);
       }
       console.log(`Compilation successful: ${stdout}`);
 

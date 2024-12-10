@@ -16,8 +16,8 @@ import { State as ReduxState } from '../state';
 
 import KIPR_LOGO_BLACK from '../assets/KIPR-Logo-Black-Text-Clear-Large.png';
 import KIPR_LOGO_WHITE from '../assets/KIPR-Logo-White-Text-Clear-Large.png';
-import { faBars, faBook, faClone, faCogs, faCommentDots, faFlagCheckered, faGlobeAmericas, faPlay, faQuestion, faSignOutAlt, faStop, faSync } from '@fortawesome/free-solid-svg-icons';
-import SceneMenu from './World/SceneMenu';
+import { faBars,faPlay, faStop } from '@fortawesome/free-solid-svg-icons';
+
 import ExtraMenu from './ExtraMenu';
 import LocalizedString from '../util/LocalizedString';
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import WorkerInstance from '../WorkerInstance';
+
 
 import { State as ReduxState } from '../state';
 import parseMessages, { hasErrors, hasWarnings, sort, toStyledText } from '../util/parse-messages';
@@ -14,7 +14,6 @@ import { SimulatorState } from './SimulatorState';
 import { StyledText } from '../util';
 import { Message } from 'ivygate';
 
-import { Space } from '../Sim';
 import axios from 'axios';
 import { DEFAULT_SETTINGS, Settings } from '../Settings';
 import { DEFAULT_FEEDBACK, Feedback } from '../Feedback';
@@ -25,7 +24,7 @@ import Dict from '../Dict';
 import ProgrammingLanguage from '../ProgrammingLanguage';
 
 
-import { AsyncScene } from '../state/State/Scene';
+
 import { RouteComponentProps } from 'react-router';
 
 import { connect } from 'react-redux';
@@ -71,7 +70,7 @@ export interface RootPublicProps extends RouteComponentProps<RootParams> {
 
 
 interface RootPrivateProps {
-  scene: AsyncScene;
+
   locale: LocalizedString.Language;
   onClearConsole: () => void;
   onIndentCode: () => void;
@@ -207,9 +206,9 @@ class Root extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    WorkerInstance.onStopped = this.onStopped_;
+   
 
-    this.scheduleUpdateConsole_();
+   
     window.addEventListener('resize', this.onWindowResize_);
     console.log("isAddNewProject in mount Root.tsx:", this.props.addNewProject);
     console.log("Root.tsx: this.props:", this.props);
@@ -395,11 +394,7 @@ class Root extends React.Component<Props, State> {
 
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.onWindowResize_);
-    cancelAnimationFrame(this.updateConsoleHandle_);
-
-    Space.getInstance().onSelectNodeId = undefined;
-    Space.getInstance().onSetNodeBatch = undefined;
+  
   }
 
   private onWindowResize_ = () => {
@@ -610,90 +605,27 @@ class Root extends React.Component<Props, State> {
     console.log("onRunClick_ activeCode:", activeCode);
     const response = await axios.post('/run-code', { userName, projectName, fileName, activeLanguage }); // This calls the backend route
 
-
-
-    switch (activeLanguage) {
-      case 'c':
-      case 'cpp': {
-        let nextConsole: StyledText = StyledText.extend(editorConsole, StyledText.text({
-          text: LocalizedString.lookup(tr(''), locale),
-          style: STDOUT_STYLE(this.state.theme)
-        }));
-
-        this.setState({
-          simulatorState: SimulatorState.COMPILING,
-          editorConsole: nextConsole
-        }, () => {
-          compile(activeCode, activeLanguage)
-            .then(compileResult => {
-              let nextConsole = this.state.editorConsole;
-              const messages = sort(parseMessages(compileResult.stderr));
-              const compileSucceeded = compileResult.result && compileResult.result.length > 0;
-
-              // Show all errors/warnings in editorConsole
-              for (const message of messages) {
-                nextConsole = StyledText.extend(nextConsole, toStyledText(message, {
-                  onClick: message.ranges.length > 0
-                    ? this.onErrorMessageClick_(message.ranges[0].start.line)
-                    : undefined
-                }));
-              }
-
-              if (compileSucceeded) {
-                // Show success in editorConsole and start running the program
-
-                WorkerInstance.start({
-                  language: activeLanguage,
-                  code: compileResult.result
-                });
-
-              } else {
-                if (!hasErrors(messages)) {
-                  // Compile failed and there are no error messages; some weird underlying error occurred
-                  // We print the entire stderr to the editorConsole
-                  nextConsole = StyledText.extend(nextConsole, StyledText.text({
-                    text: `${compileResult.stderr}\n`,
-                    style: STDERR_STYLE(this.state.theme)
-                  }));
-                }
-              }
-
-              this.setState({
-                simulatorState: compileSucceeded ? SimulatorState.RUNNING : SimulatorState.STOPPED,
-                messages,
-                editorConsole: nextConsole
-              });
-            })
-            .catch((e: unknown) => {
-              window.console.error(e);
-              nextConsole = StyledText.extend(nextConsole, StyledText.text({
-                text: LocalizedString.lookup(tr('Something went wrong during compilation.\n'), locale),
-                style: STDERR_STYLE(this.state.theme)
-              }));
-
-              this.setState({
-                simulatorState: SimulatorState.STOPPED,
-                messages: [],
-                editorConsole: nextConsole
-              });
-            });
-        });
-        break;
-      }
-      case 'python': {
-        this.setState({
-          simulatorState: SimulatorState.RUNNING,
-        }, () => {
-          WorkerInstance.start({
-            language: 'python',
-            code: activeCode
-          });
-        });
-        break;
-      }
+    const stringInput: string = response.data.output;
+    console.log("stringInput:", stringInput);
+    let parsedOutput: string = '';
+    if (stringInput.includes("[core/wombat]")) {
+      parsedOutput = stringInput.split('\n') // Split input into lines
+        .filter(line => !line.startsWith('[core/wombat]')) // Filter out lines starting with "[core/wombat]"
+        .join('\n'); // Join the lines back into a string
+      console.log("parsedOutput:", parsedOutput);
     }
+    else {
+      parsedOutput = stringInput;
+    }
+    let nextConsole: StyledText = StyledText.extend(editorConsole, StyledText.text({
+      text: LocalizedString.lookup(tr(parsedOutput), locale),
+      style: STDOUT_STYLE(this.state.theme)
+    }));
 
-
+    this.setState({
+      simulatorState: SimulatorState.COMPILING,
+      editorConsole: nextConsole
+    });
   };
 
 
@@ -703,116 +635,70 @@ class Root extends React.Component<Props, State> {
     const { userName, projectName, fileName, activeLanguage, editorConsole, code } = this.state;
     try {
       await this.onSaveCode_();
-      const response = await axios.post('/compile-code', { userName, projectName, fileName, activeLanguage }); // This calls the backend route
-      console.log(response.data);  // Display the response from the backend
 
       const activeCode = code[activeLanguage];
+      let compilingConsole: StyledText = StyledText.extend(editorConsole, StyledText.text({
+        text: LocalizedString.lookup(tr('Compiling...\n'), locale),
+        style: STDOUT_STYLE(this.state.theme)
+      }));
 
-      switch (activeLanguage) {
-        case 'c':
-        case 'cpp': {
-          let nextConsole: StyledText = StyledText.extend(editorConsole, StyledText.text({
-            text: LocalizedString.lookup(tr('Compiling...\n'), locale),
-            style: STDOUT_STYLE(this.state.theme)
-          }));
+      this.setState({
+        simulatorState: SimulatorState.COMPILING,
+        editorConsole: compilingConsole
+      }, async () => {
+        const response = await axios.post('/compile-code', { userName, projectName, fileName, activeLanguage }); // This calls the backend route
+        console.log("onCompileClick response.data: ", response.data);  // Display the response from the backend
 
-          this.setState({
-            simulatorState: SimulatorState.COMPILING,
-            editorConsole: nextConsole
-          }, () => {
+        let nextConsole: StyledText;
+        console.log("nextConsole in onCompileClick_:", nextConsole);
+        switch (activeLanguage) {
+          case 'c':
+          case 'cpp': {
+            if (response.data.message === 'successful') {
+              nextConsole = StyledText.extend(compilingConsole, StyledText.text({
+                text: LocalizedString.lookup(tr('Compilation Succeded!\n'), locale),
+                style: STDOUT_STYLE(this.state.theme)
+              }));
 
-            compile(activeCode, activeLanguage)
-              .then(compileResult => {
-                nextConsole = this.state.editorConsole;
-                const messages = sort(parseMessages(compileResult.stderr));
-                const compileSucceeded = compileResult.result && compileResult.result.length > 0;
+            }
+            else {
+              nextConsole = StyledText.extend(compilingConsole, StyledText.text({
+                text: LocalizedString.lookup(tr('Compilation Failed!\n'), locale),
+                style: STDERR_STYLE(this.state.theme)
+              }));
 
-                // Show all errors/warnings in editorConsole
-                for (const message of messages) {
-                  nextConsole = StyledText.extend(nextConsole, toStyledText(message, {
-                    onClick: message.ranges.length > 0
-                      ? this.onErrorMessageClick_(message.ranges[0].start.line)
-                      : undefined
-                  }));
-                }
-
-                if (compileSucceeded) {
-                  // Show success in editorConsole and start running the program
-
-                  const haveWarnings = hasWarnings(messages);
-                  nextConsole = StyledText.extend(nextConsole, StyledText.text({
-                    text: haveWarnings
-                      ? LocalizedString.lookup(tr('Compilation succeeded with warnings.\n'), locale)
-                      : LocalizedString.lookup(tr('Compilation succeeded.\n'), locale),
-                    style: STDOUT_STYLE(this.state.theme)
-                  }));
-
-                  // WorkerInstance.start({
-                  //   language: activeLanguage,
-                  //   code: compileResult.result
-                  // });
-
-                } else {
-                  if (!hasErrors(messages)) {
-                    // Compile failed and there are no error messages; some weird underlying error occurred
-                    // We print the entire stderr to the editorConsole
-                    nextConsole = StyledText.extend(nextConsole, StyledText.text({
-                      text: `${compileResult.stderr}\n`,
-                      style: STDERR_STYLE(this.state.theme)
-                    }));
-                  }
-
-                  nextConsole = StyledText.extend(nextConsole, StyledText.text({
-                    text: LocalizedString.lookup(tr('Compilation failed.\n'), locale),
-                    style: STDERR_STYLE(this.state.theme)
-                  }));
-                }
-
-                this.setState({
-                  simulatorState: compileSucceeded ? SimulatorState.RUNNING : SimulatorState.STOPPED,
-                  messages,
-                  editorConsole: nextConsole
-                });
-
-              })
-              .catch((e: unknown) => {
-                window.console.error(e);
-                nextConsole = StyledText.extend(nextConsole, StyledText.text({
-                  text: LocalizedString.lookup(tr('Something went wrong during compilation.\n'), locale),
-                  style: STDERR_STYLE(this.state.theme)
-                }));
-
-                this.setState({
-                  simulatorState: SimulatorState.STOPPED,
-                  messages: [],
-                  editorConsole: nextConsole
-                });
-              });
-
-
-          });
-
-          break;
-
-        }
-        case 'python': {
-          let nextConsole: StyledText = StyledText.extend(editorConsole, StyledText.text({
-            text: LocalizedString.lookup(tr('Compiling...\n'), locale),
-            style: STDOUT_STYLE(this.state.theme)
-          }));
-          this.setState({
-            simulatorState: SimulatorState.RUNNING,
-            editorConsole: nextConsole
-          }, () => {
-            WorkerInstance.start({
-              language: 'python',
-              code: activeCode
+            }
+            this.setState({
+              simulatorState: SimulatorState.COMPILING,
+              editorConsole: nextConsole
             });
-          });
-          break;
+            break;
+
+          }
+          case 'python': {
+            if (response.data.message === 'successful') {
+              nextConsole = StyledText.extend(compilingConsole, StyledText.text({
+                text: LocalizedString.lookup(tr('Compilation Succeded!\n'), locale),
+                style: STDOUT_STYLE(this.state.theme)
+              }));
+            }
+            else {
+              nextConsole = StyledText.extend(compilingConsole, StyledText.text({
+                text: LocalizedString.lookup(tr('Compilation Failed!\n'), locale),
+                style: STDERR_STYLE(this.state.theme)
+              }));
+            }
+            this.setState({
+              simulatorState: SimulatorState.COMPILING,
+              editorConsole: nextConsole
+            });
+            break;
+          }
+
         }
 
-      }
+
+      });
 
     } catch (error) {
       console.error('Error running the code:', error);
@@ -892,23 +778,6 @@ class Root extends React.Component<Props, State> {
 
   }
 
-  private updateConsole_ = () => {
-    const text = WorkerInstance.sharedConsole.popString();
-    if (text.length > 0) {
-      this.setState({
-        editorConsole: StyledText.extend(this.state.editorConsole, StyledText.text({
-          text,
-          style: STDOUT_STYLE(this.state.theme)
-        }), 300)
-      });
-    }
-
-
-    this.scheduleUpdateConsole_();
-  };
-
-  private updateConsoleHandle_: number | undefined = undefined;
-  private scheduleUpdateConsole_ = () => this.updateConsoleHandle_ = requestAnimationFrame(this.updateConsole_);
 
 
   private onClearConsole_ = () => {
@@ -952,13 +821,7 @@ class Root extends React.Component<Props, State> {
       ...changedSettings
     };
 
-    if ('simulationRealisticSensors' in changedSettings) {
-      Space.getInstance().realisticSensors = changedSettings.simulationRealisticSensors;
-    }
 
-    if ('simulationSensorNoise' in changedSettings) {
-      Space.getInstance().noisySensors = changedSettings.simulationSensorNoise;
-    }
 
     this.setState({ settings: nextSettings });
   };

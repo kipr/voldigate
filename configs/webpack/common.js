@@ -145,13 +145,16 @@ module.exports = {
       SIMULATOR_HAS_AMMO: JSON.stringify(dependencies.ammo !== undefined),
       SIMULATOR_LIBKIPR_C_DOCUMENTATION: JSON.stringify(libkiprCDocumentation),
       SIMULATOR_I18N: JSON.stringify(i18n),
+      'process.env.COUSHDB_HOST': JSON.stringify('http://192.168.125.1:5984'), // Add environment variables here
     }),
     new NpmDtsPlugin({
       root: resolve(__dirname, '../../'),
       logLevel: 'error',
       force: true,
       output: resolve(__dirname, '../../dist/simulator.d.ts'),
-    })
+    }),
+
+
   ],
   performance: {
     hints: false,

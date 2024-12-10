@@ -263,7 +263,7 @@ class HomeNavigation extends React.PureComponent<Props, State> {
             {isPanelVisible && (
               <FileExplorer
                 theme={theme}
-                robots={{}}
+              
                 locale={'en-US'}
                 propsSelectedProjectName={this.state.projectName}
                 onProjectSelected={this.onProjectSelected}

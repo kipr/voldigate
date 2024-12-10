@@ -15,7 +15,7 @@ import { Ivygate, Message } from 'ivygate';
 import ProgrammingLanguage from '../../ProgrammingLanguage';
 
 import { faFileDownload, faFloppyDisk, faIndent, faLink, faPlay } from '@fortawesome/free-solid-svg-icons';
-import Script from '../../state/State/Scene/Script';
+
 import Dict from '../../Dict';
 import * as monaco from 'monaco-editor';
 
@@ -31,7 +31,7 @@ export enum EditorActionState {
 }
 
 export interface EditorPublicProps extends StyleProps, ThemeProps {
-  language: ProgrammingLanguage | Script.Language;
+  language: ProgrammingLanguage 
   code: string;
   onCodeChange: (code: string) => void;
   onSaveCode: () => void;
@@ -292,8 +292,8 @@ export const IVYGATE_LANGUAGE_MAPPING: Dict<string> = {
   'plaintext': 'plaintext',
 };
 
-const DOCUMENTATION_LANGUAGE_MAPPING: { [key in ProgrammingLanguage | Script.Language]: 'c' | 'python' | 'plaintext' } = {
-  'ecmascript': undefined,
+const DOCUMENTATION_LANGUAGE_MAPPING: { [key in ProgrammingLanguage]: 'c' | 'python' | 'plaintext' } = {
+  
   'python': 'python',
   'c': 'c',
   'cpp': 'c',

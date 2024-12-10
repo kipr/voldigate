@@ -1,3 +1,11 @@
-from kipr import *
+#include <stdio.h>
+#include <kipr/wombat.h>
 
-print('Hello, World!')
+int main()
+{
+  while (1){
+      printf("Analog(0): %d\n", analog(0));
+  }
+ 
+   
+}

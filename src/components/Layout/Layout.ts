@@ -1,6 +1,5 @@
 import { Message } from "ivygate";
 import ProgrammingLanguage from '../../ProgrammingLanguage';
-import { RobotPosition } from "../../RobotPosition";
 import { Settings } from "../../Settings";
 import { StyleProps } from "../../style";
 import { StyledText } from "../../util";

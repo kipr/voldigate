@@ -11,7 +11,7 @@ import { LayoutProps } from './Layout/Layout';
 import tr from '@i18n';
 
 import { State as ReduxState } from '../state';
-import Node from '../state/State/Scene/Node';
+
 import Dict from '../Dict';
 
 import LocalizedString from '../util/LocalizedString';
@@ -46,7 +46,7 @@ interface SectionProps {
     selected?: boolean;
 }
 interface FileExplorerReduxSideLayoutProps {
-    robots: Dict<Node.Robot>;
+
     locale: LocalizedString.Language;
 }
 
@@ -189,7 +189,7 @@ const Container = styled('ul', {
     flexWrap: 'wrap',
     overflow: 'hidden', /* Hide any overflow within the container */
     padding: '0',
-    margin: '0',
+    margin: '0px 0px 0px -30px',
     listStyleType: 'none',
 });
 

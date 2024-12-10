@@ -12,7 +12,7 @@ import { State as ReduxState } from '../state';
 
 import KIPR_LOGO_BLACK from '../assets/KIPR-Logo-Black-Text-Clear-Large.png';
 import KIPR_LOGO_WHITE from '../assets/KIPR-Logo-White-Text-Clear-Large.png';
-import { signOutOfApp } from '../firebase/modules/auth';
+
 import LocalizedString from '../util/LocalizedString';
 import ExtraMenu from './ExtraMenu';
 import { Modal } from '../pages/Modal';
@@ -89,11 +89,7 @@ export class MainMenu extends React.Component<Props, State> {
   };
 
 
-  private onLogoutClick_ = (event: React.MouseEvent<HTMLDivElement>) => {
-    void signOutOfApp();
-  };
-
-  private onModalClick_ = (modal: Modal) => () => this.setState({ modal });
+   private onModalClick_ = (modal: Modal) => () => this.setState({ modal });
 
   private onDashboardClick_ = (event: React.MouseEvent<HTMLDivElement>) => {
     window.location.href = '/';

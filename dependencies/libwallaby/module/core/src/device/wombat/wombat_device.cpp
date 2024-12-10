@@ -16,7 +16,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#define SPI_FILE_SYSTEM ("/dev/spidev0.0")
+//#define SPI_FILE_SYSTEM ("/dev/spidev0.0")
 
 namespace
 {
@@ -33,11 +33,11 @@ public:
         read_buf(new std::uint8_t[REG_READABLE_COUNT]),
         write_buf(new std::uint8_t[REG_READABLE_COUNT])
   {
-    spi_fd_ = open(SPI_FILE_SYSTEM, O_RDWR);
-    if (spi_fd_ <= 0)
-    {
-      logger.fatal() << "Not found: " << SPI_FILE_SYSTEM;
-    }
+    // spi_fd_ = open(SPI_FILE_SYSTEM, O_RDWR);
+    // if (spi_fd_ <= 0)
+    // {
+    //   logger.fatal() << "Not found: " << SPI_FILE_SYSTEM;
+    // }
     clear_buffers();
   }
 
@@ -179,7 +179,7 @@ struct WombatDeviceDescriptor
 
   static bool isPresent()
   {
-    return access(SPI_FILE_SYSTEM, F_OK) == 0;
+    //return access(SPI_FILE_SYSTEM, F_OK) == 0;
   }
 };
 

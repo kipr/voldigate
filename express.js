@@ -9,10 +9,9 @@ const { exec } = require("child_process");
 const app = express();
 const sourceDir = "dist";
 const { get: getConfig } = require("./config");
-const { WebhookClient } = require("discord.js");
 const path = require("path");
 const proxy = require("express-http-proxy");
-
+const https = require("https");
 let config;
 try {
   config = getConfig();
@@ -20,6 +19,15 @@ try {
   process.exitCode = 1;
   throw e;
 }
+
+const options = {
+  key: fs.readFileSync('key.pem'),
+  cert: fs.readFileSync('cert.pem')
+};
+
+// https.createServer(options, app).listen(config.server.port, () => {
+//   console.log(`Server running at https://localhost:${config.server.port}`);
+// });
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -179,14 +187,21 @@ app.post("/compile-code", (req, res) => {
       console.error(`Error during execution: ${error.message}`);
       return res.status(500).json({ error: "Execution failed" });
     }
-    if (stderr) {
+    else if (stderr) {
       console.error(`Compilation warnings/errors: ${stderr}`);
+      res.json({
+        message: "failed",
+        output: stderr,
+      });
     }
-    console.log(`stdout: ${stdout}`);
-    res.json({
-      message: "Compilation successful in /compile-code",
-      output: env.PROJECT_USERNAME,
-    });
+    else {
+      console.log(`stdout: ${stdout}`);
+      res.json({
+        message: "successful",
+        output: stdout,
+      });
+    }
+   
   });
   //res.json({ message: "Received data", userName, projectName, fileName });
 });
@@ -197,13 +212,15 @@ app.post("/run-code", (req, res) => {
 
   switch(req.body.activeLanguage) {
     case "c":
-    case "cpp":
-      console.log("runcommand: ", `${bin_directory}/output_binary`);
       runCommand = `${bin_directory}/output_binary`;
       console.log("runCommand: ", runCommand);
       break;
+    case "cpp":
+      runCommand = `${bin_directory}/output_binary_cpp`;
+      console.log("runCommand: ", runCommand);
+      break;
     case "python":
-      runCommand = `export PYTHONPATH=/usr/local/lib && echo $PYTHONPATH && python3 ${bin_directory}/output_binary`;
+      runCommand = `export PYTHONPATH=/usr/local/lib  && python3 ${bin_directory}/output_binary`;
       break;
   }
   // Command to execute the binary Python file
@@ -365,12 +382,13 @@ app.use("*", (req, res) => {
   res.sendFile(`${__dirname}/${sourceDir}/index.html`);
 });
 
-app.listen(config.server.port, () => {
+app.listen(config.server.port, '0.0.0.0', () => {
   console.log(
     `Express web server started: http://localhost:${config.server.port}`
   );
   console.log(`Serving content from /${sourceDir}/`);
 });
+
 app.use((req, res, next) => {
   res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
   res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
