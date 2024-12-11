@@ -32,7 +32,7 @@ type State = ExtraMenuState;
 
 const Container = styled('div', (props: ThemeProps) => ({
   position: 'absolute',
-  right: `${(window.innerWidth * 0.03)}px`,
+  right: `${(window.innerWidth * 0.04)}px`,
   width: '200px',
   backgroundColor: props.theme.backgroundColor,
   color: props.theme.color,

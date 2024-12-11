@@ -13,6 +13,7 @@ import { State as ReduxState } from '../state';
 import { FileExplorer } from './FileExplorer';
 import ProgrammingLanguage from '../ProgrammingLanguage';
 
+
 export interface HomeNavigationPublicProps extends RouteComponentProps, ThemeProps, StyleProps {
 
 }
@@ -77,7 +78,7 @@ const RootContainer = styled('div', (props: { theme: any; isleftbaropen_: string
   //const marginLeft = props.isleftbaropen_ ? '15%' : '4%';
   const marginLeft = props.isleftbaropen_ === "true"
     ? `${(window.innerWidth * 0.12)}px` // 13% of window.innerWidth
-    : `${(window.innerWidth * 0.04)}px`; // 4% of window.innerWidth
+    : `${(window.innerWidth * 0.01)}px`; // 4% of window.innerWidth
 
   return {
     position: 'absolute',
@@ -116,8 +117,13 @@ class HomeNavigation extends React.PureComponent<Props, State> {
 
   componentDidMount(): void {
     console.log('Inside componentDidMount in HomeNavigation.tsx with state:', this.state);
+   
+    
   }
 
+  async initializeRepo() {
+
+  }
   componentDidUpdate() {
     console.log('Inside componentDidUpdate in HomeNavigation.tsx with state:', this.state);
   }

@@ -106,6 +106,7 @@ const SimultorWidgetContainer = styled('div', {
 const SimulatorWidget = styled(Widget, {
   display: 'flex',
   flex: '1 1 0',
+  margin: '10px 0px 0px 0px',
   height: '100%',
   width: '100%',
 });

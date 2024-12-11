@@ -115,7 +115,7 @@ const SidePanel = styled('div', (props: ThemeProps) => ({
     flexWrap: 'wrap',
     left: '3.5%',
     top: '6%',
-    height: '94%',
+    height: '90%',
     width: '10%', // Adjust width as needed
     backgroundColor: 'purple', // Customize as needed
     zIndex: 1,
