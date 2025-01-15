@@ -1,7 +1,7 @@
 
 import { ThemeProps } from './theme';
 import { StyleProps } from '../style';
-
+import axios from 'axios';
 import tr from '@i18n';
 import LocalizedString from '../util/LocalizedString';
 import * as React from 'react';
@@ -147,11 +147,12 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
     console.log('Inside onFinalizeClick_ in CreateProjectDialog.tsx with values:', values);
     console.log("Inside CreateProjectDialog.tsx with state Username:", this.props.userName);
     try {
-      const result = await DatabaseService.addProjectToUser(this.props.userName, values.projectName, this.state.language as ProgrammingLanguage);
-      console.log("result: ", result);
-      if(result == 1){
-        console.log("Current language is: ", this.state.language);
- 
+   
+      const response = await axios.post('/initialize-repo', {userName: this.props.userName, projectName:values.projectName, language:this.state.language as ProgrammingLanguage});
+      console.log("initialize-repo Response: ", response);
+
+      if(response.status === 200){
+        console.log("closeProjectDialog language: ", this.state.language);
         this.props.closeProjectDialog(values.projectName, this.state.language as ProgrammingLanguage);
       }
    

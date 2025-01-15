@@ -205,6 +205,11 @@ declare module 'simulator/Feedback' {
   export const DEFAULT_FEEDBACK: Feedback;
 
 }
+declare module 'simulator/Git' {
+  export function setupLocalRepo(): Promise<void>;
+  export function initializeRepository(): Promise<void>;
+
+}
 declare module 'simulator/ProgrammingLanguage' {
   type ProgrammingLanguage = 'c' | 'cpp' | 'python' | 'plaintext';
   namespace ProgrammingLanguage {
@@ -1458,7 +1463,6 @@ declare module 'simulator/components/FileExplorer' {
   import { ThemeProps } from 'simulator/components/theme';
   import { StyleProps } from 'simulator/style';
   import LocalizedString from 'simulator/util/LocalizedString';
-  import { ProjectType, SrcData, UserData, IncludeData } from 'simulator/components/DatabaseService';
   import ProgrammingLanguage from 'simulator/ProgrammingLanguage';
   type UsersSection = string;
   export interface FileExplorerProps extends ThemeProps, StyleProps {
@@ -1482,14 +1486,14 @@ declare module 'simulator/components/FileExplorer' {
       locale: LocalizedString.Language;
   }
   interface FileExplorerState {
-      includeFiles: IncludeData[];
-      srcFiles: SrcData[];
-      userDataFiles: UserData[];
+      includeFiles: [];
+      srcFiles: [];
+      userDataFiles: [];
       userName: string;
       users: string[];
       selectedSection: UsersSection;
       selectedProject: string;
-      projects: ProjectType[] | null;
+      projects: [] | null;
       error: string | null;
       projectName: string;
       fileType: string;
@@ -1501,13 +1505,14 @@ declare module 'simulator/components/FileExplorer' {
   type State = FileExplorerState;
   export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxSideLayoutProps, State> {
       constructor(props: Props & FileExplorerReduxSideLayoutProps);
-      componentDidMount(): void;
+      componentDidMount(): Promise<void>;
       componentDidUpdate(prevProps: Props, prevState: State): Promise<void>;
       private handleProjectClick;
       private handleFileClick;
       private addNewProject;
       private addNewFile;
       private loadUsers;
+      private loadProjects;
       private setSelectedSection;
       private getProjects;
       renderSrcFiles(): JSX.Element;

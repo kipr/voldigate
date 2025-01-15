@@ -43,6 +43,7 @@ import CreateProjectDialog from './CreateProjectDialog';
 import { DatabaseService } from './DatabaseService';
 import compile from '../compile';
 import { Modal } from '../pages/Modal';
+import { setupLocalRepo } from '../Git';
 
 
 interface RootParams {
@@ -206,9 +207,9 @@ class Root extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-   
 
-   
+
+
     window.addEventListener('resize', this.onWindowResize_);
     console.log("isAddNewProject in mount Root.tsx:", this.props.addNewProject);
     console.log("Root.tsx: this.props:", this.props);
@@ -332,7 +333,16 @@ class Root extends React.Component<Props, State> {
         }, () => {
           console.log("new state code in clickFile:", this.state.code);
         });
-
+        if (this.state.isHomeStartOptionsVisible == true) {
+          this.setState({
+            isHomeStartOptionsVisible: false
+          });
+        }
+        if (this.state.isEditorPageVisible == false) {
+          this.setState({
+            isEditorPageVisible: true
+          });
+        }
         this.props.setClickFile(false);
 
       }
@@ -347,28 +357,28 @@ class Root extends React.Component<Props, State> {
 
     let newCode = '';
     console.log("extension is:", extension);
-    try {
-      switch (extension) {
-        case 'c':
-        case 'cpp':
-        case 'py':
-          newCode = await DatabaseService.getContentFromSrcFile(this.props.propUserName, this.props.propProjectName, this.props.propFileName);
-          break;
-        case 'h':
-          newCode = await DatabaseService.getContentfromIncludeFile(this.props.propUserName, this.props.propProjectName, this.props.propFileName);
-          break;
-        case 'txt':
-          newCode = await DatabaseService.getContentFromUserDataFile(this.props.propUserName, this.props.propProjectName, this.props.propFileName);
-          break;
-        default:
-          newCode = await DatabaseService.getContentFromUserDataFile(this.props.propUserName, this.props.propProjectName, this.props.propFileName);
-          break;
-      }
-      console.log("loadCodeBasedOnExtension newCode:", newCode);
-    }
-    catch (error) {
-      console.error('Error fetching code:', error);
-    }
+    // try {
+    //   switch (extension) {
+    //     case 'c':
+    //     case 'cpp':
+    //     case 'py':
+    //       newCode = await DatabaseService.getContentFromSrcFile(this.props.propUserName, this.props.propProjectName, this.props.propFileName);
+    //       break;
+    //     case 'h':
+    //       newCode = await DatabaseService.getContentfromIncludeFile(this.props.propUserName, this.props.propProjectName, this.props.propFileName);
+    //       break;
+    //     case 'txt':
+    //       newCode = await DatabaseService.getContentFromUserDataFile(this.props.propUserName, this.props.propProjectName, this.props.propFileName);
+    //       break;
+    //     default:
+    //       newCode = await DatabaseService.getContentFromUserDataFile(this.props.propUserName, this.props.propProjectName, this.props.propFileName);
+    //       break;
+    //   }
+    //   console.log("loadCodeBasedOnExtension newCode:", newCode);
+    // }
+    // catch (error) {
+    //   console.error('Error fetching code:', error);
+    // }
 
     if (propActiveLanguage === 'python' && extension === 'h') {
       this.setState({
@@ -394,7 +404,7 @@ class Root extends React.Component<Props, State> {
 
 
   componentWillUnmount() {
-  
+
   }
 
   private onWindowResize_ = () => {
@@ -421,7 +431,7 @@ class Root extends React.Component<Props, State> {
     this.setState({
 
       modal: Modal.NONE,
-      userName: this.props.propUserName,
+      userName: this.state.userName,
       projectName: newProjName,
       activeLanguage: newProjLanguage,
       fileName: `main.${ProgrammingLanguage.FILE_EXTENSION[newProjLanguage]}`,
@@ -431,25 +441,37 @@ class Root extends React.Component<Props, State> {
       // }
     }, () => {
       console.log("inside onCloseProjectDialog_ in Root.tsx with after state:", this.state);
-      if (this.props.addNewProject) {
+      if (this.state.isHomeStartOptionsVisible == true) {
         this.setState({
-          addNewProject: false
+          isHomeStartOptionsVisible: false
         });
-
-        if (this.state.isHomeStartOptionsVisible == true) {
-          this.setState({
-            isHomeStartOptionsVisible: false
-          });
-        }
-        if (this.state.isEditorPageVisible == false) {
-          this.setState({
-            isEditorPageVisible: true
-          });
-        }
+      }
+      if (this.state.isEditorPageVisible == false) {
+        this.setState({
+          isEditorPageVisible: true
+        });
       }
 
-      this.props.setAddNewProject(false);
-      console.log("onCloseProjectDialog_ with new state fileName:", this.state.fileName);
+
+      // if (this.props.addNewProject) {
+      //   this.setState({
+      //     addNewProject: false
+      //   });
+
+      //   if (this.state.isHomeStartOptionsVisible == true) {
+      //     this.setState({
+      //       isHomeStartOptionsVisible: false
+      //     });
+      //   }
+      //   if (this.state.isEditorPageVisible == false) {
+      //     this.setState({
+      //       isEditorPageVisible: true
+      //     });
+      //   }
+      // }
+
+      // this.props.setAddNewProject(false);
+      // console.log("onCloseProjectDialog_ with new state fileName:", this.state.fileName);
     });
 
 
@@ -646,6 +668,7 @@ class Root extends React.Component<Props, State> {
         simulatorState: SimulatorState.COMPILING,
         editorConsole: compilingConsole
       }, async () => {
+
         const response = await axios.post('/compile-code', { userName, projectName, fileName, activeLanguage }); // This calls the backend route
         console.log("onCompileClick response.data: ", response.data);  // Display the response from the backend
 
@@ -712,38 +735,38 @@ class Root extends React.Component<Props, State> {
 
 
     console.log("extension is:", extension);
-
+    
     const { userName, activeLanguage, projectName, fileName, otherFileType } = this.state;
-    const newContent = this.state.code[activeLanguage];
-    console.log("OnSaveCode clicked in Root with newContent:", newContent);
+    const fileContents = this.state.code[activeLanguage];
+    console.log("onSaveCode language:", activeLanguage);
+    console.log("onSaveCode code:", fileContents);
+    console.log("OnSaveCode clicked in Root with newContent:", fileContents);
     console.log("onSaveCode otherFileType:", otherFileType);
     console.log("onSaveCode fileName:", this.state.fileName);
-
+    const prePath = `/home/kipr/Documents/KISS`;
+    let filePath = '';
     switch (extension) {
-      case 'h':
-        DatabaseService.updateIncludeContent(userName, projectName, fileName, newContent);
-        break;
       case 'c':
       case 'cpp':
       case 'py':
-        await DatabaseService.updateSrcContent(userName, projectName, fileName, newContent);
+
+        filePath = `${prePath}/${userName}/${projectName}/src/${fileName}`;
         break;
       case 'txt':
-        DatabaseService.updateUserDataContent(userName, projectName, fileName, newContent);
+        filePath = `${prePath}/${userName}/${projectName}/data/${fileName}`;
         break;
-      default:
-        DatabaseService.updateUserDataContent(userName, projectName, fileName, newContent);
+      case 'h':
+        filePath = `${prePath}/${userName}/${projectName}/include/${fileName}`;
         break;
-
-
     }
 
-
+    const updateFileContent = await axios.post('/save-file-content', { filePath, fileContents });
+    console.log("updateFileContent:", updateFileContent);
     this.setState({
 
       code: {
         ...this.state.code,
-        [this.state.activeLanguage]: newContent
+        [this.state.activeLanguage]: fileContents
       }
     }, () => {
       console.log("onSaveCode_ with new state code:", this.state.code);

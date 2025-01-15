@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <kipr/wombat.h>
+#include <servo_position.h>
 
 int main()
 {
-  while (1){
-      printf("Analog(0): %d\n", analog(0));
-  }
- 
-   
+  enable_servos();
+  set_servo_position(0,1750);
+  msleep(1000);
+
 }

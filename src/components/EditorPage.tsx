@@ -1,32 +1,19 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-
 import { styled } from 'styletron-react';
-
-
-
+import axios from 'axios';
 import { Console, createConsoleBarComponents } from './Console';
 import { Editor, createEditorBarComponents, EditorBarTarget } from './Editor';
-;
-
-
 import { LayoutProps } from './Layout/Layout';
-
 import Widget, { Mode, Size } from './Widget';
 import { Slider } from './Slider';
-
 import { State as ReduxState } from '../state';
-
 import Dict from '../Dict';
-
 import { StyledText } from '../util';
-
 import tr from '@i18n';
 import LocalizedString from '../util/LocalizedString';
 import ProgrammingLanguage from '../ProgrammingLanguage';
 import { Theme } from './theme';
-
-import DatabaseService from './DatabaseService';
 import { Modal } from '../pages/Modal';
 
 
@@ -198,27 +185,29 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
 
     console.log("EditorPage mounted console:", this.state.editorConsole);
     try {
-      const content = await DatabaseService.getContentFromSrcFile(this.props.userName, this.props.projectName, this.props.fileName);
-      // console.log("Content from src file:", content);
-      if (content === null) {
-        this.setState({
-          code: {
-            ...this.state.code,
-            [this.state.language]: ProgrammingLanguage.DEFAULT_CODE[this.state.language]
-          }
 
-        });
-      }
-      else {
-        this.setState({
-          code: {
-            ...this.state.code,
-            [this.state.language]: content
-          }
-        });
+      const { language, fileName } = this.state;
+      const { userName, projectName } = this.props;
 
-      }
+      const srcContent = await axios.get("get-file-contents", { params: { filePath: `/home/kipr/Documents/KISS/${userName}/${projectName}/src/${fileName}` } });
+      console.log("EditorPage srcContent.data:", srcContent.data);
+      console.log("EditorPage state code:", this.state.code);
+
+      // Ensure srcContent.data is a string
+      const fileContent = typeof srcContent.data === 'string' ? srcContent.data : JSON.stringify(srcContent.data);
+
+
+      this.setState((prevState) => ({
+        code: {
+          ...prevState.code,
+          [prevState.language]: fileContent,
+        }
+      }), () => {
+        console.log("EditorPage updated state code:", this.state.code);
+      });
+
       this.props.onFileNameChange(this.state.fileName);
+      this.props.code[this.state.language] = this.state.code[this.state.language];
     }
     catch (error) {
       console.error('Error getting content from src file:', error);

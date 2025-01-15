@@ -1,7 +1,7 @@
 
 import { ThemeProps } from './theme';
 import { StyleProps } from '../style';
-
+import axios from 'axios';
 import tr from '@i18n';
 import LocalizedString from '../util/LocalizedString';
 import * as React from 'react';
@@ -203,15 +203,18 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
         console.log('Inside onFinalizeClick_ in CreateUserDialog.tsx with values:', values);
 
         try {
-            const result = DatabaseService.addUsertoDatabase(values.userName);
+     
+            const response = await axios.get('/get-users', { params: { filePath: "/home/kipr/Documents/KISS" } });
+            console.log("Response: ", response);
 
-            if (await result == -1) {
+            if(response.data.directories.includes(values.userName)){
                 this.setState({ showRepeatUserDialog: true });
             }
             else {
                 this.props.onClose();
                 this.props.onCreateProjectDialog(values.userName);
             }
+
         }
         catch (error) {
             console.error('Error adding user to database:', error);
@@ -247,7 +250,7 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
                     <Dialog
                         theme={theme}
                         name={LocalizedString.lookup(tr('Create New User'), locale)}
-                        onClose={onClose} 
+                        onClose={onClose}
                     >
                         <Container theme={theme} style={style} className={className}>
                             <StyledForm
@@ -262,7 +265,7 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
 
                 {showRepeatUserDialog && (
                     <RepeatUserDialog
-                        onClose={this.closeRepeatUserDialog_} 
+                        onClose={this.closeRepeatUserDialog_}
                         theme={theme}
                     />
                 )}

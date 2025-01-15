@@ -19,7 +19,7 @@ import LocalizedString from '../util/LocalizedString';
 import { faFile, faFileCirclePlus, faFolderPlus } from '@fortawesome/free-solid-svg-icons';
 
 import { Fa } from './Fa';
-
+import axios from 'axios';
 import DatabaseService, { ProjectType, IncludeType, SrcType, SrcData, UserData, IncludeData } from './DatabaseService';
 import ProgrammingLanguage from '../ProgrammingLanguage';
 
@@ -55,14 +55,14 @@ interface FileExplorerPrivateProps {
 }
 
 interface FileExplorerState {
-    includeFiles: IncludeData[];
-    srcFiles: SrcData[];
-    userDataFiles: UserData[];
+    includeFiles: [];
+    srcFiles: [];
+    userDataFiles: [];
     userName: string;
     users: string[];
     selectedSection: UsersSection;
     selectedProject: string;
-    projects: ProjectType[] | null;
+    projects: [] | null;
     error: string | null;
     projectName: string;
     fileType: string;
@@ -261,11 +261,10 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
         };
 
     }
-    componentDidMount() {
-        this.loadUsers();
-        //this.getProjects();
-        console.log("Projects: ", this.state.projects);
-        console.log("fileExplorer mount this.state.showProjectfiles: ", this.state.showProjectFiles);
+    async componentDidMount() {
+        await this.loadUsers();
+
+
     }
     async componentDidUpdate(prevProps: Props, prevState: State) {
 
@@ -339,59 +338,142 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
 
         }
     }
-    private handleProjectClick = async (projectId: string) => {
+    private handleProjectClick = async (projectId: string, user: string) => {
+        console.log("handleProjectClick click");
 
-        const projectInfo = await DatabaseService.getProjectInfo(this.state.selectedSection, projectId);
-        console.log("Project Info: ", projectInfo);
-        console.log("this.state.showProjectFiles before state: ", this.state.showProjectFiles);
+        try {
+            const handleProjectClickResponse = await axios.get('/get-project-folders', { params: { filePath: `/home/kipr/Documents/KISS/${user}/${projectId}` } });
+            console.log("handleProjectClick Response: ", handleProjectClickResponse);
 
-        this.setState((prevState) => ({
-            userName: prevState.selectedSection,
-            selectedProject: projectId,
-            projectName: projectInfo.project_id,
-            activeLanguage: projectInfo.language,
-            showProjectFiles: true,
-            srcFiles: projectInfo.src.srcFiles,
-            includeFiles: projectInfo.include.includeFiles,
-            userDataFiles: projectInfo.userData.userDataFiles
-        }));
-        if (this.props.onProjectSelected) {
 
-            this.props.onProjectSelected(this.state.selectedSection, projectInfo.project_id, `main.${ProgrammingLanguage.FILE_EXTENSION[projectInfo.language]}`, projectInfo.language, this.state.fileType);
+            const projectLanguageResponse = await axios.get('/get-project-language', { params: { filePath: `/home/kipr/Documents/KISS/${user}/${projectId}` } });
+            console.log("projectLanguageResponse Response: ", projectLanguageResponse);
+
+            this.setState({
+                activeLanguage: projectLanguageResponse.data.language,
+                projectName: projectId
+            }, () => {
+                console.log("state activeLanguage: ", this.state.activeLanguage);
+                console.log("state projectName: ", this.state.projectName);
+            });
+            // Add include files to state
+            try {
+                const includeFileResponse = await axios.get('/get-folder-contents', { params: { filePath: `/home/kipr/Documents/KISS/${user}/${projectId}/include` } });
+                console.log("includeFileResponse Response: ", includeFileResponse);
+
+                let files = includeFileResponse.data.files || [];
+                // Filter out files like .gitkeep
+                const filteredFiles = files.filter(file => !file.startsWith('.'));
+                this.setState({
+                    includeFiles: filteredFiles
+                }, () => {
+                    console.log("state includeFiles: ", this.state.includeFiles);
+                });
+            }
+            catch (error) {
+                console.error("Error in includeFileResponse: ", error);
+            }
+
+            // Add src files to state
+            try {
+                const srcFileResponse = await axios.get('/get-folder-contents', { params: { filePath: `/home/kipr/Documents/KISS/${user}/${projectId}/src` } });
+                console.log("srcFileResponse Response: ", srcFileResponse);
+                let files = srcFileResponse.data.files || [];
+                // Filter out files like .gitkeep
+                const filteredFiles = files.filter(file => !file.startsWith('.'));
+                this.setState({
+                    srcFiles: filteredFiles
+                }, () => {
+                    console.log("state srcFiles: ", this.state.srcFiles);
+                });
+            }
+            catch (error) {
+                console.error("Error in srcFileResponse: ", error);
+            }
+
+            // Add data files to state
+            try {
+                const dataFileResponse = await axios.get('/get-folder-contents', { params: { filePath: `/home/kipr/Documents/KISS/${user}/${projectId}/data` } });
+                console.log("dataFileResponse Response: ", dataFileResponse);
+                let files = dataFileResponse.data.files || [];
+                // Filter out files like .gitkeep
+                const filteredFiles = files.filter(file => !file.startsWith('.'));
+                this.setState({
+                    userDataFiles: filteredFiles
+                }, () => {
+                    console.log("state userDataFiles: ", this.state.userDataFiles);
+                });
+            }
+            catch (error) {
+                console.error("Error in dataFileResponse: ", error);
+            }
+
+            this.setState({
+                selectedProject: projectId,
+                showProjectFiles: true
+            }, () => {
+
+                console.log("after project click state: ", this.state);
+            });
+
+
+        } catch (error) {
+            console.error("Error in handleProjectClick: ", error);
         }
 
-        console.log("this.state.selectedProject: ", this.state.selectedProject);
-        console.log("this.state.showProjectFiles: ", this.state.showProjectFiles);
 
 
     };
     private handleFileClick = async (fileName: string) => {
-        const { userName, projectName } = this.state;
-        const projectInfo = await DatabaseService.getProjectInfo(userName, projectName);
+        const { userName, projectName, activeLanguage } = this.state;
+
         const [name, extension] = fileName.split('.');
+        console.log("this.state.projectName: ", this.state.projectName);
+        console.log("fileName: ", fileName);
+
 
         console.log("extension is:", extension);
         this.setState({
             fileType: extension
         });
 
-        if (extension == 'txt') {
-            this.setState({
-                activeLanguage: 'plaintext'
-            });
+        switch (extension) {
+            case 'c':
+            case 'cpp':
+            case 'py':
+                // const srcFileContent = await axios.get('get-src-file', { params: { filePath: `/home/kipr/Documents/KISS/${userName}/${projectName}/src/${fileName}` } });
+
+
+                const srcFileContent = await axios.get('get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${userName}/${projectName}/src/${fileName}` } });
+                console.log("srcFileContent.data: ", srcFileContent.data);
+                break;
+            case 'h':
+                const includeFileContent = await axios.get('get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${userName}/${projectName}/include/${fileName}` } });
+                console.log("includeFileContent.data: ", includeFileContent.data);
+                break;
+            case 'txt':
+                const dataFileContent = await axios.get('get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${userName}/${projectName}/data/${fileName}` } });
+                console.log("dataFileContent.data: ", dataFileContent.data);
+                break;
+
         }
-        else {
-            this.setState({
-                activeLanguage: projectInfo.language
-            });
-        }
-        console.log("file name inside handleFileClick: ", fileName);
-        console.log("handleFileClick current fileType: ", this.state.fileType);
-        console.log("Project Info inside handleFileclick: ", projectInfo);
+        // if (extension == 'txt') {
+        //     this.setState({
+        //         activeLanguage: 'plaintext'
+        //     });
+        // }
+        // else {
+        //     this.setState({
+        //         activeLanguage: projectInfo.language
+        //     });
+        // }
+        // console.log("file name inside handleFileClick: ", fileName);
+        // console.log("handleFileClick current fileType: ", this.state.fileType);
+        // console.log("Project Info inside handleFileclick: ", projectInfo);
 
         if (this.props.onFileSelected) {
 
-            this.props.onFileSelected(userName, projectInfo.project_id, fileName, this.state.activeLanguage, this.state.fileType);
+            this.props.onFileSelected(userName, projectName, fileName, activeLanguage, this.state.fileType);
         }
     }
 
@@ -427,9 +509,36 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
     }
 
     private async loadUsers() {
-        const users = await DatabaseService.getAllUsers();
-        this.setState({ users }); // Store users in state
+
+        console.log("FileExplorer loadUsers");
+        const response = await axios.get('/get-users', { params: { filePath: "/home/kipr/Documents/KISS" } });
+        console.log("loadUsers Response: ", response);
+
+        this.setState({
+            users: response.data.directories
+        }, () => {
+            console.log("loadUsers state.users: ", this.state.users);
+
+        });
+
     }
+
+    private async loadProjects() {
+        console.log("loadProjects click");
+
+        this.state.users.forEach(async (user) => {
+            console.log("user: ", user);
+
+            const response = await axios.get('/get-projects', { params: { filePath: `/home/kipr/Documents/KISS/${user}` } });
+            console.log("loadProjects Response: ", response)
+
+
+        });
+
+    }
+
+
+
 
 
     private setSelectedSection = async (selectedSection: UsersSection) => {
@@ -443,23 +552,16 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
         console.log("setSelectedSection selectedSection: ", selectedSection);
 
 
-        const userInfo = await DatabaseService.getUserInfo(selectedSection);
-        const allUserProjects = await DatabaseService.getAllProjectsFromUser(selectedSection);
-        console.log("setSelectedSection allUserProjects: ", allUserProjects);
+        const projectsResponse = await axios.get('/get-projects', { params: { filePath: `/home/kipr/Documents/KISS/${selectedSection}` } });
+        console.log("projectsResponse: ", projectsResponse);
 
         this.setState({
-            projects: allUserProjects,
-            selectedSection: selectedSection,
-        });
-
-        this.setState({
+            projects: projectsResponse.data.directories,
             userName: selectedSection,
-            selectedProject: null,
-            projectName: '',
-            activeLanguage: 'c',
-            showProjectFiles: false,
-        })
-        console.log("setSelectedSection state: ", this.state);
+            selectedSection: selectedSection,
+        }, () => {
+            console.log("setSelectedSection state: ", this.state);
+        });
 
     };
 
@@ -471,11 +573,11 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
         this.setState({ error: null });
         try {
             console.log("selectedSection: ", selectedSection);
-            const projects = await DatabaseService.getAllProjectsFromUser(name);
-            console.log("Projects: ", projects);
-            this.setState({
-                projects: projects
-            })
+            // const projects = await DatabaseService.getAllProjectsFromUser(name);
+            // console.log("Projects: ", projects);
+            // this.setState({
+            //     projects: projects
+            // })
 
             console.log("state projects: ", this.state.projects);
 
@@ -489,10 +591,12 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
 
 
 
+
     renderSrcFiles() {
 
 
         const theme = DARK;
+        console.log("renderSrcFiles: ", this.state.srcFiles);
         return (
             <div>
                 {this.state.srcFiles.map((srcFile, index) => (
@@ -501,10 +605,10 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                         theme={theme}
                         selected={false}
                         key={index}
-                        onClick={() => { this.handleFileClick(srcFile.fileName) }}
+                        onClick={() => { this.handleFileClick(srcFile) }}
                     >
                         <FileItemIcon icon={faFile} />
-                        {srcFile.fileName}
+                        {srcFile}
                     </IndividualFile>
                 ))}
             </div>
@@ -522,10 +626,10 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                         theme={theme}
                         selected={false}
                         key={index}
-                        onClick={() => { this.handleFileClick(includeFile.fileName) }}
+                        onClick={() => { this.handleFileClick(includeFile) }}
                     >
                         <FileItemIcon icon={faFile} />
-                        {includeFile.fileName}
+                        {includeFile}
                     </IndividualFile>
 
 
@@ -544,10 +648,10 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                         theme={theme}
                         selected={false}
                         key={index}
-                        onClick={() => { this.handleFileClick(userData.fileName) }}
+                        onClick={() => { this.handleFileClick(userData) }}
                     >
                         <FileItemIcon icon={faFile} />
-                        {userData.fileName}
+                        {userData}
                     </IndividualFile>
 
 
@@ -559,9 +663,9 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
     renderProjects = (selectedSection: UsersSection | null) => {
         const theme = DARK;
         console.log("insideRenderProjects");
-        // console.log("Projects: ", this.state.projects);
-        // console.log("selectedProject: ", this.state.selectedProject);
-        // console.log("state projectName: ", this.state.projectName);
+        console.log("renderProjects projects: ", this.state.projects);
+        console.log("projects:[0]: ", this.state.projects);
+        //this.loadProjects();
         return (
             <div>
                 <ProjectContainer theme={theme} key={selectedSection}>
@@ -580,25 +684,25 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                         {this.state.projects.map((project) => (
 
 
-                            <Container key={project.project_id}>
+                            <Container key={project}>
                                 <ProjectItem
 
-                                    selected={this.state.selectedProject === project.project_id}
-                                    onClick={() => this.handleProjectClick(project.project_id)}
+                                    selected={this.state.selectedProject === project}
+                                    onClick={() => this.handleProjectClick(project, selectedSection)}
                                     style={{
-                                        backgroundColor: this.state.projectName === project.project_id
+                                        backgroundColor: this.state.projectName === project
                                             ? 'rgba(255, 255, 255, 0.3)' // Highlight color
                                             : 'transparent'
                                     }}
                                 >
-                                    {project.project_id}
+                                    {project}
 
                                 </ProjectItem>
 
-                                {((this.state.showProjectFiles && this.state.selectedProject === project.project_id) || (this.state.projectName === project.project_id)) && (
-                                    console.log('Rendering files for project:', project.project_id),
+                                {this.state.selectedProject === project && this.state.showProjectFiles && (
+                                    console.log('Rendering files for project:', project),
                                     <FileTypeContainer theme={theme}>
-                                        <FileTypeItem theme={theme} key={`IncludeFileHeader-${project.project_id}`}>
+                                        <FileTypeItem theme={theme} key={`IncludeFileHeader-${project}`}>
                                             Include Files
                                             <FileContainer theme={theme}>
                                                 {this.renderIncludeFiles()}
@@ -609,7 +713,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                                                 </IndividualFile>
                                             </FileContainer>
                                         </FileTypeItem>
-                                        <FileTypeItem theme={theme} key={`SourceFileHeader-${project.project_id}`}>
+                                        <FileTypeItem theme={theme} key={`SourceFileHeader-${project}`}>
                                             Source Files
                                             <FileContainer theme={theme}>
                                                 {this.renderSrcFiles()}
@@ -619,10 +723,10 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                                                 </IndividualFile>
                                             </FileContainer>
                                         </FileTypeItem>
-                                        <FileTypeItem theme={theme} key={`UserDataFileHeader-${project.project_id}`}>
+                                        <FileTypeItem theme={theme} key={`UserDataFileHeader-${project}`}>
                                             User Data Files
                                             <FileContainer theme={theme}>
-                                                {this.renderUserDataFiles()}
+                                                {/* {this.renderUserDataFiles()} */}
                                                 <IndividualFile theme={theme} selected={false} onClick={() => this.addNewFile("txt")}>
                                                     <FileItemIcon icon={faFileCirclePlus} />
                                                     {LocalizedString.lookup(tr('Add File'), this.props.locale)}

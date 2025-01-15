@@ -227,8 +227,7 @@ export class HomeStartOptions extends React.Component<Props, State> {
         } = this.state;
 
 
-        DatabaseService.checkForUserDatabase();
-
+      
         return (
 
 
