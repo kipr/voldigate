@@ -165,14 +165,14 @@ subprocess.run(
 )
 
 
-# print('Outputting results...')
-# output = json.dumps({
+print('Outputting results...')
+output = json.dumps({
 
-#   'libkipr_c': f'{libkipr_install_c_dir}',
-#   'libkipr_python': f'{libkipr_build_python_dir}',
-#   'cpython': f'{cpython_emscripten_build_dir}',
-#   "libkipr_c_documentation": libkipr_c_documentation_json,
-# })
+  'libkipr_c': f'{libkipr_install_c_dir}',
+  'libkipr_python': f'{libkipr_build_python_dir}',
+  # 'cpython': f'{cpython_emscripten_build_dir}',
+  #"libkipr_c_documentation": libkipr_c_documentation_json,
+})
 
-# with open(working_dir / 'dependencies.json', 'w') as f:
-#   f.write(output)
+with open(working_dir / 'dependencies.json', 'w') as f:
+  f.write(output)
