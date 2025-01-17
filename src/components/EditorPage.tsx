@@ -189,22 +189,45 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
       const { language, fileName } = this.state;
       const { userName, projectName } = this.props;
 
-      const srcContent = await axios.get("get-file-contents", { params: { filePath: `/home/kipr/Documents/KISS/${userName}/${projectName}/src/${fileName}` } });
-      console.log("EditorPage srcContent.data:", srcContent.data);
-      console.log("EditorPage state code:", this.state.code);
+      if (this.props.fileName.includes(".h")) {
+        const includeContent = await axios.get("/get-file-contents", { params: { filePath: `/home/kipr/Documents/KISS/${userName}/${projectName}/include/${this.props.fileName}` } });
+        console.log("EditorPage includeContent.data:", includeContent.data);
+        console.log("EditorPage state code:", this.state.code);
+        // Ensure includeContent.data is a string
+        const fileContent = typeof includeContent.data === 'string' ? includeContent.data : JSON.stringify(includeContent.data);
 
-      // Ensure srcContent.data is a string
-      const fileContent = typeof srcContent.data === 'string' ? srcContent.data : JSON.stringify(srcContent.data);
+
+        this.setState((prevState) => ({
+          code: {
+            ...prevState.code,
+            [prevState.language]: fileContent,
+          }
+        }), () => {
+          console.log("EditorPage updated state code:", this.state.code);
+        });
+      }
+      else {
+
+        const srcContent = await axios.get("/get-file-contents", { params: { filePath: `/home/kipr/Documents/KISS/${userName}/${projectName}/src/${this.props.fileName}` } });
+        console.log("EditorPage srcContent.data:", srcContent.data);
+        console.log("EditorPage state code:", this.state.code);
+        // Ensure srcContent.data is a string
+        const fileContent = typeof srcContent.data === 'string' ? srcContent.data : JSON.stringify(srcContent.data);
 
 
-      this.setState((prevState) => ({
-        code: {
-          ...prevState.code,
-          [prevState.language]: fileContent,
-        }
-      }), () => {
-        console.log("EditorPage updated state code:", this.state.code);
-      });
+        this.setState((prevState) => ({
+          code: {
+            ...prevState.code,
+            [prevState.language]: fileContent,
+          }
+        }), () => {
+          console.log("EditorPage updated state code:", this.state.code);
+        });
+      }
+
+
+
+
 
       this.props.onFileNameChange(this.state.fileName);
       this.props.code[this.state.language] = this.state.code[this.state.language];
