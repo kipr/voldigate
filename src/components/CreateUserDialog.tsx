@@ -17,7 +17,6 @@ import Form from './Form';
 import { push } from 'connected-react-router';
 
 
-import { DatabaseService } from './DatabaseService';
 import RepeatUserDialog from './RepeatUserDialog';
 
 

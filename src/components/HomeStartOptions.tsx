@@ -17,7 +17,7 @@ import { DEFAULT_SETTINGS, Settings } from '../Settings';
 
 import SettingsDialog from './SettingsDialog';
 
-import { DatabaseService } from './DatabaseService';
+
 import OpenUsersDialog from './OpenUsersDialog';
 
 import ProgrammingLanguage from 'ProgrammingLanguage';
@@ -119,15 +119,6 @@ const ItemIcon = styled(Fa, {
 });
 
 
-async function fetchDocument() {
-    const doc = { _id: 'erin_database' }; // replace with actual document ID
-    try {
-        const document = await DatabaseService.getDatabase(doc._id);
-        console.log('Document:', document);
-    } catch (error) {
-        console.error('Failed to fetch document:', error);
-    }
-}
 const LogoContainer = styled('div', (props: ThemeProps) => ({
     position: 'absolute',
     top: '4px',
@@ -204,10 +195,7 @@ export class HomeStartOptions extends React.Component<Props, State> {
     private onModalClick_ = (modal: Modal) => () => this.setState({ modal });
     private onModalClose_ = () => this.setState({ modal: Modal.NONE });
 
-    private handleDatabaseClick_ = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        fetchDocument();
-    };
-    
+   
     private onCreateProject = () => {
         console.log("OnCreateProject;");
     };
