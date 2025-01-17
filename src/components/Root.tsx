@@ -40,11 +40,22 @@ import NewFileDialog from './NewFileDialog';
 import EditorPage from './EditorPage';
 import CreateProjectDialog from './CreateProjectDialog';
 
-import { DatabaseService } from './DatabaseService';
+
 import compile from '../compile';
 import { Modal } from '../pages/Modal';
 import { setupLocalRepo } from '../Git';
 
+type Project = {
+  projectName: string;
+  binFolderFiles: string[];
+  includeFolderFiles: string[];
+  srcFolderFiles: string[];
+  dataFolderFiles: string[];
+}
+
+interface User {
+  [userName: string]: Project[];
+}
 
 interface RootParams {
   sceneId?: string;
@@ -56,6 +67,7 @@ export interface RootPublicProps extends RouteComponentProps<RootParams> {
   propProjectName: string;
   propActiveLanguage: ProgrammingLanguage;
   propUserName: string;
+  loadUserDataFlag: boolean;
   addNewProject: boolean;
   addNewFile: boolean;
   clickFile: boolean;
@@ -65,6 +77,9 @@ export interface RootPublicProps extends RouteComponentProps<RootParams> {
   setAddNewProject: (addNewProject: boolean) => void;
   setAddNewFile: (addNewFile: boolean) => void;
   setClickFile: (clickFile: boolean) => void;
+  onUserUpdate: (users: {}) => void;
+  onLoadUserData: (userData: Project[]) => void;
+
 
 }
 
@@ -122,15 +137,21 @@ interface RootState {
   addNewProject: boolean;
   addNewFile: boolean;
   clickFileState: boolean;
-
   otherFileType?: string;
 
   userName: string;
 
+  includeFiles: [];
+  srcFiles: [];
+  userDataFiles: [];
+
+  users: string[];
+  projects: [] | null;
 }
 
 type Props = RootPublicProps & RootPrivateProps;
 type State = RootState;
+
 
 // We can't set innerheight statically, becasue the window can change
 // but we also must use innerheight to fix mobile issues
@@ -197,6 +218,11 @@ class Root extends React.Component<Props, State> {
       addNewProject: this.props.addNewProject,
       addNewFile: this.props.addNewFile,
       clickFileState: this.props.clickFile,
+      includeFiles: [],
+      srcFiles: [],
+      userDataFiles: [],
+      users: [],
+      projects: [],
 
 
     };
@@ -206,11 +232,13 @@ class Root extends React.Component<Props, State> {
 
   }
 
-  componentDidMount() {
+  async componentDidMount() {
 
 
 
     window.addEventListener('resize', this.onWindowResize_);
+    await this.loadUsers();
+    //await this.loadProjects();
     console.log("isAddNewProject in mount Root.tsx:", this.props.addNewProject);
     console.log("Root.tsx: this.props:", this.props);
     console.log("addNewProject in state:", this.state.addNewProject);
@@ -249,12 +277,19 @@ class Root extends React.Component<Props, State> {
 
       }
     }
+    else if (prevProps.loadUserDataFlag !== this.props.loadUserDataFlag) {
+      console.log("LOAD USER DATA");
+      this.props.onLoadUserData(await this.loadUserData())
+
+    }
     else if (prevProps.addNewFile !== this.props.addNewFile) {
 
       if (this.props.addNewFile) {
         console.log("addNewFile in update Root.tsx is true");
-        console.log("Root update with propProjectName:", this.props.propProjectName);
-        console.log("Root update with otherFileType:", this.props.otherFileType);
+        // console.log("Root update with propProjectName:", this.props.propProjectName);
+        // console.log("Root update with otherFileType:", this.props.otherFileType);
+        console.log("Root update addNewFile props:", this.props);
+        const { propUserName, propProjectName, propFileName } = this.props;
         switch (this.props.otherFileType) {
           case 'h':
           case 'c':
@@ -287,6 +322,8 @@ class Root extends React.Component<Props, State> {
         this.setState({
           isNewFileDialogVisible: true,
           modal: Modal.CREATEFILE,
+          userName: propUserName,
+          projectName: propProjectName,
         })
 
 
@@ -296,9 +333,13 @@ class Root extends React.Component<Props, State> {
     }
     else if (prevProps.clickFile !== this.props.clickFile) {
       if (this.props.clickFile) {
+        const { propUserName, propProjectName, propActiveLanguage, propFileName, otherFileType } = this.props;
         console.log("clickFile in update Root.tsx is true");
-        console.log("Proped props from HomeNavigation:", this.props.propUserName, this.props.propProjectName, this.props.propActiveLanguage, this.props.propFileName, this.props.otherFileType);
-        await this.loadCodeBasedOnExtension();
+        console.log("Proped props from HomeNavigation:", propUserName, propProjectName, propActiveLanguage, propFileName, otherFileType);
+        // await this.loadCodeBasedOnExtension();
+
+        const rootUpdateCode = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUserName}/${propProjectName}/src/${propFileName}` } });
+        console.log("rootUpdateCode response:", rootUpdateCode);
         //if proped active language is python and otherFileType is h, change activeLanguage to c 
         //because of how h files are in c instead of python
         if (this.props.propActiveLanguage === 'python' && this.props.otherFileType === 'h') {
@@ -328,7 +369,7 @@ class Root extends React.Component<Props, State> {
           clickFileState: false,
           code: {
             ...this.state.code,
-            [this.props.propActiveLanguage]: this.state.code[this.props.propActiveLanguage]
+            [propActiveLanguage]: rootUpdateCode.data
           }
         }, () => {
           console.log("new state code in clickFile:", this.state.code);
@@ -350,62 +391,92 @@ class Root extends React.Component<Props, State> {
 
   }
 
-  private async loadCodeBasedOnExtension() {
-    const { propFileName, propUserName, propProjectName, propActiveLanguage } = this.props;
-    const [name, extension] = propFileName.split('.');
-    console.log("loadCodeBasedOnExtension propActiveLanguage:", propActiveLanguage);
-
-    let newCode = '';
-    console.log("extension is:", extension);
-    // try {
-    //   switch (extension) {
-    //     case 'c':
-    //     case 'cpp':
-    //     case 'py':
-    //       newCode = await DatabaseService.getContentFromSrcFile(this.props.propUserName, this.props.propProjectName, this.props.propFileName);
-    //       break;
-    //     case 'h':
-    //       newCode = await DatabaseService.getContentfromIncludeFile(this.props.propUserName, this.props.propProjectName, this.props.propFileName);
-    //       break;
-    //     case 'txt':
-    //       newCode = await DatabaseService.getContentFromUserDataFile(this.props.propUserName, this.props.propProjectName, this.props.propFileName);
-    //       break;
-    //     default:
-    //       newCode = await DatabaseService.getContentFromUserDataFile(this.props.propUserName, this.props.propProjectName, this.props.propFileName);
-    //       break;
-    //   }
-    //   console.log("loadCodeBasedOnExtension newCode:", newCode);
-    // }
-    // catch (error) {
-    //   console.error('Error fetching code:', error);
-    // }
-
-    if (propActiveLanguage === 'python' && extension === 'h') {
-      this.setState({
-        code: {
-          ...this.state.code,
-          ["c"]: newCode
-        }
-      }, () => {
-        console.log("loadCodeBasedOnExtension with new state code:", this.state.code);
-      });
-    }
-    else {
-      this.setState({
-        code: {
-          ...this.state.code,
-          [propActiveLanguage]: newCode
-        }
-      }, () => {
-        console.log("loadCodeBasedOnExtension with new state code:", this.state.code);
-      });
-    }
-  }
-
 
   componentWillUnmount() {
 
   }
+
+  private async loadUsers() {
+
+    console.log("Root loadUsers");
+    try {
+      const getUserResponse = await axios.get('/get-users', { params: { filePath: "/home/kipr/Documents/KISS" } });
+      console.log("loadUsers Response: ", getUserResponse);
+
+      const userDirectories: [] = getUserResponse.data.directories;
+
+      this.setState({
+        users: userDirectories,
+      }, () => {
+        console.log("loadUsers state.users", this.state.users);
+        this.props.onUserUpdate(this.state.users);
+      });
+
+
+
+    }
+    catch (error) {
+      console.error("Root loadUsers caught error: ", error);
+    }
+
+  }
+
+  private async loadUserData(): Promise<Project[]> {
+    console.log("Root loadUserData");
+
+    console.log("propUserName:", this.props.propUserName);
+
+    try {
+      const response = await axios.get('/get-projects', { params: { filePath: `/home/kipr/Documents/KISS/${this.props.propUserName}` } });
+      console.log("loadProjects Response: ", response)
+
+      const projectDirectories = response.data.directories;
+      console.log("projectDirectories:", projectDirectories);
+
+      //each project into a Project object
+      const projects: Project[] = await Promise.all(
+        projectDirectories.map(async (projectName) => {
+          // Simulating file retrieval for each project (you may need to adjust this based on backend data)
+          const projectDataResponse = await axios.get('/get-project-folders', {
+            params: { filePath: `/home/kipr/Documents/KISS/${this.props.propUserName}/${projectName}` }
+          });
+
+          const projectData = projectDataResponse.data.directories;
+
+
+          const dataFilesDataResponse = await axios.get('/get-folder-contents', { params: { filePath: `/home/kipr/Documents/KISS/${this.props.propUserName}/${projectName}/${projectData[2]}` } });
+
+          const includeDataResponse = await axios.get('/get-folder-contents', { params: { filePath: `/home/kipr/Documents/KISS/${this.props.propUserName}/${projectName}/${projectData[3]}` } });
+
+          const srcDataResponse = await axios.get('/get-folder-contents', { params: { filePath: `/home/kipr/Documents/KISS/${this.props.propUserName}/${projectName}/${projectData[4]}` } });
+
+          const filteredDataFiles = dataFilesDataResponse.data.files.filter(file => !file.startsWith('.'));
+          const filteredSrcFiles = srcDataResponse.data.files.filter(file => !file.startsWith('.'));
+          const filteredIncludeFiles = includeDataResponse.data.files.filter(file => !file.startsWith('.'));
+
+          // Construct the Project object
+          return {
+            projectName,
+            binFolderFiles: [],
+            includeFolderFiles: filteredIncludeFiles || [],
+            srcFolderFiles: filteredSrcFiles || [],
+            dataFolderFiles: filteredDataFiles || [],
+          } as Project;
+        })
+      );
+      console.log("Transformed Projects: ", projects);
+      return projects;
+    }
+
+
+    catch (error) {
+
+    }
+
+
+  }
+
+
 
   private onWindowResize_ = () => {
     this.setState({ windowInnerHeight: window.innerHeight });
@@ -425,9 +496,38 @@ class Root extends React.Component<Props, State> {
     });
   };
 
-  private onCloseProjectDialog_ = (newProjName: string, newProjLanguage: ProgrammingLanguage) => {
+  private onCloseProjectDialog_ = async (newProjName: string, newProjLanguage: ProgrammingLanguage) => {
     console.log("onCloseProjectDialog_ newProject and newLanguage:", newProjName, newProjLanguage);
     console.log("inside onCloseProjectDialog_ in Root.tsx with before state:", this.state);
+    const { userName } = this.state;
+    try {
+
+      this.setState((prevState) => {
+        const updatedUsers = [...prevState.users]; // Clone the current users state
+        console.log("prevState.users: ", prevState.users);
+        console.log("updatedUsers: ", updatedUsers);
+        // Add the current userName if it's not already in the list
+        if (!updatedUsers.includes(userName)) {
+          updatedUsers.push(userName); // Add the userName to the array if not already present
+        }
+
+
+        return { users: updatedUsers }; // Update the users state
+      }, () => {
+        console.log("onCloseProj users after update:", this.state.users);
+        this.props.onUserUpdate(this.state.users);
+      });
+
+    }
+    catch (error) {
+
+    }
+
+
+
+
+
+
     this.setState({
 
       modal: Modal.NONE,
@@ -439,7 +539,7 @@ class Root extends React.Component<Props, State> {
       //   ...this.state.code,
       //   [newProjLanguage]: ProgrammingLanguage.DEFAULT_CODE[newProjLanguage]
       // }
-    }, () => {
+    }, async () => {
       console.log("inside onCloseProjectDialog_ in Root.tsx with after state:", this.state);
       if (this.state.isHomeStartOptionsVisible == true) {
         this.setState({
@@ -451,6 +551,7 @@ class Root extends React.Component<Props, State> {
           isEditorPageVisible: true
         });
       }
+      this.props.onLoadUserData(await this.loadUserData())
 
 
       // if (this.props.addNewProject) {
@@ -479,6 +580,12 @@ class Root extends React.Component<Props, State> {
   }
 
   private onCloseNewFileDialog_ = async (newFileName: string, fileType: string) => {
+    const prePath = `/home/kipr/Documents/KISS`;
+    let filePath = '';
+    const { userName, activeLanguage, projectName, otherFileType, code } = this.state;
+    console.log("onCloseNewfileDialog_ state:", this.state);
+    console.log("onCloseNewFileDialog newFileName:", newFileName);
+    console.log("onCloseNewFileDialog_ fileType: ", fileType);
     switch (fileType) {
       case 'h':
         this.setState({
@@ -487,10 +594,15 @@ class Root extends React.Component<Props, State> {
             ...this.state.code,
             [this.state.activeLanguage]: ProgrammingLanguage.DEFAULT_HEADER_CODE
           }
-        }, () => {
+        }, async () => {
           console.log("onCloseNewFileDialog_ with new state code:", this.state.code);
+          const fileContents = this.state.code[activeLanguage];
+          console.log("fileContents: ", fileContents);
+          const addNewFileContentResponse = await axios.post('/save-file-content', { filePath, fileContents });
+          console.log("addNewFileContentResponse:", addNewFileContentResponse);
         });
-        await DatabaseService.addIncludeContent(this.state.userName, this.state.projectName, `${newFileName}.${fileType}`, ProgrammingLanguage.DEFAULT_HEADER_CODE);
+        filePath = `${prePath}/${userName}/${projectName}/include/${newFileName}.h`;
+        //file
         break;
       case 'c':
       case 'cpp':
@@ -501,7 +613,7 @@ class Root extends React.Component<Props, State> {
             [this.state.activeLanguage]: ProgrammingLanguage.DEFAULT_CODE[this.state.activeLanguage]
           }
         });
-        await DatabaseService.addSrcContent(this.state.userName, this.state.projectName, `${newFileName}.${fileType}`, ProgrammingLanguage.DEFAULT_CODE[this.state.activeLanguage]);
+        //await DatabaseService.addSrcContent(this.state.userName, this.state.projectName, `${newFileName}.${fileType}`, ProgrammingLanguage.DEFAULT_CODE[this.state.activeLanguage]);
         break;
       case 'txt':
         this.setState({
@@ -510,9 +622,11 @@ class Root extends React.Component<Props, State> {
             [this.state.activeLanguage]: ProgrammingLanguage.DEFAULT_USER_DATA_CODE
           }
         });
-        await DatabaseService.addUserDataContent(this.state.userName, this.state.projectName, `${newFileName}.txt`, ProgrammingLanguage.DEFAULT_USER_DATA_CODE);
+        //await DatabaseService.addUserDataContent(this.state.userName, this.state.projectName, `${newFileName}.txt`, ProgrammingLanguage.DEFAULT_USER_DATA_CODE);
         break;
     }
+
+
 
     this.setState({
       isCreateProjectDialogVisible: false,
@@ -524,15 +638,28 @@ class Root extends React.Component<Props, State> {
     }, async () => {
       console.log("onCloseNewFileDialog_ with new state:", this.state);
 
-      if (this.props.addNewFile) {
+      // if (this.props.addNewFile) {
+      //   this.setState({
+      //     addNewFile: false
+      //   });
+      // }
+
+      // this.props.setAddNewFile(false);
+      // console.log("onCloseNewFileDialog_ with new state code:", this.state.code);
+      
+      this.props.onLoadUserData(await this.loadUserData())
+      if (this.state.isHomeStartOptionsVisible == true) {
         this.setState({
-          addNewFile: false
+          isHomeStartOptionsVisible: false
         });
       }
-
-      this.props.setAddNewFile(false);
-      console.log("onCloseNewFileDialog_ with new state code:", this.state.code);
-
+      if (this.state.isEditorPageVisible == false) {
+        this.setState({
+          isEditorPageVisible: true
+        }, () => {
+          console.log("onCloseNewFileDialog_ after isEditorPageVisible set to true, code:", this.state.code);
+        });
+      }
     });
 
 
@@ -655,6 +782,7 @@ class Root extends React.Component<Props, State> {
     console.log("onCompileClick_ in Root");
     const { locale } = this.props;
     const { userName, projectName, fileName, activeLanguage, editorConsole, code } = this.state;
+    console.log("onCompileClick before try state: ", this.state);
     try {
       await this.onSaveCode_();
 
@@ -731,11 +859,12 @@ class Root extends React.Component<Props, State> {
 
 
   private onSaveCode_ = async () => {
-    const [name, extension] = this.props.propFileName.split('.');
-
+    const [name, extension] = this.state.fileName.split('.');
+    console.log("this.props.propFileName: ", this.props.propFileName);
+    console.log("this.state.fileName: ", this.state.fileName);
 
     console.log("extension is:", extension);
-    
+
     const { userName, activeLanguage, projectName, fileName, otherFileType } = this.state;
     const fileContents = this.state.code[activeLanguage];
     console.log("onSaveCode language:", activeLanguage);
@@ -759,7 +888,7 @@ class Root extends React.Component<Props, State> {
         filePath = `${prePath}/${userName}/${projectName}/include/${fileName}`;
         break;
     }
-
+    console.log("onSaveCode filepath: ", filePath);
     const updateFileContent = await axios.post('/save-file-content', { filePath, fileContents });
     console.log("updateFileContent:", updateFileContent);
     this.setState({
