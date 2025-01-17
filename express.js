@@ -415,7 +415,7 @@ app.post("/initialize-repo", async (req, res) => {
     console.log(`Set repo.language=${language} and repo.owner=${userName}`);
 
     // Create default folders and files
-    const folders = ["include", "src", "data"];
+    const folders = ["bin","include", "src", "data"];
     folders.forEach((folder) => {
       const folderPath = path.join(projectDirectory, folder);
       fs.mkdirSync(folderPath, { recursive: true });
@@ -526,20 +526,22 @@ app.post("/save-file-content", saveFileContents());
 
 
 app.post("/run-code", (req, res) => {
-  console.log("Received request body:", req.body); // Log the entire request body
-  const bin_directory = path.resolve(__dirname, "tempBin");
+  console.log("Received request body (run-code):", req.body); // Log the entire request body
+  const { userName, projectName, fileName, activeLanguage } = req.body;
+  const userDirectory = `/home/kipr/Documents/KISS/${userName}`;
+  const projectDirectory = path.join(userDirectory, projectName);
+
+
+  const bin_directory = path.join(projectDirectory, "/bin");
 
   switch (req.body.activeLanguage) {
     case "c":
-      runCommand = `"${bin_directory}/output_binary"`;
-      console.log("runCommand: ", runCommand);
-      break;
     case "cpp":
-      runCommand = `"${bin_directory}/output_binary_cpp"`;
+      runCommand = `"${bin_directory}/botball_user_program"`;
       console.log("runCommand: ", runCommand);
       break;
     case "python":
-      runCommand = `export PYTHONPATH=/usr/local/lib && python3 "${bin_directory}/output_binary"`;
+      runCommand = `export PYTHONPATH=/usr/local/lib && python3 "${bin_directory}/botball_user_program"`;
       break;
   }
   // Command to execute the binary Python file
