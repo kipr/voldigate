@@ -15,7 +15,7 @@ import ProgrammingLanguage from '../ProgrammingLanguage';
 
 
 export interface HomeNavigationPublicProps extends RouteComponentProps, ThemeProps, StyleProps {
-
+  propedUsers: string[];
 }
 
 interface HomeNavigationPrivateProps {
@@ -29,6 +29,8 @@ interface HomeNavigationState {
   isPanelVisible: boolean;
   isAddNewProject: boolean;
   isAddNewFile: boolean;
+  isReloadFiles: boolean;
+  isLoadUserFiles?: boolean;
   isClickFile: boolean;
   selectedProject: string;
   fileName: string;
@@ -36,7 +38,18 @@ interface HomeNavigationState {
   activeLanguage: ProgrammingLanguage;
   projectName: string;
   fileType?: string;
+  updatedUsers: [];
+  loadedUserData?: Project[];
+
 }
+type Project = {
+  projectName: string;
+  binFolderFiles: string[];
+  includeFolderFiles: string[];
+  srcFolderFiles: string[];
+  dataFolderFiles: string[];
+}
+
 
 
 type Props = HomeNavigationPublicProps & HomeNavigationPrivateProps;
@@ -105,28 +118,44 @@ class HomeNavigation extends React.PureComponent<Props, State> {
       isPanelVisible: false,
       isAddNewProject: false,
       isAddNewFile: false,
+      isReloadFiles: false,
       isClickFile: false,
       fileName: '',
       userName: '',
       activeLanguage: 'c',
       projectName: '',
-      selectedProject: ''
+      selectedProject: '',
+      updatedUsers: [],
     };
 
   }
 
   componentDidMount(): void {
     console.log('Inside componentDidMount in HomeNavigation.tsx with state:', this.state);
-   
-    
+
+
   }
 
   async initializeRepo() {
 
   }
-  componentDidUpdate() {
+  componentDidUpdate = async (prevProps: Props, prevState: State) => {
     console.log('Inside componentDidUpdate in HomeNavigation.tsx with state:', this.state);
+
+    if (prevState.isAddNewFile !== this.state.isAddNewFile) {
+      console.log("HomeNav compDidUpdate prevState isAddNewFile is different -> Need to reload Files in FileExplorer");
+      this.setState({ isReloadFiles: true });
+    }
+    if(prevState.userName !== this.state.userName){
+      console.log("HomeNav compDidUpdate userName changed to:", this.state.userName);
+      this.setState({
+        isLoadUserFiles: false
+      }, () => {
+        console.log("HomeNav compDidUpdate isLoadUserFiles: ", this.state.isLoadUserFiles);
+      })
+    }
   }
+
   private toggleLeftBar_ = () => {
     this.setState((prevState) => ({
       isleftbaropen__: !prevState.isleftbaropen__,
@@ -192,6 +221,7 @@ class HomeNavigation extends React.PureComponent<Props, State> {
   private onAddNewProject_ = (userName: string) => {
 
     console.log("homeNavigation onAddNewProject_ passed userName:", userName);
+    console.log("homeNav onAddNewProject_ state: ", this.state);
 
     this.setState({
       isAddNewProject: true,
@@ -200,7 +230,7 @@ class HomeNavigation extends React.PureComponent<Props, State> {
 
   };
 
-  private onAddNewFile_ = (userName: string, activeLanguage: ProgrammingLanguage, fileType: string) => {
+  private onAddNewFile_ = (userName: string, projectName: string, activeLanguage: ProgrammingLanguage, fileType: string) => {
     console.log("homeNavigation onAddNewFile_ passed userName:", userName);
     console.log("homeNavigation onAddNewFile_ passed activeLanguage:", activeLanguage);
     console.log("homeNavigation onAddNewFile_ passed fileType: ", fileType);
@@ -208,6 +238,7 @@ class HomeNavigation extends React.PureComponent<Props, State> {
       isAddNewFile: true,
       userName: userName,
       activeLanguage: activeLanguage,
+      projectName: projectName,
       fileType: fileType
     });
   };
@@ -236,11 +267,53 @@ class HomeNavigation extends React.PureComponent<Props, State> {
     console.log("setClickFile_ isClickFile:", isClickFile);
   }
 
-  private onUserSelected = (userName: string) => {
-    this.setState({
-      userName,
-    });
+  private onUserSelected = (userName: string, loadUserData: boolean) => {
+    console.log("HomeNav onUserSelected previous username:", this.state.userName);
+    console.log("HomeNav onUserSelected: ", userName);
+    try {
+      if (this.state.userName != userName) {
+        this.setState({
+          isLoadUserFiles: false
+        }, () => {
+          console.log("HomeNav onUserSelected changed isLoadUserFiles flag to:", this.state.isLoadUserFiles);
+        })
+      }
+
+ 
+    }
+    catch (error) {
+      console.error(error);
+    }
+
+    try{
+
+      this.setState({
+        userName,
+        isLoadUserFiles: loadUserData
+      }, () => {
+        console.log("HomeNav onUserSelected new userName:", this.state.userName);
+      });
+    }
+    catch(error){
+      console.error(error);
+    }
+
   };
+
+  private onUserUpdate_ = (users: []) => {
+    console.log("HomeNav onUserUpdate users:", users);
+    this.setState({
+      updatedUsers: users
+    })
+  }
+
+  private onLoadUserData_ = (userData: Project[]) => {
+
+    console.log("HomeNav onLoadUserData_ userData: ", userData);
+    this.setState({
+      loadedUserData: userData
+    })
+  }
 
   render() {
     const { props, state } = this;
@@ -253,8 +326,12 @@ class HomeNavigation extends React.PureComponent<Props, State> {
       userName,
       isAddNewProject,
       isAddNewFile,
+      isLoadUserFiles,
       isClickFile,
-      fileType
+      isReloadFiles,
+      fileType,
+      updatedUsers,
+      loadedUserData
     } = state;
     const theme = DARK;
 
@@ -269,7 +346,7 @@ class HomeNavigation extends React.PureComponent<Props, State> {
             {isPanelVisible && (
               <FileExplorer
                 theme={theme}
-              
+
                 locale={'en-US'}
                 propsSelectedProjectName={this.state.projectName}
                 onProjectSelected={this.onProjectSelected}
@@ -279,7 +356,9 @@ class HomeNavigation extends React.PureComponent<Props, State> {
                 onAddNewFile={this.onAddNewFile_}
                 addProjectFlag={isAddNewProject}
                 addFileFlag={isAddNewFile}
-              />
+                reloadFilesFlag={isReloadFiles}
+                propUsers={updatedUsers}
+                propUserData={loadedUserData} />
 
             )}
           </LeftBarContainer>
@@ -304,6 +383,9 @@ class HomeNavigation extends React.PureComponent<Props, State> {
               setAddNewFile={this.setAddNewFile_}
               setClickFile={this.setClickFile_}
               changeProjectName={this.onChangeProjectName_}
+              onUserUpdate={this.onUserUpdate_}
+              loadUserDataFlag={isLoadUserFiles}
+              onLoadUserData={this.onLoadUserData_}
             />
           </RootContainer>
         </Container>
