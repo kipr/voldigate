@@ -44,6 +44,7 @@ import CreateProjectDialog from './CreateProjectDialog';
 import compile from '../compile';
 import { Modal } from '../pages/Modal';
 import { setupLocalRepo } from '../Git';
+import DeleteUserDialog from './DeleteUserDialog';
 
 type Project = {
   projectName: string;
@@ -73,12 +74,15 @@ export interface RootPublicProps extends RouteComponentProps<RootParams> {
   clickFile: boolean;
   otherFileType?: string;
   isLeftBarOpen: boolean;
+  userToDelete?: string;
+  deleteUserFlag?: boolean;
   changeProjectName: (projectName: string) => void;
   setAddNewProject: (addNewProject: boolean) => void;
   setAddNewFile: (addNewFile: boolean) => void;
   setClickFile: (clickFile: boolean) => void;
   onUserUpdate: (users: {}) => void;
   onLoadUserData: (userData: Project[]) => void;
+  resetDeleteUserFlag: (deleteUserFlag: boolean) => void;
 
 
 }
@@ -136,6 +140,7 @@ interface RootState {
   fileName: string;
   addNewProject: boolean;
   addNewFile: boolean;
+  deleteUserFlag_?: boolean;
   clickFileState: boolean;
   otherFileType?: string;
 
@@ -282,6 +287,15 @@ class Root extends React.Component<Props, State> {
       this.props.onLoadUserData(await this.loadUserData())
 
     }
+    else if (prevProps.deleteUserFlag !== this.props.deleteUserFlag && this.props.deleteUserFlag) {
+      console.log("userToDelete in update Root.tsx is true");
+      console.log("userToDelete in update Root.tsx with userName:", this.props.userToDelete);
+      console.log("this.props.deleteUserFlag: ", this.props.deleteUserFlag);
+
+      this.deleteUser_();
+    }
+
+
     else if (prevProps.addNewFile !== this.props.addNewFile) {
 
       if (this.props.addNewFile) {
@@ -338,8 +352,52 @@ class Root extends React.Component<Props, State> {
         console.log("Proped props from HomeNavigation:", propUserName, propProjectName, propActiveLanguage, propFileName, otherFileType);
         // await this.loadCodeBasedOnExtension();
 
-        const rootUpdateCode = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUserName}/${propProjectName}/src/${propFileName}` } });
-        console.log("rootUpdateCode response:", rootUpdateCode);
+
+
+        switch (otherFileType) {
+          case 'h':
+            const rootUpdateHeader = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUserName}/${propProjectName}/include/${propFileName}` } });
+            console.log("rootUpdateHeader response:", rootUpdateHeader);
+            this.setState({
+              code: {
+                ...this.state.code,
+                [propActiveLanguage]: rootUpdateHeader.data
+              }
+            }, () => {
+              console.log("new state code in clickFile:", this.state.code);
+            });
+            break;
+          case 'c':
+          case 'cpp':
+          case 'py':
+            const rootUpdateCode = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUserName}/${propProjectName}/src/${propFileName}` } });
+            console.log("rootUpdateCode response:", rootUpdateCode);
+            this.setState({
+              code: {
+                ...this.state.code,
+                [propActiveLanguage]: rootUpdateCode.data
+              }
+            }, () => {
+              console.log("new state code in clickFile:", this.state.code);
+            });
+            break;
+          case 'txt':
+            const rootUpdateUserFiles = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUserName}/${propProjectName}/data/${propFileName}` } });
+            console.log("rootUpdateUserFiles response:", rootUpdateUserFiles);
+            this.setState({
+              code: {
+                ...this.state.code,
+                [propActiveLanguage]: rootUpdateUserFiles.data
+              }
+            }, () => {
+              console.log("new state code in clickFile:", this.state.code);
+            });
+            break;
+        }
+
+
+
+
         //if proped active language is python and otherFileType is h, change activeLanguage to c 
         //because of how h files are in c instead of python
         if (this.props.propActiveLanguage === 'python' && this.props.otherFileType === 'h') {
@@ -367,10 +425,7 @@ class Root extends React.Component<Props, State> {
           fileName: this.props.propFileName,
           otherFileType: this.props.otherFileType,
           clickFileState: false,
-          code: {
-            ...this.state.code,
-            [propActiveLanguage]: rootUpdateCode.data
-          }
+
         }, () => {
           console.log("new state code in clickFile:", this.state.code);
         });
@@ -476,7 +531,15 @@ class Root extends React.Component<Props, State> {
 
   }
 
+  private deleteUser_ = () => {
+    console.log("deleteUser_ in Root.tsx with userToDelete:", this.props.userToDelete);
+    this.setState({
+      modal: Modal.DELETEUSER,
+      deleteUserFlag_: true,
+      userName: this.props.userToDelete
 
+    });
+  }
 
   private onWindowResize_ = () => {
     this.setState({ windowInnerHeight: window.innerHeight });
@@ -522,11 +585,6 @@ class Root extends React.Component<Props, State> {
     catch (error) {
 
     }
-
-
-
-
-
 
     this.setState({
 
@@ -621,9 +679,17 @@ class Root extends React.Component<Props, State> {
             ...this.state.code,
             [this.state.activeLanguage]: ProgrammingLanguage.DEFAULT_USER_DATA_CODE
           }
+        }, async () => {
+          console.log("onCloseNewFileDialog_ (.txt) with new state code:", this.state.code);
+          const fileContents = this.state.code[activeLanguage];
+          console.log("fileContents: ", fileContents);
+          const addNewFileContentResponse = await axios.post('/save-file-content', { filePath, fileContents });
+          console.log("addNewFileContentResponse:", addNewFileContentResponse);
         });
-        //await DatabaseService.addUserDataContent(this.state.userName, this.state.projectName, `${newFileName}.txt`, ProgrammingLanguage.DEFAULT_USER_DATA_CODE);
+        filePath = `${prePath}/${userName}/${projectName}/data/${newFileName}.txt`;
+        //file
         break;
+
     }
 
 
@@ -638,15 +704,7 @@ class Root extends React.Component<Props, State> {
     }, async () => {
       console.log("onCloseNewFileDialog_ with new state:", this.state);
 
-      // if (this.props.addNewFile) {
-      //   this.setState({
-      //     addNewFile: false
-      //   });
-      // }
 
-      // this.props.setAddNewFile(false);
-      // console.log("onCloseNewFileDialog_ with new state code:", this.state.code);
-      
       this.props.onLoadUserData(await this.loadUserData())
       if (this.state.isHomeStartOptionsVisible == true) {
         this.setState({
@@ -905,8 +963,37 @@ class Root extends React.Component<Props, State> {
 
   private onModalClick_ = (modal: Modal) => () => this.setState({ modal });
 
-  private onModalClose_ = () => {
-    this.setState({ modal: Modal.NONE });
+  private onConfirm_ = async () => {
+
+    console.log("onConfirm clicked in Root");
+    this.onModalClose_();
+
+    try {
+      const deleteUserResponse = await axios.post('/delete-user', { userName: this.state.userName });
+      console.log("deleteUserResponse:", deleteUserResponse);
+      this.setState({
+        users: this.state.users.filter(user => user !== this.state.userName)
+      }, () => {
+        console.log("onConfirm_ new users:", this.state.users);
+      });
+      this.props.onUserUpdate(this.state.users);
+      if (this.state.isEditorPageVisible == true) {
+        this.setState({
+          isEditorPageVisible: false,
+          isHomeStartOptionsVisible: true
+        });
+      }
+    }
+    catch (error) {
+
+    }
+
+  }
+
+  private onModalClose_ = async () => {
+    this.setState({ modal: Modal.NONE, deleteUserFlag_: false });
+    console.log("onModalClose_ deleteUserFlag_:", this.state.deleteUserFlag_);
+    console.log("onModalClose_ with this.props.deleteUserFlag project: ", this.props.deleteUserFlag);
 
     if (this.props.addNewProject) {
       this.props.setAddNewProject(false);
@@ -926,6 +1013,10 @@ class Root extends React.Component<Props, State> {
         fileName: this.props.propFileName,
         activeLanguage: this.props.propActiveLanguage
       });
+    }
+
+    if (this.props.deleteUserFlag) {
+      this.props.resetDeleteUserFlag(false);
     }
 
   }
@@ -1100,6 +1191,18 @@ class Root extends React.Component<Props, State> {
             language={activeLanguage}
             onLanguageChange={this.onLanguageChange_}>
           </CreateProjectDialog>
+
+        )}
+
+        {this.state.deleteUserFlag_ && modal.type === Modal.Type.DeleteUser && (
+          <DeleteUserDialog
+            onClose={this.onModalClose_}
+            theme={theme}
+            userName={userName}
+            onConfirm={this.onConfirm_}
+            onDeny={this.onModalClose_}
+          >
+          </DeleteUserDialog>
 
         )}
 

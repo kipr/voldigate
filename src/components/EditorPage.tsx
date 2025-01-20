@@ -206,6 +206,23 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
           console.log("EditorPage updated state code:", this.state.code);
         });
       }
+      else if(this.props.fileName.includes(".txt")){
+        const userFileContent = await axios.get("/get-file-contents", { params: { filePath: `/home/kipr/Documents/KISS/${userName}/${projectName}/data/${this.props.fileName}` } });
+        console.log("EditorPage userFileContent.data:", userFileContent.data);
+        console.log("EditorPage state code:", this.state.code);
+        // Ensure userFileContent.data is a string
+        const fileContent = typeof userFileContent.data === 'string' ? userFileContent.data : JSON.stringify(userFileContent.data);
+
+
+        this.setState((prevState) => ({
+          code: {
+            ...prevState.code,
+            [prevState.language]: fileContent,
+          }
+        }), () => {
+          console.log("EditorPage updated state code:", this.state.code);
+        });
+      }
       else {
 
         const srcContent = await axios.get("/get-file-contents", { params: { filePath: `/home/kipr/Documents/KISS/${userName}/${projectName}/src/${this.props.fileName}` } });

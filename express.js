@@ -478,6 +478,65 @@ app.post("/initialize-repo", async (req, res) => {
   }
 });
 
+app.post("/delete-repo", async (req, res) => {
+  const { userName, projectName } = req.body;
+
+  if (!userName || !projectName) {
+    return res.status(400).json({ error: "Missing required fields." });
+  }
+
+  const userDirectory = `/home/kipr/Documents/KISS/${userName}`;
+  const projectDirectory = path.join(userDirectory, projectName);
+
+  try {
+    // Check if the project directory exists
+    if (!fs.existsSync(projectDirectory)) {
+      return res.status(404).json({ error: "Project directory does not exist." });
+    }
+
+    // Recursively delete the entire project directory
+    fs.rmSync(projectDirectory, { recursive: true, force: true });
+
+    console.log(`Deleted project directory: ${projectDirectory}`);
+
+    res.status(200).send("Repository deleted successfully.");
+  } catch (error) {
+    console.error("Error deleting repository:", error);
+    res.status(500).send("Error deleting repository.");
+  }
+});
+
+app.post("/delete-user", async (req, res) => {
+  const { userName } = req.body;
+
+  if (!userName) {
+    return res.status(400).json({ error: "Missing required fields." });
+  }
+
+  const userDirectory = `/home/kipr/Documents/KISS/${userName}`;
+
+
+  try {
+    // Check if the project directory exists
+    if (!fs.existsSync(userDirectory)) {
+      return res.status(404).json({ error: "userDirectory directory does not exist." });
+    }
+
+    // Recursively delete the entire userDirectory directory
+    fs.rmSync(userDirectory, { recursive: true, force: true });
+
+    console.log(`Deleted userDirectory directory: ${userDirectory}`);
+
+    res.status(200).send("Repository deleted successfully.");
+  } catch (error) {
+    console.error("Error deleting repository:", error);
+    res.status(500).send("Error deleting repository.");
+  }
+});
+
+
+
+
 app.get("/get-project-language" , async (req, res) => {
   try{
     console.log("/get-project-language filePath: ", req.query.filePath);

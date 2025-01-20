@@ -38,6 +38,9 @@ interface HomeNavigationState {
   activeLanguage: ProgrammingLanguage;
   projectName: string;
   fileType?: string;
+  userToDelete?: string;
+  deleteUserFlag?: boolean;
+  rootDeleteUserFlag?: boolean;
   updatedUsers: [];
   loadedUserData?: Project[];
 
@@ -315,6 +318,22 @@ class HomeNavigation extends React.PureComponent<Props, State> {
     })
   }
 
+  private onDeleteUser_ = (user: string, deleteUserFlag: boolean) => {
+
+    console.log("HomeNav onDeleteUser_ user: ", user, "with deleteUserFlag: ", deleteUserFlag);
+    this.setState({
+      userToDelete: user,
+      rootDeleteUserFlag: deleteUserFlag
+    })
+  }
+
+  private onSetUserDeleteFlag_ = (deleteUserFlag: boolean) => {
+    console.log("HomeNav onSetUserDeleteFlag_ deleteUserFlag: ", deleteUserFlag);
+    this.setState({
+      rootDeleteUserFlag: deleteUserFlag,
+      userToDelete: undefined
+    })
+  }
   render() {
     const { props, state } = this;
     const { className, style } = props;
@@ -331,7 +350,10 @@ class HomeNavigation extends React.PureComponent<Props, State> {
       isReloadFiles,
       fileType,
       updatedUsers,
-      loadedUserData
+      loadedUserData,
+      userToDelete,
+      deleteUserFlag,
+      rootDeleteUserFlag
     } = state;
     const theme = DARK;
 
@@ -354,8 +376,10 @@ class HomeNavigation extends React.PureComponent<Props, State> {
                 onUserSelected={this.onUserSelected}
                 onAddNewProject={this.onAddNewProject_}
                 onAddNewFile={this.onAddNewFile_}
+                onDeleteUser={this.onDeleteUser_}
                 addProjectFlag={isAddNewProject}
                 addFileFlag={isAddNewFile}
+                userDeleteFlag={deleteUserFlag}
                 reloadFilesFlag={isReloadFiles}
                 propUsers={updatedUsers}
                 propUserData={loadedUserData} />
@@ -386,6 +410,9 @@ class HomeNavigation extends React.PureComponent<Props, State> {
               onUserUpdate={this.onUserUpdate_}
               loadUserDataFlag={isLoadUserFiles}
               onLoadUserData={this.onLoadUserData_}
+              userToDelete={userToDelete}
+              deleteUserFlag={rootDeleteUserFlag}
+              resetDeleteUserFlag={this.onSetUserDeleteFlag_}
             />
           </RootContainer>
         </Container>
