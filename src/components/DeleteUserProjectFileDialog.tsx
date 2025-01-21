@@ -18,28 +18,29 @@ import LocalizedString from '../util/LocalizedString';
 import { sprintf } from 'sprintf-js';
 import Dict from '../Dict';
 
-export interface DeleteUserDialogPublicProps extends ThemeProps, StyleProps {
+export interface DeleteUserProjectFileDialogPublicProps extends ThemeProps, StyleProps {
   onClose: () => void;
-  onConfirm: () => void;
+  onConfirm: (confirmDeleteName: string, confirmDeleteType: string, action: string) => void;
   onDeny: () => void;
-  userName: string;
+  toDeleteName: string;
+  toDeleteType: string;
 }
 
-interface DeleteUserDialogPrivateProps {
+interface DeleteUserProjectFileDialogPrivateProps {
   locale: LocalizedString.Language;
 }
-interface DeleteUserDialogState {
-  userName: string;
+interface DeleteUserProjectFileDialogState {
+
 }
 
-type Props = DeleteUserDialogPublicProps & DeleteUserDialogPrivateProps;
-type State = DeleteUserDialogState;
+type Props = DeleteUserProjectFileDialogPublicProps & DeleteUserProjectFileDialogPrivateProps;
+type State = DeleteUserProjectFileDialogState;
 
 namespace Modal {
   export enum Type {
     Settings,
     CreateUser,
-    DeleteUser,
+    DeleteUserProjectFile,
     None,
     OpenUser
   }
@@ -61,18 +62,18 @@ namespace Modal {
 
   export const CREATEUSER: CreateUser = { type: Type.CreateUser };
 
-  export interface DeleteUser {
-    type: Type.DeleteUser;
+  export interface DeleteUserProjectFile {
+    type: Type.DeleteUserProjectFile;
   }
 
-  export const DeleteUser: DeleteUser = { type: Type.DeleteUser };
+  export const DeleteUserProjectFile: DeleteUserProjectFile = { type: Type.DeleteUserProjectFile };
 }
 
 export type Modal = (
   Modal.Settings |
   Modal.CreateUser |
   Modal.None |
-  Modal.DeleteUser
+  Modal.DeleteUserProjectFile
 );
 
 const Logo = styled('img', {
@@ -131,19 +132,21 @@ const Button = styled('button', {
   cursor: 'pointer', // Change the cursor to a pointer when hovering over the button
 });
 
-class DeleteUserDialog extends React.PureComponent<Props, State> {
+class DeleteUserProjectFileDialog extends React.PureComponent<Props, State> {
 
   constructor(props: Props, state: State) {
     super(props);
     this.state = {
-      userName: ''
-    }
+      }
   }
 
+  componentDidMount(): void {
+    console.log("DeleteUserProjectFileDialog.tsx: componentDidMount with props:", this.props);  
+  }
   render() {
     const { props, state } = this;
     const { theme, onClose, locale } = props;
-    const { userName } = state;
+
 
     let logo: JSX.Element;
 
@@ -163,13 +166,13 @@ class DeleteUserDialog extends React.PureComponent<Props, State> {
         <Container theme={theme}>
           <br />
           <CenteredContainer>
-            <Bold>{LocalizedString.lookup(tr(`Are you sure you want to delete user ${this.props.userName}?`), locale)}</Bold>
+            <Bold>{LocalizedString.lookup(tr(`Are you sure you want to delete ${this.props.toDeleteName}?`), locale)}</Bold>
           </CenteredContainer>
           <br />
           <CenteredContainer>
             
             <BottomButtonContainer>
-              <Button onClick={this.props.onConfirm}>
+              <Button onClick={() => this.props.onConfirm(this.props.toDeleteName, this.props.toDeleteType, 'delete')}>
                 Yes
               </Button>
               <Button onClick={this.props.onDeny}>
@@ -187,4 +190,4 @@ class DeleteUserDialog extends React.PureComponent<Props, State> {
 
 export default connect((state: ReduxState) => ({
   locale: state.i18n.locale,
-}))(DeleteUserDialog) as React.ComponentType<DeleteUserDialogPublicProps>;
+}))(DeleteUserProjectFileDialog) as React.ComponentType<DeleteUserProjectFileDialogPublicProps>;
