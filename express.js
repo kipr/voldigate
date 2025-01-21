@@ -128,7 +128,9 @@ function getFileContents() {
 
     // Check if the path exists and is a file
     if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
-      return res.status(400).json({ error: "Invalid or non-existent file path" });
+      return res
+        .status(400)
+        .json({ error: "Invalid or non-existent file path" });
     }
 
     // Read the file contents
@@ -142,7 +144,12 @@ function getFileContents() {
 function saveFileContents() {
   return async (req, res) => {
     const { filePath, fileContents } = req.body;
-    console.log("Received request to save file:", filePath, "with fileContents: ", fileContents);
+    console.log(
+      "Received request to save file:",
+      filePath,
+      "with fileContents: ",
+      fileContents
+    );
 
     // Validate filePath
     if (!filePath) {
@@ -170,13 +177,13 @@ function parseGitConfig(configContent) {
   let language = null;
   let currentSection = null;
 
-  const lines = configContent.split('\n');
-  
+  const lines = configContent.split("\n");
+
   for (const line of lines) {
     const trimmedLine = line.trim();
 
     // Skip empty lines or comments
-    if (trimmedLine === '' || trimmedLine.startsWith('#')) {
+    if (trimmedLine === "" || trimmedLine.startsWith("#")) {
       continue;
     }
 
@@ -188,9 +195,9 @@ function parseGitConfig(configContent) {
     }
 
     // Parse key-value pairs within a section
-    if (currentSection === 'repo' && trimmedLine.includes('=')) {
-      const [key, value] = trimmedLine.split('=').map(part => part.trim());
-      if (key === 'language') {
+    if (currentSection === "repo" && trimmedLine.includes("=")) {
+      const [key, value] = trimmedLine.split("=").map((part) => part.trim());
+      if (key === "language") {
         language = value;
         break; // Stop once 'language' is found in [repo]
       }
@@ -200,7 +207,6 @@ function parseGitConfig(configContent) {
   console.log("Language: ", language);
   return language;
 }
-
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -415,7 +421,7 @@ app.post("/initialize-repo", async (req, res) => {
     console.log(`Set repo.language=${language} and repo.owner=${userName}`);
 
     // Create default folders and files
-    const folders = ["bin","include", "src", "data"];
+    const folders = ["bin", "include", "src", "data"];
     folders.forEach((folder) => {
       const folderPath = path.join(projectDirectory, folder);
       fs.mkdirSync(folderPath, { recursive: true });
@@ -443,10 +449,10 @@ app.post("/initialize-repo", async (req, res) => {
             `#include <iostream>\n#include <kipr/wombat.hpp>\n\nint main()\n{\n  std::cout << "Hello, World!" << std::endl;\n  return 0;\n}\n`
           );
         }
-        
+
         break;
       case "python":
-        if(!fs.existsSync(path.join(projectDirectory, "src", `main.py`))){
+        if (!fs.existsSync(path.join(projectDirectory, "src", `main.py`))) {
           fs.writeFileSync(
             path.join(projectDirectory, "src", `main.py`),
             `#!/usr/bin/python3\nimport os, sys\nsys.path.append("/usr/lib")\nfrom kipr import *\n\nprint(\'Hello, World!\')`
@@ -454,8 +460,6 @@ app.post("/initialize-repo", async (req, res) => {
         }
         break;
     }
-
-
 
     // Optionally, create a README.md or other initial files
     const readmePath = path.join(projectDirectory, "README.md");
@@ -478,9 +482,58 @@ app.post("/initialize-repo", async (req, res) => {
   }
 });
 
-app.post("/delete-repo", async (req, res) => {
-  const { userName, projectName } = req.body;
+app.post("/delete-file", async (req, res) => {
+  const { userName, projectName, fileName, fileType } = req.body;
+  console.log("/Delete-file: ", req.body);
+  if (!userName || !projectName || !fileName || !fileType) {
+    return res.status(400).json({ error: "Missing required fields." });
+  }
 
+  let userProjectDirectory = "";
+  switch (fileType) {
+    case "h":
+      userProjectDirectory = `/home/kipr/Documents/KISS/${userName}/${projectName}/include`;
+      break;
+    case "c":
+    case "cpp":
+    case "py":
+      userProjectDirectory = `/home/kipr/Documents/KISS/${userName}/${projectName}/src`;
+      break;
+    case "txt":
+      userProjectDirectory = `/home/kipr/Documents/KISS/${userName}/${projectName}/data`;
+      break;
+    default:
+      return res.status(400).json({ error: "Invalid file type." });
+  }
+
+  const filePath = path.join(userProjectDirectory, fileName);
+  console.log("File path: ", filePath);
+  try {
+    // Check if the file exists
+    await fs.promises.access(filePath);
+    console.log("File exists and is accessible.");
+    
+    //Delete file
+    await fs.promises.rm(filePath);
+    console.log(`Deleted file path: ${filePath}`);
+
+    return res.status(200).send("File deleted successfully.");
+  } catch (error) {
+    if (error.code === "ENOENT") {
+      // File not found
+      return res.status(404).json({ error: "File does not exist." });
+    }
+
+    // Internal server error
+    return res
+      .status(500)
+      .json({ error: `Error deleting file: ${error.message}` });
+  }
+});
+
+app.post("/delete-project", async (req, res) => {
+  const { userName, projectName } = req.body;
+  console.log("/Delete-project: ", req.body);
   if (!userName || !projectName) {
     return res.status(400).json({ error: "Missing required fields." });
   }
@@ -491,7 +544,9 @@ app.post("/delete-repo", async (req, res) => {
   try {
     // Check if the project directory exists
     if (!fs.existsSync(projectDirectory)) {
-      return res.status(404).json({ error: "Project directory does not exist." });
+      return res
+        .status(404)
+        .json({ error: "Project directory does not exist." });
     }
 
     // Recursively delete the entire project directory
@@ -515,11 +570,12 @@ app.post("/delete-user", async (req, res) => {
 
   const userDirectory = `/home/kipr/Documents/KISS/${userName}`;
 
-
   try {
     // Check if the project directory exists
     if (!fs.existsSync(userDirectory)) {
-      return res.status(404).json({ error: "userDirectory directory does not exist." });
+      return res
+        .status(404)
+        .json({ error: "userDirectory directory does not exist." });
     }
 
     // Recursively delete the entire userDirectory directory
@@ -534,19 +590,14 @@ app.post("/delete-user", async (req, res) => {
   }
 });
 
-
-
-
-app.get("/get-project-language" , async (req, res) => {
-  try{
+app.get("/get-project-language", async (req, res) => {
+  try {
     console.log("/get-project-language filePath: ", req.query.filePath);
-    
+
     const gitConfigPath = path.join(req.query.filePath, ".git/config");
 
-    
-
     //check if .git/config exists
-    if(!fs.existsSync(gitConfigPath)){
+    if (!fs.existsSync(gitConfigPath)) {
       return res.status(400).json({ error: ".git/config not found" });
     }
 
@@ -556,10 +607,7 @@ app.get("/get-project-language" , async (req, res) => {
     res.status(200).json({
       language,
     });
-
-    
-  }
-  catch(error){
+  } catch (error) {
     console.error("Error getting project language:", error);
     res.status(500).send("Error getting project language");
   }
@@ -578,18 +626,14 @@ app.get("/get-folder-contents", getFolderContents());
 // File content getters
 app.get("/get-file-contents", getFileContents());
 
-
 //File content setters
 app.post("/save-file-content", saveFileContents());
-
-
 
 app.post("/run-code", (req, res) => {
   console.log("Received request body (run-code):", req.body); // Log the entire request body
   const { userName, projectName, fileName, activeLanguage } = req.body;
   const userDirectory = `/home/kipr/Documents/KISS/${userName}`;
   const projectDirectory = path.join(userDirectory, projectName);
-
 
   const bin_directory = path.join(projectDirectory, "/bin");
 
