@@ -44,7 +44,9 @@ import CreateProjectDialog from './CreateProjectDialog';
 import compile from '../compile';
 import { Modal } from '../pages/Modal';
 import { setupLocalRepo } from '../Git';
-import DeleteUserDialog from './DeleteUserDialog';
+import DeleteUserDialog from './DeleteUserProjectFileDialog';
+import DeleteUserProjectFileDialog from './DeleteUserProjectFileDialog';
+import DownloadUserProjectFileDialog from './DownloadUserProjectFileDialog';
 
 type Project = {
   projectName: string;
@@ -74,8 +76,22 @@ export interface RootPublicProps extends RouteComponentProps<RootParams> {
   clickFile: boolean;
   otherFileType?: string;
   isLeftBarOpen: boolean;
-  userToDelete?: string;
+
+
+  propContextMenuUser?: string;
   deleteUserFlag?: boolean;
+  downloadUserFlag?: boolean;
+
+  propContextMenuProject?: Project;
+  deleteProjectFlag?: boolean;
+  downloadProjectFlag?: boolean;
+
+  fileToDelete?: string;
+  deleteFileFlag?: boolean;
+  downloadFileFlag?: boolean;
+
+
+
   changeProjectName: (projectName: string) => void;
   setAddNewProject: (addNewProject: boolean) => void;
   setAddNewFile: (addNewFile: boolean) => void;
@@ -83,7 +99,9 @@ export interface RootPublicProps extends RouteComponentProps<RootParams> {
   onUserUpdate: (users: {}) => void;
   onLoadUserData: (userData: Project[]) => void;
   resetDeleteUserFlag: (deleteUserFlag: boolean) => void;
-
+  resetDeleteProjectFlag: (deleteProjectFlag: boolean) => void;
+  resetDeleteFileFlag: (deleteFileFlag: boolean) => void;
+  resetDownloadUserFlag: (downloadUserFlag: boolean) => void;
 
 }
 
@@ -140,7 +158,16 @@ interface RootState {
   fileName: string;
   addNewProject: boolean;
   addNewFile: boolean;
+
   deleteUserFlag_?: boolean;
+  downloadUserFlag_?: boolean;
+  deleteProjectFlag_?: boolean;
+  deleteFileFlag_?: boolean;
+  toDeleteName_?: string;
+  toDeleteType_?: string;
+  toDownloadName_?: string;
+  toDownloadType_?: string;
+
   clickFileState: boolean;
   otherFileType?: string;
 
@@ -282,21 +309,47 @@ class Root extends React.Component<Props, State> {
 
       }
     }
-    else if (prevProps.loadUserDataFlag !== this.props.loadUserDataFlag) {
+    if (prevProps.loadUserDataFlag !== this.props.loadUserDataFlag) {
       console.log("LOAD USER DATA");
       this.props.onLoadUserData(await this.loadUserData())
 
     }
-    else if (prevProps.deleteUserFlag !== this.props.deleteUserFlag && this.props.deleteUserFlag) {
-      console.log("userToDelete in update Root.tsx is true");
-      console.log("userToDelete in update Root.tsx with userName:", this.props.userToDelete);
+    if (prevProps.deleteUserFlag !== this.props.deleteUserFlag && this.props.deleteUserFlag) {
+      console.log("propContextMenuUser in update Root.tsx is true");
+      console.log("propContextMenuUser in update Root.tsx with userName:", this.props.propContextMenuUser);
       console.log("this.props.deleteUserFlag: ", this.props.deleteUserFlag);
 
       this.deleteUser_();
     }
 
+    if (prevProps.deleteProjectFlag !== this.props.deleteProjectFlag && this.props.deleteProjectFlag) {
 
-    else if (prevProps.addNewFile !== this.props.addNewFile) {
+      console.log("propContextMenuProject in update Root.tsx with projectName:", this.props.propContextMenuProject.projectName);
+      console.log("propContextMenuProject in update Root.tsx with userName:", this.props.propUserName);
+      console.log("this.props.deleteProjectFlag: ", this.props.deleteProjectFlag);
+
+      this.deleteProject_();
+    }
+
+
+    if (prevProps.deleteFileFlag !== this.props.deleteFileFlag && this.props.deleteFileFlag) {
+      console.log("fileToDelete in update Root.tsx is true");
+      console.log("fileToDelete in update Root.tsx with userName:", this.props.propUserName);
+      console.log("fileToDelete in update Root.tsx with projectName:", this.props.propProjectName);
+      console.log("fileToDelete in update Root.tsx with fileName:", this.props.fileToDelete);
+      console.log("this.props.deleteFileFlag: ", this.props.deleteFileFlag);
+
+      this.deleteFile_();
+    }
+
+    if(prevProps.downloadUserFlag !== this.props.downloadUserFlag && this.props.downloadUserFlag){
+      console.log("downloadUserFlag in update Root.tsx is true");
+      console.log("downloadUserFlag in update Root.tsx with userName:", this.props.propContextMenuUser);
+      console.log("this.props.downloadUserFlag: ", this.props.downloadUserFlag);
+      this.downloadUser_();
+    }
+
+    if (prevProps.addNewFile !== this.props.addNewFile) {
 
       if (this.props.addNewFile) {
         console.log("addNewFile in update Root.tsx is true");
@@ -345,7 +398,7 @@ class Root extends React.Component<Props, State> {
 
       }
     }
-    else if (prevProps.clickFile !== this.props.clickFile) {
+    if (prevProps.clickFile !== this.props.clickFile) {
       if (this.props.clickFile) {
         const { propUserName, propProjectName, propActiveLanguage, propFileName, otherFileType } = this.props;
         console.log("clickFile in update Root.tsx is true");
@@ -532,13 +585,51 @@ class Root extends React.Component<Props, State> {
   }
 
   private deleteUser_ = () => {
-    console.log("deleteUser_ in Root.tsx with userToDelete:", this.props.userToDelete);
+    console.log("deleteUser_ in Root.tsx with propContextMenuUser:", this.props.propContextMenuUser);
     this.setState({
-      modal: Modal.DELETEUSER,
+      modal: Modal.DELETEUSERPROJECTFILE,
       deleteUserFlag_: true,
-      userName: this.props.userToDelete
+      toDeleteName_: this.props.propContextMenuUser,
+      toDeleteType_: 'user'
 
     });
+  }
+
+  private deleteProject_ = () => {
+    console.log("deleteProject_ in Root.tsx with propContextMenuProject:", this.props.propContextMenuProject);
+    this.setState({
+      modal: Modal.DELETEUSERPROJECTFILE,
+      deleteProjectFlag_: true,
+      userName: this.props.propUserName,
+      toDeleteName_: this.props.propContextMenuProject.projectName,
+      toDeleteType_: 'project'
+
+    });
+  }
+
+  private deleteFile_ = () => {
+    console.log("deleteFile_ in Root.tsx with fileToDelete:", this.props.fileToDelete);
+    this.setState({
+      modal: Modal.DELETEUSERPROJECTFILE,
+      deleteFileFlag_: true,
+      userName: this.props.propUserName,
+      projectName: this.props.propProjectName,
+      toDeleteName_: this.props.fileToDelete,
+      toDeleteType_: 'file'
+
+    });
+  }
+
+  private downloadUser_ = () => {
+    console.log("downloadUser_ in Root.tsx with propContextMenuUser:", this.props.propContextMenuUser);
+    this.setState({
+      modal: Modal.DOWNLOADUSERPROJECTFILE,
+      downloadUserFlag_: true,
+      toDownloadName_: this.props.propContextMenuUser,
+      toDownloadType_: 'user'
+
+    });
+
   }
 
   private onWindowResize_ = () => {
@@ -612,10 +703,11 @@ class Root extends React.Component<Props, State> {
       this.props.onLoadUserData(await this.loadUserData())
 
 
-      // if (this.props.addNewProject) {
-      //   this.setState({
-      //     addNewProject: false
-      //   });
+      if (this.props.addNewProject) {
+        this.setState({
+          addNewProject: false
+        });
+      }
 
       //   if (this.state.isHomeStartOptionsVisible == true) {
       //     this.setState({
@@ -629,7 +721,7 @@ class Root extends React.Component<Props, State> {
       //   }
       // }
 
-      // this.props.setAddNewProject(false);
+      this.props.setAddNewProject(false);
       // console.log("onCloseProjectDialog_ with new state fileName:", this.state.fileName);
     });
 
@@ -670,8 +762,15 @@ class Root extends React.Component<Props, State> {
             ...this.state.code,
             [this.state.activeLanguage]: ProgrammingLanguage.DEFAULT_CODE[this.state.activeLanguage]
           }
+        }, async () => {
+          console.log("onCloseNewFileDialog_ (.c/.cpp/.py) with new state code:", this.state.code);
+          const fileContents = this.state.code[activeLanguage];
+          console.log("fileContents: ", fileContents);
+          const addNewFileContentResponse = await axios.post('/save-file-content', { filePath, fileContents });
+          console.log("addNewFileContentResponse:", addNewFileContentResponse);
+
         });
-        //await DatabaseService.addSrcContent(this.state.userName, this.state.projectName, `${newFileName}.${fileType}`, ProgrammingLanguage.DEFAULT_CODE[this.state.activeLanguage]);
+        filePath = `${prePath}/${userName}/${projectName}/src/${newFileName}.${fileType}`;
         break;
       case 'txt':
         this.setState({
@@ -718,6 +817,7 @@ class Root extends React.Component<Props, State> {
           console.log("onCloseNewFileDialog_ after isEditorPageVisible set to true, code:", this.state.code);
         });
       }
+      this.props.setAddNewFile(false);
     });
 
 
@@ -963,37 +1063,72 @@ class Root extends React.Component<Props, State> {
 
   private onModalClick_ = (modal: Modal) => () => this.setState({ modal });
 
-  private onConfirm_ = async () => {
+  private onConfirm_ = async (confirmedName: string, confirmedType: string, action: string) => {
 
-    console.log("onConfirm clicked in Root");
+    console.log("onConfirm clicked in Root with confirmedName:", confirmedName, " and confirmedType:", confirmedType, " and action:", action);
     this.onModalClose_();
+    console.log("onConfirm this.state.userName:", this.state.userName, " this.state.projectName:", this.state.projectName, " this.state.fileName:", this.state.fileName);
 
     try {
-      const deleteUserResponse = await axios.post('/delete-user', { userName: this.state.userName });
-      console.log("deleteUserResponse:", deleteUserResponse);
-      this.setState({
-        users: this.state.users.filter(user => user !== this.state.userName)
-      }, () => {
-        console.log("onConfirm_ new users:", this.state.users);
-      });
-      this.props.onUserUpdate(this.state.users);
-      if (this.state.isEditorPageVisible == true) {
-        this.setState({
-          isEditorPageVisible: false,
-          isHomeStartOptionsVisible: true
-        });
+      
+
+
+      switch(action){
+        case 'delete':
+          console.log("onConfirm_ delete action")
+          switch (confirmedType) {
+            case 'user':
+              const deleteUserResponse = await axios.post('/delete-user', { userName: confirmedName });
+              console.log("deleteUserResponse:", deleteUserResponse);
+              this.loadUsers();
+              break;
+            case 'project':
+              const deleteProjectResponse = await axios.post('/delete-project', { userName: this.state.userName, projectName: confirmedName });
+              console.log("deleteProjectResponse:", deleteProjectResponse);
+              this.props.onLoadUserData(await this.loadUserData());
+              break;
+            case 'file':
+              const [name, extension] = confirmedName.split('.');
+              console.log("File extension is: ", extension);
+              const deleteFileResponse = await axios.post('/delete-file', { userName: this.state.userName, projectName: this.state.projectName, fileName: confirmedName, fileType: extension });
+              console.log("deleteFileResponse:", deleteFileResponse);
+              this.props.onLoadUserData(await this.loadUserData());
+              break;
+          }
+          break;
+
+        case 'download':
+          console.log("onConfirm_ download action")
+          switch (confirmedType) {
+            case 'user':
+              const downloadUserResponse = await axios.post('/download-user', { userName: confirmedName });
+              console.log("downloadUserResponse:", downloadUserResponse);
+              this.loadUsers();
+              break;
+            case 'project':
+              const downloadProjectResponse = await axios.post('/download-project', { userName: this.state.userName, projectName: confirmedName });
+              console.log("downloadProjectResponse:", downloadProjectResponse);
+              this.props.onLoadUserData(await this.loadUserData());
+              break;
+            case 'file':
+              const [name, extension] = confirmedName.split('.');
+              console.log("File extension is: ", extension);
+              const downloadFileResponse = await axios.post('/download-file', { userName: this.state.userName, projectName: this.state.projectName, fileName: confirmedName, fileType: extension });
+              console.log("downloadFileResponse:", downloadFileResponse);
+              this.props.onLoadUserData(await this.loadUserData());
+              break;
+          }
+          break;
       }
     }
     catch (error) {
-
+      console.error("onConfirm_ caught error: ", error);
     }
 
   }
 
   private onModalClose_ = async () => {
     this.setState({ modal: Modal.NONE, deleteUserFlag_: false });
-    console.log("onModalClose_ deleteUserFlag_:", this.state.deleteUserFlag_);
-    console.log("onModalClose_ with this.props.deleteUserFlag project: ", this.props.deleteUserFlag);
 
     if (this.props.addNewProject) {
       this.props.setAddNewProject(false);
@@ -1017,6 +1152,15 @@ class Root extends React.Component<Props, State> {
 
     if (this.props.deleteUserFlag) {
       this.props.resetDeleteUserFlag(false);
+    }
+    if (this.props.deleteProjectFlag) {
+      this.props.resetDeleteProjectFlag(false);
+    }
+    if (this.props.deleteFileFlag) {
+      this.props.resetDeleteFileFlag(false);
+    }
+    if (this.props.downloadUserFlag) {
+      this.props.resetDownloadUserFlag(false);
     }
 
   }
@@ -1094,6 +1238,10 @@ class Root extends React.Component<Props, State> {
       fileName,
       userName,
       isEditorPageVisible,
+      toDeleteName_,
+      toDeleteType_,
+      toDownloadName_,
+      toDownloadType_
     } = state;
 
     const theme = DARK;
@@ -1194,22 +1342,30 @@ class Root extends React.Component<Props, State> {
 
         )}
 
-        {this.state.deleteUserFlag_ && modal.type === Modal.Type.DeleteUser && (
-          <DeleteUserDialog
+        {(this.state.deleteUserFlag_ || this.state.deleteProjectFlag_ || this.state.deleteFileFlag_) && modal.type === Modal.Type.DeleteUserProjectFile && (
+          <DeleteUserProjectFileDialog
             onClose={this.onModalClose_}
             theme={theme}
-            userName={userName}
+            toDeleteName={toDeleteName_}
+            toDeleteType={toDeleteType_}
             onConfirm={this.onConfirm_}
             onDeny={this.onModalClose_}
+
           >
-          </DeleteUserDialog>
+          </DeleteUserProjectFileDialog>
 
         )}
 
-
-
-
-
+        {this.state.downloadUserFlag_ && modal.type === Modal.Type.DownloadUserProjectFile && (
+          <DownloadUserProjectFileDialog
+            onClose={this.onModalClose_}
+            theme={theme}
+            toDownloadName={toDownloadName_}
+            toDownloadType={toDownloadType_}
+            onConfirm={this.onConfirm_}
+            onDeny={this.onModalClose_}
+          ></DownloadUserProjectFileDialog>
+        )}
 
       </RootContainer>
 
