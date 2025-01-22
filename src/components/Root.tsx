@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-
+import JSZip from 'jszip';
 import { State as ReduxState } from '../state';
 import parseMessages, { hasErrors, hasWarnings, sort, toStyledText } from '../util/parse-messages';
 import { styled } from 'styletron-react';
@@ -86,7 +86,7 @@ export interface RootPublicProps extends RouteComponentProps<RootParams> {
   deleteProjectFlag?: boolean;
   downloadProjectFlag?: boolean;
 
-  fileToDelete?: string;
+  propContextMenuFile?: string;
   deleteFileFlag?: boolean;
   downloadFileFlag?: boolean;
 
@@ -98,10 +98,14 @@ export interface RootPublicProps extends RouteComponentProps<RootParams> {
   setClickFile: (clickFile: boolean) => void;
   onUserUpdate: (users: {}) => void;
   onLoadUserData: (userData: Project[]) => void;
+
   resetDeleteUserFlag: (deleteUserFlag: boolean) => void;
   resetDeleteProjectFlag: (deleteProjectFlag: boolean) => void;
   resetDeleteFileFlag: (deleteFileFlag: boolean) => void;
+
   resetDownloadUserFlag: (downloadUserFlag: boolean) => void;
+  resetDownloadProjectFlag: (downloadProjectFlag: boolean) => void;
+  resetDownloadFileFlag: (downloadFileFlag: boolean) => void;
 
 }
 
@@ -160,9 +164,13 @@ interface RootState {
   addNewFile: boolean;
 
   deleteUserFlag_?: boolean;
-  downloadUserFlag_?: boolean;
   deleteProjectFlag_?: boolean;
   deleteFileFlag_?: boolean;
+
+  downloadUserFlag_?: boolean;
+  downloadProjectFlag_?: boolean;
+  downloadFileFlag_?: boolean;
+
   toDeleteName_?: string;
   toDeleteType_?: string;
   toDownloadName_?: string;
@@ -333,20 +341,37 @@ class Root extends React.Component<Props, State> {
 
 
     if (prevProps.deleteFileFlag !== this.props.deleteFileFlag && this.props.deleteFileFlag) {
-      console.log("fileToDelete in update Root.tsx is true");
-      console.log("fileToDelete in update Root.tsx with userName:", this.props.propUserName);
-      console.log("fileToDelete in update Root.tsx with projectName:", this.props.propProjectName);
-      console.log("fileToDelete in update Root.tsx with fileName:", this.props.fileToDelete);
+      console.log("propContextMenuFile in update Root.tsx is true");
+      console.log("propContextMenuFile in update Root.tsx with userName:", this.props.propUserName);
+      console.log("propContextMenuFile in update Root.tsx with projectName:", this.props.propProjectName);
+      console.log("propContextMenuFile in update Root.tsx with fileName:", this.props.propContextMenuFile);
       console.log("this.props.deleteFileFlag: ", this.props.deleteFileFlag);
 
       this.deleteFile_();
     }
 
-    if(prevProps.downloadUserFlag !== this.props.downloadUserFlag && this.props.downloadUserFlag){
+    if (prevProps.downloadUserFlag !== this.props.downloadUserFlag && this.props.downloadUserFlag) {
       console.log("downloadUserFlag in update Root.tsx is true");
       console.log("downloadUserFlag in update Root.tsx with userName:", this.props.propContextMenuUser);
       console.log("this.props.downloadUserFlag: ", this.props.downloadUserFlag);
       this.downloadUser_();
+    }
+
+
+    if (prevProps.downloadProjectFlag !== this.props.downloadProjectFlag && this.props.downloadProjectFlag) {
+      console.log("downloadProjectFlag in update Root.tsx is true");
+      console.log("downloadProjectFlag in update Root.tsx with userName:", this.props.propContextMenuProject);
+      console.log("this.props.downloadProjectFlag: ", this.props.downloadProjectFlag);
+      this.downloadProject_();
+    }
+
+    if (prevProps.downloadFileFlag !== this.props.downloadFileFlag && this.props.downloadFileFlag) {
+      console.log("downloadFileFlag in update Root.tsx is true");
+      console.log("downloadFileFlag in update Root.tsx with userName:", this.props.propUserName);
+      console.log("downloadFileFlag in update Root.tsx with projectName:", this.props.propProjectName);
+      console.log("downloadFileFlag in update Root.tsx with fileName:", this.props.propContextMenuFile);
+      console.log("this.props.downloadFileFlag: ", this.props.downloadFileFlag);
+      this.downloadFile_();
     }
 
     if (prevProps.addNewFile !== this.props.addNewFile) {
@@ -608,13 +633,13 @@ class Root extends React.Component<Props, State> {
   }
 
   private deleteFile_ = () => {
-    console.log("deleteFile_ in Root.tsx with fileToDelete:", this.props.fileToDelete);
+    console.log("deleteFile_ in Root.tsx with propContextMenuFile:", this.props.propContextMenuFile);
     this.setState({
       modal: Modal.DELETEUSERPROJECTFILE,
       deleteFileFlag_: true,
       userName: this.props.propUserName,
       projectName: this.props.propProjectName,
-      toDeleteName_: this.props.fileToDelete,
+      toDeleteName_: this.props.propContextMenuFile,
       toDeleteType_: 'file'
 
     });
@@ -631,6 +656,34 @@ class Root extends React.Component<Props, State> {
     });
 
   }
+
+  private downloadProject_ = () => {
+    console.log("downloadProject_ in Root.tsx with propContextMenuProject:", this.props.propContextMenuProject);
+    this.setState({
+      modal: Modal.DOWNLOADUSERPROJECTFILE,
+      downloadProjectFlag_: true,
+      userName: this.props.propUserName,
+      toDownloadName_: this.props.propContextMenuProject.projectName,
+      toDownloadType_: 'project'
+
+    });
+
+  }
+
+  private downloadFile_ = () => {
+    console.log("downloadFile_ in Root.tsx with propContextMenuFile:", this.props.propContextMenuFile);
+    this.setState({
+      modal: Modal.DOWNLOADUSERPROJECTFILE,
+      downloadFileFlag_: true,
+      userName: this.props.propUserName,
+      projectName: this.props.propProjectName,
+      toDownloadName_: this.props.propContextMenuFile,
+      toDownloadType_: 'file'
+
+    });
+
+  }
+
 
   private onWindowResize_ = () => {
     this.setState({ windowInnerHeight: window.innerHeight });
@@ -1063,6 +1116,11 @@ class Root extends React.Component<Props, State> {
 
   private onModalClick_ = (modal: Modal) => () => this.setState({ modal });
 
+  private onDownloadClick_ = async () => {
+
+
+  };
+
   private onConfirm_ = async (confirmedName: string, confirmedType: string, action: string) => {
 
     console.log("onConfirm clicked in Root with confirmedName:", confirmedName, " and confirmedType:", confirmedType, " and action:", action);
@@ -1070,10 +1128,10 @@ class Root extends React.Component<Props, State> {
     console.log("onConfirm this.state.userName:", this.state.userName, " this.state.projectName:", this.state.projectName, " this.state.fileName:", this.state.fileName);
 
     try {
-      
 
 
-      switch(action){
+
+      switch (action) {
         case 'delete':
           console.log("onConfirm_ delete action")
           switch (confirmedType) {
@@ -1101,21 +1159,95 @@ class Root extends React.Component<Props, State> {
           console.log("onConfirm_ download action")
           switch (confirmedType) {
             case 'user':
-              const downloadUserResponse = await axios.post('/download-user', { userName: confirmedName });
-              console.log("downloadUserResponse:", downloadUserResponse);
-              this.loadUsers();
+              try {
+                const downloadUserResponse = await fetch('/download-zip', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ userName: confirmedName }),
+                });
+                console.log("downloadUserResponse:", downloadUserResponse);
+  
+                if (downloadUserResponse.ok) {
+                  const blob = await downloadUserResponse.blob();
+                  const url = URL.createObjectURL(blob);
+  
+                  const element = document.createElement('a');
+                  element.href = url;
+                  element.download = `${confirmedName}.zip`;
+                  document.body.appendChild(element);
+                  element.click();
+                  document.body.removeChild(element);
+  
+                  URL.revokeObjectURL(url);
+                } else {
+                  const error = await downloadUserResponse.json();
+                  console.error('Error downloading ZIP:', error.error);
+                }
+              }
+              catch (error) {
+                console.error("Error downloading ZIP:", error);
+              }
               break;
             case 'project':
-              const downloadProjectResponse = await axios.post('/download-project', { userName: this.state.userName, projectName: confirmedName });
-              console.log("downloadProjectResponse:", downloadProjectResponse);
-              this.props.onLoadUserData(await this.loadUserData());
+              try {
+                const downloadUserResponse = await fetch('/download-zip', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ userName: this.state.userName, projectName: confirmedName }),
+                });
+                console.log("downloadUserResponse:", downloadUserResponse);
+  
+                if (downloadUserResponse.ok) {
+                  const blob = await downloadUserResponse.blob();
+                  const url = URL.createObjectURL(blob);
+  
+                  const element = document.createElement('a');
+                  element.href = url;
+                  element.download = `${confirmedName}.zip`;
+                  document.body.appendChild(element);
+                  element.click();
+                  document.body.removeChild(element);
+  
+                  URL.revokeObjectURL(url);
+                } else {
+                  const error = await downloadUserResponse.json();
+                  console.error('Error downloading ZIP:', error.error);
+                }
+              }
+              catch (error) {
+                console.error("Error downloading ZIP:", error);
+              }
               break;
             case 'file':
-              const [name, extension] = confirmedName.split('.');
-              console.log("File extension is: ", extension);
-              const downloadFileResponse = await axios.post('/download-file', { userName: this.state.userName, projectName: this.state.projectName, fileName: confirmedName, fileType: extension });
-              console.log("downloadFileResponse:", downloadFileResponse);
-              this.props.onLoadUserData(await this.loadUserData());
+           
+              try {
+                const downloadUserResponse = await fetch('/download-zip', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ userName: this.state.userName, projectName: this.state.projectName, fileName: confirmedName }),
+                });
+                console.log("downloadUserResponse:", downloadUserResponse);
+  
+                if (downloadUserResponse.ok) {
+                  const blob = await downloadUserResponse.blob();
+                  const url = URL.createObjectURL(blob);
+  
+                  const element = document.createElement('a');
+                  element.href = url;
+                  element.download = `${confirmedName}`;
+                  document.body.appendChild(element);
+                  element.click();
+                  document.body.removeChild(element);
+  
+                  URL.revokeObjectURL(url);
+                } else {
+                  const error = await downloadUserResponse.json();
+                  console.error('Error downloading ZIP:', error.error);
+                }
+              }
+              catch (error) {
+                console.error("Error downloading ZIP:", error);
+              }
               break;
           }
           break;
@@ -1162,7 +1294,12 @@ class Root extends React.Component<Props, State> {
     if (this.props.downloadUserFlag) {
       this.props.resetDownloadUserFlag(false);
     }
-
+    if (this.props.downloadProjectFlag) {
+      this.props.resetDownloadProjectFlag(false);
+    }
+    if (this.props.downloadFileFlag) {
+      this.props.resetDownloadFileFlag(false);
+    }
   }
 
 
@@ -1356,7 +1493,7 @@ class Root extends React.Component<Props, State> {
 
         )}
 
-        {this.state.downloadUserFlag_ && modal.type === Modal.Type.DownloadUserProjectFile && (
+        {(this.state.downloadUserFlag_ || this.state.downloadProjectFlag_ || this.state.downloadFileFlag_) && modal.type === Modal.Type.DownloadUserProjectFile && (
           <DownloadUserProjectFileDialog
             onClose={this.onModalClose_}
             theme={theme}

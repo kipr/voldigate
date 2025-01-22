@@ -45,6 +45,8 @@ export interface FileExplorerProps extends ThemeProps, StyleProps {
     onDeleteProject?: (userName: string, project: Project, deleteProjectFlag: boolean) => void;
     onDeleteFile?: (userName: string, project: string, fileName: string, deleteFileFlag: boolean) => void;
     onDownloadUser?: (userName: string) => void;
+    onDownloadProject?: (userName: string, project: Project) => void;
+    onDownloadFile?: (userName: string, projectName: string, fileName: string) => void;
     propsSelectedProjectName?: string;
     propFileName?: string;
     propProjectName?: string;
@@ -283,6 +285,10 @@ const ContextMenuItem = styled('div', (props: ThemeProps) => ({
     padding: "10px",
     margin: 0,
     cursor: "pointer",
+   ':hover': {
+        cursor: 'pointer',
+        backgroundColor: `rgba(255, 255, 255, 0.1)`
+    },
 }));
 
 
@@ -403,6 +409,21 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
 
     }
 
+    downloadProject = (project: Project) => {
+        console.log('Download project clicked with user:', this.state.selectedSection);
+        console.log("Download project clicked with project:", project);
+        this.props.onDownloadProject(this.state.selectedSection, project);
+
+    }
+
+    downloadFile = (file: string) => {
+        console.log('Download file clicked with user:', this.state.selectedSection);
+        console.log("Download file clicked with project:", this.state.selectedProject);
+        console.log("Download file clicked with file:", file);
+        this.props.onDownloadFile(this.state.selectedSection, this.state.selectedProject, file);
+
+    }
+
 
     renderUserContextMenu() {
         const { contextMenuPosition } = this.state;
@@ -455,6 +476,16 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                         Delete Project
                     </li>
                 </ContextMenuItem>
+                <ContextMenuItem theme={DARK}>
+                    <li
+                        style={{ padding: "5px 10px" }}
+                        onClick={() => {
+                            this.downloadProject(this.state.contextMenuProject);
+                        }}
+                    >
+                        Download Project
+                    </li>
+                </ContextMenuItem>
             </ContextMenu>
 
         );
@@ -475,6 +506,16 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                         }}
                     >
                         Delete File
+                    </li>
+                </ContextMenuItem>
+                <ContextMenuItem theme={DARK}>
+                    <li
+                        style={{ padding: "5px 10px" }}
+                        onClick={() => {
+                            this.downloadFile(this.state.contextMenuFile);
+                        }}
+                    >
+                        Download File
                     </li>
                 </ContextMenuItem>
             </ContextMenu>

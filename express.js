@@ -13,6 +13,7 @@ const path = require("path");
 const proxy = require("express-http-proxy");
 const https = require("https");
 const simpleGit = require("simple-git");
+const JSZip = require("jszip");
 
 let config;
 try {
@@ -112,6 +113,23 @@ function getFolderContents() {
       files,
     });
   };
+}
+async function getAllUserFiles(directory, zipFolder) {
+  const files = await fs.promises.readdir(directory, { withFileTypes: true });
+
+  for (const file of files) {
+    const filePath = path.join(directory, file.name);
+
+    if (file.isDirectory()) {
+      // Create a folder in the zip and recurse
+      const subFolder = zipFolder.folder(file.name);
+      await getAllUserFiles(filePath, subFolder);
+    } else {
+      // Add file content to the zip
+      const fileContent = await fs.promises.readFile(filePath);
+      zipFolder.file(file.name, fileContent);
+    }
+  }
 }
 
 function getFileContents() {
@@ -512,7 +530,7 @@ app.post("/delete-file", async (req, res) => {
     // Check if the file exists
     await fs.promises.access(filePath);
     console.log("File exists and is accessible.");
-    
+
     //Delete file
     await fs.promises.rm(filePath);
     console.log(`Deleted file path: ${filePath}`);
@@ -587,6 +605,112 @@ app.post("/delete-user", async (req, res) => {
   } catch (error) {
     console.error("Error deleting repository:", error);
     res.status(500).send("Error deleting repository.");
+  }
+});
+
+app.post("/download-zip", async (req, res) => {
+  const { userName, projectName, fileName } = req.body;
+
+  if (!userName) {
+    return res.status(400).json({ error: "UserName is required" });
+  }
+
+  console.log("download-zip Received request body:", req.body); // Log the entire request body
+  const userDirectory = `/home/kipr/Documents/KISS/${userName}`;
+  // Check if the directory exists
+  if (!fs.existsSync(userDirectory)) {
+    return res.status(404).json({ error: "User directory not found" });
+  }
+
+
+  try {
+    if (fileName) {
+      console.log("Single file download");
+      const [name, extension] = fileName.split('.');
+      console.log("File extension is: ", extension);
+      //Single file download
+      if (!projectName) {
+        return res.status(400).json({ error: "ProjectName is required" });
+      }
+      let filePath = "";
+      switch(extension) {
+        case 'h':
+          filePath = path.join(userDirectory, projectName, "include", fileName);
+          break;
+        case 'c':
+        case 'cpp':
+        case 'py':
+          filePath = path.join(userDirectory, projectName, "src", fileName);
+          break;
+        case 'txt':
+          filePath = path.join(userDirectory, projectName, "data", fileName);
+          break;
+      } 
+     
+      console.log("single file download file path: ", filePath);
+
+      if (!fs.existsSync(filePath)) {
+        return res.status(404).json({ error: "File not found" });
+      }
+
+      const fileContents = fs.readFileSync(filePath, "utf-8");
+
+      const extname = path.extname(fileName).toLowerCase();
+      let contentType = "text/plain"; // Default to plain text
+      if (extname === ".json") {
+        contentType = "application/json"; // If it's a JSON file
+      } else if (extname === ".html") {
+        contentType = "text/html"; // If it's an HTML file
+      }
+
+      console.log("File contents: ", fileContents);
+      // Set the correct headers for downloading the file as text
+      res.setHeader("Content-Type", contentType);
+      res.setHeader(
+        "Content-Disposition",
+        `attachment; filename="${fileName}"`
+      );
+
+      // Send the file content as a plain text response
+      res.status(200).send(fileContents);
+
+      return;
+    } 
+    else if (projectName) {
+      console.log("Single project download");
+      const projectDirectory = path.join(userDirectory, projectName);
+      // Check if the project directory exists
+      if (!fs.existsSync(projectDirectory)) {
+        return res.status(404).json({ error: "Project directory not found" });
+      }
+      const zip = new JSZip();
+      const projectFolder = zip.folder(projectName);
+      await getAllUserFiles(projectDirectory, projectFolder);
+
+      const zipContent = await zip.generateAsync({ type: "nodebuffer" });
+      res.setHeader("Content-Type", "application/zip");
+      res.setHeader(
+        "Content-Disposition",
+        `attachment; filename=${projectName}.zip`
+      );
+      res.send(zipContent);
+      return;
+    }
+    // Handle all projects as a ZIP
+    const zip = new JSZip();
+    const rootFolder = zip.folder(userName);
+    await getAllUserFiles(userDirectory, rootFolder);
+
+    const zipContent = await zip.generateAsync({ type: "nodebuffer" });
+    res.setHeader("Content-Type", "application/zip");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename=${userName}.zip`
+    );
+    res.send(zipContent);
+  } catch (error) {
+    console.error("Error while creating ZIP:", error);
+    res.status(500).json({ error: "Failed to create ZIP file" });
   }
 });
 

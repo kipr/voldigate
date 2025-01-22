@@ -44,13 +44,15 @@ interface HomeNavigationState {
   rootDeleteUserFlag?: boolean;
   rootDownloadUserFlag?: boolean;
 
-  projectToDelete?: Project;
+  contextMenuProject_?: Project;
   deleteProjectFlag?: boolean;
   rootDeleteProjectFlag?: boolean;
+  rootDownloadProjectFlag?: boolean;
 
-  fileToDelete?: string;
+  contextMenuFile_?: string;
   deleteFileFlag?: boolean;
   rootDeleteFileFlag?: boolean;
+  rootDownloadFileFlag?: boolean;
 
 
   updatedUsers: [];
@@ -344,7 +346,7 @@ class HomeNavigation extends React.PureComponent<Props, State> {
     console.log("HomeNav onDeleteProject_ project: ", project, "with deleteProjectFlag: ", deleteProjectFlag);
     this.setState({
       userName: userName,
-      projectToDelete: project,
+      contextMenuProject_: project,
       rootDeleteProjectFlag: deleteProjectFlag
     })
   }
@@ -355,7 +357,7 @@ class HomeNavigation extends React.PureComponent<Props, State> {
     this.setState({
       userName: userName,
       projectName: project,
-      fileToDelete: file,
+      contextMenuFile_: file,
       rootDeleteFileFlag: deleteFileFlag
     })
   }
@@ -370,6 +372,28 @@ class HomeNavigation extends React.PureComponent<Props, State> {
     })
   }
 
+  private onDownloadProject_ = (userName: string, project: Project) => {
+
+    console.log("HomeNav onDownloadProject_ project: ", project);
+    this.setState({
+      userName: userName,
+      contextMenuProject_: project,
+      rootDownloadProjectFlag: true
+
+    })
+  }
+
+  private onDownloadFile_ = (userName: string, project: string, file: string) => {
+
+    console.log("HomeNav onDownloadFile_ file: ", file);
+    this.setState({
+      userName: userName,
+      projectName: project,
+      contextMenuFile_: file,
+      rootDownloadFileFlag: true
+
+    })
+  }
 
   private onSetUserDeleteFlag_ = (deleteUserFlag: boolean) => {
     console.log("HomeNav onSetUserDeleteFlag_ deleteUserFlag: ", deleteUserFlag);
@@ -383,7 +407,7 @@ class HomeNavigation extends React.PureComponent<Props, State> {
     console.log("HomeNav onSetProjectDeleteFlag_ deleteProjectFlag: ", deleteProjectFlag);
     this.setState({
       rootDeleteProjectFlag: deleteProjectFlag,
-      projectToDelete: undefined
+      contextMenuProject_: undefined
     })
   }
 
@@ -391,7 +415,7 @@ class HomeNavigation extends React.PureComponent<Props, State> {
     console.log("HomeNav onSetFileDeleteFlag_ deleteFileFlag: ", deleteFileFlag);
     this.setState({
       rootDeleteFileFlag: deleteFileFlag,
-      projectToDelete: undefined
+      contextMenuProject_: undefined
     })
   }
 
@@ -400,6 +424,22 @@ class HomeNavigation extends React.PureComponent<Props, State> {
     this.setState({
       rootDownloadUserFlag: downloadUserFlag,
       contextMenuUser_: undefined
+    })
+  }
+
+  private onSetProjectDownloadFlag_ = (downloadProjectFlag: boolean) => {
+    console.log("HomeNav onSetProjectDownloadFlag_ downloadProjectFlag: ", downloadProjectFlag);
+    this.setState({
+      rootDownloadProjectFlag: downloadProjectFlag,
+      contextMenuProject_: undefined
+    })
+  }
+
+  private onSetFileDownloadFlag_ = (downloadFileFlag: boolean) => {
+    console.log("HomeNav onSetFileDownloadFlag_ downloadFileFlag: ", downloadFileFlag);
+    this.setState({
+      rootDownloadFileFlag: downloadFileFlag,
+      contextMenuFile_: undefined
     })
   }
 
@@ -421,14 +461,16 @@ class HomeNavigation extends React.PureComponent<Props, State> {
       updatedUsers,
       loadedUserData,
       contextMenuUser_,
-      fileToDelete,
+      contextMenuFile_,
       deleteUserFlag,
       rootDeleteUserFlag,
-      projectToDelete,
+      contextMenuProject_,
       deleteProjectFlag,
       rootDeleteProjectFlag,
       rootDeleteFileFlag,
-      rootDownloadUserFlag
+      rootDownloadUserFlag,
+      rootDownloadProjectFlag,
+      rootDownloadFileFlag
     } = state;
     const theme = DARK;
 
@@ -455,6 +497,8 @@ class HomeNavigation extends React.PureComponent<Props, State> {
                 onDeleteProject={this.onDeleteProject_}
                 onDeleteFile={this.onDeleteFile_}
                 onDownloadUser={this.onDownloadUser_}
+                onDownloadProject={this.onDownloadProject_}
+                onDownloadFile={this.onDownloadFile_}
                 addProjectFlag={isAddNewProject}
                 addFileFlag={isAddNewFile}
                 userDeleteFlag={deleteUserFlag}
@@ -473,12 +517,15 @@ class HomeNavigation extends React.PureComponent<Props, State> {
               history={undefined}
               location={undefined}
               match={undefined}
+
               propFileName={fileName}
               propProjectName={projectName}
               propActiveLanguage={activeLanguage}
               propUserName={userName}
               propContextMenuUser={contextMenuUser_}
-              propContextMenuProject={projectToDelete}
+              propContextMenuProject={contextMenuProject_}
+              propContextMenuFile={contextMenuFile_}
+
               addNewProject={isAddNewProject}
               addNewFile={isAddNewFile}
               clickFile={isClickFile}
@@ -490,20 +537,23 @@ class HomeNavigation extends React.PureComponent<Props, State> {
               onUserUpdate={this.onUserUpdate_}
               loadUserDataFlag={isLoadUserFiles}
               onLoadUserData={this.onLoadUserData_}
-             
+
+
               deleteUserFlag={rootDeleteUserFlag}
-              resetDeleteUserFlag={this.onSetUserDeleteFlag_}
-           
               deleteProjectFlag={rootDeleteProjectFlag}
-              fileToDelete={fileToDelete}
-
               deleteFileFlag={rootDeleteFileFlag}
-              resetDeleteProjectFlag={this.onSetProjectDeleteFlag_} 
-              resetDeleteFileFlag={this.onSetFileDeleteFlag_ }  
-              resetDownloadUserFlag={this.onSetUserDownloadFlag_}
 
-              downloadUserFlag={rootDownloadUserFlag}
-            />
+              downloadUserFlag={rootDownloadUserFlag} 
+              downloadProjectFlag={rootDownloadProjectFlag}
+              downloadFileFlag={rootDownloadFileFlag}
+
+              resetDeleteUserFlag={this.onSetUserDeleteFlag_}
+              resetDeleteProjectFlag={this.onSetProjectDeleteFlag_}
+              resetDeleteFileFlag={this.onSetFileDeleteFlag_}
+
+              resetDownloadUserFlag={this.onSetUserDownloadFlag_}
+              resetDownloadProjectFlag={this.onSetProjectDownloadFlag_} 
+              resetDownloadFileFlag={this.onSetFileDownloadFlag_ }            />
           </RootContainer>
         </Container>
 
