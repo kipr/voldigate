@@ -47,6 +47,7 @@ import { setupLocalRepo } from '../Git';
 import DeleteUserDialog from './DeleteUserProjectFileDialog';
 import DeleteUserProjectFileDialog from './DeleteUserProjectFileDialog';
 import DownloadUserProjectFileDialog from './DownloadUserProjectFileDialog';
+import { match } from 'node:assert';
 
 type Project = {
   projectName: string;
@@ -187,6 +188,7 @@ interface RootState {
 
   users: string[];
   projects: [] | null;
+
 }
 
 type Props = RootPublicProps & RootPrivateProps;
@@ -221,6 +223,10 @@ const STDOUT_STYLE = (theme: Theme) => ({
 
 const STDERR_STYLE = (theme: Theme) => ({
   color: 'red'
+});
+
+const STDWAR_STYLE = (theme: Theme) => ({
+  color: 'yellow'
 });
 
 class Root extends React.Component<Props, State> {
@@ -939,6 +945,7 @@ class Root extends React.Component<Props, State> {
     });
   }
   private onCodeChange_ = (code: string) => {
+    console.log("onCodeChange_ in Root with code:", code);
     const { activeLanguage } = this.state;
     this.setState({
       code: {
@@ -1024,10 +1031,28 @@ class Root extends React.Component<Props, State> {
 
             }
             else {
+              const errorRegex = /\/home\/kipr\/Documents\/KISS\/([^:\n]+:\d+:\d+: error: .*?)\n/g;
+              const errorMatches = [...response.data.output.matchAll(errorRegex)];
+              const filteredError = errorMatches.map(match => match[1]).join('\n');
+
+              const warningRegex = /\/home\/kipr\/Documents\/KISS\/([^:\n]+:\d+:\d+: warning: .*?)\n/g;
+              const warningMatches = [...response.data.output.matchAll(warningRegex)];
+
+
+
               nextConsole = StyledText.extend(compilingConsole, StyledText.text({
-                text: LocalizedString.lookup(tr('Compilation Failed!\n'), locale),
+                text: LocalizedString.lookup(tr(`${filteredError}\n`), locale),
                 style: STDERR_STYLE(this.state.theme)
               }));
+
+              if (warningMatches.length > 0) {
+                const filteredWarning = "Compilation Succeeded with Warnings\n" + warningMatches.map(match => match[1]).join('\n');
+                console.log("filteredWarning:", filteredWarning);
+                nextConsole = StyledText.extend(nextConsole, StyledText.text({
+                  text: LocalizedString.lookup(tr(`${filteredWarning}\n`), locale),
+                  style: STDWAR_STYLE(this.state.theme)
+                }));
+              }
 
             }
             this.setState({
@@ -1068,21 +1093,26 @@ class Root extends React.Component<Props, State> {
 
   };
 
+  private onSaveClick_ = async () => {  
+    await this.onSaveCode_();
+    const {locale} = this.props;
+    const {editorConsole} = this.state; 
+
+    let savingConsole: StyledText = StyledText.extend(editorConsole, StyledText.text({
+      text: LocalizedString.lookup(tr('Saving...\n'), locale),
+      style: STDOUT_STYLE(this.state.theme)
+    }));
+
+    this.setState({
+      editorConsole:savingConsole
+    })
+  }
 
   private onSaveCode_ = async () => {
     const [name, extension] = this.state.fileName.split('.');
-    console.log("this.props.propFileName: ", this.props.propFileName);
-    console.log("this.state.fileName: ", this.state.fileName);
-
-    console.log("extension is:", extension);
 
     const { userName, activeLanguage, projectName, fileName, otherFileType } = this.state;
     const fileContents = this.state.code[activeLanguage];
-    console.log("onSaveCode language:", activeLanguage);
-    console.log("onSaveCode code:", fileContents);
-    console.log("OnSaveCode clicked in Root with newContent:", fileContents);
-    console.log("onSaveCode otherFileType:", otherFileType);
-    console.log("onSaveCode fileName:", this.state.fileName);
     const prePath = `/home/kipr/Documents/KISS`;
     let filePath = '';
     switch (extension) {
@@ -1166,18 +1196,18 @@ class Root extends React.Component<Props, State> {
                   body: JSON.stringify({ userName: confirmedName }),
                 });
                 console.log("downloadUserResponse:", downloadUserResponse);
-  
+
                 if (downloadUserResponse.ok) {
                   const blob = await downloadUserResponse.blob();
                   const url = URL.createObjectURL(blob);
-  
+
                   const element = document.createElement('a');
                   element.href = url;
                   element.download = `${confirmedName}.zip`;
                   document.body.appendChild(element);
                   element.click();
                   document.body.removeChild(element);
-  
+
                   URL.revokeObjectURL(url);
                 } else {
                   const error = await downloadUserResponse.json();
@@ -1196,18 +1226,18 @@ class Root extends React.Component<Props, State> {
                   body: JSON.stringify({ userName: this.state.userName, projectName: confirmedName }),
                 });
                 console.log("downloadUserResponse:", downloadUserResponse);
-  
+
                 if (downloadUserResponse.ok) {
                   const blob = await downloadUserResponse.blob();
                   const url = URL.createObjectURL(blob);
-  
+
                   const element = document.createElement('a');
                   element.href = url;
                   element.download = `${confirmedName}.zip`;
                   document.body.appendChild(element);
                   element.click();
                   document.body.removeChild(element);
-  
+
                   URL.revokeObjectURL(url);
                 } else {
                   const error = await downloadUserResponse.json();
@@ -1219,7 +1249,7 @@ class Root extends React.Component<Props, State> {
               }
               break;
             case 'file':
-           
+
               try {
                 const downloadUserResponse = await fetch('/download-zip', {
                   method: 'POST',
@@ -1227,18 +1257,18 @@ class Root extends React.Component<Props, State> {
                   body: JSON.stringify({ userName: this.state.userName, projectName: this.state.projectName, fileName: confirmedName }),
                 });
                 console.log("downloadUserResponse:", downloadUserResponse);
-  
+
                 if (downloadUserResponse.ok) {
                   const blob = await downloadUserResponse.blob();
                   const url = URL.createObjectURL(blob);
-  
+
                   const element = document.createElement('a');
                   element.href = url;
                   element.download = `${confirmedName}`;
                   document.body.appendChild(element);
                   element.click();
                   document.body.removeChild(element);
-  
+
                   URL.revokeObjectURL(url);
                 } else {
                   const error = await downloadUserResponse.json();
@@ -1447,7 +1477,7 @@ class Root extends React.Component<Props, State> {
             settings={DEFAULT_SETTINGS}
             onClearConsole={this.onClearConsole_}
             onCodeChange={this.onCodeChange_}
-            onSaveCode={this.onSaveCode_}
+            onSaveCode={this.onSaveClick_}
             onRunClick={this.onRunClick_}
             onCompileClick={this.onCompileClick_}
             onIndentCode={() => { }}

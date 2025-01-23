@@ -153,7 +153,15 @@ export const createEditorBarComponents = ({
             {' '} {LocalizedString.lookup(tr('Compile'), locale)}
           </>
       }));
-
+      editorBar.push(BarComponent.create(Button, {
+        theme,
+        onClick: target.onSaveCode,
+        children:
+          <>
+            <Fa icon={faFloppyDisk} />
+            {' '} {LocalizedString.lookup(tr('Save'), locale)}
+          </>
+      }));
 
       if (target.isleftbaropen_) {
         editorBar.push(BarComponent.create(leftBarSpacerOpen, {
@@ -221,15 +229,7 @@ export const createEditorBarComponents = ({
         }));
       }
 
-      editorBar.push(BarComponent.create(Button, {
-        theme,
-        onClick: target.onSaveCode,
-        children:
-          <>
-            <Fa icon={faFloppyDisk} />
-            {' '} {LocalizedString.lookup(tr('Save'), locale)}
-          </>
-      }));
+      
 
       editorBar.push(BarComponent.create(Button, {
         theme,
