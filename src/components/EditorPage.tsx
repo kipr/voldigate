@@ -118,10 +118,10 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
       modal: Modal.NONE,
       language: props.language,
       code: {
-        'c': ProgrammingLanguage.DEFAULT_CODE['c'],
-        'cpp': window.localStorage.getItem('code-cpp') || ProgrammingLanguage.DEFAULT_CODE['cpp'],
-        'python': window.localStorage.getItem('code-python') || ProgrammingLanguage.DEFAULT_CODE['python'],
-        'plaintext': ProgrammingLanguage.DEFAULT_CODE['plaintext'],
+        'c': '',
+        'cpp': '',
+        'python': '',
+        'plaintext': '',
 
       },
       editorConsole: props.editorConsole,
@@ -172,6 +172,16 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
         editorConsole: this.props.editorConsole
       });
 
+    }
+
+    if(this.props.fileName !== prevProps.fileName){
+      console.log("EditorPage previous props fileName:", prevProps.fileName);
+      console.log("EditorPage updated props fileName:", this.props.fileName);
+
+      // this.setState({
+
+      //   fileName: this.props.fileName
+      // });
     }
 
   }
