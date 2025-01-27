@@ -206,13 +206,13 @@ class HomeNavigation extends React.PureComponent<Props, State> {
   };
 
   private onFileSelected = (selectedUserName: string, selectedProjectName: string, selectedFileName: string, selectedLanguage: ProgrammingLanguage, selectedFileType: string) => {
-    console.log("Selected project:", selectedProjectName);
-    console.log("Selected file:", selectedFileName);
-    console.log("Selected language:", selectedLanguage);
-    console.log("Selected fileType:", selectedFileType);
+    console.log("onFileSelected Selected project:", selectedProjectName);
+    console.log("onFileSelected Selected file:", selectedFileName);
+    console.log("onFileSelected Selected language:", selectedLanguage);
+    console.log("onFileSelected Selected fileType:", selectedFileType);
 
     console.log("onFileSelected current state:", this.state);
-    console.log("previous state fileName:", this.state.fileName);
+    console.log("onFileSelected previous state fileName:", this.state.fileName);
 
     this.setState({
       userName: selectedUserName,
@@ -281,6 +281,11 @@ class HomeNavigation extends React.PureComponent<Props, State> {
       isClickFile: isClickFile
     });
 
+    if(isClickFile == false){
+      this.setState({
+        fileName: ''
+      })
+    }
     console.log("setClickFile_ isClickFile:", isClickFile);
   }
 
@@ -443,6 +448,13 @@ class HomeNavigation extends React.PureComponent<Props, State> {
     })
   }
 
+  private onSetFileName_ = (fileName: string) => {
+    console.log("HomeNav onSetFileName_ fileName: ", fileName);
+    this.setState({
+      fileName: fileName
+    })
+  }
+
   render() {
     const { props, state } = this;
     const { className, style } = props;
@@ -533,6 +545,7 @@ class HomeNavigation extends React.PureComponent<Props, State> {
               setAddNewProject={this.setAddNewProject_}
               setAddNewFile={this.setAddNewFile_}
               setClickFile={this.setClickFile_}
+              setFileName_={this.onSetFileName_}
               changeProjectName={this.onChangeProjectName_}
               onUserUpdate={this.onUserUpdate_}
               loadUserDataFlag={isLoadUserFiles}
