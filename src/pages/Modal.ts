@@ -20,7 +20,8 @@ export namespace Modal {
     CreateProject,
     DeleteUserProjectFile,
     DownloadUserProjectFile,
-    OpenUsers
+    OpenUsers,
+    SaveFile
   }
   
   export interface Settings {
@@ -100,6 +101,13 @@ export namespace Modal {
 
   export const DOWNLOADUSERPROJECTFILE: DownloadUserProjectFile = { type: Type.DownloadUserProjectFile };
 
+
+  export interface SaveFile {
+    type: Type.SaveFile;
+  }
+
+  export const SAVEFILE: SaveFile = { type: Type.SaveFile };
+
 }
   
 export type Modal = (
@@ -115,6 +123,7 @@ export type Modal = (
   Modal.CreateUser |
   Modal.OpenUsers |
   Modal.DeleteUserProjectFile |
-  Modal.DownloadUserProjectFile
+  Modal.DownloadUserProjectFile |
+  Modal.SaveFile
 
 );
