@@ -123,12 +123,12 @@ const SectionName = styled('span', (props: ThemeProps & SectionProps) => ({
 
 
 const UsersContainer = styled('div', (props: ThemeProps) => ({
-    position: 'absolute',
+
     left: '4%',
     top: '4.8%',
-    height: '80%',
-    width: '100%', // Adjust width as needed
-    backgroundColor: 'blue', // Customize as needed
+    height: '100%',
+    width: '100%', 
+    backgroundColor: 'blue', 
     zIndex: 1,
     boxShadow: '2px 0 5px rgba(0,0,0,0.2)',
 }));
@@ -139,19 +139,21 @@ const SectionsColumn = styled('div', (props: ThemeProps) => ({
     flex: '0 0 150px',
     borderRight: `1px solid ${props.theme.borderColor}`,
 }));
+
 const SidePanel = styled('div', (props: ThemeProps) => ({
-    position: 'absolute',
     display: 'flex',
     flexWrap: 'wrap',
+    flex: '1 0 0',
     left: '3.5%',
     top: '6%',
     height: '90%',
-    width: '10%', // Adjust width as needed
-    backgroundColor: 'purple', // Customize as needed
+    backgroundColor: 'purple', 
     zIndex: 1,
+    overflow: 'visible',
     boxShadow: '2px 0 5px rgba(0,0,0,0.2)',
-}));
-
+    width: 'auto',
+  }));
+  
 
 const ProjectContainer = styled('div', (props: ThemeProps) => ({
     display: 'flex',
@@ -285,7 +287,7 @@ const ContextMenuItem = styled('div', (props: ThemeProps) => ({
     padding: "10px",
     margin: 0,
     cursor: "pointer",
-   ':hover': {
+    ':hover': {
         cursor: 'pointer',
         backgroundColor: `rgba(255, 255, 255, 0.1)`
     },
@@ -543,16 +545,16 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
         if (prevProps.propUserData !== this.props.propUserData) {
             console.log("propUserData changed");
             console.log("propUserData: ", this.props.propUserData);
-         
+
         }
-        if(prevState.selectedSection !== this.state.selectedSection){
+        if (prevState.selectedSection !== this.state.selectedSection) {
             console.log("selectedSection changed");
-            this.setState({showProjects: true});
+            this.setState({ showProjects: true });
         }
 
-        if(prevState.selectedProject !== this.state.selectedProject){
+        if (prevState.selectedProject !== this.state.selectedProject) {
             console.log("selectedProject changed");
-            this.setState({showProjectFiles: true});
+            this.setState({ showProjectFiles: true });
         }
         if (prevProps.addProjectFlag !== this.props.addProjectFlag) {
             if (this.props.addProjectFlag == false) {
@@ -629,7 +631,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
             selectedProject: projectId,
             userName: user,
             projectName: projectId
-            
+
         }, () => {
             console.log("handleProjectClick this.props.propUserData: ", this.props.propUserData);
             console.log("handleProjectClick state:", this.state);
@@ -755,7 +757,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                 this.setState({ showProjects: null });
             }
         }
-      
+
         console.log("setSelectedSection selectedSection: ", user);
         this.setState({
             selectedSection: user,
@@ -960,7 +962,8 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
 
             theme,
             locale,
-            propUsers
+            propUsers, 
+            style
         } = props;
 
         const {
@@ -1001,7 +1004,12 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
 
         return (
             <div onClick={this.closeContextMenu}>
-                <SidePanel theme={theme}>
+                <SidePanel
+                    theme={theme}
+                    style={{
+                        flex: style.flex, // Pass flex dynamically from the parent
+                    }}
+                >
                     <h2>Explorer</h2>
                     <UsersContainer theme={theme}>
                         <SectionsColumn theme={theme}>

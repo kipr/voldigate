@@ -163,7 +163,7 @@ class HomeNavigation extends React.PureComponent<Props, State> {
       console.log("HomeNav compDidUpdate prevState isAddNewFile is different -> Need to reload Files in FileExplorer");
       this.setState({ isReloadFiles: true });
     }
-    if(prevState.userName !== this.state.userName){
+    if (prevState.userName !== this.state.userName) {
       console.log("HomeNav compDidUpdate userName changed to:", this.state.userName);
       this.setState({
         isLoadUserFiles: false
@@ -281,7 +281,7 @@ class HomeNavigation extends React.PureComponent<Props, State> {
       isClickFile: isClickFile
     });
 
-    if(isClickFile == false){
+    if (isClickFile == false) {
       this.setState({
         fileName: ''
       })
@@ -301,13 +301,13 @@ class HomeNavigation extends React.PureComponent<Props, State> {
         })
       }
 
- 
+
     }
     catch (error) {
       console.error(error);
     }
 
-    try{
+    try {
 
       this.setState({
         userName,
@@ -316,7 +316,7 @@ class HomeNavigation extends React.PureComponent<Props, State> {
         console.log("HomeNav onUserSelected new userName:", this.state.userName);
       });
     }
-    catch(error){
+    catch (error) {
       console.error(error);
     }
 
@@ -346,7 +346,7 @@ class HomeNavigation extends React.PureComponent<Props, State> {
     })
   }
 
-  private onDeleteProject_ = (userName: string,project: Project, deleteProjectFlag: boolean) => {
+  private onDeleteProject_ = (userName: string, project: Project, deleteProjectFlag: boolean) => {
 
     console.log("HomeNav onDeleteProject_ project: ", project, "with deleteProjectFlag: ", deleteProjectFlag);
     this.setState({
@@ -356,7 +356,7 @@ class HomeNavigation extends React.PureComponent<Props, State> {
     })
   }
 
-  private onDeleteFile_ = (userName: string, project: string, file:string, deleteFileFlag: boolean) => {
+  private onDeleteFile_ = (userName: string, project: string, file: string, deleteFileFlag: boolean) => {
 
     console.log("HomeNav onDeleteFile_ file: ", file, "with deleteFileFlag: ", deleteFileFlag);
     this.setState({
@@ -455,6 +455,13 @@ class HomeNavigation extends React.PureComponent<Props, State> {
     })
   }
 
+  togglePanelVisibility = () => {
+    console.log("Toggled");
+
+
+  };
+
+
   render() {
     const { props, state } = this;
     const { className, style } = props;
@@ -471,6 +478,7 @@ class HomeNavigation extends React.PureComponent<Props, State> {
       isReloadFiles,
       fileType,
       updatedUsers,
+      selectedProject,
       loadedUserData,
       contextMenuUser_,
       contextMenuFile_,
@@ -491,83 +499,67 @@ class HomeNavigation extends React.PureComponent<Props, State> {
         <Container className={className} style={style} theme={theme}>
           <MainMenu theme={theme} />
           <LeftBarContainer theme={theme}>
+            <LeftBar theme={theme} 
+              propedSelectedProjectName={this.state.projectName}
+              propedOnProjectSelected={this.onProjectSelected}
+              propedOnFileSelected={this.onFileSelected}
+              propedOnUserSelected={this.onUserSelected}
+              propedOnAddNewProject={this.onAddNewProject_}
+              propedOnAddNewFile={this.onAddNewFile_}
+              propedOnDeleteUser={this.onDeleteUser_}
+              propedOnDeleteProject={this.onDeleteProject_}
+              propedOnDeleteFile={this.onDeleteFile_}
+              propedOnDownloadUser={this.onDownloadUser_}
+              propedOnDownloadProject={this.onDownloadProject_}
+              propedOnDownloadFile={this.onDownloadFile_}
+              propedAddProjectFlag={isAddNewProject}
+              propedAddFileFlag={isAddNewFile}
+              propedUserDeleteFlag={deleteUserFlag}
+              propedReloadFilesFlag={isReloadFiles}
+              propedUsers={updatedUsers}
+              propedUserData={loadedUserData}
+                   
+              
+              rootSelectedProject={selectedProject}
+              rootIsLeftBarOpen={this.state.isleftbaropen__}
+              rootFileName={fileName}
+              rootProjectName={projectName}
+              rootActiveLanguage={activeLanguage}
+              rootUserName={userName}
+              rootContextMenuUser={contextMenuUser_}
+              rootContextMenuProject={contextMenuProject_}
+              rootContextMenuFile={contextMenuFile_}
+              rootAddNewProject={isAddNewProject}
+              rootAddNewFile={isAddNewFile}
+              rootClickFile={isClickFile}
+              rootOtherFileType={fileType}
+              rootSetAddNewProject={this.setAddNewProject_}
+              rootSetAddNewFile={this.setAddNewFile_}
+              rootSetClickFile={this.setClickFile_}
+              rootSetFileName_={this.onSetFileName_}
+              rootChangeProjectName={this.onChangeProjectName_}
+              rootOnUserUpdate={this.onUserUpdate_}
+              rootLoadUserDataFlag={isLoadUserFiles}
+              rootOnLoadUserData={this.onLoadUserData_}
+              rootDeleteUserFlag={rootDeleteUserFlag}
+              rootDeleteProjectFlag={rootDeleteProjectFlag}
+              rootDeleteFileFlag={rootDeleteFileFlag}
+              rootDownloadUserFlag={rootDownloadUserFlag}
+              rootDownloadProjectFlag={rootDownloadProjectFlag}
+              rootDownloadFileFlag={rootDownloadFileFlag}
+              rootSetDeleteUserFlag={this.onSetUserDeleteFlag_}
+              rootSetDeleteProjectFlag={this.onSetProjectDeleteFlag_}
+              rootSetDeleteFileFlag={this.onSetFileDeleteFlag_}
+              rootSetDownloadUserFlag={this.onSetUserDownloadFlag_}
+              rootSetDownloadProjectFlag={this.onSetProjectDownloadFlag_}
+              rootSetDownloadFileFlag={this.onSetFileDownloadFlag_}
 
-            <LeftBar theme={theme} onToggle={this.toggleLeftBar_} />
+              >
 
-            {isPanelVisible && (
-              <FileExplorer
-                theme={theme}
+            </LeftBar>
 
-                locale={'en-US'}
-                propsSelectedProjectName={this.state.projectName}
-                onProjectSelected={this.onProjectSelected}
-                onFileSelected={this.onFileSelected}
-                onUserSelected={this.onUserSelected}
-                onAddNewProject={this.onAddNewProject_}
-                onAddNewFile={this.onAddNewFile_}
-                onDeleteUser={this.onDeleteUser_}
-                onDeleteProject={this.onDeleteProject_}
-                onDeleteFile={this.onDeleteFile_}
-                onDownloadUser={this.onDownloadUser_}
-                onDownloadProject={this.onDownloadProject_}
-                onDownloadFile={this.onDownloadFile_}
-                addProjectFlag={isAddNewProject}
-                addFileFlag={isAddNewFile}
-                userDeleteFlag={deleteUserFlag}
-                reloadFilesFlag={isReloadFiles}
-                propUsers={updatedUsers}
-                propUserData={loadedUserData} />
-
-            )}
           </LeftBarContainer>
-
-          <RootContainer theme={theme} isleftbaropen_={this.state.isleftbaropen__ ? "true" : "false"}>
-
-            <Root
-              key={this.state.selectedProject}
-              isLeftBarOpen={this.state.isleftbaropen__}
-              history={undefined}
-              location={undefined}
-              match={undefined}
-
-              propFileName={fileName}
-              propProjectName={projectName}
-              propActiveLanguage={activeLanguage}
-              propUserName={userName}
-              propContextMenuUser={contextMenuUser_}
-              propContextMenuProject={contextMenuProject_}
-              propContextMenuFile={contextMenuFile_}
-
-              addNewProject={isAddNewProject}
-              addNewFile={isAddNewFile}
-              clickFile={isClickFile}
-              otherFileType={fileType}
-              setAddNewProject={this.setAddNewProject_}
-              setAddNewFile={this.setAddNewFile_}
-              setClickFile={this.setClickFile_}
-              setFileName_={this.onSetFileName_}
-              changeProjectName={this.onChangeProjectName_}
-              onUserUpdate={this.onUserUpdate_}
-              loadUserDataFlag={isLoadUserFiles}
-              onLoadUserData={this.onLoadUserData_}
-
-
-              deleteUserFlag={rootDeleteUserFlag}
-              deleteProjectFlag={rootDeleteProjectFlag}
-              deleteFileFlag={rootDeleteFileFlag}
-
-              downloadUserFlag={rootDownloadUserFlag} 
-              downloadProjectFlag={rootDownloadProjectFlag}
-              downloadFileFlag={rootDownloadFileFlag}
-
-              resetDeleteUserFlag={this.onSetUserDeleteFlag_}
-              resetDeleteProjectFlag={this.onSetProjectDeleteFlag_}
-              resetDeleteFileFlag={this.onSetFileDeleteFlag_}
-
-              resetDownloadUserFlag={this.onSetUserDownloadFlag_}
-              resetDownloadProjectFlag={this.onSetProjectDownloadFlag_} 
-              resetDownloadFileFlag={this.onSetFileDownloadFlag_ }            />
-          </RootContainer>
+         
         </Container>
 
       </HomeNavigationContainer>
