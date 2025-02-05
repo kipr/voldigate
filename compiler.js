@@ -12,6 +12,8 @@ const envLanguage = process.env.ACTIVE_LANGUAGE;
 const userProjectDirectory = `/home/kipr/Documents/KISS/${envProjectUsername}/${envProjectName}`;
 console.log("userProjectDirectory: ", userProjectDirectory);
 const bin_directory = path.join(userProjectDirectory, "/bin");
+const include_directory = path.join(userProjectDirectory, "/include");
+const src_directory = path.join(userProjectDirectory, "/src");
 const outputBinaryPath = path.join(bin_directory, "botball_user_program");
 
 // Ensure bin folder doesn't already exist
@@ -27,13 +29,8 @@ console.log("envProjectName: ", envProjectName);
 console.log("envFileName: ", envFileName);
 console.log("envLanguage: ", envLanguage);
 
-// Define the compilation command (gcc for C files)
-const sourceFilePathC = path.join(userProjectDirectory, "/src/main.c"); // Adjust the path as needed
-const sourceFilePathCpp = path.resolve(__dirname, "source_file.cpp"); // Adjust the path as needed
-const sourceFilePathPy = path.resolve(__dirname, "source_file.py"); // Adjust the path as needed
-
-const outputBinaryPathCpp = path.resolve(bin_directory, "output_binary_cpp");
 let sourceFilePath;
+let sourceFiles;
 let config;
 try {
   config = getConfig();
@@ -45,12 +42,30 @@ try {
 try {
   switch (envLanguage) {
     case "c":
-      sourceFilePath = path.join(userProjectDirectory, "/src/main.c");
-      compileCommand = `gcc -Wall -Wextra -fmax-errors=100 -o "${outputBinaryPath}" "${sourceFilePath}" -I"${__dirname}/libkipr_voldigate/libkipr_install_c/include" -L"${__dirname}/libkipr_voldigate/libkipr_install_c/lib" -lkipr`;
+      sourceFiles = fs
+        .readdirSync(src_directory)
+        .filter((file) => {
+          // Only include .c
+          return file.endsWith(".c");
+        })
+        .map((file) => path.join(src_directory, file));
+      console.log("Source Files: ", sourceFiles);
+
+      sourceFilePath = sourceFiles.join(" ");
+      compileCommand = `gcc -Wall -Wextra -fmax-errors=100 -o "${outputBinaryPath}" ${sourceFilePath} -I"${__dirname}/libkipr_voldigate/libkipr_install_c/include" -I"${include_directory}" -L"${__dirname}/libkipr_voldigate/libkipr_install_c/lib" -lkipr`;
+      console.log("compileCommand: ", compileCommand);
       break;
     case "cpp":
-      sourceFilePath = path.join(userProjectDirectory, "/src/main.cpp");
-      compileCommand = `clang++ -std=c++17 -o "${outputBinaryPath}" "${sourceFilePath}" -I"${__dirname}/libkipr_voldigate/libkipr_install_c/include" -L"${__dirname}/libkipr_voldigate/libkipr_install_c/lib" -lkipr`;
+      sourceFiles = fs
+        .readdirSync(src_directory)
+        .filter((file) => {
+          // Only include .c
+          return file.endsWith(".cpp");
+        })
+        .map((file) => path.join(src_directory, file));
+      console.log("Source Files: ", sourceFiles);
+      sourceFilePath = sourceFiles.join(" ");
+      compileCommand = `clang++ -std=c++17 -o "${outputBinaryPath}" ${sourceFilePath} -I"${__dirname}/libkipr_voldigate/libkipr_install_c/include" -I"${include_directory}" -L"${__dirname}/libkipr_voldigate/libkipr_install_c/lib" -lkipr`;
       break;
     case "python":
       sourceFilePath = path.join(userProjectDirectory, "/src/main.py");
@@ -76,7 +91,6 @@ try {
         }
       });
 
-
       break;
   }
   try {
@@ -98,6 +112,7 @@ try {
   }
   chmod_cmd = `chmod u+x ${outputBinaryPath}`;
   exec(chmod_cmd);
+  console.log("compiler.js: Executing compileCommand: ", compileCommand);
   exec(compileCommand, (error, stdout, stderr) => {
     if (error) {
       console.error(`Error during compilation: ${error.message}`);

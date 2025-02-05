@@ -14,6 +14,7 @@ const proxy = require("express-http-proxy");
 const https = require("https");
 const simpleGit = require("simple-git");
 const JSZip = require("jszip");
+const { spawn } = require("child_process");
 
 let config;
 try {
@@ -622,31 +623,30 @@ app.post("/download-zip", async (req, res) => {
     return res.status(404).json({ error: "User directory not found" });
   }
 
-
   try {
     if (fileName) {
       console.log("Single file download");
-      const [name, extension] = fileName.split('.');
+      const [name, extension] = fileName.split(".");
       console.log("File extension is: ", extension);
       //Single file download
       if (!projectName) {
         return res.status(400).json({ error: "ProjectName is required" });
       }
       let filePath = "";
-      switch(extension) {
-        case 'h':
+      switch (extension) {
+        case "h":
           filePath = path.join(userDirectory, projectName, "include", fileName);
           break;
-        case 'c':
-        case 'cpp':
-        case 'py':
+        case "c":
+        case "cpp":
+        case "py":
           filePath = path.join(userDirectory, projectName, "src", fileName);
           break;
-        case 'txt':
+        case "txt":
           filePath = path.join(userDirectory, projectName, "data", fileName);
           break;
-      } 
-     
+      }
+
       console.log("single file download file path: ", filePath);
 
       if (!fs.existsSync(filePath)) {
@@ -675,8 +675,7 @@ app.post("/download-zip", async (req, res) => {
       res.status(200).send(fileContents);
 
       return;
-    } 
-    else if (projectName) {
+    } else if (projectName) {
       console.log("Single project download");
       const projectDirectory = path.join(userDirectory, projectName);
       // Check if the project directory exists
@@ -753,42 +752,82 @@ app.get("/get-file-contents", getFileContents());
 //File content setters
 app.post("/save-file-content", saveFileContents());
 
-app.post("/run-code", (req, res) => {
-  console.log("Received request body (run-code):", req.body); // Log the entire request body
-  const { userName, projectName, fileName, activeLanguage } = req.body;
+app.get("/run-code", (req, res) => {
+  console.log("Received run request:", req.query);
+  const { userName, projectName, activeLanguage } = req.query;
+  if (!userName || !projectName || !activeLanguage) {
+    return res.status(400).send("Missing parameters");
+  }
+
   const userDirectory = `/home/kipr/Documents/KISS/${userName}`;
   const projectDirectory = path.join(userDirectory, projectName);
-
   const bin_directory = path.join(projectDirectory, "/bin");
 
-  switch (req.body.activeLanguage) {
+  let runCommand;
+  switch (activeLanguage) {
     case "c":
     case "cpp":
       runCommand = `"${bin_directory}/botball_user_program"`;
-      console.log("runCommand: ", runCommand);
+
       break;
     case "python":
       runCommand = `export PYTHONPATH=/usr/local/lib && python3 "${bin_directory}/botball_user_program"`;
       break;
   }
-  // Command to execute the binary Python file
-  //const command = `export PYTHONPATH=/usr/local/lib && echo $PYTHONPATH && python3 ${bin_directory}/output_binary`;
+  console.log("runCommand: ", runCommand);
+  res.setHeader("Content-Type", "text/event-stream");
+  res.setHeader("Cache-Control", "no-cache");
+  res.setHeader("Connection", "keep-alive");
 
-  exec(runCommand, (error, stdout, stderr) => {
-    if (error) {
-      console.error(`Error during execution: ${error.message}`);
-      return res.status(500).json({ error: "Execution failed" });
-    }
-    if (stderr) {
-      console.error(`Execution errors: ${stderr}`);
-    }
+  console.log("Executing:", runCommand);
 
-    // Respond with the execution output
-    res.json({
-      message: "Execution successful",
-      output: stdout,
+  // const child = spawn(runCommand, [], { shell: true, env: { ...process.env, PYTHONPATH: "/usr/local/lib" } });
+  const child = spawn(
+    "stdbuf",
+    ["-oL", runCommand],
+    { shell: true }
+  );
+
+  child.stdout.on("data", (data) => {
+    const output = data.toString();
+
+    console.log("stdout:", output);
+    output.split("\n").forEach((line) => {
+      if (line.trim() !== "") {
+        res.write(`data: ${line}\n\n`);
+        res.flush?.();
+      }
     });
   });
+
+  child.stderr.on("data", (data) => {
+    console.error("stderr:", data.toString());
+    res.write(`data: ERROR: ${data.toString()}\n\n`);
+    res.flush?.();
+  });
+
+  child.on("close", (code) => {
+    console.log(`Process exited with code ${code}`);
+    res.write(`data: Process exited with code ${code}\n\n`);
+    res.write("event: end\ndata: END\n\n");
+    res.flush?.();
+    res.end();
+  });
+  // exec(runCommand, (error, stdout, stderr) => {
+  //   if (error) {
+  //     console.error(`Error during execution: ${error.message}`);
+  //     return res.status(500).json({ error: "Execution failed" });
+  //   }
+  //   if (stderr) {
+  //     console.error(`Execution errors: ${stderr}`);
+  //   }
+
+  //   // Respond with the execution output
+  //   res.json({
+  //     message: "Execution successful",
+  //     output: stdout,
+  //   });
+  // });
 });
 
 app.post("/feedback", (req, res) => {
