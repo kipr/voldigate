@@ -132,12 +132,10 @@ export class NewFileDialog extends React.PureComponent<Props, State> {
   private onFinalize_ = async (values: { [id: string]: string }) => {
 
     console.log('Inside onFinalizeClick_ in NewFileDialog.tsx with values:', values);
+    console.log('Inside onFinalizeClick_ in NewFileDialog.tsx with props:', this.props);
 
     try {
-      //
-      // this.props.onShowEditorPage();
-      //this.setState({ showEditorPage: true });
-      // this.setState({ fileName: values.fileName });
+
      this.props.onCloseNewFileDialog(values.fileName, this.props.otherFileType);
 
     }
