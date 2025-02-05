@@ -103,6 +103,7 @@ type Project = {
   includeFolderFiles: string[];
   srcFolderFiles: string[];
   dataFolderFiles: string[];
+  projectLanguage: ProgrammingLanguage;
 }
 
 type Props = LeftBarPublicProps & LeftBarPrivateProps;

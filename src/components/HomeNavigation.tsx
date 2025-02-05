@@ -65,6 +65,7 @@ type Project = {
   includeFolderFiles: string[];
   srcFolderFiles: string[];
   dataFolderFiles: string[];
+  projectLanguage: ProgrammingLanguage;
 }
 
 
@@ -249,6 +250,7 @@ class HomeNavigation extends React.PureComponent<Props, State> {
 
   private onAddNewFile_ = (userName: string, projectName: string, activeLanguage: ProgrammingLanguage, fileType: string) => {
     console.log("homeNavigation onAddNewFile_ passed userName:", userName);
+    console.log("homeNavigation onAddNewFile_ passed projectName:", projectName);
     console.log("homeNavigation onAddNewFile_ passed activeLanguage:", activeLanguage);
     console.log("homeNavigation onAddNewFile_ passed fileType: ", fileType);
     this.setState({
