@@ -32,6 +32,7 @@ type Project = {
     includeFolderFiles: string[];
     srcFolderFiles: string[];
     dataFolderFiles: string[];
+    projectLanguage: ProgrammingLanguage;
 }
 
 
@@ -623,14 +624,16 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
         }
     }
 
-    private handleProjectClick = async (projectId: string, user: string) => {
+    private handleProjectClick = async (projectId: string, user: string, language: ProgrammingLanguage) => {
         console.log("handleProjectClick click");
+        console.log("handleProjectClick language: ", language);
 
         this.setState({
             showProjectFiles: !this.state.showProjectFiles,
             selectedProject: projectId,
             userName: user,
-            projectName: projectId
+            projectName: projectId,
+            activeLanguage: language
 
         }, () => {
             console.log("handleProjectClick this.props.propUserData: ", this.props.propUserData);
@@ -642,6 +645,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
         const { userName, projectName, activeLanguage } = this.state;
 
         const [name, extension] = fileName.split('.');
+        console.log("handleFileClick activeLanguage: ", activeLanguage);
         console.log("this.state.projectName: ", this.state.projectName);
         console.log("fileName: ", fileName);
         console.log("FileExpl handleFileClick state:", this.state);
@@ -688,7 +692,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                 break;
             case 'h':
                 this.setState({
-                    activeLanguage: "c"
+                    activeLanguage: activeLanguage
                 }, () => {
                     console.log("Header file clicked");
                     console.log("activeLanguage set to: ", this.state.activeLanguage);
@@ -731,7 +735,8 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
 
     private addNewFile = async (fileType: string) => {
         console.log("addNewFile click");
-        console.log("addNewFile fileType: ", fileType);
+        console.log("addNewFileClick current language: ", this.state.activeLanguage);
+        console.log("addNewFile passed fileType: ", fileType);
         const { activeLanguage, selectedSection, selectedProject } = this.state;
         console.log("FileExplorer addNewFile state:", this.state);
         if (this.props.onAddNewFile) {
@@ -855,6 +860,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
     renderProjects = (projects: Project[]) => {
         const theme = DARK;
         console.log("insideRenderProjects");
+        console.log("insideRenderProjects projects: ", projects);
         return (
             <div>
                 <ProjectContainer theme={theme} key={this.state.selectedSection}>
@@ -877,7 +883,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                                 <ProjectItem
 
                                     selected={this.state.selectedProject === project.projectName}
-                                    onClick={() => this.handleProjectClick(project.projectName, this.state.selectedSection)}
+                                    onClick={() => this.handleProjectClick(project.projectName, this.state.selectedSection, project.projectLanguage)}
                                     style={{
                                         backgroundColor: this.state.projectName === project.projectName
                                             ? 'rgba(255, 255, 255, 0.3)' // Highlight color
@@ -919,7 +925,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                                                         {file}
                                                     </IndividualFile>
                                                 ))}
-                                                <IndividualFile theme={theme} selected={false} onClick={() => this.addNewFile(this.state.activeLanguage)}>
+                                                <IndividualFile theme={theme} selected={false} onClick={() => this.addNewFile(project.projectLanguage)}>
                                                     <FileItemIcon icon={faFileCirclePlus} />
                                                     {LocalizedString.lookup(tr('Add File'), this.props.locale)}
                                                 </IndividualFile>
