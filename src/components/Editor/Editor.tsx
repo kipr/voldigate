@@ -1,20 +1,20 @@
 import * as React from 'react';
+import { styled, withStyleDeep } from 'styletron-react';
 
-import { styled } from 'styletron-react';
 import { StyleProps } from '../../style';
-import { Theme, ThemeProps } from '../theme';
-import {middleBarSpacer, rightBarSpacerOpen, rightBarSpacerClosed, leftBarSpacerOpen, leftBarSpacerClosed } from '../common';
+import { Theme } from '../theme';
+import { middleBarSpacer, rightBarSpacerOpen, rightBarSpacerClosed, leftBarSpacerOpen, leftBarSpacerClosed } from '../common';
 import { Fa } from '../Fa';
 import { Button } from '../Button';
 import { Text } from '../Text';
 import { BarComponent } from '../Widget';
 import { WarningCharm, ErrorCharm } from './';
-
+import { GREEN, RED, ThemeProps } from '../../constants/theme';
 import { Ivygate, Message } from 'ivygate';
-
+import { FontAwesome } from '../FontAwesome';
 import ProgrammingLanguage from '../../ProgrammingLanguage';
 
-import { faFileDownload, faFloppyDisk, faIndent, faLink, faPlay } from '@fortawesome/free-solid-svg-icons';
+import { faFileDownload, faFloppyDisk, faIndent, faLink, faPlay, faStop } from '@fortawesome/free-solid-svg-icons';
 
 import Dict from '../../Dict';
 import * as monaco from 'monaco-editor';
@@ -31,13 +31,14 @@ export enum EditorActionState {
 }
 
 export interface EditorPublicProps extends StyleProps, ThemeProps {
-  language: ProgrammingLanguage 
+  language: ProgrammingLanguage
   code: string;
   onCodeChange: (code: string) => void;
   onSaveCode: () => void;
   messages?: Message[];
   autocomplete: boolean;
   isleftbaropen: boolean;
+  isRunning: boolean;
   onDocumentationGoToFuzzy?: (query: string, language: 'c' | 'python' | 'plaintext') => void;
 }
 
@@ -52,6 +53,11 @@ interface EditorState {
 type Props = EditorPublicProps;
 type State = EditorState;
 
+interface ClickProps {
+  onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
+  disabled?: boolean;
+}
+
 const Container = styled('div', (props: { theme: Theme; isleftbaropen: string }) => ({
   flex: '1',
   backgroundColor: props.theme.backgroundColor,
@@ -65,8 +71,52 @@ const Container = styled('div', (props: { theme: Theme; isleftbaropen: string })
   width: props.isleftbaropen == "true" ? '87%' : '97%',
 
 }));
+const Item = styled('div', (props: ThemeProps & ClickProps) => ({
+  display: 'flex',
+  alignItems: 'center',
+  flexDirection: 'row',
+  borderRight: `1px solid ${props.theme.borderColor}`,
+  paddingLeft: '30px',
+  paddingRight: '30px',
+  height: '100%',
+  opacity: props.disabled ? '0.5' : '1.0',
+  ':last-child': {
+    borderRight: 'none',
+  },
+  fontWeight: 400,
+  ':hover':
+    props.onClick && !props.disabled
+      ? {
+        cursor: 'pointer',
+        backgroundColor: `rgba(255, 255, 255, 0.1)`,
+      }
+      : {},
+  userSelect: 'none',
+  transition: 'background-color 0.2s, opacity 0.2s',
+}));
 
+const RunItem = withStyleDeep(Item, (props: ClickProps) => ({
+  backgroundColor: props.disabled ? GREEN.disabled : GREEN.standard,
+  ':hover':
+    props.onClick && !props.disabled
+      ? {
+        backgroundColor: GREEN.hover,
+      }
+      : {},
+}));
+const ItemIcon = styled(FontAwesome, {
+  paddingRight: '10px',
+});
 
+const StopItem = withStyleDeep(Item, (props: ClickProps) => ({
+  backgroundColor: props.disabled ? RED.disabled : RED.standard,
+  ':hover':
+    props.onClick && !props.disabled
+      ? {
+        backgroundColor: RED.hover,
+      }
+      : {},
+}));
 
 export namespace EditorBarTarget {
   export enum Type {
@@ -80,6 +130,7 @@ export namespace EditorBarTarget {
     messages: Message[];
     language: ProgrammingLanguage;
     isleftbaropen_: boolean;
+    isRunning: boolean;
     projectName: string;
     fileName: string;
     userName: string;
@@ -87,6 +138,7 @@ export namespace EditorBarTarget {
     onIndentCode: () => void;
     onSaveCode: () => void;
     onRunClick: () => void;
+    onStopClick: () => void;
     onCompileClick: () => void;
     onDownloadCode: () => void;
     onErrorClick: (event: React.MouseEvent<HTMLDivElement>) => void;
@@ -136,12 +188,29 @@ export const createEditorBarComponents = ({
 
       editorBar.push(BarComponent.create(Button, {
         theme,
-        onClick: target.onRunClick,
-        children:
-          <>
-            <Fa icon={faPlay} />
-            {' '} {LocalizedString.lookup(tr('Run'), locale)}
-          </>
+        //onClick: target.isRunning ? target.onStopClick : target.onRunClick,
+
+        children: target.isRunning
+          ? (
+            <StopItem
+              theme={theme}
+              onClick={target.onStopClick}
+              disabled={false}
+            >
+              <ItemIcon icon={faStop} />
+              {LocalizedString.lookup(tr('Stop', 'Terminate program execution'), locale)}
+            </StopItem>
+          )
+          : (
+            <RunItem
+              theme={theme}
+              onClick={target.onRunClick}
+              style={{ borderLeft: `1px solid ${theme.borderColor}` }}
+            >
+              <ItemIcon icon={faPlay} />
+              {LocalizedString.lookup(tr('Run', 'Begin program execution'), locale)}
+            </RunItem>
+          )
       }));
 
       editorBar.push(BarComponent.create(Button, {
@@ -229,7 +298,7 @@ export const createEditorBarComponents = ({
         }));
       }
 
-      
+
 
       editorBar.push(BarComponent.create(Button, {
         theme,
@@ -293,7 +362,7 @@ export const IVYGATE_LANGUAGE_MAPPING: Dict<string> = {
 };
 
 const DOCUMENTATION_LANGUAGE_MAPPING: { [key in ProgrammingLanguage]: 'c' | 'python' | 'plaintext' } = {
-  
+
   'python': 'python',
   'c': 'c',
   'cpp': 'c',
@@ -316,6 +385,8 @@ class Editor extends React.PureComponent<Props, State> {
 
   async componentDidUpdate(prevProps: Props) {
 
+    console.log("inside componentDidUpdate in Editor.tsx with props:", this.props);
+
     if (this.props.isleftbaropen !== this.state.isleftbaropen) {
       this.setState({ isleftbaropen: this.props.isleftbaropen });
     }
@@ -325,7 +396,7 @@ class Editor extends React.PureComponent<Props, State> {
       console.log("Editor Language changed to: ", this.props.language);
     }
 
-    if(this.props.code !== prevProps.code){
+    if (this.props.code !== prevProps.code) {
       console.log("Code changed from: ", prevProps.code);
       console.log("Code changed to: ", this.props.code);
     }
