@@ -123,14 +123,14 @@ const sizeDict = (sizes: Size[]) => {
 const Container = styled('div', (props: ThemeProps) => ({
   backgroundColor: props.theme.backgroundColor,
   color: props.theme.color,
-  height: '100vh',
+  height: '98%',
   lineHeight: '28px',
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'flex-start',
   borderRight: `1px solid ${props.theme.borderColor}`,
   zIndex: 0,
-  width: '100%',
+  width: '100vh',
   flexGrow: 1,
 }));
 
@@ -284,7 +284,7 @@ export class LeftBar extends React.Component<Props, State> {
 
     let rootContent: JSX.Element;
     rootContent = (
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+      <div style={{height: '80%', flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         <Root
           key={rootSelectedProject}
           isLeftBarOpen={rootIsLeftBarOpen}
@@ -379,12 +379,12 @@ export class LeftBar extends React.Component<Props, State> {
 
 
 
-        <div style={{ display: 'flex', flexDirection: 'column', width: '50px', height: '100vh', flex: '1 1 0' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', width: '50px', flex: '1 1 0' }}>
           <Item theme={theme} onClick={this.togglePanelVisibility}>
             <ItemIcon icon={faFolderTree} />
           </Item>
 
-          <Spacer style={{ marginBottom: '200px', borderBottom: `1px solid ${theme.borderColor}` }} />
+          <Spacer style={{ marginBottom: '650px', borderBottom: `1px solid ${theme.borderColor}` }} />
 
           <Item style={{ marginBottom: '10px' }} theme={theme} onClick={this.onModalClick_(Modal.SETTINGS)}>
             <ItemIcon icon={faCog} />

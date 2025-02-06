@@ -69,7 +69,7 @@ const ExtraMenuContainer = styled('div', (props: ThemeProps) => ({
   backgroundColor: props.theme.backgroundColor,
   color: props.theme.color,
   top: '20px',
-  width: '100%',
+  width: '100vh',
   height: '48px',
   lineHeight: '28px',
   display: 'flex',
@@ -113,7 +113,7 @@ export class MainMenu extends React.Component<Props, State> {
 
           />
         </ExtraMenuContainer>
-        {/* <Item theme={theme} onClick={this.onDashboardClick_}><ItemIcon icon='compass'/> Dashboard</Item> */}
+    
 
       </Container>
     );
