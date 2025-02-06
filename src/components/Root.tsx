@@ -684,14 +684,14 @@ class Root extends React.Component<Props, State> {
 
   }
 
-  private async loadUsers() {
+  private loadUsers = async (): Promise<string[]> =>{
 
     console.log("Root loadUsers");
     try {
       const getUserResponse = await axios.get('/get-users', { params: { filePath: "/home/kipr/Documents/KISS" } });
       console.log("loadUsers Response: ", getUserResponse);
 
-      const userDirectories: [] = getUserResponse.data.directories;
+      const userDirectories: string[] = getUserResponse.data.directories;
 
       this.setState({
         users: userDirectories,
@@ -701,22 +701,30 @@ class Root extends React.Component<Props, State> {
       });
 
 
-
+      return userDirectories;
     }
     catch (error) {
       console.error("Root loadUsers caught error: ", error);
+      return [];
     }
 
   }
 
-  private async loadUserData(): Promise<Project[]> {
+  private  loadUserData = async (openedUserDialog?: boolean, desiredUser?: string) : Promise<Project[]> => {
     console.log("Root loadUserData");
-
+    console.log("loadUserData openedUserDialog:", openedUserDialog);
+    console.log("loadUserData desiredUser:", desiredUser);
     console.log("propUserName:", this.props.propUserName);
-
-
+ 
+    let chosenUser: string;
+    if(openedUserDialog && desiredUser){
+      chosenUser = desiredUser;
+    }
+    else {
+      chosenUser = this.props.propUserName;
+    }
     try {
-      const response = await axios.get('/get-projects', { params: { filePath: `/home/kipr/Documents/KISS/${this.props.propUserName}` } });
+      const response = await axios.get('/get-projects', { params: { filePath: `/home/kipr/Documents/KISS/${chosenUser}` } });
       console.log("loadProjects Response: ", response)
 
       const projectDirectories = response.data.directories;
@@ -727,19 +735,19 @@ class Root extends React.Component<Props, State> {
         projectDirectories.map(async (projectName) => {
           // Simulating file retrieval for each project (you may need to adjust this based on backend data)
           const projectDataResponse = await axios.get('/get-project-folders', {
-            params: { filePath: `/home/kipr/Documents/KISS/${this.props.propUserName}/${projectName}` }
+            params: { filePath: `/home/kipr/Documents/KISS/${chosenUser}/${projectName}` }
           });
 
           const projectData = projectDataResponse.data.directories;
 
 
-          const dataFilesDataResponse = await axios.get('/get-folder-contents', { params: { filePath: `/home/kipr/Documents/KISS/${this.props.propUserName}/${projectName}/${projectData[2]}` } });
+          const dataFilesDataResponse = await axios.get('/get-folder-contents', { params: { filePath: `/home/kipr/Documents/KISS/${chosenUser}/${projectName}/${projectData[2]}` } });
 
-          const includeDataResponse = await axios.get('/get-folder-contents', { params: { filePath: `/home/kipr/Documents/KISS/${this.props.propUserName}/${projectName}/${projectData[3]}` } });
+          const includeDataResponse = await axios.get('/get-folder-contents', { params: { filePath: `/home/kipr/Documents/KISS/${chosenUser}/${projectName}/${projectData[3]}` } });
 
-          const srcDataResponse = await axios.get('/get-folder-contents', { params: { filePath: `/home/kipr/Documents/KISS/${this.props.propUserName}/${projectName}/${projectData[4]}` } });
+          const srcDataResponse = await axios.get('/get-folder-contents', { params: { filePath: `/home/kipr/Documents/KISS/${chosenUser}/${projectName}/${projectData[4]}` } });
 
-          const projectLanguageResponse = await axios.get('/get-project-language', { params: { filePath: `/home/kipr/Documents/KISS/${this.props.propUserName}/${projectName}` } });
+          const projectLanguageResponse = await axios.get('/get-project-language', { params: { filePath: `/home/kipr/Documents/KISS/${chosenUser}/${projectName}` } });
           console.log("projectLanguageResponse.data:", projectLanguageResponse.data);
           const filteredDataFiles = dataFilesDataResponse.data.files.filter(file => !file.startsWith('.'));
           const filteredSrcFiles = srcDataResponse.data.files.filter(file => !file.startsWith('.'));
@@ -1058,19 +1066,24 @@ class Root extends React.Component<Props, State> {
     console.log("handleFileNameChange with new state fileName:", this.state.fileName);
   }
 
-  private onOpenUserProject_ = (name: string, projectName: string, fileName: string, projectLanguage: ProgrammingLanguage) => {
-    console.log("onOpenUserProject_ name:", name);
-    console.log("onOpenUserProject_ projectName:", projectName);
-    console.log("onOpenUserProject_ fileName:", fileName);
-    console.log("onOpenUserProject_ projectLanguage:", projectLanguage);
+  private onOpenUserProject_ = async (name: string, projectName: string, fileName: string, projectLanguage: ProgrammingLanguage) => {
 
+    const getProjects = await this.loadUserData(true, name);
+    let toOpenProject =   getProjects.find(project => project.projectName === projectName);
+    let toOpenProjectMainCode = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${name}/${projectName}/src/${fileName}` } });
 
     this.setState({
       userName: name,
-      projectName: projectName,
-      activeLanguage: projectLanguage,
+      projectName: toOpenProject.projectName,
+      activeLanguage: toOpenProject.projectLanguage,
+      code: {
+        ...this.state.code,
+        [toOpenProject.projectLanguage]: toOpenProjectMainCode.data
+      },
       fileName: fileName,
       isEditorPageVisible: true,
+    }, async () => {
+   
     });
 
     if (this.state.isHomeStartOptionsVisible == true) {
@@ -1735,6 +1748,8 @@ class Root extends React.Component<Props, State> {
               onChangeProjectName={this.onChangeProjectName}
               onCreateProjectDialog={this.onCreateProjectDialogOpen_}
               onOpenUserProject={this.onOpenUserProject_}
+              onLoadUsers={this.loadUsers}
+              onLoadUserData={this.loadUserData}
             />
           )
         }

@@ -13,16 +13,30 @@ import ScrollArea from './ScrollArea';
 import { ProjectType, DatabaseService } from './DatabaseService';
 import ComboBox from './ComboBox';
 import { Settings } from '../Settings';
+import axios from 'axios';
 import ProgrammingLanguage from '../ProgrammingLanguage';
 type SettingsSection = string;
 
 
 export interface OpenUsersDialogPublicProps extends ThemeProps, StyleProps {
   onClose: () => void;
-  projectLanguage: ProgrammingLanguage;
-  settings: Settings;
   onOpenUserProject: (name: string, projectName: string, fileName: string, projectLanguage: string) => void;
   onSettingsChange: (settings: Partial<Settings>) => void;
+
+  projectLanguage: ProgrammingLanguage;
+  settings: Settings;
+  onLoadUsers: () => Promise<string[]>;
+  onLoadUserData: (openedUserDialog: boolean, desiredUser: string) => Promise<Project[]>;
+
+}
+
+type Project = {
+  projectName: string;
+  binFolderFiles: string[];
+  includeFolderFiles: string[];
+  srcFolderFiles: string[];
+  dataFolderFiles: string[];
+  projectLanguage: ProgrammingLanguage;
 }
 
 interface OpenUsersDialogPrivateProps {
@@ -33,14 +47,14 @@ interface OpenUsersDialogPrivateProps {
 interface OpenUsersDialogState {
   selectedSection: SettingsSection;
   users: string[];
-  projects: ProjectType[] | null;
+  projects: Project[] | null;
   loading: boolean;
   error: string | null;
   selectedProject: string | null;
   projectName: string;
   activeLanguage: ProgrammingLanguage;
 
- 
+
 
 }
 interface SectionProps {
@@ -152,8 +166,8 @@ const SettingsColumn = styled(ScrollArea, {
 });
 
 const ProjectTitle = styled('h2', {
-  marginTop: '0px', 
-  marginBottom: '10px', 
+  marginTop: '0px',
+  marginBottom: '10px',
   fontSize: '1.2em',
   textAlign: 'center', // 
 });
@@ -188,58 +202,76 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
       selectedProject: null,
       projectName: '',
       activeLanguage: 'c'
-   
+
     };
   }
   private setSelectedSection = (selectedSection: SettingsSection) => {
     this.setState({ selectedSection }, this.getProjects);
     this.setState({ selectedProject: null });
   };
- 
-  private handleProjectClick = async(projectId: string) => {
-    const projectInfo = await DatabaseService.getProjectInfo(this.state.selectedSection,projectId);
-    console.log("Project Info: ", projectInfo);
-    console.log("Project ID: ", projectInfo.project_id);
-    console.log("Project activeLanguage: ", projectInfo.language);
-    this.setState({ 
-      selectedProject: projectId,
-      projectName: projectInfo.project_id,
-      activeLanguage: projectInfo.language
-    });
+
+  private handleProjectClick = async (projectId: string) => {
+    // const projectInfo = await DatabaseService.getProjectInfo(this.state.selectedSection,projectId);
+    // console.log("Project Info: ", projectInfo);
+    // console.log("Project ID: ", projectInfo.project_id);
+    // console.log("Project activeLanguage: ", projectInfo.language);
+    // this.setState({ 
+    //   selectedProject: projectId,
+    //   projectName: projectInfo.project_id,
+    //   activeLanguage: projectInfo.language
+    // });
 
     //console.log("handleProjectClick activeLanguage: ", this.props.projectLanguage);
-   
+
+
+    this.setState({
+      selectedProject: projectId,
+      projectName: projectId,
+      activeLanguage: this.state.projects!.find(project => project.projectName === projectId)!.projectLanguage
+    }, () => {
+      console.log("handleProjectClick selected User: ", this.state.selectedSection);
+      console.log("handleProjectClick selectedProject: ", this.state.selectedProject);
+      console.log("handleProjectClick activeLanguage: ", this.state.activeLanguage);
+
+    });
+
   };
   private getProjects = async () => {
-    this.setState({ loading: true, error: null });
+    console.log("getProjects selectedSection: ", this.state.selectedSection);
+
+    this.setState({
+      projects: await this.props.onLoadUserData(true, this.state.selectedSection),
+      loading: false,
+    }, () => {
+      console.log("getProjects projects: ", this.state.projects);
+    })
+  }
+
+  async componentDidMount() {
     try {
-      const projects = await DatabaseService.getAllProjectsFromUser(this.state.selectedSection);
-      this.setState({ projects });
+      const userDirectories = await this.props.onLoadUsers();
+
+      console.log("OpenUsersDialog received directories:", userDirectories);
+
+      this.setState({
+        users: userDirectories,
+
+      });
+      console.log("OpenUsersDialog state.users:", this.state.users);
+
+      // Use the returned directories as needed...
+    } catch (error) {
+      console.error("Error loading users in OpenUsersDialog:", error);
     }
-    catch (error) {
-      this.setState({ error: 'Failed to fetch projects' });
-      console.error(error);
-    }
-    finally {
-      this.setState({ loading: false });
-    }
+
   }
 
-  componentDidMount() {
-    this.loadUsers();
-    this.getProjects();
-  }
-
-  private async loadUsers() {
-    const users = await DatabaseService.getAllUsers();
-    this.setState({ users }); // Store users in state
-  }
 
   renderProjects() {
     const { projects, loading, error, selectedProject } = this.state;
 
     if (loading) {
-      return <div>Loading...</div>;
+      return <div>Select User to see projects</div>;
     }
 
     if (error) {
@@ -256,17 +288,17 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
         <ul>
           {projects.map((project) => (
             <ProjectItem
-              key={project.project_id}
-              selected = {selectedProject === project.project_id}
-              onClick={() => this.handleProjectClick(project.project_id)}>
-                {project.project_id}
+              key={project.projectName}
+              selected={selectedProject === project.projectName}
+              onClick={() => this.handleProjectClick(project.projectName)}>
+              {project.projectName}
             </ProjectItem>
           ))}
         </ul>
         {
           selectedProject && (
             <BottomButtonContainer>
-              <button onClick={() => this.props.onOpenUserProject(this.state.selectedSection, this.state.selectedProject, `main.${ProgrammingLanguage.FILE_EXTENSION[this.state.activeLanguage]}`,this.state.activeLanguage )}>
+              <button onClick={() => this.props.onOpenUserProject(this.state.selectedSection, this.state.selectedProject, `main.${ProgrammingLanguage.FILE_EXTENSION[this.state.activeLanguage]}`, this.state.activeLanguage)}>
                 Open Project
               </button>
             </BottomButtonContainer>

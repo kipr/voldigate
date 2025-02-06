@@ -23,6 +23,15 @@ import OpenUsersDialog from './OpenUsersDialog';
 import ProgrammingLanguage from 'ProgrammingLanguage';
 import { Modal } from '../pages/Modal';
 
+type Project = {
+  projectName: string;
+  binFolderFiles: string[];
+  includeFolderFiles: string[];
+  srcFolderFiles: string[];
+  dataFolderFiles: string[];
+  projectLanguage: ProgrammingLanguage;
+}
+
 export interface HomeStartOptionsPublicProps extends StyleProps, ThemeProps {
     onClearConsole: () => void;
     activeLanguage: ProgrammingLanguage;
@@ -30,6 +39,8 @@ export interface HomeStartOptionsPublicProps extends StyleProps, ThemeProps {
     onChangeProjectName: (projectName: string) => void;
     onCreateProjectDialog: (name: string) => void;
     onOpenUserProject: (name: string, projectName: string, fileName: string, projectLanguage: string) => void;
+    onLoadUsers: () => Promise<string[]>;
+    onLoadUserData: (openedUserDialog: boolean, desiredUser: string) => Promise<Project[]>;
     //onNewFileName: (name: string) => void;
 }
 
@@ -131,9 +142,9 @@ const LogoContainer = styled('div', (props: ThemeProps) => ({
     width: '30%',
     height: '30%',
     zIndex: 0,
-  }));
+}));
 
-  const Logo = styled('img', (props: ThemeProps) => ({
+const Logo = styled('img', (props: ThemeProps) => ({
     position: 'relative',
     top: '14%',
     alignItems: 'flex-end',
@@ -143,8 +154,8 @@ const LogoContainer = styled('div', (props: ThemeProps) => ({
     marginRight: '10px',
     userSelect: 'none',
     transition: 'background-color 0.2s, opacity 0.2s'
-  }));
-  const IDEName = styled('div', (props: ThemeProps) => ({
+}));
+const IDEName = styled('div', (props: ThemeProps) => ({
     position: 'absolute',
     top: '40%',
     display: 'flex',
@@ -159,9 +170,9 @@ const LogoContainer = styled('div', (props: ThemeProps) => ({
     width: '500px',
     height: '100%',
     zIndex: 0,
-  }));
-  
-  
+}));
+
+
 
 export class HomeStartOptions extends React.Component<Props, State> {
     static username: string;
@@ -195,7 +206,7 @@ export class HomeStartOptions extends React.Component<Props, State> {
     private onModalClick_ = (modal: Modal) => () => this.setState({ modal });
     private onModalClose_ = () => this.setState({ modal: Modal.NONE });
 
-   
+
     private onCreateProject = () => {
         console.log("OnCreateProject;");
     };
@@ -206,16 +217,16 @@ export class HomeStartOptions extends React.Component<Props, State> {
             className,
             style,
             locale,
-             } = this.props;
+        } = this.props;
         const theme = DARK;
         const {
             settings,
             modal,
-            
+
         } = this.state;
 
 
-      
+
         return (
 
 
@@ -227,7 +238,7 @@ export class HomeStartOptions extends React.Component<Props, State> {
                     </LogoContainer>
                     <StartContainer theme={theme}>
                         <Title theme={theme} style={{ fontSize: 35 }}>Start</Title>
-                         <Item onClick={this.onModalClick_(Modal.CREATEUSER)} theme={theme}><ItemIcon icon={faUserPlus}></ItemIcon>{LocalizedString.lookup(tr('New User...'), locale)}</Item>
+                        <Item onClick={this.onModalClick_(Modal.CREATEUSER)} theme={theme}><ItemIcon icon={faUserPlus}></ItemIcon>{LocalizedString.lookup(tr('New User...'), locale)}</Item>
                         <Item theme={theme}><ItemIcon style={{ paddingRight: '7%' }} icon={faFilePen}></ItemIcon>{LocalizedString.lookup(tr('Open File...'), locale)}</Item>
                         <Item onClick={this.onModalClick_(Modal.OPENUSERS)} theme={theme}><ItemIcon style={{ paddingRight: '9%' }} icon={faBookReader}></ItemIcon>{LocalizedString.lookup(tr('Open User...'), locale)}</Item>
 
@@ -248,9 +259,9 @@ export class HomeStartOptions extends React.Component<Props, State> {
                         theme={theme}
                         onClose={this.onModalClose_}
                         userName={''}
-                        showRepeatUserDialog={false} 
-                        onCreateProjectDialog={this.props.onCreateProjectDialog}                         />
-               
+                        showRepeatUserDialog={false}
+                        onCreateProjectDialog={this.props.onCreateProjectDialog} />
+
                 )}
                 {modal.type === Modal.Type.OpenUsers && (
                     <OpenUsersDialog
@@ -259,9 +270,12 @@ export class HomeStartOptions extends React.Component<Props, State> {
                         settings={settings}
                         onSettingsChange={this.onSettingsChange_}
                         onOpenUserProject={this.props.onOpenUserProject}
-                        projectLanguage={this.props.activeLanguage}                    />
+                        onLoadUsers={this.props.onLoadUsers}
+                        onLoadUserData={this.props.onLoadUserData}
+                        projectLanguage={this.props.activeLanguage}
+                    />
                 )}
-               
+
 
             </>
 
