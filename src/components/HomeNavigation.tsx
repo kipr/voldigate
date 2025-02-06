@@ -15,7 +15,7 @@ import ProgrammingLanguage from '../ProgrammingLanguage';
 
 
 export interface HomeNavigationPublicProps extends RouteComponentProps, ThemeProps, StyleProps {
-  propedUsers: string[];
+  propedUsers?: string[];
 }
 
 interface HomeNavigationPrivateProps {
@@ -77,7 +77,7 @@ const Container = styled('div', (props: ThemeProps) => ({
   flexDirection: 'column',
   alignItems: 'left',
   justifyContent: 'center',
-  width: '100%',
+  width: '100vh',
   height: '100%',
   backgroundColor: props.theme.backgroundColor,
   color: props.theme.color,
@@ -98,34 +98,13 @@ const LeftBarContainer = styled('div', (props: ThemeProps) => ({
 
   alignItems: 'left',
   justifyContent: 'center',
-  width: '100%',
+  width: '100vh',
   height: '100vh',
   backgroundColor: props.theme.backgroundColor,
   color: props.theme.color,
 }));
 
 
-const RootContainer = styled('div', (props: { theme: any; isleftbaropen_: string }) => {
-  //const marginLeft = props.isleftbaropen_ ? '15%' : '4%';
-  const marginLeft = props.isleftbaropen_ === "true"
-    ? `${(window.innerWidth * 0.12)}px` // 13% of window.innerWidth
-    : `${(window.innerWidth * 0.01)}px`; // 4% of window.innerWidth
-
-  return {
-    position: 'absolute',
-    top: '4%',
-    left: '2%',
-    display: 'flex',
-    flexWrap: 'wrap',
-    // marginLeft: props.isleftbaropen_ == "true" ? '13%' : '4%', // Shift based on LeftBar state
-    marginLeft: marginLeft,
-    flexDirection: 'row',
-    justifyContent: 'start',
-    width: '30%',
-    height: '30%',
-    zIndex: 0,
-  };
-});
 
 class HomeNavigation extends React.PureComponent<Props, State> {
 
