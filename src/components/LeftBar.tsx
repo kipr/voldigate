@@ -4,7 +4,7 @@ import { styled } from 'styletron-react';
 import { StyleProps } from '../style';
 import { Spacer } from './common';
 import { Fa } from './Fa';
-import { DARK, ThemeProps } from './theme';
+import { DARK, ThemeProps, LIGHT } from './theme';
 
 import { faCog, faFolderTree } from '@fortawesome/free-solid-svg-icons';
 
@@ -128,7 +128,7 @@ const Container = styled('div', (props: ThemeProps) => ({
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'flex-start',
-  borderRight: `1px solid ${props.theme.borderColor}`,
+
   zIndex: 0,
   width: '100vh',
   flexGrow: 1,
@@ -166,6 +166,25 @@ const ItemIcon = styled(Fa, {
   alignItems: 'center',
   height: '30px'
 });
+const LeftBarContainer = styled('div', (props: ThemeProps & ClickProps) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  width: '50px',
+  flex: '1 1 0',
+  backgroundColor: props.theme.leftBarContainerBackground,
+  borderRight: `2px solid ${props.theme.borderColor}`,
+}));
+
+const FileExplorerContainer = styled('div', (props: ThemeProps & ClickProps) => ({
+  flex: '1 1 0',
+  display: 'flex',
+  flexDirection: 'column',
+  overflow: 'visible',
+  height: '100%',
+  backgroundColor: props.theme.fileContainerBackground,
+ 
+  borderRight: `2px solid ${props.theme.borderColor}`,
+}));
 
 
 
@@ -214,7 +233,7 @@ export class LeftBar extends React.Component<Props, State> {
   };
   render() {
     const { className, style, locale, } = this.props;
-    const theme = DARK;
+    const theme = LIGHT;
     const {
       propedSelectedProjectName,
       propedOnProjectSelected,
@@ -284,7 +303,7 @@ export class LeftBar extends React.Component<Props, State> {
 
     let rootContent: JSX.Element;
     rootContent = (
-      <div style={{height: '80%', flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+      <div style={{ height: '80%', flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         <Root
           key={rootSelectedProject}
           isLeftBarOpen={rootIsLeftBarOpen}
@@ -335,7 +354,7 @@ export class LeftBar extends React.Component<Props, State> {
     let fileExplorerContent: JSX.Element;
 
     fileExplorerContent = (
-      <div style={{ flex: '1 1 0', display: 'flex', flexDirection: 'column', overflow: 'visible', height: '100%' }}>
+      <FileExplorerContainer theme={theme}>
         <FileExplorer
           theme={theme}
           locale="en-US"
@@ -365,7 +384,9 @@ export class LeftBar extends React.Component<Props, State> {
             zIndex: 1,
           }}
         />
-      </div>
+
+
+      </FileExplorerContainer>
     );
 
 
@@ -379,7 +400,7 @@ export class LeftBar extends React.Component<Props, State> {
 
 
 
-        <div style={{ display: 'flex', flexDirection: 'column', width: '50px', flex: '1 1 0' }}>
+        <LeftBarContainer theme={theme} >
           <Item theme={theme} onClick={this.togglePanelVisibility}>
             <ItemIcon icon={faFolderTree} />
           </Item>
@@ -389,8 +410,9 @@ export class LeftBar extends React.Component<Props, State> {
           <Item style={{ marginBottom: '10px' }} theme={theme} onClick={this.onModalClick_(Modal.SETTINGS)}>
             <ItemIcon icon={faCog} />
           </Item>
-        </div>
 
+
+        </LeftBarContainer>
         <Slider
           isVertical={true}
           theme={theme}

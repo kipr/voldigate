@@ -3,7 +3,7 @@ import { styled } from 'styletron-react';
 import { StyleProps } from '../style';
 
 import { Fa } from './Fa';
-import { DARK, ThemeProps } from './theme';
+import { DARK, ThemeProps, LIGHT } from './theme';
 import CreateUserDialog from './CreateUserDialog';
 import { faBookReader, faFileCirclePlus, faFilePen, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -24,12 +24,12 @@ import ProgrammingLanguage from 'ProgrammingLanguage';
 import { Modal } from '../pages/Modal';
 
 type Project = {
-  projectName: string;
-  binFolderFiles: string[];
-  includeFolderFiles: string[];
-  srcFolderFiles: string[];
-  dataFolderFiles: string[];
-  projectLanguage: ProgrammingLanguage;
+    projectName: string;
+    binFolderFiles: string[];
+    includeFolderFiles: string[];
+    srcFolderFiles: string[];
+    dataFolderFiles: string[];
+    projectLanguage: ProgrammingLanguage;
 }
 
 export interface HomeStartOptionsPublicProps extends StyleProps, ThemeProps {
@@ -60,11 +60,30 @@ type State = HomeStartOptionsState;
 
 
 const Container = styled('div', (props: ThemeProps) => ({
-    backgroundColor: 'green',
+
     color: props.theme.color,
     width: '50%',
-    height: '100%',
-    marginTop: '16%',
+    height: '70%',
+    marginTop: '3%',
+    marginLeft: '19%',
+    lineHeight: '28px',
+    display: 'flex',
+    alignContent: 'flex-start',
+    poisition: 'relative',
+    flexDirection: 'column',
+    zIndex: 1,
+
+
+
+}));
+
+const HomeStartContainer = styled('div', (props: ThemeProps) => ({
+    backgroundColor: props.theme.homeStartContainerBackground,
+    border: `2px solid ${props.theme.borderColor}`,
+    color: props.theme.color,
+    width: '45%',
+    height: '50%',
+    marginTop: '3%',
     marginLeft: '23%',
     lineHeight: '28px',
     display: 'flex',
@@ -74,17 +93,19 @@ const Container = styled('div', (props: ThemeProps) => ({
     zIndex: 1,
 
 
+
 }));
 
 
 
 const StartContainer = styled('div', (props: ThemeProps) => ({
-    backgroundColor: 'blue',
+    backgroundColor: '#ebdbdc',
     color: props.theme.color,
     width: '45%',
-    height: '55%',
+    height: '85%',
     marginTop: '5%',
-    marginLeft: '15%',
+    marginLeft: '10%',
+    padding: '10px 5px 10px 5px',
     lineHeight: '28px',
     display: 'flex',
     alignContent: 'start',
@@ -106,6 +127,7 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
     flexDirection: 'row',
     fontSize: '25px',
     paddingRight: '20px',
+    paddingLeft: '20px',
     marginBottom: '12px',
     height: '45px',
     userSelect: 'none',
@@ -131,44 +153,45 @@ const ItemIcon = styled(Fa, {
 
 
 const LogoContainer = styled('div', (props: ThemeProps) => ({
-    position: 'absolute',
-    top: '4px',
+    position: 'relative',
+    top: '10px',
     display: 'flex',
     flexWrap: 'wrap',
     marginLeft: '10%',
-    flexDirection: 'row',
-    justifyContent: 'start',
-    backgroundColor: '#373737',
-    width: '30%',
-    height: '30%',
+    flexDirection: 'column',
+
+    width: '80%',
+    height: '40%',
     zIndex: 0,
+
 }));
 
 const Logo = styled('img', (props: ThemeProps) => ({
     position: 'relative',
-    top: '14%',
+    backgroundColor: '#373737',
     alignItems: 'flex-end',
     width: '250px',
     height: '250px',
-    marginLeft: '10%',
-    marginRight: '10px',
+    marginLeft: '6%',
+ 
     userSelect: 'none',
     transition: 'background-color 0.2s, opacity 0.2s'
 }));
 const IDEName = styled('div', (props: ThemeProps) => ({
-    position: 'absolute',
-    top: '40%',
+    position: 'relative',
+
     display: 'flex',
-    flexWrap: 'wrap',
-    marginLeft: '60%',
+
+    marginLeft: '5%',
+    marginTop: '17%',    
     flexDirection: 'row',
-    justifyContent: 'start',
+
     fontFamily: "bebas-neue-pro-semiexpanded, sans-serif",
     fontStyle: 'normal',
     fontWeight: 600,
     fontSize: "500",
     width: '500px',
-    height: '100%',
+    height: '50%',
     zIndex: 0,
 }));
 
@@ -218,7 +241,7 @@ export class HomeStartOptions extends React.Component<Props, State> {
             style,
             locale,
         } = this.props;
-        const theme = DARK;
+        const theme = LIGHT;
         const {
             settings,
             modal,
@@ -233,17 +256,19 @@ export class HomeStartOptions extends React.Component<Props, State> {
             <>
                 <Container className={className} style={style} theme={theme}>
                     <LogoContainer theme={theme}>
-                        <Logo src={KIPR_LOGO_WHITE as string} style={{ marginBottom: '10px' }} theme={theme} />
+                        <Logo src={KIPR_LOGO_WHITE as string} theme={theme} />
                         <IDEName style={{ fontSize: 50 }} theme={theme}>KISS IDE</IDEName>
                     </LogoContainer>
-                    <StartContainer theme={theme}>
-                        <Title theme={theme} style={{ fontSize: 35 }}>Start</Title>
-                        <Item onClick={this.onModalClick_(Modal.CREATEUSER)} theme={theme}><ItemIcon icon={faUserPlus}></ItemIcon>{LocalizedString.lookup(tr('New User...'), locale)}</Item>
-                        <Item theme={theme}><ItemIcon style={{ paddingRight: '7%' }} icon={faFilePen}></ItemIcon>{LocalizedString.lookup(tr('Open File...'), locale)}</Item>
-                        <Item onClick={this.onModalClick_(Modal.OPENUSERS)} theme={theme}><ItemIcon style={{ paddingRight: '9%' }} icon={faBookReader}></ItemIcon>{LocalizedString.lookup(tr('Open User...'), locale)}</Item>
+                    <HomeStartContainer theme={theme}>
+                        <StartContainer theme={theme}>
+                            <Title theme={theme} style={{ fontSize: 35 }}>Start</Title>
+                            <Item onClick={this.onModalClick_(Modal.CREATEUSER)} theme={theme}><ItemIcon icon={faUserPlus}></ItemIcon>{LocalizedString.lookup(tr('New User...'), locale)}</Item>
+                            <Item theme={theme}><ItemIcon style={{ paddingRight: '7%' }} icon={faFilePen}></ItemIcon>{LocalizedString.lookup(tr('Open File...'), locale)}</Item>
+                            <Item onClick={this.onModalClick_(Modal.OPENUSERS)} theme={theme}><ItemIcon style={{ paddingRight: '9%' }} icon={faBookReader}></ItemIcon>{LocalizedString.lookup(tr('Open User...'), locale)}</Item>
 
 
-                    </StartContainer>
+                        </StartContainer>
+                    </HomeStartContainer>
 
                 </Container>
                 {modal.type === Modal.Type.Settings && (

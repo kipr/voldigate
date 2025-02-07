@@ -58,7 +58,7 @@ interface ClickProps {
   disabled?: boolean;
 }
 
-const Container = styled('div', (props: { theme: Theme; isleftbaropen: string }) => ({
+const Container = styled('div', (props: ThemeProps) => ({
   flex: '1',
   backgroundColor: props.theme.backgroundColor,
   color: props.theme.color,
@@ -68,7 +68,7 @@ const Container = styled('div', (props: { theme: Theme; isleftbaropen: string })
     outline: 'none'
   },
   height: '100%',
-  width: props.isleftbaropen == "true" ? '87%' : '97%',
+
 
 }));
 const Item = styled('div', (props: ThemeProps & ClickProps) => ({
@@ -456,9 +456,9 @@ class Editor extends React.PureComponent<Props, State> {
       autocomplete,
       language
     } = this.props;
-
+    console.log("Editor theme:", this.props.theme); // Debugging
     return (
-      <Container theme={theme} style={style} className={className} isleftbaropen={this.state.isleftbaropen ? "true" : "false"}>
+      <Container theme={theme} style={style} className={className} >
         <Ivygate
           ref={this.bindIvygate_}
           code={code}

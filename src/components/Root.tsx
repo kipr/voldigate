@@ -4,7 +4,7 @@ import JSZip from 'jszip';
 import { State as ReduxState } from '../state';
 import parseMessages, { hasErrors, hasWarnings, sort, toStyledText } from '../util/parse-messages';
 import { styled } from 'styletron-react';
-import { DARK, Theme } from './theme';
+import { DARK, Theme, LIGHT } from './theme';
 import { Layout } from './Layout';
 
 import SettingsDialog from './SettingsDialog';
@@ -1714,7 +1714,7 @@ class Root extends React.Component<Props, State> {
     console.log("Root render with state:", state);
 
 
-    const theme = DARK;
+    const theme = LIGHT;
 
     return (
       <RootContainer $windowInnerHeight={windowInnerHeight}>

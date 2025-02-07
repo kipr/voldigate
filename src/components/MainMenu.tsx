@@ -4,7 +4,7 @@ import { styled } from 'styletron-react';
 import { StyleProps } from '../style';
 import { Spacer } from './common';
 import { Fa } from './Fa';
-import { DARK, ThemeProps } from './theme';
+import { DARK, ThemeProps,LIGHT } from './theme';
 
 import { connect } from 'react-redux';
 
@@ -29,7 +29,7 @@ type Props = MenuPublicProps & MenuPrivateProps;
 type State = MenuState;
 
 const Container = styled('div', (props: ThemeProps) => ({
-  backgroundColor: props.theme.backgroundColor,
+  backgroundColor: props.theme.titleBarBackground,
   color: props.theme.color,
   width: '100%',
   height: '48px',
@@ -66,7 +66,7 @@ interface ClickProps {
 
 
 const ExtraMenuContainer = styled('div', (props: ThemeProps) => ({
-  backgroundColor: props.theme.backgroundColor,
+  backgroundColor: props.theme.titleBarBackground,
   color: props.theme.color,
   top: '20px',
   width: '100vh',
@@ -98,7 +98,7 @@ export class MainMenu extends React.Component<Props, State> {
 
   render() {
     const { className, style, locale } = this.props;
-    const theme = DARK;
+    const theme = LIGHT;
     return (
       <Container className={className} style={style} theme={theme}>
         <Logo theme={theme} src={theme.foreground === 'white' ? KIPR_LOGO_BLACK as string : KIPR_LOGO_WHITE as string} onClick={this.onDashboardClick_} />

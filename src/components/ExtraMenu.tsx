@@ -34,7 +34,7 @@ const Container = styled('div', (props: ThemeProps) => ({
   position: 'absolute',
   right: `${(window.innerWidth * 0.04)}px`,
   width: '240px',
-  backgroundColor: props.theme.backgroundColor,
+  backgroundColor: props.theme.titleBarBackground,
   color: props.theme.color,
   
   display: 'flex',
@@ -57,6 +57,7 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
   flexDirection: 'row',
   padding: '10px',
   borderBottom: `1px solid ${props.theme.borderColor}`,
+  backgroundColor: `${props.theme.iconColor}`,
   ':last-child': {
     borderBottom: 'none'
   },
@@ -98,6 +99,7 @@ class ExtraMenu extends React.PureComponent<Props, State> {
 
       locale,
     } = props;
+    console.log("ExtraMenu theme: ", theme);
     return (
       <Container theme={theme} style={style} className={className}>
         <Item theme={theme} onClick={onDocumentationClick}><ItemIcon icon={faBook} /> {LocalizedString.lookup(tr('Documentation'), locale)}</Item>

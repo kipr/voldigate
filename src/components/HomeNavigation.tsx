@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DARK, ThemeProps } from '../components/theme';
+import { DARK, ThemeProps,LIGHT } from '../components/theme';
 import { StyleProps } from '../style';
 import { styled } from 'styletron-react';
 import MainMenu from '../components/MainMenu';
@@ -473,7 +473,7 @@ class HomeNavigation extends React.PureComponent<Props, State> {
       rootDownloadProjectFlag,
       rootDownloadFileFlag
     } = state;
-    const theme = DARK;
+    const theme = LIGHT;
 
     return (
       <HomeNavigationContainer theme={theme}>

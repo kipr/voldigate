@@ -82,6 +82,7 @@ interface FileExplorerState {
     users: string[];
     selectedSection: UsersSection;
     selectedProject: string;
+    selectedFile: string
     projects: [] | null;
     error: string | null;
     projectName: string;
@@ -106,15 +107,15 @@ type Props = FileExplorerProps & FileExplorerPrivateProps;
 type State = FileExplorerState;
 
 
-const SectionName = styled('span', (props: ThemeProps & SectionProps) => ({
+const SectionName = styled('span', (props: ThemeProps & SectionProps & { selected: boolean }) => ({
     // backgroundColor: props.selected ? `rgba(255, 255, 255, 0.1)` : undefined,
-    // ':hover': {
-    //     cursor: 'pointer',
-    //     backgroundColor: `rgba(255, 255, 255, 0.1)`
-    // },
+    ':hover': {
+        cursor: 'pointer',
+        backgroundColor: `rgba(255, 255, 255, 0.1)`
+    },
     width: '100%',
 
-    backgroundColor: "pink",
+    backgroundColor: props.selected ? props.theme.selectedUserBackground : props.theme.homeStartContainerBackground,
     transition: 'background-color 0.2s, opacity 0.2s',
     padding: `5px`,
     fontWeight: props.selected ? 400 : undefined,
@@ -128,17 +129,18 @@ const UsersContainer = styled('div', (props: ThemeProps) => ({
     left: '4%',
     top: '4.8%',
     height: '100%',
-    width: '100%', 
-    backgroundColor: 'blue', 
+    width: '100%',
+    margin: '5px',
+    // backgroundColor: 'blue', 
     zIndex: 1,
-    boxShadow: '2px 0 5px rgba(0,0,0,0.2)',
+    //boxShadow: '2px 0 5px rgba(0,0,0,0.2)',
 }));
 
 const SectionsColumn = styled('div', (props: ThemeProps) => ({
     display: 'flex',
     flexDirection: 'column',
     flex: '0 0 150px',
-    borderRight: `1px solid ${props.theme.borderColor}`,
+    border: `3px solid ${props.theme.borderColor}`,
 }));
 
 const SidePanel = styled('div', (props: ThemeProps) => ({
@@ -148,26 +150,30 @@ const SidePanel = styled('div', (props: ThemeProps) => ({
     left: '3.5%',
     top: '6%',
     height: '90%',
-    backgroundColor: 'purple', 
+
     zIndex: 1,
     overflow: 'visible',
-    boxShadow: '2px 0 5px rgba(0,0,0,0.2)',
+    // 
     width: 'auto',
-  }));
-  
+}));
+
 
 const ProjectContainer = styled('div', (props: ThemeProps) => ({
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: 'green',
+
+    position: 'relative',
     flex: '0 0 150px',
     padding: '5px',
+    marginLeft: '3px',
+    boxShadow: '4px 4px 4px rgba(0,0,0,0.2)',
+    width: '99%'
 }));
 
 const ProjectHeaderContainer = styled('div', (props: ThemeProps) => ({
     display: 'flex',
     flexDirection: 'row',
-    backgroundColor: 'deeppink',
+    borderBottom: `3px solid ${props.theme.borderColor}`,
 
 
 }));
@@ -197,22 +203,20 @@ const AddProjectItemIcon = styled(Fa, {
     alignItems: 'center',
     height: '15px'
 });
-const ProjectItem = styled('li', (props: { selected: boolean }) => ({
+
+
+const ProjectItem = styled('li', (props: ThemeProps & { selected: boolean }) => ({
     display: 'flex',
     flexDirection: 'column',
     flexWrap: 'wrap',
     cursor: 'pointer',
-    backgroundColor: props.selected ? `rgba(255, 255, 255, 0.1)` : undefined,  // Highlight selected project
-    padding: '1px',
+    padding: '5px',
     width: '100%',
     boxSizing: 'border-box',
     textOverflow: 'ellipsis',
     whiteSpace: 'normal',
     borderRadius: '5px',
-    ':hover': {
-        cursor: 'pointer',
-        backgroundColor: `rgba(255, 255, 255, 0.1)`
-    },
+
 }));
 
 
@@ -227,14 +231,34 @@ const Container = styled('ul', {
 });
 
 
+const FileTypeTitleContainer = styled('div', (props: ThemeProps) => ({
 
-
-const FileTypeContainer = styled('div', (props: ThemeProps) => ({
-    display: 'flex',
-    flexDirection: 'column',
-    backgroundColor: 'indigo',
     width: '100%',
-    padding: '10px',
+
+    transition: 'background-color 0.2s, opacity 0.2s',
+    padding: `5px`,
+    fontWeight: 400,
+    
+    userSelect: 'none',
+}));
+
+
+const FileTypeContainer = styled('div', (props: ThemeProps & { selected: boolean }) => ({
+    //     display: 'flex',
+    //     flexDirection: 'column',
+    //    // backgroundColor: 'indigo',
+    //     width: '100%',
+    //     padding: '10px',
+    //     boxShadow: '4px 4px 4px rgba(0,0,0,0.2)',
+
+    width: '100%',
+
+    backgroundColor: props.selected ? props.theme.selectedUserBackground : props.theme.homeStartContainerBackground,
+    transition: 'background-color 0.2s, opacity 0.2s',
+    padding: `5px`,
+
+    border: `3px solid ${props.theme.borderColor}`,
+    userSelect: 'none',
 }));
 
 const FileTypeItem = styled('li', (props: ThemeProps) => ({
@@ -248,7 +272,7 @@ const FileContainer = styled('div', (props: ThemeProps) => ({
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    backgroundColor: 'rosybrown',
+
     flex: '0 0 150px',
 
     marginLeft: '7px',
@@ -265,10 +289,11 @@ const IndividualFile = styled('div', (props: ThemeProps & { selected: boolean })
     listStyleType: 'none',
     borderRadius: '5px',
     cursor: 'pointer',
+    backgroundColor: props.selected ? props.theme.selectedFileBackground : props.theme.homeStartContainerBackground,
     padding: '3px',
     ':hover': {
         cursor: 'pointer',
-        backgroundColor: `rgba(255, 255, 255, 0.1)`
+        backgroundColor: props.theme.hoverFileBackground
     },
 }));
 
@@ -305,6 +330,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
             users: [],
             selectedSection: "",
             selectedProject: null,
+            selectedFile: null,
             projects: null,
             error: null,
             projectName: '',
@@ -628,17 +654,26 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
         console.log("handleProjectClick click");
         console.log("handleProjectClick language: ", language);
 
-        this.setState({
-            showProjectFiles: !this.state.showProjectFiles,
-            selectedProject: projectId,
-            userName: user,
-            projectName: projectId,
-            activeLanguage: language
+        // this.setState({
+        //     showProjectFiles: !this.state.showProjectFiles,
 
-        }, () => {
+
+        // }, () => {
+        //     console.log("handleProjectClick this.props.propUserData: ", this.props.propUserData);
+        //     console.log("handleProjectClick state:", this.state);
+        // })
+
+        this.setState((prevState) => ({
+            showProjectFiles: prevState.selectedProject === projectId ? false : true,
+            selectedProject: prevState.selectedProject === projectId ? null : projectId,
+            userName: prevState.selectedProject === projectId ? null : user,
+            projectName: prevState.selectedProject === projectId ? null : projectId,
+            activeLanguage: prevState.selectedProject === projectId ? null : language
+        }), () => {
             console.log("handleProjectClick this.props.propUserData: ", this.props.propUserData);
             console.log("handleProjectClick state:", this.state);
-        })
+        });
+
     };
 
     private handleFileClick = async (fileName: string) => {
@@ -653,7 +688,8 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
 
         console.log("extension is:", extension);
         this.setState({
-            fileType: extension
+            fileType: extension,
+            selectedFile: fileName
         });
 
         switch (extension) {
@@ -764,10 +800,15 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
         }
 
         console.log("setSelectedSection selectedSection: ", user);
-        this.setState({
-            selectedSection: user,
+        // this.setState({
+        //     selectedSection: user,
+
+        // })
+
+        this.setState((prevState) => ({
+            selectedSection: prevState.selectedSection === user ? null : user,
             showProjects: !this.state.showProjects
-        })
+        }));
 
         this.props.onUserSelected(user, true);
 
@@ -858,7 +899,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
     }
 
     renderProjects = (projects: Project[]) => {
-        const theme = DARK;
+        const theme = this.props.theme;
         console.log("insideRenderProjects");
         console.log("insideRenderProjects projects: ", projects);
         return (
@@ -886,10 +927,10 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                                     onClick={() => this.handleProjectClick(project.projectName, this.state.selectedSection, project.projectLanguage)}
                                     style={{
                                         backgroundColor: this.state.projectName === project.projectName
-                                            ? 'rgba(255, 255, 255, 0.3)' // Highlight color
+                                            ? this.props.theme.selectedProjectBackground
                                             : 'transparent'
                                     }}
-                                    onContextMenu={(e) => this.handleProjectRightClick(e, project)}
+                                    onContextMenu={(e) => this.handleProjectRightClick(e, project)} theme={theme}
                                 >
                                     {project.projectName}
 
@@ -898,12 +939,19 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
 
                                 {this.state.selectedProject === project.projectName && this.state.showProjectFiles && (
                                     console.log('Rendering files for project:', project),
-                                    <FileTypeContainer theme={theme}>
+                                    <FileTypeContainer theme={theme} selected={false}>
                                         <FileTypeItem theme={theme} key={`IncludeFileHeader-${project.projectName}`}>
-                                            Include Files
+                                            <FileTypeTitleContainer theme={theme} >
+                                                Include Files
+                                            </FileTypeTitleContainer>
                                             <FileContainer theme={theme}>
                                                 {project.includeFolderFiles.map((file, i) => (
-                                                    <IndividualFile key={`include-${i}`} theme={theme} selected={false} onClick={() => this.handleFileClick(file)} onContextMenu={(e) => this.handleFileRightClick(e, file)}>
+                                                    <IndividualFile
+                                                        key={`include-${i}`}
+                                                        theme={theme}
+                                                        selected={this.state.selectedFile === file}
+
+                                                        onClick={() => this.handleFileClick(file)} onContextMenu={(e) => this.handleFileRightClick(e, file)}>
                                                         {file}
                                                     </IndividualFile>
                                                 ))}
@@ -918,10 +966,16 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                                         </FileTypeItem>
 
                                         <FileTypeItem theme={theme} key={`SourceFileHeader-${project.projectName}`}>
-                                            Source Files
+                                            <FileTypeTitleContainer theme={theme}>
+                                                Source Files
+                                            </FileTypeTitleContainer>
                                             <FileContainer theme={theme}>
                                                 {project.srcFolderFiles.map((file, i) => (
-                                                    <IndividualFile key={`src-${i}`} theme={theme} selected={false} onClick={() => this.handleFileClick(file)} onContextMenu={(e) => this.handleFileRightClick(e, file)}>
+                                                    <IndividualFile
+                                                        key={`src-${i}`}
+                                                        theme={theme}
+                                                        selected={this.state.selectedFile === file}
+                                                        onClick={() => this.handleFileClick(file)} onContextMenu={(e) => this.handleFileRightClick(e, file)}>
                                                         {file}
                                                     </IndividualFile>
                                                 ))}
@@ -933,14 +987,23 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                                         </FileTypeItem>
 
                                         <FileTypeItem theme={theme} key={`UserDataFileHeader-${project.projectName}`}>
-                                            User Data Files
+                                            <FileTypeTitleContainer theme={theme}>
+                                                User Data Files
+                                            </FileTypeTitleContainer>
                                             <FileContainer theme={theme}>
                                                 {project.dataFolderFiles.map((file, i) => (
-                                                    <IndividualFile key={`data-${i}`} theme={theme} selected={false} onClick={() => this.handleFileClick(file)} onContextMenu={(e) => this.handleFileRightClick(e, file)}>
+                                                    <IndividualFile
+                                                        key={`data-${i}`}
+                                                        theme={theme}
+                                                        selected={this.state.selectedFile === file}
+                                                        onClick={() => this.handleFileClick(file)} onContextMenu={(e) => this.handleFileRightClick(e, file)}>
                                                         {file}
                                                     </IndividualFile>
                                                 ))}
-                                                <IndividualFile theme={theme} selected={false} onClick={() => this.addNewFile("txt")}>
+                                                <IndividualFile
+                                                    theme={theme}
+                                                    selected={false}
+                                                    onClick={() => this.addNewFile("txt")}>
                                                     <FileItemIcon icon={faFileCirclePlus} />
                                                     {LocalizedString.lookup(tr('Add File'), this.props.locale)}
                                                 </IndividualFile>
@@ -968,7 +1031,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
 
             theme,
             locale,
-            propUsers, 
+            propUsers,
             style
         } = props;
 
@@ -1016,12 +1079,12 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                         flex: style.flex, // Pass flex dynamically from the parent
                     }}
                 >
-                    <h2>Explorer</h2>
+                    <h2 style={{ marginLeft: '6px' }}>Explorer</h2>
                     <UsersContainer theme={theme}>
-                        <SectionsColumn theme={theme}>
+                        {/* <SectionsColumn theme={theme}>
 
 
-                        </SectionsColumn>
+                        </SectionsColumn> */}
                         {userSections}
                     </UsersContainer>
 
