@@ -9,7 +9,7 @@ import { Button } from '../Button';
 import { Text } from '../Text';
 import { BarComponent } from '../Widget';
 import { WarningCharm, ErrorCharm } from './';
-import { GREEN, RED, ThemeProps } from '../../constants/theme';
+import { GREEN, LIGHTMODE_GREEN, RED, ThemeProps } from '../theme';
 import { Ivygate, Message } from 'ivygate';
 import { FontAwesome } from '../FontAwesome';
 import ProgrammingLanguage from '../../ProgrammingLanguage';
@@ -96,11 +96,11 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
 }));
 
 const RunItem = withStyleDeep(Item, (props: ClickProps) => ({
-  backgroundColor: props.disabled ? GREEN.disabled : GREEN.standard,
+  backgroundColor: props.disabled ? LIGHTMODE_GREEN.disabled : LIGHTMODE_GREEN.standard,
   ':hover':
     props.onClick && !props.disabled
       ? {
-        backgroundColor: GREEN.hover,
+        backgroundColor: LIGHTMODE_GREEN.hover,
       }
       : {},
 }));

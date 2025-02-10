@@ -10,6 +10,12 @@ export const GREEN: ButtonColor = Object.freeze({
   hover: '#4aad52'
 });
 
+export const LIGHTMODE_GREEN: ButtonColor = Object.freeze({
+  disabled: '#507255',
+  standard: '#89c28a',
+  hover: '#4aad52'
+});
+
 export const RED: ButtonColor = Object.freeze({
   disabled: '#735350',
   standard: '#8C494C',
@@ -30,8 +36,22 @@ export const BROWN: ButtonColor = Object.freeze({
 
 export interface Theme {
   foreground: 'white' | 'black';
+  tester: string;
   backgroundColor: string;
   transparentBackgroundColor: (a: number) => string;
+  titleBarBackground: string;
+  fileContainerBackground: string;
+  leftBarContainerBackground: string;
+  editorPageBackground: string;
+  editorConsoleBackground: string;
+  editorBackground: string;
+  homeStartContainerBackground: string;
+  selectedUserBackground: string;
+  selectedProjectBackground: string;
+  selectedFileBackground: string;
+  hoverFileBackground: string;
+
+
   color: string;
   borderColor: string;
   borderRadius: number;
@@ -49,6 +69,8 @@ export interface Theme {
       secondary: string;
     }
   };
+
+  iconColor: string;
   lighten: (frac: number) => string;
   darken: (frac: number) => string;
 }
@@ -58,6 +80,19 @@ export const COMMON: Theme = {
   backgroundColor: undefined,
   transparentBackgroundColor: undefined,
   color: undefined,
+  titleBarBackground: undefined,
+  homeStartContainerBackground: undefined,
+  selectedUserBackground: undefined,
+  selectedProjectBackground: undefined,
+  selectedFileBackground: undefined,
+  hoverFileBackground: undefined,
+  fileContainerBackground: undefined,
+  leftBarContainerBackground: undefined,
+  editorPageBackground: undefined,
+  editorConsoleBackground: undefined,
+  tester: undefined,
+  editorBackground: undefined,
+
   borderColor: undefined,
   borderRadius: 10,
   widget: {
@@ -75,27 +110,48 @@ export const COMMON: Theme = {
     }
   },
   lighten: undefined,
-  darken: undefined
+  darken: undefined,
+
+  iconColor: undefined
 };
 
 export const LIGHT: Theme = {
   ...COMMON,
   foreground: 'white',
-  color: '#000',
+  color: '#403f53',
   backgroundColor: '#fff',
-  transparentBackgroundColor: a => `rgba(255, 255, 255, ${a})`,
+  titleBarBackground: '#f4ecec',
+  fileContainerBackground: '#f4ecec',
+  leftBarContainerBackground: '#f4ecec',
+  homeStartContainerBackground: '#f4ebec',
+  selectedUserBackground: '#dadada',
+  selectedProjectBackground: '#dadada',
+  selectedFileBackground: '#d3e8f9',
+  hoverFileBackground: '#e4f1fb',
+
+  borderColor: '#ede0e0',
+  iconColor: '#f5ebeb',
+  editorPageBackground: '#FBFBFB',
+  editorConsoleBackground: '#fff6f7',
+  editorBackground: '#fbfbfb',
+  tester: '#ff0000',
+
+
+
+  
+  transparentBackgroundColor: (a) => `rgba(255, 255, 255, ${a})`,
   switch: {
     on: {
       primary: 'rgb(0, 0, 0)',
-      secondary: 'rgb(72, 139, 73)'
+      secondary: 'rgb(72, 139, 73)',
     },
     off: {
       primary: 'rgb(127, 127, 127)',
-      secondary: 'rgba(0, 0, 0, 0.1)'
-    }
+      secondary: 'rgba(0, 0, 0, 0.1)',
+    },
   },
-  lighten: (frac: number) => `rgba(0, 0, 0, ${frac})`,
-  darken: (frac: number) => `rgba(255, 255, 255, ${frac})`,
+  lighten: (frac) => `rgba(0, 0, 0, ${frac})`,
+  darken: (frac) => `rgba(255, 255, 255, ${frac})`,
 };
 
 export const DARK: Theme = {
@@ -103,20 +159,20 @@ export const DARK: Theme = {
   foreground: 'black',
   color: '#fff',
   backgroundColor: '#212121',
-  transparentBackgroundColor: a => `rgba(${0x21}, ${0x21}, ${0x21}, ${a})`,
+  transparentBackgroundColor: (a) => `rgba(${0x21}, ${0x21}, ${0x21}, ${a})`,
   borderColor: '#323232',
   switch: {
     on: {
       primary: 'rgb(255, 255, 255)',
-      secondary: 'rgb(72, 139, 73)'
+      secondary: 'rgb(72, 139, 73)',
     },
     off: {
       primary: 'rgb(127, 127, 127)',
-      secondary: 'rgba(255, 255, 255, 0.1)'
-    }
+      secondary: 'rgba(255, 255, 255, 0.1)',
+    },
   },
-  lighten: (frac: number) => `rgba(255, 255, 255, ${frac})`,
-  darken: (frac: number) => `rgba(0, 0, 0, ${frac})`,
+  lighten: (frac) => `rgba(255, 255, 255, ${frac})`,
+  darken: (frac) => `rgba(0, 0, 0, ${frac})`,
 };
 
 export interface ThemeProps {

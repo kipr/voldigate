@@ -256,8 +256,8 @@ class Root extends React.Component<Props, State> {
       },
       modal: Modal.NONE,
       simulatorState: SimulatorState.STOPPED,
-      editorConsole: StyledText.text({ text: LocalizedString.lookup(tr('Welcome to the KIPR IDE!\n'), props.locale), style: STDOUT_STYLE(DARK) }),
-      theme: DARK,
+      editorConsole: StyledText.text({ text: LocalizedString.lookup(tr('Welcome to the KIPR IDE!\n'), props.locale), style: STDOUT_STYLE(LIGHT) }),
+      theme: LIGHT,
       messages: [],
       settings: DEFAULT_SETTINGS,
       feedback: DEFAULT_FEEDBACK,
@@ -324,6 +324,9 @@ class Root extends React.Component<Props, State> {
   shouldComponentUpdate(nextProps: Readonly<Props>, nextState: Readonly<RootState>, nextContext: any): boolean {
 
     if (this.state.saveCodePromptFlag == true) {
+
+      console.log("shouldCompUpdate saveCodePromptFlag true with state:", this.state);
+      console.log("shouldCompUpdate savecodePromptFlag true with nextState:", nextState);
       if (nextProps.propFileName === "") {
         return true;
       }
@@ -333,7 +336,20 @@ class Root extends React.Component<Props, State> {
         this.saveFile_(nextProps.propFileName);
         return false;
       }
+      else if (this.state.editorConsole !== nextState.editorConsole) {
+        console.log("shouldCompUpdate this.state.editorConsole:", this.state.editorConsole);
+        console.log("shouldCompUpdate nextState.editorConsole:", nextState.editorConsole);
+        return false;
+      }
+
+      if (nextState.toSaveCode_ !== nextState.code[nextState.activeLanguage]) {
+        console.log("shouldCompUpdate nextState.toSaveCode_:", nextState.toSaveCode_);
+        console.log("shouldCompUpdate nextState.code[nextState.activeLanguage]:", nextState.code[nextState.activeLanguage]);
+        return false;
+      }
     }
+
+
     return true;
   }
 
@@ -433,7 +449,7 @@ class Root extends React.Component<Props, State> {
         // console.log("Root update with propProjectName:", this.props.propProjectName);
         // console.log("Root update with otherFileType:", this.props.otherFileType);
         console.log("Root update addNewFile props:", this.props);
-        console.log("Root update project language:", this.props.propActiveLanguage);  
+        console.log("Root update project language:", this.props.propActiveLanguage);
         const { propUserName, propProjectName, propFileName } = this.props;
         switch (this.props.otherFileType) {
           case 'h':
@@ -458,10 +474,10 @@ class Root extends React.Component<Props, State> {
             break;
           case 'txt':
             this.setState({
-              activeLanguage: 'plaintext'         
-              });
+              activeLanguage: 'plaintext'
+            });
             break;
-         
+
         }
 
         this.setState({
@@ -684,7 +700,7 @@ class Root extends React.Component<Props, State> {
 
   }
 
-  private loadUsers = async (): Promise<string[]> =>{
+  private loadUsers = async (): Promise<string[]> => {
 
     console.log("Root loadUsers");
     try {
@@ -710,14 +726,14 @@ class Root extends React.Component<Props, State> {
 
   }
 
-  private  loadUserData = async (openedUserDialog?: boolean, desiredUser?: string) : Promise<Project[]> => {
+  private loadUserData = async (openedUserDialog?: boolean, desiredUser?: string): Promise<Project[]> => {
     console.log("Root loadUserData");
     console.log("loadUserData openedUserDialog:", openedUserDialog);
     console.log("loadUserData desiredUser:", desiredUser);
     console.log("propUserName:", this.props.propUserName);
- 
+
     let chosenUser: string;
-    if(openedUserDialog && desiredUser){
+    if (openedUserDialog && desiredUser) {
       chosenUser = desiredUser;
     }
     else {
@@ -1069,7 +1085,7 @@ class Root extends React.Component<Props, State> {
   private onOpenUserProject_ = async (name: string, projectName: string, fileName: string, projectLanguage: ProgrammingLanguage) => {
 
     const getProjects = await this.loadUserData(true, name);
-    let toOpenProject =   getProjects.find(project => project.projectName === projectName);
+    let toOpenProject = getProjects.find(project => project.projectName === projectName);
     let toOpenProjectMainCode = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${name}/${projectName}/src/${fileName}` } });
 
     this.setState({
@@ -1083,7 +1099,7 @@ class Root extends React.Component<Props, State> {
       fileName: fileName,
       isEditorPageVisible: true,
     }, async () => {
-   
+
     });
 
     if (this.state.isHomeStartOptionsVisible == true) {
@@ -1198,7 +1214,7 @@ class Root extends React.Component<Props, State> {
     const { userName, projectName, fileName, activeLanguage, editorConsole, code } = this.state;
     console.log("onCompileClick before try state: ", this.state);
     try {
-      if(this.state.toSaveCode_ !== undefined) {
+      if (this.state.toSaveCode_ !== undefined) {
         await this.onSaveCode_();
       }
 
@@ -1228,7 +1244,7 @@ class Root extends React.Component<Props, State> {
               }));
 
             }
-            else if(response.data.message === 'failed') {
+            else if (response.data.message === 'failed') {
 
               console.log("Compilation Failed with errors:", response.data.output);
               const errorRegex = /\/home\/kipr\/Documents\/KISS\/([^:\n]+:\d+:\d+: error: .*?)\n/g;
@@ -1635,9 +1651,25 @@ class Root extends React.Component<Props, State> {
   private onClearConsole_ = () => {
 
     console.log("onClearConsole_ clicked in Root");
-    this.setState({
-      editorConsole: StyledText.text({ text: LocalizedString.lookup(tr(''), this.props.locale), style: STDOUT_STYLE(DARK) }),
-    });
+    // this.setState({
+    //   editorConsole: StyledText.text({ text: LocalizedString.lookup(tr(''), this.props.locale), style: STDOUT_STYLE(DARK) }),
+    // });
+    console.log("Current editorConsole: ", this.state.editorConsole);
+    const newConsole = StyledText.text({ text: LocalizedString.lookup(tr(''), this.props.locale), style: STDOUT_STYLE(DARK) });
+
+    if (this.state.editorConsole === newConsole) {
+      console.log("onClearConsole_ with same console, no need to update");
+    }
+    else {
+      this.setState((prevState) => ({
+        ...prevState,
+        editorConsole: StyledText.text({ text: LocalizedString.lookup(tr(''), this.props.locale), style: STDOUT_STYLE(DARK) }),
+      }), () => {
+        console.log("after onClearConsole_ with new state:", this.state);
+      });
+    }
+
+
   };
 
 

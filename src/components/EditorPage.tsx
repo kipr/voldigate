@@ -13,7 +13,7 @@ import { StyledText } from '../util';
 import tr from '@i18n';
 import LocalizedString from '../util/LocalizedString';
 import ProgrammingLanguage from '../ProgrammingLanguage';
-import { Theme } from './theme';
+import { Theme, ThemeProps } from './theme';
 import { Modal } from '../pages/Modal';
 
 
@@ -31,7 +31,7 @@ const sizeDict = (sizes: Size[]) => {
 const SIDEBAR_SIZES: Size[] = [Size.MINIMIZED, Size.PARTIAL_RIGHT, Size.MAXIMIZED];
 const SIDEBAR_SIZE = sizeDict(SIDEBAR_SIZES);
 
-export interface EditorPageProps extends LayoutProps {
+export interface EditorPageProps extends LayoutProps, ThemeProps {
   language: ProgrammingLanguage;
   projectName: string;
   fileName: string;
@@ -85,25 +85,30 @@ const SidePanelContainer = styled('div', {
 });
 
 
-const SimultorWidgetContainer = styled('div', {
+const SimultorWidgetContainer = styled('div', (props: ThemeProps) => ({
   display: 'flex',
   flex: '1 0 0',
   height: '100%',
   width: '100%',
-  overflow: 'hidden'
+  overflow: 'hidden',
+  backGroundColor: props.theme.editorConsoleBackground,
 
-});
-const SimulatorWidget = styled(Widget, {
+}));
+
+const SimulatorWidget = styled(Widget, (props: ThemeProps) => ({
   display: 'flex',
   flex: '1 1 0',
   margin: '10px 0px 0px 0px',
   height: '100%',
   width: '100%',
-});
+  backgroundColor: props.theme.editorConsoleBackground,
+  
+}));
 
 
 const FlexConsole = styled(Console, {
   flex: '1 1',
+  color: 'black',
 });
 
 const SideBarMinimizedTab = -1;
@@ -381,7 +386,7 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
         sizes={[3, 1]}
         visible={[true, true]}
       >
-        <SimultorWidgetContainer>
+        <SimultorWidgetContainer theme={theme}>
           <SimulatorWidget
             theme={theme}
             name={LocalizedString.lookup(tr('Editor'), locale)}
@@ -392,7 +397,7 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
           </SimulatorWidget>
         </SimultorWidgetContainer>
 
-        <SimultorWidgetContainer>
+        <SimultorWidgetContainer theme={theme}>
           <SimulatorWidget
             theme={theme}
             name={LocalizedString.lookup(tr('Console'), locale)}
