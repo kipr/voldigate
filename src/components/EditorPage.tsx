@@ -179,7 +179,7 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
       });
     }
 
-    else if (this.props.editorConsole !== prevProps.editorConsole) {
+     if (this.props.editorConsole !== prevProps.editorConsole) {
       console.log("EditorPage previous props console:", prevProps.editorConsole);
       console.log("EditorPage updated props console:", this.props.editorConsole);
 
