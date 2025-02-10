@@ -1665,7 +1665,7 @@ class Root extends React.Component<Props, State> {
         ...prevState,
         editorConsole: StyledText.text({ text: LocalizedString.lookup(tr(''), this.props.locale), style: STDOUT_STYLE(DARK) }),
       }), () => {
-        console.log("after onClearConsole_ with new state:", this.state);
+        console.log("after onClearConsole_ with new state:", this.state.editorConsole);
       });
     }
 
