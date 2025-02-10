@@ -237,10 +237,13 @@ const STDWAR_STYLE = (theme: Theme) => ({
   color: 'yellow'
 });
 
+
+
 class Root extends React.Component<Props, State> {
   private editorRef: React.MutableRefObject<Editor>;
   private prevPropsRef: React.MutableRefObject<Props>;
   private prevStateRef: React.MutableRefObject<State>;
+  private toSaveCodeRef: React.MutableRefObject<Dict<string>>;
 
   constructor(props: Props) {
     super(props);
@@ -289,7 +292,7 @@ class Root extends React.Component<Props, State> {
     this.editorRef = React.createRef();
     this.prevPropsRef = React.createRef();
     this.prevStateRef = React.createRef();
-
+    this.toSaveCodeRef ={current: { 'c': '', 'cpp': '', 'python': '', 'plaintext': '' }};
 
   }
 
@@ -547,7 +550,7 @@ class Root extends React.Component<Props, State> {
 
         const { propUserName, propProjectName, propActiveLanguage, propFileName, otherFileType } = this.props;
 
-        console.log("Proped props from HomeNavigation:", propUserName, propProjectName, propActiveLanguage, propFileName, otherFileType);
+        //console.log("Proped props from HomeNavigation:", propUserName, propProjectName, propActiveLanguage, propFileName, otherFileType);
         // await this.loadCodeBasedOnExtension();
 
 
@@ -556,14 +559,15 @@ class Root extends React.Component<Props, State> {
           case 'h':
             const rootUpdateHeader = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUserName}/${propProjectName}/include/${propFileName}` } });
             console.log("rootUpdateHeader response:", rootUpdateHeader);
-            this.setState({
-              code: {
-                ...this.state.code,
-                [propActiveLanguage]: rootUpdateHeader.data
-              }
-            }, () => {
-              console.log("new state code in clickFile:", this.state.code);
-            });
+            // this.setState({
+            //   code: {
+            //     ...this.state.code,
+            //     [propActiveLanguage]: rootUpdateHeader.data
+            //   }
+            // }, () => {
+            //   console.log("new state code in clickFile:", this.state.code);
+            // });
+            //this.toSaveCodeRef.current = { ...this.toSaveCodeRef.current, [propActiveLanguage]: rootUpdateHeader.data };
             break;
           case 'c':
           case 'cpp':
@@ -1120,6 +1124,9 @@ class Root extends React.Component<Props, State> {
     console.log("onCodeChange_ in Root with current state code:", this.state.code);
     console.log("onCodeChange_ in Root with code:", code);
     console.log("onCodeChange_ in Root with saveCodePromptFlag:", this.state.saveCodePromptFlag);
+    this.toSaveCodeRef.current[this.state.activeLanguage] = code;
+
+    console.log("onCodeChange_ in Root with toSaveCodeRef:", this.toSaveCodeRef.current);
     const { activeLanguage } = this.state;
 
     if (this.state.code[activeLanguage] !== code && this.state.saveCodePromptFlag == false) {
@@ -1665,7 +1672,7 @@ class Root extends React.Component<Props, State> {
         ...prevState,
         editorConsole: StyledText.text({ text: LocalizedString.lookup(tr(''), this.props.locale), style: STDOUT_STYLE(DARK) }),
       }), () => {
-        console.log("after onClearConsole_ with new state:", this.state.editorConsole);
+        console.log("after onClearConsole_ with new state:", this.state);
       });
     }
 
@@ -1810,7 +1817,7 @@ class Root extends React.Component<Props, State> {
             editorTarget={undefined}
             editorConsole={editorConsole}
             messages={[]}
-            code={code}
+            code={this.toSaveCodeRef.current || code}
             language={activeLanguage}
             settings={DEFAULT_SETTINGS}
             onClearConsole={this.onClearConsole_}
