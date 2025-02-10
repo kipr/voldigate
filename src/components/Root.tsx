@@ -237,10 +237,13 @@ const STDWAR_STYLE = (theme: Theme) => ({
   color: 'yellow'
 });
 
+
+
 class Root extends React.Component<Props, State> {
   private editorRef: React.MutableRefObject<Editor>;
   private prevPropsRef: React.MutableRefObject<Props>;
   private prevStateRef: React.MutableRefObject<State>;
+  private toSaveCodeRef: React.MutableRefObject<Dict<string>>;
 
   constructor(props: Props) {
     super(props);
@@ -289,7 +292,7 @@ class Root extends React.Component<Props, State> {
     this.editorRef = React.createRef();
     this.prevPropsRef = React.createRef();
     this.prevStateRef = React.createRef();
-
+    this.toSaveCodeRef = { current: { 'c': '', 'cpp': '', 'python': '', 'plaintext': '' } };
 
   }
 
@@ -327,27 +330,29 @@ class Root extends React.Component<Props, State> {
 
       console.log("shouldCompUpdate saveCodePromptFlag true with state:", this.state);
       console.log("shouldCompUpdate savecodePromptFlag true with nextState:", nextState);
+      console.log("shouldCompUpdate savecodePromptFlag true with this.toSaveCodeRef:", this.toSaveCodeRef.current);
       if (nextProps.propFileName === "") {
         return true;
       }
       else if ((nextProps.propFileName !== this.props.propFileName)) {
         console.log("Root.tsx: propFileName changed from ", this.props.propFileName, " to ", nextProps.propFileName, "before saving -> GET BLOCKED");
         console.log("shouldComponentUpdate Root.tsx with state:", this.state);
+
+
         this.saveFile_(nextProps.propFileName);
         return false;
       }
-      else if (this.state.editorConsole !== nextState.editorConsole) {
+
+      if (this.state.editorConsole !== nextState.editorConsole) {
         console.log("shouldCompUpdate this.state.editorConsole:", this.state.editorConsole);
         console.log("shouldCompUpdate nextState.editorConsole:", nextState.editorConsole);
         return false;
       }
 
-      if (nextState.toSaveCode_ !== nextState.code[nextState.activeLanguage]) {
-        console.log("shouldCompUpdate nextState.toSaveCode_:", nextState.toSaveCode_);
-        console.log("shouldCompUpdate nextState.code[nextState.activeLanguage]:", nextState.code[nextState.activeLanguage]);
-        return false;
-      }
     }
+
+
+
 
 
     return true;
@@ -362,6 +367,7 @@ class Root extends React.Component<Props, State> {
       console.log("Previous props in Root.tsx:", previousProps);
       console.log("Current props in Root.tsx:", this.props);
       console.log("Current state in Root.tsx:", this.state);
+      console.log("current toSaveCodeRef in Root.tsx:", this.toSaveCodeRef.current);
     }
 
     if (previousState) {
@@ -547,7 +553,7 @@ class Root extends React.Component<Props, State> {
 
         const { propUserName, propProjectName, propActiveLanguage, propFileName, otherFileType } = this.props;
 
-        console.log("Proped props from HomeNavigation:", propUserName, propProjectName, propActiveLanguage, propFileName, otherFileType);
+        //console.log("Proped props from HomeNavigation:", propUserName, propProjectName, propActiveLanguage, propFileName, otherFileType);
         // await this.loadCodeBasedOnExtension();
 
 
@@ -556,6 +562,7 @@ class Root extends React.Component<Props, State> {
           case 'h':
             const rootUpdateHeader = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUserName}/${propProjectName}/include/${propFileName}` } });
             console.log("rootUpdateHeader response:", rootUpdateHeader);
+            this.toSaveCodeRef.current = { ...this.toSaveCodeRef.current, [propActiveLanguage]: rootUpdateHeader.data };
             this.setState({
               code: {
                 ...this.state.code,
@@ -564,6 +571,7 @@ class Root extends React.Component<Props, State> {
             }, () => {
               console.log("new state code in clickFile:", this.state.code);
             });
+
             break;
           case 'c':
           case 'cpp':
@@ -578,6 +586,7 @@ class Root extends React.Component<Props, State> {
             }, () => {
               console.log("new state code in clickFile:", this.state.code);
             });
+            this.toSaveCodeRef.current = { ...this.toSaveCodeRef.current, [propActiveLanguage]: rootUpdateCode.data };
             break;
           case 'txt':
             const rootUpdateUserFiles = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUserName}/${propProjectName}/data/${propFileName}` } });
@@ -590,6 +599,7 @@ class Root extends React.Component<Props, State> {
             }, () => {
               console.log("new state code in clickFile:", this.state.code);
             });
+            this.toSaveCodeRef.current = { ...this.toSaveCodeRef.current, [propActiveLanguage]: rootUpdateUserFiles.data };
             break;
         }
 
@@ -658,27 +668,34 @@ class Root extends React.Component<Props, State> {
       case 'h':
         const rootUpdateHeader = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUserName}/${propProjectName}/include/${tempNewFile}` } });
         console.log("rootUpdateHeader response:", rootUpdateHeader);
+
+        this.toSaveCodeRef.current = { ...this.toSaveCodeRef.current, [propActiveLanguage]: rootUpdateHeader.data };
         this.setState({
           code: {
             ...this.state.code,
             [propActiveLanguage]: rootUpdateHeader.data
-          }
+          },
+          saveCodePromptFlag: false
         }, () => {
+          console.log("new this.saveCodeRef in updateCode:", this.toSaveCodeRef.current);
           console.log("new state code in updateCode:", this.state.code);
           console.log("new state in updateCode:", this.state);
         });
+
         break;
       case 'c':
       case 'cpp':
       case 'py':
         const rootUpdateCode = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUserName}/${propProjectName}/src/${tempNewFile}` } });
         console.log("rootUpdateCode response:", rootUpdateCode);
+        this.toSaveCodeRef.current = { ...this.toSaveCodeRef.current, [propActiveLanguage]: rootUpdateCode.data };
         this.setState({
           code: {
             ...this.state.code,
             [propActiveLanguage]: rootUpdateCode.data
           }
         }, () => {
+          console.log("new this.saveCodeRef in updateCode:", this.toSaveCodeRef.current);
           console.log("new state code in updateCode:", this.state.code);
           console.log("new state in updateCode:", this.state);
         });
@@ -686,12 +703,14 @@ class Root extends React.Component<Props, State> {
       case 'txt':
         const rootUpdateUserFiles = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUserName}/${propProjectName}/data/${tempNewFile}` } });
         console.log("rootUpdateUserFiles response:", rootUpdateUserFiles);
+        this.toSaveCodeRef.current = { ...this.toSaveCodeRef.current, [propActiveLanguage]: rootUpdateUserFiles.data };
         this.setState({
           code: {
             ...this.state.code,
             [propActiveLanguage]: rootUpdateUserFiles.data
           }
         }, () => {
+          console.log("new this.saveCodeRef in updateCode:", this.toSaveCodeRef.current);
           console.log("new state code in updateCode:", this.state.code);
           console.log("new state in updateCode:", this.state);
         });
@@ -867,8 +886,12 @@ class Root extends React.Component<Props, State> {
 
   }
   private saveFile_(tempNewFile_: string): void {
-    console.log("saveFile_ in Root.tsx with name:", this.state.fileName, "with toSaveCode_: ", this.state.toSaveCode_);
+
+
+    console.log("saveFile_ in Root.tsx with name:", this.state.fileName, "with toSaveCodeRef: ", this.toSaveCodeRef.current);
     console.log("saveFile_ in Root with current state code:", this.state.code);
+
+
     this.setState({
       modal: Modal.SAVEFILE,
       isSaveCodePromptVisible: true,
@@ -876,10 +899,7 @@ class Root extends React.Component<Props, State> {
       clickFileState: false,
       tempNewFile: tempNewFile_,
       toSaveType_: 'file',
-      code: {
-        ...this.state.code,
-        [this.state.activeLanguage]: this.state.toSaveCode_
-      }
+
     })
   }
 
@@ -970,6 +990,7 @@ class Root extends React.Component<Props, State> {
     console.log("onCloseNewFileDialog_ fileType: ", fileType);
     switch (fileType) {
       case 'h':
+        this.toSaveCodeRef.current = { ...this.toSaveCodeRef.current, [activeLanguage]: ProgrammingLanguage.DEFAULT_HEADER_CODE };
         this.setState({
 
           code: {
@@ -989,6 +1010,7 @@ class Root extends React.Component<Props, State> {
       case 'c':
       case 'cpp':
       case 'py':
+        this.toSaveCodeRef.current = { ...this.toSaveCodeRef.current, [activeLanguage]: ProgrammingLanguage.DEFAULT_CODE[activeLanguage] };
         this.setState({
           code: {
             ...this.state.code,
@@ -1005,6 +1027,7 @@ class Root extends React.Component<Props, State> {
         filePath = `${prePath}/${userName}/${projectName}/src/${newFileName}.${fileType}`;
         break;
       case 'txt':
+        this.toSaveCodeRef.current = { ...this.toSaveCodeRef.current, [activeLanguage]: ProgrammingLanguage.DEFAULT_USER_DATA_CODE };
         this.setState({
           code: {
             ...this.state.code,
@@ -1120,22 +1143,22 @@ class Root extends React.Component<Props, State> {
     console.log("onCodeChange_ in Root with current state code:", this.state.code);
     console.log("onCodeChange_ in Root with code:", code);
     console.log("onCodeChange_ in Root with saveCodePromptFlag:", this.state.saveCodePromptFlag);
+
+    this.toSaveCodeRef.current = { ...this.toSaveCodeRef.current, [this.state.activeLanguage]: code };
+    console.log("onCodeChange_ in Root with toSaveCodeRef:", this.toSaveCodeRef.current);
     const { activeLanguage } = this.state;
 
-    if (this.state.code[activeLanguage] !== code && this.state.saveCodePromptFlag == false) {
-      this.setState({
-        saveCodePromptFlag: true,
-        toSaveCode_: code
+    if (this.toSaveCodeRef.current[activeLanguage] !== ProgrammingLanguage.DEFAULT_CODE[activeLanguage]) {
+      if (this.state.code[activeLanguage] !== code && this.state.saveCodePromptFlag == false) {
+        this.setState({
+          saveCodePromptFlag: true,
+        }, () => {
 
-      }, () => { console.log("onCodeChange_ code changed, saveCodePromptFlag is true, NEED TO SAVE"); });
-      //this.props.setFileName_(this.state.fileName);
+          console.log("onCodeChange_ code changed, saveCodePromptFlag is true, NEED TO SAVE");
+        });
+      }
     }
-    else if (this.state.saveCodePromptFlag == true) {
-      console.log("onCodeChange_ code changed, NEED TO SAVE");
-      this.setState({
-        toSaveCode_: code
-      });
-    }
+
 
 
   };
@@ -1333,7 +1356,8 @@ class Root extends React.Component<Props, State> {
       const { userName, activeLanguage, projectName, fileName, otherFileType } = this.state;
       // const fileContents = this.state.code[activeLanguage];
       console.log("onSavecode with state code before saving over:", this.state.code);
-      const fileContents = this.state.toSaveCode_;
+     // const fileContents = this.state.toSaveCode_;
+      const fileContents = this.toSaveCodeRef.current[activeLanguage];
       const prePath = `/home/kipr/Documents/KISS`;
       let filePath = '';
       switch (extension) {
@@ -1350,7 +1374,7 @@ class Root extends React.Component<Props, State> {
           filePath = `${prePath}/${userName}/${projectName}/include/${fileName}`;
           break;
       }
-      console.log("onSavecode toSaveCode_:", this.state.toSaveCode_);
+      console.log("onSavecode this.toSaveCodeRef:", this.toSaveCodeRef.current);
       console.log("onSaveCode filepath: ", filePath);
       const updateFileContent = await axios.post('/save-file-content', { filePath, fileContents });
       console.log("updateFileContent:", updateFileContent);
@@ -1502,14 +1526,19 @@ class Root extends React.Component<Props, State> {
           console.log("onConfirm_ save action")
           console.log("onConfirm tempNewFile:", this.state.tempNewFile);
           console.log("onConfirm before save state:", this.state);
+          console.log("onConfirm_ with toSaveCodeRef: ", this.toSaveCodeRef.current);
           const [name, extension] = confirmedName.split('.');
           console.log("File extension is: ", extension);
           let saveFileResponse = '';
           switch (extension) {
             case 'c':
-              saveFileResponse = await axios.post('/save-file-content', { filePath: `/home/kipr/Documents/KISS/${this.state.userName}/${this.state.projectName}/src/${this.state.fileName}`, fileContents: this.state.toSaveCode_ });
+              saveFileResponse = await axios.post('/save-file-content', { filePath: `/home/kipr/Documents/KISS/${this.state.userName}/${this.state.projectName}/src/${this.state.fileName}`, fileContents: this.toSaveCodeRef.current.c });
               console.log("saveFileResponse (src):", saveFileResponse);
               this.setState({
+                code: {
+                  ...this.state.code,
+                  [this.state.activeLanguage]: this.toSaveCodeRef.current[this.state.activeLanguage]
+                },
                 saveCodePromptFlag: false,
                 fileName: this.state.tempNewFile,
                 activeLanguage: 'c',
@@ -1517,9 +1546,13 @@ class Root extends React.Component<Props, State> {
               });
               break;
             case 'cpp':
-              saveFileResponse = await axios.post('/save-file-content', { filePath: `/home/kipr/Documents/KISS/${this.state.userName}/${this.state.projectName}/src/${this.state.fileName}`, fileContents: this.state.toSaveCode_ });
+              saveFileResponse = await axios.post('/save-file-content', { filePath: `/home/kipr/Documents/KISS/${this.state.userName}/${this.state.projectName}/src/${this.state.fileName}`, fileContents: this.toSaveCodeRef.current.cpp });
               console.log("saveFileResponse (src):", saveFileResponse);
               this.setState({
+                code: {
+                  ...this.state.code,
+                  [this.state.activeLanguage]: this.toSaveCodeRef.current[this.state.activeLanguage]
+                },
                 saveCodePromptFlag: false,
                 fileName: this.state.tempNewFile,
                 activeLanguage: 'cpp',
@@ -1527,9 +1560,13 @@ class Root extends React.Component<Props, State> {
               });
               break;
             case 'py':
-              saveFileResponse = await axios.post('/save-file-content', { filePath: `/home/kipr/Documents/KISS/${this.state.userName}/${this.state.projectName}/src/${this.state.fileName}`, fileContents: this.state.toSaveCode_ });
+              saveFileResponse = await axios.post('/save-file-content', { filePath: `/home/kipr/Documents/KISS/${this.state.userName}/${this.state.projectName}/src/${this.state.fileName}`, fileContents: this.toSaveCodeRef.current.python });
               console.log("saveFileResponse (src):", saveFileResponse);
               this.setState({
+                code: {
+                  ...this.state.code,
+                  [this.state.activeLanguage]: this.toSaveCodeRef.current[this.state.activeLanguage]
+                },
                 saveCodePromptFlag: false,
                 fileName: this.state.tempNewFile,
                 activeLanguage: 'python',
@@ -1537,9 +1574,13 @@ class Root extends React.Component<Props, State> {
               });
               break;
             case 'txt':
-              saveFileResponse = await axios.post('/save-file-content', { filePath: `/home/kipr/Documents/KISS/${this.state.userName}/${this.state.projectName}/data/${this.state.fileName}`, fileContents: this.state.toSaveCode_ });
+              saveFileResponse = await axios.post('/save-file-content', { filePath: `/home/kipr/Documents/KISS/${this.state.userName}/${this.state.projectName}/data/${this.state.fileName}`, fileContents: this.toSaveCodeRef.current.txt });
               console.log("saveFileResponse (data):", saveFileResponse);
               this.setState({
+                code: {
+                  ...this.state.code,
+                  [this.state.activeLanguage]: this.toSaveCodeRef.current[this.state.activeLanguage]
+                },
                 saveCodePromptFlag: false,
                 fileName: this.state.tempNewFile,
                 activeLanguage: 'plaintext',
@@ -1547,13 +1588,18 @@ class Root extends React.Component<Props, State> {
               });
               break;
             case 'h':
-              saveFileResponse = await axios.post('/save-file-content', { filePath: `/home/kipr/Documents/KISS/${this.state.userName}/${this.state.projectName}/include/${this.state.fileName}`, fileContents: this.state.toSaveCode_ });
+              saveFileResponse = await axios.post('/save-file-content', { filePath: `/home/kipr/Documents/KISS/${this.state.userName}/${this.state.projectName}/include/${this.state.fileName}`, fileContents: this.toSaveCodeRef.current[this.state.activeLanguage] });
               console.log("saveFileResponse (include):", saveFileResponse);
               this.setState({
+                code: {
+                  ...this.state.code,
+                  [this.state.activeLanguage]: this.toSaveCodeRef.current[this.state.activeLanguage]
+                },
                 saveCodePromptFlag: false,
                 fileName: this.state.tempNewFile,
-                activeLanguage: 'c',
                 toSaveCode_: undefined
+              }, () => {
+                // this.toSaveCodeRef.current = { c: '', cpp: '', python: '', txt: '' };
               });
           }
           break;
@@ -1651,23 +1697,14 @@ class Root extends React.Component<Props, State> {
   private onClearConsole_ = () => {
 
     console.log("onClearConsole_ clicked in Root");
-    // this.setState({
-    //   editorConsole: StyledText.text({ text: LocalizedString.lookup(tr(''), this.props.locale), style: STDOUT_STYLE(DARK) }),
-    // });
     console.log("Current editorConsole: ", this.state.editorConsole);
-    const newConsole = StyledText.text({ text: LocalizedString.lookup(tr(''), this.props.locale), style: STDOUT_STYLE(DARK) });
+    this.setState({
+      editorConsole: StyledText.text({ text: LocalizedString.lookup(tr(''), this.props.locale), style: STDOUT_STYLE(DARK) }),
+    }, () => {
+      console.log("after onClearConsole_ with new state:", this.state);
+    });
 
-    if (this.state.editorConsole === newConsole) {
-      console.log("onClearConsole_ with same console, no need to update");
-    }
-    else {
-      this.setState((prevState) => ({
-        ...prevState,
-        editorConsole: StyledText.text({ text: LocalizedString.lookup(tr(''), this.props.locale), style: STDOUT_STYLE(DARK) }),
-      }), () => {
-        console.log("after onClearConsole_ with new state:", this.state.editorConsole);
-      });
-    }
+
 
 
   };
@@ -1810,7 +1847,7 @@ class Root extends React.Component<Props, State> {
             editorTarget={undefined}
             editorConsole={editorConsole}
             messages={[]}
-            code={code}
+            code={this.toSaveCodeRef.current || code}
             language={activeLanguage}
             settings={DEFAULT_SETTINGS}
             onClearConsole={this.onClearConsole_}
