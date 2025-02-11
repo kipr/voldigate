@@ -771,7 +771,7 @@ app.get("/run-code", (req, res) => {
 
       break;
     case "python":
-      runCommand = `export PYTHONPATH=/usr/local/lib && python3 "${bin_directory}/botball_user_program"`;
+      runCommand = `/bin/bash -c 'export PYTHONPATH=/usr/local/lib && python3 "${bin_directory}/botball_user_program"'`;
       break;
   }
   console.log("runCommand: ", runCommand);

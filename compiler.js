@@ -79,7 +79,7 @@ try {
           err.message
         );
       }
-      compileCommand = `python3 -m py_compile ${sourceFilePath}`;
+      compileCommand = `/bin/bash -c 'export PYTHONPATH=/usr/local/lib && python3 -m py_compile ${sourceFilePath}'`;
       ln_cmd = `ln -s ${sourceFilePath} ${outputBinaryPath}`;
       exec(ln_cmd, (err) => {
         if (err) {
