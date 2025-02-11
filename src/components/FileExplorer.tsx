@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DARK, ThemeProps } from '../components/theme';
+import { DARK, ThemeProps, LIGHT } from '../components/theme';
 import { StyleProps } from '../style';
 
 import { connect } from 'react-redux';
@@ -218,6 +218,10 @@ const ProjectItem = styled('li', (props: ThemeProps & { selected: boolean }) => 
     textOverflow: 'ellipsis',
     whiteSpace: 'normal',
     borderRadius: '5px',
+    ':hover': {
+        cursor: 'pointer',
+        backgroundColor: props.theme.hoverFileBackground
+    },
 
 }));
 
@@ -246,12 +250,7 @@ const FileTypeTitleContainer = styled('div', (props: ThemeProps) => ({
 
 
 const FileTypeContainer = styled('div', (props: ThemeProps & { selected: boolean }) => ({
-    //     display: 'flex',
-    //     flexDirection: 'column',
-    //    // backgroundColor: 'indigo',
-    //     width: '100%',
-    //     padding: '10px',
-    //     boxShadow: '4px 4px 4px rgba(0,0,0,0.2)',
+
 
     width: '100%',
 
@@ -298,26 +297,14 @@ const IndividualFile = styled('div', (props: ThemeProps & { selected: boolean })
         backgroundColor: props.theme.hoverFileBackground
     },
 }));
-// const IndividualFile = styled('div', (props: ThemeProps & { selected: boolean; selectedfile?: string; filename?: string }) => ({
-//     listStyleType: 'none',
-//     borderRadius: '5px',
-//     cursor: 'pointer',
-//     backgroundColor: (props.filename === props.selectedfile) 
-//         ? props.theme.selectedFileBackground 
-//         : props.theme.homeStartContainerBackground,
-//     padding: '3px',
-//     ':hover': {
-//         cursor: 'pointer',
-//         backgroundColor: props.theme.hoverFileBackground
-//     },
-// }));
+
 
 const ContextMenu = styled('div', (props: ThemeProps & { x: number, y: number }) => ({
     position: "absolute",
     top: `${props.y}px`,
     left: `${props.x}px`,
-    background: "#383838",
-    border: "1px solid #ccc",
+    background: "#FFFFFF",
+    border: `2px solid ${props.theme.borderColor}`,
     borderRadius: "4px",
     boxShadow: "0px 4px 6px hsla(0, 0.00%, 0.00%, 0.10)",
     zIndex: 1000,
@@ -330,7 +317,7 @@ const ContextMenuItem = styled('div', (props: ThemeProps) => ({
     cursor: "pointer",
     ':hover': {
         cursor: 'pointer',
-        backgroundColor: `rgba(255, 255, 255, 0.1)`
+        backgroundColor: `${props.theme.hoverFileBackground}`
     },
 }));
 
@@ -481,8 +468,8 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
         const { x, y, } = contextMenuPosition;
 
         return (
-            <ContextMenu x={x} y={y} theme={DARK} onClick={this.closeContextMenu}>
-                <ContextMenuItem theme={DARK}>
+            <ContextMenu x={x} y={y} theme={LIGHT} onClick={this.closeContextMenu}>
+                <ContextMenuItem theme={LIGHT}>
                     <li
                         style={{ padding: "5px 10px" }}
                         onClick={() => {
@@ -493,7 +480,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                     </li>
                 </ContextMenuItem>
 
-                <ContextMenuItem theme={DARK}>
+                <ContextMenuItem theme={LIGHT}>
                     <li
                         style={{ padding: "5px 10px" }}
                         onClick={() => {
@@ -514,8 +501,8 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
         const { x, y } = contextMenuPosition;
 
         return (
-            <ContextMenu x={x} y={y} theme={DARK} onClick={this.closeContextMenu}>
-                <ContextMenuItem theme={DARK}>
+            <ContextMenu x={x} y={y} theme={LIGHT} onClick={this.closeContextMenu}>
+                <ContextMenuItem theme={LIGHT}>
                     <li
                         style={{ padding: "5px 10px" }}
                         onClick={() => {
@@ -525,7 +512,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                         Delete Project
                     </li>
                 </ContextMenuItem>
-                <ContextMenuItem theme={DARK}>
+                <ContextMenuItem theme={LIGHT}>
                     <li
                         style={{ padding: "5px 10px" }}
                         onClick={() => {
@@ -546,8 +533,8 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
         const { x, y } = contextMenuPosition;
 
         return (
-            <ContextMenu x={x} y={y} theme={DARK} onClick={this.closeContextMenu}>
-                <ContextMenuItem theme={DARK}>
+            <ContextMenu x={x} y={y} theme={LIGHT} onClick={this.closeContextMenu}>
+                <ContextMenuItem theme={LIGHT}>
                     <li
                         style={{ padding: "5px 10px" }}
                         onClick={() => {
@@ -557,7 +544,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                         Delete File
                     </li>
                 </ContextMenuItem>
-                <ContextMenuItem theme={DARK}>
+                <ContextMenuItem theme={LIGHT}>
                     <li
                         style={{ padding: "5px 10px" }}
                         onClick={() => {
@@ -973,11 +960,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
 
                                     selected={this.state.selectedProject === project.projectName}
                                     onClick={() => this.handleProjectClick(project.projectName, this.state.selectedSection, project.projectLanguage)}
-                                    style={{
-                                        backgroundColor: this.state.projectName === project.projectName
-                                            ? this.props.theme.selectedProjectBackground
-                                            : 'transparent'
-                                    }}
+                                  
                                     onContextMenu={(e) => this.handleProjectRightClick(e, project)} theme={theme}
                                 >
                                     {project.projectName}

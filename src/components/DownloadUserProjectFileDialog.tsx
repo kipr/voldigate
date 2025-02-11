@@ -2,7 +2,7 @@ import * as React from 'react';
 import { styled } from 'styletron-react';
 import { StyleProps } from '../style';
 import { Dialog } from './Dialog';
-import { ThemeProps } from './theme';
+import { ThemeProps, LIGHT, LIGHTMODE_YES, LIGHTMODE_NO } from './theme';
 import { Fa } from './Fa';
 
 import { faCopyright } from '@fortawesome/free-solid-svg-icons';
@@ -32,7 +32,10 @@ interface DownloadUserProjectFileDialogPrivateProps {
 interface DownloadUserProjectFileDialogState {
 
 }
-
+interface ClickProps {
+  onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
+  disabled?: boolean;
+}
 type Props = DownloadUserProjectFileDialogPublicProps & DownloadUserProjectFileDialogPrivateProps;
 type State = DownloadUserProjectFileDialogState;
 
@@ -121,7 +124,7 @@ const BottomButtonContainer = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   marginTop: '20px', // Add some space above the button
-  
+
 });
 
 const Button = styled('button', {
@@ -131,17 +134,58 @@ const Button = styled('button', {
   borderRadius: '5px', // Add some border radius
   cursor: 'pointer', // Change the cursor to a pointer when hovering over the button
 });
+// Styled component button for the "Yes" button
+const YesItem = styled(Button, (props: ThemeProps & ClickProps) => ({
+  backgroundColor: LIGHTMODE_YES.standard,
+  border: `1px solid ${LIGHTMODE_YES.border}`,
+  ':hover':
+    props.onClick && !props.disabled
+      ? {
+        backgroundColor: LIGHTMODE_YES.hover,
+      }
+      : {},
+  color: LIGHTMODE_YES.textColor,
+  textShadow: LIGHTMODE_YES.textShadow,
+  boxShadow: '2px 2px 4px rgba(0,0,0,0.9)',
+  ':active': props.onClick && !props.disabled
+    ? {
+      boxShadow: '1px 1px 2px rgba(0,0,0,0.7)', // Fixed incorrect commas
+      transform: 'translateY(1px, 1px)', // Adds a press-down effect
+    }
+    : {},
+}));
+
+// Styled component button for the "No, don't save and continue" button
+const NoItem = styled(Button, (props: ThemeProps & ClickProps) => ({
+  backgroundColor: LIGHTMODE_NO.standard,
+  border: `1px solid ${LIGHTMODE_NO.border}`,
+  ':hover':
+    props.onClick && !props.disabled
+      ? {
+        backgroundColor: LIGHTMODE_NO.hover,
+      }
+      : {},
+  color: LIGHTMODE_NO.textColor,
+  textShadow: LIGHTMODE_NO.textShadow,
+  boxShadow: '2px 2px 4px rgba(0,0,0,0.9)',
+  ':active': props.onClick && !props.disabled
+    ? {
+        boxShadow: '1px 1px 2px rgba(0,0,0,0.7)', // Fixed incorrect commas
+        transform: 'translateY(1px, 1px)', // Adds a press-down effect
+      }
+    : {},
+}));
 
 class DownloadUserProjectFileDialog extends React.PureComponent<Props, State> {
 
   constructor(props: Props, state: State) {
     super(props);
     this.state = {
-      }
+    }
   }
 
   componentDidMount(): void {
-    console.log("DownloadUserProjectFileDialog.tsx: componentDidMount with props:", this.props);  
+    console.log("DownloadUserProjectFileDialog.tsx: componentDidMount with props:", this.props);
   }
   render() {
     const { props, state } = this;
@@ -170,14 +214,14 @@ class DownloadUserProjectFileDialog extends React.PureComponent<Props, State> {
           </CenteredContainer>
           <br />
           <CenteredContainer>
-            
+
             <BottomButtonContainer>
-              <Button onClick={() => this.props.onConfirm(this.props.toDownloadName, this.props.toDownloadType, 'download')}>
+              <YesItem onClick={() => this.props.onConfirm(this.props.toDownloadName, this.props.toDownloadType, 'download')} theme={theme}>
                 Yes
-              </Button>
-              <Button onClick={this.props.onDeny}>
+              </YesItem>
+              <NoItem onClick={this.props.onDeny} theme={theme}>
                 No
-              </Button>
+              </NoItem>
             </BottomButtonContainer>
           </CenteredContainer>
           <br />

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { styled } from 'styletron-react';
 import { StyleProps } from '../style';
 import { Dialog } from './Dialog';
-import { ThemeProps } from './theme';
+import { ThemeProps, LIGHTMODE_YES,LIGHTMODE_NO,LIGHT } from './theme';
 import { Fa } from './Fa';
 
 import { faCopyright } from '@fortawesome/free-solid-svg-icons';
@@ -32,7 +32,10 @@ interface DeleteUserProjectFileDialogPrivateProps {
 interface DeleteUserProjectFileDialogState {
 
 }
-
+interface ClickProps {
+  onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
+  disabled?: boolean;
+}
 type Props = DeleteUserProjectFileDialogPublicProps & DeleteUserProjectFileDialogPrivateProps;
 type State = DeleteUserProjectFileDialogState;
 
@@ -88,6 +91,7 @@ const LogoContainer = styled('div', {
 const Container = styled('div', (props: ThemeProps) => ({
   color: props.theme.color,
   padding: `${props.theme.itemPadding * 2}px`,
+  background: props.theme.titleBarBackground
 }));
 
 const Bold = styled('span', {
@@ -132,6 +136,50 @@ const Button = styled('button', {
   cursor: 'pointer', // Change the cursor to a pointer when hovering over the button
 });
 
+
+// Styled component button for the "Yes" button
+const YesItem = styled(Button, (props: ThemeProps & ClickProps) => ({
+  backgroundColor: LIGHTMODE_YES.standard,
+  border: `1px solid ${LIGHTMODE_YES.border}`,
+  ':hover':
+    props.onClick && !props.disabled
+      ? {
+        backgroundColor: LIGHTMODE_YES.hover,
+      }
+      : {},
+  color: LIGHTMODE_YES.textColor,
+  textShadow: LIGHTMODE_YES.textShadow,
+  boxShadow: '2px 2px 4px rgba(0,0,0,0.9)',
+  ':active': props.onClick && !props.disabled
+    ? {
+      boxShadow: '1px 1px 2px rgba(0,0,0,0.7)', // Fixed incorrect commas
+      transform: 'translateY(1px, 1px)', // Adds a press-down effect
+    }
+    : {},
+}));
+
+// Styled component button for the "No, don't save and continue" button
+const NoItem = styled(Button, (props: ThemeProps & ClickProps) => ({
+  backgroundColor: LIGHTMODE_NO.standard,
+  border: `1px solid ${LIGHTMODE_NO.border}`,
+  ':hover':
+    props.onClick && !props.disabled
+      ? {
+        backgroundColor: LIGHTMODE_NO.hover,
+      }
+      : {},
+  color: LIGHTMODE_NO.textColor,
+  textShadow: LIGHTMODE_NO.textShadow,
+  boxShadow: '2px 2px 4px rgba(0,0,0,0.9)',
+  ':active': props.onClick && !props.disabled
+    ? {
+        boxShadow: '1px 1px 2px rgba(0,0,0,0.7)', // Fixed incorrect commas
+        transform: 'translateY(1px, 1px)', // Adds a press-down effect
+      }
+    : {},
+}));
+
+
 class DeleteUserProjectFileDialog extends React.PureComponent<Props, State> {
 
   constructor(props: Props, state: State) {
@@ -172,12 +220,12 @@ class DeleteUserProjectFileDialog extends React.PureComponent<Props, State> {
           <CenteredContainer>
             
             <BottomButtonContainer>
-              <Button onClick={() => this.props.onConfirm(this.props.toDeleteName, this.props.toDeleteType, 'delete')}>
+              <YesItem onClick={() => this.props.onConfirm(this.props.toDeleteName, this.props.toDeleteType, 'delete')} theme={theme}>
                 Yes
-              </Button>
-              <Button onClick={this.props.onDeny}>
+              </YesItem>
+              <NoItem onClick={this.props.onDeny} theme={theme}>
                 No
-              </Button>
+              </NoItem>
             </BottomButtonContainer>
           </CenteredContainer>
           <br />

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { styled } from 'styletron-react';
 import { StyleProps } from '../style';
 import { Dialog } from './Dialog';
-import { ThemeProps } from './theme';
+import { ThemeProps, LIGHT, LIGHTMODE_YES, LIGHTMODE_NO } from './theme';
 import { Fa } from './Fa';
 
 import { faCopyright } from '@fortawesome/free-solid-svg-icons';
@@ -75,6 +75,10 @@ export type Modal = (
   Modal.None |
   Modal.DeleteUserProjectFile
 );
+interface ClickProps {
+  onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
+  disabled?: boolean;
+}
 
 const Logo = styled('img', {
   width: '150px',
@@ -87,6 +91,7 @@ const LogoContainer = styled('div', {
 
 const Container = styled('div', (props: ThemeProps) => ({
   color: props.theme.color,
+  backgroundColor: props.theme.titleBarBackground,
   padding: `${props.theme.itemPadding * 2}px`,
 }));
 
@@ -121,7 +126,7 @@ const BottomButtonContainer = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   marginTop: '20px', // Add some space above the button
-  
+
 });
 
 const Button = styled('button', {
@@ -132,24 +137,87 @@ const Button = styled('button', {
   cursor: 'pointer', // Change the cursor to a pointer when hovering over the button
 });
 
+// Styled component button for the "Yes" button
+const YesItem = styled(Button, (props: ThemeProps & ClickProps) => ({
+  backgroundColor: LIGHTMODE_YES.standard,
+  border: `1px solid ${LIGHTMODE_YES.border}`,
+  ':hover':
+    props.onClick && !props.disabled
+      ? {
+        backgroundColor: LIGHTMODE_YES.hover,
+      }
+      : {},
+  color: LIGHTMODE_YES.textColor,
+  textShadow: LIGHTMODE_YES.textShadow,
+  boxShadow: '2px 2px 4px rgba(0,0,0,0.9)',
+  ':active': props.onClick && !props.disabled
+    ? {
+        boxShadow: '1px 1px 2px rgba(0,0,0,0.7)', // Fixed incorrect commas
+        transform: 'translateY(1px, 1px)', // Adds a press-down effect
+      }
+    : {},
+}));
+
+// Styled component button for the "No, don't save and continue" button
+const NoContinueItem = styled(Button, (props: ThemeProps & ClickProps) => ({
+  backgroundColor: LIGHTMODE_NO.standard,
+  border: `1px solid ${LIGHTMODE_NO.border}`,
+  ':hover':
+    props.onClick && !props.disabled
+      ? {
+        backgroundColor: LIGHTMODE_NO.hover,
+      }
+      : {},
+  color: LIGHTMODE_NO.textColor,
+  textShadow: LIGHTMODE_NO.textShadow,
+  boxShadow: '2px 2px 4px rgba(0,0,0,0.9)',
+  ':active': props.onClick && !props.disabled
+    ? {
+        boxShadow: '1px 1px 2px rgba(0,0,0,0.7)', // Fixed incorrect commas
+        transform: 'translateY(1px, 1px)', // Adds a press-down effect
+      }
+    : {},
+}));
+
+// Styled component button for the "No, cancel" button
+const NoCancelItem = styled(Button, (props: ThemeProps & ClickProps) => ({
+  
+  border: `1px solid black`,
+  ':hover':
+    props.onClick && !props.disabled
+      ? {
+        backgroundColor: "#ffcccc",
+      }
+      : {},
+  color: "black",
+
+  boxShadow: '2px 2px 4px rgba(0,0,0,0.9)',
+  ':active': props.onClick && !props.disabled
+    ? {
+        boxShadow: '1px 1px 2px rgba(0,0,0,0.7)', // Fixed incorrect commas
+        transform: 'translateY(1px, 1px)', // Adds a press-down effect
+      }
+    : {},
+}));
+
 class SaveFileDialog extends React.PureComponent<Props, State> {
 
   constructor(props: Props, state: State) {
     super(props);
     this.state = {
-      }
+    }
   }
 
   componentDidMount(): void {
-    console.log("SaveFileDialog.tsx: componentDidMount with props:", this.props);  
+    console.log("SaveFileDialog.tsx: componentDidMount with props:", this.props);
   }
   render() {
     const { props, state } = this;
-    const { theme, onClose, locale } = props;
+    const { onClose, locale } = props;
 
 
     let logo: JSX.Element;
-
+    const theme = LIGHT;
     switch (theme.foreground) {
       case 'black': {
         logo = <Logo src={KIPR_LOGO_WHITE as string} />;
@@ -161,6 +229,7 @@ class SaveFileDialog extends React.PureComponent<Props, State> {
       }
     }
 
+
     return (
       <Dialog theme={theme} name={LocalizedString.lookup(tr('Are You Sure?'), locale)} onClose={onClose}>
         <Container theme={theme}>
@@ -170,17 +239,17 @@ class SaveFileDialog extends React.PureComponent<Props, State> {
           </CenteredContainer>
           <br />
           <CenteredContainer>
-            
+
             <BottomButtonContainer>
-              <Button onClick={() => this.props.onConfirm(this.props.toSaveName, this.props.toSaveType, 'save')}>
+              <YesItem onClick={() => this.props.onConfirm(this.props.toSaveName, this.props.toSaveType, 'save')} theme={theme}>
                 Yes
-              </Button>
-              <Button onClick={() => this.props.onDenySave('continue')}>
+              </YesItem>
+              <NoContinueItem onClick={() => this.props.onDenySave('continue')} theme={theme}>
                 No, don't save and continue
-              </Button>
-              <Button onClick={() => this.props.onDenySave('cancel')}>
+              </NoContinueItem>
+              <NoCancelItem onClick={() => this.props.onDenySave('cancel')} theme={theme}>
                 No, cancel
-              </Button>
+              </NoCancelItem>
             </BottomButtonContainer>
           </CenteredContainer>
           <br />
