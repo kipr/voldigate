@@ -2,6 +2,9 @@ export interface ButtonColor {
   disabled: string;
   standard: string;
   hover: string;
+  border?: string;
+  textColor?: string;
+  textShadow?: string;
 }
 
 export const GREEN: ButtonColor = Object.freeze({
@@ -34,6 +37,24 @@ export const BROWN: ButtonColor = Object.freeze({
   hover: '#ab8c49',
 });
 
+export const LIGHTMODE_YES: ButtonColor = Object.freeze({
+  disabled: '#507255',
+  border: '#800000',  
+  standard: "#2AA298",
+  hover: "#34cbbe",
+  textColor: 'white',
+  textShadow: '2px 2px 4px rgba(0,0,0,0.9)',
+});
+
+export const LIGHTMODE_NO: ButtonColor = Object.freeze({
+  disabled: '#507255',
+  border: '#800000',  
+  standard: "#cc0000",
+  hover: "#ff1a1a",
+  textColor: 'white',
+  textShadow: '2px 2px 4px rgba(0,0,0,0.9)',
+});
+
 export interface Theme {
   foreground: 'white' | 'black';
   tester: string;
@@ -51,7 +72,7 @@ export interface Theme {
   selectedFileBackground: string;
   hoverFileBackground: string;
 
-
+  yesButtonColor: ButtonColor;
   color: string;
   borderColor: string;
   borderRadius: number;
@@ -92,7 +113,7 @@ export const COMMON: Theme = {
   editorConsoleBackground: undefined,
   tester: undefined,
   editorBackground: undefined,
-
+  yesButtonColor: undefined,
   borderColor: undefined,
   borderRadius: 10,
   widget: {
@@ -128,6 +149,11 @@ export const LIGHT: Theme = {
   selectedProjectBackground: '#dadada',
   selectedFileBackground: '#d3e8f9',
   hoverFileBackground: '#e4f1fb',
+
+  yesButtonColor: LIGHTMODE_YES,
+
+
+
 
   borderColor: '#ede0e0',
   iconColor: '#f5ebeb',
