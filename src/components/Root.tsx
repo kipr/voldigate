@@ -111,6 +111,8 @@ export interface RootPublicProps extends RouteComponentProps<RootParams> {
   resetDownloadProjectFlag: (downloadProjectFlag: boolean) => void;
   resetDownloadFileFlag: (downloadFileFlag: boolean) => void;
 
+  resetFileExplorerFileSelection: (resetSelectionToFile: string) => void;
+
 }
 
 
@@ -526,6 +528,7 @@ class Root extends React.Component<Props, State> {
         userName: this.props.propUserName,
         projectName: this.props.propProjectName,
         otherFileType: this.props.otherFileType,
+        fileName: this.state.tempNewFile,
         clickFileState: false,
 
       }, () => {
@@ -557,7 +560,8 @@ class Root extends React.Component<Props, State> {
         // await this.loadCodeBasedOnExtension();
 
 
-
+        console.log("Root.tsx compDidUpdate clickFile with current props:", this.props);
+        this.props.resetFileExplorerFileSelection(this.props.propFileName);
         switch (otherFileType) {
           case 'h':
             const rootUpdateHeader = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUserName}/${propProjectName}/include/${propFileName}` } });
@@ -1046,7 +1050,7 @@ class Root extends React.Component<Props, State> {
 
     }
 
-
+    this.props.resetFileExplorerFileSelection(`${newFileName}.${fileType}`);
 
     this.setState({
       isCreateProjectDialogVisible: false,
@@ -1073,6 +1077,7 @@ class Root extends React.Component<Props, State> {
         });
       }
       this.props.setAddNewFile(false);
+
     });
 
 
@@ -1356,7 +1361,7 @@ class Root extends React.Component<Props, State> {
       const { userName, activeLanguage, projectName, fileName, otherFileType } = this.state;
       // const fileContents = this.state.code[activeLanguage];
       console.log("onSavecode with state code before saving over:", this.state.code);
-     // const fileContents = this.state.toSaveCode_;
+      // const fileContents = this.state.toSaveCode_;
       const fileContents = this.toSaveCodeRef.current[activeLanguage];
       const prePath = `/home/kipr/Documents/KISS`;
       let filePath = '';
@@ -1395,7 +1400,7 @@ class Root extends React.Component<Props, State> {
   private onConfirm_ = async (confirmedName: string, confirmedType: string, action: string) => {
 
     console.log("onConfirm clicked in Root with confirmedName:", confirmedName, " and confirmedType:", confirmedType, " and action:", action);
-    this.onModalClose_();
+
     console.log("onConfirm this.state.userName:", this.state.userName, " this.state.projectName:", this.state.projectName, " this.state.fileName:", this.state.fileName);
 
     try {
@@ -1405,6 +1410,7 @@ class Root extends React.Component<Props, State> {
       switch (action) {
         case 'delete':
           console.log("onConfirm_ delete action")
+          this.onModalClose_();
           switch (confirmedType) {
             case 'user':
               const deleteUserResponse = await axios.post('/delete-user', { userName: confirmedName });
@@ -1428,6 +1434,7 @@ class Root extends React.Component<Props, State> {
 
         case 'download':
           console.log("onConfirm_ download action")
+          this.onModalClose_();
           switch (confirmedType) {
             case 'user':
               try {
@@ -1523,12 +1530,14 @@ class Root extends React.Component<Props, State> {
           }
           break;
         case 'save':
+
           console.log("onConfirm_ save action")
           console.log("onConfirm tempNewFile:", this.state.tempNewFile);
           console.log("onConfirm before save state:", this.state);
           console.log("onConfirm_ with toSaveCodeRef: ", this.toSaveCodeRef.current);
           const [name, extension] = confirmedName.split('.');
           console.log("File extension is: ", extension);
+          this.onModalClose_('save');
           let saveFileResponse = '';
           switch (extension) {
             case 'c':
@@ -1574,7 +1583,7 @@ class Root extends React.Component<Props, State> {
               });
               break;
             case 'txt':
-              saveFileResponse = await axios.post('/save-file-content', { filePath: `/home/kipr/Documents/KISS/${this.state.userName}/${this.state.projectName}/data/${this.state.fileName}`, fileContents: this.toSaveCodeRef.current.txt });
+              saveFileResponse = await axios.post('/save-file-content', { filePath: `/home/kipr/Documents/KISS/${this.state.userName}/${this.state.projectName}/data/${this.state.fileName}`, fileContents: this.toSaveCodeRef.current.plaintext });
               console.log("saveFileResponse (data):", saveFileResponse);
               this.setState({
                 code: {
@@ -1624,18 +1633,24 @@ class Root extends React.Component<Props, State> {
       this.setState({
         saveCodePromptFlag: false
       }, async () => {
-        this.onModalClose_();
+        this.onModalClose_('deny,continue');
       });
     }
     else if (denyType == 'cancel') {
       console.log("onDenySave_ with denyType cancel");
+      console.log("onDenySave_ with fileName to reset to:", this.state.fileName);
+      console.log("onDenySave_ with resetFileExplorerFileSelection with fileName:", this.state.fileName);
+      // this.props.resetFileExplorerFileSelection(this.state.fileName);
       this.onModalClose_();
     }
 
 
 
   }
-  private onModalClose_ = async () => {
+  private onModalClose_ = async (action?: string) => {
+    console.log("onModalClose_ with current state: ", this.state);
+    console.log("onModalClose_ with current props: ", this.props);
+    console.log("onModalClose_ with action: ", action);
     this.setState({ modal: Modal.NONE, deleteUserFlag_: false });
 
     if (this.props.addNewProject) {
@@ -1690,6 +1705,21 @@ class Root extends React.Component<Props, State> {
     if (this.props.clickFile) {
       this.props.setClickFile(false);
     }
+    if (this.state.fileName || this.state.tempNewFile) {
+
+      if (action == 'save') {
+        console.log("onModalClose_ with saveAction true, saveFile_ with tempNewFile:", this.state.tempNewFile);
+        this.props.resetFileExplorerFileSelection(this.state.tempNewFile);
+      }
+      else if(action == 'deny,continue')
+      {
+        console.log("onModalClose_ with deny,continue action with tempNewFile:", this.state.tempNewFile);
+        this.props.resetFileExplorerFileSelection(this.state.tempNewFile);
+      }
+
+
+    }
+
   }
 
 

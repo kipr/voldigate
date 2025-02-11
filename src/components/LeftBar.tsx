@@ -190,6 +190,7 @@ const FileExplorerContainer = styled('div', (props: ThemeProps & ClickProps) => 
 
 export class LeftBar extends React.Component<Props, State> {
 
+  private selectedFileRef: React.MutableRefObject<string>;
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -201,8 +202,18 @@ export class LeftBar extends React.Component<Props, State> {
       isPanelVisible: false,
 
     }
+    this.selectedFileRef = React.createRef();
   }
 
+ 
+  async componentDidUpdate(prevProps: Props, prevState: State) {
+    console.log("LeftBar compDidUpdate prevProps: ", prevProps);
+    console.log("LeftBar compDidUpdate prevState: ", prevState);
+
+    console.log("LeftBar compDidUpdate props: ", this.props);
+    console.log("LeftBar compDidUpdate state: ", this.state);
+
+  }
   private onSettingsChange_ = (changedSettings: Partial<Settings>) => {
     const nextSettings: Settings = {
       ...this.state.settings,
@@ -229,6 +240,13 @@ export class LeftBar extends React.Component<Props, State> {
     }, () => {
       console.log("Leftbar sliderSizes: ", this.state.sliderSizes);
     });
+
+  };
+
+  private setSelectedFileRef_ = (fileName: string) => {
+    this.selectedFileRef.current = fileName;
+
+    console.log("LeftBar selectedFileRef: ", this.selectedFileRef.current);
 
   };
   render() {
@@ -347,7 +365,10 @@ export class LeftBar extends React.Component<Props, State> {
 
           resetDownloadUserFlag={rootSetDownloadUserFlag}
           resetDownloadProjectFlag={rootSetDownloadProjectFlag}
-          resetDownloadFileFlag={rootSetDownloadFileFlag} />
+          resetDownloadFileFlag={rootSetDownloadFileFlag}
+          
+          resetFileExplorerFileSelection={this.setSelectedFileRef_}
+          />
       </div>
     )
 
@@ -376,6 +397,8 @@ export class LeftBar extends React.Component<Props, State> {
           reloadFilesFlag={propedReloadFilesFlag}
           propUsers={propedUsers}
           propUserData={propedUserData}
+          propFileName={ this.selectedFileRef.current}
+
           style={{
             flex: 1,
             width: `${sliderSizes[0] * 100}%`,
@@ -383,6 +406,7 @@ export class LeftBar extends React.Component<Props, State> {
 
             zIndex: 1,
           }}
+          
         />
 
 

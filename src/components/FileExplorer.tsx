@@ -61,6 +61,8 @@ export interface FileExplorerProps extends ThemeProps, StyleProps {
 
     propUsers: string[];
     propUserData: Project[];
+
+    propedFromRootFileName?: string;
 }
 interface SectionProps {
     selected?: boolean;
@@ -238,7 +240,7 @@ const FileTypeTitleContainer = styled('div', (props: ThemeProps) => ({
     transition: 'background-color 0.2s, opacity 0.2s',
     padding: `5px`,
     fontWeight: 400,
-    
+
     userSelect: 'none',
 }));
 
@@ -289,13 +291,26 @@ const IndividualFile = styled('div', (props: ThemeProps & { selected: boolean })
     listStyleType: 'none',
     borderRadius: '5px',
     cursor: 'pointer',
-    backgroundColor: props.selected ? props.theme.selectedFileBackground : props.theme.homeStartContainerBackground,
+    backgroundColor: (props.selected) ? props.theme.selectedFileBackground : props.theme.homeStartContainerBackground,
     padding: '3px',
     ':hover': {
         cursor: 'pointer',
         backgroundColor: props.theme.hoverFileBackground
     },
 }));
+// const IndividualFile = styled('div', (props: ThemeProps & { selected: boolean; selectedfile?: string; filename?: string }) => ({
+//     listStyleType: 'none',
+//     borderRadius: '5px',
+//     cursor: 'pointer',
+//     backgroundColor: (props.filename === props.selectedfile) 
+//         ? props.theme.selectedFileBackground 
+//         : props.theme.homeStartContainerBackground,
+//     padding: '3px',
+//     ':hover': {
+//         cursor: 'pointer',
+//         backgroundColor: props.theme.hoverFileBackground
+//     },
+// }));
 
 const ContextMenu = styled('div', (props: ThemeProps & { x: number, y: number }) => ({
     position: "absolute",
@@ -322,6 +337,9 @@ const ContextMenuItem = styled('div', (props: ThemeProps) => ({
 
 
 export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxSideLayoutProps, State> {
+
+    private selectedFileRefFE: React.MutableRefObject<string>;
+    private previousSelectedFileFE: React.MutableRefObject<string>;
     constructor(props: Props & FileExplorerReduxSideLayoutProps) {
         super(props);
 
@@ -349,6 +367,8 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
             showFileContextMenu: false
 
         };
+        this.selectedFileRefFE = React.createRef();
+        this.previousSelectedFileFE = React.createRef();
 
     }
 
@@ -558,6 +578,22 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
     }
     async componentDidUpdate(prevProps: Props, prevState: State) {
 
+        console.log("FileExplorer compDidUpdate prevProps: ", prevProps);
+        console.log("FileExplorer compDidUpdate props: ", this.props);
+        console.log("FileEXplorer compDidUpdate state: ", this.state);
+        console.log("FileExplorer compDidUpdate this.selectedFileRefFE.current: ", this.selectedFileRefFE.current);
+        console.log("FileExplorer compDidUpdate this.previousSelectedFileFE.current: ", this.previousSelectedFileFE.current);
+
+        
+        if(this.props.propFileName !== this.selectedFileRefFE.current){
+            console.log("FileExplorer compDidUpdate this.props.propFileName: ", this.props.propFileName, "and this.selectedFileRefFE.current: ", this.selectedFileRefFE.current);
+
+            this.selectedFileRefFE.current = this.props.propFileName;
+            console.log("FileExplorer compDidUpdate this.selectedFileRefFE.current after checking: ", this.selectedFileRefFE.current);
+            this.setState({selectedFile: this.selectedFileRefFE.current});
+       
+        }
+
         if (prevState.projectName !== this.state.projectName) {
             console.log("inside componentDidUpdate FileExplorer.tsx with prev state: ", prevState);
             console.log("inside componentDidUpdate FileExplorer.tsx with current state: ", this.state);
@@ -568,6 +604,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                 selectedProject: this.state.projectName
             });
         }
+
 
         if (prevProps.propUserData !== this.props.propUserData) {
             console.log("propUserData changed");
@@ -676,22 +713,34 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
 
     };
 
-    private handleFileClick = async (fileName: string) => {
+    private handleFileClick = async (fileName: string, projectDetails?: Project) => {
         const { userName, projectName, activeLanguage } = this.state;
+
+        if (this.previousSelectedFileFE.current === null) {
+            this.previousSelectedFileFE.current = fileName;
+        }
+        else {
+            this.previousSelectedFileFE.current = this.selectedFileRefFE.current;
+        }
+        this.selectedFileRefFE.current = fileName;
 
         const [name, extension] = fileName.split('.');
         console.log("handleFileClick activeLanguage: ", activeLanguage);
         console.log("this.state.projectName: ", this.state.projectName);
         console.log("fileName: ", fileName);
         console.log("FileExpl handleFileClick state:", this.state);
-
+        console.log("FileExpl handleFileClick selectedFileRefFE: ", this.selectedFileRefFE.current);
+        console.log("FileExpl handleFileClick previousSelectedFileFE: ", this.previousSelectedFileFE.current);
 
         console.log("extension is:", extension);
+
+
+
+        console.log("FileExpl handleFileClick projectDetails: ", projectDetails);
         this.setState({
             fileType: extension,
             selectedFile: fileName
         });
-
         switch (extension) {
             case 'c':
                 this.setState({
@@ -728,7 +777,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                 break;
             case 'h':
                 this.setState({
-                    activeLanguage: activeLanguage
+                    activeLanguage: projectDetails.projectLanguage
                 }, () => {
                     console.log("Header file clicked");
                     console.log("activeLanguage set to: ", this.state.activeLanguage);
@@ -900,8 +949,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
 
     renderProjects = (projects: Project[]) => {
         const theme = this.props.theme;
-        console.log("insideRenderProjects");
-        console.log("insideRenderProjects projects: ", projects);
+        console.log("insideRenderProjects with state: ", this.state);
         return (
             <div>
                 <ProjectContainer theme={theme} key={this.state.selectedSection}>
@@ -949,9 +997,9 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                                                     <IndividualFile
                                                         key={`include-${i}`}
                                                         theme={theme}
-                                                        selected={this.state.selectedFile === file}
+                                                        selected={this.selectedFileRefFE.current === file}
 
-                                                        onClick={() => this.handleFileClick(file)} onContextMenu={(e) => this.handleFileRightClick(e, file)}>
+                                                        onClick={() => this.handleFileClick(file, project)} onContextMenu={(e) => this.handleFileRightClick(e, file)}>
                                                         {file}
                                                     </IndividualFile>
                                                 ))}
@@ -974,8 +1022,9 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                                                     <IndividualFile
                                                         key={`src-${i}`}
                                                         theme={theme}
-                                                        selected={this.state.selectedFile === file}
-                                                        onClick={() => this.handleFileClick(file)} onContextMenu={(e) => this.handleFileRightClick(e, file)}>
+                                                        selected={this.selectedFileRefFE.current === file}
+
+                                                        onClick={() => this.handleFileClick(file, project)} onContextMenu={(e) => this.handleFileRightClick(e, file)}>
                                                         {file}
                                                     </IndividualFile>
                                                 ))}
@@ -996,7 +1045,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                                                         key={`data-${i}`}
                                                         theme={theme}
                                                         selected={this.state.selectedFile === file}
-                                                        onClick={() => this.handleFileClick(file)} onContextMenu={(e) => this.handleFileRightClick(e, file)}>
+                                                        onClick={() => this.handleFileClick(file,project)} onContextMenu={(e) => this.handleFileRightClick(e, file)}>
                                                         {file}
                                                     </IndividualFile>
                                                 ))}
