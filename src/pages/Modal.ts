@@ -21,6 +21,7 @@ export namespace Modal {
     DeleteUserProjectFile,
     DownloadUserProjectFile,
     OpenUsers,
+    OpenFile,
     SaveFile
   }
   
@@ -88,6 +89,12 @@ export namespace Modal {
 
   export const OPENUSERS: OpenUsers = { type: Type.OpenUsers };
 
+  export interface OpenFile {
+    type: Type.OpenFile;
+  }
+
+  export const OPENFILE: OpenFile = { type: Type.OpenFile };
+
   export interface DeleteUserProjectFile {
     type: Type.DeleteUserProjectFile;
   }
@@ -108,6 +115,7 @@ export namespace Modal {
 
   export const SAVEFILE: SaveFile = { type: Type.SaveFile };
 
+
 }
   
 export type Modal = (
@@ -124,6 +132,7 @@ export type Modal = (
   Modal.OpenUsers |
   Modal.DeleteUserProjectFile |
   Modal.DownloadUserProjectFile |
-  Modal.SaveFile
+  Modal.SaveFile |
+  Modal.OpenFile
 
 );
