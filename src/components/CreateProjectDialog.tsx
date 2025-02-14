@@ -13,9 +13,9 @@ import { I18nAction } from '../state/reducer';
 import { connect } from 'react-redux';
 import Form from './Form';
 import { Modal } from '../pages/Modal';
-
+import { Fa } from './Fa';
 import ProgrammingLanguage from '../ProgrammingLanguage';
-
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
 
 export interface CreateProjectDialogPublicProps extends ThemeProps, StyleProps {
@@ -40,8 +40,9 @@ interface CreateProjectDialogPrivateProps {
 interface CreateProjectDialogState {
   userName: string;
   modal: Modal;
-  showRepeatUserDialog: boolean;
+  showRepeatProjectDialog: boolean;
   language: string;
+  errorMessage: string;
 }
 
 
@@ -78,9 +79,11 @@ const NewProjectContainer = styled('div', (props: ThemeProps) => ({
   display: 'flex',
   flexDirection: 'column',
   color: props.theme.color,
+  backgroundColor: props.theme.backgroundColor,
   minHeight: '200px',
   paddingLeft: `${props.theme.itemPadding * 2}px`,
   paddingRight: `${props.theme.itemPadding * 2}px`,
+  paddingTop: `${props.theme.itemPadding * 2}px`,
 }));
 
 
@@ -104,6 +107,23 @@ const OPTIONS: ComboBox.Option[] = [{
   text: 'Python',
   data: 'python'
 }];
+const ErrorMessageContainer = styled('div', (props: ThemeProps) => ({
+  display: 'flex',
+  flexDirection: 'row',
+  backgroundColor: 'red',
+  color: 'white',
+  height: '40px',
+  alignItems: 'center',
+  marginTop: '10px',
+
+}));
+
+const ItemIcon = styled(Fa, {
+  paddingLeft: '10px',
+  paddingRight: '10px',
+  alignItems: 'center',
+  height: '30px'
+});
 
 
 export class CreateProjectDialog extends React.PureComponent<Props, State> {
@@ -114,8 +134,9 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
     this.state = {
       modal: Modal.NONE,
       userName: this.props.userName,
-      showRepeatUserDialog: false,
+      showRepeatProjectDialog: false,
       language: 'c',
+      errorMessage: ''
     }
     console.log(" CreateProjectDialog.tsx constructor with state language:", this.state.language);
   }
@@ -130,15 +151,15 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
     const { props } = this;
     // const { onLanguageChange } = props;
 
-     this.onLanguageChange(option.data as ProgrammingLanguage);
+    this.onLanguageChange(option.data as ProgrammingLanguage);
   };
-  
+
   private onLanguageChange = (language: ProgrammingLanguage) => {
     this.setState({
       language: language
     }, () => {
       console.log("Updated language to: ", this.state.language);
-       //this.props.onDocumentationSetLanguage(language === 'python' ? 'python' : 'c');
+      //this.props.onDocumentationSetLanguage(language === 'python' ? 'python' : 'c');
     });
 
   };
@@ -146,20 +167,38 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
 
     console.log('Inside onFinalizeClick_ in CreateProjectDialog.tsx with values:', values);
     console.log("Inside CreateProjectDialog.tsx with state Username:", this.props.userName);
+
+    const projectName = values.projectName;
+
+    const specialCharRegex = /[^a-zA-Z0-9 _-]/;
+    const isOnlySpaces = !projectName.trim(); // Check if the name is empty or only spaces
+
+
+    if (specialCharRegex.test(projectName)) {
+      this.setState({ errorMessage: 'Project name contains special characters. Please use only letters, numbers, spaces, underscores, and hyphens.' });
+      return;
+    }
+    if (isOnlySpaces) {
+      this.setState({ errorMessage: "Project name cannot be empty or just spaces!" });
+      return;
+    }
+    this.setState({ errorMessage: "" }); // Clear error message if input is valid
     try {
-   
-      const response = await axios.post('/initialize-repo', {userName: this.props.userName, projectName:values.projectName, language:this.state.language as ProgrammingLanguage});
+
+      const response = await axios.post('/initialize-repo', { userName: this.props.userName, projectName: values.projectName, language: this.state.language as ProgrammingLanguage });
       console.log("initialize-repo Response: ", response);
 
-      if(response.status === 200){
+      if (response.status === 200) {
         console.log("closeProjectDialog language: ", this.state.language);
         this.props.closeProjectDialog(values.projectName, this.state.language as ProgrammingLanguage);
       }
-   
+
     }
     catch (error) {
       console.error('Error adding user to database:', error);
     }
+
+
 
 
 
@@ -174,12 +213,12 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
   render() {
     const { props, state } = this;
     const { style, className, theme, onClose, locale } = props;
-
+    const { errorMessage } = state;
     const CREATEPROJECT_FORM_ITEMS: Form.Item[] = [
-        Form.projectName('projectName', 'Project Name')
+      Form.projectName('projectName', 'Project Name')
 
     ];
- 
+
     const index = OPTIONS.findIndex(option => option.data === this.state.language);
 
     return (
@@ -199,6 +238,17 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
                 index={index}>
               </StyledComboBox>
             </ComboBoxContainer>
+
+            {/* Show error message if it exists */}
+            {errorMessage && (
+              <ErrorMessageContainer theme={theme}>
+                <ItemIcon icon={faExclamationTriangle} />
+                <div style={{ fontWeight: 450 }}>
+                  {state.errorMessage}
+                </div>
+
+              </ErrorMessageContainer>
+            )}
             <Container theme={theme} style={style} className={className}>
               <StyledForm
                 theme={theme}
