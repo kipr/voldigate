@@ -30,6 +30,7 @@ type State = MenuState;
 
 const Container = styled('div', (props: ThemeProps) => ({
   backgroundColor: props.theme.titleBarBackground,
+
   color: props.theme.color,
   width: '100%',
   height: '48px',
@@ -67,9 +68,10 @@ interface ClickProps {
 
 const ExtraMenuContainer = styled('div', (props: ThemeProps) => ({
   backgroundColor: props.theme.titleBarBackground,
+ 
   color: props.theme.color,
   top: '20px',
-  width: '100vh',
+  width: '100%',
   height: '48px',
   lineHeight: '28px',
   display: 'flex',
@@ -102,7 +104,7 @@ export class MainMenu extends React.Component<Props, State> {
     return (
       <Container className={className} style={style} theme={theme}>
         <Logo theme={theme} src={theme.foreground === 'white' ? KIPR_LOGO_BLACK as string : KIPR_LOGO_WHITE as string} onClick={this.onDashboardClick_} />
-        <Spacer style={{ borderRight: `1px solid ${theme.borderColor}` }} />
+        {/* <Spacer style={{ borderRight: `1px solid ${theme.borderColor}` }} /> */}
         <ExtraMenuContainer theme={theme}>
           <ExtraMenu
             style={{ zIndex: 9 }}

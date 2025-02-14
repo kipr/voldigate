@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { styled } from 'styletron-react';
 import { StyleProps } from '../style';
 import { Dialog } from './Dialog';
-import { ThemeProps } from './theme';
+import { ThemeProps, LIGHTMODE_YES } from './theme';
 import KIPR_LOGO_BLACK from '../assets/KIPR-Logo-Black-Text-Clear-Large.png';
 import KIPR_LOGO_WHITE from '../assets/KIPR-Logo-White-Text-Clear-Large.png';
 import tr from '@i18n';
@@ -38,7 +38,10 @@ type Project = {
   dataFolderFiles: string[];
   projectLanguage: ProgrammingLanguage;
 }
-
+interface ClickProps {
+  onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
+  disabled?: boolean;
+}
 interface OpenUsersDialogPrivateProps {
   locale: LocalizedString.Language;
   onLocaleChange: (locale: LocalizedString.Language) => void;
@@ -120,6 +123,7 @@ const Container = styled('div', (props: ThemeProps) => ({
   display: 'flex',
   flexDirection: 'row',
   color: props.theme.color,
+  backgroundColor: props.theme.backgroundColor,
   minHeight: '300px',
 }));
 
@@ -153,7 +157,7 @@ const SectionName = styled('span', (props: ThemeProps & SectionProps) => ({
   backgroundColor: props.selected ? `rgba(255, 255, 255, 0.1)` : undefined,
   ':hover': {
     cursor: 'pointer',
-    backgroundColor: `rgba(255, 255, 255, 0.1)`
+    backgroundColor: props.theme.hoverOptionBackground
   },
   transition: 'background-color 0.2s, opacity 0.2s',
   padding: `${props.theme.itemPadding * 2}px`,
@@ -171,7 +175,7 @@ const ProjectTitle = styled('h2', {
   fontSize: '1.2em',
   textAlign: 'center', // 
 });
-const ProjectItem = styled('li', (props: { selected: boolean }) => ({
+const ProjectItem = styled('li', (props: ThemeProps & { selected: boolean }) => ({
   cursor: 'pointer',
   backgroundColor: props.selected ? `rgba(255, 255, 255, 0.1)` : undefined,  // Highlight selected project
   padding: '5px',
@@ -179,7 +183,7 @@ const ProjectItem = styled('li', (props: { selected: boolean }) => ({
   borderRadius: '5px',
   ':hover': {
     cursor: 'pointer',
-    backgroundColor: `rgba(255, 255, 255, 0.1)`
+    backgroundColor: props.theme.hoverOptionBackground
   },
 }));
 const BottomButtonContainer = styled('div', {
@@ -187,7 +191,34 @@ const BottomButtonContainer = styled('div', {
   justifyContent: 'center',
   marginTop: '20px', // Add some space above the button
 });
+const Button = styled('button', {
+  margin: '0 10px', // Add some space to the left and right of the button
+  padding: '10px 20px', // Add some padding to the button
+  border: 'none', // Remove the border
+  borderRadius: '5px', // Add some border radius
+  cursor: 'pointer', // Change the cursor to a pointer when hovering over the button
+});
 
+// Styled component button for the "Yes" button
+const OpenProjectButton = styled(Button, (props: ThemeProps & ClickProps) => ({
+  backgroundColor: LIGHTMODE_YES.standard,
+  border: `1px solid ${LIGHTMODE_YES.border}`,
+  ':hover':
+    props.onClick && !props.disabled
+      ? {
+        backgroundColor: LIGHTMODE_YES.hover,
+      }
+      : {},
+  color: LIGHTMODE_YES.textColor,
+  textShadow: LIGHTMODE_YES.textShadow,
+  boxShadow: '2px 2px 4px rgba(0,0,0,0.9)',
+  ':active': props.onClick && !props.disabled
+    ? {
+      boxShadow: '1px 1px 2px rgba(0,0,0,0.7)', // Fixed incorrect commas
+      transform: 'translateY(1px, 1px)', // Adds a press-down effect
+    }
+    : {},
+}));
 
 class OpenUsersDialog extends React.PureComponent<Props, State> {
 
@@ -211,18 +242,6 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
   };
 
   private handleProjectClick = async (projectId: string) => {
-    // const projectInfo = await DatabaseService.getProjectInfo(this.state.selectedSection,projectId);
-    // console.log("Project Info: ", projectInfo);
-    // console.log("Project ID: ", projectInfo.project_id);
-    // console.log("Project activeLanguage: ", projectInfo.language);
-    // this.setState({ 
-    //   selectedProject: projectId,
-    //   projectName: projectInfo.project_id,
-    //   activeLanguage: projectInfo.language
-    // });
-
-    //console.log("handleProjectClick activeLanguage: ", this.props.projectLanguage);
-
 
     this.setState({
       selectedProject: projectId,
@@ -269,6 +288,7 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
 
   renderProjects() {
     const { projects, loading, error, selectedProject } = this.state;
+    const { theme } = this.props;
 
     if (loading) {
       return <div>Select User to see projects</div>;
@@ -290,7 +310,8 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
             <ProjectItem
               key={project.projectName}
               selected={selectedProject === project.projectName}
-              onClick={() => this.handleProjectClick(project.projectName)}>
+              onClick={() => this.handleProjectClick(project.projectName)}
+              theme={this.props.theme}>
               {project.projectName}
             </ProjectItem>
           ))}
@@ -298,9 +319,9 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
         {
           selectedProject && (
             <BottomButtonContainer>
-              <button onClick={() => this.props.onOpenUserProject(this.state.selectedSection, this.state.selectedProject, `main.${ProgrammingLanguage.FILE_EXTENSION[this.state.activeLanguage]}`, this.state.activeLanguage)}>
+              <OpenProjectButton onClick={() => this.props.onOpenUserProject(this.state.selectedSection, this.state.selectedProject, `main.${ProgrammingLanguage.FILE_EXTENSION[this.state.activeLanguage]}`, this.state.activeLanguage)} theme={theme}>
                 Open Project
-              </button>
+              </OpenProjectButton>
             </BottomButtonContainer>
           )
         }
@@ -344,6 +365,7 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
       <Dialog
         theme={theme}
         name={LocalizedString.lookup(tr('Open Users'), locale)}
+        style={{color: theme.whiteText}}
         onClose={onClose}
       >
         <Container theme={theme} style={style} className={className}>

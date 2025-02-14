@@ -22,6 +22,7 @@ import OpenUsersDialog from './OpenUsersDialog';
 
 import ProgrammingLanguage from 'ProgrammingLanguage';
 import { Modal } from '../pages/Modal';
+import OpenFileDialog from './OpenFileDialog';
 
 type Project = {
     projectName: string;
@@ -41,7 +42,7 @@ export interface HomeStartOptionsPublicProps extends StyleProps, ThemeProps {
     onOpenUserProject: (name: string, projectName: string, fileName: string, projectLanguage: string) => void;
     onLoadUsers: () => Promise<string[]>;
     onLoadUserData: (openedUserDialog: boolean, desiredUser: string) => Promise<Project[]>;
-    //onNewFileName: (name: string) => void;
+    onOpenFile: (userName: string, projectName: string, fileName: string, projectLanguage: string) => void;
 }
 
 interface HomeStartOptionsPrivateProps {
@@ -102,7 +103,7 @@ const StartContainer = styled('div', (props: ThemeProps) => ({
     backgroundColor: '#ebdbdc',
     color: props.theme.color,
     width: '45%',
-    height: '85%',
+    height: '90%',
     marginTop: '5%',
     marginLeft: '10%',
     padding: '10px 5px 10px 5px',
@@ -123,16 +124,20 @@ interface ClickProps {
 
 const Item = styled('div', (props: ThemeProps & ClickProps) => ({
     display: 'flex',
-    alignItems: 'start',
+    justifyContent: 'center',
+    alignItems: 'center',
     flexDirection: 'row',
     fontSize: '25px',
-    paddingRight: '20px',
-    paddingLeft: '20px',
-    marginBottom: '12px',
+    padding: '30px 20px 30px 20px',
+    marginBottom: '16px',
     height: '45px',
     userSelect: 'none',
     transition: 'background-color 0.2s, opacity 0.2s',
-    cursor: 'grab'
+    cursor: 'grab',
+    ':hover': props.onClick && !props.disabled ? {
+        cursor: 'pointer',
+        backgroundColor: props.theme.hoverOptionBackground
+      } : {},
 }));
 const Title = styled('div', (props: ThemeProps & ClickProps) => ({
     display: 'flex',
@@ -146,9 +151,19 @@ const Title = styled('div', (props: ThemeProps & ClickProps) => ({
     transition: 'background-color 0.2s, opacity 0.2s'
 }));
 const ItemIcon = styled(Fa, {
+    display: 'flex',
+    justifyContent: 'center',
     paddingRight: '12px',
     alignItems: 'center',
+
     height: '30px'
+});
+
+const ItemIconContainer = styled('div', {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '60px'
 });
 
 
@@ -263,7 +278,7 @@ export class HomeStartOptions extends React.Component<Props, State> {
                         <StartContainer theme={theme}>
                             <Title theme={theme} style={{ fontSize: 35 }}>Start</Title>
                             <Item onClick={this.onModalClick_(Modal.CREATEUSER)} theme={theme}><ItemIcon icon={faUserPlus}></ItemIcon>{LocalizedString.lookup(tr('New User...'), locale)}</Item>
-                            <Item theme={theme}><ItemIcon style={{ paddingRight: '7%' }} icon={faFilePen}></ItemIcon>{LocalizedString.lookup(tr('Open File...'), locale)}</Item>
+                            <Item onClick={this.onModalClick_(Modal.OPENFILE)} theme={theme}><ItemIcon icon={faFilePen}></ItemIcon>{LocalizedString.lookup(tr('Open File...'), locale)}</Item>
                             <Item onClick={this.onModalClick_(Modal.OPENUSERS)} theme={theme}><ItemIcon style={{ paddingRight: '9%' }} icon={faBookReader}></ItemIcon>{LocalizedString.lookup(tr('Open User...'), locale)}</Item>
 
 
@@ -298,6 +313,19 @@ export class HomeStartOptions extends React.Component<Props, State> {
                         onLoadUsers={this.props.onLoadUsers}
                         onLoadUserData={this.props.onLoadUserData}
                         projectLanguage={this.props.activeLanguage}
+                    />
+                )}
+                 {modal.type === Modal.Type.OpenFile && (
+                    <OpenFileDialog
+                        theme={theme}
+                        onClose={this.onModalClose_}
+                        settings={settings}
+                        onSettingsChange={this.onSettingsChange_}
+                        onOpenUserProject={this.props.onOpenUserProject}
+                        onLoadUsers={this.props.onLoadUsers}
+                        onLoadUserData={this.props.onLoadUserData}
+                        projectLanguage={this.props.activeLanguage}
+                        onOpenFile={this.props.onOpenFile}
                     />
                 )}
 

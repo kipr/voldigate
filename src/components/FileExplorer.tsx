@@ -113,7 +113,7 @@ const SectionName = styled('span', (props: ThemeProps & SectionProps & { selecte
     // backgroundColor: props.selected ? `rgba(255, 255, 255, 0.1)` : undefined,
     ':hover': {
         cursor: 'pointer',
-        backgroundColor: `rgba(255, 255, 255, 0.1)`
+        backgroundColor: props.theme.hoverOptionBackground
     },
     width: '100%',
 
@@ -189,13 +189,13 @@ const ProjectTitle = styled('h2', {
 const AddProjectButtonContainer = styled('div', (props: ThemeProps & { selected: boolean }) => ({
     borderRadius: '5px',
     cursor: 'pointer',
-    marginBottom: '0px',
-    marginTop: '19px',
-    height: '5px',
+    marginTop: '10px',
+    padding: '5px 10px 30px 10px',
+    height: '20px',
     alignItems: 'right',
     ':hover': {
         cursor: 'pointer',
-        backgroundColor: `rgba(255, 255, 255, 0.1)`
+        backgroundColor: props.theme.hoverOptionBackground
     },
 }));
 

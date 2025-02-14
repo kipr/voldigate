@@ -34,9 +34,9 @@ const Container = styled('div', (props: ThemeProps) => ({
   position: 'absolute',
   right: `${(window.innerWidth * 0.04)}px`,
   width: '240px',
+  
   backgroundColor: props.theme.titleBarBackground,
   color: props.theme.color,
-  
   display: 'flex',
   flexDirection: 'row',
   borderBottomLeftRadius: `${props.theme.borderRadius}px`,
@@ -65,7 +65,7 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
   fontWeight: 400,
   ':hover': !props.disabled && props.onClick ? {
     cursor: 'pointer',
-    backgroundColor: `rgba(255, 255, 255, 0.1)`
+    backgroundColor: props.theme.hoverOptionBackground  
   } : {
     cursor: 'auto',
   },

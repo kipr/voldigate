@@ -77,9 +77,11 @@ const Container = styled('div', (props: ThemeProps) => ({
   flexDirection: 'column',
   alignItems: 'left',
   justifyContent: 'center',
-  width: '100vh',
+
+  width: '100%',
   height: '100%',
   backgroundColor: props.theme.backgroundColor,
+
   color: props.theme.color,
 }));
 

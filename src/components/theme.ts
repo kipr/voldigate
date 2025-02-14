@@ -1,3 +1,17 @@
+
+import {styled} from 'styletron-react';
+
+const ShakeAnimation = styled('div', {
+  '@keyframes shake': {
+    '0%': { transform: 'translateX(0)' },
+    '25%': { transform: 'translateX(-5px)' },
+    '50%': { transform: 'translateX(5px)' },
+    '75%': { transform: 'translateX(-5px)' },
+    '100%': { transform: 'translateX(0)' },
+  },
+  animation: 'shake 1s ease-in-out',
+});
+
 export interface ButtonColor {
   disabled: string;
   standard: string;
@@ -38,8 +52,8 @@ export const BROWN: ButtonColor = Object.freeze({
 });
 
 export const LIGHTMODE_YES: ButtonColor = Object.freeze({
-  disabled: '#507255',
-  border: '#800000',  
+  disabled: '#808080',
+  border: '#800000',
   standard: "#2AA298",
   hover: "#34cbbe",
   textColor: 'white',
@@ -48,7 +62,7 @@ export const LIGHTMODE_YES: ButtonColor = Object.freeze({
 
 export const LIGHTMODE_NO: ButtonColor = Object.freeze({
   disabled: '#507255',
-  border: '#800000',  
+  border: '#800000',
   standard: "#cc0000",
   hover: "#ff1a1a",
   textColor: 'white',
@@ -71,6 +85,11 @@ export interface Theme {
   selectedProjectBackground: string;
   selectedFileBackground: string;
   hoverFileBackground: string;
+  hoverOptionBackground: string;
+  whiteText: string;
+  dialogBoxTitleBackground: string;
+
+
 
   yesButtonColor: ButtonColor;
   color: string;
@@ -114,6 +133,10 @@ export const COMMON: Theme = {
   tester: undefined,
   editorBackground: undefined,
   yesButtonColor: undefined,
+  hoverOptionBackground: undefined,
+  dialogBoxTitleBackground: undefined,
+  whiteText: undefined,
+
   borderColor: undefined,
   borderRadius: 10,
   widget: {
@@ -139,6 +162,7 @@ export const COMMON: Theme = {
 export const LIGHT: Theme = {
   ...COMMON,
   foreground: 'white',
+
   color: '#403f53',
   backgroundColor: '#fff',
   titleBarBackground: '#f4ecec',
@@ -149,11 +173,10 @@ export const LIGHT: Theme = {
   selectedProjectBackground: '#dadada',
   selectedFileBackground: '#d3e8f9',
   hoverFileBackground: '#e4f1fb',
-
+  hoverOptionBackground: '#e4f1fb',
   yesButtonColor: LIGHTMODE_YES,
-
-
-
+  dialogBoxTitleBackground: '#e3cece',
+  whiteText: 'white',
 
   borderColor: '#ede0e0',
   iconColor: '#f5ebeb',
@@ -164,7 +187,7 @@ export const LIGHT: Theme = {
 
 
 
-  
+
   transparentBackgroundColor: (a) => `rgba(255, 255, 255, ${a})`,
   switch: {
     on: {
@@ -187,6 +210,8 @@ export const DARK: Theme = {
   backgroundColor: '#212121',
   transparentBackgroundColor: (a) => `rgba(${0x21}, ${0x21}, ${0x21}, ${a})`,
   borderColor: '#323232',
+
+
   switch: {
     on: {
       primary: 'rgb(255, 255, 255)',

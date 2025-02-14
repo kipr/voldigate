@@ -35,7 +35,7 @@ class Dialog_ extends React.PureComponent<Props> {
     return (
       <Modal>
         <Container theme={theme}>
-          <Widget theme={theme} size={0} sizes={[Size.MAXIMIZED, Size.MINIMIZED]} onSizeChange={this.onSizeChange_} mode={Mode.Floating} name={name}>
+          <Widget style={{backgroundColor: theme.dialogBoxTitleBackground}}theme={theme} size={0} sizes={[Size.MAXIMIZED, Size.MINIMIZED]} onSizeChange={this.onSizeChange_} mode={Mode.Floating} name={name}>
             {children}
           </Widget>
         </Container>
