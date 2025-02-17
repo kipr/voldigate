@@ -99,8 +99,7 @@ export class MainMenu extends React.Component<Props, State> {
 
 
   render() {
-    const { className, style, locale } = this.props;
-    const theme = LIGHT;
+    const { className, style, locale, theme } = this.props;
     return (
       <Container className={className} style={style} theme={theme}>
         <Logo theme={theme} src={theme.foreground === 'white' ? KIPR_LOGO_BLACK as string : KIPR_LOGO_WHITE as string} onClick={this.onDashboardClick_} />

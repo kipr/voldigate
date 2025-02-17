@@ -95,12 +95,13 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
   transition: 'background-color 0.2s, opacity 0.2s',
 }));
 
-const RunItem = withStyleDeep(Item, (props: ClickProps) => ({
-  backgroundColor: props.disabled ? LIGHTMODE_GREEN.disabled : LIGHTMODE_GREEN.standard,
+const RunItem = withStyleDeep(Item, (props: ClickProps & ThemeProps) => ({
+  
+  backgroundColor: props.disabled ? (props.theme.themeName === 'DARK' ? props.theme.runButtonColor.disabled : props.theme.runButtonColor.disabled) : (props.theme.themeName === 'DARK' ? props.theme.runButtonColor.standard: props.theme.runButtonColor.standard),
   ':hover':
     props.onClick && !props.disabled
       ? {
-        backgroundColor: LIGHTMODE_GREEN.hover,
+        backgroundColor: props.theme.themeName === 'DARK' ? GREEN.hover : LIGHTMODE_GREEN.hover,
       }
       : {},
 }));
@@ -285,14 +286,12 @@ export const createEditorBarComponents = ({
       }));
 
       if (target.isleftbaropen_.toString() === 'true') {
-        console.log("Left bar is open");
-        editorBar.push(BarComponent.create(rightBarSpacerOpen, {
+         editorBar.push(BarComponent.create(rightBarSpacerOpen, {
 
         }));
 
       }
       else {
-        console.log("Left bar is closed");
         editorBar.push(BarComponent.create(rightBarSpacerClosed, {
 
         }));

@@ -1,16 +1,5 @@
 
-import {styled} from 'styletron-react';
 
-const ShakeAnimation = styled('div', {
-  '@keyframes shake': {
-    '0%': { transform: 'translateX(0)' },
-    '25%': { transform: 'translateX(-5px)' },
-    '50%': { transform: 'translateX(5px)' },
-    '75%': { transform: 'translateX(-5px)' },
-    '100%': { transform: 'translateX(0)' },
-  },
-  animation: 'shake 1s ease-in-out',
-});
 
 export interface ButtonColor {
   disabled: string;
@@ -53,7 +42,7 @@ export const BROWN: ButtonColor = Object.freeze({
 
 export const LIGHTMODE_YES: ButtonColor = Object.freeze({
   disabled: '#808080',
-  border: '#800000',
+  border: '#1f7a72',
   standard: "#2AA298",
   hover: "#34cbbe",
   textColor: 'white',
@@ -69,7 +58,27 @@ export const LIGHTMODE_NO: ButtonColor = Object.freeze({
   textShadow: '2px 2px 4px rgba(0,0,0,0.9)',
 });
 
+export const DARKMODE_YES: ButtonColor = Object.freeze({
+  disabled: '#5c665e',
+  standard: '#488b49',
+  hover: '#4aad52',
+  textColor: 'white',
+  textShadow: '2px 2px 4px rgba(0,0,0,0.9)',
+});
+
+export const DARKMODE_NO: ButtonColor = Object.freeze({
+  disabled: '#735350',
+  standard: '#8C494C',
+  hover: '#AD4C4B',
+  textColor: 'white',
+  textShadow: '2px 2px 4px rgba(0,0,0,0.9)',
+
+});
+
 export interface Theme {
+  themeName: string;
+
+
   foreground: 'white' | 'black';
   tester: string;
   backgroundColor: string;
@@ -78,6 +87,7 @@ export interface Theme {
   fileContainerBackground: string;
   leftBarContainerBackground: string;
   editorPageBackground: string;
+  startContainerBackground: string;
   editorConsoleBackground: string;
   editorBackground: string;
   homeStartContainerBackground: string;
@@ -88,10 +98,18 @@ export interface Theme {
   hoverOptionBackground: string;
   whiteText: string;
   dialogBoxTitleBackground: string;
-
-
+  unselectedBackground: string;
+  runButtonColor: ButtonColor;
 
   yesButtonColor: ButtonColor;
+  noButtonColor: ButtonColor;
+
+  contextMenuBackground: string;
+
+
+
+
+
   color: string;
   borderColor: string;
   borderRadius: number;
@@ -116,11 +134,13 @@ export interface Theme {
 }
 
 export const COMMON: Theme = {
+  themeName: 'common',
   foreground: undefined,
   backgroundColor: undefined,
   transparentBackgroundColor: undefined,
   color: undefined,
   titleBarBackground: undefined,
+  startContainerBackground: undefined,
   homeStartContainerBackground: undefined,
   selectedUserBackground: undefined,
   selectedProjectBackground: undefined,
@@ -133,11 +153,14 @@ export const COMMON: Theme = {
   tester: undefined,
   editorBackground: undefined,
   yesButtonColor: undefined,
+  noButtonColor: undefined,
   hoverOptionBackground: undefined,
   dialogBoxTitleBackground: undefined,
   whiteText: undefined,
-
+  unselectedBackground: undefined,
   borderColor: undefined,
+  runButtonColor: undefined,
+  contextMenuBackground: undefined,
   borderRadius: 10,
   widget: {
     padding: 10
@@ -161,32 +184,36 @@ export const COMMON: Theme = {
 
 export const LIGHT: Theme = {
   ...COMMON,
-  foreground: 'white',
-
-  color: '#403f53',
-  backgroundColor: '#fff',
-  titleBarBackground: '#f4ecec',
-  fileContainerBackground: '#f4ecec',
-  leftBarContainerBackground: '#f4ecec',
-  homeStartContainerBackground: '#f4ebec',
-  selectedUserBackground: '#dadada',
-  selectedProjectBackground: '#dadada',
-  selectedFileBackground: '#d3e8f9',
-  hoverFileBackground: '#e4f1fb',
-  hoverOptionBackground: '#e4f1fb',
-  yesButtonColor: LIGHTMODE_YES,
-  dialogBoxTitleBackground: '#e3cece',
+  themeName: 'LIGHT',
   whiteText: 'white',
-
+  color: '#403f53',
   borderColor: '#ede0e0',
   iconColor: '#f5ebeb',
+  foreground: 'white',
+  backgroundColor: '#ffffff',
+  titleBarBackground: '#f4ecec',
+  startContainerBackground: '#ebdbdc',
+  dialogBoxTitleBackground: '#e3cece',
   editorPageBackground: '#FBFBFB',
   editorConsoleBackground: '#fff6f7',
   editorBackground: '#fbfbfb',
-  tester: '#ff0000',
+  contextMenuBackground: '#ffffff',
 
+  unselectedBackground: '#f4ebec',
+  fileContainerBackground: '#f4ecec',
+  leftBarContainerBackground: '#f4ecec',
+  homeStartContainerBackground: '#f4ebec',
 
+  selectedUserBackground: '#dadada',
+  selectedProjectBackground: '#dadada',
+  selectedFileBackground: '#d3e8f9',
 
+  hoverFileBackground: '#e4f1fb',
+  hoverOptionBackground: '#e4f1fb',
+
+  yesButtonColor: LIGHTMODE_YES,
+  noButtonColor: LIGHTMODE_NO,
+  runButtonColor: LIGHTMODE_GREEN,
 
   transparentBackgroundColor: (a) => `rgba(255, 255, 255, ${a})`,
   switch: {
@@ -205,13 +232,41 @@ export const LIGHT: Theme = {
 
 export const DARK: Theme = {
   ...COMMON,
-  foreground: 'black',
-  color: '#fff',
-  backgroundColor: '#212121',
-  transparentBackgroundColor: (a) => `rgba(${0x21}, ${0x21}, ${0x21}, ${a})`,
+  themeName: 'DARK',
+  color: '#ffffff',
   borderColor: '#323232',
+  foreground: 'black',
+  backgroundColor: '#212121',
+  titleBarBackground: '#212121',
+
+  dialogBoxTitleBackground: '#212121',
+  editorPageBackground: '#212121',
+  editorConsoleBackground: '#212121',
+  editorBackground: '#212121',
+  contextMenuBackground: '#212121',
+
+  fileContainerBackground: '#343436',
+  leftBarContainerBackground: '#212121',
+  homeStartContainerBackground: '#333333',
+  startContainerBackground: '#404040',
+  unselectedBackground: '#343436',
+
+  selectedUserBackground: '#3f3f3f',
+  selectedProjectBackground: '#3f3f3f',
+  selectedFileBackground: '#3f3f3f',
+
+  hoverFileBackground: `rgba(255, 255, 255, 0.1)`,
+  hoverOptionBackground: `rgba(255, 255, 255, 0.1)`,
 
 
+  yesButtonColor: DARKMODE_YES,
+  noButtonColor: DARKMODE_NO,
+  runButtonColor: GREEN,
+
+
+
+
+  transparentBackgroundColor: (a) => `rgba(${0x21}, ${0x21}, ${0x21}, ${a})`,
   switch: {
     on: {
       primary: 'rgb(255, 255, 255)',

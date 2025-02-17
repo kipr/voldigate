@@ -194,7 +194,7 @@ const FileTypeHeader = styled('div', {
 
 const ProjectItem = styled('li', (props: ThemeProps & { selected: boolean }) => ({
   cursor: 'pointer',
-  backgroundColor: props.selected ? props.theme.selectedUserBackground : props.theme.homeStartContainerBackground, // Highlight selected project
+  backgroundColor: props.selected ? props.theme.selectedUserBackground : props.theme.unselectedBackground, // Highlight selected project
   padding: '10px 20px',
   margin: '5px 0',
   borderRadius: '5px',
@@ -204,11 +204,13 @@ const ProjectItem = styled('li', (props: ThemeProps & { selected: boolean }) => 
   ':hover': {
     backgroundColor: props.theme.hoverOptionBackground,
   },
+  boxShadow: props.theme.themeName === "DARK" ? ' 0px 7px 8px -4px rgba(0, 0, 0, 0.2), 0px 12px 17px 2px rgba(0, 0, 0, 0.14), 0px 5px 22px 4px rgba(0, 0, 0, 0.12)' : '2px 2px 4px rgba(0,0,0,0.9)',
+
 }));
 
 const ProjectFileContainer = styled('div', (props: ThemeProps) => ({
   cursor: 'pointer',
-  backgroundColor: `rgba(255, 255, 255, 0.1)`, // Highlight selected project
+ // backgroundColor: `rgba(255, 255, 255, 0.1)`, // Highlight selected project
 
   leftMargin: '50px',
   borderRadius: '5px',
@@ -220,7 +222,6 @@ const ProjectFileContainer = styled('div', (props: ThemeProps) => ({
 
 const ProjectFileItem = styled('li', (props: ThemeProps) => ({
   cursor: 'pointer',
-  backgroundColor: `rgba(255, 255, 255, 0.1)`, // Highlight selected project
   ':hover': {
     backgroundColor: props.theme.hoverOptionBackground,
   },
@@ -244,16 +245,16 @@ const Button = styled('button', {
 // Styled component button for the "Yes" button
 const OpenFileButton = styled(Button, (props: ThemeProps & ClickProps) => ({
   marginRight: '70px',
-  backgroundColor: LIGHTMODE_YES.standard,
-  border: `1px solid ${LIGHTMODE_YES.border}`,
+  backgroundColor:  props.theme.yesButtonColor.standard,
+  border: `1px solid ${props.theme.yesButtonColor.border}`,
   ':hover':
     props.onClick && !props.disabled
       ? {
-        backgroundColor: LIGHTMODE_YES.hover,
+        backgroundColor: props.theme.yesButtonColor.hover,
       }
       : {},
-  color: LIGHTMODE_YES.textColor,
-  textShadow: LIGHTMODE_YES.textShadow,
+  color: props.theme.yesButtonColor.textColor,
+  textShadow: props.theme.yesButtonColor.textShadow,
   boxShadow: '2px 2px 4px rgba(0,0,0,0.9)',
   ':active': props.onClick && !props.disabled
     ? {

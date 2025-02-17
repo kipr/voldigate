@@ -52,9 +52,10 @@ const Finalize = styled('div', (props: ThemeProps & { disabled?: boolean }) => (
   padding: `${props.theme.itemPadding * 2}px`,
   //backgroundColor: props.disabled ? GREEN.disabled : GREEN.standard,
 
-  backgroundColor: props.disabled ? LIGHTMODE_YES.disabled : LIGHTMODE_YES.standard,
+  //backgroundColor: props.disabled ? LIGHTMODE_YES.disabled : LIGHTMODE_YES.standard,
+  backgroundColor: props.disabled ? props.theme.yesButtonColor.disabled : props.theme.yesButtonColor.standard,
   ':hover': props.disabled ? {} : {
-    backgroundColor: LIGHTMODE_YES.hover,
+    backgroundColor: props.theme.yesButtonColor.hover,
   },
   fontWeight: 400,
   fontSize: '1.1em',

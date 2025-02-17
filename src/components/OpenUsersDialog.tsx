@@ -10,10 +10,7 @@ import { connect } from 'react-redux';
 import { State as ReduxState } from '../state';
 import LocalizedString from '../util/LocalizedString';
 import ScrollArea from './ScrollArea';
-import { ProjectType, DatabaseService } from './DatabaseService';
-import ComboBox from './ComboBox';
 import { Settings } from '../Settings';
-import axios from 'axios';
 import ProgrammingLanguage from '../ProgrammingLanguage';
 type SettingsSection = string;
 
@@ -201,16 +198,16 @@ const Button = styled('button', {
 
 // Styled component button for the "Yes" button
 const OpenProjectButton = styled(Button, (props: ThemeProps & ClickProps) => ({
-  backgroundColor: LIGHTMODE_YES.standard,
-  border: `1px solid ${LIGHTMODE_YES.border}`,
+  backgroundColor: props.theme.yesButtonColor.standard,
+  border: `1px solid ${props.theme.yesButtonColor.border}`,
   ':hover':
     props.onClick && !props.disabled
       ? {
-        backgroundColor: LIGHTMODE_YES.hover,
+        backgroundColor: props.theme.yesButtonColor.hover,
       }
       : {},
-  color: LIGHTMODE_YES.textColor,
-  textShadow: LIGHTMODE_YES.textShadow,
+  color: props.theme.yesButtonColor.textColor,
+  textShadow: props.theme.yesButtonColor.textShadow,
   boxShadow: '2px 2px 4px rgba(0,0,0,0.9)',
   ':active': props.onClick && !props.disabled
     ? {

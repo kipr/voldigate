@@ -4,7 +4,7 @@ import { styled } from 'styletron-react';
 import { StyleProps } from '../style';
 import { Spacer } from './common';
 import { Fa } from './Fa';
-import { DARK, ThemeProps, LIGHT } from './theme';
+import { DARK, ThemeProps, LIGHT, Theme } from './theme';
 
 import { faCog, faFolderTree } from '@fortawesome/free-solid-svg-icons';
 
@@ -82,6 +82,7 @@ export interface LeftBarPublicProps extends StyleProps, ThemeProps {
   rootSetDownloadFileFlag: (downloadFileFlag: boolean) => void;
 
 
+  onThemeChange: (theme: Theme) => void;
 }
 
 interface LeftBarPrivateProps {
@@ -95,6 +96,7 @@ interface LeftBarState {
   sidePanelSize: Size.Type;
   sliderSizes: [number, number];
   isPanelVisible: boolean;
+  storedTheme: Theme;
 
 }
 type Project = {
@@ -123,14 +125,15 @@ const sizeDict = (sizes: Size[]) => {
 const Container = styled('div', (props: ThemeProps) => ({
   backgroundColor: props.theme.backgroundColor,
   color: props.theme.color,
-  height: '98%',
+  height: '100vh',
+  overflow: 'hidden',
   lineHeight: '28px',
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'flex-start',
 
   zIndex: 0,
-  width: '100vh',
+  width: '100vw',
   flexGrow: 1,
 }));
 
@@ -155,7 +158,7 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
   fontWeight: 400,
   ':hover': props.onClick && !props.disabled ? {
     cursor: 'pointer',
-    backgroundColor: `rgba(255, 255, 255, 0.1)`
+    backgroundColor: props.theme.hoverOptionBackground
   } : {},
   userSelect: 'none',
   transition: 'background-color 0.2s, opacity 0.2s'
@@ -170,9 +173,16 @@ const LeftBarContainer = styled('div', (props: ThemeProps & ClickProps) => ({
   display: 'flex',
   flexDirection: 'column',
   width: '50px',
-  flex: '1 1 0',
+  height: '100vh',
+  flexShrink: 0,
+  justifyContent: 'space-between',
+
+
   backgroundColor: props.theme.leftBarContainerBackground,
+
+
   borderRight: `2px solid ${props.theme.borderColor}`,
+  boxShadow: `5px 0 6px ${props.theme.borderColor}`,
 }));
 
 const FileExplorerContainer = styled('div', (props: ThemeProps & ClickProps) => ({
@@ -182,7 +192,7 @@ const FileExplorerContainer = styled('div', (props: ThemeProps & ClickProps) => 
   overflow: 'visible',
   height: '100%',
   backgroundColor: props.theme.fileContainerBackground,
- 
+
   borderRight: `2px solid ${props.theme.borderColor}`,
 }));
 
@@ -198,14 +208,15 @@ export class LeftBar extends React.Component<Props, State> {
       settings: DEFAULT_SETTINGS,
       activePanel: 0,
       sidePanelSize: Size.Type.Minimized,
-      sliderSizes: [2, 9],
+      sliderSizes: [4, 9],
       isPanelVisible: false,
+      storedTheme: localStorage.getItem('ideEditorDarkMode') === 'true' ? DARK : LIGHT
 
     }
     this.selectedFileRef = React.createRef();
   }
 
- 
+
   async componentDidUpdate(prevProps: Props, prevState: State) {
     console.log("LeftBar compDidUpdate prevProps: ", prevProps);
     console.log("LeftBar compDidUpdate prevState: ", prevState);
@@ -213,13 +224,25 @@ export class LeftBar extends React.Component<Props, State> {
     console.log("LeftBar compDidUpdate props: ", this.props);
     console.log("LeftBar compDidUpdate state: ", this.state);
 
+    if (this.state.settings !== prevState.settings) {
+      console.log("LeftBar settings changed: ", this.state.settings);
+      if (this.state.settings.ideEditorDarkMode) {
+        this.setState({ storedTheme: DARK });
+        this.props.onThemeChange(DARK);
+      }
+      else {
+        this.setState({ storedTheme: LIGHT });
+        this.props.onThemeChange(LIGHT);
+      }
+    }
+
   }
   private onSettingsChange_ = (changedSettings: Partial<Settings>) => {
     const nextSettings: Settings = {
       ...this.state.settings,
       ...changedSettings
     }
-
+    this.props.onThemeChange(nextSettings.ideEditorDarkMode ? DARK : LIGHT);
     this.setState({ settings: nextSettings });
   };
 
@@ -250,8 +273,8 @@ export class LeftBar extends React.Component<Props, State> {
 
   };
   render() {
-    const { className, style, locale, } = this.props;
-    const theme = LIGHT;
+    const { className, style, locale, theme } = this.props;
+    //const theme = LIGHT;
     const {
       propedSelectedProjectName,
       propedOnProjectSelected,
@@ -315,10 +338,12 @@ export class LeftBar extends React.Component<Props, State> {
       activePanel,
       sidePanelSize,
       sliderSizes,
-      isPanelVisible
+      isPanelVisible,
+      storedTheme
 
     } = this.state;
 
+    console.log("LeftBar render theme: ", theme);
     let rootContent: JSX.Element;
     rootContent = (
       <div style={{ height: '80%', flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
@@ -328,7 +353,7 @@ export class LeftBar extends React.Component<Props, State> {
           history={undefined}
           location={undefined}
           match={undefined}
-
+          propedTheme={storedTheme}
           propFileName={rootFileName}
           propProjectName={rootProjectName}
           propActiveLanguage={rootActiveLanguage}
@@ -366,18 +391,18 @@ export class LeftBar extends React.Component<Props, State> {
           resetDownloadUserFlag={rootSetDownloadUserFlag}
           resetDownloadProjectFlag={rootSetDownloadProjectFlag}
           resetDownloadFileFlag={rootSetDownloadFileFlag}
-          
+
           resetFileExplorerFileSelection={this.setSelectedFileRef_}
-          />
+        />
       </div>
     )
 
     let fileExplorerContent: JSX.Element;
 
     fileExplorerContent = (
-      <FileExplorerContainer theme={theme}>
+      <FileExplorerContainer theme={storedTheme}>
         <FileExplorer
-          theme={theme}
+          theme={storedTheme}
           locale="en-US"
           propsSelectedProjectName={propedSelectedProjectName}
           onProjectSelected={propedOnProjectSelected}
@@ -397,7 +422,7 @@ export class LeftBar extends React.Component<Props, State> {
           reloadFilesFlag={propedReloadFilesFlag}
           propUsers={propedUsers}
           propUserData={propedUserData}
-          propFileName={ this.selectedFileRef.current}
+          propFileName={this.selectedFileRef.current}
 
           style={{
             flex: 1,
@@ -406,7 +431,7 @@ export class LeftBar extends React.Component<Props, State> {
 
             zIndex: 1,
           }}
-          
+
         />
 
 
@@ -420,18 +445,16 @@ export class LeftBar extends React.Component<Props, State> {
 
     return (
 
-      <Container className={className} theme={theme}>
+      <Container className={className} theme={storedTheme}>
 
-
-
-        <LeftBarContainer theme={theme} >
-          <Item theme={theme} onClick={this.togglePanelVisibility}>
+        <LeftBarContainer theme={storedTheme} >
+          <Item theme={storedTheme} onClick={this.togglePanelVisibility}>
             <ItemIcon icon={faFolderTree} />
           </Item>
 
-          <Spacer style={{ marginBottom: '650px', borderBottom: `1px solid ${theme.borderColor}` }} />
+          {/* <Spacer style={{ borderBottom: `1px solid ${storedTheme.borderColor}` }} /> */}
 
-          <Item style={{ marginBottom: '10px' }} theme={theme} onClick={this.onModalClick_(Modal.SETTINGS)}>
+          <Item style={{ marginBottom: '50px', marginTop: 'auto' }} theme={storedTheme} onClick={this.onModalClick_(Modal.SETTINGS)}>
             <ItemIcon icon={faCog} />
           </Item>
 
@@ -439,7 +462,7 @@ export class LeftBar extends React.Component<Props, State> {
         </LeftBarContainer>
         <Slider
           isVertical={true}
-          theme={theme}
+          theme={storedTheme}
           minSizes={[50, 0]}
           sizes={this.state.sliderSizes} // Dynamic sizing based on FileExplorer visibility
           visible={[isPanelVisible, true]}
@@ -448,6 +471,15 @@ export class LeftBar extends React.Component<Props, State> {
           {fileExplorerContent}
           {rootContent}
         </Slider>
+
+        {modal.type === Modal.Type.Settings && (
+          <SettingsDialog
+            theme={storedTheme}
+            settings={settings}
+            onSettingsChange={this.onSettingsChange_}
+            onClose={this.onModalClose_}
+          />
+        )}
 
 
       </Container >

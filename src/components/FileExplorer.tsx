@@ -12,17 +12,13 @@ import tr from '@i18n';
 
 import { State as ReduxState } from '../state';
 
-import Dict from '../Dict';
-
 import LocalizedString from '../util/LocalizedString';
 
 import { faFile, faFileCirclePlus, faFolderPlus } from '@fortawesome/free-solid-svg-icons';
 
 import { Fa } from './Fa';
-import axios from 'axios';
-import DatabaseService, { ProjectType, IncludeType, SrcType, SrcData, UserData, IncludeData } from './DatabaseService';
+
 import ProgrammingLanguage from '../ProgrammingLanguage';
-import { useState } from 'react';
 
 type UsersSection = string;
 
@@ -117,7 +113,8 @@ const SectionName = styled('span', (props: ThemeProps & SectionProps & { selecte
     },
     width: '100%',
 
-    backgroundColor: props.selected ? props.theme.selectedUserBackground : props.theme.homeStartContainerBackground,
+    backgroundColor: props.selected ? props.theme.selectedUserBackground : props.theme.unselectedBackground,
+    boxShadow: props.theme.themeName === 'DARK' ? '0px 10px 13px -6px rgba(0, 0, 0, 0.2), 0px 20px 31px 3px rgba(0, 0, 0, 0.14), 0px 8px 38px 7px rgba(0, 0, 0, 0.12)' : undefined,
     transition: 'background-color 0.2s, opacity 0.2s',
     padding: `5px`,
     fontWeight: props.selected ? 400 : undefined,
@@ -133,9 +130,7 @@ const UsersContainer = styled('div', (props: ThemeProps) => ({
     height: '100%',
     width: '100%',
     margin: '5px',
-    // backgroundColor: 'blue', 
     zIndex: 1,
-    //boxShadow: '2px 0 5px rgba(0,0,0,0.2)',
 }));
 
 const SectionsColumn = styled('div', (props: ThemeProps) => ({
@@ -151,11 +146,8 @@ const SidePanel = styled('div', (props: ThemeProps) => ({
     flex: '1 0 0',
     left: '3.5%',
     top: '6%',
-    height: '90%',
-
     zIndex: 1,
-    overflow: 'visible',
-    // 
+    overflow: 'hidden',
     width: 'auto',
 }));
 
@@ -210,6 +202,7 @@ const AddProjectItemIcon = styled(Fa, {
 const ProjectItem = styled('li', (props: ThemeProps & { selected: boolean }) => ({
     display: 'flex',
     flexDirection: 'column',
+    background: props.selected ? props.theme.selectedProjectBackground : props.theme.unselectedBackground,
     flexWrap: 'wrap',
     cursor: 'pointer',
     padding: '5px',
@@ -249,15 +242,15 @@ const FileTypeTitleContainer = styled('div', (props: ThemeProps) => ({
 }));
 
 
-const FileTypeContainer = styled('div', (props: ThemeProps & { selected: boolean }) => ({
+const FileTypeContainer = styled('span', (props: ThemeProps & { selected: boolean }) => ({
 
 
     width: '100%',
 
-    backgroundColor: props.selected ? props.theme.selectedUserBackground : props.theme.homeStartContainerBackground,
+    backgroundColor: props.selected ? props.theme.selectedUserBackground : props.theme.unselectedBackground,
+
     transition: 'background-color 0.2s, opacity 0.2s',
     padding: `5px`,
-
     border: `3px solid ${props.theme.borderColor}`,
     userSelect: 'none',
 }));
@@ -266,6 +259,8 @@ const FileTypeItem = styled('li', (props: ThemeProps) => ({
     listStyleType: 'none',
     padding: '3px',
     borderRadius: '5px',
+    boxShadow: props.theme.themeName === "DARK" ? ' 0px 7px 8px -4px rgba(0, 0, 0, 0.2), 0px 12px 17px 2px rgba(0, 0, 0, 0.14), 0px 5px 22px 4px rgba(0, 0, 0, 0.12)' : undefined,
+
 
 }));
 
@@ -290,7 +285,8 @@ const IndividualFile = styled('div', (props: ThemeProps & { selected: boolean })
     listStyleType: 'none',
     borderRadius: '5px',
     cursor: 'pointer',
-    backgroundColor: (props.selected) ? props.theme.selectedFileBackground : props.theme.homeStartContainerBackground,
+    width: '99%',
+    backgroundColor: (props.selected) ? props.theme.selectedFileBackground : undefined,
     padding: '3px',
     ':hover': {
         cursor: 'pointer',
@@ -303,7 +299,7 @@ const ContextMenu = styled('div', (props: ThemeProps & { x: number, y: number })
     position: "absolute",
     top: `${props.y}px`,
     left: `${props.x}px`,
-    background: "#FFFFFF",
+    background: props.theme.contextMenuBackground,
     border: `2px solid ${props.theme.borderColor}`,
     borderRadius: "4px",
     boxShadow: "0px 4px 6px hsla(0, 0.00%, 0.00%, 0.10)",
@@ -463,13 +459,14 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
 
     renderUserContextMenu() {
         const { contextMenuPosition } = this.state;
+        const {theme} = this.props;
         if (!contextMenuPosition) return null;
 
         const { x, y, } = contextMenuPosition;
 
         return (
-            <ContextMenu x={x} y={y} theme={LIGHT} onClick={this.closeContextMenu}>
-                <ContextMenuItem theme={LIGHT}>
+            <ContextMenu x={x} y={y} theme={theme} onClick={this.closeContextMenu}>
+                <ContextMenuItem theme={theme}>
                     <li
                         style={{ padding: "5px 10px" }}
                         onClick={() => {
@@ -480,7 +477,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                     </li>
                 </ContextMenuItem>
 
-                <ContextMenuItem theme={LIGHT}>
+                <ContextMenuItem theme={theme}>
                     <li
                         style={{ padding: "5px 10px" }}
                         onClick={() => {
@@ -496,13 +493,14 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
     }
     renderProjectContextMenu() {
         const { contextMenuPosition } = this.state;
+        const {theme} = this.props;
         if (!contextMenuPosition) return null;
 
         const { x, y } = contextMenuPosition;
 
         return (
-            <ContextMenu x={x} y={y} theme={LIGHT} onClick={this.closeContextMenu}>
-                <ContextMenuItem theme={LIGHT}>
+            <ContextMenu x={x} y={y} theme={theme} onClick={this.closeContextMenu}>
+                <ContextMenuItem theme={theme}>
                     <li
                         style={{ padding: "5px 10px" }}
                         onClick={() => {
@@ -512,7 +510,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                         Delete Project
                     </li>
                 </ContextMenuItem>
-                <ContextMenuItem theme={LIGHT}>
+                <ContextMenuItem theme={theme}>
                     <li
                         style={{ padding: "5px 10px" }}
                         onClick={() => {
@@ -528,13 +526,14 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
     }
     renderFileContextMenu() {
         const { contextMenuPosition } = this.state;
+        const {theme} = this.props;
         if (!contextMenuPosition) return null;
 
         const { x, y } = contextMenuPosition;
 
         return (
-            <ContextMenu x={x} y={y} theme={LIGHT} onClick={this.closeContextMenu}>
-                <ContextMenuItem theme={LIGHT}>
+            <ContextMenu x={x} y={y} theme={theme} onClick={this.closeContextMenu}>
+                <ContextMenuItem theme={theme}>
                     <li
                         style={{ padding: "5px 10px" }}
                         onClick={() => {
@@ -544,7 +543,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                         Delete File
                     </li>
                 </ContextMenuItem>
-                <ContextMenuItem theme={LIGHT}>
+                <ContextMenuItem theme={theme}>
                     <li
                         style={{ padding: "5px 10px" }}
                         onClick={() => {
@@ -571,14 +570,14 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
         console.log("FileExplorer compDidUpdate this.selectedFileRefFE.current: ", this.selectedFileRefFE.current);
         console.log("FileExplorer compDidUpdate this.previousSelectedFileFE.current: ", this.previousSelectedFileFE.current);
 
-        
-        if(this.props.propFileName !== this.selectedFileRefFE.current){
+
+        if (this.props.propFileName !== this.selectedFileRefFE.current) {
             console.log("FileExplorer compDidUpdate this.props.propFileName: ", this.props.propFileName, "and this.selectedFileRefFE.current: ", this.selectedFileRefFE.current);
 
             this.selectedFileRefFE.current = this.props.propFileName;
             console.log("FileExplorer compDidUpdate this.selectedFileRefFE.current after checking: ", this.selectedFileRefFE.current);
-            this.setState({selectedFile: this.selectedFileRefFE.current});
-       
+            this.setState({ selectedFile: this.selectedFileRefFE.current });
+
         }
 
         if (prevState.projectName !== this.state.projectName) {
@@ -637,39 +636,6 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                 projectName: this.props.propsSelectedProjectName
             });
             console.log("inside componentDidUpdate FileExplorer.tsx with props: ", this.props);
-
-
-
-
-            if (this.props.addFileFlag == false) {
-
-                try {
-                    console.log("FileExp compDidUpdate addFileFlag == false");
-
-                    const projects = await DatabaseService.getAllProjectsFromUser(this.state.userName);
-                    const newProjectInfo = await DatabaseService.getProjectInfo(this.state.selectedSection, this.state.projectName);
-
-
-                    this.setState({
-                        projects: projects,
-                        srcFiles: newProjectInfo.src.srcFiles,
-                        includeFiles: newProjectInfo.include.includeFiles,
-                        userDataFiles: newProjectInfo.userData.userDataFiles
-
-                    }, () => {
-                        // This callback is executed after the state has been updated
-                        console.log("Updated state projects: ", this.state.projects);
-
-                    });
-
-                }
-                catch (error) {
-                    this.setState({ error: 'Failed to fetch projects' });
-                    console.error(error);
-                }
-
-
-            }
 
         }
     }
@@ -937,6 +903,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
     renderProjects = (projects: Project[]) => {
         const theme = this.props.theme;
         console.log("insideRenderProjects with state: ", this.state);
+        console.log("insideRenderProjects with theme: ", theme);
         return (
             <div>
                 <ProjectContainer theme={theme} key={this.state.selectedSection}>
@@ -960,7 +927,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
 
                                     selected={this.state.selectedProject === project.projectName}
                                     onClick={() => this.handleProjectClick(project.projectName, this.state.selectedSection, project.projectLanguage)}
-                                  
+
                                     onContextMenu={(e) => this.handleProjectRightClick(e, project)} theme={theme}
                                 >
                                     {project.projectName}
@@ -1028,7 +995,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                                                         key={`data-${i}`}
                                                         theme={theme}
                                                         selected={this.state.selectedFile === file}
-                                                        onClick={() => this.handleFileClick(file,project)} onContextMenu={(e) => this.handleFileRightClick(e, file)}>
+                                                        onClick={() => this.handleFileClick(file, project)} onContextMenu={(e) => this.handleFileRightClick(e, file)}>
                                                         {file}
                                                     </IndividualFile>
                                                 ))}
@@ -1108,15 +1075,13 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                 <SidePanel
                     theme={theme}
                     style={{
-                        flex: style.flex, // Pass flex dynamically from the parent
+                        flex: 1, // Pass flex dynamically from the parent
+                      
+                        overflowY: 'hidden',
                     }}
                 >
                     <h2 style={{ marginLeft: '6px' }}>Explorer</h2>
                     <UsersContainer theme={theme}>
-                        {/* <SectionsColumn theme={theme}>
-
-
-                        </SectionsColumn> */}
                         {userSections}
                     </UsersContainer>
 

@@ -12,10 +12,11 @@ import { push } from 'connected-react-router';
 
 import tr from '@i18n';
 import LocalizedString from '../util/LocalizedString';
-import { State } from '../state';
+import { State as ReduxState } from '../state';
 import { normalize } from 'node:path/win32';
 import HomeNavigation from '../components/HomeNavigation';
 import Root from '../components/Root';
+import { Theme, LIGHT } from '../components/theme';
 
 export interface DashboardPublicProps extends RouteComponentProps, ThemeProps, StyleProps {
 
@@ -25,9 +26,15 @@ interface DashboardPrivateProps {
   onTutorialsClick: () => void;
   onSimulatorClick: () => void;
   locale: LocalizedString.Language;
+
+}
+
+interface DashboardState {
+  storedTheme: Theme;
 }
 
 type Props = DashboardPublicProps & DashboardPrivateProps;
+type State = DashboardState;
 
 const Container = styled('div', (props: ThemeProps) => ({
   display: 'flex',
@@ -109,20 +116,47 @@ const Item = styled('div', (props: ThemeProps) => ({
   transition: 'background-color 0.2s, opacity 0.2s'
 }));
 
-class Dashboard extends React.PureComponent<Props> {
+class Dashboard extends React.PureComponent<Props, State> {
+
+  constructor(props: Props) {
+
+    super(props);
+    this.state = {
+      storedTheme: localStorage.getItem('ideEditorDarkMode') === 'true' ? DARK : LIGHT
+    };
+  }
+
+
+
+
   private onAboutClick_ = (event: React.MouseEvent) => {
     window.location.href = 'https://www.kipr.org/kipr/about-kipr';
   };
 
-  render() {
-    const { props } = this;
-    const { className, style, onTutorialsClick, onSimulatorClick, locale } = props;
-    const theme = DARK;
+  private onThemeChange_ = (theme: Theme) => {
+    console.log("Dashboard onThemeChange_ with theme: ", theme);  
 
+  };
+  componentDidMount(): void {
+    console.log("Dashboard mount with state.storedTheme: ", this.state.storedTheme);
+  }
+
+
+  render() {
+    const { props, state } = this;
+    const { className, style, onTutorialsClick, onSimulatorClick, locale } = props;
+    const { storedTheme } = state;
+    //const theme = DARK;
+    console.log("Dashboard theme: ", storedTheme);
     return (
       <>
 
-        <HomeNavigation theme={theme} history={undefined} location={undefined} match={undefined}>
+        <HomeNavigation
+          theme={storedTheme}
+          history={undefined}
+          location={undefined}
+          match={undefined}
+          onThemeChange={this.onThemeChange_}>
         </HomeNavigation>
       </>
 
@@ -130,7 +164,7 @@ class Dashboard extends React.PureComponent<Props> {
   }
 }
 
-export default connect((state: State) => ({
+export default connect((state: ReduxState) => ({
   locale: state.i18n.locale,
 }), dispatch => ({
 

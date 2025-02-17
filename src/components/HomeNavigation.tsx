@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DARK, ThemeProps,LIGHT } from '../components/theme';
+import { DARK, ThemeProps, LIGHT, Theme } from '../components/theme';
 import { StyleProps } from '../style';
 import { styled } from 'styletron-react';
 import MainMenu from '../components/MainMenu';
@@ -16,6 +16,7 @@ import ProgrammingLanguage from '../ProgrammingLanguage';
 
 export interface HomeNavigationPublicProps extends RouteComponentProps, ThemeProps, StyleProps {
   propedUsers?: string[];
+  onThemeChange: (theme: Theme) => void;
 }
 
 interface HomeNavigationPrivateProps {
@@ -58,6 +59,8 @@ interface HomeNavigationState {
   updatedUsers: [];
   loadedUserData?: Project[];
 
+  theme: Theme;
+
 }
 type Project = {
   projectName: string;
@@ -78,8 +81,8 @@ const Container = styled('div', (props: ThemeProps) => ({
   alignItems: 'left',
   justifyContent: 'center',
 
-  width: '100%',
-  height: '100%',
+  width: '100vh',
+  height: '100vh',
   backgroundColor: props.theme.backgroundColor,
 
   color: props.theme.color,
@@ -97,11 +100,13 @@ const HomeNavigationContainer = styled('div', (props: ThemeProps) => ({
 }));
 
 const LeftBarContainer = styled('div', (props: ThemeProps) => ({
-
+  display: 'flex',
+  flex: 1,
+  overflow: 'hidden',
   alignItems: 'left',
   justifyContent: 'center',
   width: '100vh',
-  height: '100vh',
+  
   backgroundColor: props.theme.backgroundColor,
   color: props.theme.color,
 }));
@@ -125,6 +130,8 @@ class HomeNavigation extends React.PureComponent<Props, State> {
       projectName: '',
       selectedProject: '',
       updatedUsers: [],
+      theme: localStorage.getItem('ideEditorDarkMode') === 'true' ? DARK : LIGHT
+
     };
 
   }
@@ -444,6 +451,14 @@ class HomeNavigation extends React.PureComponent<Props, State> {
 
   };
 
+  private onThemeChange_ = (theme: Theme) => {
+    console.log("HomeNav onThemeChange_ with theme: ", theme);
+    this.props.onThemeChange(theme);
+
+    this.setState({ theme: theme });
+
+
+  }
 
   render() {
     const { props, state } = this;
@@ -473,77 +488,81 @@ class HomeNavigation extends React.PureComponent<Props, State> {
       rootDeleteFileFlag,
       rootDownloadUserFlag,
       rootDownloadProjectFlag,
-      rootDownloadFileFlag
+      rootDownloadFileFlag,
+      theme
     } = state;
-    const theme = LIGHT;
+
 
     return (
       <HomeNavigationContainer theme={theme}>
-        <Container className={className} style={style} theme={theme}>
-          <MainMenu theme={theme} />
-          <LeftBarContainer theme={theme}>
-            <LeftBar theme={theme} 
-              propedSelectedProjectName={this.state.projectName}
-              propedOnProjectSelected={this.onProjectSelected}
-              propedOnFileSelected={this.onFileSelected}
-              propedOnUserSelected={this.onUserSelected}
-              propedOnAddNewProject={this.onAddNewProject_}
-              propedOnAddNewFile={this.onAddNewFile_}
-              propedOnDeleteUser={this.onDeleteUser_}
-              propedOnDeleteProject={this.onDeleteProject_}
-              propedOnDeleteFile={this.onDeleteFile_}
-              propedOnDownloadUser={this.onDownloadUser_}
-              propedOnDownloadProject={this.onDownloadProject_}
-              propedOnDownloadFile={this.onDownloadFile_}
-              propedAddProjectFlag={isAddNewProject}
-              propedAddFileFlag={isAddNewFile}
-              propedUserDeleteFlag={deleteUserFlag}
-              propedReloadFilesFlag={isReloadFiles}
-              propedUsers={updatedUsers}
-              propedUserData={loadedUserData}
-                   
-              
-              rootSelectedProject={selectedProject}
-              rootIsLeftBarOpen={this.state.isleftbaropen__}
-              rootFileName={fileName}
-              rootProjectName={projectName}
-              rootActiveLanguage={activeLanguage}
-              rootUserName={userName}
-              rootContextMenuUser={contextMenuUser_}
-              rootContextMenuProject={contextMenuProject_}
-              rootContextMenuFile={contextMenuFile_}
-              rootAddNewProject={isAddNewProject}
-              rootAddNewFile={isAddNewFile}
-              rootClickFile={isClickFile}
-              rootOtherFileType={fileType}
-              rootSetAddNewProject={this.setAddNewProject_}
-              rootSetAddNewFile={this.setAddNewFile_}
-              rootSetClickFile={this.setClickFile_}
-              rootSetFileName_={this.onSetFileName_}
-              rootChangeProjectName={this.onChangeProjectName_}
-              rootOnUserUpdate={this.onUserUpdate_}
-              rootLoadUserDataFlag={isLoadUserFiles}
-              rootOnLoadUserData={this.onLoadUserData_}
-              rootDeleteUserFlag={rootDeleteUserFlag}
-              rootDeleteProjectFlag={rootDeleteProjectFlag}
-              rootDeleteFileFlag={rootDeleteFileFlag}
-              rootDownloadUserFlag={rootDownloadUserFlag}
-              rootDownloadProjectFlag={rootDownloadProjectFlag}
-              rootDownloadFileFlag={rootDownloadFileFlag}
-              rootSetDeleteUserFlag={this.onSetUserDeleteFlag_}
-              rootSetDeleteProjectFlag={this.onSetProjectDeleteFlag_}
-              rootSetDeleteFileFlag={this.onSetFileDeleteFlag_}
-              rootSetDownloadUserFlag={this.onSetUserDownloadFlag_}
-              rootSetDownloadProjectFlag={this.onSetProjectDownloadFlag_}
-              rootSetDownloadFileFlag={this.onSetFileDownloadFlag_}
+        {/* <Container className={className} style={style} theme={theme}>
+        
+        </Container> */}
+        <MainMenu theme={theme} />
+        <LeftBarContainer theme={theme}>
+          <LeftBar theme={theme}
+            propedSelectedProjectName={this.state.projectName}
+            propedOnProjectSelected={this.onProjectSelected}
+            propedOnFileSelected={this.onFileSelected}
+            propedOnUserSelected={this.onUserSelected}
+            propedOnAddNewProject={this.onAddNewProject_}
+            propedOnAddNewFile={this.onAddNewFile_}
+            propedOnDeleteUser={this.onDeleteUser_}
+            propedOnDeleteProject={this.onDeleteProject_}
+            propedOnDeleteFile={this.onDeleteFile_}
+            propedOnDownloadUser={this.onDownloadUser_}
+            propedOnDownloadProject={this.onDownloadProject_}
+            propedOnDownloadFile={this.onDownloadFile_}
+            propedAddProjectFlag={isAddNewProject}
+            propedAddFileFlag={isAddNewFile}
+            propedUserDeleteFlag={deleteUserFlag}
+            propedReloadFilesFlag={isReloadFiles}
+            propedUsers={updatedUsers}
+            propedUserData={loadedUserData}
 
-              >
 
-            </LeftBar>
+            rootSelectedProject={selectedProject}
+            rootIsLeftBarOpen={this.state.isleftbaropen__}
+            rootFileName={fileName}
+            rootProjectName={projectName}
+            rootActiveLanguage={activeLanguage}
+            rootUserName={userName}
+            rootContextMenuUser={contextMenuUser_}
+            rootContextMenuProject={contextMenuProject_}
+            rootContextMenuFile={contextMenuFile_}
+            rootAddNewProject={isAddNewProject}
+            rootAddNewFile={isAddNewFile}
+            rootClickFile={isClickFile}
+            rootOtherFileType={fileType}
+            rootSetAddNewProject={this.setAddNewProject_}
+            rootSetAddNewFile={this.setAddNewFile_}
+            rootSetClickFile={this.setClickFile_}
+            rootSetFileName_={this.onSetFileName_}
+            rootChangeProjectName={this.onChangeProjectName_}
+            rootOnUserUpdate={this.onUserUpdate_}
+            rootLoadUserDataFlag={isLoadUserFiles}
+            rootOnLoadUserData={this.onLoadUserData_}
+            rootDeleteUserFlag={rootDeleteUserFlag}
+            rootDeleteProjectFlag={rootDeleteProjectFlag}
+            rootDeleteFileFlag={rootDeleteFileFlag}
+            rootDownloadUserFlag={rootDownloadUserFlag}
+            rootDownloadProjectFlag={rootDownloadProjectFlag}
+            rootDownloadFileFlag={rootDownloadFileFlag}
+            rootSetDeleteUserFlag={this.onSetUserDeleteFlag_}
+            rootSetDeleteProjectFlag={this.onSetProjectDeleteFlag_}
+            rootSetDeleteFileFlag={this.onSetFileDeleteFlag_}
+            rootSetDownloadUserFlag={this.onSetUserDownloadFlag_}
+            rootSetDownloadProjectFlag={this.onSetProjectDownloadFlag_}
+            rootSetDownloadFileFlag={this.onSetFileDownloadFlag_}
 
-          </LeftBarContainer>
-         
-        </Container>
+
+            onThemeChange={this.onThemeChange_}
+
+          >
+
+          </LeftBar>
+
+        </LeftBarContainer>
 
       </HomeNavigationContainer>
     );

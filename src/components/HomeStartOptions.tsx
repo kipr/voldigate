@@ -64,7 +64,7 @@ const Container = styled('div', (props: ThemeProps) => ({
 
     color: props.theme.color,
     width: '50%',
-    height: '70%',
+    height: '80%',
     marginTop: '3%',
     marginLeft: '19%',
     lineHeight: '28px',
@@ -92,6 +92,7 @@ const HomeStartContainer = styled('div', (props: ThemeProps) => ({
     poisition: 'relative',
     flexDirection: 'column',
     zIndex: 1,
+    boxShadow: '0px 10px 13px -6px rgba(0, 0, 0, 0.2), 0px 20px 31px 3px rgba(0, 0, 0, 0.14), 0px 8px 38px 7px rgba(0, 0, 0, 0.12)'
 
 
 
@@ -100,7 +101,7 @@ const HomeStartContainer = styled('div', (props: ThemeProps) => ({
 
 
 const StartContainer = styled('div', (props: ThemeProps) => ({
-    backgroundColor: '#ebdbdc',
+    backgroundColor: props.theme.startContainerBackground,
     color: props.theme.color,
     width: '45%',
     height: '90%',
@@ -113,6 +114,7 @@ const StartContainer = styled('div', (props: ThemeProps) => ({
     poisition: 'relative',
     flexDirection: 'column',
     zIndex: 4,
+    boxShadow: '0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 5px 8px 0px rgba(0, 0, 0, 0.14), 0px 1px 14px 0px rgba(0, 0, 0, 0.12)'
 
 
 }));
@@ -226,8 +228,16 @@ export class HomeStartOptions extends React.Component<Props, State> {
         }
 
         console.log("HomeStartOptions constructor language: ", this.state.language);
+    }  
+
+    componentDidMount(): void {
+        console.log("HomeStartOptions mount with theme: ", this.props.theme);
     }
 
+
+    componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<HomeStartOptionsState>, snapshot?: any): void {
+        console.log("HomeStartOptions compDidUpdate prevProps: ", prevProps);
+    }
     handleNewFileClick = () => {
         this.props.onEditorPageOpen();
         // Additional logic for opening the NewFileDialog
@@ -255,14 +265,16 @@ export class HomeStartOptions extends React.Component<Props, State> {
             className,
             style,
             locale,
+            theme
         } = this.props;
-        const theme = LIGHT;
+
         const {
             settings,
             modal,
 
         } = this.state;
 
+        console.log("HomeStartOptions render with theme: ", theme);
 
 
         return (

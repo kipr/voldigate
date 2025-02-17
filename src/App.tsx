@@ -3,14 +3,13 @@ import * as React from 'react';
 
 
 import { Route, Switch } from 'react-router';
-import Loading from './components/Loading';
 import Dashboard from './pages/Dashboard';
 import { connect } from 'react-redux';
 import DocumentationWindow from './components/documentation/DocumentationWindow';
 import { State as ReduxState } from './state';
-import { DARK } from './components/theme';
+import { DARK, LIGHT, Theme} from './components/theme';
 
-export interface AppPublicProps {
+export interface AppPublicProps  {
 
 }
 
@@ -20,6 +19,8 @@ interface AppPrivateProps {
 
 interface AppState {
   loading: boolean;
+  storedTheme: Theme;
+  
 }
 
 type Props = AppPublicProps & AppPrivateProps;
@@ -30,13 +31,18 @@ class App extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      loading: true
+      loading: true,
+      storedTheme: localStorage.getItem('ideEditorDarkMode') === 'true' ? DARK : LIGHT
     };
   }
 
 
 
   componentDidMount() {
+    // const storedTheme = localStorage.getItem('ideEditorDarkMode');
+ 
+    // console.log("App mount with storedTheme: ", storedTheme);
+    console.log("App mount with storedTheme: ", this.state.storedTheme);
   
   }
 
@@ -47,16 +53,16 @@ class App extends React.Component<Props, State> {
   render() {
     const { props, state } = this;
 
-    const { loading } = state;
+    const { loading, storedTheme } = state;
 
 
     return (
-      <>
+      <div style = {{overflow: 'hidden'}}>
         <Switch>
           <Route path="/" exact component={Dashboard} />
         </Switch>
-        <DocumentationWindow theme={DARK} />
-      </>
+        {/* <DocumentationWindow theme={storedTheme} /> */}
+      </div>
     );
   }
 }
