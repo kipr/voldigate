@@ -144,6 +144,7 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
 
   componentDidMount() {
     console.log("Inside CreateProjectDialog.tsx mount with state Username:", this.props.userName);
+    console.log("CreateProjectDialog compDidMount theme: ", this.props.theme);
   }
   private onSelect_ = (index: number, option: ComboBox.Option) => {
     console.log("Selected index: ", index);
@@ -173,9 +174,13 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
     const specialCharRegex = /[^a-zA-Z0-9 _-]/;
     const isOnlySpaces = !projectName.trim(); // Check if the name is empty or only spaces
 
-
+    // Check if project name exceeds 100 characters
+    if (projectName.length > 50) {
+      this.setState({ errorMessage: 'Project name cannot exceed 50 characters.' });
+      return;
+    }
     if (specialCharRegex.test(projectName)) {
-      this.setState({ errorMessage: 'Project name contains special characters. Please use only letters, numbers, spaces, underscores, and hyphens.' });
+      this.setState({ errorMessage: 'Project name contains special characters. Please use only letters, numbers, underscores, and hyphens.' });
       return;
     }
     if (isOnlySpaces) {
@@ -221,6 +226,7 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
 
     const index = OPTIONS.findIndex(option => option.data === this.state.language);
 
+    console.log("CreateProjectdialog render theme: ", theme);
     return (
       <div>
         <Dialog

@@ -59,7 +59,7 @@ function getAllFiles(dirPath) {
 function createFolderHandler() {
   return async (req, res) => {
     const folderPath = req.query.filePath;
-    console.log("Received request for folder path:", folderPath);
+    console.log("createFolderHandler - Received request for folder path:", folderPath);
 
     // Validate folderPath
     if (!folderPath) {
@@ -89,7 +89,7 @@ function createFolderHandler() {
 function getFolderContents() {
   return async (req, res) => {
     const folderPath = req.query.filePath;
-    console.log("Received request for folder path:", folderPath);
+    console.log("getFolderContents - Received request for folder path:", folderPath);
 
     // Validate folderPath
     if (!folderPath) {
@@ -501,6 +501,9 @@ app.post("/initialize-repo", async (req, res) => {
   }
 });
 
+
+
+
 app.post("/delete-file", async (req, res) => {
   const { userName, projectName, fileName, fileType } = req.body;
   console.log("/Delete-file: ", req.body);
@@ -710,6 +713,59 @@ app.post("/download-zip", async (req, res) => {
   } catch (error) {
     console.error("Error while creating ZIP:", error);
     res.status(500).json({ error: "Failed to create ZIP file" });
+  }
+});
+app.get("/get-all-file-names", async (req, res) => {
+  try {
+    const dirPath = req.query.dirPath;
+
+    if (!dirPath) {
+      return res.status(400).json({ error: "Directory path is required" });
+    }
+
+    // Directories to check
+    const allowedDirs = ['src', 'include', 'data'];
+
+    // Function to recursively get all file names in allowed directories only
+    const getAllFileNames = (dir) => {
+      let fileNames = [];
+
+      // Read the contents of the directory
+      const files = fs.readdirSync(dir);
+
+      // Loop through the contents
+      files.forEach((file) => {
+        // Skip hidden files or directories (those starting with a dot)
+        if (file.startsWith('.')) {
+          return;
+        }
+
+        const filePath = path.join(dir, file);
+        const stats = fs.statSync(filePath);
+
+        // If it's a directory, check if it's in the allowedDirs list
+        if (stats.isDirectory()) {
+          if (allowedDirs.includes(file)) {
+            fileNames = fileNames.concat(getAllFileNames(filePath)); // Recursion only if the directory is allowed
+          }
+        } else {
+          // If it's a file, add it to the fileNames array
+          fileNames.push(filePath);
+        }
+      });
+
+      return fileNames;
+    };
+
+    const allFileNames = getAllFileNames(dirPath);
+
+    // Send the list of file names as the response
+    res.status(200).json({
+      fileNames: allFileNames,
+    });
+  } catch (error) {
+    console.error("Error getting file names:", error);
+    res.status(500).send("Error getting file names");
   }
 });
 
