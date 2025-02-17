@@ -199,8 +199,8 @@ const ProjectItem = styled('li', (props: ThemeProps & { selected: boolean }) => 
   margin: '5px 0',
   borderRadius: '5px',
   display: 'flex',
-  alignItems: 'center', // Center the items vertically
-  justifyContent: 'space-between', // Space out project name and any additional content
+  alignItems: 'center', 
+  justifyContent: 'space-between', 
   ':hover': {
     backgroundColor: props.theme.hoverOptionBackground,
   },
@@ -210,14 +210,12 @@ const ProjectItem = styled('li', (props: ThemeProps & { selected: boolean }) => 
 
 const ProjectFileContainer = styled('div', (props: ThemeProps) => ({
   cursor: 'pointer',
- // backgroundColor: `rgba(255, 255, 255, 0.1)`, // Highlight selected project
-
   leftMargin: '50px',
   borderRadius: '5px',
   display: 'flex',
 
   flexDirection: 'column',
-  justifyContent: 'space-between', // Space out project name and any additional content
+  justifyContent: 'space-between', 
 }));
 
 const ProjectFileItem = styled('li', (props: ThemeProps) => ({
@@ -230,16 +228,16 @@ const ProjectFileItem = styled('li', (props: ThemeProps) => ({
   paddingTop: '5px',
   borderRadius: '5px',
   display: 'flex',
-  alignItems: 'center', // Center the items vertically
-  justifyContent: 'space-between', // Space out project name and any additional content
+  alignItems: 'center', 
+  justifyContent: 'space-between', 
 }));
 
 const Button = styled('button', {
-  margin: '0 10px', // Add some space to the left and right of the button
-  padding: '10px 20px', // Add some padding to the button
-  border: 'none', // Remove the border
-  borderRadius: '5px', // Add some border radius
-  cursor: 'pointer', // Change the cursor to a pointer when hovering over the button
+  margin: '0 10px', 
+  padding: '10px 20px', 
+  border: 'none',
+  borderRadius: '5px', 
+  cursor: 'pointer', 
 });
 
 // Styled component button for the "Yes" button

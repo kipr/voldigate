@@ -8,9 +8,7 @@ import { RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import LocalizedString from '../util/LocalizedString';
-import Root from './Root';
 import { State as ReduxState } from '../state';
-import { FileExplorer } from './FileExplorer';
 import ProgrammingLanguage from '../ProgrammingLanguage';
 
 
@@ -75,19 +73,6 @@ type Project = {
 
 type Props = HomeNavigationPublicProps & HomeNavigationPrivateProps;
 type State = HomeNavigationState;
-const Container = styled('div', (props: ThemeProps) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'left',
-  justifyContent: 'center',
-
-  width: '100vh',
-  height: '100vh',
-  backgroundColor: props.theme.backgroundColor,
-
-  color: props.theme.color,
-}));
-
 
 const HomeNavigationContainer = styled('div', (props: ThemeProps) => ({
 
@@ -189,9 +174,6 @@ class HomeNavigation extends React.PureComponent<Props, State> {
       console.log('Inside onProjectSelected in HomeNavigation.tsx with state:', this.state);
     });
 
-    // console.log('Inside onProjectSelected in HomeNavigation.tsx with userName:', userName, 'projectName:', projectName, 'fileName:', fileName, 'activeLanguage:', activeLanguage);
-
-
   };
 
   private onFileSelected = (selectedUserName: string, selectedProjectName: string, selectedFileName: string, selectedLanguage: ProgrammingLanguage, selectedFileType: string) => {
@@ -214,7 +196,6 @@ class HomeNavigation extends React.PureComponent<Props, State> {
       console.log('Inside onFileSelected in HomeNavigation.tsx with state:', this.state);
     });
 
-    // console.log('Inside onProjectSelected in HomeNavigation.tsx with userName:', userName, 'projectName:', projectName, 'fileName:', fileName, 'activeLanguage:', activeLanguage);
   };
 
   private onChangeProjectName_ = (projectName: string) => {
@@ -462,9 +443,7 @@ class HomeNavigation extends React.PureComponent<Props, State> {
 
   render() {
     const { props, state } = this;
-    const { className, style } = props;
     const {
-      isPanelVisible,
       activeLanguage,
       fileName,
       projectName,
@@ -483,7 +462,6 @@ class HomeNavigation extends React.PureComponent<Props, State> {
       deleteUserFlag,
       rootDeleteUserFlag,
       contextMenuProject_,
-      deleteProjectFlag,
       rootDeleteProjectFlag,
       rootDeleteFileFlag,
       rootDownloadUserFlag,
@@ -495,9 +473,6 @@ class HomeNavigation extends React.PureComponent<Props, State> {
 
     return (
       <HomeNavigationContainer theme={theme}>
-        {/* <Container className={className} style={style} theme={theme}>
-        
-        </Container> */}
         <MainMenu theme={theme} />
         <LeftBarContainer theme={theme}>
           <LeftBar theme={theme}

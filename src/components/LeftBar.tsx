@@ -1,27 +1,20 @@
 import * as React from 'react';
-
 import { styled } from 'styletron-react';
 import { StyleProps } from '../style';
-import { Spacer } from './common';
 import { Fa } from './Fa';
 import { DARK, ThemeProps, LIGHT, Theme } from './theme';
-
 import { faCog, faFolderTree } from '@fortawesome/free-solid-svg-icons';
-
 import { connect } from 'react-redux';
 import { DEFAULT_SETTINGS, Settings } from '../Settings';
 import SettingsDialog from './SettingsDialog';
 import { State as ReduxState } from '../state';
 import { Modal } from '../pages/Modal';
-
 import LocalizedString from '../util/LocalizedString';
-
 import { Size } from './Widget';
 import { FileExplorer } from './FileExplorer';
 import ProgrammingLanguage from 'ProgrammingLanguage';
 import { Slider } from './Slider';
 import Root from './Root';
-import { file } from 'jszip';
 
 export interface LeftBarPublicProps extends StyleProps, ThemeProps {
 
@@ -273,8 +266,8 @@ export class LeftBar extends React.Component<Props, State> {
 
   };
   render() {
-    const { className, style, locale, theme } = this.props;
-    //const theme = LIGHT;
+    const { className, theme } = this.props;
+
     const {
       propedSelectedProjectName,
       propedOnProjectSelected,
@@ -335,8 +328,6 @@ export class LeftBar extends React.Component<Props, State> {
     const {
       settings,
       modal,
-      activePanel,
-      sidePanelSize,
       sliderSizes,
       isPanelVisible,
       storedTheme
@@ -438,11 +429,6 @@ export class LeftBar extends React.Component<Props, State> {
       </FileExplorerContainer>
     );
 
-
-    // Inside LeftBar component
-
-
-
     return (
 
       <Container className={className} theme={storedTheme}>
@@ -451,8 +437,6 @@ export class LeftBar extends React.Component<Props, State> {
           <Item theme={storedTheme} onClick={this.togglePanelVisibility}>
             <ItemIcon icon={faFolderTree} />
           </Item>
-
-          {/* <Spacer style={{ borderBottom: `1px solid ${storedTheme.borderColor}` }} /> */}
 
           <Item style={{ marginBottom: '50px', marginTop: 'auto' }} theme={storedTheme} onClick={this.onModalClick_(Modal.SETTINGS)}>
             <ItemIcon icon={faCog} />
@@ -464,7 +448,7 @@ export class LeftBar extends React.Component<Props, State> {
           isVertical={true}
           theme={storedTheme}
           minSizes={[50, 0]}
-          sizes={this.state.sliderSizes} // Dynamic sizing based on FileExplorer visibility
+          sizes={this.state.sliderSizes} 
           visible={[isPanelVisible, true]}
 
         >

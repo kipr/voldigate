@@ -1,18 +1,11 @@
 import * as React from 'react';
-
 import { styled } from 'styletron-react';
 import { StyleProps } from '../style';
-import { Spacer } from './common';
-import { Fa } from './Fa';
-import { DARK, ThemeProps,LIGHT } from './theme';
-
+import { ThemeProps } from './theme';
 import { connect } from 'react-redux';
-
 import { State as ReduxState } from '../state';
-
 import KIPR_LOGO_BLACK from '../assets/KIPR-Logo-Black-Text-Clear-Large.png';
 import KIPR_LOGO_WHITE from '../assets/KIPR-Logo-White-Text-Clear-Large.png';
-
 import LocalizedString from '../util/LocalizedString';
 import ExtraMenu from './ExtraMenu';
 import { Modal } from '../pages/Modal';
@@ -103,7 +96,6 @@ export class MainMenu extends React.Component<Props, State> {
     return (
       <Container className={className} style={style} theme={theme}>
         <Logo theme={theme} src={theme.foreground === 'white' ? KIPR_LOGO_BLACK as string : KIPR_LOGO_WHITE as string} onClick={this.onDashboardClick_} />
-        {/* <Spacer style={{ borderRight: `1px solid ${theme.borderColor}` }} /> */}
         <ExtraMenuContainer theme={theme}>
           <ExtraMenu
             style={{ zIndex: 9 }}

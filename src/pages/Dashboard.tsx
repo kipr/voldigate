@@ -2,20 +2,11 @@ import * as React from 'react';
 import { DARK, ThemeProps } from '../components/theme';
 import { StyleProps } from '../style';
 import { styled } from 'styletron-react';
-import { Card } from '../components/Card';
-import MainMenu from '../components/MainMenu';
-import LeftBar from '../components/LeftBar';
-import { HomeStartOptions } from '../components/HomeStartOptions';
 import { RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
-
-import tr from '@i18n';
 import LocalizedString from '../util/LocalizedString';
 import { State as ReduxState } from '../state';
-import { normalize } from 'node:path/win32';
 import HomeNavigation from '../components/HomeNavigation';
-import Root from '../components/Root';
 import { Theme, LIGHT } from '../components/theme';
 
 export interface DashboardPublicProps extends RouteComponentProps, ThemeProps, StyleProps {
@@ -146,7 +137,6 @@ class Dashboard extends React.PureComponent<Props, State> {
     const { props, state } = this;
     const { className, style, onTutorialsClick, onSimulatorClick, locale } = props;
     const { storedTheme } = state;
-    //const theme = DARK;
     console.log("Dashboard theme: ", storedTheme);
     return (
       <>

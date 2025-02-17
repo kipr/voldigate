@@ -1,53 +1,30 @@
 import * as React from 'react';
-
-import JSZip from 'jszip';
 import { State as ReduxState } from '../state';
-import parseMessages, { hasErrors, hasWarnings, sort, toStyledText } from '../util/parse-messages';
 import { styled } from 'styletron-react';
 import { DARK, Theme, LIGHT } from './theme';
 import { Layout } from './Layout';
-
-import SettingsDialog from './SettingsDialog';
 import AboutDialog from './AboutDialog';
-
 import { SimulatorState } from './SimulatorState';
 import { StyledText } from '../util';
 import { Message } from 'ivygate';
-
 import axios from 'axios';
 import { DEFAULT_SETTINGS, Settings } from '../Settings';
 import { DEFAULT_FEEDBACK, Feedback } from '../Feedback';
-
-
 import { Editor } from './Editor';
 import Dict from '../Dict';
 import ProgrammingLanguage from '../ProgrammingLanguage';
-
-
-
 import { RouteComponentProps } from 'react-router';
-
 import { connect } from 'react-redux';
-
 import LocalizedString from '../util/LocalizedString';
-
 import DocumentationLocation from '../state/State/Documentation/DocumentationLocation';
-
 import tr from '@i18n';
-
 import { HomeStartOptions } from './HomeStartOptions';
 import NewFileDialog from './NewFileDialog';
 import EditorPage from './EditorPage';
 import CreateProjectDialog from './CreateProjectDialog';
-import OpenFileDialog from './OpenFileDialog';
-
-import compile from '../compile';
 import { Modal } from '../pages/Modal';
-import { setupLocalRepo } from '../Git';
-import DeleteUserDialog from './DeleteUserProjectFileDialog';
 import DeleteUserProjectFileDialog from './DeleteUserProjectFileDialog';
 import DownloadUserProjectFileDialog from './DownloadUserProjectFileDialog';
-import { match } from 'node:assert';
 import SaveFileDialog from './SaveFileDialog';
 
 type Project = {
@@ -57,10 +34,6 @@ type Project = {
   srcFolderFiles: string[];
   dataFolderFiles: string[];
   projectLanguage: ProgrammingLanguage;
-}
-
-interface User {
-  [userName: string]: Project[];
 }
 
 interface RootParams {
@@ -569,10 +542,6 @@ class Root extends React.Component<Props, State> {
 
         const { propUserName, propProjectName, propActiveLanguage, propFileName, otherFileType } = this.props;
 
-        //console.log("Proped props from HomeNavigation:", propUserName, propProjectName, propActiveLanguage, propFileName, otherFileType);
-        // await this.loadCodeBasedOnExtension();
-
-
         console.log("Root.tsx compDidUpdate clickFile with current props:", this.props);
         this.props.resetFileExplorerFileSelection(this.props.propFileName);
         switch (otherFileType) {
@@ -1042,7 +1011,6 @@ class Root extends React.Component<Props, State> {
           }
         }, async () => {
           console.log("onCloseNewFileDialog_ (.c/.cpp/.py) with new state code:", this.state.code);
-          //const fileContents = this.state.code[activeLanguage];
           filePath = `${prePath}/${userName}/${projectName}/src/${newFileName}.${fileType}`;
           const fileContents = this.toSaveCodeRef.current[activeLanguage];
           console.log("fileContents: ", fileContents);
@@ -1403,9 +1371,8 @@ class Root extends React.Component<Props, State> {
       saveCodePromptFlag: false
     }, async () => {
       const { userName, activeLanguage, projectName, fileName, otherFileType } = this.state;
-      // const fileContents = this.state.code[activeLanguage];
+
       console.log("onSavecode with state code before saving over:", this.state.code);
-      // const fileContents = this.state.toSaveCode_;
       const fileContents = this.toSaveCodeRef.current[activeLanguage];
       const prePath = `/home/kipr/Documents/KISS`;
       let filePath = '';
@@ -1652,7 +1619,6 @@ class Root extends React.Component<Props, State> {
                 fileName: this.state.tempNewFile,
                 toSaveCode_: undefined
               }, () => {
-                // this.toSaveCodeRef.current = { c: '', cpp: '', python: '', txt: '' };
               });
           }
           break;
@@ -1684,7 +1650,6 @@ class Root extends React.Component<Props, State> {
       console.log("onDenySave_ with denyType cancel");
       console.log("onDenySave_ with fileName to reset to:", this.state.fileName);
       console.log("onDenySave_ with resetFileExplorerFileSelection with fileName:", this.state.fileName);
-      // this.props.resetFileExplorerFileSelection(this.state.fileName);
       this.onModalClose_();
     }
 
@@ -1838,7 +1803,6 @@ class Root extends React.Component<Props, State> {
       code,
       modal,
       editorConsole,
-      settings,
       windowInnerHeight,
       isHomeStartOptionsVisible,
       projectName,

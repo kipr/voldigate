@@ -6,12 +6,9 @@ import { Dialog } from './Dialog';
 import ScrollArea from './ScrollArea';
 import { Switch } from './Switch';
 import { ThemeProps, Theme, DARK,LIGHT } from './theme';
-
 import tr from '@i18n';
 import LocalizedString from '../util/LocalizedString';
 import ComboBox from './ComboBox';
-import Dict from '../Dict';
-
 import { State as ReduxState } from '../state';
 import { I18nAction } from '../state/reducer';
 import { connect } from 'react-redux';

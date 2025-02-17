@@ -1,25 +1,17 @@
 
 import { styled } from 'styletron-react';
 import { StyleProps } from '../style';
-
 import { Fa } from './Fa';
-import { DARK, ThemeProps, LIGHT } from './theme';
+import {ThemeProps } from './theme';
 import CreateUserDialog from './CreateUserDialog';
-import { faBookReader, faFileCirclePlus, faFilePen, faUserPlus } from '@fortawesome/free-solid-svg-icons';
-
+import { faBookReader, faFilePen, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import tr from '@i18n';
 import KIPR_LOGO_WHITE from '../assets/KIPR-Logo-White-Text-Clear-Large.png';
-
 import React from 'react';
-
 import LocalizedString from '../util/LocalizedString';
 import { DEFAULT_SETTINGS, Settings } from '../Settings';
-
 import SettingsDialog from './SettingsDialog';
-
-
 import OpenUsersDialog from './OpenUsersDialog';
-
 import ProgrammingLanguage from 'ProgrammingLanguage';
 import { Modal } from '../pages/Modal';
 import OpenFileDialog from './OpenFileDialog';
@@ -253,11 +245,6 @@ export class HomeStartOptions extends React.Component<Props, State> {
     };
     private onModalClick_ = (modal: Modal) => () => this.setState({ modal });
     private onModalClose_ = () => this.setState({ modal: Modal.NONE });
-
-
-    private onCreateProject = () => {
-        console.log("OnCreateProject;");
-    };
 
 
     render() {

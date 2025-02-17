@@ -1,23 +1,14 @@
 import * as React from 'react';
-import { DARK, ThemeProps, LIGHT } from '../components/theme';
+import { DARK, ThemeProps } from '../components/theme';
 import { StyleProps } from '../style';
-
 import { connect } from 'react-redux';
-
 import { styled } from 'styletron-react';
-
 import { LayoutProps } from './Layout/Layout';
-
 import tr from '@i18n';
-
 import { State as ReduxState } from '../state';
-
 import LocalizedString from '../util/LocalizedString';
-
 import { faFile, faFileCirclePlus, faFolderPlus } from '@fortawesome/free-solid-svg-icons';
-
 import { Fa } from './Fa';
-
 import ProgrammingLanguage from '../ProgrammingLanguage';
 
 type UsersSection = string;
@@ -106,7 +97,6 @@ type State = FileExplorerState;
 
 
 const SectionName = styled('span', (props: ThemeProps & SectionProps & { selected: boolean }) => ({
-    // backgroundColor: props.selected ? `rgba(255, 255, 255, 0.1)` : undefined,
     ':hover': {
         cursor: 'pointer',
         backgroundColor: props.theme.hoverOptionBackground
@@ -616,7 +606,6 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
         }
         if (prevProps.userDeleteFlag !== this.props.userDeleteFlag) {
             console.log("FileExp componentDidUpdate userDeleteFlag: ", this.props.userDeleteFlag);
-            //this.props.onDeleteUser("", false);
         }
 
 
@@ -643,15 +632,6 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
     private handleProjectClick = async (projectId: string, user: string, language: ProgrammingLanguage) => {
         console.log("handleProjectClick click");
         console.log("handleProjectClick language: ", language);
-
-        // this.setState({
-        //     showProjectFiles: !this.state.showProjectFiles,
-
-
-        // }, () => {
-        //     console.log("handleProjectClick this.props.propUserData: ", this.props.propUserData);
-        //     console.log("handleProjectClick state:", this.state);
-        // })
 
         this.setState((prevState) => ({
             showProjectFiles: prevState.selectedProject === projectId ? false : true,
@@ -802,10 +782,6 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
         }
 
         console.log("setSelectedSection selectedSection: ", user);
-        // this.setState({
-        //     selectedSection: user,
-
-        // })
 
         this.setState((prevState) => ({
             selectedSection: prevState.selectedSection === user ? null : user,
@@ -1031,14 +1007,11 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
             theme,
             locale,
             propUsers,
-            style
         } = props;
 
         const {
-            users,
+
             selectedSection,
-            projects,
-            contextMenuPosition,
             showProjectContextMenu,
             showUserContextMenu,
             showFileContextMenu

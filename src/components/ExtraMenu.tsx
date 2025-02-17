@@ -1,15 +1,11 @@
 import * as React from 'react';
-
 import { styled } from 'styletron-react';
 import { StyleProps } from '../style';
 import { Fa } from './Fa';
 import { ThemeProps } from './theme';
 import { faBook, faQuestion } from '@fortawesome/free-solid-svg-icons';
-
 import tr from '@i18n';
-
 import { connect } from 'react-redux';
-
 import { State as ReduxState } from '../state';
 import LocalizedString from '../util/LocalizedString';
 

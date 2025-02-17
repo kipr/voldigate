@@ -1,5 +1,5 @@
 
-import { ThemeProps, LIGHTMODE_YES } from './theme';
+import { ThemeProps } from './theme';
 import { StyleProps } from '../style';
 import axios from 'axios';
 import tr from '@i18n';
@@ -7,7 +7,6 @@ import LocalizedString from '../util/LocalizedString';
 import * as React from 'react';
 import ComboBox from './ComboBox';
 import { styled } from 'styletron-react';
-import ScrollArea from './ScrollArea';
 import { Dialog } from './Dialog';
 import { State as ReduxState } from '../state';
 import { I18nAction } from '../state/reducer';
@@ -15,7 +14,6 @@ import { connect } from 'react-redux';
 import Form from './Form';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { push } from 'connected-react-router';
-
 import { Fa } from './Fa';
 import RepeatUserDialog from './RepeatUserDialog';
 
@@ -133,18 +131,11 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
             errorMessage: ''
         }
     }
-    private onModalClick_ = (modal: Modal) => () => this.setState({ modal });
-    private onModalClose_ = () => this.setState({ modal: Modal.NONE });
+
     private closeRepeatUserDialog_ = () => {
-        // 
-        // 
-        //  this.setState({modal:Modal.NONE});
+
         this.setState({ showRepeatUserDialog: false });
     };
-    private onLocaleSelect_ = (index: number, option: ComboBox.Option) => {
-        this.props.onLocaleChange(option.data as LocalizedString.Language);
-    };
-
 
     onFinalize_ = async (values: { [id: string]: string }) => {
 
@@ -204,7 +195,6 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
 
         ];
 
-        const FORMS = [CREATEUSER_FORM_ITEMS];
         return (
             <div>
                 {!showRepeatUserDialog && (

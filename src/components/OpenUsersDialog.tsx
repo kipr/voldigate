@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { styled } from 'styletron-react';
 import { StyleProps } from '../style';
 import { Dialog } from './Dialog';
-import { ThemeProps, LIGHTMODE_YES } from './theme';
+import { ThemeProps} from './theme';
 import KIPR_LOGO_BLACK from '../assets/KIPR-Logo-Black-Text-Clear-Large.png';
 import KIPR_LOGO_WHITE from '../assets/KIPR-Logo-White-Text-Clear-Large.png';
 import tr from '@i18n';
@@ -275,7 +275,6 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
       });
       console.log("OpenUsersDialog state.users:", this.state.users);
 
-      // Use the returned directories as needed...
     } catch (error) {
       console.error("Error loading users in OpenUsersDialog:", error);
     }

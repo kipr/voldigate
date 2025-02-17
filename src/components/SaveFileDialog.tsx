@@ -3,20 +3,12 @@ import { styled } from 'styletron-react';
 import { StyleProps } from '../style';
 import { Dialog } from './Dialog';
 import { ThemeProps, LIGHT, LIGHTMODE_YES, LIGHTMODE_NO } from './theme';
-import { Fa } from './Fa';
-
-import { faCopyright } from '@fortawesome/free-solid-svg-icons';
-
 import KIPR_LOGO_BLACK from '../assets/KIPR-Logo-Black-Text-Clear-Large.png';
 import KIPR_LOGO_WHITE from '../assets/KIPR-Logo-White-Text-Clear-Large.png';
-
 import tr from '@i18n';
-
 import { connect } from 'react-redux';
 import { State as ReduxState } from '../state';
 import LocalizedString from '../util/LocalizedString';
-import { sprintf } from 'sprintf-js';
-import Dict from '../Dict';
 
 export interface SaveFileDialogPublicProps extends ThemeProps, StyleProps {
   onClose: () => void;
@@ -97,21 +89,6 @@ const Container = styled('div', (props: ThemeProps) => ({
 
 const Bold = styled('span', {
   fontWeight: 400
-});
-
-const Link = styled('a', (props: ThemeProps) => ({
-  color: props.theme.color,
-}));
-
-const LogoRow = styled('div', {
-  display: 'flex',
-  flexDirection: 'row',
-  marginBottom: '10px',
-  alignItems: 'center',
-});
-
-const CopyrightContainer = styled('div', {
-  flex: '1 1'
 });
 
 const CenteredContainer = styled('div', {

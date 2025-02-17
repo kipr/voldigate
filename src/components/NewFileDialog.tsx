@@ -14,10 +14,7 @@ import { connect } from 'react-redux';
 import Form from './Form';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
-import { push } from 'connected-react-router';
-
 import { Editor } from './Editor';
-
 import ProgrammingLanguage from 'ProgrammingLanguage';
 import { DEFAULT_SETTINGS, Settings } from '../Settings';
 import { Modal } from '../pages/Modal';
@@ -116,7 +113,7 @@ const OPTIONS: ComboBox.Option[] = [{
 
 
 export class NewFileDialog extends React.PureComponent<Props, State> {
-  //state = {fileName: ''};
+
   private editorRef: React.MutableRefObject<Editor>;
   constructor(props: Props) {
     super(props);
@@ -130,17 +127,6 @@ export class NewFileDialog extends React.PureComponent<Props, State> {
       errorMessage: ''
     }
   }
-
-
-  private onModalClick_ = (modal: Modal) => () => this.setState({ modal });
-  private onModalClose_ = () => this.setState({ modal: Modal.NONE });
-  private closeRepeatUserDialog_ = () => {
-
-    this.setState({ showRepeatUserDialog: false });
-  };
-
-
-
 
   componentDidMount() {
     console.log("Inside componentDidMount in NewFileDialog.tsx with state:", this.state);
@@ -231,10 +217,6 @@ export class NewFileDialog extends React.PureComponent<Props, State> {
 
     ];
 
-
-
-    const FORMS = [CREATE_NEW_FILE_FORM_ITEMS];
-    const index = OPTIONS.findIndex(option => option.data === this.state.language);
     return (
       <div>
         <Dialog

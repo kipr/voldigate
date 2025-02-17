@@ -127,8 +127,6 @@ const ItemIcon = styled(Fa, {
 
 
 export class CreateProjectDialog extends React.PureComponent<Props, State> {
-  //state = {userName: ''};
-
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -149,9 +147,6 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
   private onSelect_ = (index: number, option: ComboBox.Option) => {
     console.log("Selected index: ", index);
     console.log("Selected option: ", option);
-    const { props } = this;
-    // const { onLanguageChange } = props;
-
     this.onLanguageChange(option.data as ProgrammingLanguage);
   };
 
@@ -160,7 +155,6 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
       language: language
     }, () => {
       console.log("Updated language to: ", this.state.language);
-      //this.props.onDocumentationSetLanguage(language === 'python' ? 'python' : 'c');
     });
 
   };
