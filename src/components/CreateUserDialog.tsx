@@ -145,7 +145,11 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
         const specialCharRegex = /[^a-zA-Z0-9 _-]/;
         const isOnlySpaces = !userName.trim(); // Check if the name is empty or only spaces
 
-
+        // Check if user name exceeds 50 characters
+        if (userName.length > 50) {
+            this.setState({ errorMessage: 'User name cannot exceed 50 characters.' });
+            return;
+        }
         if (specialCharRegex.test(userName)) {
             this.setState({ errorMessage: 'User name contains special characters. Please use only letters, numbers, spaces, underscores, and hyphens.' });
             return;
