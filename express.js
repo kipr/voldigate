@@ -132,7 +132,12 @@ async function getAllUserFiles(directory, zipFolder) {
     }
   }
 }
-
+async function interalGetFileContents(filePath) {
+  if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
+    throw new Error("Invalid or non-existent file path");
+  }
+  return fs.promises.readFile(filePath, "utf-8"); // ✅ Now using async/await properly
+}
 function getFileContents() {
   return async (req, res) => {
     const filePath = req.query.filePath;
@@ -356,7 +361,7 @@ if (
   });
 }
 
-app.post("/compile-code", (req, res) => {
+app.post("/compile-code", async (req, res) => {
   console.log("Received request body:", req.body); // Log the entire request body
 
   const { userName, projectName, fileName, activeLanguage } = req.body;
@@ -378,6 +383,10 @@ app.post("/compile-code", (req, res) => {
   console.log("Project username: ", userName);
   console.log("Project name: ", projectName);
   console.log("Current working directory:", process.cwd());
+
+  const filePath = `/home/kipr/Documents/KISS/${userName}/${projectName}/src/${fileName}`;
+
+  console.log("Code to compile: ", await interalGetFileContents(filePath));
 
   exec("node compiler.js", { env }, (error, stdout, stderr) => {
     if (error) {
