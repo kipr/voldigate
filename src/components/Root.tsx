@@ -1253,8 +1253,10 @@ class Root extends React.Component<Props, State> {
     const { locale } = this.props;
     const { userName, projectName, fileName, activeLanguage, editorConsole, code } = this.state;
     console.log("onCompileClick before try state: ", this.state);
+
     try {
-      if (this.state.toSaveCode_ !== undefined) {
+      if (this.toSaveCodeRef !== undefined) {
+        console.log("onCompileClick_ onSaveCode_ triggered");
         await this.onSaveCode_();
       }
 
@@ -1277,6 +1279,7 @@ class Root extends React.Component<Props, State> {
         switch (activeLanguage) {
           case 'c':
           case 'cpp': {
+            console.log("onCompileClick_ response.data.message:", response.data.message);
             if (response.data.message === 'successful') {
               nextConsole = StyledText.extend(compilingConsole, StyledText.text({
                 text: LocalizedString.lookup(tr('Compilation Succeded!\n'), locale),
@@ -1287,15 +1290,25 @@ class Root extends React.Component<Props, State> {
             else if (response.data.message === 'failed') {
 
               console.log("Compilation Failed with errors:", response.data.output);
-              const errorRegex = /\/home\/kipr\/Documents\/KISS\/([^:\n]+:\d+:\d+: error: .*?)\n/g;
-              const errorMatches = [...response.data.output.matchAll(errorRegex)];
-              const filteredError = errorMatches.map(match => match[1]).join('\n');
+              let errorRegex = /\/home\/kipr\/Documents\/KISS\/([^:\n]+:\d+:\d+: error: .*?)\n/g;
+              let errorMatches = [...response.data.output.matchAll(errorRegex)];
+              let filteredError = errorMatches.map(match => match[1]).join('\n');
 
               const warningRegex = /\/home\/kipr\/Documents\/KISS\/([^:\n]+:\d+:\d+: warning: .*?)\n/g;
               const warningMatches = [...response.data.output.matchAll(warningRegex)];
-
+              console.log("Full Compilation Output:\n", response.data.output);
+              console.log("Raw errorMatches:", errorMatches);
+              
               console.log("errorMatches:", errorMatches);
               console.log("filteredError:", filteredError);
+
+              if (filteredError.length == 0){
+                console.log("no matching errors, but failed compilation");
+                errorRegex = /-lkipr\s*([\s\S]*)/g;
+                errorMatches = [...response.data.output.matchAll(errorRegex)];
+                filteredError = errorMatches.map(match => match[1]).join('\n');
+                console.log("filteredError:", filteredError);
+              }
 
               nextConsole = StyledText.extend(compilingConsole, StyledText.text({
                 text: LocalizedString.lookup(tr(`${filteredError}\n`), locale),
