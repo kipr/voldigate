@@ -1,123 +1,65 @@
-import React, { useEffect, useState } from 'react';
-import { styled } from 'styletron-react';
-import { StyleProps } from '../style';
-import { Dialog } from './Dialog';
-import { ThemeProps, LIGHTMODE_YES } from './theme';
+import React from 'react';
 import KIPR_LOGO_BLACK from '../assets/KIPR-Logo-Black-Text-Clear-Large.png';
 import KIPR_LOGO_WHITE from '../assets/KIPR-Logo-White-Text-Clear-Large.png';
 import tr from '@i18n';
-import { connect } from 'react-redux';
-import { State as ReduxState } from '../state';
 import LocalizedString from '../util/LocalizedString';
 import ScrollArea from './ScrollArea';
-import { Settings } from '../Settings';
 import ProgrammingLanguage from '../ProgrammingLanguage';
-
-type SettingsSection = string;
-
+import { styled } from 'styletron-react';
+import { StyleProps } from '../style';
+import { Dialog } from './Dialog';
+import { ThemeProps } from './theme';
+import { connect } from 'react-redux';
+import { State as ReduxState } from '../state';
+import { Settings } from '../Settings';
+import { Project } from '../types/projectTypes';
 
 export interface OpenFileDialogPublicProps extends ThemeProps, StyleProps {
+  projectLanguage: ProgrammingLanguage;
+  settings: Settings;
   onClose: () => void;
   onOpenUserProject: (name: string, projectName: string, fileName: string, projectLanguage: string) => void;
   onSettingsChange: (settings: Partial<Settings>) => void;
-
-  projectLanguage: ProgrammingLanguage;
-  settings: Settings;
   onLoadUsers: () => Promise<string[]>;
   onLoadUserData: (openedUserDialog: boolean, desiredUser: string) => Promise<Project[]>;
   onOpenFile: (userName: string, projectName: string, fileName: string, projectLanguage: string) => void;
 }
 
-type Project = {
-  projectName: string;
-  binFolderFiles: string[];
-  includeFolderFiles: string[];
-  srcFolderFiles: string[];
-  dataFolderFiles: string[];
-  projectLanguage: ProgrammingLanguage;
-}
 interface ClickProps {
   onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
   disabled?: boolean;
 }
+
 interface OpenFileDialogPrivateProps {
   locale: LocalizedString.Language;
   onLocaleChange: (locale: LocalizedString.Language) => void;
 }
 
 interface OpenFileDialogState {
-  selectedSection: SettingsSection;
-  users: string[];
-  projects: Project[] | null;
   loading: boolean;
+  showUserProjectFiles: boolean;
+  selectedSection: string;
+  projectName: string;
   error: string | null;
   selectedProject: string | null;
-  projectName: string;
+  selectedFile: string | null;
   activeLanguage: ProgrammingLanguage;
   selectedProjectFiles: Project | null;
-  showUserProjectFiles: boolean;
-  selectedFile: string | null;
-
-
+  users: string[];
+  projects: Project[] | null;
 }
+
 interface SectionProps {
   selected?: boolean;
 }
 
 type Props = OpenFileDialogPublicProps & OpenFileDialogPrivateProps;
 type State = OpenFileDialogState;
-namespace Modal {
-  export enum Type {
-    Settings,
-    CreateUser,
-    RepeatUser,
-    None,
-    OpenFile
-  }
-  export interface None {
-    type: Type.None;
-  }
-
-  export const NONE: None = { type: Type.None };
-
-  export interface Settings {
-    type: Type.Settings;
-  }
-
-  export const SETTINGS: Settings = { type: Type.Settings };
-
-  export interface CreateUser {
-    type: Type.CreateUser;
-  }
-
-  export const CREATEUSER: CreateUser = { type: Type.CreateUser };
-
-  export interface RepeatUser {
-    type: Type.RepeatUser;
-  }
-
-  export const REPEATUSER: RepeatUser = { type: Type.RepeatUser };
-
-
-  export interface OpenFile {
-    type: Type.OpenFile;
-  }
-
-  export const OpenFile: OpenFile = { type: Type.OpenFile };
-}
-
-export type Modal = (
-  Modal.Settings |
-  Modal.CreateUser |
-  Modal.None |
-  Modal.RepeatUser
-);
 
 const Logo = styled('img', {
   width: '150px',
   height: 'auto',
 });
-
 
 const Container = styled('div', (props: ThemeProps) => ({
   display: 'flex',
@@ -127,24 +69,21 @@ const Container = styled('div', (props: ThemeProps) => ({
   minHeight: '300px',
 }));
 
-
-
 const SettingContainer = styled('div', (props: ThemeProps) => ({
   display: 'flex',
   flexDirection: 'row',
   padding: `${props.theme.itemPadding * 2}px`,
 }));
+
 const SettingInfoContainer = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   flex: '1 0',
 });
 
-
 interface SectionProps {
   selected?: boolean;
 }
-
 
 const SectionsColumn = styled('div', (props: ThemeProps) => ({
   display: 'flex',
@@ -173,7 +112,7 @@ const ProjectTitle = styled('h2', {
   marginTop: '0px',
   marginBottom: '10px',
   fontSize: '1.2em',
-  textAlign: 'center', // 
+  textAlign: 'center',
 });
 
 const ProjectFileTitle = styled('h3', {
@@ -185,16 +124,14 @@ const ProjectFileTitle = styled('h3', {
 });
 
 const FileTypeHeader = styled('div', {
-
   fontSize: '1.0em',
   textAlign: 'start',
   fontWeight: 400,
 });
 
-
 const ProjectItem = styled('li', (props: ThemeProps & { selected: boolean }) => ({
   cursor: 'pointer',
-  backgroundColor: props.selected ? props.theme.selectedUserBackground : props.theme.unselectedBackground, // Highlight selected project
+  backgroundColor: props.selected ? props.theme.selectedUserBackground : props.theme.unselectedBackground,
   padding: '10px 20px',
   margin: '5px 0',
   borderRadius: '5px',
@@ -205,7 +142,6 @@ const ProjectItem = styled('li', (props: ThemeProps & { selected: boolean }) => 
     backgroundColor: props.theme.hoverOptionBackground,
   },
   boxShadow: props.theme.themeName === "DARK" ? ' 0px 7px 8px -4px rgba(0, 0, 0, 0.2), 0px 12px 17px 2px rgba(0, 0, 0, 0.14), 0px 5px 22px 4px rgba(0, 0, 0, 0.12)' : '2px 2px 4px rgba(0,0,0,0.9)',
-
 }));
 
 const ProjectFileContainer = styled('div', (props: ThemeProps) => ({
@@ -213,7 +149,6 @@ const ProjectFileContainer = styled('div', (props: ThemeProps) => ({
   leftMargin: '50px',
   borderRadius: '5px',
   display: 'flex',
-
   flexDirection: 'column',
   justifyContent: 'space-between', 
 }));
@@ -256,8 +191,8 @@ const OpenFileButton = styled(Button, (props: ThemeProps & ClickProps) => ({
   boxShadow: '2px 2px 4px rgba(0,0,0,0.9)',
   ':active': props.onClick && !props.disabled
     ? {
-      boxShadow: '1px 1px 2px rgba(0,0,0,0.7)', // Fixed incorrect commas
-      transform: 'translateY(1px, 1px)', // Adds a press-down effect
+      boxShadow: '1px 1px 2px rgba(0,0,0,0.7)', 
+      transform: 'translateY(1px, 1px)',
     }
     : {},
 }));
@@ -281,7 +216,8 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
 
     };
   }
-  private setSelectedSection = (selectedSection: SettingsSection) => {
+
+  private setSelectedSection = (selectedSection: string) => {
     this.setState({ selectedSection }, this.getProjects);
     this.setState({ selectedProject: null });
   };
@@ -293,44 +229,24 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
       projectName: projectId,
       activeLanguage: this.state.projects!.find(project => project.projectName === projectId)!.projectLanguage,
       selectedProjectFiles: this.state.projects!.find(project => project.projectName === projectId),
-
-    }), () => {
-      console.log("handleProjectClick selected User: ", this.state.selectedSection);
-      console.log("handleProjectClick selectedProject: ", this.state.selectedProject);
-      console.log("handleProjectClick activeLanguage: ", this.state.activeLanguage);
-      console.log("handleProjectClick selectedProjectFiles: ", this.state.selectedProjectFiles);
-
-    });
-
-
+    }));
   };
 
   private handleFileClick = async (fileId: string) => {
     this.setState({
       showUserProjectFiles: true,
       selectedFile: fileId,
-    }, () => {
-      console.log("handleFileClick showUserProjectFiles: ", this.state.showUserProjectFiles);
-      console.log("handleFileClick fileId: ", fileId);
-      console.log("handleFileClick state.selectedFile: ", this.state.selectedFile);
     })
-
   };
 
   private handleButtonClick(file) {
-    console.log("Button clicked for file:", file);
     this.props.onOpenFile(this.state.selectedSection, this.state.projectName, file, this.state.activeLanguage);
   }
 
-
   private getProjects = async () => {
-    console.log("getProjects selectedSection: ", this.state.selectedSection);
-
     this.setState({
       projects: await this.props.onLoadUserData(true, this.state.selectedSection),
       loading: false,
-    }, () => {
-      console.log("getProjects projects: ", this.state.projects);
     })
   }
 
@@ -338,21 +254,14 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
     try {
       const userDirectories = await this.props.onLoadUsers();
 
-      console.log("OpenFileDialog received directories:", userDirectories);
-
       this.setState({
         users: userDirectories,
-
       });
-      console.log("OpenFileDialog state.users:", this.state.users);
-
-      // Use the returned directories as needed...
+     
     } catch (error) {
       console.error("Error loading users in OpenFileDialog:", error);
     }
-
   }
-
 
   renderProjects() {
     const { projects, loading, error, selectedProject } = this.state;
@@ -393,9 +302,7 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
 
 
   renderFiles() {
-    console.log("OpenFileDialog renderFiles selectedProject: ", this.state.selectedProject);
-    console.log("OpenFileDialog renderFiles projects: ", this.state.projects);
-    return (
+       return (
       <div>
         <ProjectFileTitle>Files for {this.state.selectedProject}</ProjectFileTitle>
         <ul>
@@ -470,7 +377,6 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
     const { style, className, theme, onClose, locale } = props;
     const { selectedSection, users, showUserProjectFiles } = state;
 
-
     let logo: JSX.Element;
 
     switch (theme.foreground) {
@@ -484,7 +390,6 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
       }
     }
 
-
     const userSections = users.map((user) => (
       <SectionName
         key={user}
@@ -495,7 +400,6 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
         {LocalizedString.lookup(tr(user), locale)}
       </SectionName>
     ));
-
 
     return (
       <Dialog

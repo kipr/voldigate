@@ -1,17 +1,13 @@
 import * as React from 'react';
-
 import { Modal } from './Modal';
-
 import { StyleProps } from '../style';
-
 import { styled } from 'styletron-react';
-import Widget, { Mode, Size } from './Widget';
 import { ThemeProps } from './theme';
+import Widget, { Mode, Size } from './Widget';
 
 export interface DialogProps extends ThemeProps, StyleProps {
   name: string;
   children: React.ReactNode;
-
   onClose: () => void;
 }
 

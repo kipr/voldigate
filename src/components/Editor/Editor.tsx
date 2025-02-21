@@ -1,6 +1,10 @@
 import * as React from 'react';
+import ProgrammingLanguage from '../../ProgrammingLanguage';
+import Dict from '../../Dict';
+import * as monaco from 'monaco-editor';
+import tr from '@i18n';
+import LocalizedString from '../../util/LocalizedString';
 import { styled, withStyleDeep } from 'styletron-react';
-
 import { StyleProps } from '../../style';
 import { Theme } from '../theme';
 import { middleBarSpacer, rightBarSpacerOpen, rightBarSpacerClosed, leftBarSpacerOpen, leftBarSpacerClosed } from '../common';
@@ -12,17 +16,7 @@ import { WarningCharm, ErrorCharm } from './';
 import { GREEN, LIGHTMODE_GREEN, RED, ThemeProps } from '../theme';
 import { Ivygate, Message } from 'ivygate';
 import { FontAwesome } from '../FontAwesome';
-import ProgrammingLanguage from '../../ProgrammingLanguage';
-
 import { faFileDownload, faFloppyDisk, faIndent, faLink, faPlay, faStop } from '@fortawesome/free-solid-svg-icons';
-
-import Dict from '../../Dict';
-import * as monaco from 'monaco-editor';
-
-import tr from '@i18n';
-
-import LocalizedString from '../../util/LocalizedString';
-
 
 export enum EditorActionState {
   None,
@@ -33,17 +27,13 @@ export enum EditorActionState {
 export interface EditorPublicProps extends StyleProps, ThemeProps {
   language: ProgrammingLanguage
   code: string;
-  onCodeChange: (code: string) => void;
-  onSaveCode: () => void;
-  messages?: Message[];
   autocomplete: boolean;
   isleftbaropen: boolean;
   isRunning: boolean;
+  messages?: Message[];
+  onCodeChange: (code: string) => void;
+  onSaveCode: () => void;
   onDocumentationGoToFuzzy?: (query: string, language: 'c' | 'python' | 'plaintext') => void;
-}
-
-interface EditorPrivateProps {
-  locale: LocalizedString.Language;
 }
 
 interface EditorState {
@@ -68,9 +58,8 @@ const Container = styled('div', (props: ThemeProps) => ({
     outline: 'none'
   },
   height: '100%',
-
-
 }));
+
 const Item = styled('div', (props: ThemeProps & ClickProps) => ({
   display: 'flex',
   alignItems: 'center',
@@ -96,8 +85,7 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
 }));
 
 const RunItem = withStyleDeep(Item, (props: ClickProps & ThemeProps) => ({
-  
-  backgroundColor: props.disabled ? (props.theme.themeName === 'DARK' ? props.theme.runButtonColor.disabled : props.theme.runButtonColor.disabled) : (props.theme.themeName === 'DARK' ? props.theme.runButtonColor.standard: props.theme.runButtonColor.standard),
+  backgroundColor: props.disabled ? (props.theme.themeName === 'DARK' ? props.theme.runButtonColor.disabled : props.theme.runButtonColor.disabled) : (props.theme.themeName === 'DARK' ? props.theme.runButtonColor.standard : props.theme.runButtonColor.standard),
   ':hover':
     props.onClick && !props.disabled
       ? {
@@ -105,6 +93,7 @@ const RunItem = withStyleDeep(Item, (props: ClickProps & ThemeProps) => ({
       }
       : {},
 }));
+
 const ItemIcon = styled(FontAwesome, {
   paddingRight: '10px',
 });
@@ -123,7 +112,6 @@ export namespace EditorBarTarget {
   export enum Type {
     Robot,
     Script,
-
   }
 
   export interface Robot {
@@ -150,9 +138,6 @@ export type EditorBarTarget = EditorBarTarget.Robot;
 
 
 export const createNavigationNamesBar = (
-  theme: Theme,
-  onClearConsole: () => void,
-  locale: LocalizedString.Language
 ) => {
   // eslint-disable-next-line @typescript-eslint/ban-types
   const consoleBar: BarComponent<object>[] = [];
@@ -168,13 +153,10 @@ export const createEditorBarComponents = ({
   theme,
   target,
   locale,
-
-
 }: {
   theme: Theme,
   target: EditorBarTarget,
   locale: LocalizedString.Language,
-
 }) => {
 
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -189,7 +171,6 @@ export const createEditorBarComponents = ({
 
       editorBar.push(BarComponent.create(Button, {
         theme,
-        //onClick: target.isRunning ? target.onStopClick : target.onRunClick,
 
         children: target.isRunning
           ? (
@@ -286,7 +267,7 @@ export const createEditorBarComponents = ({
       }));
 
       if (target.isleftbaropen_.toString() === 'true') {
-         editorBar.push(BarComponent.create(rightBarSpacerOpen, {
+        editorBar.push(BarComponent.create(rightBarSpacerOpen, {
 
         }));
 
@@ -377,31 +358,13 @@ class Editor extends React.PureComponent<Props, State> {
     };
   }
 
-  componentDidMount() {
-    console.log("inside componentDidMount in Editor.tsx with props:", this.props);
-
-  }
-
   async componentDidUpdate(prevProps: Props) {
-
-    console.log("inside componentDidUpdate in Editor.tsx with props:", this.props);
 
     if (this.props.isleftbaropen !== this.state.isleftbaropen) {
       this.setState({ isleftbaropen: this.props.isleftbaropen });
     }
-
-    if (this.props.language !== prevProps.language) {
-      console.log("Editor Language changed from: ", prevProps.language);
-      console.log("Editor Language changed to: ", this.props.language);
-    }
-
-    if (this.props.code !== prevProps.code) {
-      console.log("Code changed from: ", prevProps.code);
-      console.log("Code changed to: ", this.props.code);
-    }
-
-
   }
+
   private openDocumentation_ = () => {
     const { word } = this.ivygate_.editor.getModel().getWordAtPosition(this.ivygate_.editor.getPosition());
     const language = DOCUMENTATION_LANGUAGE_MAPPING[this.props.language];
@@ -411,6 +374,7 @@ class Editor extends React.PureComponent<Props, State> {
   };
 
   private openDocumentationAction_?: monaco.IDisposable;
+  
   private setupCodeEditor_ = (editor: monaco.editor.IStandaloneCodeEditor) => {
     if (this.props.onDocumentationGoToFuzzy) this.openDocumentationAction_ = editor.addAction({
       id: 'open-documentation',
@@ -427,6 +391,7 @@ class Editor extends React.PureComponent<Props, State> {
   };
 
   private ivygate_: Ivygate;
+
   private bindIvygate_ = (ivygate: Ivygate) => {
     if (this.ivygate_ === ivygate) return;
     const old = this.ivygate_;
@@ -444,7 +409,6 @@ class Editor extends React.PureComponent<Props, State> {
 
   render() {
 
-    console.log("inside render in Editor.tsx with props:", this.props);
     const {
       style,
       className,
@@ -455,7 +419,7 @@ class Editor extends React.PureComponent<Props, State> {
       autocomplete,
       language
     } = this.props;
-    console.log("Editor theme:", this.props.theme); // Debugging
+
     return (
       <Container theme={theme} style={style} className={className} >
         <Ivygate

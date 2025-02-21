@@ -1,29 +1,32 @@
 import * as React from 'react';
+import tr from '@i18n';
+import LocalizedString from '../util/LocalizedString';
+import ProgrammingLanguage from '../ProgrammingLanguage';
+import { Project } from '../types/projectTypes';
 import { DARK, ThemeProps } from '../components/theme';
 import { StyleProps } from '../style';
 import { connect } from 'react-redux';
 import { styled } from 'styletron-react';
 import { LayoutProps } from './Layout/Layout';
-import tr from '@i18n';
 import { State as ReduxState } from '../state';
-import LocalizedString from '../util/LocalizedString';
 import { faFile, faFileCirclePlus, faFolderPlus } from '@fortawesome/free-solid-svg-icons';
 import { Fa } from './Fa';
-import ProgrammingLanguage from '../ProgrammingLanguage';
-
-type UsersSection = string;
-
-type Project = {
-    projectName: string;
-    binFolderFiles: string[];
-    includeFolderFiles: string[];
-    srcFolderFiles: string[];
-    dataFolderFiles: string[];
-    projectLanguage: ProgrammingLanguage;
-}
-
 
 export interface FileExplorerProps extends ThemeProps, StyleProps {
+    propsSelectedProjectName?: string;
+    propFileName?: string;
+    propProjectName?: string;
+    propUserName?: string;
+    propedFromRootFileName?: string;
+    addProjectFlag?: boolean;
+    addFileFlag?: boolean;
+    reloadFilesFlag?: boolean;
+    userSelectedFlag?: boolean;
+    userDeleteFlag?: boolean;
+    propActiveLanguage?: ProgrammingLanguage;
+    propUsers: string[];
+    propUserData: Project[];
+
     onProjectSelected?: (userName: string, projectName: string, fileName: string, activeLanguage: ProgrammingLanguage, fileType: string) => void;
     onFileSelected?: (userName: string, projectName: string, fileName: string, activeLanguage: ProgrammingLanguage, fileType: string) => void;
     onUserSelected?: (userName: string, loadUserData: boolean) => void;
@@ -35,21 +38,7 @@ export interface FileExplorerProps extends ThemeProps, StyleProps {
     onDownloadUser?: (userName: string) => void;
     onDownloadProject?: (userName: string, project: Project) => void;
     onDownloadFile?: (userName: string, projectName: string, fileName: string) => void;
-    propsSelectedProjectName?: string;
-    propFileName?: string;
-    propProjectName?: string;
-    propActiveLanguage?: ProgrammingLanguage;
-    propUserName?: string;
-    addProjectFlag?: boolean;
-    addFileFlag?: boolean;
-    reloadFilesFlag?: boolean;
-    userSelectedFlag?: boolean;
-    userDeleteFlag?: boolean;
 
-    propUsers: string[];
-    propUserData: Project[];
-
-    propedFromRootFileName?: string;
 }
 interface SectionProps {
     selected?: boolean;
@@ -64,32 +53,30 @@ interface FileExplorerPrivateProps {
 }
 
 interface FileExplorerState {
-    includeFiles: [];
-    srcFiles: [];
-    userDataFiles: [];
-    userName: string;
-    users: string[];
-    selectedSection: UsersSection;
+    selectedSection: string;
     selectedProject: string;
     selectedFile: string
-    projects: [] | null;
+    userName: string;
     error: string | null;
     projectName: string;
     fileType: string;
+    contextMenuUser?: string;
+    contextMenuFile?: string;
     deleteUserFlag: boolean;
-    activeLanguage: ProgrammingLanguage;
     showProjectFiles: boolean;
     showProjects: boolean;
     showUserContextMenu: boolean;
     showProjectContextMenu: boolean;
     showFileContextMenu: boolean;
     currentUserSelected: boolean;
-
-    contextMenuUser?: string;
+    activeLanguage: ProgrammingLanguage;
     contextMenuProject?: Project;
-    contextMenuFile?: string;
-
     contextMenuPosition: { x: number; y: number } | null;
+    includeFiles: [];
+    srcFiles: [];
+    userDataFiles: [];
+    projects: [] | null;
+    users: string[];
 }
 
 type Props = FileExplorerProps & FileExplorerPrivateProps;
@@ -110,8 +97,6 @@ const SectionName = styled('span', (props: ThemeProps & SectionProps & { selecte
     fontWeight: props.selected ? 400 : undefined,
     userSelect: 'none',
 }));
-
-
 
 const UsersContainer = styled('div', (props: ThemeProps) => ({
 
@@ -141,7 +126,6 @@ const SidePanel = styled('div', (props: ThemeProps) => ({
     width: 'auto',
 }));
 
-
 const ProjectContainer = styled('div', (props: ThemeProps) => ({
     display: 'flex',
     flexDirection: 'column',
@@ -158,9 +142,8 @@ const ProjectHeaderContainer = styled('div', (props: ThemeProps) => ({
     display: 'flex',
     flexDirection: 'row',
     borderBottom: `3px solid ${props.theme.borderColor}`,
-
-
 }));
+
 const ProjectTitle = styled('h2', {
     fontSize: '1.2em',
     marginBottom: '0px',
@@ -188,7 +171,6 @@ const AddProjectItemIcon = styled(Fa, {
     height: '15px'
 });
 
-
 const ProjectItem = styled('li', (props: ThemeProps & { selected: boolean }) => ({
     display: 'flex',
     flexDirection: 'column',
@@ -205,40 +187,29 @@ const ProjectItem = styled('li', (props: ThemeProps & { selected: boolean }) => 
         cursor: 'pointer',
         backgroundColor: props.theme.hoverFileBackground
     },
-
 }));
-
 
 const Container = styled('ul', {
     display: 'flex',
-    flexDirection: 'column', /* Change to row if you want horizontal layout */
+    flexDirection: 'column',
     flexWrap: 'wrap',
-    overflow: 'hidden', /* Hide any overflow within the container */
+    overflow: 'hidden',
     padding: '0',
     margin: '0px 0px 0px -30px',
     listStyleType: 'none',
 });
 
-
 const FileTypeTitleContainer = styled('div', (props: ThemeProps) => ({
-
     width: '100%',
-
     transition: 'background-color 0.2s, opacity 0.2s',
     padding: `5px`,
     fontWeight: 400,
-
     userSelect: 'none',
 }));
 
-
 const FileTypeContainer = styled('span', (props: ThemeProps & { selected: boolean }) => ({
-
-
     width: '100%',
-
     backgroundColor: props.selected ? props.theme.selectedUserBackground : props.theme.unselectedBackground,
-
     transition: 'background-color 0.2s, opacity 0.2s',
     padding: `5px`,
     border: `3px solid ${props.theme.borderColor}`,
@@ -250,17 +221,13 @@ const FileTypeItem = styled('li', (props: ThemeProps) => ({
     padding: '3px',
     borderRadius: '5px',
     boxShadow: props.theme.themeName === "DARK" ? ' 0px 7px 8px -4px rgba(0, 0, 0, 0.2), 0px 12px 17px 2px rgba(0, 0, 0, 0.14), 0px 5px 22px 4px rgba(0, 0, 0, 0.12)' : undefined,
-
-
 }));
 
 const FileContainer = styled('div', (props: ThemeProps) => ({
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-
     flex: '0 0 150px',
-
     marginLeft: '7px',
 }));
 
@@ -269,7 +236,6 @@ const FileItemIcon = styled(Fa, {
     alignItems: 'center',
     height: '15px'
 });
-
 
 const IndividualFile = styled('div', (props: ThemeProps & { selected: boolean }) => ({
     listStyleType: 'none',
@@ -283,7 +249,6 @@ const IndividualFile = styled('div', (props: ThemeProps & { selected: boolean })
         backgroundColor: props.theme.hoverFileBackground
     },
 }));
-
 
 const ContextMenu = styled('div', (props: ThemeProps & { x: number, y: number }) => ({
     position: "absolute",
@@ -306,8 +271,6 @@ const ContextMenuItem = styled('div', (props: ThemeProps) => ({
         backgroundColor: `${props.theme.hoverFileBackground}`
     },
 }));
-
-
 
 export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxSideLayoutProps, State> {
 
@@ -345,7 +308,53 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
 
     }
 
-    // Handle right-click to show the context menu
+    async componentDidUpdate(prevProps: Props, prevState: State) {
+        if (this.props.propFileName !== this.selectedFileRefFE.current) {
+            this.selectedFileRefFE.current = this.props.propFileName;
+            this.setState({ selectedFile: this.selectedFileRefFE.current });
+
+        }
+
+        if (prevState.projectName !== this.state.projectName) {
+            this.getProjects(this.state.selectedSection);
+            this.setState({
+                selectedProject: this.state.projectName
+            });
+        }
+
+        if (prevState.selectedSection !== this.state.selectedSection) {
+            this.setState({ showProjects: true });
+        }
+
+        if (prevState.selectedProject !== this.state.selectedProject) {
+            this.setState({ showProjectFiles: true });
+        }
+        if (prevProps.addProjectFlag !== this.props.addProjectFlag) {
+            if (this.props.addProjectFlag == false) {
+                this.getProjects(this.state.selectedSection);
+            }
+        }
+
+        if (
+            prevProps.propFileName !== this.props.propFileName ||
+            prevProps.propProjectName !== this.props.propProjectName ||
+            prevProps.propActiveLanguage !== this.props.propActiveLanguage ||
+            prevProps.propUserName !== this.props.propUserName ||
+            prevProps.addProjectFlag !== this.props.addProjectFlag ||
+            prevProps.addFileFlag !== this.props.addFileFlag
+        ) {
+            this.setState({
+
+                projectName: this.props.propsSelectedProjectName
+            });
+        }
+    }
+
+    /**
+     * Right click handler for Users
+     * @param event - right click event
+     * @param user - user name
+     */
     handleUserRightClick = (event: React.MouseEvent, user: string) => {
         event.preventDefault();
         this.setState({
@@ -357,13 +366,16 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                 y: event.pageY,
             },
             contextMenuUser: user
-
         }, () => {
-            // Add a global click listener to close the menu
             document.addEventListener('click', this.closeContextMenu);
         });
     };
 
+    /**
+     * Right click handler for Projects
+     * @param event - right click event
+     * @param project - project name
+     */
     handleProjectRightClick = (event: React.MouseEvent, project: Project) => {
         event.preventDefault();
         this.setState({
@@ -374,15 +386,17 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                 x: event.pageX,
                 y: event.pageY,
             },
-
             contextMenuProject: project
-
         }, () => {
-            // Add a global click listener to close the menu
             document.addEventListener('click', this.closeContextMenu);
         });
     };
 
+    /**
+     * Right click handler for Files
+     * @param event - right click event
+     * @param file - file name
+     */
     handleFileRightClick = (event: React.MouseEvent, file: string) => {
         event.preventDefault();
         this.setState({
@@ -393,59 +407,40 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                 x: event.pageX,
                 y: event.pageY,
             },
-
             contextMenuFile: file
-
         }, () => {
-            // Add a global click listener to close the menu
             document.addEventListener('click', this.closeContextMenu);
         });
     };
 
-    // Close the context menu
     closeContextMenu = () => {
         this.setState({ contextMenuPosition: null });
     };
 
     deleteUser = (user: string) => {
-        console.log('Delete user clicked with user:', user);
         this.props.onDeleteUser(user, true);
     }
 
     deleteProject = (project: Project) => {
-        console.log("Delete project with state.userName: ", this.state.selectedSection);
-        console.log("Delete project clicked with project: ", project);
         this.props.onDeleteProject(this.state.selectedSection, project, true);
     }
 
     deleteFile = (file: string) => {
-        console.log("Delete file with state.userName: ", this.state.selectedSection);
-        console.log("Delete file clicked with state.project: ", this.state.selectedProject);
-        console.log("Delete file clicked with file: ", file);
+        ;
         this.props.onDeleteFile(this.state.selectedSection, this.state.selectedProject, file, true);
     }
 
     downloadUser = (user: string) => {
-        console.log('Download user clicked with user:', user);
         this.props.onDownloadUser(user);
-
     }
 
     downloadProject = (project: Project) => {
-        console.log('Download project clicked with user:', this.state.selectedSection);
-        console.log("Download project clicked with project:", project);
         this.props.onDownloadProject(this.state.selectedSection, project);
-
     }
 
     downloadFile = (file: string) => {
-        console.log('Download file clicked with user:', this.state.selectedSection);
-        console.log("Download file clicked with project:", this.state.selectedProject);
-        console.log("Download file clicked with file:", file);
         this.props.onDownloadFile(this.state.selectedSection, this.state.selectedProject, file);
-
     }
-
 
     renderUserContextMenu() {
         const { contextMenuPosition } = this.state;
@@ -481,6 +476,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
             </ContextMenu>
         );
     }
+
     renderProjectContextMenu() {
         const { contextMenuPosition } = this.state;
         const { theme } = this.props;
@@ -514,6 +510,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
 
         );
     }
+
     renderFileContextMenu() {
         const { contextMenuPosition } = this.state;
         const { theme } = this.props;
@@ -548,101 +545,14 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
         );
     }
 
-
-    async componentDidMount() {
-        console.log("PropedUsers: ", this.props.propUsers);
-    }
-    async componentDidUpdate(prevProps: Props, prevState: State) {
-
-        console.log("FileExplorer compDidUpdate prevProps: ", prevProps);
-        console.log("FileExplorer compDidUpdate props: ", this.props);
-        console.log("FileEXplorer compDidUpdate state: ", this.state);
-        console.log("FileExplorer compDidUpdate this.selectedFileRefFE.current: ", this.selectedFileRefFE.current);
-        console.log("FileExplorer compDidUpdate this.previousSelectedFileFE.current: ", this.previousSelectedFileFE.current);
-
-
-        if (this.props.propFileName !== this.selectedFileRefFE.current) {
-            console.log("FileExplorer compDidUpdate this.props.propFileName: ", this.props.propFileName, "and this.selectedFileRefFE.current: ", this.selectedFileRefFE.current);
-
-            this.selectedFileRefFE.current = this.props.propFileName;
-            console.log("FileExplorer compDidUpdate this.selectedFileRefFE.current after checking: ", this.selectedFileRefFE.current);
-            this.setState({ selectedFile: this.selectedFileRefFE.current });
-
-        }
-
-        if (prevState.projectName !== this.state.projectName) {
-            console.log("inside componentDidUpdate FileExplorer.tsx with prev state: ", prevState);
-            console.log("inside componentDidUpdate FileExplorer.tsx with current state: ", this.state);
-            this.getProjects(this.state.selectedSection);
-            this.setState({
-
-                // showProjectFiles: true,
-                selectedProject: this.state.projectName
-            });
-        }
-
-
-        if (prevProps.propUserData !== this.props.propUserData) {
-            console.log("propUserData changed");
-            console.log("propUserData: ", this.props.propUserData);
-
-        }
-        if (prevState.selectedSection !== this.state.selectedSection) {
-            console.log("selectedSection changed");
-            this.setState({ showProjects: true });
-        }
-
-        if (prevState.selectedProject !== this.state.selectedProject) {
-            console.log("selectedProject changed");
-            this.setState({ showProjectFiles: true });
-        }
-        if (prevProps.addProjectFlag !== this.props.addProjectFlag) {
-            if (this.props.addProjectFlag == false) {
-                this.getProjects(this.state.selectedSection);
-                console.log("fileExplorer componentDidUpdate propProjectName: ", this.props.propProjectName);
-                console.log("fileExplorer componentDidUpdate prevProps.propProjectName: ", prevProps.propProjectName);
-                console.log("fileExplorer componentDidUpdate projects: ", this.state.projects);
-            }
-        }
-        if (prevProps.userDeleteFlag !== this.props.userDeleteFlag) {
-            console.log("FileExp componentDidUpdate userDeleteFlag: ", this.props.userDeleteFlag);
-        }
-
-
-        if (
-            prevProps.propFileName !== this.props.propFileName ||
-            prevProps.propProjectName !== this.props.propProjectName ||
-            prevProps.propActiveLanguage !== this.props.propActiveLanguage ||
-            prevProps.propUserName !== this.props.propUserName ||
-            prevProps.addProjectFlag !== this.props.addProjectFlag ||
-            prevProps.addFileFlag !== this.props.addFileFlag
-
-
-        ) {
-            console.log("inside componentDidUpdate FileExplorer.tsx with state: ", this.state);
-            this.setState({
-
-                projectName: this.props.propsSelectedProjectName
-            });
-            console.log("inside componentDidUpdate FileExplorer.tsx with props: ", this.props);
-
-        }
-    }
-
     private handleProjectClick = async (projectId: string, user: string, language: ProgrammingLanguage) => {
-        console.log("handleProjectClick click");
-        console.log("handleProjectClick language: ", language);
-
         this.setState((prevState) => ({
             showProjectFiles: prevState.selectedProject === projectId ? false : true,
             selectedProject: prevState.selectedProject === projectId ? null : projectId,
             userName: prevState.selectedProject === projectId ? null : user,
             projectName: prevState.selectedProject === projectId ? null : projectId,
             activeLanguage: prevState.selectedProject === projectId ? null : language
-        }), () => {
-            console.log("handleProjectClick this.props.propUserData: ", this.props.propUserData);
-            console.log("handleProjectClick state:", this.state);
-        });
+        }));
 
     };
 
@@ -658,18 +568,6 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
         this.selectedFileRefFE.current = fileName;
 
         const [name, extension] = fileName.split('.');
-        console.log("handleFileClick activeLanguage: ", activeLanguage);
-        console.log("this.state.projectName: ", this.state.projectName);
-        console.log("fileName: ", fileName);
-        console.log("FileExpl handleFileClick state:", this.state);
-        console.log("FileExpl handleFileClick selectedFileRefFE: ", this.selectedFileRefFE.current);
-        console.log("FileExpl handleFileClick previousSelectedFileFE: ", this.previousSelectedFileFE.current);
-
-        console.log("extension is:", extension);
-
-
-
-        console.log("FileExpl handleFileClick projectDetails: ", projectDetails);
         this.setState({
             fileType: extension,
             selectedFile: fileName
@@ -679,9 +577,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                 this.setState({
                     activeLanguage: "c"
                 }, () => {
-                    console.log("activeLanguage set to: ", this.state.activeLanguage);
                     if (this.props.onFileSelected) {
-
                         this.props.onFileSelected(userName, projectName, fileName, this.state.activeLanguage, this.state.fileType);
                     }
                 });
@@ -690,7 +586,6 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                 this.setState({
                     activeLanguage: "cpp"
                 }, () => {
-                    console.log("activeLanguage set to: ", this.state.activeLanguage);
                     if (this.props.onFileSelected) {
 
                         this.props.onFileSelected(userName, projectName, fileName, this.state.activeLanguage, this.state.fileType);
@@ -701,9 +596,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                 this.setState({
                     activeLanguage: "python"
                 }, () => {
-                    console.log("activeLanguage set to: ", this.state.activeLanguage);
                     if (this.props.onFileSelected) {
-
                         this.props.onFileSelected(userName, projectName, fileName, this.state.activeLanguage, this.state.fileType);
                     }
                 });
@@ -712,10 +605,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                 this.setState({
                     activeLanguage: projectDetails.projectLanguage
                 }, () => {
-                    console.log("Header file clicked");
-                    console.log("activeLanguage set to: ", this.state.activeLanguage);
                     if (this.props.onFileSelected) {
-
                         this.props.onFileSelected(userName, projectName, fileName, this.state.activeLanguage, this.state.fileType);
                     }
                 });
@@ -724,26 +614,19 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                 this.setState({
                     activeLanguage: "plaintext"
                 }, () => {
-                    console.log("User Data file clicked");
-                    console.log("activeLanguage set to: ", this.state.activeLanguage);
                     if (this.props.onFileSelected) {
-
                         this.props.onFileSelected(userName, projectName, fileName, this.state.activeLanguage, this.state.fileType);
                     }
                 });
                 break;
-
         }
-
-
     }
 
+    /**
+     * Add new project to previously selected user
+     */
     private addNewProject = async () => {
-        console.log("addNewProject click");
-        console.log("addNewProject currentState: ", this.state);
-        console.log("addNewProject selectedSection: ", this.state.selectedSection);
-
-        const { userName, projectName, activeLanguage, selectedSection } = this.state;
+        const { selectedSection } = this.state;
 
         if (this.props.onAddNewProject) {
             this.props.onAddNewProject(selectedSection);
@@ -751,45 +634,39 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
 
     }
 
+    /**
+     * Add new file to previously selected project based on the file type
+     * @param fileType - type of file (header, src, data)
+     */
     private addNewFile = async (fileType: string) => {
-        console.log("addNewFile click");
-        console.log("addNewFileClick current language: ", this.state.activeLanguage);
-        console.log("addNewFile passed fileType: ", fileType);
         const { activeLanguage, selectedSection, selectedProject } = this.state;
-        console.log("FileExplorer addNewFile state:", this.state);
         if (this.props.onAddNewFile) {
             if (fileType == "python") {
                 this.setState({ fileType: 'py' });
                 this.props.onAddNewFile(selectedSection, selectedProject, activeLanguage, 'py');
-
             } else {
                 this.setState({ fileType: fileType });
                 this.props.onAddNewFile(selectedSection, selectedProject, activeLanguage, fileType);
-
             }
-
         }
     }
 
-
-
+    /**
+     * Sets the state user based on the user selected
+     * @param user - user name
+     */
     private setSelectedSection = async (user: string) => {
-        console.log("setSelectedSection click")
         if (this.state.userName !== user) {
             if (this.state.projectName !== this.state.selectedProject) {
                 this.setState({ showProjects: null });
             }
         }
 
-        console.log("setSelectedSection selectedSection: ", user);
-
         this.setState((prevState) => ({
             selectedSection: prevState.selectedSection === user ? null : user,
             showProjects: !this.state.showProjects
         }));
-
         this.props.onUserSelected(user, true);
-
     };
 
     private getProjects = async (name: string) => {
@@ -809,10 +686,8 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
     }
 
     renderSrcFiles() {
+        const { theme } = this.props;
 
-
-        const theme = DARK;
-        console.log("renderSrcFiles: ", this.state.srcFiles);
         return (
             <div>
                 {this.state.srcFiles.map((srcFile, index) => (
@@ -832,8 +707,8 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
     }
 
     renderIncludeFiles() {
-        const theme = DARK;
-        console.log("renderIncludeFiles: ", this.state.includeFiles);
+        const { theme } = this.props;
+
         return (
             <div>
                 {this.state.includeFiles.map((includeFile, index) => (
@@ -847,15 +722,13 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                         <FileItemIcon icon={faFile} />
                         {includeFile}
                     </IndividualFile>
-
-
                 ))}
             </div>
         )
     }
 
     renderUserDataFiles() {
-        const theme = DARK;
+        const { theme } = this.props;
         return (
             <div>
                 {this.state.userDataFiles.map((userData, index) => (
@@ -869,17 +742,14 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                         <FileItemIcon icon={faFile} />
                         {userData}
                     </IndividualFile>
-
-
                 ))}
             </div>
         )
     }
 
     renderProjects = (projects: Project[]) => {
-        const theme = this.props.theme;
-        console.log("insideRenderProjects with state: ", this.state);
-        console.log("insideRenderProjects with theme: ", theme);
+        const { theme } = this.props;
+
         return (
             <div>
                 <ProjectContainer theme={theme} key={this.state.selectedSection}>
@@ -895,7 +765,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                         </AddProjectButtonContainer>
                     </ProjectHeaderContainer>
                     <ul>
-                        {projects.map((project, index) => (
+                        {projects.map((project) => (
 
 
                             <Container key={project.projectName}>
@@ -907,8 +777,6 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                                     onContextMenu={(e) => this.handleProjectRightClick(e, project)} theme={theme}
                                 >
                                     {project.projectName}
-
-
                                 </ProjectItem>
 
                                 {this.state.selectedProject === project.projectName && this.state.showProjectFiles && (
@@ -925,16 +793,12 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                                                             key={`include-${i}`}
                                                             theme={theme}
                                                             selected={this.selectedFileRefFE.current === file}
-
                                                             onClick={() => this.handleFileClick(file, project)} onContextMenu={(e) => this.handleFileRightClick(e, file)}>
                                                             {file}
                                                         </IndividualFile>
                                                     ))}
-
-
                                                     <IndividualFile theme={theme} selected={false} onClick={() => this.addNewFile("h")}>
                                                         <FileItemIcon icon={faFileCirclePlus} />
-
                                                         {LocalizedString.lookup(tr('Add File'), this.props.locale)}
                                                     </IndividualFile>
                                                 </FileContainer>
@@ -951,7 +815,6 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                                                         key={`src-${i}`}
                                                         theme={theme}
                                                         selected={this.selectedFileRefFE.current === file}
-
                                                         onClick={() => this.handleFileClick(file, project)} onContextMenu={(e) => this.handleFileRightClick(e, file)}>
                                                         {file}
                                                     </IndividualFile>
@@ -987,44 +850,33 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                                             </FileContainer>
                                         </FileTypeItem>
                                     </FileTypeContainer>
-
-                                )
-
-                                }
-
+                                )}
                             </Container>
-
                         ))}
                     </ul>
                 </ProjectContainer>
             </div>
         )
-
     }
 
     render() {
         const { props } = this;
         const {
-
             theme,
             locale,
             propUsers,
         } = props;
 
         const {
-
             selectedSection,
             showProjectContextMenu,
             showUserContextMenu,
             showFileContextMenu
         } = this.state;
-        console.log("render() propUsers:", propUsers);
 
         const userSections = (propUsers || []).map((user: string) => {
-            //console.log("Rendering user:", user);
             const projects = this.props.propUserData || [];
-            console.log("userSections projects: ", projects);
-            console.log("this.state.selectedSection: ", this.state.selectedSection);
+
             return (
                 <SectionsColumn theme={theme} key={user}>
                     <SectionName
@@ -1037,21 +889,16 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                         {LocalizedString.lookup(tr(user), locale)}
                     </SectionName>
                     {selectedSection === user && this.state.showProjects && this.renderProjects(projects)}
-
                 </SectionsColumn>
             );
         });
-
-
-
 
         return (
             <div onClick={this.closeContextMenu}>
                 <SidePanel
                     theme={theme}
                     style={{
-                        flex: 1, // Pass flex dynamically from the parent
-
+                        flex: 1,
                         overflowY: 'hidden',
                     }}
                 >
@@ -1059,13 +906,10 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                     <UsersContainer theme={theme}>
                         {userSections}
                     </UsersContainer>
-
-
                 </SidePanel>
                 {showUserContextMenu && this.renderUserContextMenu()}
                 {showProjectContextMenu && this.renderProjectContextMenu()}
                 {showFileContextMenu && this.renderFileContextMenu()}
-
             </div >
         );
     }

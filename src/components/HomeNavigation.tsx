@@ -1,16 +1,16 @@
 import * as React from 'react';
+import MainMenu from '../components/MainMenu';
+import LeftBar from '../components/LeftBar';
+import LocalizedString from '../util/LocalizedString';
+import ProgrammingLanguage from '../ProgrammingLanguage';
 import { DARK, ThemeProps, LIGHT, Theme } from '../components/theme';
 import { StyleProps } from '../style';
 import { styled } from 'styletron-react';
-import MainMenu from '../components/MainMenu';
-import LeftBar from '../components/LeftBar';
 import { RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-import LocalizedString from '../util/LocalizedString';
 import { State as ReduxState } from '../state';
-import ProgrammingLanguage from '../ProgrammingLanguage';
-
+import { Project } from '../types/projectTypes';
 
 export interface HomeNavigationPublicProps extends RouteComponentProps, ThemeProps, StyleProps {
   propedUsers?: string[];
@@ -31,28 +31,26 @@ interface HomeNavigationState {
   isReloadFiles: boolean;
   isLoadUserFiles?: boolean;
   isClickFile: boolean;
-  selectedProject: string;
-  fileName: string;
-  userName: string;
-  activeLanguage: ProgrammingLanguage;
-  projectName: string;
-  fileType?: string;
-
-  contextMenuUser_?: string;
   deleteUserFlag?: boolean;
   rootDeleteUserFlag?: boolean;
   rootDownloadUserFlag?: boolean;
-
-  contextMenuProject_?: Project;
   deleteProjectFlag?: boolean;
   rootDeleteProjectFlag?: boolean;
   rootDownloadProjectFlag?: boolean;
-
-  contextMenuFile_?: string;
   deleteFileFlag?: boolean;
   rootDeleteFileFlag?: boolean;
   rootDownloadFileFlag?: boolean;
 
+  selectedProject: string;
+  fileName: string;
+  userName: string;
+  projectName: string;
+  fileType?: string;
+  contextMenuUser_?: string;
+  contextMenuFile_?: string;
+  activeLanguage: ProgrammingLanguage;
+
+  contextMenuProject_?: Project;
 
   updatedUsers: [];
   loadedUserData?: Project[];
@@ -60,16 +58,6 @@ interface HomeNavigationState {
   theme: Theme;
 
 }
-type Project = {
-  projectName: string;
-  binFolderFiles: string[];
-  includeFolderFiles: string[];
-  srcFolderFiles: string[];
-  dataFolderFiles: string[];
-  projectLanguage: ProgrammingLanguage;
-}
-
-
 
 type Props = HomeNavigationPublicProps & HomeNavigationPrivateProps;
 type State = HomeNavigationState;
@@ -91,7 +79,7 @@ const LeftBarContainer = styled('div', (props: ThemeProps) => ({
   alignItems: 'left',
   justifyContent: 'center',
   width: '100vh',
-  
+
   backgroundColor: props.theme.backgroundColor,
   color: props.theme.color,
 }));
@@ -121,158 +109,30 @@ class HomeNavigation extends React.PureComponent<Props, State> {
 
   }
 
-  componentDidMount(): void {
-    console.log('Inside componentDidMount in HomeNavigation.tsx with state:', this.state);
-
-
-  }
-
-  async initializeRepo() {
-
-  }
   componentDidUpdate = async (prevProps: Props, prevState: State) => {
-    console.log('Inside componentDidUpdate in HomeNavigation.tsx with state:', this.state);
 
     if (prevState.isAddNewFile !== this.state.isAddNewFile) {
-      console.log("HomeNav compDidUpdate prevState isAddNewFile is different -> Need to reload Files in FileExplorer");
       this.setState({ isReloadFiles: true });
     }
     if (prevState.userName !== this.state.userName) {
-      console.log("HomeNav compDidUpdate userName changed to:", this.state.userName);
       this.setState({
         isLoadUserFiles: false
-      }, () => {
-        console.log("HomeNav compDidUpdate isLoadUserFiles: ", this.state.isLoadUserFiles);
       })
     }
   }
 
-  private toggleLeftBar_ = () => {
-    this.setState((prevState) => ({
-      isleftbaropen__: !prevState.isleftbaropen__,
-      isPanelVisible: !prevState.isPanelVisible,
-    }));
-  };
-
-  private onProjectSelected = (userName: string, projectName: string, fileName: string, activeLanguage: ProgrammingLanguage, fileType: string) => {
-    console.log("Selected project:", projectName);
-    console.log("Selected file:", fileName);
-    console.log("Selected language:", activeLanguage);
-    console.log("onProjectSelected selected fileType:", fileType);
-
-    console.log("onProjectSelected current state:", this.state);
-    console.log("previous state fileName:", this.state.fileName);
-
-
-    this.setState({
-      userName,
-      projectName,
-      fileName: fileName,
-      activeLanguage: activeLanguage,
-      selectedProject: projectName
-    }, () => {
-      console.log('Inside onProjectSelected in HomeNavigation.tsx with state:', this.state);
-    });
-
-  };
-
-  private onFileSelected = (selectedUserName: string, selectedProjectName: string, selectedFileName: string, selectedLanguage: ProgrammingLanguage, selectedFileType: string) => {
-    console.log("onFileSelected Selected project:", selectedProjectName);
-    console.log("onFileSelected Selected file:", selectedFileName);
-    console.log("onFileSelected Selected language:", selectedLanguage);
-    console.log("onFileSelected Selected fileType:", selectedFileType);
-
-    console.log("onFileSelected current state:", this.state);
-    console.log("onFileSelected previous state fileName:", this.state.fileName);
-
-    this.setState({
-      userName: selectedUserName,
-      projectName: selectedProjectName,
-      fileName: selectedFileName,
-      activeLanguage: selectedLanguage,
-      fileType: selectedFileType,
-      isClickFile: true
-    }, () => {
-      console.log('Inside onFileSelected in HomeNavigation.tsx with state:', this.state);
-    });
-
-  };
-
-  private onChangeProjectName_ = (projectName: string) => {
-
-    console.log("onChangeProjectName_ projectName:", projectName);
-    this.setState({
-      projectName
-    });
-  }
-  private onAddNewProject_ = (userName: string) => {
-
-    console.log("homeNavigation onAddNewProject_ passed userName:", userName);
-    console.log("homeNav onAddNewProject_ state: ", this.state);
-
-    this.setState({
-      isAddNewProject: true,
-      userName: userName,
-    });
-
-  };
-
-  private onAddNewFile_ = (userName: string, projectName: string, activeLanguage: ProgrammingLanguage, fileType: string) => {
-    console.log("homeNavigation onAddNewFile_ passed userName:", userName);
-    console.log("homeNavigation onAddNewFile_ passed projectName:", projectName);
-    console.log("homeNavigation onAddNewFile_ passed activeLanguage:", activeLanguage);
-    console.log("homeNavigation onAddNewFile_ passed fileType: ", fileType);
-    this.setState({
-      isAddNewFile: true,
-      userName: userName,
-      activeLanguage: activeLanguage,
-      projectName: projectName,
-      fileType: fileType
-    });
-  };
-
-  private setAddNewProject_ = (isAddNewProject: boolean) => {
-    this.setState({
-      isAddNewProject: isAddNewProject
-    });
-
-    console.log("setAddNewProject_ isAddNewProject:", isAddNewProject);
-  }
-
-  private setAddNewFile_ = (isAddNewFile: boolean) => {
-    this.setState({
-      isAddNewFile: isAddNewFile
-    });
-
-    console.log("setAddNewFile_ isAddNewFile:", isAddNewFile);
-  }
-
-  private setClickFile_ = (isClickFile: boolean) => {
-    this.setState({
-      isClickFile: isClickFile
-    });
-
-    if (isClickFile == false) {
-      this.setState({
-        fileName: ''
-      })
-    }
-    console.log("setClickFile_ isClickFile:", isClickFile);
-  }
-
+  /**
+     * Sets the isLoadUserFiles flag based on the user selected
+     * @param userName - The username of the user
+     * @param loadUserData - A boolean value to set the state isLoadUserFiles
+     */
   private onUserSelected = (userName: string, loadUserData: boolean) => {
-    console.log("HomeNav onUserSelected previous username:", this.state.userName);
-    console.log("HomeNav onUserSelected: ", userName);
     try {
       if (this.state.userName != userName) {
         this.setState({
           isLoadUserFiles: false
-        }, () => {
-          console.log("HomeNav onUserSelected changed isLoadUserFiles flag to:", this.state.isLoadUserFiles);
         })
       }
-
-
     }
     catch (error) {
       console.error(error);
@@ -283,8 +143,6 @@ class HomeNavigation extends React.PureComponent<Props, State> {
       this.setState({
         userName,
         isLoadUserFiles: loadUserData
-      }, () => {
-        console.log("HomeNav onUserSelected new userName:", this.state.userName);
       });
     }
     catch (error) {
@@ -293,43 +151,242 @@ class HomeNavigation extends React.PureComponent<Props, State> {
 
   };
 
+  /**
+   * Receives the updated list of users and sets the state updatedUsers
+   * @param users - The list of users
+   */
   private onUserUpdate_ = (users: []) => {
-    console.log("HomeNav onUserUpdate users:", users);
     this.setState({
       updatedUsers: users
     })
-  }
+  };
 
+  /**
+   * Sets the state loadedUserData based on the list of projects
+   * @param userData - The list of projects
+   */
   private onLoadUserData_ = (userData: Project[]) => {
-
-    console.log("HomeNav onLoadUserData_ userData: ", userData);
     this.setState({
       loadedUserData: userData
     })
-  }
+  };
 
+  /**
+ * Sets the Root state's deleteUserFlag based on the user selected to be deleted
+ * @param user - The username of the user
+ * @param deleteUserFlag - A boolean value to set the state deleteUserFlag
+ */
   private onDeleteUser_ = (user: string, deleteUserFlag: boolean) => {
-
-    console.log("HomeNav onDeleteUser_ user: ", user, "with deleteUserFlag: ", deleteUserFlag);
     this.setState({
       contextMenuUser_: user,
       rootDeleteUserFlag: deleteUserFlag
     })
-  }
+  };
 
+  /**
+   * Sets the Root state's downloadUserFlag based on the user selected to be downloaded
+   * @param user - The username of the user
+   */
+  private onDownloadUser_ = (user: string) => {
+    this.setState({
+      contextMenuUser_: user,
+      rootDownloadUserFlag: true
+    })
+  };
+
+  /**
+   * Sets the Root state's deleteUserFlag to given boolean value
+   * @param deleteUserFlag - A boolean value to set the state deleteUserFlag
+   */
+  private onSetUserDownloadFlag_ = (downloadUserFlag: boolean) => {
+    this.setState({
+      rootDownloadUserFlag: downloadUserFlag,
+      contextMenuUser_: undefined
+    })
+  };
+
+  /**
+   * Sets the Root state's deleteUserFlag to given boolean value
+   * @param deleteUserFlag - A boolean value to set the state deleteUserFlag
+   */
+  private onSetUserDeleteFlag_ = (deleteUserFlag: boolean) => {
+    this.setState({
+      rootDeleteUserFlag: deleteUserFlag,
+      contextMenuUser_: undefined
+    })
+  };
+
+  /**
+   * Sets the state based on the project selected from File Explorer
+   * @param userName - The username of the user
+   * @param projectName - The name of the project
+   * @param fileName - The name of the file
+   * @param activeLanguage - The programming language of the project
+   * @param fileType - The type of file (header, source, data)
+   */
+  private onProjectSelected = (userName: string, projectName: string, fileName: string, activeLanguage: ProgrammingLanguage) => {
+
+    this.setState({
+      userName,
+      projectName,
+      fileName: fileName,
+      activeLanguage: activeLanguage,
+      selectedProject: projectName
+    });
+
+  };
+
+  /**
+   * Sets the state based on the project name
+   * @param projectName - The name of the project
+   */
+  private onChangeProjectName_ = (projectName: string) => {
+    this.setState({
+      projectName
+    });
+  };
+
+  /**
+   * Sets the state userName based on the user selected and sets isAddNewProject flag to true
+   * @param userName - The username of the user
+   */
+  private onAddNewProject_ = (userName: string) => {
+    this.setState({
+      isAddNewProject: true,
+      userName: userName,
+    });
+
+  };
+
+  /**
+   * Resets isAddNewProject flag to given boolean value
+   * @param isAddNewProject - A boolean value to set the state isAddNewProject
+   */
+  private setAddNewProject_ = (isAddNewProject: boolean) => {
+    this.setState({
+      isAddNewProject: isAddNewProject
+    });
+  };
+
+  /**
+   * Sets the user and project to be deleted based on the user and project selected
+   * @param userName - The username of the user
+   * @param project - The project to be deleted
+   * @param deleteProjectFlag - A boolean value to set the state rootDeleteProjectFlag
+   */
   private onDeleteProject_ = (userName: string, project: Project, deleteProjectFlag: boolean) => {
-
-    console.log("HomeNav onDeleteProject_ project: ", project, "with deleteProjectFlag: ", deleteProjectFlag);
     this.setState({
       userName: userName,
       contextMenuProject_: project,
       rootDeleteProjectFlag: deleteProjectFlag
     })
-  }
+  };
 
+  /**
+   * Sets the user and project to be downloaded based on the user and project selected
+   * @param userName - The username of the user
+   * @param project - The project to be downloaded
+   */
+  private onDownloadProject_ = (userName: string, project: Project) => {
+    this.setState({
+      userName: userName,
+      contextMenuProject_: project,
+      rootDownloadProjectFlag: true
+    })
+  };
+
+  /**
+   * Sets Root's deleteProjectFlag to given boolean value
+   * @param deleteProjectFlag - A boolean value to set the state rootDeleteProjectFlag
+   */
+  private onSetProjectDeleteFlag_ = (deleteProjectFlag: boolean) => {
+    this.setState({
+      rootDeleteProjectFlag: deleteProjectFlag,
+      contextMenuProject_: undefined
+    })
+  };
+
+  /**
+   * Sets Root's downloadProjectFlag to given boolean value
+   * @param downloadProjectFlag - A boolean value to set the state rootDownloadProjectFlag
+   */
+  private onSetProjectDownloadFlag_ = (downloadProjectFlag: boolean) => {
+    this.setState({
+      rootDownloadProjectFlag: downloadProjectFlag,
+      contextMenuProject_: undefined
+    })
+  };
+
+  /**
+   * Sets the state values based on the file selected from File Explorer
+   * @param selectedUserName - The username of the user
+   * @param selectedProjectName - The name of the project
+   * @param selectedFileName - The name of the file
+   * @param selectedLanguage - The programming language of the project
+   * @param selectedFileType - The type of file (header, source, data)
+   */
+  private onFileSelected = (selectedUserName: string, selectedProjectName: string, selectedFileName: string, selectedLanguage: ProgrammingLanguage, selectedFileType: string) => {
+    this.setState({
+      userName: selectedUserName,
+      projectName: selectedProjectName,
+      fileName: selectedFileName,
+      activeLanguage: selectedLanguage,
+      fileType: selectedFileType,
+      isClickFile: true
+    });
+  };
+
+  /**
+   * Sets the state values based on the file to be added and sets isAddNewFile flag to true
+   * @param userName - The username of the user
+   * @param projectName - The name of the project
+   * @param activeLanguage - The programming language of the project
+   * @param fileType - The type of file (header, source, data)
+   */
+  private onAddNewFile_ = (userName: string, projectName: string, activeLanguage: ProgrammingLanguage, fileType: string) => {
+    this.setState({
+      isAddNewFile: true,
+      userName: userName,
+      activeLanguage: activeLanguage,
+      projectName: projectName,
+      fileType: fileType
+    });
+  };
+
+  /**
+   * Sets the state isAddNewFile flag to given boolean value
+   * @param isAddNewFile - A boolean value to set the state isAddNewFile
+   */
+  private setAddNewFile_ = (isAddNewFile: boolean) => {
+    this.setState({
+      isAddNewFile: isAddNewFile
+    });
+  };
+
+  /**
+   * Sets state isClickFile flag to given boolean value
+   * @param isClickFile - A boolean value to set the state isClickFile
+   */
+  private setClickFile_ = (isClickFile: boolean) => {
+    this.setState({
+      isClickFile: isClickFile
+    });
+
+    if (isClickFile == false) {
+      this.setState({
+        fileName: ''
+      })
+    }
+  };
+
+  /**
+   * Sets the state values based on the file to be deleted
+   * @param userName - The username of the user of file to be deleted
+   * @param project - The project to be deleted of file to be deleted
+   * @param file - The file to be deleted
+   * @param deleteFileFlag - A boolean value to set the state rootDeleteFileFlag
+   */
   private onDeleteFile_ = (userName: string, project: string, file: string, deleteFileFlag: boolean) => {
-
-    console.log("HomeNav onDeleteFile_ file: ", file, "with deleteFileFlag: ", deleteFileFlag);
     this.setState({
       userName: userName,
       projectName: project,
@@ -338,30 +395,13 @@ class HomeNavigation extends React.PureComponent<Props, State> {
     })
   }
 
-  private onDownloadUser_ = (user: string) => {
-
-    console.log("HomeNav onDownloadUser_ user: ", user);
-    this.setState({
-      contextMenuUser_: user,
-      rootDownloadUserFlag: true
-
-    })
-  }
-
-  private onDownloadProject_ = (userName: string, project: Project) => {
-
-    console.log("HomeNav onDownloadProject_ project: ", project);
-    this.setState({
-      userName: userName,
-      contextMenuProject_: project,
-      rootDownloadProjectFlag: true
-
-    })
-  }
-
+  /**
+   * 
+   * @param userName - The username of the user of file to be downloaded
+   * @param project - The project of file to be downloaded  
+   * @param file - The file to be downloaded
+   */
   private onDownloadFile_ = (userName: string, project: string, file: string) => {
-
-    console.log("HomeNav onDownloadFile_ file: ", file);
     this.setState({
       userName: userName,
       projectName: project,
@@ -371,78 +411,49 @@ class HomeNavigation extends React.PureComponent<Props, State> {
     })
   }
 
-  private onSetUserDeleteFlag_ = (deleteUserFlag: boolean) => {
-    console.log("HomeNav onSetUserDeleteFlag_ deleteUserFlag: ", deleteUserFlag);
-    this.setState({
-      rootDeleteUserFlag: deleteUserFlag,
-      contextMenuUser_: undefined
-    })
-  }
-
-  private onSetProjectDeleteFlag_ = (deleteProjectFlag: boolean) => {
-    console.log("HomeNav onSetProjectDeleteFlag_ deleteProjectFlag: ", deleteProjectFlag);
-    this.setState({
-      rootDeleteProjectFlag: deleteProjectFlag,
-      contextMenuProject_: undefined
-    })
-  }
-
+  /**
+   * Sets the Root state's deleteFileFlag to given boolean value
+   * @param deleteFileFlag - A boolean value to set the state rootDeleteFileFlag
+   */
   private onSetFileDeleteFlag_ = (deleteFileFlag: boolean) => {
-    console.log("HomeNav onSetFileDeleteFlag_ deleteFileFlag: ", deleteFileFlag);
     this.setState({
       rootDeleteFileFlag: deleteFileFlag,
       contextMenuProject_: undefined
     })
   }
 
-  private onSetUserDownloadFlag_ = (downloadUserFlag: boolean) => {
-    console.log("HomeNav onSetUserDownloadFlag_ downloadUserFlag: ", downloadUserFlag);
-    this.setState({
-      rootDownloadUserFlag: downloadUserFlag,
-      contextMenuUser_: undefined
-    })
-  }
-
-  private onSetProjectDownloadFlag_ = (downloadProjectFlag: boolean) => {
-    console.log("HomeNav onSetProjectDownloadFlag_ downloadProjectFlag: ", downloadProjectFlag);
-    this.setState({
-      rootDownloadProjectFlag: downloadProjectFlag,
-      contextMenuProject_: undefined
-    })
-  }
-
+  /**
+   * Sets the Root state's downloadFileFlag to given boolean value
+   * @param downloadFileFlag - A boolean value to set the state rootDownloadFileFlag
+   */
   private onSetFileDownloadFlag_ = (downloadFileFlag: boolean) => {
-    console.log("HomeNav onSetFileDownloadFlag_ downloadFileFlag: ", downloadFileFlag);
     this.setState({
       rootDownloadFileFlag: downloadFileFlag,
       contextMenuFile_: undefined
     })
   }
 
+  /**
+   * Sets the state fileName based on the file selected
+   * @param fileName - The name of the file
+   */
   private onSetFileName_ = (fileName: string) => {
-    console.log("HomeNav onSetFileName_ fileName: ", fileName);
     this.setState({
       fileName: fileName
     })
   }
 
-  togglePanelVisibility = () => {
-    console.log("Toggled");
-
-
-  };
-
+  /**
+   * Theme change handler
+   * @param theme - The theme to be set
+   */
   private onThemeChange_ = (theme: Theme) => {
-    console.log("HomeNav onThemeChange_ with theme: ", theme);
     this.props.onThemeChange(theme);
-
     this.setState({ theme: theme });
-
-
   }
 
   render() {
-    const { props, state } = this;
+    const { state } = this;
     const {
       activeLanguage,
       fileName,
@@ -473,6 +484,7 @@ class HomeNavigation extends React.PureComponent<Props, State> {
 
     return (
       <HomeNavigationContainer theme={theme}>
+
         <MainMenu theme={theme} />
         <LeftBarContainer theme={theme}>
           <LeftBar theme={theme}

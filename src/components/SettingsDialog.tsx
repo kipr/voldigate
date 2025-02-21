@@ -1,14 +1,14 @@
 import * as React from 'react';
+import ScrollArea from './ScrollArea';
+import tr from '@i18n';
+import LocalizedString from '../util/LocalizedString';
+import ComboBox from './ComboBox';
 import { styled } from 'styletron-react';
 import { Settings } from '../Settings';
 import { StyleProps } from '../style';
 import { Dialog } from './Dialog';
-import ScrollArea from './ScrollArea';
 import { Switch } from './Switch';
-import { ThemeProps, Theme, DARK,LIGHT } from './theme';
-import tr from '@i18n';
-import LocalizedString from '../util/LocalizedString';
-import ComboBox from './ComboBox';
+import { ThemeProps, Theme, DARK, LIGHT } from './theme';
 import { State as ReduxState } from '../state';
 import { I18nAction } from '../state/reducer';
 import { connect } from 'react-redux';
@@ -16,8 +16,8 @@ import { connect } from 'react-redux';
 type SettingsSection = 'user-interface' | 'simulation' | 'editor';
 
 export interface SettingsDialogPublicProps extends ThemeProps, StyleProps {
-  onClose: () => void;
   settings: Settings;
+  onClose: () => void;
   onSettingsChange: (settings: Partial<Settings>) => void;
 }
 
@@ -110,11 +110,8 @@ class SettingsDialog extends React.PureComponent<Props, State> {
     };
   }
 
-
-
   componentDidMount(): void {
     const storedTheme = localStorage.getItem('ideEditorDarkMode');
-    console.log("storedTheme", storedTheme);
     if (storedTheme) {
       this.props.onSettingsChange({ ideEditorDarkMode: storedTheme === 'true' });
     }
@@ -122,24 +119,16 @@ class SettingsDialog extends React.PureComponent<Props, State> {
 
   componentDidUpdate = async (prevProps: Props, prevState: State) => {
 
-    console.log("SettingsDialog compDidUpdate with prevProps: ", prevProps);
-    console.log("SettingsDialog compDidUpdate with prevState: ", prevState);
-
-    console.log("SettingsDialog compDidUpdate with this.props: ", this.props);
-    console.log("SettingsDialog compDidUpdate with this.state: ", this.state);
-
     if (prevProps.settings.ideEditorDarkMode !== this.props.settings.ideEditorDarkMode) {
-      console.log("SettingsDialog compDidUpdate with settings.ideEditorDarkMode: ", this.props.settings.ideEditorDarkMode);
-
-      if(this.props.settings.ideEditorDarkMode){
-        this.setState({storedTheme: DARK});
+      if (this.props.settings.ideEditorDarkMode) {
+        this.setState({ storedTheme: DARK });
       }
       else {
-        this.setState({storedTheme: LIGHT});
+        this.setState({ storedTheme: LIGHT });
       }
     }
+  };
 
-  }
   private setSelectedSection = (selectedSection: SettingsSection) => {
     this.setState({ selectedSection });
   };
@@ -157,7 +146,6 @@ class SettingsDialog extends React.PureComponent<Props, State> {
           value={getValue(currentSettings)}
           onValueChange={(value) => {
             const updatedSettings = getUpdatedSettings(value);
-
             if (updatedSettings.hasOwnProperty('ideEditorDarkMode')) {
               localStorage.setItem('ideEditorDarkMode', updatedSettings.ideEditorDarkMode ? 'true' : 'false');
             }

@@ -1,28 +1,26 @@
-
+import * as React from 'react';
+import tr from '@i18n';
+import LocalizedString from '../util/LocalizedString';
+import ComboBox from './ComboBox';
+import Form from './Form';
+import axios from 'axios';
+import ProgrammingLanguage from 'ProgrammingLanguage';
 import { ThemeProps } from './theme';
 import { StyleProps } from '../style';
 import { Fa } from './Fa';
-import tr from '@i18n';
-import LocalizedString from '../util/LocalizedString';
-import * as React from 'react';
-import ComboBox from './ComboBox';
 import { styled } from 'styletron-react';
 import { Dialog } from './Dialog';
 import { State as ReduxState } from '../state';
 import { I18nAction } from '../state/reducer';
 import { connect } from 'react-redux';
-import Form from './Form';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import axios from 'axios';
 import { Editor } from './Editor';
-import ProgrammingLanguage from 'ProgrammingLanguage';
 import { DEFAULT_SETTINGS, Settings } from '../Settings';
 import { Modal } from '../pages/Modal';
 
 export interface NewFileDialogPublicProps extends ThemeProps, StyleProps {
 
   showRepeatUserDialog: boolean;
-
   language: ProgrammingLanguage;
   otherFileType?: string;
   projectName: string;
@@ -31,16 +29,7 @@ export interface NewFileDialogPublicProps extends ThemeProps, StyleProps {
   onEditorPageOpen: () => void;
   onCloseNewFileDialog: (newFileName: string, fileType: string) => void;
 }
-export enum Type {
-  Robot = 'robot',
-}
-export interface Robot {
-  type: Type.Robot;
-  language: ProgrammingLanguage;
-  onLanguageChange: (language: ProgrammingLanguage) => void;
-  code: string;
-  onCodeChange: (code: string) => void;
-}
+
 interface NewFileDialogPrivateProps {
   locale: LocalizedString.Language;
   onLocaleChange: (locale: LocalizedString.Language) => void;
@@ -49,18 +38,16 @@ interface NewFileDialogPrivateProps {
 
 interface NewFileDialogState {
   fileName: string;
-  modal: Modal;
-  settings: Settings;
+  errorMessage: string;
   showRepeatUserDialog: boolean;
   showEditorPage: boolean;
+  modal: Modal;
+  settings: Settings;
   language: ProgrammingLanguage;
-  errorMessage: string;
 }
 
 type Props = NewFileDialogPublicProps & NewFileDialogPrivateProps;
 type State = NewFileDialogState;
-
-
 
 const Container = styled('div', (props: ThemeProps) => ({
   display: 'flex',
@@ -82,7 +69,6 @@ const ErrorMessageContainer = styled('div', (props: ThemeProps) => ({
   height: '40px',
   alignItems: 'center',
   marginTop: '10px',
-
 }));
 
 const ItemIcon = styled(Fa, {
@@ -91,7 +77,6 @@ const ItemIcon = styled(Fa, {
   alignItems: 'center',
   height: '30px'
 });
-
 
 const NewFileContainer = styled('div', (props: ThemeProps) => ({
   display: 'flex',
@@ -111,7 +96,6 @@ const OPTIONS: ComboBox.Option[] = [{
   data: 'txt'
 }];
 
-
 export class NewFileDialog extends React.PureComponent<Props, State> {
 
   private editorRef: React.MutableRefObject<Editor>;
@@ -128,26 +112,17 @@ export class NewFileDialog extends React.PureComponent<Props, State> {
     }
   }
 
-  componentDidMount() {
-    console.log("Inside componentDidMount in NewFileDialog.tsx with state:", this.state);
-    console.log("Inside compondidMount in NewFileDialog.tsx with props:", this.props);
-  }
-
-
   private onFinalize_ = async (values: { [id: string]: string }) => {
 
-    console.log('Inside onFinalizeClick_ in NewFileDialog.tsx with values:', values);
-    console.log('Inside onFinalizeClick_ in NewFileDialog.tsx with props:', this.props);
-
     const { fileName } = values;
-    const {projectName, userName} = this.props;
+    const { projectName, userName } = this.props;
     const specialCharRegex = /[^a-zA-Z0-9 _-]/;
     const isOnlySpaces = !fileName.trim(); // Check if the name is empty or only spaces
 
     try {
 
       let finalDirectory = ''
-      switch(this.props.otherFileType) {
+      switch (this.props.otherFileType) {
         case 'h':
           finalDirectory = `/home/kipr/Documents/KISS/${userName}/${projectName}/include`;
           break;
@@ -162,10 +137,8 @@ export class NewFileDialog extends React.PureComponent<Props, State> {
 
       }
       const projectData = await axios.get('/get-all-file-names', { params: { dirPath: `${finalDirectory}` } });
-      console.log("NewFileDialog projectData: ", projectData);
 
       if (projectData.data.fileNames.some(name => name.includes(fileName))) {
-        console.log("Project contains file with similar name");
         this.setState({ errorMessage: 'File name already exists. Please choose a different name.' });
         return;
       }
@@ -210,11 +183,9 @@ export class NewFileDialog extends React.PureComponent<Props, State> {
 
     } = props;
 
-
     const { errorMessage } = state;
     const CREATE_NEW_FILE_FORM_ITEMS: Form.Item[] = [
       Form.fileName('fileName', 'File Name')
-
     ];
 
     return (
@@ -257,6 +228,6 @@ export default connect((state: ReduxState) => ({
   locale: state.i18n.locale
 }), dispatch => ({
   onLocaleChange: (locale: LocalizedString.Language) => dispatch(I18nAction.setLocale({ locale })),
- 
+
 }))(NewFileDialog) as React.ComponentType<NewFileDialogPublicProps>;
 

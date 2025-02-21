@@ -1,6 +1,3 @@
-
-
-
 export interface ButtonColor {
   disabled: string;
   standard: string;
@@ -78,11 +75,12 @@ export const DARKMODE_NO: ButtonColor = Object.freeze({
 export interface Theme {
   themeName: string;
 
-
   foreground: 'white' | 'black';
-  tester: string;
+  color: string;
   backgroundColor: string;
-  transparentBackgroundColor: (a: number) => string;
+  iconColor: string;
+  whiteText: string;
+
   titleBarBackground: string;
   fileContainerBackground: string;
   leftBarContainerBackground: string;
@@ -96,21 +94,15 @@ export interface Theme {
   selectedFileBackground: string;
   hoverFileBackground: string;
   hoverOptionBackground: string;
-  whiteText: string;
+
   dialogBoxTitleBackground: string;
   unselectedBackground: string;
-  runButtonColor: ButtonColor;
+  contextMenuBackground: string;
 
+  runButtonColor: ButtonColor;
   yesButtonColor: ButtonColor;
   noButtonColor: ButtonColor;
 
-  contextMenuBackground: string;
-
-
-
-
-
-  color: string;
   borderColor: string;
   borderRadius: number;
   widget: {
@@ -128,7 +120,7 @@ export interface Theme {
     }
   };
 
-  iconColor: string;
+  transparentBackgroundColor: (a: number) => string;
   lighten: (frac: number) => string;
   darken: (frac: number) => string;
 }
@@ -150,7 +142,6 @@ export const COMMON: Theme = {
   leftBarContainerBackground: undefined,
   editorPageBackground: undefined,
   editorConsoleBackground: undefined,
-  tester: undefined,
   editorBackground: undefined,
   yesButtonColor: undefined,
   noButtonColor: undefined,
@@ -262,9 +253,6 @@ export const DARK: Theme = {
   yesButtonColor: DARKMODE_YES,
   noButtonColor: DARKMODE_NO,
   runButtonColor: GREEN,
-
-
-
 
   transparentBackgroundColor: (a) => `rgba(${0x21}, ${0x21}, ${0x21}, ${a})`,
   switch: {

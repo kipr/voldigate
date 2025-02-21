@@ -1,15 +1,15 @@
 import * as React from 'react';
+import KIPR_LOGO_BLACK from '../assets/KIPR-Logo-Black-Text-Clear-Large.png';
+import KIPR_LOGO_WHITE from '../assets/KIPR-Logo-White-Text-Clear-Large.png';
+import LocalizedString from '../util/LocalizedString';
+import ExtraMenu from './ExtraMenu';
+import AboutDialog from './AboutDialog';
 import { styled } from 'styletron-react';
 import { StyleProps } from '../style';
 import { ThemeProps } from './theme';
 import { connect } from 'react-redux';
 import { State as ReduxState } from '../state';
-import KIPR_LOGO_BLACK from '../assets/KIPR-Logo-Black-Text-Clear-Large.png';
-import KIPR_LOGO_WHITE from '../assets/KIPR-Logo-White-Text-Clear-Large.png';
-import LocalizedString from '../util/LocalizedString';
-import ExtraMenu from './ExtraMenu';
 import { Modal } from '../pages/Modal';
-import AboutDialog from './AboutDialog';
 
 export interface MenuPublicProps extends StyleProps, ThemeProps { }
 
@@ -86,24 +86,9 @@ export class MainMenu extends React.Component<Props, State> {
     }
   }
 
-  componentDidMount(): void {
-    console.log("MainMenu compDidMount props: ", this.props);
-    console.log("MainMenu compDidMount state: ", this.state);
-  }
-
-  componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<MenuState>, snapshot?: any): void {
-    console.log("MainMenu compDidUpdate prevProps: ", prevProps);
-    console.log("MainMenu compDidUpdate props: ", this.props);
-    console.log("MainMenu compDidUpdate prevState: ", prevState);
-    console.log("MainMenu compDidUpdate state: ", this.state);
-
-
-  }
-
   private onDocumentationClick_ = () => {
     window.open("https://www.kipr.org/doc/index.html");
   };
-
 
   private onModalClick_ = (modal: Modal) => () => this.setState({ modal });
 

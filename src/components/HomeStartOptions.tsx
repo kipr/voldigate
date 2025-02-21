@@ -1,32 +1,22 @@
-
-import { styled } from 'styletron-react';
-import { StyleProps } from '../style';
-import { Fa } from './Fa';
-import {ThemeProps } from './theme';
 import CreateUserDialog from './CreateUserDialog';
-import { faBookReader, faFilePen, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import tr from '@i18n';
 import KIPR_LOGO_WHITE from '../assets/KIPR-Logo-White-Text-Clear-Large.png';
 import React from 'react';
 import LocalizedString from '../util/LocalizedString';
-import { DEFAULT_SETTINGS, Settings } from '../Settings';
 import SettingsDialog from './SettingsDialog';
 import OpenUsersDialog from './OpenUsersDialog';
 import ProgrammingLanguage from 'ProgrammingLanguage';
-import { Modal } from '../pages/Modal';
 import OpenFileDialog from './OpenFileDialog';
-
-type Project = {
-    projectName: string;
-    binFolderFiles: string[];
-    includeFolderFiles: string[];
-    srcFolderFiles: string[];
-    dataFolderFiles: string[];
-    projectLanguage: ProgrammingLanguage;
-}
+import { styled } from 'styletron-react';
+import { StyleProps } from '../style';
+import { Fa } from './Fa';
+import { ThemeProps } from './theme';
+import { faBookReader, faFilePen, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { DEFAULT_SETTINGS, Settings } from '../Settings';
+import { Modal } from '../pages/Modal';
+import { Project } from '../types/projectTypes';
 
 export interface HomeStartOptionsPublicProps extends StyleProps, ThemeProps {
-    onClearConsole: () => void;
     activeLanguage: ProgrammingLanguage;
     onEditorPageOpen: () => void;
     onChangeProjectName: (projectName: string) => void;
@@ -35,6 +25,7 @@ export interface HomeStartOptionsPublicProps extends StyleProps, ThemeProps {
     onLoadUsers: () => Promise<string[]>;
     onLoadUserData: (openedUserDialog: boolean, desiredUser: string) => Promise<Project[]>;
     onOpenFile: (userName: string, projectName: string, fileName: string, projectLanguage: string) => void;
+    onClearConsole: () => void;
 }
 
 interface HomeStartOptionsPrivateProps {
@@ -45,15 +36,12 @@ interface HomeStartOptionsState {
     modal: Modal;
     language: ProgrammingLanguage;
     settings: Settings;
-
 }
 
 type Props = HomeStartOptionsPublicProps & HomeStartOptionsPrivateProps;
 type State = HomeStartOptionsState;
 
-
 const Container = styled('div', (props: ThemeProps) => ({
-
     color: props.theme.color,
     width: '50%',
     height: '80%',
@@ -65,9 +53,6 @@ const Container = styled('div', (props: ThemeProps) => ({
     poisition: 'relative',
     flexDirection: 'column',
     zIndex: 1,
-
-
-
 }));
 
 const HomeStartContainer = styled('div', (props: ThemeProps) => ({
@@ -85,12 +70,7 @@ const HomeStartContainer = styled('div', (props: ThemeProps) => ({
     flexDirection: 'column',
     zIndex: 1,
     boxShadow: '0px 10px 13px -6px rgba(0, 0, 0, 0.2), 0px 20px 31px 3px rgba(0, 0, 0, 0.14), 0px 8px 38px 7px rgba(0, 0, 0, 0.12)'
-
-
-
 }));
-
-
 
 const StartContainer = styled('div', (props: ThemeProps) => ({
     backgroundColor: props.theme.startContainerBackground,
@@ -107,8 +87,6 @@ const StartContainer = styled('div', (props: ThemeProps) => ({
     flexDirection: 'column',
     zIndex: 4,
     boxShadow: '0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 5px 8px 0px rgba(0, 0, 0, 0.14), 0px 1px 14px 0px rgba(0, 0, 0, 0.12)'
-
-
 }));
 
 interface ClickProps {
@@ -131,8 +109,9 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
     ':hover': props.onClick && !props.disabled ? {
         cursor: 'pointer',
         backgroundColor: props.theme.hoverOptionBackground
-      } : {},
+    } : {},
 }));
+
 const Title = styled('div', (props: ThemeProps & ClickProps) => ({
     display: 'flex',
     alignItems: 'start',
@@ -144,6 +123,7 @@ const Title = styled('div', (props: ThemeProps & ClickProps) => ({
     userSelect: 'none',
     transition: 'background-color 0.2s, opacity 0.2s'
 }));
+
 const ItemIcon = styled(Fa, {
     display: 'flex',
     justifyContent: 'center',
@@ -153,14 +133,6 @@ const ItemIcon = styled(Fa, {
     height: '30px'
 });
 
-const ItemIconContainer = styled('div', {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '60px'
-});
-
-
 const LogoContainer = styled('div', (props: ThemeProps) => ({
     position: 'relative',
     top: '10px',
@@ -168,11 +140,9 @@ const LogoContainer = styled('div', (props: ThemeProps) => ({
     flexWrap: 'wrap',
     marginLeft: '10%',
     flexDirection: 'column',
-
     width: '80%',
     height: '40%',
     zIndex: 0,
-
 }));
 
 const Logo = styled('img', (props: ThemeProps) => ({
@@ -182,19 +152,16 @@ const Logo = styled('img', (props: ThemeProps) => ({
     width: '250px',
     height: '250px',
     marginLeft: '6%',
- 
     userSelect: 'none',
     transition: 'background-color 0.2s, opacity 0.2s'
 }));
+
 const IDEName = styled('div', (props: ThemeProps) => ({
     position: 'relative',
-
     display: 'flex',
-
     marginLeft: '5%',
-    marginTop: '17%',    
+    marginTop: '17%',
     flexDirection: 'row',
-
     fontFamily: "bebas-neue-pro-semiexpanded, sans-serif",
     fontStyle: 'normal',
     fontWeight: 600,
@@ -204,35 +171,21 @@ const IDEName = styled('div', (props: ThemeProps) => ({
     zIndex: 0,
 }));
 
-
-
 export class HomeStartOptions extends React.Component<Props, State> {
     static username: string;
 
     constructor(props: Props) {
         super(props);
-
         this.state = {
             modal: Modal.NONE,
             settings: DEFAULT_SETTINGS,
             language: props.activeLanguage
 
         }
-
-        console.log("HomeStartOptions constructor language: ", this.state.language);
-    }  
-
-    componentDidMount(): void {
-        console.log("HomeStartOptions mount with theme: ", this.props.theme);
     }
 
-
-    componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<HomeStartOptionsState>, snapshot?: any): void {
-        console.log("HomeStartOptions compDidUpdate prevProps: ", prevProps);
-    }
     handleNewFileClick = () => {
         this.props.onEditorPageOpen();
-        // Additional logic for opening the NewFileDialog
     };
 
     private onSettingsChange_ = (changedSettings: Partial<Settings>) => {
@@ -261,12 +214,7 @@ export class HomeStartOptions extends React.Component<Props, State> {
 
         } = this.state;
 
-        console.log("HomeStartOptions render with theme: ", theme);
-
-
         return (
-
-
             <>
                 <Container className={className} style={style} theme={theme}>
                     <LogoContainer theme={theme}>
@@ -279,12 +227,10 @@ export class HomeStartOptions extends React.Component<Props, State> {
                             <Item onClick={this.onModalClick_(Modal.CREATEUSER)} theme={theme}><ItemIcon icon={faUserPlus}></ItemIcon>{LocalizedString.lookup(tr('New User...'), locale)}</Item>
                             <Item onClick={this.onModalClick_(Modal.OPENFILE)} theme={theme}><ItemIcon icon={faFilePen}></ItemIcon>{LocalizedString.lookup(tr('Open File...'), locale)}</Item>
                             <Item onClick={this.onModalClick_(Modal.OPENUSERS)} theme={theme}><ItemIcon style={{ paddingRight: '9%' }} icon={faBookReader}></ItemIcon>{LocalizedString.lookup(tr('Open User...'), locale)}</Item>
-
-
                         </StartContainer>
                     </HomeStartContainer>
-
                 </Container>
+
                 {modal.type === Modal.Type.Settings && (
                     <SettingsDialog
                         theme={theme}
@@ -314,7 +260,7 @@ export class HomeStartOptions extends React.Component<Props, State> {
                         projectLanguage={this.props.activeLanguage}
                     />
                 )}
-                 {modal.type === Modal.Type.OpenFile && (
+                {modal.type === Modal.Type.OpenFile && (
                     <OpenFileDialog
                         theme={theme}
                         onClose={this.onModalClose_}
@@ -327,10 +273,7 @@ export class HomeStartOptions extends React.Component<Props, State> {
                         onOpenFile={this.props.onOpenFile}
                     />
                 )}
-
-
             </>
-
         );
     }
 }

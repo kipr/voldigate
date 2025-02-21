@@ -1,4 +1,8 @@
 import * as React from 'react';
+import SettingsDialog from './SettingsDialog';
+import LocalizedString from '../util/LocalizedString';
+import ProgrammingLanguage from 'ProgrammingLanguage';
+import Root from './Root';
 import { styled } from 'styletron-react';
 import { StyleProps } from '../style';
 import { Fa } from './Fa';
@@ -6,19 +10,21 @@ import { DARK, ThemeProps, LIGHT, Theme } from './theme';
 import { faCog, faFolderTree } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { DEFAULT_SETTINGS, Settings } from '../Settings';
-import SettingsDialog from './SettingsDialog';
 import { State as ReduxState } from '../state';
 import { Modal } from '../pages/Modal';
-import LocalizedString from '../util/LocalizedString';
 import { Size } from './Widget';
 import { FileExplorer } from './FileExplorer';
-import ProgrammingLanguage from 'ProgrammingLanguage';
 import { Slider } from './Slider';
-import Root from './Root';
+
 
 export interface LeftBarPublicProps extends StyleProps, ThemeProps {
-
+  propedAddProjectFlag: boolean;
+  propedAddFileFlag: boolean;
+  propedUserDeleteFlag: boolean;
+  propedReloadFilesFlag: boolean;
   propedSelectedProjectName: string;
+  propedUsers: string[];
+  propedUserData: Project[];
   propedOnProjectSelected: (userName: string, projectName: string, fileName: string, activeLanguage: ProgrammingLanguage, fileType: string) => void;
   propedOnFileSelected: (userName: string, projectName: string, fileName: string, language: ProgrammingLanguage, fileType: string) => void;
   propedOnUserSelected: (userName: string, loadUserData: boolean) => void;
@@ -30,51 +36,40 @@ export interface LeftBarPublicProps extends StyleProps, ThemeProps {
   propedOnDownloadUser: (userName: string) => void;
   propedOnDownloadProject: (userName: string, project: Project) => void;
   propedOnDownloadFile: (userName: string, projectName: string, fileName: string) => void;
-  propedAddProjectFlag: boolean;
-  propedAddFileFlag: boolean;
-  propedUserDeleteFlag: boolean;
-  propedReloadFilesFlag: boolean;
-  propedUsers: string[];
-  propedUserData: Project[];
-
-
 
   rootSelectedProject: string;
-  rootIsLeftBarOpen: boolean;
   rootFileName: string;
   rootProjectName: string;
-  rootActiveLanguage: ProgrammingLanguage;
   rootUserName: string;
   rootContextMenuUser: string;
-  rootContextMenuProject: Project;
   rootContextMenuFile: string;
+  rootOtherFileType: string;
+  rootIsLeftBarOpen: boolean;
   rootAddNewProject: boolean;
   rootAddNewFile: boolean;
   rootClickFile: boolean;
-  rootOtherFileType: string;
-  rootSetAddNewProject: (addNewProject: boolean) => void;
-  rootSetAddNewFile: (addNewFile: boolean) => void;
-  rootSetClickFile: (clickFile: boolean) => void;
-  rootSetFileName_: (fileName: string) => void;
-  rootChangeProjectName: (projectName: string) => void;
-  rootOnUserUpdate: (users: string[]) => void;
   rootLoadUserDataFlag: boolean;
-  rootOnLoadUserData: (project: Project[]) => void;
   rootDeleteUserFlag: boolean;
   rootDeleteProjectFlag: boolean;
   rootDeleteFileFlag: boolean;
   rootDownloadUserFlag: boolean;
   rootDownloadProjectFlag: boolean;
   rootDownloadFileFlag: boolean;
-
+  rootActiveLanguage: ProgrammingLanguage;
+  rootContextMenuProject: Project;
+  rootSetAddNewProject: (addNewProject: boolean) => void;
+  rootSetAddNewFile: (addNewFile: boolean) => void;
+  rootSetClickFile: (clickFile: boolean) => void;
+  rootSetFileName_: (fileName: string) => void;
+  rootChangeProjectName: (projectName: string) => void;
+  rootOnUserUpdate: (users: string[]) => void;
+  rootOnLoadUserData: (project: Project[]) => void;
   rootSetDeleteUserFlag: (deleteUserFlag: boolean) => void;
   rootSetDeleteProjectFlag: (deleteProjectFlag: boolean) => void;
   rootSetDeleteFileFlag: (deleteFileFlag: boolean) => void;
   rootSetDownloadUserFlag: (downloadUserFlag: boolean) => void;
   rootSetDownloadProjectFlag: (downloadProjectFlag: boolean) => void;
   rootSetDownloadFileFlag: (downloadFileFlag: boolean) => void;
-
-
   onThemeChange: (theme: Theme) => void;
 }
 
@@ -103,17 +98,6 @@ type Project = {
 
 type Props = LeftBarPublicProps & LeftBarPrivateProps;
 type State = LeftBarState;
-const sizeDict = (sizes: Size[]) => {
-  const forward: { [type: number]: number } = {};
-
-  for (let i = 0; i < sizes.length; ++i) {
-    const size = sizes[i];
-    forward[size.type] = i;
-  }
-
-  return forward;
-};
-
 
 const Container = styled('div', (props: ThemeProps) => ({
   backgroundColor: props.theme.backgroundColor,
@@ -169,11 +153,7 @@ const LeftBarContainer = styled('div', (props: ThemeProps & ClickProps) => ({
   height: '100vh',
   flexShrink: 0,
   justifyContent: 'space-between',
-
-
   backgroundColor: props.theme.leftBarContainerBackground,
-
-
   borderRight: `2px solid ${props.theme.borderColor}`,
   boxShadow: `5px 0 6px ${props.theme.borderColor}`,
 }));
@@ -185,11 +165,8 @@ const FileExplorerContainer = styled('div', (props: ThemeProps & ClickProps) => 
   overflow: 'visible',
   height: '100%',
   backgroundColor: props.theme.fileContainerBackground,
-
   borderRight: `2px solid ${props.theme.borderColor}`,
 }));
-
-
 
 export class LeftBar extends React.Component<Props, State> {
 
@@ -209,16 +186,8 @@ export class LeftBar extends React.Component<Props, State> {
     this.selectedFileRef = React.createRef();
   }
 
-
   async componentDidUpdate(prevProps: Props, prevState: State) {
-    console.log("LeftBar compDidUpdate prevProps: ", prevProps);
-    console.log("LeftBar compDidUpdate prevState: ", prevState);
-
-    console.log("LeftBar compDidUpdate props: ", this.props);
-    console.log("LeftBar compDidUpdate state: ", this.state);
-
     if (this.state.settings !== prevState.settings) {
-      console.log("LeftBar settings changed: ", this.state.settings);
       if (this.state.settings.ideEditorDarkMode) {
         this.setState({ storedTheme: DARK });
         this.props.onThemeChange(DARK);
@@ -230,6 +199,11 @@ export class LeftBar extends React.Component<Props, State> {
     }
 
   }
+
+  /**
+   * Settings change handler
+   * @param changedSettings - Partial<Settings> - The settings that have been changed
+   */
   private onSettingsChange_ = (changedSettings: Partial<Settings>) => {
     const nextSettings: Settings = {
       ...this.state.settings,
@@ -242,29 +216,23 @@ export class LeftBar extends React.Component<Props, State> {
   private onModalClick_ = (modal: Modal) => () => this.setState({ modal });
   private onModalClose_ = () => this.setState({ modal: Modal.NONE });
 
+  /**
+   * Toggle the visibility of the leftbar
+   */
   private togglePanelVisibility = () => {
-    console.log("LeftBar clicked, triggering toggle");
-
-    // Toggle visibility of FileExplorer
     this.setState((prevState) => {
       const newIsPanelVisible = !prevState.isPanelVisible;
-
       return {
         isPanelVisible: newIsPanelVisible,
-
       };
-    }, () => {
-      console.log("Leftbar sliderSizes: ", this.state.sliderSizes);
     });
 
   };
 
   private setSelectedFileRef_ = (fileName: string) => {
     this.selectedFileRef.current = fileName;
-
-    console.log("LeftBar selectedFileRef: ", this.selectedFileRef.current);
-
   };
+
   render() {
     const { className, theme } = this.props;
 
@@ -334,7 +302,6 @@ export class LeftBar extends React.Component<Props, State> {
 
     } = this.state;
 
-    console.log("LeftBar render theme: ", theme);
     let rootContent: JSX.Element;
     rootContent = (
       <div style={{ height: '80%', flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
@@ -448,7 +415,7 @@ export class LeftBar extends React.Component<Props, State> {
           isVertical={true}
           theme={storedTheme}
           minSizes={[50, 0]}
-          sizes={this.state.sliderSizes} 
+          sizes={this.state.sliderSizes}
           visible={[isPanelVisible, true]}
 
         >

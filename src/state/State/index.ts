@@ -1,11 +1,7 @@
-import { Size } from '../../components/Widget';
 import LocalizedString from '../../util/LocalizedString';
-import Dict from '../../Dict';
-import Async from "./Async";
 import Documentation from './Documentation';
 import DocumentationLocation from './Documentation/DocumentationLocation';
-
-
+import { Size } from '../../components/Widget';
 
 export interface DocumentationState {
   documentation: Documentation;
