@@ -16,7 +16,7 @@ export interface DocumentationState {
 
 export namespace DocumentationState {
   export const DEFAULT: DocumentationState = {
-    documentation: SIMULATOR_LIBKIPR_C_DOCUMENTATION as Documentation || Documentation.EMPTY,
+    documentation: IDE_LIBKIPR_C_DOCUMENTATION as Documentation || Documentation.EMPTY,
     locationStack: [],
     size: Size.MINIMIZED,
     language: 'c'

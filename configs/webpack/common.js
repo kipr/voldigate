@@ -139,13 +139,12 @@ module.exports = {
     new HtmlWebpackPlugin({ template: 'index.html.ejs', excludeChunks: ['login'] }),
     new HtmlWebpackPlugin({ template: 'login/login.html.ejs', filename: 'login.html', chunks: ['login'] }),
     new DefinePlugin({
-      SIMULATOR_VERSION: JSON.stringify(require('../../package.json').version),
-      SIMULATOR_GIT_HASH: JSON.stringify(commitHash),
-      SIMULATOR_HAS_CPYTHON: JSON.stringify(dependencies.cpython !== undefined),
-      SIMULATOR_HAS_AMMO: JSON.stringify(dependencies.ammo !== undefined),
-      SIMULATOR_LIBKIPR_C_DOCUMENTATION: JSON.stringify(libkiprCDocumentation),
-      SIMULATOR_I18N: JSON.stringify(i18n),
-      'process.env.COUSHDB_HOST': JSON.stringify('http://192.168.125.1:5984'), // Add environment variables here
+      IDE_VERSION: JSON.stringify(require('../../package.json').version),
+      IDE_GIT_HASH: JSON.stringify(commitHash),
+      IDE_HAS_CPYTHON: JSON.stringify(dependencies.cpython !== undefined),
+      IDE_HAS_AMMO: JSON.stringify(dependencies.ammo !== undefined),
+      IDE_LIBKIPR_C_DOCUMENTATION: JSON.stringify(libkiprCDocumentation),
+      IDE_I18N: JSON.stringify(i18n),
     }),
     new NpmDtsPlugin({
       root: resolve(__dirname, '../../'),
