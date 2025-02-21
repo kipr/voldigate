@@ -9,6 +9,7 @@ import KIPR_LOGO_WHITE from '../assets/KIPR-Logo-White-Text-Clear-Large.png';
 import LocalizedString from '../util/LocalizedString';
 import ExtraMenu from './ExtraMenu';
 import { Modal } from '../pages/Modal';
+import AboutDialog from './AboutDialog';
 
 export interface MenuPublicProps extends StyleProps, ThemeProps { }
 
@@ -16,7 +17,9 @@ interface MenuPrivateProps {
   locale: LocalizedString.Language;
 }
 
-interface MenuState { }
+interface MenuState {
+  modal: Modal;
+ }
 
 type Props = MenuPublicProps & MenuPrivateProps;
 type State = MenuState;
@@ -61,7 +64,7 @@ interface ClickProps {
 
 const ExtraMenuContainer = styled('div', (props: ThemeProps) => ({
   backgroundColor: props.theme.titleBarBackground,
- 
+
   color: props.theme.color,
   top: '20px',
   width: '100%',
@@ -77,6 +80,24 @@ const ExtraMenuContainer = styled('div', (props: ThemeProps) => ({
 export class MainMenu extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
+
+    this.state = {
+      modal: Modal.NONE
+    }
+  }
+
+  componentDidMount(): void {
+    console.log("MainMenu compDidMount props: ", this.props);
+    console.log("MainMenu compDidMount state: ", this.state);
+  }
+
+  componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<MenuState>, snapshot?: any): void {
+    console.log("MainMenu compDidUpdate prevProps: ", prevProps);
+    console.log("MainMenu compDidUpdate props: ", this.props);
+    console.log("MainMenu compDidUpdate prevState: ", prevState);
+    console.log("MainMenu compDidUpdate state: ", this.state);
+
+
   }
 
   private onDocumentationClick_ = () => {
@@ -84,7 +105,7 @@ export class MainMenu extends React.Component<Props, State> {
   };
 
 
-   private onModalClick_ = (modal: Modal) => () => this.setState({ modal });
+  private onModalClick_ = (modal: Modal) => () => this.setState({ modal });
 
   private onDashboardClick_ = (event: React.MouseEvent<HTMLDivElement>) => {
     window.location.href = '/';
@@ -93,6 +114,7 @@ export class MainMenu extends React.Component<Props, State> {
 
   render() {
     const { className, style, locale, theme } = this.props;
+    const {modal} = this.state;
     return (
       <Container className={className} style={style} theme={theme}>
         <Logo theme={theme} src={theme.foreground === 'white' ? KIPR_LOGO_BLACK as string : KIPR_LOGO_WHITE as string} onClick={this.onDashboardClick_} />
@@ -106,7 +128,15 @@ export class MainMenu extends React.Component<Props, State> {
 
           />
         </ExtraMenuContainer>
-    
+
+
+        {modal.type === Modal.Type.About && (
+          <AboutDialog
+            theme={theme}
+            onClose={() => this.setState({ modal: Modal.NONE })}>
+
+          </AboutDialog>
+        )}
 
       </Container>
     );
