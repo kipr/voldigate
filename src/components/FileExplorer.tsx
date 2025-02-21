@@ -449,7 +449,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
 
     renderUserContextMenu() {
         const { contextMenuPosition } = this.state;
-        const {theme} = this.props;
+        const { theme } = this.props;
         if (!contextMenuPosition) return null;
 
         const { x, y, } = contextMenuPosition;
@@ -483,7 +483,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
     }
     renderProjectContextMenu() {
         const { contextMenuPosition } = this.state;
-        const {theme} = this.props;
+        const { theme } = this.props;
         if (!contextMenuPosition) return null;
 
         const { x, y } = contextMenuPosition;
@@ -516,7 +516,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
     }
     renderFileContextMenu() {
         const { contextMenuPosition } = this.state;
-        const {theme} = this.props;
+        const { theme } = this.props;
         if (!contextMenuPosition) return null;
 
         const { x, y } = contextMenuPosition;
@@ -914,30 +914,32 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                                 {this.state.selectedProject === project.projectName && this.state.showProjectFiles && (
                                     console.log('Rendering files for project:', project),
                                     <FileTypeContainer theme={theme} selected={false}>
-                                        <FileTypeItem theme={theme} key={`IncludeFileHeader-${project.projectName}`}>
-                                            <FileTypeTitleContainer theme={theme} >
-                                                Include Files
-                                            </FileTypeTitleContainer>
-                                            <FileContainer theme={theme}>
-                                                {project.includeFolderFiles.map((file, i) => (
-                                                    <IndividualFile
-                                                        key={`include-${i}`}
-                                                        theme={theme}
-                                                        selected={this.selectedFileRefFE.current === file}
+                                        {project.projectLanguage != "python" && (
+                                            <FileTypeItem theme={theme} key={`IncludeFileHeader-${project.projectName}`}>
+                                                <FileTypeTitleContainer theme={theme} >
+                                                    Include Files
+                                                </FileTypeTitleContainer>
+                                                <FileContainer theme={theme}>
+                                                    {project.includeFolderFiles.map((file, i) => (
+                                                        <IndividualFile
+                                                            key={`include-${i}`}
+                                                            theme={theme}
+                                                            selected={this.selectedFileRefFE.current === file}
 
-                                                        onClick={() => this.handleFileClick(file, project)} onContextMenu={(e) => this.handleFileRightClick(e, file)}>
-                                                        {file}
+                                                            onClick={() => this.handleFileClick(file, project)} onContextMenu={(e) => this.handleFileRightClick(e, file)}>
+                                                            {file}
+                                                        </IndividualFile>
+                                                    ))}
+
+
+                                                    <IndividualFile theme={theme} selected={false} onClick={() => this.addNewFile("h")}>
+                                                        <FileItemIcon icon={faFileCirclePlus} />
+
+                                                        {LocalizedString.lookup(tr('Add File'), this.props.locale)}
                                                     </IndividualFile>
-                                                ))}
-
-
-                                                <IndividualFile theme={theme} selected={false} onClick={() => this.addNewFile("h")}>
-                                                    <FileItemIcon icon={faFileCirclePlus} />
-
-                                                    {LocalizedString.lookup(tr('Add File'), this.props.locale)}
-                                                </IndividualFile>
-                                            </FileContainer>
-                                        </FileTypeItem>
+                                                </FileContainer>
+                                            </FileTypeItem>
+                                        )}
 
                                         <FileTypeItem theme={theme} key={`SourceFileHeader-${project.projectName}`}>
                                             <FileTypeTitleContainer theme={theme}>
@@ -1049,7 +1051,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                     theme={theme}
                     style={{
                         flex: 1, // Pass flex dynamically from the parent
-                      
+
                         overflowY: 'hidden',
                     }}
                 >
