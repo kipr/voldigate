@@ -18,7 +18,7 @@ export interface PythonParams {
 }
 
 let python: (params: PythonParams) => Promise<void>;
-if (SIMULATOR_HAS_CPYTHON) {
+if (IDE_HAS_CPYTHON) {
   // This is on a non-standard path specified in the webpack config.
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const PythonEmscripten = require('python.js');
