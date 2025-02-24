@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="dir_8c5e7244493cb1d25858b8249943a4b9" kind="dir">
+    <compoundname>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/compass/public</compoundname>
+    <innerdir refid="dir_13e4a82ff442f7cd7fc81c2c732a212e">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/compass/public/kipr</innerdir>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/compass/public/"/>
+  </compounddef>
+</doxygen>

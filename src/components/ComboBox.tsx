@@ -61,7 +61,7 @@ const OptionContainer = styled('div', (props: ThemeProps & { $selected?: boolean
   userSelect: 'none',
   backgroundColor: props.$selected ? `rgba(255, 255, 255, 0.1)` : undefined,
   ':hover': {
-    backgroundColor: `rgba(255, 255, 255, 0.1)`
+    backgroundColor: props.theme.hoverOptionBackground
   },
   ':last-child': {
     borderBottomLeftRadius: `${props.theme.borderRadius}px`,

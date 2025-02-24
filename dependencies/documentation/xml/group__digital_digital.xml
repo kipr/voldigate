@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="group__digital_digital" kind="page">
+    <compoundname>digital</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>The functions here allow for reading the values of digital sensors. </para>
+<sect1 id="group__digital_1example_digital_touch">
+<title>example_digital_touch</title>
+<para>Assuming that there is a touch sensor plugged into digital port 0, then the following code would move forward until the touch sensor was clicked. <programlisting><codeline><highlight class="normal">#include<sp/>&lt;kipr/wombat.h&gt;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">int<sp/>main(){</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>int<sp/>touch_port_number<sp/>=<sp/>0;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>while<sp/>(digital(touch_port_number)<sp/>!=<sp/>1){</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>move</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>motor(0,<sp/>100);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>motor(1,<sp/>-100);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>//<sp/>stop<sp/>moving</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>ao();</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>return<sp/>0;</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+</programlisting> </para>
+</sect1>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital/public/kipr/digital/digital.h"/>
+  </compounddef>
+</doxygen>

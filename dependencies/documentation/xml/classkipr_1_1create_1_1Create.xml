@@ -1,0 +1,2797 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classkipr_1_1create_1_1Create" kind="class" language="C++" prot="public">
+    <compoundname>kipr::create::Create</compoundname>
+    <includes refid="create_8hpp" local="no">create.hpp</includes>
+      <sectiondef kind="public-type">
+      <memberdef kind="enum" id="classkipr_1_1create_1_1Create_1aa705f92c64f024ca75a4e7be32ff5aa5" prot="public" static="no" strong="no">
+        <type></type>
+        <name>Mode</name>
+        <enumvalue id="classkipr_1_1create_1_1Create_1aa705f92c64f024ca75a4e7be32ff5aa5a9a8ef8921c0eb914995f1697c981c867" prot="public">
+          <name>OffMode</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classkipr_1_1create_1_1Create_1aa705f92c64f024ca75a4e7be32ff5aa5ac37b1b453585b163235b882484432eb9" prot="public">
+          <name>PassiveMode</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classkipr_1_1create_1_1Create_1aa705f92c64f024ca75a4e7be32ff5aa5ab6df5b1b041ef2284c0a034103fd5f06" prot="public">
+          <name>SafeMode</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classkipr_1_1create_1_1Create_1aa705f92c64f024ca75a4e7be32ff5aa5a2e6ccf4636d4ae3dd6e210c6f179aaf9" prot="public">
+          <name>FullMode</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>The &quot;Mode&quot; of the create.<itemizedlist>
+<listitem><para>PassiveMode: No movement allowed.</para>
+</listitem><listitem><para>SafeMode: Movement is allowed, but the <ref refid="classkipr_1_1create_1_1Create" kindref="compound">Create</ref> will stop if it&apos;s safety sensors are activated.</para>
+</listitem><listitem><para>FullMode: All movement is allowed, even if it is considered dangerous. This mode is recommended for Botball. </para>
+</listitem></itemizedlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="239" column="7" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="240" bodyend="245"/>
+      </memberdef>
+      <memberdef kind="enum" id="classkipr_1_1create_1_1Create_1a3159cdaf3d073e5ccd0427210a4e1cf4" prot="public" static="no" strong="no">
+        <type></type>
+        <name>BaudRate</name>
+        <enumvalue id="classkipr_1_1create_1_1Create_1a3159cdaf3d073e5ccd0427210a4e1cf4a68f620224821c445ced99a1690028898" prot="public">
+          <name>Baud57600</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classkipr_1_1create_1_1Create_1a3159cdaf3d073e5ccd0427210a4e1cf4a42528736339c0e4714e22942a69831f9" prot="public">
+          <name>Baud115200</name>
+          <initializer>= 1</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="257" column="7" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="258" bodyend="261"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a36fa5b829cc0245a02b21d10800f7601" prot="private" static="no" mutable="no">
+        <type><ref refid="structkipr_1_1create_1_1CreateState" kindref="compound">CreateState</ref></type>
+        <definition>CreateState kipr::create::Create::m_state</definition>
+        <argsstring></argsstring>
+        <name>m_state</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="564" column="19" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="564" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a15a9b3c240d294ff8da4f89a4f1efb58" prot="private" static="no" mutable="no">
+        <type>unsigned short</type>
+        <definition>unsigned short kipr::create::Create::m_refreshRate</definition>
+        <argsstring></argsstring>
+        <name>m_refreshRate</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="566" column="22" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="566" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a7c1f68cfaf15f43fef2f90e1dbbe9676" prot="private" static="no" mutable="no">
+        <type><ref refid="structkipr_1_1create_1_1CreatePackets_1_1__1" kindref="compound">CreatePackets::_1</ref></type>
+        <definition>CreatePackets::_1 kipr::create::Create::m_1</definition>
+        <argsstring></argsstring>
+        <name>m_1</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="568" column="25" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="568" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1acb41c82c9fd323be6c96990d2e9bb7f3" prot="private" static="no" mutable="no">
+        <type><ref refid="structkipr_1_1create_1_1CreatePackets_1_1__2" kindref="compound">CreatePackets::_2</ref></type>
+        <definition>CreatePackets::_2 kipr::create::Create::m_2</definition>
+        <argsstring></argsstring>
+        <name>m_2</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="569" column="25" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="569" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a9000075a6f9198790ac08eca7874027e" prot="private" static="no" mutable="no">
+        <type><ref refid="structkipr_1_1create_1_1CreatePackets_1_1__3" kindref="compound">CreatePackets::_3</ref></type>
+        <definition>CreatePackets::_3 kipr::create::Create::m_3</definition>
+        <argsstring></argsstring>
+        <name>m_3</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="570" column="25" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="570" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a2693380af95bae6ec3f58ae014665fa2" prot="private" static="no" mutable="no">
+        <type><ref refid="structkipr_1_1create_1_1CreatePackets_1_1__4" kindref="compound">CreatePackets::_4</ref></type>
+        <definition>CreatePackets::_4 kipr::create::Create::m_4</definition>
+        <argsstring></argsstring>
+        <name>m_4</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="571" column="25" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="571" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1aa58fbcfe1b021b3a502cf36809f30032" prot="private" static="no" mutable="no">
+        <type><ref refid="structkipr_1_1create_1_1CreatePackets_1_1__5" kindref="compound">CreatePackets::_5</ref></type>
+        <definition>CreatePackets::_5 kipr::create::Create::m_5</definition>
+        <argsstring></argsstring>
+        <name>m_5</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="572" column="25" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="572" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a2f815122aafae4bddd520316a1019c3f" prot="private" static="no" mutable="no">
+        <type><ref refid="structkipr_1_1create_1_1CreatePackets_1_1__101" kindref="compound">CreatePackets::_101</ref></type>
+        <definition>CreatePackets::_101 kipr::create::Create::m_101</definition>
+        <argsstring></argsstring>
+        <name>m_101</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="573" column="27" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="573" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a3c8ffd0ad545666848c2a8724802afa6" prot="private" static="no" mutable="no">
+        <type>timeval</type>
+        <definition>timeval kipr::create::Create::timestamps[6]</definition>
+        <argsstring>[6]</argsstring>
+        <name>timestamps</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="574" column="15" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="574" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a2e2e33925088bc94df708ad23ea84700" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool kipr::create::Create::have_packet[6]</definition>
+        <argsstring>[6]</argsstring>
+        <name>have_packet</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="575" column="12" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="575" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a382aebb94a0620c71670c9c61d47ddbf" prot="private" static="no" mutable="yes">
+        <type>sensors::PlayButton *</type>
+        <definition>sensors::PlayButton* kipr::create::Create::m_playButton</definition>
+        <argsstring></argsstring>
+        <name>m_playButton</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="579" column="35" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="579" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a75d2e8a03fc8a1772956dc5bc4bf50a4" prot="private" static="no" mutable="yes">
+        <type>sensors::AdvanceButton *</type>
+        <definition>sensors::AdvanceButton* kipr::create::Create::m_advanceButton</definition>
+        <argsstring></argsstring>
+        <name>m_advanceButton</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="580" column="38" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="580" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a2e9b4865cb996b5a3c83e86116673e6f" prot="private" static="no" mutable="yes">
+        <type>sensors::Wall *</type>
+        <definition>sensors::Wall* kipr::create::Create::m_wall</definition>
+        <argsstring></argsstring>
+        <name>m_wall</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="582" column="29" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="582" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a85d0fcb69f034e0739ad5229c7d9a596" prot="private" static="no" mutable="yes">
+        <type>sensors::CliffLeft *</type>
+        <definition>sensors::CliffLeft* kipr::create::Create::m_cliffLeft</definition>
+        <argsstring></argsstring>
+        <name>m_cliffLeft</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="583" column="34" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="583" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a8a6919866055b5d5872fa1bbe1d10b21" prot="private" static="no" mutable="yes">
+        <type>sensors::CliffFrontLeft *</type>
+        <definition>sensors::CliffFrontLeft* kipr::create::Create::m_cliffFrontLeft</definition>
+        <argsstring></argsstring>
+        <name>m_cliffFrontLeft</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="584" column="39" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="584" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1ac519c81b1a11ce1946d1fc16cd3f0cb8" prot="private" static="no" mutable="yes">
+        <type>sensors::CliffFrontRight *</type>
+        <definition>sensors::CliffFrontRight* kipr::create::Create::m_cliffFrontRight</definition>
+        <argsstring></argsstring>
+        <name>m_cliffFrontRight</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="585" column="40" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="585" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a135f5e84020c261715d1a5036c153c79" prot="private" static="no" mutable="yes">
+        <type>sensors::CliffRight *</type>
+        <definition>sensors::CliffRight* kipr::create::Create::m_cliffRight</definition>
+        <argsstring></argsstring>
+        <name>m_cliffRight</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="586" column="35" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="586" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a5d447106038a685f4145b07b268ee48f" prot="private" static="no" mutable="yes">
+        <type>sensors::VirtualWall *</type>
+        <definition>sensors::VirtualWall* kipr::create::Create::m_virtualWall</definition>
+        <argsstring></argsstring>
+        <name>m_virtualWall</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="587" column="36" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="587" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1ae3fc1de85f7e78d53a4b469485192bad" prot="private" static="no" mutable="yes">
+        <type>sensors::WallSignal *</type>
+        <definition>sensors::WallSignal* kipr::create::Create::m_wallSignal</definition>
+        <argsstring></argsstring>
+        <name>m_wallSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="589" column="35" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="589" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a3e999f1e183b8ce22e1213161172f982" prot="private" static="no" mutable="yes">
+        <type>sensors::CliffLeftSignal *</type>
+        <definition>sensors::CliffLeftSignal* kipr::create::Create::m_cliffLeftSignal</definition>
+        <argsstring></argsstring>
+        <name>m_cliffLeftSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="590" column="40" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="590" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1af647611d53f718b336a630b2c7436e13" prot="private" static="no" mutable="yes">
+        <type>sensors::CliffFrontLeftSignal *</type>
+        <definition>sensors::CliffFrontLeftSignal* kipr::create::Create::m_cliffFrontLeftSignal</definition>
+        <argsstring></argsstring>
+        <name>m_cliffFrontLeftSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="591" column="45" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="591" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a17eb4e7ca25a0334c1f54e82cc1e892b" prot="private" static="no" mutable="yes">
+        <type>sensors::CliffFrontRightSignal *</type>
+        <definition>sensors::CliffFrontRightSignal* kipr::create::Create::m_cliffFrontRightSignal</definition>
+        <argsstring></argsstring>
+        <name>m_cliffFrontRightSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="592" column="46" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="592" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a7dec57313b2986ab257e84ac59de0cc3" prot="private" static="no" mutable="yes">
+        <type>sensors::CliffRightSignal *</type>
+        <definition>sensors::CliffRightSignal* kipr::create::Create::m_cliffRightSignal</definition>
+        <argsstring></argsstring>
+        <name>m_cliffRightSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="593" column="41" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="593" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1ae95373a6ede8d91ce19efe18611fc273" prot="private" static="no" mutable="yes">
+        <type>sensors::CargoBayAnalogSignal *</type>
+        <definition>sensors::CargoBayAnalogSignal* kipr::create::Create::m_cargoBayAnalogSignal</definition>
+        <argsstring></argsstring>
+        <name>m_cargoBayAnalogSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="594" column="45" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="594" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a83b271ad7b1399d15f9e1aae3a765c67" prot="private" static="no" mutable="yes">
+        <type>sensors::CargoBayDigitalInputs *</type>
+        <definition>sensors::CargoBayDigitalInputs* kipr::create::Create::m_cargoBayDigitalInputs</definition>
+        <argsstring></argsstring>
+        <name>m_cargoBayDigitalInputs</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="595" column="46" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="595" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1aead596edac765f2184d00dca9ff7bd85" prot="private" static="no" mutable="yes">
+        <type>sensors::LightBumpLeft *</type>
+        <definition>sensors::LightBumpLeft* kipr::create::Create::m_lightBumpLeft</definition>
+        <argsstring></argsstring>
+        <name>m_lightBumpLeft</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="597" column="38" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="597" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a1c7f08e71d9bd6ae153f2ed683e42a41" prot="private" static="no" mutable="yes">
+        <type>sensors::LightBumpFrontLeft *</type>
+        <definition>sensors::LightBumpFrontLeft* kipr::create::Create::m_lightBumpFrontLeft</definition>
+        <argsstring></argsstring>
+        <name>m_lightBumpFrontLeft</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="598" column="43" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="598" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a3fa357b4857c5c33c89f211aaee14c26" prot="private" static="no" mutable="yes">
+        <type>sensors::LightBumpCenterLeft *</type>
+        <definition>sensors::LightBumpCenterLeft* kipr::create::Create::m_lightBumpCenterLeft</definition>
+        <argsstring></argsstring>
+        <name>m_lightBumpCenterLeft</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="599" column="44" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="599" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1aa6419293590b52ec6e94751e3421df52" prot="private" static="no" mutable="yes">
+        <type>sensors::LightBumpCenterRight *</type>
+        <definition>sensors::LightBumpCenterRight* kipr::create::Create::m_lightBumpCenterRight</definition>
+        <argsstring></argsstring>
+        <name>m_lightBumpCenterRight</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="600" column="45" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="600" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a464caba3609d68b61239c0d7e6db32cf" prot="private" static="no" mutable="yes">
+        <type>sensors::LightBumpFrontRight *</type>
+        <definition>sensors::LightBumpFrontRight* kipr::create::Create::m_lightBumpFrontRight</definition>
+        <argsstring></argsstring>
+        <name>m_lightBumpFrontRight</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="601" column="44" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="601" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a66309884d47554d6d04ba7efc29d126e" prot="private" static="no" mutable="yes">
+        <type>sensors::LightBumpRight *</type>
+        <definition>sensors::LightBumpRight* kipr::create::Create::m_lightBumpRight</definition>
+        <argsstring></argsstring>
+        <name>m_lightBumpRight</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="602" column="39" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="602" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a65abc81588fbae7aebc51a1d1a083bc4" prot="private" static="no" mutable="yes">
+        <type>sensors::LightBumpLeftSignal *</type>
+        <definition>sensors::LightBumpLeftSignal* kipr::create::Create::m_lightBumpLeftSignal</definition>
+        <argsstring></argsstring>
+        <name>m_lightBumpLeftSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="604" column="44" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="604" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a56837257644995b56f32167489085de4" prot="private" static="no" mutable="yes">
+        <type>sensors::LightBumpFrontLeftSignal *</type>
+        <definition>sensors::LightBumpFrontLeftSignal* kipr::create::Create::m_lightBumpFrontLeftSignal</definition>
+        <argsstring></argsstring>
+        <name>m_lightBumpFrontLeftSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="605" column="49" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="605" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1adf7bef7d61d92ae4ff211b17fa9e0301" prot="private" static="no" mutable="yes">
+        <type>sensors::LightBumpCenterLeftSignal *</type>
+        <definition>sensors::LightBumpCenterLeftSignal* kipr::create::Create::m_lightBumpCenterLeftSignal</definition>
+        <argsstring></argsstring>
+        <name>m_lightBumpCenterLeftSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="606" column="50" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="606" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a8d154ce2ef024f08f21ae2e0a60b05ae" prot="private" static="no" mutable="yes">
+        <type>sensors::LightBumpCenterRightSignal *</type>
+        <definition>sensors::LightBumpCenterRightSignal* kipr::create::Create::m_lightBumpCenterRightSignal</definition>
+        <argsstring></argsstring>
+        <name>m_lightBumpCenterRightSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="607" column="51" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="607" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a2a3c54d9bd0a28042638d2659f01149b" prot="private" static="no" mutable="yes">
+        <type>sensors::LightBumpFrontRightSignal *</type>
+        <definition>sensors::LightBumpFrontRightSignal* kipr::create::Create::m_lightBumpFrontRightSignal</definition>
+        <argsstring></argsstring>
+        <name>m_lightBumpFrontRightSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="608" column="50" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="608" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1acac76ee89be25212fd2e4d51605e7f65" prot="private" static="no" mutable="yes">
+        <type>sensors::LightBumpRightSignal *</type>
+        <definition>sensors::LightBumpRightSignal* kipr::create::Create::m_lightBumpRightSignal</definition>
+        <argsstring></argsstring>
+        <name>m_lightBumpRightSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="609" column="45" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="609" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a7d4d615b30332f03c5381a1600f36426" prot="private" static="no" mutable="yes">
+        <type>sensors::IR *</type>
+        <definition>sensors::IR* kipr::create::Create::m_ir</definition>
+        <argsstring></argsstring>
+        <name>m_ir</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="611" column="27" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="611" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a8aec3f21ecd8519cc017d9ee783cdf2d" prot="private" static="no" mutable="yes">
+        <type>sensors::ChargingState *</type>
+        <definition>sensors::ChargingState* kipr::create::Create::m_chargingState</definition>
+        <argsstring></argsstring>
+        <name>m_chargingState</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="613" column="38" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="613" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a03313e4dd4038ae1794f3b171425d647" prot="private" static="no" mutable="yes">
+        <type>sensors::BatteryTemperature *</type>
+        <definition>sensors::BatteryTemperature* kipr::create::Create::m_batteryTemperature</definition>
+        <argsstring></argsstring>
+        <name>m_batteryTemperature</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="614" column="43" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="614" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a301ad6af6f149264dcc012a833b9c50c" prot="private" static="no" mutable="yes">
+        <type>sensors::BatteryCharge *</type>
+        <definition>sensors::BatteryCharge* kipr::create::Create::m_batteryCharge</definition>
+        <argsstring></argsstring>
+        <name>m_batteryCharge</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="615" column="38" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="615" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a5b74d4f9fc144bb2be34ecb2f9392a07" prot="private" static="no" mutable="yes">
+        <type>sensors::BatteryCapacity *</type>
+        <definition>sensors::BatteryCapacity* kipr::create::Create::m_batteryCapacity</definition>
+        <argsstring></argsstring>
+        <name>m_batteryCapacity</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="616" column="40" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="616" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a39118b52a0cd553356c66c6cd12a4f4b" prot="private" static="no" mutable="yes">
+        <type>sensors::Angle *</type>
+        <definition>sensors::Angle* kipr::create::Create::m_angle</definition>
+        <argsstring></argsstring>
+        <name>m_angle</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="618" column="30" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="618" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a66bf66fd3b655dc6eb864ef7a2a2e5bb" prot="private" static="no" mutable="yes">
+        <type>sensors::Distance *</type>
+        <definition>sensors::Distance* kipr::create::Create::m_distance</definition>
+        <argsstring></argsstring>
+        <name>m_distance</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="619" column="33" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="619" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a47ddfa8bea0eb1e9cd77f93482fdef35" prot="private" static="no" mutable="yes">
+        <type>sensors::BumpLeft *</type>
+        <definition>sensors::BumpLeft* kipr::create::Create::m_bumpLeft</definition>
+        <argsstring></argsstring>
+        <name>m_bumpLeft</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="621" column="33" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="621" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a6e23c7195395c566d247677933af67f8" prot="private" static="no" mutable="yes">
+        <type>sensors::BumpRight *</type>
+        <definition>sensors::BumpRight* kipr::create::Create::m_bumpRight</definition>
+        <argsstring></argsstring>
+        <name>m_bumpRight</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="622" column="34" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="622" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a183637a2995241986bf10f36541e7704" prot="private" static="no" mutable="yes">
+        <type>sensors::WheelDropLeft *</type>
+        <definition>sensors::WheelDropLeft* kipr::create::Create::m_wheelDropLeft</definition>
+        <argsstring></argsstring>
+        <name>m_wheelDropLeft</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="624" column="38" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="624" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1abba292ad31a7ddd166dd1b6884a4d7aa" prot="private" static="no" mutable="yes">
+        <type>sensors::WheelDropRight *</type>
+        <definition>sensors::WheelDropRight* kipr::create::Create::m_wheelDropRight</definition>
+        <argsstring></argsstring>
+        <name>m_wheelDropRight</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="625" column="39" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="625" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a6d3198c45196aa4925d4083e7fe73661" prot="private" static="no" mutable="yes">
+        <type>sensors::WheelDropCaster *</type>
+        <definition>sensors::WheelDropCaster* kipr::create::Create::m_wheelDropCaster</definition>
+        <argsstring></argsstring>
+        <name>m_wheelDropCaster</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="626" column="40" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="626" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a51567f34c75d1401f171d4012a4d8236" prot="private" static="no" mutable="yes">
+        <type>sensors::SongPlaying *</type>
+        <definition>sensors::SongPlaying* kipr::create::Create::m_songPlaying</definition>
+        <argsstring></argsstring>
+        <name>m_songPlaying</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="628" column="36" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="628" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a3b45ec019d2fc19c4c4d34c9726bedcf" prot="private" static="no" mutable="yes">
+        <type>sensors::SongNumber *</type>
+        <definition>sensors::SongNumber* kipr::create::Create::m_songNumber</definition>
+        <argsstring></argsstring>
+        <name>m_songNumber</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="629" column="35" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="629" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a4d22c221baba4a71622a319436a2d88d" prot="private" static="no" mutable="no">
+        <type>size_t</type>
+        <definition>size_t kipr::create::Create::m_i</definition>
+        <argsstring></argsstring>
+        <name>m_i</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="631" column="14" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="631" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a5f6b3228b4f83dc4033da21fbd38fff5" prot="private" static="no" mutable="no">
+        <type><ref refid="classkipr_1_1create_1_1CreateScript" kindref="compound">CreateScript</ref></type>
+        <definition>CreateScript kipr::create::Create::m_script</definition>
+        <argsstring></argsstring>
+        <name>m_script</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="632" column="20" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="632" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1ac798ec901df6eb17436977f4b4cd575a" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int kipr::create::Create::m_tty</definition>
+        <argsstring></argsstring>
+        <name>m_tty</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="633" column="11" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="633" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1a753d23500282ec97014b686bacd37840" prot="private" static="no" mutable="no">
+        <type>pthread_mutex_t</type>
+        <definition>pthread_mutex_t kipr::create::Create::m_mutex</definition>
+        <argsstring></argsstring>
+        <name>m_mutex</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="635" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="635" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1create_1_1Create_1aa1b1e6ec64c66028015f47627b7f4804" prot="private" static="no" mutable="no">
+        <type><ref refid="classkipr_1_1create_1_1Create_1a3159cdaf3d073e5ccd0427210a4e1cf4" kindref="member">BaudRate</ref></type>
+        <definition>BaudRate kipr::create::Create::m_defaultBaudRate</definition>
+        <argsstring></argsstring>
+        <name>m_defaultBaudRate</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="638" column="16" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="638" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1ac37178513c6c309a9f4b54b352441458" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>kipr::create::Create::~Create</definition>
+        <argsstring>()</argsstring>
+        <name>~Create</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="247" column="7"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1acbfdcc752c85c941e5ee8278811b0aba" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool kipr::create::Create::connect</definition>
+        <argsstring>()</argsstring>
+        <name>connect</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Attempts to establish a connection to the create <simplesect kind="return"><para>true if connection succeeded, false if connection failed </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="classkipr_1_1create_1_1Create_1ae8c66e695f249785b8fef5de3ffcbbd6" kindref="member">disconnect</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="classkipr_1_1create_1_1Create_1ad033d94e1e939c2e7b90c17b853d1a70" kindref="member">isConnected</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="255" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a61ad114305904150661a269c4a1c1db7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool kipr::create::Create::connect</definition>
+        <argsstring>(const BaudRate baudRate)</argsstring>
+        <name>connect</name>
+        <param>
+          <type>const <ref refid="classkipr_1_1create_1_1Create_1a3159cdaf3d073e5ccd0427210a4e1cf4" kindref="member">BaudRate</ref></type>
+          <declname>baudRate</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Attempts to establish a connection to the create <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>baudRate</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The desired communication speed with the <ref refid="classkipr_1_1create_1_1Create" kindref="compound">Create</ref> 1 or 2 </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>true if connection succeeded, false if connection failed </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="classkipr_1_1create_1_1Create_1ae8c66e695f249785b8fef5de3ffcbbd6" kindref="member">disconnect</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="classkipr_1_1create_1_1Create_1ad033d94e1e939c2e7b90c17b853d1a70" kindref="member">isConnected</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="270" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1ae8c66e695f249785b8fef5de3ffcbbd6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool kipr::create::Create::disconnect</definition>
+        <argsstring>()</argsstring>
+        <name>disconnect</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Cleans up connection to the create <simplesect kind="return"><para>true if disconnected, false otherwise </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="classkipr_1_1create_1_1Create_1acbfdcc752c85c941e5ee8278811b0aba" kindref="member">connect</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="classkipr_1_1create_1_1Create_1ad033d94e1e939c2e7b90c17b853d1a70" kindref="member">isConnected</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="278" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1ad033d94e1e939c2e7b90c17b853d1a70" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool kipr::create::Create::isConnected</definition>
+        <argsstring>() const</argsstring>
+        <name>isConnected</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>true if connected, false if not connected </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="classkipr_1_1create_1_1Create_1acbfdcc752c85c941e5ee8278811b0aba" kindref="member">connect</ref> </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="classkipr_1_1create_1_1Create_1ae8c66e695f249785b8fef5de3ffcbbd6" kindref="member">disconnect</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="285" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1ab7caffc0b7988ee93df27b73b5e88524" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::setOffMode</definition>
+        <argsstring>()</argsstring>
+        <name>setOffMode</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="287" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a2ff108fd4001f00d402aede7013180f1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::setPassiveMode</definition>
+        <argsstring>()</argsstring>
+        <name>setPassiveMode</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="288" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1aafe274d519e8ec032e206ac97e8d833b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::setSafeMode</definition>
+        <argsstring>()</argsstring>
+        <name>setSafeMode</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="289" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a9cb078bad6fdcd73c4358739fb4ed678" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::setFullMode</definition>
+        <argsstring>()</argsstring>
+        <name>setFullMode</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="290" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1aa0b17bc856ee8fed06df0fe76f10c805" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::setMode</definition>
+        <argsstring>(const Create::Mode &amp;mode)</argsstring>
+        <name>setMode</name>
+        <param>
+          <type>const <ref refid="classkipr_1_1create_1_1Create_1aa705f92c64f024ca75a4e7be32ff5aa5" kindref="member">Create::Mode</ref> &amp;</type>
+          <declname>mode</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="292" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a9c675f7bf0190eac6174a11d69799104" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1create_1_1Create_1aa705f92c64f024ca75a4e7be32ff5aa5" kindref="member">Create::Mode</ref></type>
+        <definition>Create::Mode kipr::create::Create::mode</definition>
+        <argsstring>()</argsstring>
+        <name>mode</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="293" column="20"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a09b5da68b8f95a57199a1f471a68e8b5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::send</definition>
+        <argsstring>(const CreateScript &amp;script)</argsstring>
+        <name>send</name>
+        <param>
+          <type>const <ref refid="classkipr_1_1create_1_1CreateScript" kindref="compound">CreateScript</ref> &amp;</type>
+          <declname>script</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="295" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1aabe0ea962f33ec277a65b0f18da9bb4b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool kipr::create::Create::write</definition>
+        <argsstring>(const unsigned char &amp;c)</argsstring>
+        <name>write</name>
+        <param>
+          <type>const unsigned char &amp;</type>
+          <declname>c</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="297" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a1e6cd03e54ed1ede3113a7a5de86e608" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool kipr::create::Create::write</definition>
+        <argsstring>(const unsigned char *data, const size_t &amp;len)</argsstring>
+        <name>write</name>
+        <param>
+          <type>const unsigned char *</type>
+          <declname>data</declname>
+        </param>
+        <param>
+          <type>const size_t &amp;</type>
+          <declname>len</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="300" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a535ceb95d037ccee233aaf119172f660" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::flush</definition>
+        <argsstring>()</argsstring>
+        <name>flush</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="303" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1adde30795fa14866ca044a5a84d416006" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>short</type>
+        <definition>short kipr::create::Create::read</definition>
+        <argsstring>()</argsstring>
+        <name>read</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Reads one byte. <simplesect kind="return"><para>The read byte, or less than zero on error. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="309" column="13"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a54b4e8bd0573a5763b7f6f1b4732e601" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int kipr::create::Create::read</definition>
+        <argsstring>(unsigned char *data, const size_t &amp;len)</argsstring>
+        <name>read</name>
+        <param>
+          <type>unsigned char *</type>
+          <declname>data</declname>
+        </param>
+        <param>
+          <type>const size_t &amp;</type>
+          <declname>len</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Reads a maximum of len bytes. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the buffer to read into. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>len</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Maxiumum number of bytes to read. Should be less than or equal to the size of data. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The number of bytes actually read, or less than zero on error. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="317" column="11"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1aca817780cf1a57d50ecb1b4eeed4babd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool kipr::create::Create::blockingRead</definition>
+        <argsstring>(unsigned char *data, const size_t &amp;size, unsigned timeout=25)</argsstring>
+        <name>blockingRead</name>
+        <param>
+          <type>unsigned char *</type>
+          <declname>data</declname>
+        </param>
+        <param>
+          <type>const size_t &amp;</type>
+          <declname>size</declname>
+        </param>
+        <param>
+          <type>unsigned</type>
+          <declname>timeout</declname>
+          <defval>25</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Reads until the specified number of bytes have been read. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the buffer to read into </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>size</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Number of bytes to be read </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>true if reading succeeded, false if there was an error </para>
+</simplesect>
+<simplesect kind="par"><title><bold>This</bold> function is blocking.</title><para></para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="326" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a6a8618b8a541d2768338916e4259c19f" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+        </templateparamlist>
+        <type>bool</type>
+        <definition>bool kipr::create::Create::blockingRead</definition>
+        <argsstring>(T &amp;data, unsigned timeout=0)</argsstring>
+        <name>blockingRead</name>
+        <param>
+          <type>T &amp;</type>
+          <declname>data</declname>
+        </param>
+        <param>
+          <type>unsigned</type>
+          <declname>timeout</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="329" column="19" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="329" bodyend="333"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a1307f8ba0c69c8cc6995933ef2d95b83" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::setLeds</definition>
+        <argsstring>(const bool &amp;advance, const bool &amp;play, const unsigned char &amp;color, const unsigned char &amp;brightness)</argsstring>
+        <name>setLeds</name>
+        <param>
+          <type>const bool &amp;</type>
+          <declname>advance</declname>
+        </param>
+        <param>
+          <type>const bool &amp;</type>
+          <declname>play</declname>
+        </param>
+        <param>
+          <type>const unsigned char &amp;</type>
+          <declname>color</declname>
+        </param>
+        <param>
+          <type>const unsigned char &amp;</type>
+          <declname>brightness</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="335" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a7a1764740c4dadccaffb6340227b5b35" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::drive</definition>
+        <argsstring>(const short &amp;velocity, const short &amp;radius)</argsstring>
+        <name>drive</name>
+        <param>
+          <type>const short &amp;</type>
+          <declname>velocity</declname>
+        </param>
+        <param>
+          <type>const short &amp;</type>
+          <declname>radius</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="337" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a9374d22857062833deacc875c94bef7b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::driveDirect</definition>
+        <argsstring>(const short &amp;left, const short &amp;right)</argsstring>
+        <name>driveDirect</name>
+        <param>
+          <type>const short &amp;</type>
+          <declname>left</declname>
+        </param>
+        <param>
+          <type>const short &amp;</type>
+          <declname>right</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="338" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1ae83a0d9b843e1fe789efae0e397d4913" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::driveStraight</definition>
+        <argsstring>(const short &amp;speed)</argsstring>
+        <name>driveStraight</name>
+        <param>
+          <type>const short &amp;</type>
+          <declname>speed</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="339" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a329c5f294be422112b025853f3b7fa70" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::stop</definition>
+        <argsstring>()</argsstring>
+        <name>stop</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="340" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a258d8684737e8e6ed4ede3f43cd15c88" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::turn</definition>
+        <argsstring>(const short &amp;angle, const unsigned short &amp;speed)</argsstring>
+        <name>turn</name>
+        <param>
+          <type>const short &amp;</type>
+          <declname>angle</declname>
+        </param>
+        <param>
+          <type>const unsigned short &amp;</type>
+          <declname>speed</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>A very accurate turn method based on time rather than the create&apos;s own readings, which are often less than accurate. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>angle</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The angle to turn, in degrees. Positive is counter-clockwise. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>speed</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The speed each wheel should move at, in mm/s. The angular velocity will be double this value. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="par"><title><bold>This</bold> function is blocking.</title><para></para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="348" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a21a7148be57c6f364da35c69244fd364" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::move</definition>
+        <argsstring>(const short &amp;millimeters, const unsigned short &amp;speed)</argsstring>
+        <name>move</name>
+        <param>
+          <type>const short &amp;</type>
+          <declname>millimeters</declname>
+        </param>
+        <param>
+          <type>const unsigned short &amp;</type>
+          <declname>speed</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>A very accurate move method based on time rather than the create&apos;s own readings, which are often less than accurate. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>millimeters</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The amount to move, in millimeters. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>speed</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The speed each wheel should move at, in mm/s. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="par"><title><bold>This</bold> function is blocking.</title><para></para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="356" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1aa2a2e5bbe6040e85a20ffb86f4a2f71c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::spin</definition>
+        <argsstring>(const short &amp;speed)</argsstring>
+        <name>spin</name>
+        <param>
+          <type>const short &amp;</type>
+          <declname>speed</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Spin the create at a constant velocity. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>speed</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The speed each motor should move at. Positive is counter-clockwise. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="362" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a7f833e4675301564d0091e7a905251af" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>short</type>
+        <definition>short kipr::create::Create::angularVelocity</definition>
+        <argsstring>() const</argsstring>
+        <name>angularVelocity</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Returns the current angular velocity of the create. This value is positive for counter-clockwise velocity and negative for clockwise velocity. <simplesect kind="return"><para>angular velocity of the create, between 0 and 1000 mm/s </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="369" column="13"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a7d0d5ee97562827b18b3c9dab436fa49" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::spinClockwise</definition>
+        <argsstring>(const short &amp;speed)</argsstring>
+        <name>spinClockwise</name>
+        <param>
+          <type>const short &amp;</type>
+          <declname>speed</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="371" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a188f91106a75d0c6ebe4931f479c5e88" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::spinCounterClockwise</definition>
+        <argsstring>(const short &amp;speed)</argsstring>
+        <name>spinCounterClockwise</name>
+        <param>
+          <type>const short &amp;</type>
+          <declname>speed</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="372" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a36292ef9fa6a2918944f5c75a5818c44" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool kipr::create::Create::setBaudRate</definition>
+        <argsstring>(const unsigned char &amp;baudCode)</argsstring>
+        <name>setBaudRate</name>
+        <param>
+          <type>const unsigned char &amp;</type>
+          <declname>baudCode</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="374" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a26586e7e74c33753e3fdb1ce615033f8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::setDistance</definition>
+        <argsstring>(const int distance)</argsstring>
+        <name>setDistance</name>
+        <param>
+          <type>const int</type>
+          <declname>distance</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="376" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1aec020df613b42d1ceff4512fb166023b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::setAngle</definition>
+        <argsstring>(const int angle)</argsstring>
+        <name>setAngle</name>
+        <param>
+          <type>const int</type>
+          <declname>angle</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="377" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a6b5c75b31115c4e24bb36b42edf5c41d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1button_1_1AbstractButton" kindref="compound">button::AbstractButton</ref> *</type>
+        <definition>button::AbstractButton* kipr::create::Create::playButton</definition>
+        <argsstring>() const</argsstring>
+        <name>playButton</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="380" column="30"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a920843fcadaa34a05ac934dbc2f6b26e" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1button_1_1AbstractButton" kindref="compound">button::AbstractButton</ref> *</type>
+        <definition>button::AbstractButton* kipr::create::Create::advanceButton</definition>
+        <argsstring>() const</argsstring>
+        <name>advanceButton</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="381" column="30"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a0938789ad23f1411a0180e0fcea4d4af" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; bool &gt; *</type>
+        <definition>sensor::Sensor&lt;bool&gt;* kipr::create::Create::wall</definition>
+        <argsstring>() const</argsstring>
+        <name>wall</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="383" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1adc25e5cc07cfb1c16d7c7a88a9f3ef18" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; bool &gt; *</type>
+        <definition>sensor::Sensor&lt;bool&gt;* kipr::create::Create::cliffLeft</definition>
+        <argsstring>() const</argsstring>
+        <name>cliffLeft</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="384" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a592b6c5b96be4bc0d9f1150485e30d92" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; bool &gt; *</type>
+        <definition>sensor::Sensor&lt;bool&gt;* kipr::create::Create::cliffFrontLeft</definition>
+        <argsstring>() const</argsstring>
+        <name>cliffFrontLeft</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="385" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a0220cdd5868fa3d738404276ac29a77d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; bool &gt; *</type>
+        <definition>sensor::Sensor&lt;bool&gt;* kipr::create::Create::cliffFrontRight</definition>
+        <argsstring>() const</argsstring>
+        <name>cliffFrontRight</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="386" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a0df07543e0447bd49f602fd43fac2a9d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; bool &gt; *</type>
+        <definition>sensor::Sensor&lt;bool&gt;* kipr::create::Create::cliffRight</definition>
+        <argsstring>() const</argsstring>
+        <name>cliffRight</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="387" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1aabf97448c08f2974487ba873eb8bdd78" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; bool &gt; *</type>
+        <definition>sensor::Sensor&lt;bool&gt;* kipr::create::Create::virtualWall</definition>
+        <argsstring>() const</argsstring>
+        <name>virtualWall</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="388" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a88029a763dd23c18ed57a5267ae8a0a8" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; unsigned short &gt; *</type>
+        <definition>sensor::Sensor&lt;unsigned short&gt;* kipr::create::Create::wallSignal</definition>
+        <argsstring>() const</argsstring>
+        <name>wallSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="390" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1aab2d898460a8973e273a3a0eb82985e8" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; unsigned short &gt; *</type>
+        <definition>sensor::Sensor&lt;unsigned short&gt;* kipr::create::Create::cliffLeftSignal</definition>
+        <argsstring>() const</argsstring>
+        <name>cliffLeftSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="391" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1ad8bc65b4bb93dec4b30bc9b0ee486da7" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; unsigned short &gt; *</type>
+        <definition>sensor::Sensor&lt;unsigned short&gt;* kipr::create::Create::cliffFrontLeftSignal</definition>
+        <argsstring>() const</argsstring>
+        <name>cliffFrontLeftSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="392" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1aa73905651c3b04a2888f3bb6d2672ead" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; unsigned short &gt; *</type>
+        <definition>sensor::Sensor&lt;unsigned short&gt;* kipr::create::Create::cliffFrontRightSignal</definition>
+        <argsstring>() const</argsstring>
+        <name>cliffFrontRightSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="393" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a0ebd7bae9550b1436bd893c056280e59" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; unsigned short &gt; *</type>
+        <definition>sensor::Sensor&lt;unsigned short&gt;* kipr::create::Create::cliffRightSignal</definition>
+        <argsstring>() const</argsstring>
+        <name>cliffRightSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="394" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a5ef417e298bab265fcbe0ab9020cbd06" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; unsigned short &gt; *</type>
+        <definition>sensor::Sensor&lt;unsigned short&gt;* kipr::create::Create::cargoBayAnalogSignal</definition>
+        <argsstring>() const</argsstring>
+        <name>cargoBayAnalogSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="395" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a2c453a47255f0c6d474da7fd9d1a07ad" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; unsigned char &gt; *</type>
+        <definition>sensor::Sensor&lt;unsigned char&gt;* kipr::create::Create::cargoBayDigitalInputs</definition>
+        <argsstring>() const</argsstring>
+        <name>cargoBayDigitalInputs</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="396" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1ae3305abea01cb8a98aee37d834174b3c" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; unsigned char &gt; *</type>
+        <definition>sensor::Sensor&lt;unsigned char&gt;* kipr::create::Create::ir</definition>
+        <argsstring>() const</argsstring>
+        <name>ir</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="398" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a9adaa6bd50a508539d27c45ab10b0641" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; unsigned char &gt; *</type>
+        <definition>sensor::Sensor&lt;unsigned char&gt;* kipr::create::Create::chargingState</definition>
+        <argsstring>() const</argsstring>
+        <name>chargingState</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="400" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a778ad7f93df779ca17eff4a6d8cd9693" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; char &gt; *</type>
+        <definition>sensor::Sensor&lt;char&gt;* kipr::create::Create::batteryTemperature</definition>
+        <argsstring>() const</argsstring>
+        <name>batteryTemperature</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="401" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1ab9cb06c24ccc1c59c18a737d4c7983aa" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; unsigned short &gt; *</type>
+        <definition>sensor::Sensor&lt;unsigned short&gt;* kipr::create::Create::batteryCharge</definition>
+        <argsstring>() const</argsstring>
+        <name>batteryCharge</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="402" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a792c58469c93d81bfa4d57144341b0db" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; unsigned short &gt; *</type>
+        <definition>sensor::Sensor&lt;unsigned short&gt;* kipr::create::Create::batteryCapacity</definition>
+        <argsstring>() const</argsstring>
+        <name>batteryCapacity</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="403" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1ab3c2007c43e2f33f74f387aabde30ef6" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; int &gt; *</type>
+        <definition>sensor::Sensor&lt;int&gt;* kipr::create::Create::angle</definition>
+        <argsstring>() const</argsstring>
+        <name>angle</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="405" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a6810e87aa6fcefbe1324c1a909f0fabb" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; int &gt; *</type>
+        <definition>sensor::Sensor&lt;int&gt;* kipr::create::Create::distance</definition>
+        <argsstring>() const</argsstring>
+        <name>distance</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="406" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a1086cf3263b6e046255d33c00d618855" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; bool &gt; *</type>
+        <definition>sensor::Sensor&lt;bool&gt;* kipr::create::Create::bumpLeft</definition>
+        <argsstring>() const</argsstring>
+        <name>bumpLeft</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="408" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1af5036159b750432ffc13eee07945853c" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; bool &gt; *</type>
+        <definition>sensor::Sensor&lt;bool&gt;* kipr::create::Create::bumpRight</definition>
+        <argsstring>() const</argsstring>
+        <name>bumpRight</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="409" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1aa48eb27d7d513e0d312a54d3365b96bd" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; bool &gt; *</type>
+        <definition>sensor::Sensor&lt;bool&gt;* kipr::create::Create::wheelDropLeft</definition>
+        <argsstring>() const</argsstring>
+        <name>wheelDropLeft</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="411" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1ae25d94869ce495dfafb38e9a27678b92" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; bool &gt; *</type>
+        <definition>sensor::Sensor&lt;bool&gt;* kipr::create::Create::wheelDropRight</definition>
+        <argsstring>() const</argsstring>
+        <name>wheelDropRight</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="412" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1ab88719c42699b2aae57b1fbada37798a" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; bool &gt; *</type>
+        <definition>sensor::Sensor&lt;bool&gt;* kipr::create::Create::wheelDropCaster</definition>
+        <argsstring>() const</argsstring>
+        <name>wheelDropCaster</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="413" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a8f46920f5bd27b20fc17d15182b15424" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; bool &gt; *</type>
+        <definition>sensor::Sensor&lt;bool&gt;* kipr::create::Create::lightBumpLeft</definition>
+        <argsstring>() const</argsstring>
+        <name>lightBumpLeft</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="415" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1aa6abd8ea8ec1570b196beb8c6e7587ae" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; bool &gt; *</type>
+        <definition>sensor::Sensor&lt;bool&gt;* kipr::create::Create::lightBumpFrontLeft</definition>
+        <argsstring>() const</argsstring>
+        <name>lightBumpFrontLeft</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="416" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a2bd1d6c20b0b5331cec143480e447f34" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; bool &gt; *</type>
+        <definition>sensor::Sensor&lt;bool&gt;* kipr::create::Create::lightBumpCenterLeft</definition>
+        <argsstring>() const</argsstring>
+        <name>lightBumpCenterLeft</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="417" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a3344e9e4bc57a16601626d83eb2a5ac2" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; bool &gt; *</type>
+        <definition>sensor::Sensor&lt;bool&gt;* kipr::create::Create::lightBumpCenterRight</definition>
+        <argsstring>() const</argsstring>
+        <name>lightBumpCenterRight</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="418" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1afbdfa5444d10c5a90202962da5dfd412" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; bool &gt; *</type>
+        <definition>sensor::Sensor&lt;bool&gt;* kipr::create::Create::lightBumpFrontRight</definition>
+        <argsstring>() const</argsstring>
+        <name>lightBumpFrontRight</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="419" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a2adedf9b92d4e41f6ef57f12efe8d8f8" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; bool &gt; *</type>
+        <definition>sensor::Sensor&lt;bool&gt;* kipr::create::Create::lightBumpRight</definition>
+        <argsstring>() const</argsstring>
+        <name>lightBumpRight</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="420" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1ac4cbf3db837d141a865337a185497cc8" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; unsigned short &gt; *</type>
+        <definition>sensor::Sensor&lt;unsigned short&gt;* kipr::create::Create::lightBumpLeftSignal</definition>
+        <argsstring>() const</argsstring>
+        <name>lightBumpLeftSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="422" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1afa280ba4fb60d62e38585a971d21631b" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; unsigned short &gt; *</type>
+        <definition>sensor::Sensor&lt;unsigned short&gt;* kipr::create::Create::lightBumpFrontLeftSignal</definition>
+        <argsstring>() const</argsstring>
+        <name>lightBumpFrontLeftSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="423" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a84435eee5745732fb15890af9f014eb7" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; unsigned short &gt; *</type>
+        <definition>sensor::Sensor&lt;unsigned short&gt;* kipr::create::Create::lightBumpCenterLeftSignal</definition>
+        <argsstring>() const</argsstring>
+        <name>lightBumpCenterLeftSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="424" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a2ecae817aeb6804373408a549d6dd2b0" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; unsigned short &gt; *</type>
+        <definition>sensor::Sensor&lt;unsigned short&gt;* kipr::create::Create::lightBumpCenterRightSignal</definition>
+        <argsstring>() const</argsstring>
+        <name>lightBumpCenterRightSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="425" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a9c5ad8cc3411f1290de973d54c3befe3" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; unsigned short &gt; *</type>
+        <definition>sensor::Sensor&lt;unsigned short&gt;* kipr::create::Create::lightBumpFrontRightSignal</definition>
+        <argsstring>() const</argsstring>
+        <name>lightBumpFrontRightSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="426" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a8258f751355a25e1d2d6034f0d4d53e2" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; unsigned short &gt; *</type>
+        <definition>sensor::Sensor&lt;unsigned short&gt;* kipr::create::Create::lightBumpRightSignal</definition>
+        <argsstring>() const</argsstring>
+        <name>lightBumpRightSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="427" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a57156aa58f3d30539d0ab989ef7f9df9" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; unsigned char &gt; *</type>
+        <definition>sensor::Sensor&lt;unsigned char&gt;* kipr::create::Create::songPlaying</definition>
+        <argsstring>() const</argsstring>
+        <name>songPlaying</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="429" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a286bc10e04107a42c958b363a7e02878" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt; unsigned char &gt; *</type>
+        <definition>sensor::Sensor&lt;unsigned char&gt;* kipr::create::Create::songNumber</definition>
+        <argsstring>() const</argsstring>
+        <name>songNumber</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="430" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a9d5df1c1f1500ecf40a7642ca0da6e99" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::setRefreshRate</definition>
+        <argsstring>(const unsigned short &amp;refreshRate)</argsstring>
+        <name>setRefreshRate</name>
+        <param>
+          <type>const unsigned short &amp;</type>
+          <declname>refreshRate</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="432" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a6e64e8ea6ee7600000fe8087c5a91003" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const unsigned short &amp;</type>
+        <definition>const unsigned short&amp; kipr::create::Create::refreshRate</definition>
+        <argsstring>() const</argsstring>
+        <name>refreshRate</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="433" column="28"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1gadde31111a96ae9d1ad88b897f79d0fff" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool kipr::create::Create::loadSong</definition>
+        <argsstring>(const unsigned char *song, const unsigned char length, const unsigned char songNum)</argsstring>
+        <name>loadSong</name>
+        <param>
+          <type>const unsigned char *</type>
+          <declname>song</declname>
+        </param>
+        <param>
+          <type>const unsigned char</type>
+          <declname>length</declname>
+        </param>
+        <param>
+          <type>const unsigned char</type>
+          <declname>songNum</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Loads a song for playing on the create <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>song</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>It should be an array of unsigned chars (positive integers 0-255) The first value in a pair will be the midi value of the note the second value in the pair will be the duration (in 64ths of a second) for example, a song {88, 20, 91, 32, 70, 15} will play midi value 88 for 20/64ths of a second, midi value 91 for 32/64ths of a second, and midi value 70 for 15/64ths of a second. A full list of notes playable on the create is found at <ulink url="https://cdn-shop.adafruit.com/datasheets/create_2_Open_Interface_Spec.pdf">https://cdn-shop.adafruit.com/datasheets/create_2_Open_Interface_Spec.pdf</ulink> on page 34 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>length</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The length of the song. It is how many notes are in the song, not how many items are in your song array. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>num</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The song slot to load the song into; valid values are 0, 1, 2, and 3 </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>1 on success, 0 on failure </para>
+</simplesect>
+<simplesect kind="note"><para>Example use: <computeroutput>unsigned char example_song[] = {88, 20, 91, 32, 70, 15}; create_load_song(example_song, 3, 0);</computeroutput> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="452" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="group__create_1gae92e9562ccbf510058d365de97c2254d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool kipr::create::Create::playSong</definition>
+        <argsstring>(const unsigned char songNum)</argsstring>
+        <name>playSong</name>
+        <param>
+          <type>const unsigned char</type>
+          <declname>songNum</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Plays a song that has been loaded. Use create_load_song first. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>num</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The song slot to play from; valid values are 0, 1, 2, and 3 </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>1 on success, 0 on failure </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__create_1ga3893843fd78804fdc227ceb836f0314a" kindref="member">create_load_song</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="461" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a99e6c0f2e53695b9a2a0e0096c6026bc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const <ref refid="structkipr_1_1create_1_1CreateState" kindref="compound">CreateState</ref> *</type>
+        <definition>const CreateState* kipr::create::Create::state</definition>
+        <argsstring>()</argsstring>
+        <name>state</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="470" column="25"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1af6836f7a3b193d8841ea76628a0c38f1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const <ref refid="structkipr_1_1create_1_1CreatePackets_1_1__1" kindref="compound">CreatePackets::_1</ref> *</type>
+        <definition>const CreatePackets::_1* kipr::create::Create::sensorPacket1</definition>
+        <argsstring>()</argsstring>
+        <name>sensorPacket1</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="471" column="31"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a80ddc4a6373f071b90e8ac44b71255f7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const <ref refid="structkipr_1_1create_1_1CreatePackets_1_1__2" kindref="compound">CreatePackets::_2</ref> *</type>
+        <definition>const CreatePackets::_2* kipr::create::Create::sensorPacket2</definition>
+        <argsstring>()</argsstring>
+        <name>sensorPacket2</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="472" column="31"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1ac4dee07026e0ac14438f2020e97f4eac" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const <ref refid="structkipr_1_1create_1_1CreatePackets_1_1__3" kindref="compound">CreatePackets::_3</ref> *</type>
+        <definition>const CreatePackets::_3* kipr::create::Create::sensorPacket3</definition>
+        <argsstring>()</argsstring>
+        <name>sensorPacket3</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="473" column="31"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a66aff85b23d882c51d432abebc6a8258" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const <ref refid="structkipr_1_1create_1_1CreatePackets_1_1__4" kindref="compound">CreatePackets::_4</ref> *</type>
+        <definition>const CreatePackets::_4* kipr::create::Create::sensorPacket4</definition>
+        <argsstring>()</argsstring>
+        <name>sensorPacket4</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="474" column="31"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1ab059c8bb1b525a47092458469c1b9e43" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const <ref refid="structkipr_1_1create_1_1CreatePackets_1_1__5" kindref="compound">CreatePackets::_5</ref> *</type>
+        <definition>const CreatePackets::_5* kipr::create::Create::sensorPacket5</definition>
+        <argsstring>()</argsstring>
+        <name>sensorPacket5</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="475" column="31"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a9682f5de3ed1350286a4d83f40694579" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const <ref refid="structkipr_1_1create_1_1CreatePackets_1_1__101" kindref="compound">CreatePackets::_101</ref> *</type>
+        <definition>const CreatePackets::_101* kipr::create::Create::sensorPacket101</definition>
+        <argsstring>()</argsstring>
+        <name>sensorPacket101</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="476" column="33"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a4c4e89a36ab8fdac8a1d03ace963835a" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::beginAtomicOperation</definition>
+        <argsstring>()</argsstring>
+        <name>beginAtomicOperation</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="478" column="19" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="478" bodyend="483"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a56897361b8a54a61c58d5522c4737d20" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::endAtomicOperation</definition>
+        <argsstring>()</argsstring>
+        <name>endAtomicOperation</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="485" column="19" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="485" bodyend="490"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1acbd2225b1728dd63b6bdfba8f5b5921a" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::setDefaultBaudRate</definition>
+        <argsstring>(const BaudRate defaultBaudRate)</argsstring>
+        <name>setDefaultBaudRate</name>
+        <param>
+          <type>const <ref refid="classkipr_1_1create_1_1Create_1a3159cdaf3d073e5ccd0427210a4e1cf4" kindref="member">BaudRate</ref></type>
+          <declname>defaultBaudRate</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="492" column="19" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="492" bodyend="492"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a51b77549776e81c1e848a3efb76864c9" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classkipr_1_1create_1_1Create_1a3159cdaf3d073e5ccd0427210a4e1cf4" kindref="member">BaudRate</ref></type>
+        <definition>BaudRate kipr::create::Create::defaultBaudRate</definition>
+        <argsstring>() const</argsstring>
+        <name>defaultBaudRate</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="493" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="493" bodyend="493"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1aec7a9e82c4dbf9452cd59e680a81e52e" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1create_1_1Create" kindref="compound">Create</ref> *</type>
+        <definition>static Create* kipr::create::Create::instance</definition>
+        <argsstring>()</argsstring>
+        <name>instance</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>The <ref refid="classkipr_1_1create_1_1Create" kindref="compound">Create</ref> class is a singleton, which means that you cannot instantiate it directly. To get an instance of the create, you must use this method. <simplesect kind="return"><para>The global instance of the <ref refid="classkipr_1_1create_1_1Create" kindref="compound">Create</ref> class </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="468" column="21"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a37b2eea4be3245ec373541a87d0ce0d8" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>kipr::create::Create::Create</definition>
+        <argsstring>()</argsstring>
+        <name>Create</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="496" column="7"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1ad587016c362f52073eebf560e3d478a3" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>kipr::create::Create::Create</definition>
+        <argsstring>(const Create &amp;rhs)</argsstring>
+        <name>Create</name>
+        <param>
+          <type>const <ref refid="classkipr_1_1create_1_1Create" kindref="compound">Create</ref> &amp;</type>
+          <declname>rhs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="497" column="7"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1aad9193750e8611b173a22446cb6dbac9" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1create_1_1Create" kindref="compound">Create</ref> &amp;</type>
+        <definition>Create&amp; kipr::create::Create::operator=</definition>
+        <argsstring>(const Create &amp;rhs)</argsstring>
+        <name>operator=</name>
+        <param>
+          <type>const <ref refid="classkipr_1_1create_1_1Create" kindref="compound">Create</ref> &amp;</type>
+          <declname>rhs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="498" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1ad256623af13b0fe6265c496095bfabc9" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::setLocalBaudRate</definition>
+        <argsstring>(const speed_t &amp;baudRate)</argsstring>
+        <name>setLocalBaudRate</name>
+        <param>
+          <type>const speed_t &amp;</type>
+          <declname>baudRate</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="500" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1aae0c42790a0f4a790dd4c84ec35f6e61" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool kipr::create::Create::start</definition>
+        <argsstring>()</argsstring>
+        <name>start</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="502" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1afcde9943a33e2e563cdd5371badb4951" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool kipr::create::Create::open</definition>
+        <argsstring>()</argsstring>
+        <name>open</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="504" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1acb99c676b6aac0de1439f08ec8ebe540" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::close</definition>
+        <argsstring>()</argsstring>
+        <name>close</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="505" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1af48bea2d82d940cf2e2722e9cc92cb5a" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+        </templateparamlist>
+        <type>void</type>
+        <definition>void kipr::create::Create::lazyDelete</definition>
+        <argsstring>(T *&amp;ptr)</argsstring>
+        <name>lazyDelete</name>
+        <param>
+          <type>T *&amp;</type>
+          <declname>ptr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="508" column="19" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="508" bodyend="512"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a9f21fd3d2a407fd6e10cdd72987e8746" prot="private" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>timeval</type>
+        <definition>timeval kipr::create::Create::timeOfDay</definition>
+        <argsstring>() const</argsstring>
+        <name>timeOfDay</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="514" column="22" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="514" bodyend="530"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1abc26c59b3d15a962727155b3a16ad575" prot="private" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool kipr::create::Create::hasRequiredTimePassed</definition>
+        <argsstring>(const timeval &amp;timestamp) const</argsstring>
+        <name>hasRequiredTimePassed</name>
+        <param>
+          <type>const timeval &amp;</type>
+          <declname>timestamp</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="532" column="19" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="532" bodyend="543"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1af4ea8298fc28569f00ce2e2cd457d8cc" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>double</type>
+        <definition>double kipr::create::Create::timevalToFloat</definition>
+        <argsstring>(const timeval &amp;tv)</argsstring>
+        <name>timevalToFloat</name>
+        <param>
+          <type>const timeval &amp;</type>
+          <declname>tv</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="545" column="21" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="545" bodyend="548"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a77040b70a83238fe305643601c0ec46c" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>float</type>
+        <definition>float kipr::create::Create::deg2rad</definition>
+        <argsstring>(const float &amp;deg)</argsstring>
+        <name>deg2rad</name>
+        <param>
+          <type>const float &amp;</type>
+          <declname>deg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="550" column="20" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="550" bodyend="553"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1ae2a0158e7f7b7fde88a618ba341d1526" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::updateState</definition>
+        <argsstring>()</argsstring>
+        <name>updateState</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="555" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1ab39bef817bce18899f1d0e527b9d5a98" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::updateSensorPacket1</definition>
+        <argsstring>()</argsstring>
+        <name>updateSensorPacket1</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="557" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a9eb31e0612ec605260476706b342540e" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::updateSensorPacket2</definition>
+        <argsstring>(bool forceUpdate=false)</argsstring>
+        <name>updateSensorPacket2</name>
+        <param>
+          <type>bool</type>
+          <declname>forceUpdate</declname>
+          <defval>false</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="558" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a095726606b30206a53dcd5d3da737668" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::updateSensorPacket3</definition>
+        <argsstring>()</argsstring>
+        <name>updateSensorPacket3</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="559" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a0cb02de81abf6625be881a49ec51682c" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::updateSensorPacket4</definition>
+        <argsstring>()</argsstring>
+        <name>updateSensorPacket4</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="560" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1ae643f3522d3406fdbb05a51a3ab12651" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::updateSensorPacket5</definition>
+        <argsstring>()</argsstring>
+        <name>updateSensorPacket5</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="561" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1Create_1a2aa6b933b37b418f9ca7a857a88d99a4" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::Create::updateSensorPacket101</definition>
+        <argsstring>()</argsstring>
+        <name>updateSensorPacket101</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="562" column="12"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>Facilitates communication with the iRobot (R) <ref refid="classkipr_1_1create_1_1Create" kindref="compound">Create</ref> (TM) </para>
+    </briefdescription>
+    <detaileddescription>
+<para>Provides high level bindings for a significant majority of the iRobot Open Interface specification. <simplesect kind="author"><para>Braden McDorman </para>
+</simplesect>
+</para>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="230" column="5" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="231" bodyend="639"/>
+    <listofallmembers>
+      <member refid="classkipr_1_1create_1_1Create_1a920843fcadaa34a05ac934dbc2f6b26e" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>advanceButton</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1ab3c2007c43e2f33f74f387aabde30ef6" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>angle</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a7f833e4675301564d0091e7a905251af" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>angularVelocity</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a792c58469c93d81bfa4d57144341b0db" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>batteryCapacity</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1ab9cb06c24ccc1c59c18a737d4c7983aa" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>batteryCharge</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a778ad7f93df779ca17eff4a6d8cd9693" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>batteryTemperature</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a3159cdaf3d073e5ccd0427210a4e1cf4a42528736339c0e4714e22942a69831f9" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>Baud115200</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a3159cdaf3d073e5ccd0427210a4e1cf4a68f620224821c445ced99a1690028898" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>Baud57600</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a3159cdaf3d073e5ccd0427210a4e1cf4" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>BaudRate</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a4c4e89a36ab8fdac8a1d03ace963835a" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>beginAtomicOperation</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1aca817780cf1a57d50ecb1b4eeed4babd" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>blockingRead</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a6a8618b8a541d2768338916e4259c19f" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>blockingRead</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a1086cf3263b6e046255d33c00d618855" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>bumpLeft</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1af5036159b750432ffc13eee07945853c" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>bumpRight</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a5ef417e298bab265fcbe0ab9020cbd06" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>cargoBayAnalogSignal</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a2c453a47255f0c6d474da7fd9d1a07ad" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>cargoBayDigitalInputs</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a9adaa6bd50a508539d27c45ab10b0641" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>chargingState</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a592b6c5b96be4bc0d9f1150485e30d92" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>cliffFrontLeft</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1ad8bc65b4bb93dec4b30bc9b0ee486da7" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>cliffFrontLeftSignal</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a0220cdd5868fa3d738404276ac29a77d" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>cliffFrontRight</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1aa73905651c3b04a2888f3bb6d2672ead" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>cliffFrontRightSignal</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1adc25e5cc07cfb1c16d7c7a88a9f3ef18" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>cliffLeft</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1aab2d898460a8973e273a3a0eb82985e8" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>cliffLeftSignal</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a0df07543e0447bd49f602fd43fac2a9d" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>cliffRight</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a0ebd7bae9550b1436bd893c056280e59" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>cliffRightSignal</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1acb99c676b6aac0de1439f08ec8ebe540" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>close</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1acbfdcc752c85c941e5ee8278811b0aba" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>connect</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a61ad114305904150661a269c4a1c1db7" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>connect</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a37b2eea4be3245ec373541a87d0ce0d8" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>Create</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1ad587016c362f52073eebf560e3d478a3" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>Create</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a51b77549776e81c1e848a3efb76864c9" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>defaultBaudRate</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a77040b70a83238fe305643601c0ec46c" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>deg2rad</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1ae8c66e695f249785b8fef5de3ffcbbd6" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>disconnect</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a6810e87aa6fcefbe1324c1a909f0fabb" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>distance</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a7a1764740c4dadccaffb6340227b5b35" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>drive</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a9374d22857062833deacc875c94bef7b" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>driveDirect</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1ae83a0d9b843e1fe789efae0e397d4913" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>driveStraight</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a56897361b8a54a61c58d5522c4737d20" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>endAtomicOperation</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a535ceb95d037ccee233aaf119172f660" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>flush</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1aa705f92c64f024ca75a4e7be32ff5aa5a2e6ccf4636d4ae3dd6e210c6f179aaf9" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>FullMode</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1abc26c59b3d15a962727155b3a16ad575" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>hasRequiredTimePassed</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a2e2e33925088bc94df708ad23ea84700" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>have_packet</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1aec7a9e82c4dbf9452cd59e680a81e52e" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>instance</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1ae3305abea01cb8a98aee37d834174b3c" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>ir</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1ad033d94e1e939c2e7b90c17b853d1a70" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>isConnected</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1af48bea2d82d940cf2e2722e9cc92cb5a" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>lazyDelete</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a2bd1d6c20b0b5331cec143480e447f34" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>lightBumpCenterLeft</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a84435eee5745732fb15890af9f014eb7" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>lightBumpCenterLeftSignal</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a3344e9e4bc57a16601626d83eb2a5ac2" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>lightBumpCenterRight</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a2ecae817aeb6804373408a549d6dd2b0" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>lightBumpCenterRightSignal</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1aa6abd8ea8ec1570b196beb8c6e7587ae" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>lightBumpFrontLeft</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1afa280ba4fb60d62e38585a971d21631b" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>lightBumpFrontLeftSignal</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1afbdfa5444d10c5a90202962da5dfd412" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>lightBumpFrontRight</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a9c5ad8cc3411f1290de973d54c3befe3" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>lightBumpFrontRightSignal</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a8f46920f5bd27b20fc17d15182b15424" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>lightBumpLeft</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1ac4cbf3db837d141a865337a185497cc8" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>lightBumpLeftSignal</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a2adedf9b92d4e41f6ef57f12efe8d8f8" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>lightBumpRight</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a8258f751355a25e1d2d6034f0d4d53e2" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>lightBumpRightSignal</name></member>
+      <member refid="group__create_1gadde31111a96ae9d1ad88b897f79d0fff" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>loadSong</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a7c1f68cfaf15f43fef2f90e1dbbe9676" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_1</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a2f815122aafae4bddd520316a1019c3f" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_101</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1acb41c82c9fd323be6c96990d2e9bb7f3" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_2</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a9000075a6f9198790ac08eca7874027e" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_3</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a2693380af95bae6ec3f58ae014665fa2" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_4</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1aa58fbcfe1b021b3a502cf36809f30032" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_5</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a75d2e8a03fc8a1772956dc5bc4bf50a4" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_advanceButton</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a39118b52a0cd553356c66c6cd12a4f4b" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_angle</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a5b74d4f9fc144bb2be34ecb2f9392a07" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_batteryCapacity</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a301ad6af6f149264dcc012a833b9c50c" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_batteryCharge</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a03313e4dd4038ae1794f3b171425d647" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_batteryTemperature</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a47ddfa8bea0eb1e9cd77f93482fdef35" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_bumpLeft</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a6e23c7195395c566d247677933af67f8" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_bumpRight</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1ae95373a6ede8d91ce19efe18611fc273" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_cargoBayAnalogSignal</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a83b271ad7b1399d15f9e1aae3a765c67" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_cargoBayDigitalInputs</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a8aec3f21ecd8519cc017d9ee783cdf2d" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_chargingState</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a8a6919866055b5d5872fa1bbe1d10b21" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_cliffFrontLeft</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1af647611d53f718b336a630b2c7436e13" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_cliffFrontLeftSignal</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1ac519c81b1a11ce1946d1fc16cd3f0cb8" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_cliffFrontRight</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a17eb4e7ca25a0334c1f54e82cc1e892b" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_cliffFrontRightSignal</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a85d0fcb69f034e0739ad5229c7d9a596" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_cliffLeft</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a3e999f1e183b8ce22e1213161172f982" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_cliffLeftSignal</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a135f5e84020c261715d1a5036c153c79" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_cliffRight</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a7dec57313b2986ab257e84ac59de0cc3" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_cliffRightSignal</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1aa1b1e6ec64c66028015f47627b7f4804" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_defaultBaudRate</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a66bf66fd3b655dc6eb864ef7a2a2e5bb" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_distance</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a4d22c221baba4a71622a319436a2d88d" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_i</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a7d4d615b30332f03c5381a1600f36426" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_ir</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a3fa357b4857c5c33c89f211aaee14c26" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_lightBumpCenterLeft</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1adf7bef7d61d92ae4ff211b17fa9e0301" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_lightBumpCenterLeftSignal</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1aa6419293590b52ec6e94751e3421df52" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_lightBumpCenterRight</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a8d154ce2ef024f08f21ae2e0a60b05ae" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_lightBumpCenterRightSignal</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a1c7f08e71d9bd6ae153f2ed683e42a41" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_lightBumpFrontLeft</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a56837257644995b56f32167489085de4" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_lightBumpFrontLeftSignal</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a464caba3609d68b61239c0d7e6db32cf" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_lightBumpFrontRight</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a2a3c54d9bd0a28042638d2659f01149b" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_lightBumpFrontRightSignal</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1aead596edac765f2184d00dca9ff7bd85" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_lightBumpLeft</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a65abc81588fbae7aebc51a1d1a083bc4" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_lightBumpLeftSignal</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a66309884d47554d6d04ba7efc29d126e" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_lightBumpRight</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1acac76ee89be25212fd2e4d51605e7f65" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_lightBumpRightSignal</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a753d23500282ec97014b686bacd37840" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_mutex</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a382aebb94a0620c71670c9c61d47ddbf" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_playButton</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a15a9b3c240d294ff8da4f89a4f1efb58" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_refreshRate</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a5f6b3228b4f83dc4033da21fbd38fff5" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_script</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a3b45ec019d2fc19c4c4d34c9726bedcf" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_songNumber</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a51567f34c75d1401f171d4012a4d8236" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_songPlaying</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a36fa5b829cc0245a02b21d10800f7601" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_state</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1ac798ec901df6eb17436977f4b4cd575a" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_tty</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a5d447106038a685f4145b07b268ee48f" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_virtualWall</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a2e9b4865cb996b5a3c83e86116673e6f" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_wall</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1ae3fc1de85f7e78d53a4b469485192bad" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_wallSignal</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a6d3198c45196aa4925d4083e7fe73661" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_wheelDropCaster</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a183637a2995241986bf10f36541e7704" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_wheelDropLeft</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1abba292ad31a7ddd166dd1b6884a4d7aa" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>m_wheelDropRight</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1aa705f92c64f024ca75a4e7be32ff5aa5" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>Mode</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a9c675f7bf0190eac6174a11d69799104" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>mode</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a21a7148be57c6f364da35c69244fd364" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>move</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1aa705f92c64f024ca75a4e7be32ff5aa5a9a8ef8921c0eb914995f1697c981c867" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>OffMode</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1afcde9943a33e2e563cdd5371badb4951" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>open</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1aad9193750e8611b173a22446cb6dbac9" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>operator=</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1aa705f92c64f024ca75a4e7be32ff5aa5ac37b1b453585b163235b882484432eb9" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>PassiveMode</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a6b5c75b31115c4e24bb36b42edf5c41d" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>playButton</name></member>
+      <member refid="group__create_1gae92e9562ccbf510058d365de97c2254d" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>playSong</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1adde30795fa14866ca044a5a84d416006" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>read</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a54b4e8bd0573a5763b7f6f1b4732e601" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>read</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a6e64e8ea6ee7600000fe8087c5a91003" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>refreshRate</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1aa705f92c64f024ca75a4e7be32ff5aa5ab6df5b1b041ef2284c0a034103fd5f06" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>SafeMode</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a09b5da68b8f95a57199a1f471a68e8b5" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>send</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1af6836f7a3b193d8841ea76628a0c38f1" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>sensorPacket1</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a9682f5de3ed1350286a4d83f40694579" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>sensorPacket101</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a80ddc4a6373f071b90e8ac44b71255f7" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>sensorPacket2</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1ac4dee07026e0ac14438f2020e97f4eac" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>sensorPacket3</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a66aff85b23d882c51d432abebc6a8258" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>sensorPacket4</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1ab059c8bb1b525a47092458469c1b9e43" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>sensorPacket5</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1aec020df613b42d1ceff4512fb166023b" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>setAngle</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a36292ef9fa6a2918944f5c75a5818c44" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>setBaudRate</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1acbd2225b1728dd63b6bdfba8f5b5921a" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>setDefaultBaudRate</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a26586e7e74c33753e3fdb1ce615033f8" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>setDistance</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a9cb078bad6fdcd73c4358739fb4ed678" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>setFullMode</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a1307f8ba0c69c8cc6995933ef2d95b83" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>setLeds</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1ad256623af13b0fe6265c496095bfabc9" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>setLocalBaudRate</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1aa0b17bc856ee8fed06df0fe76f10c805" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>setMode</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1ab7caffc0b7988ee93df27b73b5e88524" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>setOffMode</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a2ff108fd4001f00d402aede7013180f1" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>setPassiveMode</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a9d5df1c1f1500ecf40a7642ca0da6e99" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>setRefreshRate</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1aafe274d519e8ec032e206ac97e8d833b" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>setSafeMode</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a286bc10e04107a42c958b363a7e02878" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>songNumber</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a57156aa58f3d30539d0ab989ef7f9df9" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>songPlaying</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1aa2a2e5bbe6040e85a20ffb86f4a2f71c" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>spin</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a7d0d5ee97562827b18b3c9dab436fa49" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>spinClockwise</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a188f91106a75d0c6ebe4931f479c5e88" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>spinCounterClockwise</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1aae0c42790a0f4a790dd4c84ec35f6e61" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>start</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a99e6c0f2e53695b9a2a0e0096c6026bc" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>state</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a329c5f294be422112b025853f3b7fa70" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>stop</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a9f21fd3d2a407fd6e10cdd72987e8746" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>timeOfDay</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a3c8ffd0ad545666848c2a8724802afa6" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>timestamps</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1af4ea8298fc28569f00ce2e2cd457d8cc" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>timevalToFloat</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a258d8684737e8e6ed4ede3f43cd15c88" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>turn</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1ab39bef817bce18899f1d0e527b9d5a98" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>updateSensorPacket1</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a2aa6b933b37b418f9ca7a857a88d99a4" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>updateSensorPacket101</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a9eb31e0612ec605260476706b342540e" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>updateSensorPacket2</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a095726606b30206a53dcd5d3da737668" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>updateSensorPacket3</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a0cb02de81abf6625be881a49ec51682c" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>updateSensorPacket4</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1ae643f3522d3406fdbb05a51a3ab12651" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>updateSensorPacket5</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1ae2a0158e7f7b7fde88a618ba341d1526" prot="private" virt="non-virtual"><scope>kipr::create::Create</scope><name>updateState</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1aabf97448c08f2974487ba873eb8bdd78" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>virtualWall</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a0938789ad23f1411a0180e0fcea4d4af" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>wall</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a88029a763dd23c18ed57a5267ae8a0a8" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>wallSignal</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1ab88719c42699b2aae57b1fbada37798a" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>wheelDropCaster</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1aa48eb27d7d513e0d312a54d3365b96bd" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>wheelDropLeft</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1ae25d94869ce495dfafb38e9a27678b92" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>wheelDropRight</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1aabe0ea962f33ec277a65b0f18da9bb4b" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>write</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1a1e6cd03e54ed1ede3113a7a5de86e608" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>write</name></member>
+      <member refid="classkipr_1_1create_1_1Create_1ac37178513c6c309a9f4b54b352441458" prot="public" virt="non-virtual"><scope>kipr::create::Create</scope><name>~Create</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

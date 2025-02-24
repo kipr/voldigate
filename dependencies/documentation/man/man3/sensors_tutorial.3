@@ -1,0 +1,34 @@
+.TH "sensors_tutorial" 3 "Wed Sep 4 2024" "Version 1.0.0" "libkipr" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+sensors_tutorial \- Sensors Tutorials 
+Hewwo and welcome to the sensors tutorial! First, we'll start off with a detail on the types of sensors that there are\&. 
+.SH "Sensor Types"
+.PP
+.SS "Analog Sensors"
+ As the above image details, there are 5 primary types of analog sensors\&. These get plugged into the wombat's (or wallaby's) analog ports\&.
+.IP "\(bu" 2
+ET sensors - These are 'distance' sensors; they return values based on the distance from the sensor's lens to the nearest object\&. The higher the value, the closer it is to an object\&. Note that these only detect objects in the direction of the lens\&.
+.IP "\(bu" 2
+Tophat sensors and Small Tophat sensors - These sensors should be positioned facing the board\&. Their use is to detect the brightness of the floor, which means that most teams use them to detect whether there is tape on the board or not\&. Essentially, these are the sensors that you'll use if you want to line follow tape on the board\&.
+.IP "\(bu" 2
+Light sensors - These are used for detecting the starting light\&. 
+.PP
+\fBSee also\fP
+.RS 4
+\fBwait_for_light\fP
+.RE
+.PP
+
+.IP "\(bu" 2
+Linear Slide sensors - These are slideable sensors\&. They read higher values the more that they are pushed in\&. Common use for these would be to get within a certain distance of a wall\&. 
+.PP
+.SS "Digital Sensors"
+ As the above image details, there are 3 primary types of digital sensors\&. These get plugged into the wombat's (or wallaby's) digital ports\&.
+.IP "\(bu" 2
+Lever - Also called a click sensor\&. Outputs 0 when not clicked and 1 when clicked\&.
+.IP "\(bu" 2
+Small Touch and Large Touch - These are buttons\&. They output 0 when not pressed and 1 when pressed\&. 
+.PP
+

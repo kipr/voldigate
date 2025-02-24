@@ -1,15 +1,11 @@
 import * as React from 'react';
-
 import { styled } from 'styletron-react';
 import { StyleProps } from '../style';
 import { Fa } from './Fa';
 import { ThemeProps } from './theme';
 import { faBook, faQuestion } from '@fortawesome/free-solid-svg-icons';
-
 import tr from '@i18n';
-
 import { connect } from 'react-redux';
-
 import { State as ReduxState } from '../state';
 import LocalizedString from '../util/LocalizedString';
 
@@ -32,11 +28,11 @@ type State = ExtraMenuState;
 
 const Container = styled('div', (props: ThemeProps) => ({
   position: 'absolute',
-  right: `${(window.innerWidth * 0.03)}px`,
-  width: '200px',
-  backgroundColor: props.theme.backgroundColor,
-  color: props.theme.color,
+  right: `${(window.innerWidth * 0.04)}px`,
+  width: '240px',
   
+  backgroundColor: props.theme.titleBarBackground,
+  color: props.theme.color,
   display: 'flex',
   flexDirection: 'row',
   borderBottomLeftRadius: `${props.theme.borderRadius}px`,
@@ -57,6 +53,7 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
   flexDirection: 'row',
   padding: '10px',
   borderBottom: `1px solid ${props.theme.borderColor}`,
+  backgroundColor: `${props.theme.iconColor}`,
   ':last-child': {
     borderBottom: 'none'
   },
@@ -64,7 +61,7 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
   fontWeight: 400,
   ':hover': !props.disabled && props.onClick ? {
     cursor: 'pointer',
-    backgroundColor: `rgba(255, 255, 255, 0.1)`
+    backgroundColor: props.theme.hoverOptionBackground  
   } : {
     cursor: 'auto',
   },
@@ -98,6 +95,7 @@ class ExtraMenu extends React.PureComponent<Props, State> {
 
       locale,
     } = props;
+    console.log("ExtraMenu theme: ", theme);
     return (
       <Container theme={theme} style={style} className={className}>
         <Item theme={theme} onClick={onDocumentationClick}><ItemIcon icon={faBook} /> {LocalizedString.lookup(tr('Documentation'), locale)}</Item>

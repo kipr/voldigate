@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="namespacekipr_1_1magneto" kind="namespace" language="C++">
+    <compoundname>kipr::magneto</compoundname>
+    <innerclass refid="classkipr_1_1magneto_1_1Magneto" prot="public">kipr::magneto::Magneto</innerclass>
+    <innerclass refid="classkipr_1_1magneto_1_1MagnetoX" prot="public">kipr::magneto::MagnetoX</innerclass>
+    <innerclass refid="classkipr_1_1magneto_1_1MagnetoY" prot="public">kipr::magneto::MagnetoY</innerclass>
+    <innerclass refid="classkipr_1_1magneto_1_1MagnetoZ" prot="public">kipr::magneto::MagnetoZ</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/magneto/public/kipr/magneto/magneto.hpp" line="8" column="1"/>
+  </compounddef>
+</doxygen>

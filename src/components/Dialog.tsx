@@ -1,17 +1,13 @@
 import * as React from 'react';
-
 import { Modal } from './Modal';
-
 import { StyleProps } from '../style';
-
 import { styled } from 'styletron-react';
-import Widget, { Mode, Size } from './Widget';
 import { ThemeProps } from './theme';
+import Widget, { Mode, Size } from './Widget';
 
 export interface DialogProps extends ThemeProps, StyleProps {
   name: string;
   children: React.ReactNode;
-
   onClose: () => void;
 }
 
@@ -35,7 +31,7 @@ class Dialog_ extends React.PureComponent<Props> {
     return (
       <Modal>
         <Container theme={theme}>
-          <Widget theme={theme} size={0} sizes={[Size.MAXIMIZED, Size.MINIMIZED]} onSizeChange={this.onSizeChange_} mode={Mode.Floating} name={name}>
+          <Widget style={{backgroundColor: theme.dialogBoxTitleBackground}}theme={theme} size={0} sizes={[Size.MAXIMIZED, Size.MINIMIZED]} onSizeChange={this.onSizeChange_} mode={Mode.Floating} name={name}>
             {children}
           </Widget>
         </Container>

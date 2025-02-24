@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="display_8h" kind="file" language="C++">
+    <compoundname>display.h</compoundname>
+    <includes refid="export_8h" local="yes">kipr/export/export.h</includes>
+    <incdepgraph>
+      <node id="2">
+        <label>kipr/export/export.h</label>
+        <link refid="export_8h"/>
+      </node>
+      <node id="1">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/console/public/kipr/console/display.h</label>
+        <link refid="display_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="display_8h_1aee07a233052bd0b8f6e461d21f380d4e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void display_clear</definition>
+        <argsstring>()</argsstring>
+        <name>display_clear</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/console/public/kipr/console/display.h" line="19" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/console/public/kipr/console/display.h" declline="19" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="display_8h_1abbf993d2dc1de781d106a1ca2c8c484d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void display_printf</definition>
+        <argsstring>(int col, int row, const char *t,...)</argsstring>
+        <name>display_printf</name>
+        <param>
+          <type>int</type>
+          <declname>col</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>row</declname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>t</declname>
+        </param>
+        <param>
+          <type>...</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/console/public/kipr/console/display.h" line="21" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/console/public/kipr/console/display.h" declline="21" declcolumn="17"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">//<sp/>Full<sp/>screen<sp/>management<sp/>functions<sp/>for<sp/>the<sp/>display<sp/>window<sp/>as<sp/>implemented<sp/>on<sp/>the<sp/>KIPR<sp/>LINK<sp/>controller</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/>display_printf(int<sp/>column,<sp/>int<sp/>row,<sp/>&lt;printf<sp/>arguments&gt;)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/>display_clear()</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="comment">//<sp/>NOTE:<sp/>the<sp/>difference<sp/>between<sp/>display_clear<sp/>and<sp/>console_clear<sp/>is<sp/>that<sp/>display_clear<sp/>also<sp/>clears<sp/>the<sp/>display<sp/>map</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Display<sp/>window<sp/>size<sp/>is<sp/>10<sp/>rows<sp/>by<sp/>42<sp/>columns,<sp/>indexed<sp/>from<sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_KIPR_CONSOLE_DISPLAY_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_KIPR_CONSOLE_DISPLAY_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="export_8h" kindref="compound">kipr/export/export.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="comment">//void<sp/>display_printf(int<sp/>col,<sp/>int<sp/>row,<sp/>char<sp/>*t,<sp/>...);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="comment">//void<sp/>display_clear();</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight></codeline>
+<codeline lineno="19" refid="display_8h_1aee07a233052bd0b8f6e461d21f380d4e" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="display_8h_1aee07a233052bd0b8f6e461d21f380d4e" kindref="member">display_clear</ref>();<sp/><sp/></highlight><highlight class="comment">//<sp/>clears<sp/>console<sp/>and<sp/>sets<sp/>display<sp/>map<sp/>to<sp/>all<sp/>spaces</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight></codeline>
+<codeline lineno="21" refid="display_8h_1abbf993d2dc1de781d106a1ca2c8c484d" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="display_8h_1abbf993d2dc1de781d106a1ca2c8c484d" kindref="member">display_printf</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>col,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>row,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*t,<sp/>...);<sp/></highlight><highlight class="comment">//<sp/>runs<sp/>printf<sp/>formatting<sp/>to<sp/>specified<sp/>screen<sp/>location</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/console/public/kipr/console/display.h"/>
+  </compounddef>
+</doxygen>

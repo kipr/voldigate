@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="structkipr_1_1create_1_1CreateState" kind="struct" language="C++" prot="public">
+    <compoundname>kipr::create::CreateState</compoundname>
+    <includes refid="create_8hpp" local="no">create.hpp</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreateState_1aff5312accc3d37fb3c142810d0c24692" prot="public" static="no" mutable="no">
+        <type>timeval</type>
+        <definition>timeval kipr::create::CreateState::timestamp</definition>
+        <argsstring></argsstring>
+        <name>timestamp</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="67" column="15" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreateState_1abf7892ddcaebc78a04e40590c008b97a" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int kipr::create::CreateState::distance</definition>
+        <argsstring></argsstring>
+        <name>distance</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="69" column="11" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreateState_1a9e7d902602de78237b4c57ed30f2473a" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int kipr::create::CreateState::angle</definition>
+        <argsstring></argsstring>
+        <name>angle</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="70" column="11" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="70" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreateState_1afac9f5cf0c8ff835c2588f1ba6ad4304" prot="public" static="no" mutable="no">
+        <type>short</type>
+        <definition>short kipr::create::CreateState::radius</definition>
+        <argsstring></argsstring>
+        <name>radius</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="71" column="13" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="71" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreateState_1a0da2624fe399f3753bf235776253c2e0" prot="public" static="no" mutable="no">
+        <type>short</type>
+        <definition>short kipr::create::CreateState::rightVelocity</definition>
+        <argsstring></argsstring>
+        <name>rightVelocity</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="72" column="13" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="72" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreateState_1adace48d28610a2d9d2637b5b48527554" prot="public" static="no" mutable="no">
+        <type>short</type>
+        <definition>short kipr::create::CreateState::leftVelocity</definition>
+        <argsstring></argsstring>
+        <name>leftVelocity</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="73" column="13" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="73" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Locally stored state information </para>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="65" column="5" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="66" bodyend="74"/>
+    <listofallmembers>
+      <member refid="structkipr_1_1create_1_1CreateState_1a9e7d902602de78237b4c57ed30f2473a" prot="public" virt="non-virtual"><scope>kipr::create::CreateState</scope><name>angle</name></member>
+      <member refid="structkipr_1_1create_1_1CreateState_1abf7892ddcaebc78a04e40590c008b97a" prot="public" virt="non-virtual"><scope>kipr::create::CreateState</scope><name>distance</name></member>
+      <member refid="structkipr_1_1create_1_1CreateState_1adace48d28610a2d9d2637b5b48527554" prot="public" virt="non-virtual"><scope>kipr::create::CreateState</scope><name>leftVelocity</name></member>
+      <member refid="structkipr_1_1create_1_1CreateState_1afac9f5cf0c8ff835c2588f1ba6ad4304" prot="public" virt="non-virtual"><scope>kipr::create::CreateState</scope><name>radius</name></member>
+      <member refid="structkipr_1_1create_1_1CreateState_1a0da2624fe399f3753bf235776253c2e0" prot="public" virt="non-virtual"><scope>kipr::create::CreateState</scope><name>rightVelocity</name></member>
+      <member refid="structkipr_1_1create_1_1CreateState_1aff5312accc3d37fb3c142810d0c24692" prot="public" virt="non-virtual"><scope>kipr::create::CreateState</scope><name>timestamp</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

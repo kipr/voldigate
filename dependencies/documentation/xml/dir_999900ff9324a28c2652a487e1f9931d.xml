@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="dir_999900ff9324a28c2652a487e1f9931d" kind="dir">
+    <compoundname>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics</compoundname>
+    <innerfile refid="graphics_8h">graphics.h</innerfile>
+    <innerfile refid="graphics__characters_8h">graphics_characters.h</innerfile>
+    <innerfile refid="graphics__key__code_8h">graphics_key_code.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/"/>
+  </compounddef>
+</doxygen>

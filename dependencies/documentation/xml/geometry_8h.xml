@@ -1,0 +1,296 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="geometry_8h" kind="file" language="C++">
+    <compoundname>geometry.h</compoundname>
+    <includes refid="export_8h" local="yes">kipr/export/export.h</includes>
+    <includedby refid="geometry_8hpp" local="yes">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h</label>
+        <link refid="geometry_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>kipr/export/export.h</label>
+        <link refid="export_8h"/>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="1">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h</label>
+        <link refid="geometry_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp</label>
+        <link refid="geometry_8hpp"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structpoint2" prot="public">point2</innerclass>
+    <innerclass refid="structpoint3" prot="public">point3</innerclass>
+    <innerclass refid="structrectangle" prot="public">rectangle</innerclass>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="geometry_8h_1a740b92e74889e69dc6fba3672ef007bf" prot="public" static="no">
+        <type>struct <ref refid="structpoint2" kindref="compound">point2</ref></type>
+        <definition>typedef struct point2 point2</definition>
+        <argsstring></argsstring>
+        <name>point2</name>
+        <briefdescription>
+<para>A 2D point; has x and y. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" line="18" column="8"/>
+      </memberdef>
+      <memberdef kind="typedef" id="geometry_8h_1a2ce9ea0acb67122e9f6884b020263e9f" prot="public" static="no">
+        <type>struct <ref refid="structpoint3" kindref="compound">point3</ref></type>
+        <definition>typedef struct point3 point3</definition>
+        <argsstring></argsstring>
+        <name>point3</name>
+        <briefdescription>
+<para>A 3D point; has x, y, and z. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" line="29" column="8"/>
+      </memberdef>
+      <memberdef kind="typedef" id="geometry_8h_1ac05b76cb45185785dc024912b32b7b05" prot="public" static="no">
+        <type>struct <ref refid="structrectangle" kindref="compound">rectangle</ref></type>
+        <definition>typedef struct rectangle rectangle</definition>
+        <argsstring></argsstring>
+        <name>rectangle</name>
+        <briefdescription>
+<para>A rectangle object. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" line="41" column="11"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="geometry_8h_1ac1f6153905cf399f94735ed9e873ad99" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> <ref refid="structpoint2" kindref="compound">point2</ref></type>
+        <definition>EXPORT_SYM point2 create_point2</definition>
+        <argsstring>(int x, int y)</argsstring>
+        <name>create_point2</name>
+        <param>
+          <type>int</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y</declname>
+        </param>
+        <briefdescription>
+<para>Create a <ref refid="structpoint2" kindref="compound">point2</ref> object. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>- the x value of the point </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>- the y value of the point </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><ref refid="structpoint2" kindref="compound">point2</ref> object </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" line="51" column="19" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" declline="51" declcolumn="19"/>
+        <referencedby refid="classkipr_1_1geometry_1_1Point2_1a74687f56e9bbd34b15b56bcc6652a414" compoundref="geometry_8hpp" startline="61" endline="64">kipr::geometry::Point2&lt; T &gt;::toCPoint2</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="geometry_8h_1a857eaf4c97ea5a11cc8205d88cd97e96" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> <ref refid="structpoint3" kindref="compound">point3</ref></type>
+        <definition>EXPORT_SYM point3 create_point3</definition>
+        <argsstring>(int x, int y, int z)</argsstring>
+        <name>create_point3</name>
+        <param>
+          <type>int</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>z</declname>
+        </param>
+        <briefdescription>
+<para>Create a <ref refid="structpoint3" kindref="compound">point3</ref> object. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>- the x value of the point </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>- the y value of the point </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>z</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>- the z value of the point </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><ref refid="structpoint3" kindref="compound">point3</ref> object </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" line="62" column="19" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" declline="62" declcolumn="19"/>
+        <referencedby refid="classkipr_1_1geometry_1_1Point3_1accd620854094c3ca1dc45886c7e0aef3" compoundref="geometry_8hpp" startline="112" endline="115">kipr::geometry::Point3&lt; T &gt;::toCPoint3</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="geometry_8h_1a16565d9e4cf25ba1a8b7efa988169fb3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> <ref refid="structrectangle" kindref="compound">rectangle</ref></type>
+        <definition>EXPORT_SYM rectangle create_rectangle</definition>
+        <argsstring>(int ulx, int uly, int width, int height)</argsstring>
+        <name>create_rectangle</name>
+        <param>
+          <type>int</type>
+          <declname>ulx</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>uly</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>width</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>height</declname>
+        </param>
+        <briefdescription>
+<para>Create a rectangle object. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>ulx</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>- the x value of the rectangle&apos;s upper left </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>uly</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>- the y value of the rectangle&apos;s upper left </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>width</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>- the width of the rectangle </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>height</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>- the height of the rectangle </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>rectangle object </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" line="74" column="22" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h" declline="74" declcolumn="22"/>
+        <referencedby refid="classkipr_1_1geometry_1_1Rect_1aa2991433d3457ca59c21fcf791d17999" compoundref="geometry_8hpp" startline="188" endline="191">kipr::geometry::Rect&lt; T &gt;::toCRectangle</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>_KIPR_GEOMETRY_GEOMETRY_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_KIPR_GEOMETRY_GEOMETRY_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="export_8h" kindref="compound">kipr/export/export.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14" refid="structpoint2" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structpoint2" kindref="compound">point2</ref></highlight></codeline>
+<codeline lineno="15"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="16" refid="structpoint2_1a945025c0035751bfc726251dda81da54" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structpoint2_1a945025c0035751bfc726251dda81da54" kindref="member">x</ref>;<sp/><sp/></highlight></codeline>
+<codeline lineno="17" refid="structpoint2_1a4caabf9c28bb6b0283b028ddad9c8a62" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structpoint2_1a4caabf9c28bb6b0283b028ddad9c8a62" kindref="member">y</ref>;<sp/><sp/></highlight></codeline>
+<codeline lineno="18" refid="geometry_8h_1a740b92e74889e69dc6fba3672ef007bf" refkind="member"><highlight class="normal">}<sp/><ref refid="geometry_8h_1a740b92e74889e69dc6fba3672ef007bf" kindref="member">point2</ref>;</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="24" refid="structpoint3" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structpoint3" kindref="compound">point3</ref></highlight></codeline>
+<codeline lineno="25"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="26" refid="structpoint3_1a617420d14db862c60053216fa72342de" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structpoint3_1a617420d14db862c60053216fa72342de" kindref="member">x</ref>;<sp/><sp/></highlight></codeline>
+<codeline lineno="27" refid="structpoint3_1a87df35474bb5e0d5ba2d68c522842d0a" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structpoint3_1a87df35474bb5e0d5ba2d68c522842d0a" kindref="member">y</ref>;<sp/><sp/></highlight></codeline>
+<codeline lineno="28" refid="structpoint3_1a0380e24b79b7c2576ea6dc79d5e2812b" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structpoint3_1a0380e24b79b7c2576ea6dc79d5e2812b" kindref="member">z</ref>;<sp/><sp/></highlight></codeline>
+<codeline lineno="29" refid="geometry_8h_1a2ce9ea0acb67122e9f6884b020263e9f" refkind="member"><highlight class="normal">}<sp/><ref refid="geometry_8h_1a2ce9ea0acb67122e9f6884b020263e9f" kindref="member">point3</ref>;</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35" refid="structrectangle" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structrectangle" kindref="compound">rectangle</ref></highlight></codeline>
+<codeline lineno="36"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="37" refid="structrectangle_1a4feece2ec58d909444613177ec67e2bc" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structrectangle_1a4feece2ec58d909444613177ec67e2bc" kindref="member">ulx</ref>;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="38" refid="structrectangle_1ac537f5c6afbda6ef42cc428540058ecb" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structrectangle_1ac537f5c6afbda6ef42cc428540058ecb" kindref="member">uly</ref>;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="39" refid="structrectangle_1a57a9b24a714057d8d2ca9a06333560d3" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structrectangle_1a57a9b24a714057d8d2ca9a06333560d3" kindref="member">width</ref>;<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="40" refid="structrectangle_1af460193d9a375b8e2813bf1fe6216cce" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structrectangle_1af460193d9a375b8e2813bf1fe6216cce" kindref="member">height</ref>;<sp/><sp/></highlight></codeline>
+<codeline lineno="41" refid="geometry_8h_1ac05b76cb45185785dc024912b32b7b05" refkind="member"><highlight class="normal">}<sp/><ref refid="geometry_8h_1ac05b76cb45185785dc024912b32b7b05" kindref="member">rectangle</ref>;</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51" refid="geometry_8h_1ac1f6153905cf399f94735ed9e873ad99" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/><ref refid="structpoint2" kindref="compound">point2</ref><sp/><ref refid="geometry_8h_1ac1f6153905cf399f94735ed9e873ad99" kindref="member">create_point2</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>y);</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62" refid="geometry_8h_1a857eaf4c97ea5a11cc8205d88cd97e96" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/><ref refid="structpoint3" kindref="compound">point3</ref><sp/><ref refid="geometry_8h_1a857eaf4c97ea5a11cc8205d88cd97e96" kindref="member">create_point3</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>y,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>z);</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight></codeline>
+<codeline lineno="74" refid="geometry_8h_1a16565d9e4cf25ba1a8b7efa988169fb3" refkind="member"><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/><ref refid="structrectangle" kindref="compound">rectangle</ref><sp/><ref refid="geometry_8h_1a16565d9e4cf25ba1a8b7efa988169fb3" kindref="member">create_rectangle</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>ulx,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>uly,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>width,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>height);</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>INCLUDE_WALLABY_GEOM_H_<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h"/>
+  </compounddef>
+</doxygen>

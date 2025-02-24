@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="group__compass" kind="group">
+    <compoundname>compass</compoundname>
+    <title>Compass</title>
+    <innerpage refid="group__compass_Compass"></innerpage>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="group__compass_1ga967556bd100e24df918e7adb912bd26a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void calibrate_compass</definition>
+        <argsstring>()</argsstring>
+        <name>calibrate_compass</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Begin calibrating the compass.</para>
+<para>Will display the calibration parameter results which can be used in the future with set_compass_params</para>
+<para>Provided by Dr. Andrew H. Fagg and Twister Robotics </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/compass/public/kipr/compass/compass.h" line="28" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/compass/public/kipr/compass/compass.h" declline="28" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__compass_1gac3e85c6216882ab5e6cc0be3111bc2c7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void set_compass_params</definition>
+        <argsstring>(float meanX, float meanY, float meanZ, float W1, float W2, float div_E1, float div_E2)</argsstring>
+        <name>set_compass_params</name>
+        <param>
+          <type>float</type>
+          <declname>meanX</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>meanY</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>meanZ</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>W1</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>W2</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>div_E1</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>div_E2</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set the compass parameters based on a previous calibration.</para>
+<para>Provided by Dr. Andrew H. Fagg and Twister Robotics</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">meanX</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>a value provided by calibrate_compass </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">meanY</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>a value provided by calibrate_compass </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">meanZ</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>a value provided by calibrate_compass </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">W1</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>a value provided by calibrate_compass </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">W2</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>a value provided by calibrate_compass </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">div_E1</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>a value provided by calibrate_compass </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">div_E2</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>a value provided by calibrate_compass </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/compass/public/kipr/compass/compass.h" line="45" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/compass/public/kipr/compass/compass.h" declline="45" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__compass_1ga1514178173bb3ea8effe4d6c183ec0f9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>float</type>
+        <definition>float get_compass_angle</definition>
+        <argsstring>(void)</argsstring>
+        <name>get_compass_angle</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Get the current compass heading.</para>
+<para>Provided by Dr. Andrew H. Fagg and Twister Robotics <simplesect kind="return"><para>the compass angle in radians </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/compass/public/kipr/compass/compass.h" line="55" column="7" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/compass/public/kipr/compass/compass.h" declline="55" declcolumn="7"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

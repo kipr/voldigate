@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="structmutex" kind="struct" language="C++" prot="public">
+    <compoundname>mutex</compoundname>
+    <includes refid="thread_8h" local="no">thread.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structmutex_1a4a80e8b6f332480afe9e5cd36cddd1a8" prot="public" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void* mutex::data</definition>
+        <argsstring></argsstring>
+        <name>data</name>
+        <briefdescription>
+<para>a C++ Mutex object cast to a <computeroutput>void*</computeroutput>. Not intended to be accessed. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread/thread.h" line="27" column="6" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread/thread.h" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>A mutex, or lock. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>mutexes are used to prevent memory errors when two programs or threads need to access the same variable. <simplesect kind="see"><para><ref refid="group__thread_1gac9c53fb550d97d6d0ee04f13957f18d0" kindref="member">mutex_create</ref> </para>
+</simplesect>
+</para>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread/thread.h" line="25" column="1" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread/thread.h" bodystart="26" bodyend="28"/>
+    <listofallmembers>
+      <member refid="structmutex_1a4a80e8b6f332480afe9e5cd36cddd1a8" prot="public" virt="non-virtual"><scope>mutex</scope><name>data</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

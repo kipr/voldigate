@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classkipr_1_1battery_1_1Battery" kind="class" language="C++" prot="public">
+    <compoundname>kipr::battery::Battery</compoundname>
+    <includes refid="battery_8hpp" local="no">battery.hpp</includes>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classkipr_1_1battery_1_1Battery_1a269b2a7c61f0932572ad3ed4d39bc678" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>static bool kipr::battery::Battery::isCharging</definition>
+        <argsstring>()</argsstring>
+        <name>isCharging</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/battery/public/kipr/battery/battery.hpp" line="11" column="19"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1battery_1_1Battery_1a53aceba0d53c91e872ec17ffbf7a1aa5" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>float</type>
+        <definition>static float kipr::battery::Battery::powerLevel</definition>
+        <argsstring>(unsigned int battery_type=0)</argsstring>
+        <name>powerLevel</name>
+        <param>
+          <type>unsigned int</type>
+          <declname>battery_type</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/battery/public/kipr/battery/battery.hpp" line="12" column="20"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1battery_1_1Battery_1a90375a5cace301f92d1d4e8d4845fc26" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>unsigned short</type>
+        <definition>static unsigned short kipr::battery::Battery::rawPowerADC</definition>
+        <argsstring>()</argsstring>
+        <name>rawPowerADC</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/battery/public/kipr/battery/battery.hpp" line="13" column="29"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/battery/public/kipr/battery/battery.hpp" line="8" column="5" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/battery/public/kipr/battery/battery.hpp" bodystart="9" bodyend="14"/>
+    <listofallmembers>
+      <member refid="classkipr_1_1battery_1_1Battery_1a269b2a7c61f0932572ad3ed4d39bc678" prot="public" virt="non-virtual"><scope>kipr::battery::Battery</scope><name>isCharging</name></member>
+      <member refid="classkipr_1_1battery_1_1Battery_1a53aceba0d53c91e872ec17ffbf7a1aa5" prot="public" virt="non-virtual"><scope>kipr::battery::Battery</scope><name>powerLevel</name></member>
+      <member refid="classkipr_1_1battery_1_1Battery_1a90375a5cace301f92d1d4e8d4845fc26" prot="public" virt="non-virtual"><scope>kipr::battery::Battery</scope><name>rawPowerADC</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

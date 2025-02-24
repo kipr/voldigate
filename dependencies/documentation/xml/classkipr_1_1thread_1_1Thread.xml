@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classkipr_1_1thread_1_1Thread" kind="class" language="C++" prot="public" abstract="yes">
+    <compoundname>kipr::thread::Thread</compoundname>
+    <includes refid="thread_8hpp" local="no">thread.hpp</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classkipr_1_1thread_1_1Thread_1a172cce779c1220e65e817a3621cc9447" prot="private" static="no" mutable="no">
+        <type>pthread_t</type>
+        <definition>pthread_t kipr::thread::Thread::m_thread</definition>
+        <argsstring></argsstring>
+        <name>m_thread</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread/thread.hpp" line="52" column="11" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread/thread.hpp" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classkipr_1_1thread_1_1Thread_1a59b072650fc2ef0b4814bb41e3b9a7b7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>kipr::thread::Thread::Thread</definition>
+        <argsstring>()</argsstring>
+        <name>Thread</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread/thread.hpp" line="42" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1thread_1_1Thread_1a9fddea8aa52f644c2ffaf71696552e59" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type></type>
+        <definition>virtual kipr::thread::Thread::~Thread</definition>
+        <argsstring>()</argsstring>
+        <name>~Thread</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread/thread.hpp" line="43" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1thread_1_1Thread_1a244b7873c57db20297cbeab03bcbe999" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::thread::Thread::start</definition>
+        <argsstring>()</argsstring>
+        <name>start</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread/thread.hpp" line="45" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1thread_1_1Thread_1ae4ef45e7d79a7e01c2507a345d234e60" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::thread::Thread::join</definition>
+        <argsstring>()</argsstring>
+        <name>join</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread/thread.hpp" line="46" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1thread_1_1Thread_1aca98deefaf7e297cbf28191e95776587" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>void</type>
+        <definition>virtual void kipr::thread::Thread::run</definition>
+        <argsstring>()=0</argsstring>
+        <name>run</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread/thread.hpp" line="48" column="14"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread/thread.hpp" line="39" column="1" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread/thread.hpp" bodystart="40" bodyend="56"/>
+    <listofallmembers>
+      <member refid="classkipr_1_1thread_1_1Thread_1ae4ef45e7d79a7e01c2507a345d234e60" prot="public" virt="non-virtual"><scope>kipr::thread::Thread</scope><name>join</name></member>
+      <member refid="classkipr_1_1thread_1_1Thread_1a172cce779c1220e65e817a3621cc9447" prot="private" virt="non-virtual"><scope>kipr::thread::Thread</scope><name>m_thread</name></member>
+      <member refid="classkipr_1_1thread_1_1Thread_1aca98deefaf7e297cbf28191e95776587" prot="public" virt="pure-virtual"><scope>kipr::thread::Thread</scope><name>run</name></member>
+      <member refid="classkipr_1_1thread_1_1Thread_1a244b7873c57db20297cbeab03bcbe999" prot="public" virt="non-virtual"><scope>kipr::thread::Thread</scope><name>start</name></member>
+      <member refid="classkipr_1_1thread_1_1Thread_1a59b072650fc2ef0b4814bb41e3b9a7b7" prot="public" virt="non-virtual"><scope>kipr::thread::Thread</scope><name>Thread</name></member>
+      <member refid="classkipr_1_1thread_1_1Thread_1a9fddea8aa52f644c2ffaf71696552e59" prot="public" virt="virtual"><scope>kipr::thread::Thread</scope><name>~Thread</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

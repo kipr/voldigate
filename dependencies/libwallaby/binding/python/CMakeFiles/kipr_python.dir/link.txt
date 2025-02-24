@@ -1,0 +1,2 @@
+/usr/bin/ar qc libkipr_python.a CMakeFiles/kipr_python.dir/kipr_python.o
+/usr/bin/ranlib libkipr_python.a

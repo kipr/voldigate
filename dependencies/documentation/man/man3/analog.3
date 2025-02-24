@@ -1,0 +1,207 @@
+.TH "analog" 3 "Wed Sep 4 2024" "Version 1.0.0" "libkipr" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+analog \- Analogs
+.SH SYNOPSIS
+.br
+.PP
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBanalog\fP (int port)"
+.br
+.ti -1c
+.RI "int \fBanalog8\fP (int port)"
+.br
+.ti -1c
+.RI "int \fBanalog10\fP (int port)"
+.br
+.ti -1c
+.RI "int \fBanalog12\fP (int port)"
+.br
+.ti -1c
+.RI "int \fBanalog_et\fP (int port)"
+.br
+.ti -1c
+.RI "void \fBset_analog_pullup\fP (int port, int pullup)"
+.br
+.ti -1c
+.RI "int \fBget_analog_pullup\fP (int port)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+The functions defined here allow for reading the values in analog sensors\&. 
+.SH "Example"
+.PP
+For example, if there was a distance sensor in analog port 0, then you could use the following code block to move until close to an object or wall 
+.PP
+.nf
+#include <kipr/wombat\&.h>
+#include <stdio\&.h>
+
+int main(){
+     // arbitrary number that represents how close to get to the wall/object
+     // larger numbers mean closer to the wall/object
+     int stopping_distance = 1200;
+
+     while (analog(0) < stopping_distance){
+         // move
+     }
+}
+
+.fi
+.PP
+ 
+.SH "Function Documentation"
+.PP 
+.SS "int analog (int port)"
+Gets the 12-bit analog value of a port\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIport\fP A value between 0 and 5 specifying the sensor to read from\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The latest 12-bit value of the port (a value in the range 0 to 4095)\&. 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBanalog12\fP 
+.RE
+.PP
+
+.SS "int analog10 (int port)"
+Gets the 10-bit analog value of a port\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIport\fP A value between 0 and 5 specifying the sensor to read from\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The latest 10-bit value of the port (a value in the range 0 to 1023)\&. 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBanalog\fP 
+.RE
+.PP
+
+.SS "int analog12 (int port)"
+Gets the 12-bit analog value of a port\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIport\fP A value between 0 and 5 specifying the sensor to read from\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The latest 12-bit value of the port (a value in the range 0 to 4095)\&. 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBanalog\fP 
+.RE
+.PP
+
+.SS "int analog8 (int port)"
+Gets the 8-bit analog value of a port\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIport\fP A value between 0 and 5 specifying the sensor to read from\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The latest 8-bit value of the port (a value in the range 0 to 255)\&. 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBanalog\fP 
+.RE
+.PP
+
+.SS "int analog_et (int port)"
+Gets the 10-bit analog value of an ET sensor on the given port\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIport\fP A value between 0 and 7 specifying the ET sensor to read from\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The latest 10-bit value of the port (a value in the range 0 to 1023)\&. 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBanalog\fP
+.RE
+.PP
+\fBDeprecated\fP
+.RS 4
+defaulting to \fBanalog()\fP on the Wallaby 
+.RE
+.PP
+
+.SS "int get_analog_pullup (int port)"
+Gets the analog pullup status for one portt\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIport\fP A value between 0 and 7 specifying the analog sensor to read from\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The status of the analog pullup on the specified port 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBanalog\fP
+.RE
+.PP
+\fBDeprecated\fP
+.RS 4
+no effect on the Wallaby 
+.RE
+.PP
+
+.SS "void set_analog_pullup (int port, int pullup)"
+Sets analog pullup status for one port\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIport\fP A value between 0 and 5 specifying the analog sensor to read from\&. 
+.br
+\fIpullup\fP A value of 0 (inactive) or 1 (active)\&. 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBanalog\fP
+.RE
+.PP
+\fBDeprecated\fP
+.RS 4
+no effect on the Wallaby 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for libkipr from the source code\&.

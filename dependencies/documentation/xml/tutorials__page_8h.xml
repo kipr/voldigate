@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="tutorials__page_8h" kind="file" language="C++">
+    <compoundname>tutorials_page.h</compoundname>
+    <briefdescription>
+<para>a page filled with tutorials </para>
+    </briefdescription>
+    <detaileddescription>
+<para><simplesect kind="author"><para>Eliot Hall </para>
+</simplesect>
+<simplesect kind="version"><para>0.1 </para>
+</simplesect>
+<simplesect kind="date"><para>2022-08-27</para>
+</simplesect>
+<simplesect kind="copyright"><para>Copyright (c) 2022 </para>
+</simplesect>
+</para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"></codeline>
+    </programlisting>
+    <location file="pages/tutorials_page.h"/>
+  </compounddef>
+</doxygen>

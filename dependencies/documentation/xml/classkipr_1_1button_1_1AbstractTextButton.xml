@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classkipr_1_1button_1_1AbstractTextButton" kind="class" language="C++" prot="public" abstract="yes">
+    <compoundname>kipr::button::AbstractTextButton</compoundname>
+    <basecompoundref refid="classkipr_1_1button_1_1AbstractButton" prot="public" virt="non-virtual">kipr::button::AbstractButton</basecompoundref>
+    <derivedcompoundref refid="classkipr_1_1button_1_1IdButton" prot="public" virt="non-virtual">kipr::button::IdButton</derivedcompoundref>
+    <includes refid="button_8hpp" local="no">button.hpp</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classkipr_1_1button_1_1AbstractTextButton_1ab3670fda7972700695e33e91a3485e6d" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type></type>
+        <definition>virtual kipr::button::AbstractTextButton::~AbstractTextButton</definition>
+        <argsstring>()</argsstring>
+        <name>~AbstractTextButton</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.hpp" line="40" column="15"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1button_1_1AbstractTextButton_1a09b0dae10968d316eb5095dae58933e1" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>void</type>
+        <definition>virtual void kipr::button::AbstractTextButton::setText</definition>
+        <argsstring>(const char *text)=0</argsstring>
+        <name>setText</name>
+        <reimplementedby refid="classkipr_1_1button_1_1IdButton_1ac6cea0dd9f461e929ba35b755fe9e16c">setText</reimplementedby>
+        <param>
+          <type>const char *</type>
+          <declname>text</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.hpp" line="42" column="20"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1button_1_1AbstractTextButton_1ace5ac331b051c11dccf44d08344faab1" prot="public" static="no" const="yes" explicit="no" inline="no" virt="pure-virtual">
+        <type>const char *</type>
+        <definition>virtual const char* kipr::button::AbstractTextButton::text</definition>
+        <argsstring>() const =0</argsstring>
+        <name>text</name>
+        <reimplementedby refid="classkipr_1_1button_1_1IdButton_1a5ac78344ad2d2638005c475456242658">text</reimplementedby>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.hpp" line="44" column="27"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1button_1_1AbstractTextButton_1aa31595efcff39e4f57748a518a409d19" prot="public" static="no" const="yes" explicit="no" inline="no" virt="pure-virtual">
+        <type>bool</type>
+        <definition>virtual bool kipr::button::AbstractTextButton::isTextDirty</definition>
+        <argsstring>() const =0</argsstring>
+        <name>isTextDirty</name>
+        <reimplementedby refid="classkipr_1_1button_1_1IdButton_1a790eaead998d029d7e4105b5013f14bc">isTextDirty</reimplementedby>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.hpp" line="46" column="20"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1button_1_1AbstractTextButton_1ac16e21eb25cdacb796d410b3a7e1c000" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>void</type>
+        <definition>virtual void kipr::button::AbstractTextButton::resetText</definition>
+        <argsstring>()=0</argsstring>
+        <name>resetText</name>
+        <reimplementedby refid="classkipr_1_1button_1_1IdButton_1a1be37f44c07b4b7b58064c2f687d824b">resetText</reimplementedby>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.hpp" line="48" column="20"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>kipr::button::AbstractButton</label>
+        <link refid="classkipr_1_1button_1_1AbstractButton"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>kipr::button::AbstractTextButton</label>
+        <link refid="classkipr_1_1button_1_1AbstractTextButton"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>kipr::button::IdButton</label>
+        <link refid="classkipr_1_1button_1_1IdButton"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>kipr::sensor::Sensor&lt; bool &gt;</label>
+        <link refid="classkipr_1_1sensor_1_1Sensor"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>kipr::button::AbstractButton</label>
+        <link refid="classkipr_1_1button_1_1AbstractButton"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>kipr::button::AbstractTextButton</label>
+        <link refid="classkipr_1_1button_1_1AbstractTextButton"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>kipr::sensor::Sensor&lt; bool &gt;</label>
+        <link refid="classkipr_1_1sensor_1_1Sensor"/>
+      </node>
+    </collaborationgraph>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.hpp" line="37" column="5" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.hpp" bodystart="38" bodyend="49"/>
+    <listofallmembers>
+      <member refid="classkipr_1_1button_1_1AbstractButton_1a8f579b7875a10b84752b9328b3b236f0" prot="public" virt="non-virtual"><scope>kipr::button::AbstractTextButton</scope><name>isClicked</name></member>
+      <member refid="classkipr_1_1button_1_1AbstractButton_1af6f894ff83b02c2b6280d53a3848fc07" prot="public" virt="non-virtual"><scope>kipr::button::AbstractTextButton</scope><name>isNotPressed</name></member>
+      <member refid="classkipr_1_1button_1_1AbstractButton_1a124cf2760816c85a0df82a95f092db10" prot="public" virt="non-virtual"><scope>kipr::button::AbstractTextButton</scope><name>isPressed</name></member>
+      <member refid="classkipr_1_1button_1_1AbstractTextButton_1aa31595efcff39e4f57748a518a409d19" prot="public" virt="pure-virtual"><scope>kipr::button::AbstractTextButton</scope><name>isTextDirty</name></member>
+      <member refid="classkipr_1_1button_1_1AbstractTextButton_1ac16e21eb25cdacb796d410b3a7e1c000" prot="public" virt="pure-virtual"><scope>kipr::button::AbstractTextButton</scope><name>resetText</name></member>
+      <member refid="classkipr_1_1button_1_1AbstractButton_1ab744b3181aa4ddccf16a1f9de2673cae" prot="public" virt="pure-virtual"><scope>kipr::button::AbstractTextButton</scope><name>setPressed</name></member>
+      <member refid="classkipr_1_1button_1_1AbstractTextButton_1a09b0dae10968d316eb5095dae58933e1" prot="public" virt="pure-virtual"><scope>kipr::button::AbstractTextButton</scope><name>setText</name></member>
+      <member refid="classkipr_1_1button_1_1AbstractTextButton_1ace5ac331b051c11dccf44d08344faab1" prot="public" virt="pure-virtual"><scope>kipr::button::AbstractTextButton</scope><name>text</name></member>
+      <member refid="classkipr_1_1sensor_1_1Sensor_1a6ccd0837f3e12090bed823f841d3e318" prot="public" virt="pure-virtual"><scope>kipr::button::AbstractTextButton</scope><name>value</name></member>
+      <member refid="classkipr_1_1button_1_1AbstractButton_1a5272a87a1d23dc58fc125caf84adaa4c" prot="public" virt="virtual"><scope>kipr::button::AbstractTextButton</scope><name>waitUntilClicked</name></member>
+      <member refid="classkipr_1_1button_1_1AbstractButton_1a0755135f0b838a511b2c4ff10a754839" prot="public" virt="virtual"><scope>kipr::button::AbstractTextButton</scope><name>waitUntilPressed</name></member>
+      <member refid="classkipr_1_1button_1_1AbstractButton_1a93a071b3b48adeddf7196b2ac4be580c" prot="public" virt="virtual"><scope>kipr::button::AbstractTextButton</scope><name>waitUntilReleased</name></member>
+      <member refid="classkipr_1_1button_1_1AbstractButton_1a3d431437a2dddb5aabce688c4cc09d18" prot="public" virt="virtual"><scope>kipr::button::AbstractTextButton</scope><name>~AbstractButton</name></member>
+      <member refid="classkipr_1_1button_1_1AbstractTextButton_1ab3670fda7972700695e33e91a3485e6d" prot="public" virt="virtual"><scope>kipr::button::AbstractTextButton</scope><name>~AbstractTextButton</name></member>
+      <member refid="classkipr_1_1sensor_1_1Sensor_1a7a2997c6ede6b25603032f2b110e8cb5" prot="public" virt="virtual"><scope>kipr::button::AbstractTextButton</scope><name>~Sensor</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

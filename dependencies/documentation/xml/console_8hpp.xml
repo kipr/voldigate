@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="console_8hpp" kind="file" language="C++">
+    <compoundname>console.hpp</compoundname>
+    <includes refid="export_8h" local="yes">kipr/export/export.h</includes>
+    <incdepgraph>
+      <node id="2">
+        <label>kipr/export/export.h</label>
+        <link refid="export_8h"/>
+      </node>
+      <node id="1">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/console/public/kipr/console/console.hpp</label>
+        <link refid="console_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <innerclass refid="classkipr_1_1console_1_1Console" prot="public">kipr::console::Console</innerclass>
+    <innernamespace refid="namespacekipr">kipr</innernamespace>
+    <innernamespace refid="namespacekipr_1_1console">kipr::console</innernamespace>
+    <briefdescription>
+<para>Classes for working with the console screen. </para>
+    </briefdescription>
+    <detaileddescription>
+<para><simplesect kind="copyright"><para>KISS Insitute for Practical Robotics </para>
+</simplesect>
+</para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_KIPR_CONSOLE_CONSOLE_HPP_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_KIPR_CONSOLE_CONSOLE_HPP_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="export_8h" kindref="compound">kipr/export/export.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal"><ref refid="namespacekipr" kindref="compound">kipr</ref></highlight></codeline>
+<codeline lineno="14"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="15" refid="namespacekipr_1_1console" refkind="compound"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">console</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"><sp/><sp/>{</highlight></codeline>
+<codeline lineno="22" refid="classkipr_1_1console_1_1Console" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref><sp/><ref refid="classkipr_1_1console_1_1Console" kindref="compound">Console</ref></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="28" refid="classkipr_1_1console_1_1Console_1ab4ab86dd9e73ba1f736944906154eb29" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1console_1_1Console_1ab4ab86dd9e73ba1f736944906154eb29" kindref="member">clear</ref>();</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="31"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/console/public/kipr/console/console.hpp"/>
+  </compounddef>
+</doxygen>

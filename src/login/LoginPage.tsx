@@ -2,13 +2,8 @@ import * as React from 'react';
 import { DARK, RED, ThemeProps } from '../components/theme';
 import { StyleProps } from '../style';
 import { styled } from 'styletron-react';
-import { auth, Providers } from '../firebase/firebase';
-import { 
-  signInWithEmail, 
-  createUserWithEmail, 
-  forgotPassword
-} from '../firebase/modules/auth';
-import { AuthProvider, getRedirectResult, signInWithPopup } from 'firebase/auth';
+
+
 import Form from '../components/Form';
 import { TabBar } from '../components/TabBar';
 
@@ -33,7 +28,6 @@ interface LoginPagePrivateProps {
 interface LoginPageState {
   initialAuthLoaded: boolean,
   authenticating: boolean,
-  loggedIn: boolean;
   index: number;
   forgotPassword: boolean;
   logInFailedMessage: string;
@@ -139,7 +133,6 @@ class LoginPage extends React.Component<Props, State> {
     this.state = {
       initialAuthLoaded: false,
       authenticating: false,
-      loggedIn: auth.currentUser !== null,
       index: this.props.externalIndex !== undefined ? this.props.externalIndex : 0,
       forgotPassword: false,
       logInFailedMessage: null,
@@ -151,64 +144,11 @@ class LoginPage extends React.Component<Props, State> {
   }
 
   private authListener = async () => {
-    const redirect = await getRedirectResult(auth);
-    if (redirect !== null) {
-      this.setState({ loggedIn: true });
-    }
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        this.setState({ loggedIn: true, initialAuthLoaded: true });
-      } else {
-        this.setState({ loggedIn: false, initialAuthLoaded: true });
-      }
-    });
+
   };
 
   private onFinalize_ = (values: { [id: string]: string }) => {
-    if (this.state.forgotPassword) {
-      forgotPassword(values.email);
-
-      this.setState({
-        forgotPassword: false,
-      });
-
-      return;
-    }
-
-    switch (this.state.index) {
-      case 0: {
-        this.setState({
-          authenticating: true,
-          logInFailedMessage: null,
-        });
-
-        signInWithEmail(values['email'], values['password'])
-          .catch(error => {
-            this.setState({
-              authenticating: false,
-              logInFailedMessage: this.getMessageForFailedLogin_(error),
-            });
-          });
-
-        break;
-      }
-      case 1: {
-        this.setState({
-          authenticating: true,
-          logInFailedMessage: null,
-        });
-
-        createUserWithEmail(values['email'], values['password'])
-          .catch(error => {
-            this.setState({
-              authenticating: false,
-              logInFailedMessage: this.getMessageForFailedLogin_(error),
-            });
-          });
-
-        break;
-      }
-    }
+   
   };
 
   private getMessageForFailedLogin_ = (error: string): string => {
@@ -226,10 +166,7 @@ class LoginPage extends React.Component<Props, State> {
     }
   };
 
-  private signInWithSocialMedia_ = async (provider: AuthProvider) => {
-    this.setState({ authenticating: true });
-    await signInWithPopup(auth, provider);
-  };
+
 
   private onTabIndexChange_ = (index: number) => {
     this.setState({
@@ -253,7 +190,7 @@ class LoginPage extends React.Component<Props, State> {
   render() {
     const { props, state } = this;
     const { className, style } = props;
-    const { initialAuthLoaded, index, authenticating, loggedIn, forgotPassword, logInFailedMessage } = state;
+    const { initialAuthLoaded, index, authenticating, forgotPassword, logInFailedMessage } = state;
     const theme = DARK;
 
     if (!initialAuthLoaded) {
@@ -261,15 +198,6 @@ class LoginPage extends React.Component<Props, State> {
       return null;
     }
 
-    if (loggedIn) {
-      setTimeout(() => {
-        const { search } = window.location;
-        const q = qs.parse(search.length > 0 ? search.substring(1) : '');
-        const { from } = q;
-        window.location.href = from ? from.toString() : '/';
-      });
-      return null;
-    }
 
     const googleButtonItems = [
       StyledText.component ({
@@ -380,7 +308,7 @@ class LoginPage extends React.Component<Props, State> {
           <SocialContainer theme={theme}>
             <Button 
               theme={theme} 
-              onClick={() => this.signInWithSocialMedia_(Providers.google)} 
+
               children={googleButtonItems.map((item, i) => (
                 <Text key={i} text={item} />
               ))}/>

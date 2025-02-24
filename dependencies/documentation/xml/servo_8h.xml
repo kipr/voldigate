@@ -1,0 +1,275 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="servo_8h" kind="file" language="C++">
+    <compoundname>servo.h</compoundname>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="group__servo_1ga74414a627ba987f929cb23de9173b056" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void enable_servo</definition>
+        <argsstring>(int port)</argsstring>
+        <name>enable_servo</name>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+<para>Enable a specific servo. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">port</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The port, between 0 and 3, to enable </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo/servo.h" line="19" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo/servo.h" declline="19" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__servo_1ga04ea4f9bce0b434d3cc2f41fcda99c14" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void disable_servo</definition>
+        <argsstring>(int port)</argsstring>
+        <name>disable_servo</name>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+<para>Disable a specific servo. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">port</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The port, between 0 and 3, to disable </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo/servo.h" line="26" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo/servo.h" declline="26" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__servo_1gad82d46ae912a2a0de1f942ce7e10bfbf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void enable_servos</definition>
+        <argsstring>()</argsstring>
+        <name>enable_servos</name>
+        <briefdescription>
+<para>Enable all four servo channels. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo/servo.h" line="32" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo/servo.h" declline="32" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__servo_1ga93b41914541860f719247c1f14a601ed" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void disable_servos</definition>
+        <argsstring>()</argsstring>
+        <name>disable_servos</name>
+        <briefdescription>
+<para>Disable all four servo channels. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo/servo.h" line="38" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo/servo.h" declline="38" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__servo_1gaa8cb86f109b7d1eb497c90f0386eee9a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void set_servo_enabled</definition>
+        <argsstring>(int port, int enabled)</argsstring>
+        <name>set_servo_enabled</name>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>enabled</declname>
+        </param>
+        <briefdescription>
+<para>Enable or disable a specific servo. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">port</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The port, between 0 and 3, to enable </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">enabled</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The new enable setting 0: disabled 1: enabled </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo/servo.h" line="46" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo/servo.h" declline="46" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__servo_1ga63f2d035ad976f13423d3e046d456967" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int get_servo_enabled</definition>
+        <argsstring>(int port)</argsstring>
+        <name>get_servo_enabled</name>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+<para>Check if a servo is enabled. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">port</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The port, between 0 and 3 </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The servo enable setting 0: disabled 1: enabled </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo/servo.h" line="54" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo/servo.h" declline="54" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__servo_1ga7576c77d711e981259a7d67e4e304155" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int get_servo_position</definition>
+        <argsstring>(int port)</argsstring>
+        <name>get_servo_position</name>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+<para>Get the most recent commanded servo position. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>port</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The port of the servo </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The servo&apos;s position as an 11 bit integer (which is an integer between 0 and 2047) </para>
+</simplesect>
+<simplesect kind="note"><para>This method will return the last <emphasis>sent</emphasis> position, not the currently <emphasis>set</emphasis> position. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo/servo.h" line="63" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo/servo.h" declline="63" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__servo_1ga7bd7903bca70212767182ff077b0b89f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void set_servo_position</definition>
+        <argsstring>(int port, int position)</argsstring>
+        <name>set_servo_position</name>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>position</declname>
+        </param>
+        <briefdescription>
+<para>Set a new servo goal position. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>port</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The port of the servo </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>position</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The new servo position, between 0 and 2047</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="note"><para>Even though the servos have a <emphasis>theoretical</emphasis> range between 0 and 2047, the <emphasis>actual</emphasis> range is often less. Setting the servo to a position that it cannot physically reach will cause the servo to audibly strain and will consume battery very quickly. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo/servo.h" line="75" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo/servo.h" declline="75" declcolumn="6"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><simplesect kind="copyright"><para>KISS Institute for Practical Robotics </para>
+</simplesect>
+</para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_KIPR_SERVO_SERVO_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_KIPR_SERVO_SERVO_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="19" refid="group__servo_1ga74414a627ba987f929cb23de9173b056" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__servo_1ga74414a627ba987f929cb23de9173b056" kindref="member">enable_servo</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>port);</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight></codeline>
+<codeline lineno="26" refid="group__servo_1ga04ea4f9bce0b434d3cc2f41fcda99c14" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__servo_1ga04ea4f9bce0b434d3cc2f41fcda99c14" kindref="member">disable_servo</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>port);</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32" refid="group__servo_1gad82d46ae912a2a0de1f942ce7e10bfbf" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__servo_1gad82d46ae912a2a0de1f942ce7e10bfbf" kindref="member">enable_servos</ref>();</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38" refid="group__servo_1ga93b41914541860f719247c1f14a601ed" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__servo_1ga93b41914541860f719247c1f14a601ed" kindref="member">disable_servos</ref>();</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46" refid="group__servo_1gaa8cb86f109b7d1eb497c90f0386eee9a" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__servo_1gaa8cb86f109b7d1eb497c90f0386eee9a" kindref="member">set_servo_enabled</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>port,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>enabled);</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54" refid="group__servo_1ga63f2d035ad976f13423d3e046d456967" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__servo_1ga63f2d035ad976f13423d3e046d456967" kindref="member">get_servo_enabled</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>port);</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+<codeline lineno="63" refid="group__servo_1ga7576c77d711e981259a7d67e4e304155" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__servo_1ga7576c77d711e981259a7d67e4e304155" kindref="member">get_servo_position</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>port);</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="75" refid="group__servo_1ga7bd7903bca70212767182ff077b0b89f" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__servo_1ga7bd7903bca70212767182ff077b0b89f" kindref="member">set_servo_position</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>port,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>position);</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo/servo.h"/>
+  </compounddef>
+</doxygen>

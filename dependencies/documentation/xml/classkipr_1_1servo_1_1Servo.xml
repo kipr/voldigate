@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classkipr_1_1servo_1_1Servo" kind="class" language="C++" prot="public">
+    <compoundname>kipr::servo::Servo</compoundname>
+    <includes refid="servo_8hpp" local="no">servo.hpp</includes>
+      <sectiondef kind="public-type">
+      <memberdef kind="typedef" id="classkipr_1_1servo_1_1Servo_1a20d37c49ff42aeb80568bf0f49183c6e" prot="public" static="no">
+        <type>unsigned int</type>
+        <definition>typedef unsigned int kipr::servo::Servo::ticks_t</definition>
+        <argsstring></argsstring>
+        <name>ticks_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo/servo.hpp" line="11" column="28" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo/servo.hpp" bodystart="11" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classkipr_1_1servo_1_1Servo_1a0b117453f253346d24fceb1435136884" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int kipr::servo::Servo::m_port</definition>
+        <argsstring></argsstring>
+        <name>m_port</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo/servo.hpp" line="25" column="11" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo/servo.hpp" bodystart="25" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classkipr_1_1servo_1_1Servo_1afb82ac42800a5b0059256b60bde766b8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>kipr::servo::Servo::Servo</definition>
+        <argsstring>(int port)</argsstring>
+        <name>Servo</name>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo/servo.hpp" line="13" column="7"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1servo_1_1Servo_1ac36e297ece56e943c7a8981f39d289ba" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::servo::Servo::setPosition</definition>
+        <argsstring>(ticks_t position)</argsstring>
+        <name>setPosition</name>
+        <param>
+          <type><ref refid="classkipr_1_1servo_1_1Servo_1a20d37c49ff42aeb80568bf0f49183c6e" kindref="member">ticks_t</ref></type>
+          <declname>position</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo/servo.hpp" line="15" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1servo_1_1Servo_1a201e623e418e7a5222b42c17711e755f" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1servo_1_1Servo_1a20d37c49ff42aeb80568bf0f49183c6e" kindref="member">ticks_t</ref></type>
+        <definition>ticks_t kipr::servo::Servo::position</definition>
+        <argsstring>() const</argsstring>
+        <name>position</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo/servo.hpp" line="17" column="15"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1servo_1_1Servo_1abb35bc870ad17df012d290ea3cbafa8a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::servo::Servo::disable</definition>
+        <argsstring>()</argsstring>
+        <name>disable</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo/servo.hpp" line="19" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1servo_1_1Servo_1ad40dd3da49dd1b8a492163f5c1215d10" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::servo::Servo::enable</definition>
+        <argsstring>()</argsstring>
+        <name>enable</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo/servo.hpp" line="20" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1servo_1_1Servo_1a3a251051d43b775e2fd6d4b6419b482a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::servo::Servo::setEnabled</definition>
+        <argsstring>(bool enabled)</argsstring>
+        <name>setEnabled</name>
+        <param>
+          <type>bool</type>
+          <declname>enabled</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo/servo.hpp" line="21" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1servo_1_1Servo_1a3163766960289a7034837e45144cad42" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool kipr::servo::Servo::isEnabled</definition>
+        <argsstring>() const</argsstring>
+        <name>isEnabled</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo/servo.hpp" line="22" column="12"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo/servo.hpp" line="8" column="5" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/servo/public/kipr/servo/servo.hpp" bodystart="9" bodyend="26"/>
+    <listofallmembers>
+      <member refid="classkipr_1_1servo_1_1Servo_1abb35bc870ad17df012d290ea3cbafa8a" prot="public" virt="non-virtual"><scope>kipr::servo::Servo</scope><name>disable</name></member>
+      <member refid="classkipr_1_1servo_1_1Servo_1ad40dd3da49dd1b8a492163f5c1215d10" prot="public" virt="non-virtual"><scope>kipr::servo::Servo</scope><name>enable</name></member>
+      <member refid="classkipr_1_1servo_1_1Servo_1a3163766960289a7034837e45144cad42" prot="public" virt="non-virtual"><scope>kipr::servo::Servo</scope><name>isEnabled</name></member>
+      <member refid="classkipr_1_1servo_1_1Servo_1a0b117453f253346d24fceb1435136884" prot="private" virt="non-virtual"><scope>kipr::servo::Servo</scope><name>m_port</name></member>
+      <member refid="classkipr_1_1servo_1_1Servo_1a201e623e418e7a5222b42c17711e755f" prot="public" virt="non-virtual"><scope>kipr::servo::Servo</scope><name>position</name></member>
+      <member refid="classkipr_1_1servo_1_1Servo_1afb82ac42800a5b0059256b60bde766b8" prot="public" virt="non-virtual"><scope>kipr::servo::Servo</scope><name>Servo</name></member>
+      <member refid="classkipr_1_1servo_1_1Servo_1a3a251051d43b775e2fd6d4b6419b482a" prot="public" virt="non-virtual"><scope>kipr::servo::Servo</scope><name>setEnabled</name></member>
+      <member refid="classkipr_1_1servo_1_1Servo_1ac36e297ece56e943c7a8981f39d289ba" prot="public" virt="non-virtual"><scope>kipr::servo::Servo</scope><name>setPosition</name></member>
+      <member refid="classkipr_1_1servo_1_1Servo_1a20d37c49ff42aeb80568bf0f49183c6e" prot="public" virt="non-virtual"><scope>kipr::servo::Servo</scope><name>ticks_t</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

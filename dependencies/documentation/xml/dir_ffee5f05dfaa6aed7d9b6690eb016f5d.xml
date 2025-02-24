@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="dir_ffee5f05dfaa6aed7d9b6690eb016f5d" kind="dir">
+    <compoundname>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor</compoundname>
+    <innerfile refid="constants_8hpp">constants.hpp</innerfile>
+    <innerfile refid="motor_8h">motor.h</innerfile>
+    <innerfile refid="motor_8hpp">motor.hpp</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/"/>
+  </compounddef>
+</doxygen>

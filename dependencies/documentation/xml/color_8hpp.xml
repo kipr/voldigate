@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="color_8hpp" kind="file" language="C++">
+    <compoundname>color.hpp</compoundname>
+    <includes refid="export_8h" local="yes">kipr/export/export.h</includes>
+    <incdepgraph>
+      <node id="2">
+        <label>kipr/export/export.h</label>
+        <link refid="export_8h"/>
+      </node>
+      <node id="1">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/color.hpp</label>
+        <link refid="color_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <innerclass refid="structRgb" prot="public">Rgb</innerclass>
+    <innerclass refid="structHsv" prot="public">Hsv</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>_KIPR_COLOR_COLOR_HPP_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_KIPR_COLOR_COLOR_HPP_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="export_8h" kindref="compound">kipr/export/export.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight></codeline>
+<codeline lineno="6" refid="structRgb" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structRgb" kindref="compound">Rgb</ref></highlight></codeline>
+<codeline lineno="7"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="8" refid="structRgb_1a3da778daa4ccbc628c478b21d6093df5" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structRgb_1a3da778daa4ccbc628c478b21d6093df5" kindref="member">r</ref>;</highlight></codeline>
+<codeline lineno="9" refid="structRgb_1a27a8958ecb91f5f98ee520129a396ce3" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structRgb_1a27a8958ecb91f5f98ee520129a396ce3" kindref="member">g</ref>;</highlight></codeline>
+<codeline lineno="10" refid="structRgb_1acab4ec8e0d55174258da75ee80f69bef" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structRgb_1acab4ec8e0d55174258da75ee80f69bef" kindref="member">b</ref>;</highlight></codeline>
+<codeline lineno="11"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight></codeline>
+<codeline lineno="13" refid="structHsv" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structHsv" kindref="compound">Hsv</ref></highlight></codeline>
+<codeline lineno="14"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="15" refid="structHsv_1aff34d0070e8941ade8da7229d210fe2d" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structHsv_1aff34d0070e8941ade8da7229d210fe2d" kindref="member">h</ref>;</highlight></codeline>
+<codeline lineno="16" refid="structHsv_1a6f73894db95401d9e30c7c08f1f59b4b" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structHsv_1a6f73894db95401d9e30c7c08f1f59b4b" kindref="member">s</ref>;</highlight></codeline>
+<codeline lineno="17" refid="structHsv_1af5299857a2003d3fcb2ce00568f8c6bd" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structHsv_1af5299857a2003d3fcb2ce00568f8c6bd" kindref="member">v</ref>;</highlight></codeline>
+<codeline lineno="18"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/color.hpp"/>
+  </compounddef>
+</doxygen>

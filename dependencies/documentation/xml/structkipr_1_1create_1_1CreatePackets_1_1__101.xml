@@ -1,0 +1,213 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="structkipr_1_1create_1_1CreatePackets_1_1__101" kind="struct" language="C++" prot="public">
+    <compoundname>kipr::create::CreatePackets::_101</compoundname>
+    <includes refid="create_8hpp" local="no">create.hpp</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__101_1abd175d3f0f247c3587bee4fc1426ae70" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_101::leftEncoderCounts[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>leftEncoderCounts</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="156" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="156" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__101_1a1ed08b26b8cc371ef927409c9b96f2b6" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_101::rightEncoderCounts[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>rightEncoderCounts</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="157" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="157" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__101_1ac54b84c4e01169307eb15152482bdfc3" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_101::lightBumpBits</definition>
+        <argsstring></argsstring>
+        <name>lightBumpBits</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="159" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="159" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__101_1aa9c10b2ad38882e04d49673a7dc1a48c" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_101::lightBumpLeftSignal[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>lightBumpLeftSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="160" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="160" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__101_1a7f97bcbbd1be9384205b645aede69e13" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_101::lightBumpFrontLeftSignal[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>lightBumpFrontLeftSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="161" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="161" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__101_1aeefbb0e939ecd1e3548f9fef43266101" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_101::lightBumpCenterLeftSignal[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>lightBumpCenterLeftSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="162" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="162" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__101_1a26dc3d20e8da55c6b2293bc7fb0f616f" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_101::lightBumpCenterRightSignal[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>lightBumpCenterRightSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="163" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="163" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__101_1acb22bb2faba42e0ca5fd8516e3567fea" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_101::lightBumpFrontRightSignal[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>lightBumpFrontRightSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="164" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="164" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__101_1a0114a80c832e2ecce3c82bf6cdfe8e2b" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_101::lightBumpRightSignal[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>lightBumpRightSignal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="165" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="165" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__101_1ae1e5de7bc53fc50eb4d7f25c172e8e22" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char kipr::create::CreatePackets::_101::leftMotorCurrent[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>leftMotorCurrent</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="167" column="14" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="167" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__101_1a7c4556fc8214e4c0ffb04498d9c97c6e" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char kipr::create::CreatePackets::_101::rightMotorCurrent[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>rightMotorCurrent</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="168" column="14" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="168" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__101_1a32c55cb5c8409f20b688b09eba0055a8" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char kipr::create::CreatePackets::_101::mainBrushMotorCurrent[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>mainBrushMotorCurrent</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="169" column="14" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="169" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__101_1a943e23e55c6bfe066f933d6283105e2f" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char kipr::create::CreatePackets::_101::sideBrushMotorCurrent[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>sideBrushMotorCurrent</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="170" column="14" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="170" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__101_1ab56c5b32418341093e47698c39c61026" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char kipr::create::CreatePackets::_101::stasis</definition>
+        <argsstring></argsstring>
+        <name>stasis</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="171" column="14" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="171" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><ref refid="classkipr_1_1create_1_1Create" kindref="compound">Create</ref> OI Packet 101 </para>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="154" column="7" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="155" bodyend="172"/>
+    <listofallmembers>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__101_1abd175d3f0f247c3587bee4fc1426ae70" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_101</scope><name>leftEncoderCounts</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__101_1ae1e5de7bc53fc50eb4d7f25c172e8e22" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_101</scope><name>leftMotorCurrent</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__101_1ac54b84c4e01169307eb15152482bdfc3" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_101</scope><name>lightBumpBits</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__101_1aeefbb0e939ecd1e3548f9fef43266101" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_101</scope><name>lightBumpCenterLeftSignal</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__101_1a26dc3d20e8da55c6b2293bc7fb0f616f" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_101</scope><name>lightBumpCenterRightSignal</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__101_1a7f97bcbbd1be9384205b645aede69e13" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_101</scope><name>lightBumpFrontLeftSignal</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__101_1acb22bb2faba42e0ca5fd8516e3567fea" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_101</scope><name>lightBumpFrontRightSignal</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__101_1aa9c10b2ad38882e04d49673a7dc1a48c" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_101</scope><name>lightBumpLeftSignal</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__101_1a0114a80c832e2ecce3c82bf6cdfe8e2b" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_101</scope><name>lightBumpRightSignal</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__101_1a32c55cb5c8409f20b688b09eba0055a8" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_101</scope><name>mainBrushMotorCurrent</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__101_1a1ed08b26b8cc371ef927409c9b96f2b6" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_101</scope><name>rightEncoderCounts</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__101_1a7c4556fc8214e4c0ffb04498d9c97c6e" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_101</scope><name>rightMotorCurrent</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__101_1a943e23e55c6bfe066f933d6283105e2f" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_101</scope><name>sideBrushMotorCurrent</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__101_1ab56c5b32418341093e47698c39c61026" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_101</scope><name>stasis</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

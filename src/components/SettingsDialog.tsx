@@ -1,17 +1,14 @@
 import * as React from 'react';
+import ScrollArea from './ScrollArea';
+import tr from '@i18n';
+import LocalizedString from '../util/LocalizedString';
+import ComboBox from './ComboBox';
 import { styled } from 'styletron-react';
 import { Settings } from '../Settings';
 import { StyleProps } from '../style';
 import { Dialog } from './Dialog';
-import ScrollArea from './ScrollArea';
 import { Switch } from './Switch';
-import { ThemeProps } from './theme';
-
-import tr from '@i18n';
-import LocalizedString from '../util/LocalizedString';
-import ComboBox from './ComboBox';
-import Dict from '../Dict';
-
+import { ThemeProps, Theme, DARK, LIGHT } from './theme';
 import { State as ReduxState } from '../state';
 import { I18nAction } from '../state/reducer';
 import { connect } from 'react-redux';
@@ -19,8 +16,8 @@ import { connect } from 'react-redux';
 type SettingsSection = 'user-interface' | 'simulation' | 'editor';
 
 export interface SettingsDialogPublicProps extends ThemeProps, StyleProps {
-  onClose: () => void;
   settings: Settings;
+  onClose: () => void;
   onSettingsChange: (settings: Partial<Settings>) => void;
 }
 
@@ -31,6 +28,7 @@ interface SettingsDialogPrivateProps {
 
 interface SettingsDialogState {
   selectedSection: SettingsSection;
+  storedTheme: Theme;
 }
 
 type Props = SettingsDialogPublicProps & SettingsDialogPrivateProps;
@@ -39,6 +37,7 @@ type State = SettingsDialogState;
 const Container = styled('div', (props: ThemeProps) => ({
   display: 'flex',
   flexDirection: 'row',
+  backgroundColor: props.theme.backgroundColor,
   color: props.theme.color,
   minHeight: '300px',
 }));
@@ -107,8 +106,28 @@ class SettingsDialog extends React.PureComponent<Props, State> {
     super(props);
     this.state = {
       selectedSection: 'user-interface',
+      storedTheme: localStorage.getItem('ideEditorDarkMode') === 'true' ? DARK : LIGHT
     };
   }
+
+  componentDidMount(): void {
+    const storedTheme = localStorage.getItem('ideEditorDarkMode');
+    if (storedTheme) {
+      this.props.onSettingsChange({ ideEditorDarkMode: storedTheme === 'true' });
+    }
+  }
+
+  componentDidUpdate = async (prevProps: Props, prevState: State) => {
+
+    if (prevProps.settings.ideEditorDarkMode !== this.props.settings.ideEditorDarkMode) {
+      if (this.props.settings.ideEditorDarkMode) {
+        this.setState({ storedTheme: DARK });
+      }
+      else {
+        this.setState({ storedTheme: LIGHT });
+      }
+    }
+  };
 
   private setSelectedSection = (selectedSection: SettingsSection) => {
     this.setState({ selectedSection });
@@ -123,9 +142,16 @@ class SettingsDialog extends React.PureComponent<Props, State> {
           <SettingInfoText>{text}</SettingInfoText>
           <SettingInfoSubtext>{subtext}</SettingInfoSubtext>
         </SettingInfoContainer>
-        <Switch theme={theme} value={getValue(currentSettings)} onValueChange={(value) => {
-          onSettingsChange(getUpdatedSettings(value));
-        }} />
+        <Switch theme={theme}
+          value={getValue(currentSettings)}
+          onValueChange={(value) => {
+            const updatedSettings = getUpdatedSettings(value);
+            if (updatedSettings.hasOwnProperty('ideEditorDarkMode')) {
+              localStorage.setItem('ideEditorDarkMode', updatedSettings.ideEditorDarkMode ? 'true' : 'false');
+            }
+            onSettingsChange(getUpdatedSettings(value));
+
+          }} />
       </SettingContainer>
     );
   };
@@ -138,36 +164,36 @@ class SettingsDialog extends React.PureComponent<Props, State> {
   render() {
     const { props, state } = this;
     const { style, className, theme, onClose, locale } = props;
-    const { selectedSection } = state;
+    const { selectedSection, storedTheme } = state;
 
     return (
       <Dialog
-        theme={theme}
+        theme={storedTheme}
         name={LocalizedString.lookup(tr('Settings'), locale)}
         onClose={onClose}
       >
-        <Container theme={theme} style={style} className={className}>
-          <SectionsColumn theme={theme}>
+        <Container theme={storedTheme} style={style} className={className}>
+          <SectionsColumn theme={storedTheme}>
             <SectionName
-              theme={theme}
+              theme={storedTheme}
               selected={selectedSection === 'user-interface'}
               onClick={() => this.setSelectedSection('user-interface')}
             >
               {LocalizedString.lookup(tr('User Interface'), locale)}
             </SectionName>
-            
+
             <SectionName
-              theme={theme}
+              theme={storedTheme}
               selected={selectedSection === 'editor'}
               onClick={() => this.setSelectedSection('editor')}
             >
               {LocalizedString.lookup(tr('Editor'), locale)}
             </SectionName>
           </SectionsColumn>
-          <SettingsColumn theme={theme}>
+          <SettingsColumn theme={storedTheme}>
             {selectedSection === 'user-interface' && (
               <>
-                <SettingContainer theme={theme}>
+                <SettingContainer theme={storedTheme}>
                   <SettingInfoContainer>
                     <SettingInfoText>{LocalizedString.lookup(tr('Locale'), locale)}</SettingInfoText>
                     <SettingInfoSubtext>{LocalizedString.lookup(tr('Switch languages'), locale)}</SettingInfoSubtext>
@@ -176,12 +202,18 @@ class SettingsDialog extends React.PureComponent<Props, State> {
                     options={LOCALE_OPTIONS}
                     index={LOCALE_OPTIONS.findIndex(opt => opt.data === locale)}
                     onSelect={this.onLocaleSelect_}
-                    theme={theme}
+                    theme={storedTheme}
                   />
                 </SettingContainer>
+                {this.createBooleanSetting(
+                  LocalizedString.lookup(tr('KISS IDE Theme'), locale),
+                  LocalizedString.lookup(tr('Toggle IDE theme to dark mode'), locale),
+                  (settings: Settings) => settings.ideEditorDarkMode,
+                  (newValue: boolean) => ({ ideEditorDarkMode: newValue })
+                )}
               </>
             )}
-       
+
             {selectedSection === 'editor' && (
               <>
                 {this.createBooleanSetting(

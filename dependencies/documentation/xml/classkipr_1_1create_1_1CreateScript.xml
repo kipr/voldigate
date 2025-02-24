@@ -1,0 +1,209 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classkipr_1_1create_1_1CreateScript" kind="class" language="C++" prot="public">
+    <compoundname>kipr::create::CreateScript</compoundname>
+    <includes refid="create_8hpp" local="no">create.hpp</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classkipr_1_1create_1_1CreateScript_1ad3da8df71079edd7ea8b52c94b54e633" prot="private" static="no" mutable="no">
+        <type>std::vector&lt; unsigned char &gt;</type>
+        <definition>std::vector&lt;unsigned char&gt; kipr::create::CreateScript::m_script</definition>
+        <argsstring></argsstring>
+        <name>m_script</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="59" column="19" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classkipr_1_1create_1_1CreateScript_1a079a6cb1b9df0270f9141ee3536686ce" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>kipr::create::CreateScript::CreateScript</definition>
+        <argsstring>()</argsstring>
+        <name>CreateScript</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="42" column="7"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1CreateScript_1acae1a39f7cef2b96403f8fe1cee22049" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>kipr::create::CreateScript::CreateScript</definition>
+        <argsstring>(const CreateScript &amp;rhs)</argsstring>
+        <name>CreateScript</name>
+        <param>
+          <type>const <ref refid="classkipr_1_1create_1_1CreateScript" kindref="compound">CreateScript</ref> &amp;</type>
+          <declname>rhs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="43" column="7"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1CreateScript_1a8e25c11f78843f7a3e337499925cdf5a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::CreateScript::append</definition>
+        <argsstring>(const unsigned char &amp;byte)</argsstring>
+        <name>append</name>
+        <param>
+          <type>const unsigned char &amp;</type>
+          <declname>byte</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="45" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1CreateScript_1af1a9380469d46c6704ca7d8423dca177" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::CreateScript::append</definition>
+        <argsstring>(const unsigned char *data, const size_t &amp;size)</argsstring>
+        <name>append</name>
+        <param>
+          <type>const unsigned char *</type>
+          <declname>data</declname>
+        </param>
+        <param>
+          <type>const size_t &amp;</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="46" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1CreateScript_1aa57db62dc24be36211808c0094633434" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::CreateScript::append</definition>
+        <argsstring>(const CreateScript &amp;script)</argsstring>
+        <name>append</name>
+        <param>
+          <type>const <ref refid="classkipr_1_1create_1_1CreateScript" kindref="compound">CreateScript</ref> &amp;</type>
+          <declname>script</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="47" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1CreateScript_1ab7408dcc25dd365cc6f6b58eff5b151c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::create::CreateScript::remove</definition>
+        <argsstring>(const size_t &amp;i, const size_t &amp;len=1)</argsstring>
+        <name>remove</name>
+        <param>
+          <type>const size_t &amp;</type>
+          <declname>i</declname>
+        </param>
+        <param>
+          <type>const size_t &amp;</type>
+          <declname>len</declname>
+          <defval>1</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="49" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1CreateScript_1a5d12f64a68d760c6f3dff014364464d7" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const unsigned char *</type>
+        <definition>const unsigned char* kipr::create::CreateScript::data</definition>
+        <argsstring>() const</argsstring>
+        <name>data</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="51" column="27"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1CreateScript_1aa37d9d168864d3391a38902eb48e8ad4" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>size_t</type>
+        <definition>size_t kipr::create::CreateScript::size</definition>
+        <argsstring>() const</argsstring>
+        <name>size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="52" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1CreateScript_1afb55cbf000318092a64d26fd0163fee0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreateScript::byte</definition>
+        <argsstring>(const size_t &amp;i)</argsstring>
+        <name>byte</name>
+        <param>
+          <type>const size_t &amp;</type>
+          <declname>i</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="54" column="21"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1create_1_1CreateScript_1ad76bddbdfbd1180309f02aa22a64eee7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1create_1_1CreateScript" kindref="compound">CreateScript</ref> &amp;</type>
+        <definition>CreateScript&amp; kipr::create::CreateScript::operator=</definition>
+        <argsstring>(const CreateScript &amp;rhs)</argsstring>
+        <name>operator=</name>
+        <param>
+          <type>const <ref refid="classkipr_1_1create_1_1CreateScript" kindref="compound">CreateScript</ref> &amp;</type>
+          <declname>rhs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="56" column="20"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="39" column="5" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="40" bodyend="60"/>
+    <listofallmembers>
+      <member refid="classkipr_1_1create_1_1CreateScript_1a8e25c11f78843f7a3e337499925cdf5a" prot="public" virt="non-virtual"><scope>kipr::create::CreateScript</scope><name>append</name></member>
+      <member refid="classkipr_1_1create_1_1CreateScript_1af1a9380469d46c6704ca7d8423dca177" prot="public" virt="non-virtual"><scope>kipr::create::CreateScript</scope><name>append</name></member>
+      <member refid="classkipr_1_1create_1_1CreateScript_1aa57db62dc24be36211808c0094633434" prot="public" virt="non-virtual"><scope>kipr::create::CreateScript</scope><name>append</name></member>
+      <member refid="classkipr_1_1create_1_1CreateScript_1afb55cbf000318092a64d26fd0163fee0" prot="public" virt="non-virtual"><scope>kipr::create::CreateScript</scope><name>byte</name></member>
+      <member refid="classkipr_1_1create_1_1CreateScript_1a079a6cb1b9df0270f9141ee3536686ce" prot="public" virt="non-virtual"><scope>kipr::create::CreateScript</scope><name>CreateScript</name></member>
+      <member refid="classkipr_1_1create_1_1CreateScript_1acae1a39f7cef2b96403f8fe1cee22049" prot="public" virt="non-virtual"><scope>kipr::create::CreateScript</scope><name>CreateScript</name></member>
+      <member refid="classkipr_1_1create_1_1CreateScript_1a5d12f64a68d760c6f3dff014364464d7" prot="public" virt="non-virtual"><scope>kipr::create::CreateScript</scope><name>data</name></member>
+      <member refid="classkipr_1_1create_1_1CreateScript_1ad3da8df71079edd7ea8b52c94b54e633" prot="private" virt="non-virtual"><scope>kipr::create::CreateScript</scope><name>m_script</name></member>
+      <member refid="classkipr_1_1create_1_1CreateScript_1ad76bddbdfbd1180309f02aa22a64eee7" prot="public" virt="non-virtual"><scope>kipr::create::CreateScript</scope><name>operator=</name></member>
+      <member refid="classkipr_1_1create_1_1CreateScript_1ab7408dcc25dd365cc6f6b58eff5b151c" prot="public" virt="non-virtual"><scope>kipr::create::CreateScript</scope><name>remove</name></member>
+      <member refid="classkipr_1_1create_1_1CreateScript_1aa37d9d168864d3391a38902eb48e8ad4" prot="public" virt="non-virtual"><scope>kipr::create::CreateScript</scope><name>size</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

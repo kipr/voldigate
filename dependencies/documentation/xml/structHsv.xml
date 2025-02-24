@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="structHsv" kind="struct" language="C++" prot="public">
+    <compoundname>Hsv</compoundname>
+    <includes refid="color_8hpp" local="no">color.hpp</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structHsv_1aff34d0070e8941ade8da7229d210fe2d" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char Hsv::h</definition>
+        <argsstring></argsstring>
+        <name>h</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/color.hpp" line="15" column="17" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/color.hpp" bodystart="15" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structHsv_1a6f73894db95401d9e30c7c08f1f59b4b" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char Hsv::s</definition>
+        <argsstring></argsstring>
+        <name>s</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/color.hpp" line="16" column="17" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/color.hpp" bodystart="16" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structHsv_1af5299857a2003d3fcb2ce00568f8c6bd" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char Hsv::v</definition>
+        <argsstring></argsstring>
+        <name>v</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/color.hpp" line="17" column="17" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/color.hpp" bodystart="17" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/color.hpp" line="13" column="1" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/color.hpp" bodystart="14" bodyend="18"/>
+    <listofallmembers>
+      <member refid="structHsv_1aff34d0070e8941ade8da7229d210fe2d" prot="public" virt="non-virtual"><scope>Hsv</scope><name>h</name></member>
+      <member refid="structHsv_1a6f73894db95401d9e30c7c08f1f59b4b" prot="public" virt="non-virtual"><scope>Hsv</scope><name>s</name></member>
+      <member refid="structHsv_1af5299857a2003d3fcb2ce00568f8c6bd" prot="public" virt="non-virtual"><scope>Hsv</scope><name>v</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

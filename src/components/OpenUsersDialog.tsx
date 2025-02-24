@@ -1,28 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import KIPR_LOGO_BLACK from '../assets/KIPR-Logo-Black-Text-Clear-Large.png';
+import KIPR_LOGO_WHITE from '../assets/KIPR-Logo-White-Text-Clear-Large.png';
+import tr from '@i18n';
+import LocalizedString from '../util/LocalizedString';
+import ScrollArea from './ScrollArea';
+import ProgrammingLanguage from '../ProgrammingLanguage';
 import { styled } from 'styletron-react';
 import { StyleProps } from '../style';
 import { Dialog } from './Dialog';
 import { ThemeProps } from './theme';
-import KIPR_LOGO_BLACK from '../assets/KIPR-Logo-Black-Text-Clear-Large.png';
-import KIPR_LOGO_WHITE from '../assets/KIPR-Logo-White-Text-Clear-Large.png';
-import tr from '@i18n';
 import { connect } from 'react-redux';
 import { State as ReduxState } from '../state';
-import LocalizedString from '../util/LocalizedString';
-import ScrollArea from './ScrollArea';
-import { ProjectType, DatabaseService } from './DatabaseService';
-import ComboBox from './ComboBox';
 import { Settings } from '../Settings';
-import ProgrammingLanguage from '../ProgrammingLanguage';
-type SettingsSection = string;
-
+import { Project } from '../types/projectTypes';
 
 export interface OpenUsersDialogPublicProps extends ThemeProps, StyleProps {
-  onClose: () => void;
   projectLanguage: ProgrammingLanguage;
   settings: Settings;
+  onClose: () => void;
   onOpenUserProject: (name: string, projectName: string, fileName: string, projectLanguage: string) => void;
   onSettingsChange: (settings: Partial<Settings>) => void;
+  onLoadUsers: () => Promise<string[]>;
+  onLoadUserData: (openedUserDialog: boolean, desiredUser: string) => Promise<Project[]>;
+}
+
+interface ClickProps {
+  onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
+  disabled?: boolean;
 }
 
 interface OpenUsersDialogPrivateProps {
@@ -31,102 +35,51 @@ interface OpenUsersDialogPrivateProps {
 }
 
 interface OpenUsersDialogState {
-  selectedSection: SettingsSection;
-  users: string[];
-  projects: ProjectType[] | null;
   loading: boolean;
-  error: string | null;
-  selectedProject: string | null;
+  selectedSection: string;
   projectName: string;
+  selectedProject: string | null;
+  error: string | null;
   activeLanguage: ProgrammingLanguage;
-
- 
-
+  users: string[];
+  projects: Project[] | null;
 }
+
 interface SectionProps {
   selected?: boolean;
 }
 
 type Props = OpenUsersDialogPublicProps & OpenUsersDialogPrivateProps;
 type State = OpenUsersDialogState;
-namespace Modal {
-  export enum Type {
-    Settings,
-    CreateUser,
-    RepeatUser,
-    None,
-    OpenUsers
-  }
-  export interface None {
-    type: Type.None;
-  }
-
-  export const NONE: None = { type: Type.None };
-
-  export interface Settings {
-    type: Type.Settings;
-  }
-
-  export const SETTINGS: Settings = { type: Type.Settings };
-
-  export interface CreateUser {
-    type: Type.CreateUser;
-  }
-
-  export const CREATEUSER: CreateUser = { type: Type.CreateUser };
-
-  export interface RepeatUser {
-    type: Type.RepeatUser;
-  }
-
-  export const REPEATUSER: RepeatUser = { type: Type.RepeatUser };
-
-
-  export interface OpenUsers {
-    type: Type.OpenUsers;
-  }
-
-  export const OPENUSERS: OpenUsers = { type: Type.OpenUsers };
-}
-
-export type Modal = (
-  Modal.Settings |
-  Modal.CreateUser |
-  Modal.None |
-  Modal.RepeatUser
-);
 
 const Logo = styled('img', {
   width: '150px',
   height: 'auto',
 });
 
-
 const Container = styled('div', (props: ThemeProps) => ({
   display: 'flex',
   flexDirection: 'row',
   color: props.theme.color,
+  backgroundColor: props.theme.backgroundColor,
   minHeight: '300px',
 }));
-
-
 
 const SettingContainer = styled('div', (props: ThemeProps) => ({
   display: 'flex',
   flexDirection: 'row',
   padding: `${props.theme.itemPadding * 2}px`,
 }));
+
 const SettingInfoContainer = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   flex: '1 0',
 });
 
-
 interface SectionProps {
   selected?: boolean;
 }
-
 
 const SectionsColumn = styled('div', (props: ThemeProps) => ({
   display: 'flex',
@@ -139,7 +92,7 @@ const SectionName = styled('span', (props: ThemeProps & SectionProps) => ({
   backgroundColor: props.selected ? `rgba(255, 255, 255, 0.1)` : undefined,
   ':hover': {
     cursor: 'pointer',
-    backgroundColor: `rgba(255, 255, 255, 0.1)`
+    backgroundColor: props.theme.hoverOptionBackground
   },
   transition: 'background-color 0.2s, opacity 0.2s',
   padding: `${props.theme.itemPadding * 2}px`,
@@ -152,28 +105,58 @@ const SettingsColumn = styled(ScrollArea, {
 });
 
 const ProjectTitle = styled('h2', {
-  marginTop: '0px', 
-  marginBottom: '10px', 
+  marginTop: '0px',
+  marginBottom: '10px',
   fontSize: '1.2em',
-  textAlign: 'center', // 
+  textAlign: 'center',
 });
-const ProjectItem = styled('li', (props: { selected: boolean }) => ({
+
+const ProjectItem = styled('li', (props: ThemeProps & { selected: boolean }) => ({
   cursor: 'pointer',
-  backgroundColor: props.selected ? `rgba(255, 255, 255, 0.1)` : undefined,  // Highlight selected project
+  backgroundColor: props.selected ? `rgba(255, 255, 255, 0.1)` : undefined, 
   padding: '5px',
   margin: '5px 0',
   borderRadius: '5px',
   ':hover': {
     cursor: 'pointer',
-    backgroundColor: `rgba(255, 255, 255, 0.1)`
+    backgroundColor: props.theme.hoverOptionBackground
   },
 }));
+
 const BottomButtonContainer = styled('div', {
   display: 'flex',
   justifyContent: 'center',
-  marginTop: '20px', // Add some space above the button
+  marginTop: '20px', 
 });
 
+const Button = styled('button', {
+  margin: '0 10px',
+  padding: '10px 20px',
+  border: 'none', 
+  borderRadius: '5px', 
+  cursor: 'pointer', 
+});
+
+// Styled component button for the "Yes" button
+const OpenProjectButton = styled(Button, (props: ThemeProps & ClickProps) => ({
+  backgroundColor: props.theme.yesButtonColor.standard,
+  border: `1px solid ${props.theme.yesButtonColor.border}`,
+  ':hover':
+    props.onClick && !props.disabled
+      ? {
+        backgroundColor: props.theme.yesButtonColor.hover,
+      }
+      : {},
+  color: props.theme.yesButtonColor.textColor,
+  textShadow: props.theme.yesButtonColor.textShadow,
+  boxShadow: '2px 2px 4px rgba(0,0,0,0.9)',
+  ':active': props.onClick && !props.disabled
+    ? {
+      boxShadow: '1px 1px 2px rgba(0,0,0,0.7)',
+      transform: 'translateY(1px, 1px)',
+    }
+    : {},
+}));
 
 class OpenUsersDialog extends React.PureComponent<Props, State> {
 
@@ -188,58 +171,49 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
       selectedProject: null,
       projectName: '',
       activeLanguage: 'c'
-   
+
     };
-  }
-  private setSelectedSection = (selectedSection: SettingsSection) => {
+  };
+
+  private setSelectedSection = (selectedSection: string) => {
     this.setState({ selectedSection }, this.getProjects);
     this.setState({ selectedProject: null });
   };
- 
-  private handleProjectClick = async(projectId: string) => {
-    const projectInfo = await DatabaseService.getProjectInfo(this.state.selectedSection,projectId);
-    console.log("Project Info: ", projectInfo);
-    console.log("Project ID: ", projectInfo.project_id);
-    console.log("Project activeLanguage: ", projectInfo.language);
-    this.setState({ 
+
+  private handleProjectClick = async (projectId: string) => {
+    this.setState({
       selectedProject: projectId,
-      projectName: projectInfo.project_id,
-      activeLanguage: projectInfo.language
+      projectName: projectId,
+      activeLanguage: this.state.projects!.find(project => project.projectName === projectId)!.projectLanguage
     });
-
-    //console.log("handleProjectClick activeLanguage: ", this.props.projectLanguage);
-   
   };
+
   private getProjects = async () => {
-    this.setState({ loading: true, error: null });
+    this.setState({
+      projects: await this.props.onLoadUserData(true, this.state.selectedSection),
+      loading: false,
+    })
+  };
+
+  async componentDidMount() {
     try {
-      const projects = await DatabaseService.getAllProjectsFromUser(this.state.selectedSection);
-      this.setState({ projects });
-    }
-    catch (error) {
-      this.setState({ error: 'Failed to fetch projects' });
-      console.error(error);
-    }
-    finally {
-      this.setState({ loading: false });
-    }
-  }
+      const userDirectories = await this.props.onLoadUsers();
 
-  componentDidMount() {
-    this.loadUsers();
-    this.getProjects();
-  }
+      this.setState({
+        users: userDirectories,
+      });
 
-  private async loadUsers() {
-    const users = await DatabaseService.getAllUsers();
-    this.setState({ users }); // Store users in state
+    } catch (error) {
+      console.error("Error loading users in OpenUsersDialog:", error);
+    }
   }
 
   renderProjects() {
     const { projects, loading, error, selectedProject } = this.state;
+    const { theme } = this.props;
 
     if (loading) {
-      return <div>Loading...</div>;
+      return <div>Select User to see projects</div>;
     }
 
     if (error) {
@@ -256,19 +230,20 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
         <ul>
           {projects.map((project) => (
             <ProjectItem
-              key={project.project_id}
-              selected = {selectedProject === project.project_id}
-              onClick={() => this.handleProjectClick(project.project_id)}>
-                {project.project_id}
+              key={project.projectName}
+              selected={selectedProject === project.projectName}
+              onClick={() => this.handleProjectClick(project.projectName)}
+              theme={this.props.theme}>
+              {project.projectName}
             </ProjectItem>
           ))}
         </ul>
         {
           selectedProject && (
             <BottomButtonContainer>
-              <button onClick={() => this.props.onOpenUserProject(this.state.selectedSection, this.state.selectedProject, `main.${ProgrammingLanguage.FILE_EXTENSION[this.state.activeLanguage]}`,this.state.activeLanguage )}>
+              <OpenProjectButton onClick={() => this.props.onOpenUserProject(this.state.selectedSection, this.state.selectedProject, `main.${ProgrammingLanguage.FILE_EXTENSION[this.state.activeLanguage]}`, this.state.activeLanguage)} theme={theme}>
                 Open Project
-              </button>
+              </OpenProjectButton>
             </BottomButtonContainer>
           )
         }
@@ -280,7 +255,6 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
     const { props, state } = this;
     const { style, className, theme, onClose, locale } = props;
     const { selectedSection, users } = state;
-
 
     let logo: JSX.Element;
 
@@ -295,7 +269,6 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
       }
     }
 
-
     const userSections = users.map((user) => (
       <SectionName
         key={user}
@@ -307,18 +280,16 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
       </SectionName>
     ));
 
-
     return (
       <Dialog
         theme={theme}
         name={LocalizedString.lookup(tr('Open Users'), locale)}
+        style={{ color: theme.whiteText }}
         onClose={onClose}
       >
         <Container theme={theme} style={style} className={className}>
           <SectionsColumn theme={theme}>
-
             {userSections}
-
           </SectionsColumn>
           <SettingsColumn theme={theme}>
             <SettingContainer theme={theme}>

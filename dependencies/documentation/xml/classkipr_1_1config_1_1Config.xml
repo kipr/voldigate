@@ -1,0 +1,456 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classkipr_1_1config_1_1Config" kind="class" language="C++" prot="public">
+    <compoundname>kipr::config::Config</compoundname>
+    <includes refid="config_8hpp" local="no">config.hpp</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classkipr_1_1config_1_1Config_1a0dd67dfea6faf9bb60d1f63bb50a41a6" prot="private" static="no" mutable="no">
+        <type>std::map&lt; std::string, std::string &gt;</type>
+        <definition>std::map&lt;std::string, std::string&gt; kipr::config::Config::m_config</definition>
+        <argsstring></argsstring>
+        <name>m_config</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp" line="48" column="16" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1config_1_1Config_1adfa89e9b012033e1e47b876935b79e49" prot="private" static="no" mutable="no">
+        <type>std::vector&lt; std::string &gt;</type>
+        <definition>std::vector&lt;std::string&gt; kipr::config::Config::m_groups</definition>
+        <argsstring></argsstring>
+        <name>m_groups</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp" line="49" column="19" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1config_1_1Config_1ae2c11fdccd2bd9d4dd7b2addce3cc17c" prot="private" static="no" mutable="yes">
+        <type>std::string</type>
+        <definition>std::string kipr::config::Config::m_cachedGroup</definition>
+        <argsstring></argsstring>
+        <name>m_cachedGroup</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp" line="50" column="27" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp" bodystart="50" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classkipr_1_1config_1_1Config_1a4fc15e53891b0113d4c71df8589a2548" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>kipr::config::Config::Config</definition>
+        <argsstring>()</argsstring>
+        <name>Config</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp" line="16" column="7"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1config_1_1Config_1a575c880fe2d69b1eec56e1176855c383" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>kipr::config::Config::Config</definition>
+        <argsstring>(const std::map&lt; std::string, std::string &gt; &amp;config)</argsstring>
+        <name>Config</name>
+        <param>
+          <type>const std::map&lt; std::string, std::string &gt; &amp;</type>
+          <declname>config</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp" line="17" column="7"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1config_1_1Config_1a5ba7dd69ea1331bcc22882f17a37fd94" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool kipr::config::Config::save</definition>
+        <argsstring>(const std::string &amp;path) const</argsstring>
+        <name>save</name>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp" line="20" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1config_1_1Config_1af575df21f5acad1061f7dbf4adfa7100" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::config::Config::beginGroup</definition>
+        <argsstring>(const std::string &amp;group)</argsstring>
+        <name>beginGroup</name>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>group</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp" line="22" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1config_1_1Config_1abf86d0aef4e7f522f6113271ab54d4d9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::config::Config::endGroup</definition>
+        <argsstring>()</argsstring>
+        <name>endGroup</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp" line="23" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1config_1_1Config_1a32fd9cb3adddd8f134d75e2f47f1b04c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::config::Config::clearGroup</definition>
+        <argsstring>()</argsstring>
+        <name>clearGroup</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp" line="24" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1config_1_1Config_1a0a913c83b09df992585b8aef0876e924" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::config::Config::clear</definition>
+        <argsstring>()</argsstring>
+        <name>clear</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp" line="26" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1config_1_1Config_1a9b7fe1d78fb3708d2140e9b77d31c1c8" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool kipr::config::Config::containsKey</definition>
+        <argsstring>(const std::string &amp;key) const</argsstring>
+        <name>containsKey</name>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>key</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp" line="28" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1config_1_1Config_1a5efc1ac1481cf923fa2dc677ecd27e86" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool kipr::config::Config::boolValue</definition>
+        <argsstring>(const std::string &amp;key) const</argsstring>
+        <name>boolValue</name>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>key</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp" line="30" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1config_1_1Config_1aa016a2f09afed47286256313e5354a8a" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int kipr::config::Config::intValue</definition>
+        <argsstring>(const std::string &amp;key) const</argsstring>
+        <name>intValue</name>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>key</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp" line="31" column="11"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1config_1_1Config_1a07797cb29f7ddf6445e7a4b41f76fb72" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double kipr::config::Config::doubleValue</definition>
+        <argsstring>(const std::string &amp;key) const</argsstring>
+        <name>doubleValue</name>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>key</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp" line="32" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1config_1_1Config_1a06f87ecc9bd8dfa8376d79821e9c74ca" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>std::string</type>
+        <definition>std::string kipr::config::Config::stringValue</definition>
+        <argsstring>(const std::string &amp;key) const</argsstring>
+        <name>stringValue</name>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>key</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp" line="33" column="19"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1config_1_1Config_1a9802d8fe1f629dd3417718e0a50ecc0a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::config::Config::setValue</definition>
+        <argsstring>(const std::string &amp;key, const bool &amp;value)</argsstring>
+        <name>setValue</name>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>key</declname>
+        </param>
+        <param>
+          <type>const bool &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp" line="35" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1config_1_1Config_1a0bcfbd79cff90d59829c119d5d6d28c2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::config::Config::setValue</definition>
+        <argsstring>(const std::string &amp;key, const int &amp;value)</argsstring>
+        <name>setValue</name>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>key</declname>
+        </param>
+        <param>
+          <type>const int &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp" line="36" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1config_1_1Config_1a294bd37dd1561154a38f9ea93d5b38cc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::config::Config::setValue</definition>
+        <argsstring>(const std::string &amp;key, const double &amp;value)</argsstring>
+        <name>setValue</name>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>key</declname>
+        </param>
+        <param>
+          <type>const double &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp" line="37" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1config_1_1Config_1a2113bbf845f75f53a8b9b3d8a9ffc008" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::config::Config::setValue</definition>
+        <argsstring>(const std::string &amp;key, const char *value)</argsstring>
+        <name>setValue</name>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>key</declname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp" line="38" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1config_1_1Config_1aa792d92d383a06411413025784e0a799" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::config::Config::setValue</definition>
+        <argsstring>(const std::string &amp;key, const std::string &amp;value)</argsstring>
+        <name>setValue</name>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>key</declname>
+        </param>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp" line="39" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1config_1_1Config_1a5c9f1d39c479025c2f359771942c395b" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1config_1_1Config" kindref="compound">Config</ref></type>
+        <definition>Config kipr::config::Config::values</definition>
+        <argsstring>() const</argsstring>
+        <name>values</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp" line="41" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1config_1_1Config_1a00705b41f801be5c219a0f7ab50e967f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::config::Config::addValues</definition>
+        <argsstring>(const Config &amp;config)</argsstring>
+        <name>addValues</name>
+        <param>
+          <type>const <ref refid="classkipr_1_1config_1_1Config" kindref="compound">Config</ref> &amp;</type>
+          <declname>config</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp" line="42" column="12"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classkipr_1_1config_1_1Config_1a2ab280ce77c5cd4c7035ed1eb840f43a" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classkipr_1_1config_1_1Config" kindref="compound">Config</ref> *</type>
+        <definition>static Config* kipr::config::Config::load</definition>
+        <argsstring>(const std::string &amp;path)</argsstring>
+        <name>load</name>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp" line="19" column="21"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classkipr_1_1config_1_1Config_1a7fbfdc9eea75dffbfd8b4e6475ba884d" prot="private" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>std::string</type>
+        <definition>std::string kipr::config::Config::safeKey</definition>
+        <argsstring>(std::string key) const</argsstring>
+        <name>safeKey</name>
+        <param>
+          <type>std::string</type>
+          <declname>key</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp" line="45" column="19"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1config_1_1Config_1ae0dd544444efa509306acae3bef948e1" prot="private" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>std::string</type>
+        <definition>std::string kipr::config::Config::group</definition>
+        <argsstring>() const</argsstring>
+        <name>group</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp" line="46" column="19"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp" line="13" column="5" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp" bodystart="14" bodyend="51"/>
+    <listofallmembers>
+      <member refid="classkipr_1_1config_1_1Config_1a00705b41f801be5c219a0f7ab50e967f" prot="public" virt="non-virtual"><scope>kipr::config::Config</scope><name>addValues</name></member>
+      <member refid="classkipr_1_1config_1_1Config_1af575df21f5acad1061f7dbf4adfa7100" prot="public" virt="non-virtual"><scope>kipr::config::Config</scope><name>beginGroup</name></member>
+      <member refid="classkipr_1_1config_1_1Config_1a5efc1ac1481cf923fa2dc677ecd27e86" prot="public" virt="non-virtual"><scope>kipr::config::Config</scope><name>boolValue</name></member>
+      <member refid="classkipr_1_1config_1_1Config_1a0a913c83b09df992585b8aef0876e924" prot="public" virt="non-virtual"><scope>kipr::config::Config</scope><name>clear</name></member>
+      <member refid="classkipr_1_1config_1_1Config_1a32fd9cb3adddd8f134d75e2f47f1b04c" prot="public" virt="non-virtual"><scope>kipr::config::Config</scope><name>clearGroup</name></member>
+      <member refid="classkipr_1_1config_1_1Config_1a4fc15e53891b0113d4c71df8589a2548" prot="public" virt="non-virtual"><scope>kipr::config::Config</scope><name>Config</name></member>
+      <member refid="classkipr_1_1config_1_1Config_1a575c880fe2d69b1eec56e1176855c383" prot="public" virt="non-virtual"><scope>kipr::config::Config</scope><name>Config</name></member>
+      <member refid="classkipr_1_1config_1_1Config_1a9b7fe1d78fb3708d2140e9b77d31c1c8" prot="public" virt="non-virtual"><scope>kipr::config::Config</scope><name>containsKey</name></member>
+      <member refid="classkipr_1_1config_1_1Config_1a07797cb29f7ddf6445e7a4b41f76fb72" prot="public" virt="non-virtual"><scope>kipr::config::Config</scope><name>doubleValue</name></member>
+      <member refid="classkipr_1_1config_1_1Config_1abf86d0aef4e7f522f6113271ab54d4d9" prot="public" virt="non-virtual"><scope>kipr::config::Config</scope><name>endGroup</name></member>
+      <member refid="classkipr_1_1config_1_1Config_1ae0dd544444efa509306acae3bef948e1" prot="private" virt="non-virtual"><scope>kipr::config::Config</scope><name>group</name></member>
+      <member refid="classkipr_1_1config_1_1Config_1aa016a2f09afed47286256313e5354a8a" prot="public" virt="non-virtual"><scope>kipr::config::Config</scope><name>intValue</name></member>
+      <member refid="classkipr_1_1config_1_1Config_1a2ab280ce77c5cd4c7035ed1eb840f43a" prot="public" virt="non-virtual"><scope>kipr::config::Config</scope><name>load</name></member>
+      <member refid="classkipr_1_1config_1_1Config_1ae2c11fdccd2bd9d4dd7b2addce3cc17c" prot="private" virt="non-virtual"><scope>kipr::config::Config</scope><name>m_cachedGroup</name></member>
+      <member refid="classkipr_1_1config_1_1Config_1a0dd67dfea6faf9bb60d1f63bb50a41a6" prot="private" virt="non-virtual"><scope>kipr::config::Config</scope><name>m_config</name></member>
+      <member refid="classkipr_1_1config_1_1Config_1adfa89e9b012033e1e47b876935b79e49" prot="private" virt="non-virtual"><scope>kipr::config::Config</scope><name>m_groups</name></member>
+      <member refid="classkipr_1_1config_1_1Config_1a7fbfdc9eea75dffbfd8b4e6475ba884d" prot="private" virt="non-virtual"><scope>kipr::config::Config</scope><name>safeKey</name></member>
+      <member refid="classkipr_1_1config_1_1Config_1a5ba7dd69ea1331bcc22882f17a37fd94" prot="public" virt="non-virtual"><scope>kipr::config::Config</scope><name>save</name></member>
+      <member refid="classkipr_1_1config_1_1Config_1a9802d8fe1f629dd3417718e0a50ecc0a" prot="public" virt="non-virtual"><scope>kipr::config::Config</scope><name>setValue</name></member>
+      <member refid="classkipr_1_1config_1_1Config_1a0bcfbd79cff90d59829c119d5d6d28c2" prot="public" virt="non-virtual"><scope>kipr::config::Config</scope><name>setValue</name></member>
+      <member refid="classkipr_1_1config_1_1Config_1a294bd37dd1561154a38f9ea93d5b38cc" prot="public" virt="non-virtual"><scope>kipr::config::Config</scope><name>setValue</name></member>
+      <member refid="classkipr_1_1config_1_1Config_1a2113bbf845f75f53a8b9b3d8a9ffc008" prot="public" virt="non-virtual"><scope>kipr::config::Config</scope><name>setValue</name></member>
+      <member refid="classkipr_1_1config_1_1Config_1aa792d92d383a06411413025784e0a799" prot="public" virt="non-virtual"><scope>kipr::config::Config</scope><name>setValue</name></member>
+      <member refid="classkipr_1_1config_1_1Config_1a06f87ecc9bd8dfa8376d79821e9c74ca" prot="public" virt="non-virtual"><scope>kipr::config::Config</scope><name>stringValue</name></member>
+      <member refid="classkipr_1_1config_1_1Config_1a5c9f1d39c479025c2f359771942c395b" prot="public" virt="non-virtual"><scope>kipr::config::Config</scope><name>values</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="compass_8hpp" kind="file" language="C++">
+    <compoundname>compass.hpp</compoundname>
+    <innerclass refid="classkipr_1_1compass_1_1Compass" prot="public">kipr::compass::Compass</innerclass>
+    <innernamespace refid="namespacekipr">kipr</innernamespace>
+    <innernamespace refid="namespacekipr_1_1compass">kipr::compass</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>_KIPR_COMPASS_COMPASS_HPP_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_KIPR_COMPASS_COMPASS_HPP_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal"><ref refid="namespacekipr" kindref="compound">kipr</ref></highlight></codeline>
+<codeline lineno="5"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="6" refid="namespacekipr_1_1compass" refkind="compound"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">compass</highlight></codeline>
+<codeline lineno="7"><highlight class="normal"><sp/><sp/>{</highlight></codeline>
+<codeline lineno="8" refid="classkipr_1_1compass_1_1Compass" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classkipr_1_1compass_1_1Compass" kindref="compound">Compass</ref></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="10"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="11" refid="classkipr_1_1compass_1_1Compass_1aee578bb4186b6934d11790d1f8f02c61" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classkipr_1_1compass_1_1Compass_1aee578bb4186b6934d11790d1f8f02c61" kindref="member">Compass</ref>();</highlight></codeline>
+<codeline lineno="12" refid="classkipr_1_1compass_1_1Compass_1ae5dffbd0a1095fcd61dbed3eddcecab2" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classkipr_1_1compass_1_1Compass_1ae5dffbd0a1095fcd61dbed3eddcecab2" kindref="member">~Compass</ref>();</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14" refid="classkipr_1_1compass_1_1Compass_1a0ac286268d1181ae4f21a823d86655a1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1compass_1_1Compass_1a0ac286268d1181ae4f21a823d86655a1" kindref="member">calibrate</ref>();</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight></codeline>
+<codeline lineno="16" refid="classkipr_1_1compass_1_1Compass_1a503a854f028f3d788a86b7164823cbc9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1compass_1_1Compass_1a503a854f028f3d788a86b7164823cbc9" kindref="member">setParams</ref>(</highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>meanX,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>meanY,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>meanZ,</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>W1,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>W2,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>div_E1,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>div_E2);</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight></codeline>
+<codeline lineno="19" refid="classkipr_1_1compass_1_1Compass_1ab1425b852d8ee66a3a77abec9bbb5396" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1compass_1_1Compass_1ab1425b852d8ee66a3a77abec9bbb5396" kindref="member">getAngle</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="22"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/compass/public/kipr/compass/compass.hpp"/>
+  </compounddef>
+</doxygen>

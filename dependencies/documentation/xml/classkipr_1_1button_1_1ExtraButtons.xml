@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classkipr_1_1button_1_1ExtraButtons" kind="class" language="C++" prot="public">
+    <compoundname>kipr::button::ExtraButtons</compoundname>
+    <includes refid="button_8hpp" local="no">button.hpp</includes>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classkipr_1_1button_1_1ExtraButtons_1a82ab17ed40cae6dc9e9e1205bb483ed9" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>static void kipr::button::ExtraButtons::show</definition>
+        <argsstring>()</argsstring>
+        <name>show</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.hpp" line="71" column="19"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1button_1_1ExtraButtons_1ada78ce01b359b3f577a49b79b27360a1" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>static void kipr::button::ExtraButtons::hide</definition>
+        <argsstring>()</argsstring>
+        <name>hide</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.hpp" line="73" column="19"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1button_1_1ExtraButtons_1ad1ffb74c5f8162bf95d02201938d749f" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>static void kipr::button::ExtraButtons::setShown</definition>
+        <argsstring>(bool shown)</argsstring>
+        <name>setShown</name>
+        <param>
+          <type>bool</type>
+          <declname>shown</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.hpp" line="75" column="19"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1button_1_1ExtraButtons_1a99aad2525dca151bb701e879414de60d" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>static bool kipr::button::ExtraButtons::isShown</definition>
+        <argsstring>()</argsstring>
+        <name>isShown</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.hpp" line="77" column="19"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.hpp" line="68" column="5" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.hpp" bodystart="69" bodyend="78"/>
+    <listofallmembers>
+      <member refid="classkipr_1_1button_1_1ExtraButtons_1ada78ce01b359b3f577a49b79b27360a1" prot="public" virt="non-virtual"><scope>kipr::button::ExtraButtons</scope><name>hide</name></member>
+      <member refid="classkipr_1_1button_1_1ExtraButtons_1a99aad2525dca151bb701e879414de60d" prot="public" virt="non-virtual"><scope>kipr::button::ExtraButtons</scope><name>isShown</name></member>
+      <member refid="classkipr_1_1button_1_1ExtraButtons_1ad1ffb74c5f8162bf95d02201938d749f" prot="public" virt="non-virtual"><scope>kipr::button::ExtraButtons</scope><name>setShown</name></member>
+      <member refid="classkipr_1_1button_1_1ExtraButtons_1a82ab17ed40cae6dc9e9e1205bb483ed9" prot="public" virt="non-virtual"><scope>kipr::button::ExtraButtons</scope><name>show</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

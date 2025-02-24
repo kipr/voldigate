@@ -1,0 +1,23 @@
+warning: source '/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/compat/public' is not a readable file or directory... skipping.
+/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp:436: warning: argument 'num' of command @param is not found in the argument list of kipr::create::Create::loadSong(const unsigned char *song, const unsigned char length, const unsigned char songNum)
+/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp:452: warning: The following parameter of kipr::create::Create::loadSong(const unsigned char *song, const unsigned char length, const unsigned char songNum) is not documented:
+  parameter 'songNum'
+/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp:455: warning: argument 'num' of command @param is not found in the argument list of kipr::create::Create::playSong(const unsigned char songNum)
+/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp:461: warning: The following parameter of kipr::create::Create::playSong(const unsigned char songNum) is not documented:
+  parameter 'songNum'
+/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp:326: warning: The following parameter of kipr::create::Create::blockingRead(unsigned char *data, const size_t &size, unsigned timeout=25) is not documented:
+  parameter 'timeout'
+/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp:326: warning: The following parameter of kipr::create::Create::blockingRead(unsigned char *data, const size_t &size, unsigned timeout=25) is not documented:
+  parameter 'timeout'
+/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp:436: warning: argument 'num' of command @param is not found in the argument list of kipr::create::Create::loadSong(const unsigned char *song, const unsigned char length, const unsigned char songNum)
+/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp:452: warning: The following parameter of kipr::create::Create::loadSong(const unsigned char *song, const unsigned char length, const unsigned char songNum) is not documented:
+  parameter 'songNum'
+/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp:455: warning: argument 'num' of command @param is not found in the argument list of kipr::create::Create::playSong(const unsigned char songNum)
+/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp:461: warning: The following parameter of kipr::create::Create::playSong(const unsigned char songNum) is not documented:
+  parameter 'songNum'
+/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp:436: warning: argument 'num' of command @param is not found in the argument list of kipr::create::Create::loadSong(const unsigned char *song, const unsigned char length, const unsigned char songNum)
+/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp:452: warning: The following parameter of kipr::create::Create::loadSong(const unsigned char *song, const unsigned char length, const unsigned char songNum) is not documented:
+  parameter 'songNum'
+/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp:455: warning: argument 'num' of command @param is not found in the argument list of kipr::create::Create::playSong(const unsigned char songNum)
+/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp:461: warning: The following parameter of kipr::create::Create::playSong(const unsigned char songNum) is not documented:
+  parameter 'songNum'

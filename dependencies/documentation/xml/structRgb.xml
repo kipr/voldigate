@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="structRgb" kind="struct" language="C++" prot="public">
+    <compoundname>Rgb</compoundname>
+    <includes refid="color_8hpp" local="no">color.hpp</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structRgb_1a3da778daa4ccbc628c478b21d6093df5" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char Rgb::r</definition>
+        <argsstring></argsstring>
+        <name>r</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/color.hpp" line="8" column="17" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/color.hpp" bodystart="8" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structRgb_1a27a8958ecb91f5f98ee520129a396ce3" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char Rgb::g</definition>
+        <argsstring></argsstring>
+        <name>g</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/color.hpp" line="9" column="17" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/color.hpp" bodystart="9" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structRgb_1acab4ec8e0d55174258da75ee80f69bef" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char Rgb::b</definition>
+        <argsstring></argsstring>
+        <name>b</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/color.hpp" line="10" column="17" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/color.hpp" bodystart="10" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/color.hpp" line="6" column="1" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/color.hpp" bodystart="7" bodyend="11"/>
+    <listofallmembers>
+      <member refid="structRgb_1acab4ec8e0d55174258da75ee80f69bef" prot="public" virt="non-virtual"><scope>Rgb</scope><name>b</name></member>
+      <member refid="structRgb_1a27a8958ecb91f5f98ee520129a396ce3" prot="public" virt="non-virtual"><scope>Rgb</scope><name>g</name></member>
+      <member refid="structRgb_1a3da778daa4ccbc628c478b21d6093df5" prot="public" virt="non-virtual"><scope>Rgb</scope><name>r</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

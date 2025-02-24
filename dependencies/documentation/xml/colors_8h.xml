@@ -1,0 +1,352 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="colors_8h" kind="file" language="C++">
+    <compoundname>colors.h</compoundname>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="colors_8h_1a8d23feea868a983c8c2b661e1e16972f" prot="public" static="no">
+        <name>RED</name>
+        <initializer>255,0,0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" line="1" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" bodystart="1" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="colors_8h_1acb94f6551a49a0687321b68cc5ff5ae7" prot="public" static="no">
+        <name>MAROON</name>
+        <initializer>128,0,0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" line="2" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" bodystart="2" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="colors_8h_1a1e1791735cb7832943c0d3c58936da44" prot="public" static="no">
+        <name>CORAL</name>
+        <initializer>240,128,128</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" line="3" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" bodystart="3" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="colors_8h_1ada419fe3b48fcf19daed7cc57ccf1174" prot="public" static="no">
+        <name>PINK</name>
+        <initializer>255,105,180</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" line="4" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" bodystart="4" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="colors_8h_1a30283739677a9ab6664959f69e2d8dde" prot="public" static="no">
+        <name>ROSE</name>
+        <initializer>255,228,225</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" line="5" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" bodystart="5" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="colors_8h_1ac5b6e19bf06822021f35602c59658de3" prot="public" static="no">
+        <name>ORANGE</name>
+        <initializer>255,153,51</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" line="6" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" bodystart="6" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="colors_8h_1a6f699060902f800f12aaae150f3a708e" prot="public" static="no">
+        <name>MAGENTA</name>
+        <initializer>255,0,255</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" line="7" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" bodystart="7" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="colors_8h_1a025a1624e6a431140f6176b3c410f189" prot="public" static="no">
+        <name>FUCHSIA</name>
+        <initializer>255,0,255</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" line="8" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" bodystart="8" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="colors_8h_1a0bb0b009e7a7390473ace4d98bd843c0" prot="public" static="no">
+        <name>PURPLE</name>
+        <initializer>128,0,128</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" line="9" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" bodystart="9" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="colors_8h_1a928ad872921809adddfdd7f5d260fac0" prot="public" static="no">
+        <name>VIOLET</name>
+        <initializer>138,43,226</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" line="10" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" bodystart="10" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="colors_8h_1af468028083c9e52aa2c94ef3b9940450" prot="public" static="no">
+        <name>GOLD</name>
+        <initializer>255,215,0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" line="11" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" bodystart="11" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="colors_8h_1abf681265909adf3d3e8116c93c0ba179" prot="public" static="no">
+        <name>YELLOW</name>
+        <initializer>255,255,0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" line="12" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" bodystart="12" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="colors_8h_1a46019a1f2c10603a54b6cbb19cbf3c21" prot="public" static="no">
+        <name>LIME</name>
+        <initializer>0,255,0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" line="13" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" bodystart="13" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="colors_8h_1acfbc006ea433ad708fdee3e82996e721" prot="public" static="no">
+        <name>GREEN</name>
+        <initializer>0,255,0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" line="14" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" bodystart="14" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="colors_8h_1a07fc0f45feae04b5da68627d5cf3ac62" prot="public" static="no">
+        <name>OLIVE</name>
+        <initializer>128,128,0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" line="15" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" bodystart="15" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="colors_8h_1ad243f93c16bc4c1d3e0a13b84421d760" prot="public" static="no">
+        <name>CYAN</name>
+        <initializer>0,255,255</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" line="16" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" bodystart="16" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="colors_8h_1a03f3dfd90aa5fafc6c690f215b489976" prot="public" static="no">
+        <name>AQUA</name>
+        <initializer>0,255,255</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" line="17" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" bodystart="17" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="colors_8h_1a03e7881ce42823bcd8c3e798e03e7507" prot="public" static="no">
+        <name>TEAL</name>
+        <initializer>0,128,128</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" line="18" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" bodystart="18" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="colors_8h_1a79d10e672abb49ad63eeaa8aaef57c38" prot="public" static="no">
+        <name>BLUE</name>
+        <initializer>0,0,255</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" line="19" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" bodystart="19" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="colors_8h_1ab2ee9bdede8e3af96ff696c7b2ba7416" prot="public" static="no">
+        <name>NAVY</name>
+        <initializer>0,0,128</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" line="20" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="colors_8h_1af1ba9f9222a902062abcee6a5b37399e" prot="public" static="no">
+        <name>ALMOND</name>
+        <initializer>255,235,205</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" line="21" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" bodystart="21" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="colors_8h_1ab1fecb76a9c95f2051f2cd835776fca7" prot="public" static="no">
+        <name>LTBROWN</name>
+        <initializer>255,229,220</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" line="22" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" bodystart="22" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="colors_8h_1ab2baea56ece91306020afd6d77fd19f9" prot="public" static="no">
+        <name>BROWN</name>
+        <initializer>139,69,19</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" line="23" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" bodystart="23" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="colors_8h_1aecbb01f32cb2f057131ae6c6c54f72a1" prot="public" static="no">
+        <name>SIENNA</name>
+        <initializer>160,82,45</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" line="24" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" bodystart="24" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="colors_8h_1a87b537f5fa5c109d3c05c13d6b18f382" prot="public" static="no">
+        <name>WHITE</name>
+        <initializer>255,255,255</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" line="25" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" bodystart="25" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="colors_8h_1a7b3b25cba33b07c303f3060fe41887f6" prot="public" static="no">
+        <name>BLACK</name>
+        <initializer>0,0,0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" line="26" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" bodystart="26" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="colors_8h_1a94acd99b9c9aa3d0bc02834f543437b9" prot="public" static="no">
+        <name>DKGRAY</name>
+        <initializer>84,84,84</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" line="27" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="colors_8h_1ae5f70677050eecd8909e0248e07b9e73" prot="public" static="no">
+        <name>GRAY</name>
+        <initializer>128,128,128</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" line="28" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h" bodystart="28" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1" refid="colors_8h_1a8d23feea868a983c8c2b661e1e16972f" refkind="member"><highlight class="preprocessor">#define<sp/>RED<sp/>255,0,0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2" refid="colors_8h_1acb94f6551a49a0687321b68cc5ff5ae7" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAROON<sp/>128,0,0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3" refid="colors_8h_1a1e1791735cb7832943c0d3c58936da44" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CORAL<sp/>240,128,128</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4" refid="colors_8h_1ada419fe3b48fcf19daed7cc57ccf1174" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PINK<sp/>255,105,180</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5" refid="colors_8h_1a30283739677a9ab6664959f69e2d8dde" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ROSE<sp/>255,228,225</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6" refid="colors_8h_1ac5b6e19bf06822021f35602c59658de3" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ORANGE<sp/>255,153,51</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7" refid="colors_8h_1a6f699060902f800f12aaae150f3a708e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAGENTA<sp/>255,0,255</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8" refid="colors_8h_1a025a1624e6a431140f6176b3c410f189" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FUCHSIA<sp/>255,0,255</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9" refid="colors_8h_1a0bb0b009e7a7390473ace4d98bd843c0" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PURPLE<sp/>128,0,128</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10" refid="colors_8h_1a928ad872921809adddfdd7f5d260fac0" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>VIOLET<sp/>138,43,226</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11" refid="colors_8h_1af468028083c9e52aa2c94ef3b9940450" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>GOLD<sp/>255,215,0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12" refid="colors_8h_1abf681265909adf3d3e8116c93c0ba179" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>YELLOW<sp/>255,255,0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13" refid="colors_8h_1a46019a1f2c10603a54b6cbb19cbf3c21" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LIME<sp/>0,255,0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14" refid="colors_8h_1acfbc006ea433ad708fdee3e82996e721" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>GREEN<sp/>0,255,0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15" refid="colors_8h_1a07fc0f45feae04b5da68627d5cf3ac62" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OLIVE<sp/>128,128,0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16" refid="colors_8h_1ad243f93c16bc4c1d3e0a13b84421d760" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CYAN<sp/>0,255,255</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17" refid="colors_8h_1a03f3dfd90aa5fafc6c690f215b489976" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>AQUA<sp/>0,255,255</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18" refid="colors_8h_1a03e7881ce42823bcd8c3e798e03e7507" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>TEAL<sp/>0,128,128</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="19" refid="colors_8h_1a79d10e672abb49ad63eeaa8aaef57c38" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BLUE<sp/>0,0,255</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="20" refid="colors_8h_1ab2ee9bdede8e3af96ff696c7b2ba7416" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>NAVY<sp/>0,0,128</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="21" refid="colors_8h_1af1ba9f9222a902062abcee6a5b37399e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ALMOND<sp/>255,235,205</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="22" refid="colors_8h_1ab1fecb76a9c95f2051f2cd835776fca7" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LTBROWN<sp/>255,229,220</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23" refid="colors_8h_1ab2baea56ece91306020afd6d77fd19f9" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BROWN<sp/>139,69,19</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="24" refid="colors_8h_1aecbb01f32cb2f057131ae6c6c54f72a1" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIENNA<sp/>160,82,45</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="25" refid="colors_8h_1a87b537f5fa5c109d3c05c13d6b18f382" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>WHITE<sp/>255,255,255</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="26" refid="colors_8h_1a7b3b25cba33b07c303f3060fe41887f6" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BLACK<sp/>0,0,0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="27" refid="colors_8h_1a94acd99b9c9aa3d0bc02834f543437b9" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DKGRAY<sp/>84,84,84</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28" refid="colors_8h_1ae5f70677050eecd8909e0248e07b9e73" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>GRAY<sp/>128,128,128</highlight></codeline>
+<codeline lineno="29"><highlight class="preprocessor">#define<sp/>SHADOW<sp/>170,170,170</highlight></codeline>
+    </programlisting>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/colors.h"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="battery_8hpp" kind="file" language="C++">
+    <compoundname>battery.hpp</compoundname>
+    <innerclass refid="classkipr_1_1battery_1_1Battery" prot="public">kipr::battery::Battery</innerclass>
+    <innernamespace refid="namespacekipr">kipr</innernamespace>
+    <innernamespace refid="namespacekipr_1_1battery">kipr::battery</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>_KIPR_BATTERY_BATTERY_HPP_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_KIPR_BATTERY_BATTERY_HPP_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal"><ref refid="namespacekipr" kindref="compound">kipr</ref></highlight></codeline>
+<codeline lineno="5"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="6" refid="namespacekipr_1_1battery" refkind="compound"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">battery</highlight></codeline>
+<codeline lineno="7"><highlight class="normal"><sp/><sp/>{</highlight></codeline>
+<codeline lineno="8" refid="classkipr_1_1battery_1_1Battery" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classkipr_1_1battery_1_1Battery" kindref="compound">Battery</ref></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="10"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="11" refid="classkipr_1_1battery_1_1Battery_1a269b2a7c61f0932572ad3ed4d39bc678" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1battery_1_1Battery_1a269b2a7c61f0932572ad3ed4d39bc678" kindref="member">isCharging</ref>();</highlight></codeline>
+<codeline lineno="12" refid="classkipr_1_1battery_1_1Battery_1a53aceba0d53c91e872ec17ffbf7a1aa5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1battery_1_1Battery_1a53aceba0d53c91e872ec17ffbf7a1aa5" kindref="member">powerLevel</ref>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>battery_type<sp/>=<sp/>0);</highlight></codeline>
+<codeline lineno="13" refid="classkipr_1_1battery_1_1Battery_1a90375a5cace301f92d1d4e8d4845fc26" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1battery_1_1Battery_1a90375a5cace301f92d1d4e8d4845fc26" kindref="member">rawPowerADC</ref>();</highlight></codeline>
+<codeline lineno="14"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="16"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/battery/public/kipr/battery/battery.hpp"/>
+  </compounddef>
+</doxygen>

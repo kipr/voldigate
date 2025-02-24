@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="namespacekipr_1_1create" kind="namespace" language="C++">
+    <compoundname>kipr::create</compoundname>
+    <innerclass refid="classkipr_1_1create_1_1CreateScript" prot="public">kipr::create::CreateScript</innerclass>
+    <innerclass refid="structkipr_1_1create_1_1CreateState" prot="public">kipr::create::CreateState</innerclass>
+    <innerclass refid="classkipr_1_1create_1_1Create" prot="public">kipr::create::Create</innerclass>
+    <innernamespace refid="namespacekipr_1_1create_1_1CreatePackets">kipr::create::CreatePackets</innernamespace>
+    <innernamespace refid="namespacekipr_1_1create_1_1sensors">kipr::create::sensors</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="33" column="3"/>
+  </compounddef>
+</doxygen>

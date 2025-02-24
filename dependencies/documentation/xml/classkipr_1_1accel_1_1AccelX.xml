@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classkipr_1_1accel_1_1AccelX" kind="class" language="C++" prot="public">
+    <compoundname>kipr::accel::AccelX</compoundname>
+    <basecompoundref refid="classkipr_1_1sensor_1_1Sensor" prot="public" virt="non-virtual">kipr::sensor::Sensor&lt; short &gt;</basecompoundref>
+    <includes refid="accel_8hpp" local="no">accel.hpp</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classkipr_1_1accel_1_1AccelX_1a0ffeee7629023a7999dd280dddfc33eb" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+        <type>short</type>
+        <definition>virtual short kipr::accel::AccelX::value</definition>
+        <argsstring>() const</argsstring>
+        <name>value</name>
+        <reimplements refid="classkipr_1_1sensor_1_1Sensor_1a6ccd0837f3e12090bed823f841d3e318">value</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/accel/public/kipr/accel/accel.hpp" line="24" column="21"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>kipr::sensor::Sensor&lt; short &gt;</label>
+        <link refid="classkipr_1_1sensor_1_1Sensor"/>
+      </node>
+      <node id="1">
+        <label>kipr::accel::AccelX</label>
+        <link refid="classkipr_1_1accel_1_1AccelX"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>kipr::sensor::Sensor&lt; short &gt;</label>
+        <link refid="classkipr_1_1sensor_1_1Sensor"/>
+      </node>
+      <node id="1">
+        <label>kipr::accel::AccelX</label>
+        <link refid="classkipr_1_1accel_1_1AccelX"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/accel/public/kipr/accel/accel.hpp" line="21" column="5" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/accel/public/kipr/accel/accel.hpp" bodystart="22" bodyend="25"/>
+    <listofallmembers>
+      <member refid="classkipr_1_1accel_1_1AccelX_1a0ffeee7629023a7999dd280dddfc33eb" prot="public" virt="virtual"><scope>kipr::accel::AccelX</scope><name>value</name></member>
+      <member refid="classkipr_1_1sensor_1_1Sensor_1a7a2997c6ede6b25603032f2b110e8cb5" prot="public" virt="virtual"><scope>kipr::accel::AccelX</scope><name>~Sensor</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

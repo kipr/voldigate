@@ -1,37 +1,7 @@
-import { Size } from '../../components/Widget';
 import LocalizedString from '../../util/LocalizedString';
-import Dict from '../../Dict';
-import Async from "./Async";
 import Documentation from './Documentation';
 import DocumentationLocation from './Documentation/DocumentationLocation';
-import Robot from './Robot';
-import { AsyncScene } from './Scene';
-
-export type Scenes = Dict<AsyncScene>;
-
-export namespace Scenes {
-  export const EMPTY: Scenes = {};
-}
-
-export interface Robots {
-  robots: Dict<Async<Record<string, never>, Robot>>;
-}
-
-export namespace Robots {
-  export const EMPTY: Robots = {
-    robots: {},
-  };
-
-  export const loaded = (robots: Robots): Dict<Robot> => {
-    const ret: Dict<Robot> = {};
-    for (const id in robots.robots) {
-      const robot = robots.robots[id];
-      if (robot.type !== Async.Type.Loaded) continue;
-      ret[id] = robot.value;
-    }
-    return ret;
-  };
-}
+import { Size } from '../../components/Widget';
 
 export interface DocumentationState {
   documentation: Documentation;
@@ -42,7 +12,7 @@ export interface DocumentationState {
 
 export namespace DocumentationState {
   export const DEFAULT: DocumentationState = {
-    documentation: SIMULATOR_LIBKIPR_C_DOCUMENTATION as Documentation || Documentation.EMPTY,
+    documentation: IDE_LIBKIPR_C_DOCUMENTATION as Documentation || Documentation.EMPTY,
     locationStack: [],
     size: Size.MINIMIZED,
     language: 'c'

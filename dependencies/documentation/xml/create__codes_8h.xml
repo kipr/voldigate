@@ -1,0 +1,498 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="create__codes_8h" kind="file" language="C++">
+    <compoundname>create_codes.h</compoundname>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="create__codes_8h_1a86a0bce6ec0ed06a4711304ece2ea5a6" prot="public" static="no">
+        <name>OI_START</name>
+        <initializer>128</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="7" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="7" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1a07a8fa72014acf411c7a0879a0153acf" prot="public" static="no">
+        <name>OI_BAUD</name>
+        <initializer>129</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="8" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="8" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1a4e7d1ba9386cf8430d16a95474e0063c" prot="public" static="no">
+        <name>OI_SAFE</name>
+        <initializer>131</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="9" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="9" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1abf7bdb0a8c5fb288b87a1e73782e0201" prot="public" static="no">
+        <name>OI_FULL</name>
+        <initializer>132</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="10" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="10" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1a82ccddb48c414b4c69bcba8b1a565208" prot="public" static="no">
+        <name>OI_DEMO</name>
+        <initializer>136</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="11" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="11" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1ab4646684a910c39066bd63c80d8031a2" prot="public" static="no">
+        <name>OI_DRIVE</name>
+        <initializer>137</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="13" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="13" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1a62fcd88b2eb8b4c01e52c31681b0a60f" prot="public" static="no">
+        <name>OI_DRIVE_DIRECT</name>
+        <initializer>145</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="14" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="14" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1a3a4f1ef934a634ff2e601efcbd7fe7be" prot="public" static="no">
+        <name>OI_LEDS</name>
+        <initializer>139</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="15" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="15" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1a294bffa74eb516fd8371ba2ae473e7df" prot="public" static="no">
+        <name>OI_DIGITAL_OUTPUTS</name>
+        <initializer>147</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="16" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="16" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1ab291a488d247c337dcf63ddc76fafd6a" prot="public" static="no">
+        <name>OI_LOW_SIDE_DRIVERS</name>
+        <initializer>138</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="17" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="17" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1a820d21a809086b87517e2333f8c8dad2" prot="public" static="no">
+        <name>OI_SEND_IR</name>
+        <initializer>151</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="18" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="18" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1a781acda4e6bcb725344bd0d4283f83be" prot="public" static="no">
+        <name>OI_SONG</name>
+        <initializer>140</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="20" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1aebdd1b6ecefc68f1c06a111133a1e9b3" prot="public" static="no">
+        <name>OI_PLAY_SONG</name>
+        <initializer>141</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="21" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="21" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1ac6d04d50c76feb4c312ac6e3677367c8" prot="public" static="no">
+        <name>OI_SENSORS</name>
+        <initializer>142</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="23" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="23" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1ac69ca6e64428dfdafa2b42f99d061bc2" prot="public" static="no">
+        <name>OI_QUERY_LIST</name>
+        <initializer>149</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="24" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="24" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1a3852a2a6b3c8c571913d8058fda76872" prot="public" static="no">
+        <name>OI_STREAM</name>
+        <initializer>148</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="26" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="26" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1a484e49a24d0c1b30e0bc7467355f768c" prot="public" static="no">
+        <name>OI_PAUSE_RESUME_STREAM</name>
+        <initializer>150</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="27" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1a0446501526372d4f98527cb9806118f5" prot="public" static="no">
+        <name>OI_SCRIPT</name>
+        <initializer>152</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="29" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="29" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1a60a59eec4860ad294579def6ba1f91bd" prot="public" static="no">
+        <name>OI_PLAY_SCRIPT</name>
+        <initializer>153</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="30" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="30" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1a66954024e8e71477f33a6c07dc9f1441" prot="public" static="no">
+        <name>OI_SHOW_SCRIPT</name>
+        <initializer>154</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="31" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="31" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1ab098283e44188befde206a835322d74f" prot="public" static="no">
+        <name>OI_WAIT_TIME</name>
+        <initializer>155</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="33" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="33" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1aa75f256466443324de418ef11b7b8666" prot="public" static="no">
+        <name>OI_WAIT_DISTANCE</name>
+        <initializer>156</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="34" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="34" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1a067f234cad70c4290827a148608b868a" prot="public" static="no">
+        <name>OI_WAIT_ANGLE</name>
+        <initializer>157</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="35" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="35" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1ae5c3183b747e09054b7c31e054b5d39c" prot="public" static="no">
+        <name>OI_WAIT_EVENT</name>
+        <initializer>156</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="36" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1a05174f0682f2728f2fd430d5d811054b" prot="public" static="no">
+        <name>OI_BUMPS_AND_WHEEL_DROPS</name>
+        <initializer>7</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="38" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="38" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1a432dc003337f6f6a309a0af7f7b80c48" prot="public" static="no">
+        <name>OI_WALL</name>
+        <initializer>8</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="39" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1a2c3864c2663ad88c9d026b4c5ff2122f" prot="public" static="no">
+        <name>OI_CLIFF_LEFT</name>
+        <initializer>9</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="40" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1aaf60598468f90c96b94db2c3a65fdf3e" prot="public" static="no">
+        <name>OI_CLIFF_FRONT_LEFT</name>
+        <initializer>10</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="41" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1ab2c57c1e02bdef5a89e1ec966e9fb5dc" prot="public" static="no">
+        <name>OI_CLIFF_FRONT_RIGHT</name>
+        <initializer>11</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="42" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1a848da0ac0ec57c592e3e5b6cfe2fcee9" prot="public" static="no">
+        <name>OI_CLIFF_RIGHT</name>
+        <initializer>12</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="43" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1ad2a18d306f807b902ad01a8ae2105f18" prot="public" static="no">
+        <name>OI_VIRTUAL_WALL</name>
+        <initializer>13</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="44" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="44" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1ae805927fabbbe949fb87138b049c296c" prot="public" static="no">
+        <name>OI_LOW_SIDE_DRIVER_AND_WHEEL_OVERCURRENTS</name>
+        <initializer>14</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="45" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1a172c7fbda90198da17bcb49b120711b1" prot="public" static="no">
+        <name>OI_BUTTONS</name>
+        <initializer>18</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="46" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1ace344f6a2e6ffe296ffca50ccd368ece" prot="public" static="no">
+        <name>OI_DISTANCE</name>
+        <initializer>19</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="47" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1ab2980159191d46db1eb320e53b700199" prot="public" static="no">
+        <name>OI_ANGLE</name>
+        <initializer>20</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="48" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1aac2bc3fbab88641586f87aa45b26da60" prot="public" static="no">
+        <name>OI_CHARGING_STATE</name>
+        <initializer>21</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="49" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1aee3a2e89948518d8a4f3e33d9116d9a5" prot="public" static="no">
+        <name>OI_VOLTAGE</name>
+        <initializer>22</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="50" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="50" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1aa14da68b9464ab95feb564bc2badaec9" prot="public" static="no">
+        <name>OI_CURRENT</name>
+        <initializer>23</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="51" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="create__codes_8h_1a98a7017a1e0a1255faf1c8500ddaeff4" prot="public" static="no">
+        <name>OI_CARGO_BAY_DIGITAL_INPUTS</name>
+        <initializer>32</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" line="52" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>_KIPR_CREATE_CREATE_CODES_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_KIPR_CREATE_CREATE_CODES_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="comment">//<sp/>See<sp/>http://www.irobot.com/filelibrary/pdfs/hrd/create/create%20open%20interface_v2.pdf</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="comment">//<sp/>for<sp/>more<sp/>information</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight></codeline>
+<codeline lineno="7" refid="create__codes_8h_1a86a0bce6ec0ed06a4711304ece2ea5a6" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_START<sp/>128</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8" refid="create__codes_8h_1a07a8fa72014acf411c7a0879a0153acf" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_BAUD<sp/>129</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9" refid="create__codes_8h_1a4e7d1ba9386cf8430d16a95474e0063c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_SAFE<sp/>131</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10" refid="create__codes_8h_1abf7bdb0a8c5fb288b87a1e73782e0201" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_FULL<sp/>132</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11" refid="create__codes_8h_1a82ccddb48c414b4c69bcba8b1a565208" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_DEMO<sp/>136</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight></codeline>
+<codeline lineno="13" refid="create__codes_8h_1ab4646684a910c39066bd63c80d8031a2" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_DRIVE<sp/>137</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14" refid="create__codes_8h_1a62fcd88b2eb8b4c01e52c31681b0a60f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_DRIVE_DIRECT<sp/>145</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15" refid="create__codes_8h_1a3a4f1ef934a634ff2e601efcbd7fe7be" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_LEDS<sp/>139</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16" refid="create__codes_8h_1a294bffa74eb516fd8371ba2ae473e7df" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_DIGITAL_OUTPUTS<sp/>147</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17" refid="create__codes_8h_1ab291a488d247c337dcf63ddc76fafd6a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_LOW_SIDE_DRIVERS<sp/>138</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18" refid="create__codes_8h_1a820d21a809086b87517e2333f8c8dad2" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_SEND_IR<sp/>151</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="20" refid="create__codes_8h_1a781acda4e6bcb725344bd0d4283f83be" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_SONG<sp/>140</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="21" refid="create__codes_8h_1aebdd1b6ecefc68f1c06a111133a1e9b3" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_PLAY_SONG<sp/>141</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight></codeline>
+<codeline lineno="23" refid="create__codes_8h_1ac6d04d50c76feb4c312ac6e3677367c8" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_SENSORS<sp/>142</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="24" refid="create__codes_8h_1ac69ca6e64428dfdafa2b42f99d061bc2" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_QUERY_LIST<sp/>149</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight></codeline>
+<codeline lineno="26" refid="create__codes_8h_1a3852a2a6b3c8c571913d8058fda76872" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_STREAM<sp/>148</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="27" refid="create__codes_8h_1a484e49a24d0c1b30e0bc7467355f768c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_PAUSE_RESUME_STREAM<sp/>150</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29" refid="create__codes_8h_1a0446501526372d4f98527cb9806118f5" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_SCRIPT<sp/>152</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30" refid="create__codes_8h_1a60a59eec4860ad294579def6ba1f91bd" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_PLAY_SCRIPT<sp/>153</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31" refid="create__codes_8h_1a66954024e8e71477f33a6c07dc9f1441" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_SHOW_SCRIPT<sp/>154</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight></codeline>
+<codeline lineno="33" refid="create__codes_8h_1ab098283e44188befde206a835322d74f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_WAIT_TIME<sp/>155</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34" refid="create__codes_8h_1aa75f256466443324de418ef11b7b8666" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_WAIT_DISTANCE<sp/>156</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35" refid="create__codes_8h_1a067f234cad70c4290827a148608b868a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_WAIT_ANGLE<sp/>157</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36" refid="create__codes_8h_1ae5c3183b747e09054b7c31e054b5d39c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_WAIT_EVENT<sp/>156</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38" refid="create__codes_8h_1a05174f0682f2728f2fd430d5d811054b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_BUMPS_AND_WHEEL_DROPS<sp/>7</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39" refid="create__codes_8h_1a432dc003337f6f6a309a0af7f7b80c48" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_WALL<sp/>8</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40" refid="create__codes_8h_1a2c3864c2663ad88c9d026b4c5ff2122f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_CLIFF_LEFT<sp/>9</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41" refid="create__codes_8h_1aaf60598468f90c96b94db2c3a65fdf3e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_CLIFF_FRONT_LEFT<sp/>10</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42" refid="create__codes_8h_1ab2c57c1e02bdef5a89e1ec966e9fb5dc" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_CLIFF_FRONT_RIGHT<sp/>11</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43" refid="create__codes_8h_1a848da0ac0ec57c592e3e5b6cfe2fcee9" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_CLIFF_RIGHT<sp/>12</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44" refid="create__codes_8h_1ad2a18d306f807b902ad01a8ae2105f18" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_VIRTUAL_WALL<sp/>13</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45" refid="create__codes_8h_1ae805927fabbbe949fb87138b049c296c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_LOW_SIDE_DRIVER_AND_WHEEL_OVERCURRENTS<sp/>14</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46" refid="create__codes_8h_1a172c7fbda90198da17bcb49b120711b1" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_BUTTONS<sp/>18</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47" refid="create__codes_8h_1ace344f6a2e6ffe296ffca50ccd368ece" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_DISTANCE<sp/>19</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48" refid="create__codes_8h_1ab2980159191d46db1eb320e53b700199" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_ANGLE<sp/>20</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49" refid="create__codes_8h_1aac2bc3fbab88641586f87aa45b26da60" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_CHARGING_STATE<sp/>21</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50" refid="create__codes_8h_1aee3a2e89948518d8a4f3e33d9116d9a5" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_VOLTAGE<sp/>22</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51" refid="create__codes_8h_1aa14da68b9464ab95feb564bc2badaec9" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_CURRENT<sp/>23</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52" refid="create__codes_8h_1a98a7017a1e0a1255faf1c8500ddaeff4" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OI_CARGO_BAY_DIGITAL_INPUTS<sp/>32</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create_codes.h"/>
+  </compounddef>
+</doxygen>

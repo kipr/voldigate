@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="namespacekipr_1_1gyro" kind="namespace" language="C++">
+    <compoundname>kipr::gyro</compoundname>
+    <innerclass refid="classkipr_1_1gyro_1_1Gyro" prot="public">kipr::gyro::Gyro</innerclass>
+    <innerclass refid="classkipr_1_1gyro_1_1GyroX" prot="public">kipr::gyro::GyroX</innerclass>
+    <innerclass refid="classkipr_1_1gyro_1_1GyroY" prot="public">kipr::gyro::GyroY</innerclass>
+    <innerclass refid="classkipr_1_1gyro_1_1GyroZ" prot="public">kipr::gyro::GyroZ</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/gyro/public/kipr/gyro/gyro.hpp" line="8" column="3"/>
+  </compounddef>
+</doxygen>

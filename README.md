@@ -21,9 +21,10 @@ The IDE for the Wombat Controller
 # to get newer versions of Node.js through apt-get, you likely need to add the correct NodeSource repositories
 # for details, see https://github.com/nodesource/distributions
 sudo apt-get update
-sudo apt-get install -y wget git cmake build-essential python3.8 swig zlib1g-dev doxygen nodejs
+sudo apt-get install -y wget git cmake build-essential python3.8 swig zlib1g-dev doxygen nodejs clang libc++-dev libc++abi-dev libstdc++-12-dev
 sudo npm install --global npm
 sudo npm install --global yarn
+
 yarn --version
 
 #(if yarn does not work, reboot or use "sudo yarn" on the rest of the instructions)
@@ -70,7 +71,7 @@ git lfs pull
 
 ```bash
 # Python 3.7+ is required for the build process
-python3 dependencies/build.py
+python3 dependencies/build_voldigate.py
 ```
 
 Tip: if you are experiencing issues with this step, you may try deleting the repository and follow the steps listed above again.

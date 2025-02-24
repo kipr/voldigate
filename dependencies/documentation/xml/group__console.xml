@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="group__console" kind="group">
+    <compoundname>console</compoundname>
+    <title>Console</title>
+    <innerclass refid="classkipr_1_1console_1_1Console" prot="public">kipr::console::Console</innerclass>
+    <innerpage refid="group__console_console"></innerpage>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="group__console_1ga490370bb141fb9d46cafb20abdf77e65" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void console_clear</definition>
+        <argsstring>()</argsstring>
+        <name>console_clear</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Clears the UI&apos;s console. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/console/public/kipr/console/console.h" line="29" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/console/public/kipr/console/console.h" declline="29" declcolumn="17"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

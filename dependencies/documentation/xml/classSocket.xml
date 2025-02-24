@@ -1,0 +1,346 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classSocket" kind="class" language="C++" prot="public">
+    <compoundname>Socket</compoundname>
+    <includes refid="socket_8hpp" local="no">socket.hpp</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classSocket_1ae01c9cc8df251da1fe8a9f025c97a989" prot="private" static="no" mutable="no">
+        <type><ref refid="socket_8hpp_1ac5edad8c23925f7425866e7253f7f02a" kindref="member">socket_fd_t</ref></type>
+        <definition>socket_fd_t Socket::m_fd</definition>
+        <argsstring></argsstring>
+        <name>m_fd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="82" column="13" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" bodystart="82" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classSocket_1a7c3256c4fc6e2c603df73201049fae5a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>Socket::Socket</definition>
+        <argsstring>()</argsstring>
+        <name>Socket</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="58" column="1"/>
+      </memberdef>
+      <memberdef kind="function" id="classSocket_1ac29147e85ea697c250cdb9f6bfdd72cb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool Socket::open</definition>
+        <argsstring>(int domain, int type, int protocol)</argsstring>
+        <name>open</name>
+        <param>
+          <type>int</type>
+          <declname>domain</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>type</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>protocol</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="60" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classSocket_1a35d1ad03b3ae7ec106924e22c8c1b7d4" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool Socket::isOpen</definition>
+        <argsstring>() const</argsstring>
+        <name>isOpen</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="61" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classSocket_1a7f73007fafbe7745fb2176a209787457" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool Socket::setBlocking</definition>
+        <argsstring>(const bool blocking)</argsstring>
+        <name>setBlocking</name>
+        <param>
+          <type>const bool</type>
+          <declname>blocking</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="62" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classSocket_1a5c3b3427993ca1382598783dec0544e2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool Socket::setReusable</definition>
+        <argsstring>(const bool reusable)</argsstring>
+        <name>setReusable</name>
+        <param>
+          <type>const bool</type>
+          <declname>reusable</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="63" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classSocket_1ac032166859151611d8f76308db2a13e5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool Socket::bind</definition>
+        <argsstring>(const unsigned short port)</argsstring>
+        <name>bind</name>
+        <param>
+          <type>const unsigned short</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="64" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classSocket_1a9067acf8b3e2b5191fe191e3f376b319" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool Socket::connect</definition>
+        <argsstring>(const Address &amp;addr)</argsstring>
+        <name>connect</name>
+        <param>
+          <type>const <ref refid="classAddress" kindref="compound">Address</ref> &amp;</type>
+          <declname>addr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="65" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classSocket_1af4e3f3b8001460ae2871f5374b70e3b8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool Socket::disconnect</definition>
+        <argsstring>()</argsstring>
+        <name>disconnect</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="66" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classSocket_1a0c9750548d7cfc58390c35a513bc3a12" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool Socket::close</definition>
+        <argsstring>()</argsstring>
+        <name>close</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="68" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classSocket_1a0a0ee366bc625b8f0d435cf68d083157" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>ssize_t</type>
+        <definition>ssize_t Socket::recv</definition>
+        <argsstring>(void *const buffer, const size_t length, int flags=0)</argsstring>
+        <name>recv</name>
+        <param>
+          <type>void *const</type>
+          <declname>buffer</declname>
+        </param>
+        <param>
+          <type>const size_t</type>
+          <declname>length</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>flags</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="70" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classSocket_1a1f9437723ddf95179268958407383f1c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>ssize_t</type>
+        <definition>ssize_t Socket::recvfrom</definition>
+        <argsstring>(void *const buffer, const size_t length, Address &amp;address, int flags=0)</argsstring>
+        <name>recvfrom</name>
+        <param>
+          <type>void *const</type>
+          <declname>buffer</declname>
+        </param>
+        <param>
+          <type>const size_t</type>
+          <declname>length</declname>
+        </param>
+        <param>
+          <type><ref refid="classAddress" kindref="compound">Address</ref> &amp;</type>
+          <declname>address</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>flags</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="71" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classSocket_1a0dd57cbcafcea8caaf0c86f66a0841b1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>ssize_t</type>
+        <definition>ssize_t Socket::send</definition>
+        <argsstring>(const void *const buffer, const size_t length, int flags=0)</argsstring>
+        <name>send</name>
+        <param>
+          <type>const void *const</type>
+          <declname>buffer</declname>
+        </param>
+        <param>
+          <type>const size_t</type>
+          <declname>length</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>flags</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="73" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classSocket_1acebd799182ee92f2d6c4c96bb67f63da" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>ssize_t</type>
+        <definition>ssize_t Socket::sendto</definition>
+        <argsstring>(const void *const buffer, const size_t length, const Address &amp;dest, int flags=0)</argsstring>
+        <name>sendto</name>
+        <param>
+          <type>const void *const</type>
+          <declname>buffer</declname>
+        </param>
+        <param>
+          <type>const size_t</type>
+          <declname>length</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classAddress" kindref="compound">Address</ref> &amp;</type>
+          <declname>dest</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>flags</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="74" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classSocket_1af8da516631e03da69eb9cb5dfac46383" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="socket_8hpp_1ac5edad8c23925f7425866e7253f7f02a" kindref="member">socket_fd_t</ref></type>
+        <definition>socket_fd_t Socket::fd</definition>
+        <argsstring>() const</argsstring>
+        <name>fd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="76" column="13"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classSocket_1a10087d3a3aa3eaa924302de3b7663299" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classSocket" kindref="compound">Socket</ref></type>
+        <definition>static Socket Socket::udp</definition>
+        <argsstring>()</argsstring>
+        <name>udp</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="78" column="15"/>
+      </memberdef>
+      <memberdef kind="function" id="classSocket_1ac126b4d2350aba6c62fb58794fc8efe3" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classSocket" kindref="compound">Socket</ref></type>
+        <definition>static Socket Socket::tcp</definition>
+        <argsstring>()</argsstring>
+        <name>tcp</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="79" column="15"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" line="55" column="1" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/network/public/kipr/network/socket.hpp" bodystart="56" bodyend="83"/>
+    <listofallmembers>
+      <member refid="classSocket_1ac032166859151611d8f76308db2a13e5" prot="public" virt="non-virtual"><scope>Socket</scope><name>bind</name></member>
+      <member refid="classSocket_1a0c9750548d7cfc58390c35a513bc3a12" prot="public" virt="non-virtual"><scope>Socket</scope><name>close</name></member>
+      <member refid="classSocket_1a9067acf8b3e2b5191fe191e3f376b319" prot="public" virt="non-virtual"><scope>Socket</scope><name>connect</name></member>
+      <member refid="classSocket_1af4e3f3b8001460ae2871f5374b70e3b8" prot="public" virt="non-virtual"><scope>Socket</scope><name>disconnect</name></member>
+      <member refid="classSocket_1af8da516631e03da69eb9cb5dfac46383" prot="public" virt="non-virtual"><scope>Socket</scope><name>fd</name></member>
+      <member refid="classSocket_1a35d1ad03b3ae7ec106924e22c8c1b7d4" prot="public" virt="non-virtual"><scope>Socket</scope><name>isOpen</name></member>
+      <member refid="classSocket_1ae01c9cc8df251da1fe8a9f025c97a989" prot="private" virt="non-virtual"><scope>Socket</scope><name>m_fd</name></member>
+      <member refid="classSocket_1ac29147e85ea697c250cdb9f6bfdd72cb" prot="public" virt="non-virtual"><scope>Socket</scope><name>open</name></member>
+      <member refid="classSocket_1a0a0ee366bc625b8f0d435cf68d083157" prot="public" virt="non-virtual"><scope>Socket</scope><name>recv</name></member>
+      <member refid="classSocket_1a1f9437723ddf95179268958407383f1c" prot="public" virt="non-virtual"><scope>Socket</scope><name>recvfrom</name></member>
+      <member refid="classSocket_1a0dd57cbcafcea8caaf0c86f66a0841b1" prot="public" virt="non-virtual"><scope>Socket</scope><name>send</name></member>
+      <member refid="classSocket_1acebd799182ee92f2d6c4c96bb67f63da" prot="public" virt="non-virtual"><scope>Socket</scope><name>sendto</name></member>
+      <member refid="classSocket_1a7f73007fafbe7745fb2176a209787457" prot="public" virt="non-virtual"><scope>Socket</scope><name>setBlocking</name></member>
+      <member refid="classSocket_1a5c3b3427993ca1382598783dec0544e2" prot="public" virt="non-virtual"><scope>Socket</scope><name>setReusable</name></member>
+      <member refid="classSocket_1a7c3256c4fc6e2c603df73201049fae5a" prot="public" virt="non-virtual"><scope>Socket</scope><name>Socket</name></member>
+      <member refid="classSocket_1ac126b4d2350aba6c62fb58794fc8efe3" prot="public" virt="non-virtual"><scope>Socket</scope><name>tcp</name></member>
+      <member refid="classSocket_1a10087d3a3aa3eaa924302de3b7663299" prot="public" virt="non-virtual"><scope>Socket</scope><name>udp</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

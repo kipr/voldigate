@@ -1,0 +1,244 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="group__analog" kind="group">
+    <compoundname>analog</compoundname>
+    <title>Analogs</title>
+    <innerpage refid="group__analog_Analog"></innerpage>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="group__analog_1gafa28db0c35c02b77341a6bed7aac0cb4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int analog</definition>
+        <argsstring>(int port)</argsstring>
+        <name>analog</name>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the 12-bit analog value of a port. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">port</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A value between 0 and 5 specifying the sensor to read from. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The latest 12-bit value of the port (a value in the range 0 to 4095). </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__analog_1gae4df1b885eb1242e8906bbb053e4aa48" kindref="member">analog12</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog/analog.h" line="45" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog/analog.h" declline="45" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__analog_1gab67f7af2df378fc643c9452946aa470b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int analog8</definition>
+        <argsstring>(int port)</argsstring>
+        <name>analog8</name>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the 8-bit analog value of a port. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">port</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A value between 0 and 5 specifying the sensor to read from. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The latest 8-bit value of the port (a value in the range 0 to 255). </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__analog_1gafa28db0c35c02b77341a6bed7aac0cb4" kindref="member">analog</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog/analog.h" line="55" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog/analog.h" declline="55" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__analog_1ga9dca569422efccf49420ebb82ce26aef" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int analog10</definition>
+        <argsstring>(int port)</argsstring>
+        <name>analog10</name>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the 10-bit analog value of a port. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">port</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A value between 0 and 5 specifying the sensor to read from. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The latest 10-bit value of the port (a value in the range 0 to 1023). </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__analog_1gafa28db0c35c02b77341a6bed7aac0cb4" kindref="member">analog</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog/analog.h" line="65" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog/analog.h" declline="65" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__analog_1gae4df1b885eb1242e8906bbb053e4aa48" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int analog12</definition>
+        <argsstring>(int port)</argsstring>
+        <name>analog12</name>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the 12-bit analog value of a port. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">port</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A value between 0 and 5 specifying the sensor to read from. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The latest 12-bit value of the port (a value in the range 0 to 4095). </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__analog_1gafa28db0c35c02b77341a6bed7aac0cb4" kindref="member">analog</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog/analog.h" line="75" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog/analog.h" declline="75" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__analog_1gac6275954d0f20882dce85bbf2a191add" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int analog_et</definition>
+        <argsstring>(int port)</argsstring>
+        <name>analog_et</name>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the 10-bit analog value of an ET sensor on the given port. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">port</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A value between 0 and 7 specifying the ET sensor to read from. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The latest 10-bit value of the port (a value in the range 0 to 1023). </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__analog_1gafa28db0c35c02b77341a6bed7aac0cb4" kindref="member">analog</ref></para>
+</simplesect>
+<xrefsect id="deprecated_1_deprecated000001"><xreftitle>Deprecated</xreftitle><xrefdescription><para>defaulting to <ref refid="group__analog_1gafa28db0c35c02b77341a6bed7aac0cb4" kindref="member">analog()</ref> on the Wallaby </para>
+</xrefdescription></xrefsect></para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog/analog.h" line="86" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog/analog.h" declline="86" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__analog_1gafe0e26968180cb71db2c398574b82731" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void set_analog_pullup</definition>
+        <argsstring>(int port, int pullup)</argsstring>
+        <name>set_analog_pullup</name>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>pullup</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Sets analog pullup status for one port. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">port</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A value between 0 and 5 specifying the analog sensor to read from. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">pullup</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A value of 0 (inactive) or 1 (active). </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="group__analog_1gafa28db0c35c02b77341a6bed7aac0cb4" kindref="member">analog</ref></para>
+</simplesect>
+<xrefsect id="deprecated_1_deprecated000002"><xreftitle>Deprecated</xreftitle><xrefdescription><para>no effect on the Wallaby </para>
+</xrefdescription></xrefsect></para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog/analog.h" line="98" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog/analog.h" declline="98" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__analog_1ga0efa75659885dfd582847bfa5590d2d8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int get_analog_pullup</definition>
+        <argsstring>(int port)</argsstring>
+        <name>get_analog_pullup</name>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the analog pullup status for one portt. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">port</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A value between 0 and 7 specifying the analog sensor to read from. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The status of the analog pullup on the specified port </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__analog_1gafa28db0c35c02b77341a6bed7aac0cb4" kindref="member">analog</ref></para>
+</simplesect>
+<xrefsect id="deprecated_1_deprecated000003"><xreftitle>Deprecated</xreftitle><xrefdescription><para>no effect on the Wallaby </para>
+</xrefdescription></xrefsect></para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog/analog.h" line="108" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog/analog.h" declline="108" declcolumn="5"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

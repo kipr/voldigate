@@ -1,33 +1,25 @@
-
-import { ThemeProps } from './theme';
-import { StyleProps } from '../style';
-
+import * as React from 'react';
+import axios from 'axios';
 import tr from '@i18n';
 import LocalizedString from '../util/LocalizedString';
-import * as React from 'react';
-import ComboBox from './ComboBox';
+import Form from './Form';
+import RepeatUserDialog from './RepeatUserDialog';
+import { ThemeProps } from './theme';
+import { StyleProps } from '../style';
 import { styled } from 'styletron-react';
-import ScrollArea from './ScrollArea';
 import { Dialog } from './Dialog';
 import { State as ReduxState } from '../state';
 import { I18nAction } from '../state/reducer';
 import { connect } from 'react-redux';
-import Form from './Form';
-
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { push } from 'connected-react-router';
-
-
-import { DatabaseService } from './DatabaseService';
-import RepeatUserDialog from './RepeatUserDialog';
-
-
+import { Fa } from './Fa';
 
 export interface CreateUserDialogPublicProps extends ThemeProps, StyleProps {
-    onClose: () => void;
     showRepeatUserDialog: boolean;
     userName: string;
+    onClose: () => void;
     onCreateProjectDialog: (userName: string) => void;
-
 }
 
 interface CreateUserDialogPrivateProps {
@@ -38,174 +30,86 @@ interface CreateUserDialogPrivateProps {
 
 interface CreateUserDialogState {
     userName: string;
-    modal: Modal;
+    errorMessage: string;
     showRepeatUserDialog: boolean;
 }
-
-
 
 type Props = CreateUserDialogPublicProps & CreateUserDialogPrivateProps;
 type State = CreateUserDialogState;
 
 const Container = styled('div', (props: ThemeProps) => ({
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
+    backgroundColor: props.theme.backgroundColor,
     color: props.theme.color,
     minHeight: '200px',
 }));
-namespace Modal {
-    export enum Type {
-        Settings,
-        CreateUser,
-        RepeatUser,
-        None,
-        OpenUser
-    }
-    export interface None {
-        type: Type.None;
-    }
-
-    export const NONE: None = { type: Type.None };
-
-    export interface Settings {
-        type: Type.Settings;
-    }
-
-    export const SETTINGS: Settings = { type: Type.Settings };
-
-    export interface CreateUser {
-        type: Type.CreateUser;
-    }
-
-    export const CREATEUSER: CreateUser = { type: Type.CreateUser };
-
-    export interface RepeatUser {
-        type: Type.RepeatUser;
-    }
-
-    export const REPEATUSER: RepeatUser = { type: Type.RepeatUser };
-}
-
-export type Modal = (
-    Modal.Settings |
-    Modal.CreateUser |
-    Modal.None |
-    Modal.RepeatUser
-);
-
-const SectionsColumn = styled('div', (props: ThemeProps) => ({
-    display: 'flex',
-    flexDirection: 'column',
-    flex: '0 0 150px',
-    borderRight: `1px solid ${props.theme.borderColor}`,
-}));
-
-const SectionName = styled('span', (props: ThemeProps & SectionProps) => ({
-    backgroundColor: props.selected ? `rgba(255, 255, 255, 0.1)` : undefined,
-    ':hover': {
-        cursor: 'pointer',
-        backgroundColor: `rgba(255, 255, 255, 0.1)`
-    },
-    transition: 'background-color 0.2s, opacity 0.2s',
-    padding: `${props.theme.itemPadding * 2}px`,
-    fontWeight: props.selected ? 400 : undefined,
-    userSelect: 'none',
-}));
-
-const SettingsColumn = styled(ScrollArea, {
-    flex: '1 1',
-});
-
-const SettingContainer = styled('div', (props: ThemeProps) => ({
-    display: 'flex',
-    flexDirection: 'row',
-    padding: `${props.theme.itemPadding * 2}px`,
-}));
-
-const SettingInfoContainer = styled('div', {
-    display: 'flex',
-    flexDirection: 'column',
-    flex: '1 0',
-});
-
-const SettingInfoText = styled('span', {
-    userSelect: 'none',
-});
-
-const SettingInfoSubtext = styled(SettingInfoText, {
-    fontSize: '10pt',
-});
-
-interface SectionProps {
-    selected?: boolean;
-}
-
-const LOCALE_OPTIONS: ComboBox.Option[] = (() => {
-    const ret: ComboBox.Option[] = [];
-    for (const locale of [LocalizedString.EN_US]) {
-        ret.push(ComboBox.option(LocalizedString.NATIVE_LOCALE_NAMES[locale], locale));
-    }
-    return ret;
-})();
-
-const StyledComboBox = styled(ComboBox, {
-    flex: '1 1',
-});
 
 const StyledForm = styled(Form, (props: ThemeProps) => ({
     paddingLeft: `${props.theme.itemPadding * 2}px`,
     paddingRight: `${props.theme.itemPadding * 2}px`,
 }));
 
-
-const OverlayContainer = styled('div', {
-    position: 'relative',
-});
-
-const OverlayDialog = styled('div', {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
+const ErrorMessageContainer = styled('div', (props: ThemeProps) => ({
     display: 'flex',
-    justifyContent: 'center',
+    flexDirection: 'row',
+    backgroundColor: 'red',
+    color: 'white',
+    height: '40px',
     alignItems: 'center',
-    zIndex: 1000, // Ensure this is above the CreateUserDialog
+    marginTop: '10px',
+}));
+
+const ItemIcon = styled(Fa, {
+    paddingLeft: '10px',
+    paddingRight: '10px',
+    alignItems: 'center',
+    height: '30px'
 });
 
 export class CreateUserDialog extends React.PureComponent<Props, State> {
-    //state = {userName: ''};
 
     constructor(props: Props) {
         super(props);
         this.state = {
-            modal: Modal.NONE,
             userName: '',
-            showRepeatUserDialog: false
+            showRepeatUserDialog: false,
+            errorMessage: ''
         }
     }
-    private onModalClick_ = (modal: Modal) => () => this.setState({ modal });
-    private onModalClose_ = () => this.setState({ modal: Modal.NONE });
+
     private closeRepeatUserDialog_ = () => {
-        // 
-        // 
-        //  this.setState({modal:Modal.NONE});
+
         this.setState({ showRepeatUserDialog: false });
     };
-    private onLocaleSelect_ = (index: number, option: ComboBox.Option) => {
-        this.props.onLocaleChange(option.data as LocalizedString.Language);
-    };
-
 
     onFinalize_ = async (values: { [id: string]: string }) => {
 
-        console.log('Inside onFinalizeClick_ in CreateUserDialog.tsx with values:', values);
+        const userName = values.userName;
+
+        const specialCharRegex = /[^a-zA-Z0-9 _-]/;
+        const isOnlySpaces = !userName.trim(); // Check if the name is empty or only spaces
+
+        // Check if user name exceeds 50 characters
+        if (userName.length > 50) {
+            this.setState({ errorMessage: 'User name cannot exceed 50 characters.' });
+            return;
+        }
+        if (specialCharRegex.test(userName)) {
+            this.setState({ errorMessage: 'User name contains special characters. Please use only letters, numbers, spaces, underscores, and hyphens.' });
+            return;
+        }
+        if (isOnlySpaces) {
+            this.setState({ errorMessage: "User name cannot be empty or just spaces!" });
+            return;
+        }
+        this.setState({ errorMessage: "" }); // Clear error message if input is valid
 
         try {
-            const result = DatabaseService.addUsertoDatabase(values.userName);
 
-            if (await result == -1) {
+            const response = await axios.get('/get-users', { params: { filePath: "/home/kipr/Documents/KISS" } });
+
+            if (response.data.directories.includes(values.userName)) {
                 this.setState({ showRepeatUserDialog: true });
             }
             else {
@@ -216,53 +120,54 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
         catch (error) {
             console.error('Error adding user to database:', error);
         }
-
-
-
     };
 
     public myComponent(props: CreateUserDialogPublicProps) {
         return (props.userName)
     }
 
-
-
     render() {
         const { props, state } = this;
         const { style, className, theme, onClose, locale } = props;
-        const { modal } = state;
+        const { errorMessage } = state;
 
         const { showRepeatUserDialog } = state;
         const CREATEUSER_FORM_ITEMS: Form.Item[] = [
-            //Form.email('email', 'Email'),
-            //Form.password('password', 'Password', undefined, this.onForgotPasswordClick_, 'Forgot?', false),
             Form.username('userName', 'User Name')
-
         ];
 
-        const FORMS = [CREATEUSER_FORM_ITEMS];
         return (
             <div>
                 {!showRepeatUserDialog && (
                     <Dialog
                         theme={theme}
                         name={LocalizedString.lookup(tr('Create New User'), locale)}
-                        onClose={onClose} 
+                        onClose={onClose}
                     >
                         <Container theme={theme} style={style} className={className}>
+                            {/* Show error message if it exists */}
+                            {errorMessage && (
+                                <ErrorMessageContainer theme={theme}>
+                                    <ItemIcon icon={faExclamationTriangle} />
+                                    <div style={{ fontWeight: 450 }}>
+                                        {state.errorMessage}
+                                    </div>
+
+                                </ErrorMessageContainer>
+                            )}
                             <StyledForm
                                 theme={theme}
                                 onFinalize={this.onFinalize_}
                                 items={CREATEUSER_FORM_ITEMS}
                                 finalizeText="Create"
+                                finalizeDisabled={false}
                             />
                         </Container>
+
                     </Dialog>)}
-
-
                 {showRepeatUserDialog && (
                     <RepeatUserDialog
-                        onClose={this.closeRepeatUserDialog_} 
+                        onClose={this.closeRepeatUserDialog_}
                         theme={theme}
                     />
                 )}

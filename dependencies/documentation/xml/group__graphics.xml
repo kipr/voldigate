@@ -1,0 +1,1836 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="group__graphics" kind="group">
+    <compoundname>graphics</compoundname>
+    <title>Graphics</title>
+      <sectiondef kind="enum">
+      <memberdef kind="enum" id="group__graphics_1gafb0564821f132bfe74508af8349a0faa" prot="public" static="no" strong="no">
+        <type></type>
+        <name>Encoding</name>
+        <enumvalue id="group__graphics_1ggafb0564821f132bfe74508af8349a0faaa30447e9f6efa4afdd251f9afc1d5fb44" prot="public">
+          <name>RGB</name>
+          <briefdescription>
+<para>the enum used to represent RGB encoding </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__graphics_1ggafb0564821f132bfe74508af8349a0faaa4a19a93c929964c201e01c8352dc8b9c" prot="public">
+          <name>BGR</name>
+          <briefdescription>
+<para>the enum used to represent BGR encoding </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+<para>An enumerate with encoding types RGB and BGR. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" line="52" column="1" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" bodystart="53" bodyend="56"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="group__graphics_1ga08cafb219a227e701219541255fb77b4" prot="public" static="no">
+        <type>enum <ref refid="group__graphics_1gafb0564821f132bfe74508af8349a0faa" kindref="member">Encoding</ref></type>
+        <definition>typedef enum Encoding Encoding</definition>
+        <argsstring></argsstring>
+        <name>Encoding</name>
+        <briefdescription>
+<para>An enumerate with encoding types RGB and BGR. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" line="56" column="10"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="group__graphics_1gac9d7c4ff69254bd92cf968394eaa29d9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int graphics_open</definition>
+        <argsstring>(int width, int height)</argsstring>
+        <name>graphics_open</name>
+        <param>
+          <type>int</type>
+          <declname>width</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>height</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Opens a KISS Graphics Window for drawing and input functions.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>width</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The width of the graphics window </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>height</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The height of the graphics window </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" line="27" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" declline="27" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__graphics_1ga7678bcc850c4da50ee71a4aabd052304" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void graphics_close</definition>
+        <argsstring>()</argsstring>
+        <name>graphics_close</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Closes the previously opened KISS Graphics Window </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" line="33" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" declline="33" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__graphics_1gac0d7cb12c52179da9dac9ab705e722c2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void graphics_update</definition>
+        <argsstring>()</argsstring>
+        <name>graphics_update</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Update must be called after drawing to the window for changes to be visible. This function also must be called regularly for input to work. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" line="40" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" declline="40" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__graphics_1gabfee1317660a7674805bf4d56c23a2dc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void graphics_clear</definition>
+        <argsstring>()</argsstring>
+        <name>graphics_clear</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Fills the entire window with the color black </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" line="46" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" declline="46" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__graphics_1gae9c15eab999556d3595c6ec59ed823fb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void graphics_blit_enc</definition>
+        <argsstring>(const unsigned char *data, Encoding enc, int x, int y, int width, int height)</argsstring>
+        <name>graphics_blit_enc</name>
+        <param>
+          <type>const unsigned char *</type>
+          <declname>data</declname>
+        </param>
+        <param>
+          <type><ref refid="group__graphics_1gafb0564821f132bfe74508af8349a0faa" kindref="member">Encoding</ref></type>
+          <declname>enc</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>width</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>height</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Blits a pixel array onto the graphics context</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the 1D array of pixel data to blit </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>enc</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>RGB for a Red-Green-Blue encoding or BGR for a Blue-Green-Red encoding </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The destination x coordinate of the blit (target) </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The destination y coordinate of the blit (target) </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>width</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The width of the area to blit </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>height</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The height of the area to blit </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" line="81" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" declline="81" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__graphics_1ga8dde034ca28052432450dffd57d2a5ca" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void graphics_blit_region_enc</definition>
+        <argsstring>(const unsigned char *data, Encoding enc, int sx, int sy, int ex, int ey, int width, int height, int dx, int dy)</argsstring>
+        <name>graphics_blit_region_enc</name>
+        <param>
+          <type>const unsigned char *</type>
+          <declname>data</declname>
+        </param>
+        <param>
+          <type><ref refid="group__graphics_1gafb0564821f132bfe74508af8349a0faa" kindref="member">Encoding</ref></type>
+          <declname>enc</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>sx</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>sy</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>ex</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>ey</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>width</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>height</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>dx</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>dy</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Blits a pixel array region onto the graphics context</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the 1D array of pixel data to blit </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>enc</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>RGB for a Red-Green-Blue encoding or BGR for a Blue-Green-Red encoding </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>sx</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The start x coordinate of the blit (source) </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>sy</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The start y coordinate of the blit (source) </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>ex</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The end x coordinate of the blit (source) </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>ey</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The end y coordinate of the blit (source) </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>width</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The width of the area to blit </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>height</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The height of the area to blit </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>dx</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The destination x coordinate of the blit (target) </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>dy</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The destination y coordinate of the blit (target) </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" line="98" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" declline="98" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__graphics_1ga857a974f8b4c33e7abfbdba39f283aa0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void graphics_fill</definition>
+        <argsstring>(int r, int g, int b)</argsstring>
+        <name>graphics_fill</name>
+        <param>
+          <type>int</type>
+          <declname>r</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>g</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Fill the graphics context with a color. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>r</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the red component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>g</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the green component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>b</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the blue component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" line="107" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" declline="107" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__graphics_1ga13e95732fd374201c6a7e572fde183f9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void graphics_pixel</definition>
+        <argsstring>(int x, int y, int r, int g, int b)</argsstring>
+        <name>graphics_pixel</name>
+        <param>
+          <type>int</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>r</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>g</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Draw a pixel at (x, y) <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the X coordinate of the pixel </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the Y coordinate of the pixel </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>r</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the red component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>g</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the green component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>b</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the blue component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" line="118" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" declline="118" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__graphics_1ga83282f25b35d78f93ba2c65f265653df" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void graphics_line</definition>
+        <argsstring>(int x1, int y1, int x2, int y2, int r, int g, int b)</argsstring>
+        <name>graphics_line</name>
+        <param>
+          <type>int</type>
+          <declname>x1</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y1</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>x2</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y2</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>r</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>g</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Draw a line from the point (x1, y1) to (x2, y2) <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>x1</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the X coordinate of the first point </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y1</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the Y coordinate of the first point </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x2</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the X coordinate of the second point </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y2</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the Y coordinate of the second point </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>r</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the red component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>g</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the green component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>b</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the blue component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" line="131" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" declline="131" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__graphics_1ga8d98440a493a62ea29daee0b1acf6b10" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void graphics_circle</definition>
+        <argsstring>(int cx, int cy, int radius, int r, int g, int b)</argsstring>
+        <name>graphics_circle</name>
+        <param>
+          <type>int</type>
+          <declname>cx</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>cy</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>radius</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>r</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>g</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Draw an unfilled circle to the graphics window at the given coordinates and with the given radius. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>cx</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the X coordinate of the center of the circle </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>cy</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the Y cordinate of the center of the circle </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>radius</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the radius of the circle to be drawn </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>r</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the red component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>g</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the green component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>b</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the blue component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" line="143" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" declline="143" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__graphics_1ga615b7a986f3e78c441adcc9394957993" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void graphics_circle_fill</definition>
+        <argsstring>(int cx, int cy, int radius, int r, int g, int b)</argsstring>
+        <name>graphics_circle_fill</name>
+        <param>
+          <type>int</type>
+          <declname>cx</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>cy</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>radius</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>r</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>g</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Draw a filled circle to the graphics window at the given coordinates and with the given radius. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>cx</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the X coordinate of the center of the circle </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>cy</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the Y cordinate of the center of the circle </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>radius</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the radius of the circle to be drawn </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>r</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the red component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>g</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the green component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>b</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the blue component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" line="155" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" declline="155" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__graphics_1gace9bb9be0c182da1dd20cfc41be083e6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void graphics_rectangle</definition>
+        <argsstring>(int x1, int y1, int x2, int y2, int r, int g, int b)</argsstring>
+        <name>graphics_rectangle</name>
+        <param>
+          <type>int</type>
+          <declname>x1</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y1</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>x2</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y2</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>r</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>g</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Draw an unfilled rectangle to the graphics window at the given coordinates. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>x1</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the X coordinate of the rectangle&apos;s top-left corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y1</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the Y coordinate of the rectangle&apos;s top-left corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x2</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the X coordinate of the rectangle&apos;s bottom-right corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y2</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the Y coordinate of the rectangle&apos;s bottom-right corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>r</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the red component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>g</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the green component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>b</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the blue component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" line="168" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" declline="168" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__graphics_1gaff056ff62a1ef05a38af8b7565bc8a64" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void graphics_rectangle_fill</definition>
+        <argsstring>(int x1, int y1, int x2, int y2, int r, int g, int b)</argsstring>
+        <name>graphics_rectangle_fill</name>
+        <param>
+          <type>int</type>
+          <declname>x1</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y1</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>x2</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y2</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>r</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>g</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Draw a filled rectangle to the graphics window at the given coordinates. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>x1</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the X coordinate of the rectangle&apos;s top-left corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y1</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the Y coordinate of the rectangle&apos;s top-left corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x2</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the X coordinate of the rectangle&apos;s bottom-right corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y2</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the Y coordinate of the rectangle&apos;s bottom-right corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>r</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the red component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>g</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the green component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>b</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the blue component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" line="181" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" declline="181" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__graphics_1ga94825ba0f491ebeebf42d882f17d6ceb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void graphics_triangle</definition>
+        <argsstring>(int x1, int y1, int x2, int y2, int x3, int y3, int r, int g, int b)</argsstring>
+        <name>graphics_triangle</name>
+        <param>
+          <type>int</type>
+          <declname>x1</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y1</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>x2</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y2</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>x3</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y3</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>r</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>g</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Draw an unfilled triangle to the graphics window at the given coordinates. The order of the corners does not matter when drawing a triangle. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>x1</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the X coordinate of the triangle&apos;s first corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y1</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the Y coordinate of the triangle&apos;s first corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x2</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the X coordinate of the triangle&apos;s second corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y2</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the Y coordinate of the triangle&apos;s second corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x3</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the X coordinate of the triangle&apos;s third corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y3</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the Y coordinate of the triangle&apos;s third corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>r</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the red component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>g</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the green component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>b</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the blue component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" line="197" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" declline="197" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__graphics_1ga99ea53636f2bcb5e20f6fd96f2883a6f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void graphics_triangle_fill</definition>
+        <argsstring>(int x1, int y1, int x2, int y2, int x3, int y3, int r, int g, int b)</argsstring>
+        <name>graphics_triangle_fill</name>
+        <param>
+          <type>int</type>
+          <declname>x1</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y1</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>x2</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y2</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>x3</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y3</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>r</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>g</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Draw a filled triangle to the graphics window at the given coordinates. The order of the corners does not matter when drawing a triangle. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>x1</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the X coordinate of the triangle&apos;s first corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y1</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the Y coordinate of the triangle&apos;s first corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x2</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the X coordinate of the triangle&apos;s second corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y2</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the Y coordinate of the triangle&apos;s second corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x3</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the X coordinate of the triangle&apos;s third corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y3</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the Y coordinate of the triangle&apos;s third corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>r</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the red component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>g</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the green component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>b</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the blue component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" line="213" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" declline="213" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__graphics_1gaa8cd41fec3b526e8cb48de1040ae45fe" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_key_state</definition>
+        <argsstring>(enum KeyCode key)</argsstring>
+        <name>get_key_state</name>
+        <param>
+          <type>enum <ref refid="graphics__key__code_8h_1a7885f47644a0388f981f416fa20389b2" kindref="member">KeyCode</ref></type>
+          <declname>key</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the current state of a keyboard key.</para>
+<para><simplesect kind="note"><para>A KISS Graphics Window must be open for input functions to work. </para>
+</simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>key</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>An ASCII key code or a Key value from the KeyCode enum. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>1 for pressed, 0 for not pressed </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" line="223" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" declline="223" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__graphics_1gaccc7319151e0ff91beabe06068a82471" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> void</type>
+        <definition>EXPORT_SYM void get_mouse_position</definition>
+        <argsstring>(int *x, int *y)</argsstring>
+        <name>get_mouse_position</name>
+        <param>
+          <type>int *</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>int *</type>
+          <declname>y</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Returns the mouse&apos;s current position relative to the top left corner of the graphics window. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" line="229" column="17" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" declline="229" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="group__graphics_1ga1bec0ed44c570403a77ccb351f351b98" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_mouse_middle_button</definition>
+        <argsstring>()</argsstring>
+        <name>get_mouse_middle_button</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Returns the state of the mouse&apos;s middle button. <simplesect kind="return"><para>1 for pressed, 0 for not pressed </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" line="236" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" declline="236" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__graphics_1ga509ecede60e1c150c46f88aec36876cc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_mouse_left_button</definition>
+        <argsstring>()</argsstring>
+        <name>get_mouse_left_button</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Returns the state of the mouse&apos;s left button. <simplesect kind="return"><para>1 for pressed, 0 for not pressed </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" line="243" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" declline="243" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__graphics_1gac21888802b7312836315676b04397ad6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="export_8h_1ad78259114e2822d9b93f376572655819" kindref="member">EXPORT_SYM</ref> int</type>
+        <definition>EXPORT_SYM int get_mouse_right_button</definition>
+        <argsstring>()</argsstring>
+        <name>get_mouse_right_button</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Returns the state of the mouse&apos;s right button. <simplesect kind="return"><para>1 for pressed, 0 for not pressed </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" line="250" column="16" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h" declline="250" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="group__graphics_1ga41cbbd1e9b6c9fd4586b5d451f9a1a97" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void graphics_segment_display</definition>
+        <argsstring>(int s[], int x, int y, int r, int g, int b, float size)</argsstring>
+        <name>graphics_segment_display</name>
+        <param>
+          <type>int</type>
+          <declname>s</declname>
+          <array>[]</array>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>r</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>g</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>b</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Draw a 16 segment character (alphameric - caps only)</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>s</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The segments to display </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The X coordinate of the first segment&apos;s top-left corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The Y coordinate of the first segment&apos;s top-left corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>r</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The red component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>g</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The green component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>b</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The blue component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>size</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The segment&apos;s size </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" line="76" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" declline="76" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__graphics_1gae617f52ed3909aef62a1e5ef3ed098e2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void graphics_print_character</definition>
+        <argsstring>(int n, int x, int y, int r, int g, int b, float size)</argsstring>
+        <name>graphics_print_character</name>
+        <param>
+          <type>int</type>
+          <declname>n</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>r</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>g</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>b</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Prints out a character in 16 segment characters</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>n</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The character to display </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The X coordinate of the character&apos;s top-left corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The Y coordinate of the character&apos;s top-left corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>r</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The red component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>g</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The green component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>b</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The blue component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>size</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The character&apos;s size </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" line="91" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" declline="91" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__graphics_1ga135a7b8b7a66396caa2347a3fd15934d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void graphics_print_string</definition>
+        <argsstring>(char s[], int x, int y, int r, int g, int b, float size)</argsstring>
+        <name>graphics_print_string</name>
+        <param>
+          <type>char</type>
+          <declname>s</declname>
+          <array>[]</array>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>r</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>g</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>b</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Prints out a text string in 16 segment characters</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>s</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The string to display </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The X coordinate of the first character&apos;s top-left corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The Y coordinate of the first character&apos;s top-left corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>r</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The red component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>g</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The green component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>b</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The blue component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>size</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The strings&apos;s size </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" line="106" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" declline="106" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__graphics_1gad026f76f05f24e19827c9b0c3d6e5400" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int graphics_print_int</definition>
+        <argsstring>(int n, int minNumDigits, int x, int y, int r, int g, int b, float size)</argsstring>
+        <name>graphics_print_int</name>
+        <param>
+          <type>int</type>
+          <declname>n</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>minNumDigits</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>r</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>g</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>b</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Prints out an integer in 16 segment characters</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>n</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The integer to display </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>minNumDigits</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>minNumDigits is normally 0, but can be larger if leading 0&apos;s are desired </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The X coordinate of the first character&apos;s top-left corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The Y coordinate of the first character&apos;s top-left corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>r</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The red component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>g</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The green component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>b</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The blue component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>size</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The strings&apos;s size </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" line="122" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" declline="122" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__graphics_1ga52984fe99467614fe47b7a3f2c9e3dd7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void graphics_print_float</definition>
+        <argsstring>(float n, int numDigits, int x, int y, int r, int g, int b, float size)</argsstring>
+        <name>graphics_print_float</name>
+        <param>
+          <type>float</type>
+          <declname>n</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>numDigits</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>r</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>g</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>b</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Prints out a float in 16 segment characters</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>n</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The float to display </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>numDigits</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>numDigits is the number of digits to right of decimal to be printed </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The X coordinate of the first character&apos;s top-left corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The Y coordinate of the first character&apos;s top-left corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>r</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The red component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>g</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The green component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>b</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The blue component of the drawing, from 0 to 255 </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>size</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The strings&apos;s size </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" line="138" column="6" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics_characters.h" declline="138" declcolumn="6"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="structkipr_1_1create_1_1CreatePackets_1_1__1" kind="struct" language="C++" prot="public">
+    <compoundname>kipr::create::CreatePackets::_1</compoundname>
+    <includes refid="create_8hpp" local="no">create.hpp</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__1_1a153ee6bc0e148a129ab7d0adda859b3a" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_1::bumpsAndWheelDrops</definition>
+        <argsstring></argsstring>
+        <name>bumpsAndWheelDrops</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="86" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="86" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__1_1a14175fc7bc9adacb3269fc71f8f62a3a" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_1::wall</definition>
+        <argsstring></argsstring>
+        <name>wall</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="87" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="87" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__1_1a26ed9c7c5ab0a992690d0a5241fb79f8" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_1::cliffLeft</definition>
+        <argsstring></argsstring>
+        <name>cliffLeft</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="88" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="88" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__1_1acd058aa56185edc023b822b06fa190d7" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_1::cliffFrontLeft</definition>
+        <argsstring></argsstring>
+        <name>cliffFrontLeft</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="89" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="89" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__1_1a47a8872b8b9b4d250cc00f26f9e165ad" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_1::cliffFrontRight</definition>
+        <argsstring></argsstring>
+        <name>cliffFrontRight</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="90" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="90" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__1_1a6777d10850f73223aafec324f7ea729d" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_1::cliffRight</definition>
+        <argsstring></argsstring>
+        <name>cliffRight</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="91" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="91" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__1_1a15398b2f837f4fd50b1908fe1d3bb3d9" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_1::virtualWall</definition>
+        <argsstring></argsstring>
+        <name>virtualWall</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="92" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="92" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__1_1a87c81424392a23ff9a9aa9f889034f8e" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_1::cargoBayDigitalInputs</definition>
+        <argsstring></argsstring>
+        <name>cargoBayDigitalInputs</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="93" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="93" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkipr_1_1create_1_1CreatePackets_1_1__1_1aa290b4879b0b91c84396909282485af3" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char kipr::create::CreatePackets::_1::lowSideDriverAndWheelOvercurrents</definition>
+        <argsstring></argsstring>
+        <name>lowSideDriverAndWheelOvercurrents</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="94" column="23" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="94" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><ref refid="classkipr_1_1create_1_1Create" kindref="compound">Create</ref> OI Packet 1 </para>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="84" column="7" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" bodystart="85" bodyend="95"/>
+    <listofallmembers>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__1_1a153ee6bc0e148a129ab7d0adda859b3a" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_1</scope><name>bumpsAndWheelDrops</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__1_1a87c81424392a23ff9a9aa9f889034f8e" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_1</scope><name>cargoBayDigitalInputs</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__1_1acd058aa56185edc023b822b06fa190d7" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_1</scope><name>cliffFrontLeft</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__1_1a47a8872b8b9b4d250cc00f26f9e165ad" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_1</scope><name>cliffFrontRight</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__1_1a26ed9c7c5ab0a992690d0a5241fb79f8" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_1</scope><name>cliffLeft</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__1_1a6777d10850f73223aafec324f7ea729d" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_1</scope><name>cliffRight</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__1_1aa290b4879b0b91c84396909282485af3" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_1</scope><name>lowSideDriverAndWheelOvercurrents</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__1_1a15398b2f837f4fd50b1908fe1d3bb3d9" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_1</scope><name>virtualWall</name></member>
+      <member refid="structkipr_1_1create_1_1CreatePackets_1_1__1_1a14175fc7bc9adacb3269fc71f8f62a3a" prot="public" virt="non-virtual"><scope>kipr::create::CreatePackets::_1</scope><name>wall</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

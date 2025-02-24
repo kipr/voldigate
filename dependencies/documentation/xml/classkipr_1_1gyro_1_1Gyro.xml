@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classkipr_1_1gyro_1_1Gyro" kind="class" language="C++" prot="public">
+    <compoundname>kipr::gyro::Gyro</compoundname>
+    <includes refid="gyro_8hpp" local="no">gyro.hpp</includes>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classkipr_1_1gyro_1_1Gyro_1a321bf74624402d79afb0e22dd017b281" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>short</type>
+        <definition>static short kipr::gyro::Gyro::x</definition>
+        <argsstring>()</argsstring>
+        <name>x</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/gyro/public/kipr/gyro/gyro.hpp" line="13" column="20"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1gyro_1_1Gyro_1acbc7282b8530e5651a4642a50c47fd82" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>short</type>
+        <definition>static short kipr::gyro::Gyro::y</definition>
+        <argsstring>()</argsstring>
+        <name>y</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/gyro/public/kipr/gyro/gyro.hpp" line="14" column="20"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1gyro_1_1Gyro_1aef5cc12f902a47244680a5f218b40015" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>short</type>
+        <definition>static short kipr::gyro::Gyro::z</definition>
+        <argsstring>()</argsstring>
+        <name>z</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/gyro/public/kipr/gyro/gyro.hpp" line="15" column="20"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1gyro_1_1Gyro_1a0ddad88dea4456c66539603877bcea51" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>static bool kipr::gyro::Gyro::calibrate</definition>
+        <argsstring>()</argsstring>
+        <name>calibrate</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/gyro/public/kipr/gyro/gyro.hpp" line="16" column="19"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/gyro/public/kipr/gyro/gyro.hpp" line="10" column="5" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/gyro/public/kipr/gyro/gyro.hpp" bodystart="11" bodyend="19"/>
+    <listofallmembers>
+      <member refid="classkipr_1_1gyro_1_1Gyro_1a0ddad88dea4456c66539603877bcea51" prot="public" virt="non-virtual"><scope>kipr::gyro::Gyro</scope><name>calibrate</name></member>
+      <member refid="classkipr_1_1gyro_1_1Gyro_1a321bf74624402d79afb0e22dd017b281" prot="public" virt="non-virtual"><scope>kipr::gyro::Gyro</scope><name>x</name></member>
+      <member refid="classkipr_1_1gyro_1_1Gyro_1acbc7282b8530e5651a4642a50c47fd82" prot="public" virt="non-virtual"><scope>kipr::gyro::Gyro</scope><name>y</name></member>
+      <member refid="classkipr_1_1gyro_1_1Gyro_1aef5cc12f902a47244680a5f218b40015" prot="public" virt="non-virtual"><scope>kipr::gyro::Gyro</scope><name>z</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

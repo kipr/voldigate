@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="namespacekipr_1_1analog" kind="namespace" language="C++">
+    <compoundname>kipr::analog</compoundname>
+    <innerclass refid="classkipr_1_1analog_1_1Analog" prot="public">kipr::analog::Analog</innerclass>
+    <innerclass refid="classkipr_1_1analog_1_1Analog8" prot="public">kipr::analog::Analog8</innerclass>
+    <innerclass refid="classkipr_1_1analog_1_1Analog10" prot="public">kipr::analog::Analog10</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog/analog.hpp" line="8" column="3"/>
+  </compounddef>
+</doxygen>

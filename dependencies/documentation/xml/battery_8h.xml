@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="battery_8h" kind="file" language="C++">
+    <compoundname>battery.h</compoundname>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="group__battery_1ga00b9c876fa198ae3485c44eb7ca92519" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int battery_charging</definition>
+        <argsstring>()</argsstring>
+        <name>battery_charging</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Whether or not the battery is charging <simplesect kind="return"><para>0: not charging 1: charging </para>
+</simplesect>
+<xrefsect id="deprecated_1_deprecated000004"><xreftitle>Deprecated</xreftitle><xrefdescription><para>not applicable for the Wallaby controller</para>
+</xrefdescription></xrefsect></para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/battery/public/kipr/battery/battery.h" line="36" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/battery/public/kipr/battery/battery.h" declline="36" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__battery_1gae1ca31cc83102eaaeaf1afa62a15abb6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>float</type>
+        <definition>float power_level</definition>
+        <argsstring>()</argsstring>
+        <name>power_level</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>The device&apos;s power level <simplesect kind="return"><para>The device&apos;s current battery capacity 0: 0% 1: 100% </para>
+</simplesect>
+<simplesect kind="note"><para>defaults to LiFePO4 chemistry </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/battery/public/kipr/battery/battery.h" line="45" column="7" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/battery/public/kipr/battery/battery.h" declline="45" declcolumn="7"/>
+      </memberdef>
+      <memberdef kind="function" id="group__battery_1ga4240f318b6aaab523f4947ad1314ef15" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>float</type>
+        <definition>float power_level_nimh</definition>
+        <argsstring>()</argsstring>
+        <name>power_level_nimh</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>The device&apos;s power level (NiMH chemistry) <simplesect kind="return"><para>The device&apos;s current battery capacity 0: 0% 1: 100% </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/battery/public/kipr/battery/battery.h" line="52" column="7" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/battery/public/kipr/battery/battery.h" declline="52" declcolumn="7"/>
+      </memberdef>
+      <memberdef kind="function" id="group__battery_1gafed7c1f128056008a75719ff634a1af4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>float</type>
+        <definition>float power_level_lipo</definition>
+        <argsstring>()</argsstring>
+        <name>power_level_lipo</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>The device&apos;s power level (LiPo chemistry) <simplesect kind="return"><para>The device&apos;s current battery capacity 0: 0% 1: 100% </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/battery/public/kipr/battery/battery.h" line="59" column="7" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/battery/public/kipr/battery/battery.h" declline="59" declcolumn="7"/>
+      </memberdef>
+      <memberdef kind="function" id="group__battery_1ga2998e0fd731d4c46608ffbea835e6f03" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>float</type>
+        <definition>float power_level_life</definition>
+        <argsstring>()</argsstring>
+        <name>power_level_life</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>The device&apos;s power level (LiFePO4 chemistry) <simplesect kind="return"><para>The device&apos;s current battery capacity 0: 0% 1: 100% </para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__battery_1gae1ca31cc83102eaaeaf1afa62a15abb6" kindref="member">power_level()</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/battery/public/kipr/battery/battery.h" line="67" column="7" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/battery/public/kipr/battery/battery.h" declline="67" declcolumn="7"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><simplesect kind="author"><para>Joshua Southerland </para>
+</simplesect>
+<simplesect kind="copyright"><para>KISS Institute for Practical Robotics </para>
+</simplesect>
+</para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>battery.h</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*<sp/><sp/>Created<sp/>on:<sp/>Nov<sp/>2,<sp/>2015</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/>Author:<sp/>Joshua<sp/>Southerland</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>INCLUDE_WALLABY_BATTERY_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>INCLUDE_WALLABY_BATTERY_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36" refid="group__battery_1ga00b9c876fa198ae3485c44eb7ca92519" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__battery_1ga00b9c876fa198ae3485c44eb7ca92519" kindref="member">battery_charging</ref>();</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45" refid="group__battery_1gae1ca31cc83102eaaeaf1afa62a15abb6" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><ref refid="group__battery_1gae1ca31cc83102eaaeaf1afa62a15abb6" kindref="member">power_level</ref>();</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="52" refid="group__battery_1ga4240f318b6aaab523f4947ad1314ef15" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><ref refid="group__battery_1ga4240f318b6aaab523f4947ad1314ef15" kindref="member">power_level_nimh</ref>();</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="59" refid="group__battery_1gafed7c1f128056008a75719ff634a1af4" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><ref refid="group__battery_1gafed7c1f128056008a75719ff634a1af4" kindref="member">power_level_lipo</ref>();</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight></codeline>
+<codeline lineno="67" refid="group__battery_1ga2998e0fd731d4c46608ffbea835e6f03" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><ref refid="group__battery_1ga2998e0fd731d4c46608ffbea835e6f03" kindref="member">power_level_life</ref>();</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>INCLUDE_WALLABY_BATTERY_H_<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/battery/public/kipr/battery/battery.h"/>
+  </compounddef>
+</doxygen>

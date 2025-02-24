@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="gyro_8hpp" kind="file" language="C++">
+    <compoundname>gyro.hpp</compoundname>
+    <includes refid="sensor_8hpp" local="yes">kipr/sensor/sensor.hpp</includes>
+    <incdepgraph>
+      <node id="1">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/gyro/public/kipr/gyro/gyro.hpp</label>
+        <link refid="gyro_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>kipr/export/export.h</label>
+        <link refid="export_8h"/>
+      </node>
+      <node id="2">
+        <label>kipr/sensor/sensor.hpp</label>
+        <link refid="sensor_8hpp"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <innerclass refid="classkipr_1_1gyro_1_1Gyro" prot="public">kipr::gyro::Gyro</innerclass>
+    <innerclass refid="classkipr_1_1gyro_1_1GyroX" prot="public">kipr::gyro::GyroX</innerclass>
+    <innerclass refid="classkipr_1_1gyro_1_1GyroY" prot="public">kipr::gyro::GyroY</innerclass>
+    <innerclass refid="classkipr_1_1gyro_1_1GyroZ" prot="public">kipr::gyro::GyroZ</innerclass>
+    <innernamespace refid="namespacekipr">kipr</innernamespace>
+    <innernamespace refid="namespacekipr_1_1gyro">kipr::gyro</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>_KIPR_GYRO_GYRO_HPP_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_KIPR_GYRO_GYRO_HPP_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="sensor_8hpp" kindref="compound">kipr/sensor/sensor.hpp</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal"><ref refid="namespacekipr" kindref="compound">kipr</ref></highlight></codeline>
+<codeline lineno="7"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="8" refid="namespacekipr_1_1gyro" refkind="compound"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">gyro</highlight></codeline>
+<codeline lineno="9"><highlight class="normal"><sp/><sp/>{</highlight></codeline>
+<codeline lineno="10" refid="classkipr_1_1gyro_1_1Gyro" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classkipr_1_1gyro_1_1Gyro" kindref="compound">Gyro</ref></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="12"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="13" refid="classkipr_1_1gyro_1_1Gyro_1a321bf74624402d79afb0e22dd017b281" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1gyro_1_1Gyro_1a321bf74624402d79afb0e22dd017b281" kindref="member">x</ref>();</highlight></codeline>
+<codeline lineno="14" refid="classkipr_1_1gyro_1_1Gyro_1acbc7282b8530e5651a4642a50c47fd82" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1gyro_1_1Gyro_1acbc7282b8530e5651a4642a50c47fd82" kindref="member">y</ref>();</highlight></codeline>
+<codeline lineno="15" refid="classkipr_1_1gyro_1_1Gyro_1aef5cc12f902a47244680a5f218b40015" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1gyro_1_1Gyro_1aef5cc12f902a47244680a5f218b40015" kindref="member">z</ref>();</highlight></codeline>
+<codeline lineno="16" refid="classkipr_1_1gyro_1_1Gyro_1a0ddad88dea4456c66539603877bcea51" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1gyro_1_1Gyro_1a0ddad88dea4456c66539603877bcea51" kindref="member">calibrate</ref>();</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight></codeline>
+<codeline lineno="21" refid="classkipr_1_1gyro_1_1GyroX" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classkipr_1_1gyro_1_1GyroX" kindref="compound">GyroX</ref><sp/>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt;short&gt;</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="24" refid="classkipr_1_1gyro_1_1GyroX_1af27514e5549568170e0a172cf03a8747" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1gyro_1_1GyroX_1af27514e5549568170e0a172cf03a8747" kindref="member">value</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight></codeline>
+<codeline lineno="27" refid="classkipr_1_1gyro_1_1GyroY" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classkipr_1_1gyro_1_1GyroY" kindref="compound">GyroY</ref><sp/>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt;short&gt;</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="30" refid="classkipr_1_1gyro_1_1GyroY_1aa812fc0d455d39d3f176b99f90f2cd89" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1gyro_1_1GyroY_1aa812fc0d455d39d3f176b99f90f2cd89" kindref="member">value</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight></codeline>
+<codeline lineno="33" refid="classkipr_1_1gyro_1_1GyroZ" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classkipr_1_1gyro_1_1GyroZ" kindref="compound">GyroZ</ref><sp/>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">sensor::Sensor</ref>&lt;short&gt;</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="36" refid="classkipr_1_1gyro_1_1GyroZ_1a23657e5b5705c62d9956468785d8403d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="classkipr_1_1gyro_1_1GyroZ_1a23657e5b5705c62d9956468785d8403d" kindref="member">value</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="39"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/gyro/public/kipr/gyro/gyro.hpp"/>
+  </compounddef>
+</doxygen>

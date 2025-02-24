@@ -9,7 +9,7 @@ import { Validators } from '../util/Validator';
 import { Fa } from './Fa';
 import Input from './Input';
 import { Text } from './Text';
-import { GREEN, RED, ThemeProps } from './theme';
+import { GREEN, RED, ThemeProps, LIGHTMODE_YES } from './theme';
 const Container = styled('div', (props: ThemeProps) => ({
   color: props.theme.color,
   width: '100%',
@@ -50,9 +50,12 @@ const Finalize = styled('div', (props: ThemeProps & { disabled?: boolean }) => (
   flex: '1 1',
   borderRadius: `${props.theme.itemPadding * 2}px`,
   padding: `${props.theme.itemPadding * 2}px`,
-  backgroundColor: props.disabled ? GREEN.disabled : GREEN.standard,
+  //backgroundColor: props.disabled ? GREEN.disabled : GREEN.standard,
+
+  //backgroundColor: props.disabled ? LIGHTMODE_YES.disabled : LIGHTMODE_YES.standard,
+  backgroundColor: props.disabled ? props.theme.yesButtonColor.disabled : props.theme.yesButtonColor.standard,
   ':hover': props.disabled ? {} : {
-    backgroundColor: GREEN.hover,
+    backgroundColor: props.theme.yesButtonColor.hover,
   },
   fontWeight: 400,
   fontSize: '1.1em',

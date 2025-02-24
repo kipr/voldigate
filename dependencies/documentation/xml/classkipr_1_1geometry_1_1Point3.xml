@@ -1,0 +1,202 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classkipr_1_1geometry_1_1Point3" kind="class" language="C++" prot="public">
+    <compoundname>kipr::geometry::Point3</compoundname>
+    <includes refid="geometry_8hpp" local="no">geometry.hpp</includes>
+    <templateparamlist>
+      <param>
+        <type>typename T</type>
+      </param>
+    </templateparamlist>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classkipr_1_1geometry_1_1Point3_1aaef409b9fb4f884acd02e647d9c89779" prot="private" static="no" mutable="no">
+        <type>T</type>
+        <definition>T kipr::geometry::Point3&lt; T &gt;::m_x</definition>
+        <argsstring></argsstring>
+        <name>m_x</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" line="118" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" bodystart="118" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1geometry_1_1Point3_1a0d51ecaace4ca8ca17509f6183b36cd6" prot="private" static="no" mutable="no">
+        <type>T</type>
+        <definition>T kipr::geometry::Point3&lt; T &gt;::m_y</definition>
+        <argsstring></argsstring>
+        <name>m_y</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" line="119" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" bodystart="119" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classkipr_1_1geometry_1_1Point3_1a7f5e2a8266e6051ffad7abd68396e564" prot="private" static="no" mutable="no">
+        <type>T</type>
+        <definition>T kipr::geometry::Point3&lt; T &gt;::m_z</definition>
+        <argsstring></argsstring>
+        <name>m_z</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" line="120" column="9" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" bodystart="120" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classkipr_1_1geometry_1_1Point3_1ac626d35e7c80f773cb8151fc69441ff4" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>kipr::geometry::Point3&lt; T &gt;::Point3</definition>
+        <argsstring>(const T &amp;x, const T &amp;y, const T &amp;z)</argsstring>
+        <name>Point3</name>
+        <param>
+          <type>const T &amp;</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>const T &amp;</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>const T &amp;</type>
+          <declname>z</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" line="75" column="7" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" bodystart="75" bodyend="80"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1geometry_1_1Point3_1a8b92dee923884bc58b46ac4d8309cc5c" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const T &amp;</type>
+        <definition>const T&amp; kipr::geometry::Point3&lt; T &gt;::x</definition>
+        <argsstring>() const</argsstring>
+        <name>x</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" line="82" column="15" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" bodystart="82" bodyend="85"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1geometry_1_1Point3_1a3c9e02962c55521d7fd07a479f778b43" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const T &amp;</type>
+        <definition>const T&amp; kipr::geometry::Point3&lt; T &gt;::y</definition>
+        <argsstring>() const</argsstring>
+        <name>y</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" line="87" column="15" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" bodystart="87" bodyend="90"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1geometry_1_1Point3_1a9a98f600787d84663ece798fcd54c920" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const T &amp;</type>
+        <definition>const T&amp; kipr::geometry::Point3&lt; T &gt;::z</definition>
+        <argsstring>() const</argsstring>
+        <name>z</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" line="92" column="15" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" bodystart="92" bodyend="95"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1geometry_1_1Point3_1a924f85384d946670de599eb3b402c208" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::geometry::Point3&lt; T &gt;::setX</definition>
+        <argsstring>(const T &amp;x)</argsstring>
+        <name>setX</name>
+        <param>
+          <type>const T &amp;</type>
+          <declname>x</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" line="97" column="12" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" bodystart="97" bodyend="100"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1geometry_1_1Point3_1a860f1d04e531bb1db86942433739acc7" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::geometry::Point3&lt; T &gt;::setY</definition>
+        <argsstring>(const T &amp;y)</argsstring>
+        <name>setY</name>
+        <param>
+          <type>const T &amp;</type>
+          <declname>y</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" line="102" column="12" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" bodystart="102" bodyend="105"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1geometry_1_1Point3_1a14f880ed5fdb251fc47b5a17731846a9" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::geometry::Point3&lt; T &gt;::setZ</definition>
+        <argsstring>(const T &amp;z)</argsstring>
+        <name>setZ</name>
+        <param>
+          <type>const T &amp;</type>
+          <declname>z</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" line="107" column="12" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" bodystart="107" bodyend="110"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1geometry_1_1Point3_1accd620854094c3ca1dc45886c7e0aef3" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="structpoint3" kindref="compound">point3</ref></type>
+        <definition>point3 kipr::geometry::Point3&lt; T &gt;::toCPoint3</definition>
+        <argsstring>() const</argsstring>
+        <name>toCPoint3</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" line="112" column="14" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" bodystart="112" bodyend="115"/>
+        <references refid="geometry_8h_1a857eaf4c97ea5a11cc8205d88cd97e96">create_point3</references>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" line="72" column="5" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp" bodystart="73" bodyend="121"/>
+    <listofallmembers>
+      <member refid="classkipr_1_1geometry_1_1Point3_1aaef409b9fb4f884acd02e647d9c89779" prot="private" virt="non-virtual"><scope>kipr::geometry::Point3</scope><name>m_x</name></member>
+      <member refid="classkipr_1_1geometry_1_1Point3_1a0d51ecaace4ca8ca17509f6183b36cd6" prot="private" virt="non-virtual"><scope>kipr::geometry::Point3</scope><name>m_y</name></member>
+      <member refid="classkipr_1_1geometry_1_1Point3_1a7f5e2a8266e6051ffad7abd68396e564" prot="private" virt="non-virtual"><scope>kipr::geometry::Point3</scope><name>m_z</name></member>
+      <member refid="classkipr_1_1geometry_1_1Point3_1ac626d35e7c80f773cb8151fc69441ff4" prot="public" virt="non-virtual"><scope>kipr::geometry::Point3</scope><name>Point3</name></member>
+      <member refid="classkipr_1_1geometry_1_1Point3_1a924f85384d946670de599eb3b402c208" prot="public" virt="non-virtual"><scope>kipr::geometry::Point3</scope><name>setX</name></member>
+      <member refid="classkipr_1_1geometry_1_1Point3_1a860f1d04e531bb1db86942433739acc7" prot="public" virt="non-virtual"><scope>kipr::geometry::Point3</scope><name>setY</name></member>
+      <member refid="classkipr_1_1geometry_1_1Point3_1a14f880ed5fdb251fc47b5a17731846a9" prot="public" virt="non-virtual"><scope>kipr::geometry::Point3</scope><name>setZ</name></member>
+      <member refid="classkipr_1_1geometry_1_1Point3_1accd620854094c3ca1dc45886c7e0aef3" prot="public" virt="non-virtual"><scope>kipr::geometry::Point3</scope><name>toCPoint3</name></member>
+      <member refid="classkipr_1_1geometry_1_1Point3_1a8b92dee923884bc58b46ac4d8309cc5c" prot="public" virt="non-virtual"><scope>kipr::geometry::Point3</scope><name>x</name></member>
+      <member refid="classkipr_1_1geometry_1_1Point3_1a3c9e02962c55521d7fd07a479f778b43" prot="public" virt="non-virtual"><scope>kipr::geometry::Point3</scope><name>y</name></member>
+      <member refid="classkipr_1_1geometry_1_1Point3_1a9a98f600787d84663ece798fcd54c920" prot="public" virt="non-virtual"><scope>kipr::geometry::Point3</scope><name>z</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="structstd_1_1hash_3_01kipr_1_1log_1_1Level_01_4" kind="struct" language="C++" prot="public">
+    <compoundname>std::hash&lt; kipr::log::Level &gt;</compoundname>
+    <includes refid="log_8hpp" local="no">log.hpp</includes>
+    <templateparamlist>
+    </templateparamlist>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structstd_1_1hash_3_01kipr_1_1log_1_1Level_01_4_1a24cea8098fefc9aafed9b933ee20bf1f" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>size_t</type>
+        <definition>size_t std::hash&lt; kipr::log::Level &gt;::operator()</definition>
+        <argsstring>(const kipr::log::Level &amp;level) const</argsstring>
+        <name>operator()</name>
+        <param>
+          <type>const <ref refid="namespacekipr_1_1log_1ac448d0ee86b50f80a44a11636d65fe34" kindref="member">kipr::log::Level</ref> &amp;</type>
+          <declname>level</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/log/public/kipr/log/log.hpp" line="180" column="12" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/log/public/kipr/log/log.hpp" bodystart="180" bodyend="183"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/log/public/kipr/log/log.hpp" line="178" column="3" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/log/public/kipr/log/log.hpp" bodystart="179" bodyend="184"/>
+    <listofallmembers>
+      <member refid="structstd_1_1hash_3_01kipr_1_1log_1_1Level_01_4_1a24cea8098fefc9aafed9b933ee20bf1f" prot="public" virt="non-virtual"><scope>std::hash&lt; kipr::log::Level &gt;</scope><name>operator()</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

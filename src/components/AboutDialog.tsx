@@ -1,22 +1,18 @@
 import * as React from 'react';
+import KIPR_LOGO_BLACK from '../assets/KIPR-Logo-Black-Text-Clear-Large.png';
+import KIPR_LOGO_WHITE from '../assets/KIPR-Logo-White-Text-Clear-Large.png';
+import tr from '@i18n';
+import LocalizedString from '../util/LocalizedString';
+import Dict from '../Dict';
 import { styled } from 'styletron-react';
 import { StyleProps } from '../style';
 import { Dialog } from './Dialog';
 import { ThemeProps } from './theme';
 import { Fa } from './Fa';
-
 import { faCopyright } from '@fortawesome/free-solid-svg-icons';
-
-import KIPR_LOGO_BLACK from '../assets/KIPR-Logo-Black-Text-Clear-Large.png';
-import KIPR_LOGO_WHITE from '../assets/KIPR-Logo-White-Text-Clear-Large.png';
-
-import tr from '@i18n';
-
 import { connect } from 'react-redux';
 import { State as ReduxState } from '../state';
-import LocalizedString from '../util/LocalizedString';
 import { sprintf } from 'sprintf-js';
-import Dict from '../Dict';
 
 export interface AboutDialogPublicProps extends ThemeProps, StyleProps {
   onClose: () => void;
@@ -33,12 +29,9 @@ const Logo = styled('img', {
   height: 'auto',
 });
 
-const LogoContainer = styled('div', {
-  flex: '1 1'
-});
-
 const Container = styled('div', (props: ThemeProps) => ({
   color: props.theme.color,
+  backgroundColor: props.theme.backgroundColor,
   padding: `${props.theme.itemPadding * 2}px`, 
 }));
 
@@ -55,10 +48,6 @@ const LogoRow = styled('div', {
   flexDirection: 'row',
   marginBottom: '10px',
   alignItems: 'center',
-});
-
-const CopyrightContainer = styled('div', {
-  flex: '1 1'
 });
 
 class AboutDialog extends React.PureComponent<Props> {
@@ -85,15 +74,16 @@ class AboutDialog extends React.PureComponent<Props> {
           <LogoRow>
             {logo}
           </LogoRow>
-          {LocalizedString.lookup(Dict.map(tr('Version %s (%s)'), (str: string) => sprintf(str, SIMULATOR_VERSION, SIMULATOR_GIT_HASH)), locale)}
+          {LocalizedString.lookup(Dict.map(tr('Version %s (%s)'), (str: string) => sprintf(str, IDE_VERSION, IDE_GIT_HASH)), locale)}
           <br /> <br />
-          <Bold>{LocalizedString.lookup(tr('Copyright'), locale)} <Fa icon={faCopyright} /> 2023 <Link theme={theme} href="https://kipr.org/" target="_blank">KISS Institute for Practical Robotics</Link> {LocalizedString.lookup(tr('and External Contributors', 'Part of copyright notice, after KIPR is listed'), locale)}</Bold>
+          <Bold>{LocalizedString.lookup(tr('Copyright'), locale)} <Fa icon={faCopyright} /> 2025 <Link theme={theme} href="https://kipr.org/" target="_blank">KISS Institute for Practical Robotics</Link> {LocalizedString.lookup(tr('and External Contributors', 'Part of copyright notice, after KIPR is listed'), locale)}</Bold>
           <br /> <br />
           {LocalizedString.lookup(tr('This software is licensed under the terms of the'), locale)} <Link theme={theme} href="https://www.gnu.org/licenses/gpl-3.0.en.html" target="_blank">GNU General Public License v3</Link>.
           <br /> <br />
           {LocalizedString.lookup(tr('Thank you to the following contributors and testers:'), locale)}
           <ul>
             <li>Tim Corbly</li>
+            <li>Erin Harrington</li>
             <li>Will Hawkins</li>
             <li>Braden McDorman</li>
             <li>Zachary Sasser</li>

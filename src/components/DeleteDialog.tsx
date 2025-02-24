@@ -4,10 +4,8 @@ import { StyleProps } from '../style';
 import { Dialog } from './Dialog';
 import { ThemeProps } from './theme';
 import { Fa } from './Fa';
-import Scene from '../state/State/Scene';
-import SceneSettings from './SceneSettings';
 import DialogBar from './DialogBar';
-import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import LocalizedString from '../util/LocalizedString';
 
 import tr from '@i18n';

@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="dir_5ef2c19dcb937565b5afbf3c09686858" kind="dir">
+    <compoundname>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/audio</compoundname>
+    <innerdir refid="dir_d5b8d3560a14f9589cc843c7b5a921e3">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/audio/public</innerdir>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/audio/"/>
+  </compounddef>
+</doxygen>

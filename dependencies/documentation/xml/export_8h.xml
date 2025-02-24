@@ -1,0 +1,207 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="export_8h" kind="file" language="C++">
+    <compoundname>export.h</compoundname>
+    <includedby refid="audio_8h" local="yes">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/audio/public/kipr/audio/audio.h</includedby>
+    <includedby refid="botball_8h" local="yes">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/botball/public/kipr/botball/botball.h</includedby>
+    <includedby refid="button_8hpp" local="yes">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.hpp</includedby>
+    <includedby refid="color_8hpp" local="yes">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/color.hpp</includedby>
+    <includedby refid="config_8hpp" local="yes">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp</includedby>
+    <includedby refid="console_8h" local="yes">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/console/public/kipr/console/console.h</includedby>
+    <includedby refid="console_8hpp" local="yes">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/console/public/kipr/console/console.hpp</includedby>
+    <includedby refid="display_8h" local="yes">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/console/public/kipr/console/display.h</includedby>
+    <includedby refid="create_8h" local="yes">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h</includedby>
+    <includedby refid="create_8hpp" local="yes">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp</includedby>
+    <includedby refid="geometry_8h" local="yes">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h</includedby>
+    <includedby refid="geometry_8hpp" local="yes">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp</includedby>
+    <includedby refid="graphics_8h" local="yes">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h</includedby>
+    <includedby refid="logic_8hpp" local="yes">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/sensor/public/kipr/sensor/logic.hpp</includedby>
+    <includedby refid="sensor_8hpp" local="yes">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/sensor/public/kipr/sensor/sensor.hpp</includedby>
+    <includedby refid="thread_8h" local="yes">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread/thread.h</includedby>
+    <includedby refid="thread_8hpp" local="yes">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread/thread.hpp</includedby>
+    <includedby refid="wait__for_8h" local="yes">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h</includedby>
+    <invincdepgraph>
+      <node id="23">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread/thread.hpp</label>
+        <link refid="thread_8hpp"/>
+      </node>
+      <node id="12">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.h</label>
+        <link refid="geometry_8h"/>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/digital/public/kipr/digital/digital.hpp</label>
+        <link refid="digital_8hpp"/>
+      </node>
+      <node id="20">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/gyro/public/kipr/gyro/gyro.hpp</label>
+        <link refid="gyro_8hpp"/>
+      </node>
+      <node id="5">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp</label>
+        <link refid="create_8hpp"/>
+      </node>
+      <node id="7">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/config/public/kipr/config/config.hpp</label>
+        <link refid="config_8hpp"/>
+      </node>
+      <node id="1">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/export/public/kipr/export/export.h</label>
+        <link refid="export_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/geometry/public/kipr/geometry/geometry.hpp</label>
+        <link refid="geometry_8hpp"/>
+      </node>
+      <node id="14">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/graphics/public/kipr/graphics/graphics.h</label>
+        <link refid="graphics_8h"/>
+      </node>
+      <node id="3">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/botball/public/kipr/botball/botball.h</label>
+        <link refid="botball_8h"/>
+      </node>
+      <node id="9">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/console/public/kipr/console/console.hpp</label>
+        <link refid="console_8hpp"/>
+      </node>
+      <node id="22">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/thread/public/kipr/thread/thread.h</label>
+        <link refid="thread_8h"/>
+      </node>
+      <node id="2">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/audio/public/kipr/audio/audio.h</label>
+        <link refid="audio_8h"/>
+      </node>
+      <node id="24">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/wait_for/public/kipr/wait_for/wait_for.h</label>
+        <link refid="wait__for_8h"/>
+      </node>
+      <node id="17">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/accel/public/kipr/accel/accel.hpp</label>
+        <link refid="accel_8hpp"/>
+      </node>
+      <node id="15">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/sensor/public/kipr/sensor/logic.hpp</label>
+        <link refid="logic_8hpp"/>
+      </node>
+      <node id="8">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/console/public/kipr/console/console.h</label>
+        <link refid="console_8h"/>
+      </node>
+      <node id="4">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.hpp</label>
+        <link refid="button_8hpp"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/magneto/public/kipr/magneto/magneto.hpp</label>
+        <link refid="magneto_8hpp"/>
+      </node>
+      <node id="18">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog/analog.hpp</label>
+        <link refid="analog_8hpp"/>
+      </node>
+      <node id="10">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/console/public/kipr/console/display.h</label>
+        <link refid="display_8h"/>
+      </node>
+      <node id="6">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/color/public/kipr/color/color.hpp</label>
+        <link refid="color_8hpp"/>
+      </node>
+      <node id="11">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.h</label>
+        <link refid="create_8h"/>
+      </node>
+      <node id="16">
+        <label>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/sensor/public/kipr/sensor/sensor.hpp</label>
+        <link refid="sensor_8hpp"/>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="export_8h_1ad78259114e2822d9b93f376572655819" prot="public" static="no">
+        <name>EXPORT_SYM</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/export/public/kipr/export/export.h" line="7" column="10" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/export/public/kipr/export/export.h" bodystart="7" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>_KIPR_EXPORT_EXPORT_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_KIPR_EXPORT_EXPORT_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>WIN32</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>EXPORT_SYM<sp/>__declspec(dllexport)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7" refid="export_8h_1ad78259114e2822d9b93f376572655819" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>EXPORT_SYM</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/export/public/kipr/export/export.h"/>
+  </compounddef>
+</doxygen>

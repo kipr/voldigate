@@ -1,7 +1,7 @@
 // Globals from Webpack DefinePlugin
-declare const SIMULATOR_VERSION: string;
-declare const SIMULATOR_GIT_HASH: string;
-declare const SIMULATOR_HAS_CPYTHON: boolean;
-declare const SIMULATOR_HAS_AMMO: boolean;
-declare const SIMULATOR_LIBKIPR_C_DOCUMENTATION: unknown | undefined;
-declare const SIMULATOR_I18N: unknown | undefined;
+declare const IDE_VERSION: string;
+declare const IDE_GIT_HASH: string;
+declare const IDE_HAS_CPYTHON: boolean;
+declare const IDE_HAS_AMMO: boolean;
+declare const IDE_LIBKIPR_C_DOCUMENTATION: unknown | undefined;
+declare const IDE_I18N: unknown | undefined;

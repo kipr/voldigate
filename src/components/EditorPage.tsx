@@ -1,65 +1,40 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
-
-import { styled } from 'styletron-react';
-
-
-
-import { Console, createConsoleBarComponents } from './Console';
-import { Editor, createEditorBarComponents, EditorBarTarget } from './Editor';
-;
-
-
-import { LayoutProps } from './Layout/Layout';
-
-import Widget, { Mode, Size } from './Widget';
-import { Slider } from './Slider';
-
-import { State as ReduxState } from '../state';
-
+import axios from 'axios';
 import Dict from '../Dict';
-
-import { StyledText } from '../util';
-
 import tr from '@i18n';
 import LocalizedString from '../util/LocalizedString';
 import ProgrammingLanguage from '../ProgrammingLanguage';
-import { Theme } from './theme';
-
-import DatabaseService from './DatabaseService';
+import Widget, { Mode, Size } from './Widget';
+import { connect } from 'react-redux';
+import { styled } from 'styletron-react';
+import { Console, createConsoleBarComponents } from './Console';
+import { Editor, createEditorBarComponents, EditorBarTarget } from './Editor';
+import { LayoutProps } from './Layout/Layout';
+import { Slider } from './Slider';
+import { State as ReduxState } from '../state';
+import { StyledText } from '../util';
+import { ThemeProps } from './theme';
 import { Modal } from '../pages/Modal';
 
 
+export interface EditorPageProps extends LayoutProps, ThemeProps {
 
-const sizeDict = (sizes: Size[]) => {
-  const forward: { [type: number]: number } = {};
-
-  for (let i = 0; i < sizes.length; ++i) {
-    const size = sizes[i];
-    forward[size.type] = i;
-  }
-
-  return forward;
-};
-const SIDEBAR_SIZES: Size[] = [Size.MINIMIZED, Size.PARTIAL_RIGHT, Size.MAXIMIZED];
-const SIDEBAR_SIZE = sizeDict(SIDEBAR_SIZES);
-
-export interface EditorPageProps extends LayoutProps {
-  language: ProgrammingLanguage;
   projectName: string;
   fileName: string;
   userName: string;
-  code: Dict<string>;
+  isRunning: boolean;
   isleftbaropen: boolean;
+  editorConsole: StyledText;
+  language: ProgrammingLanguage;
+  code: Dict<string>;
   onCodeChange: (code: string) => void;
   onRunClick: () => void;
+  onStopClick: () => void;
   onCompileClick: () => void;
   onSaveCode: () => void;
   onDocumentationSetLanguage: (language: 'c' | 'python') => void;
   onFileNameChange: (newFileName: string) => void;
   onClearConsole: () => void;
-  editorConsole: StyledText;
-
 }
 
 interface ReduxEditorPageProps {
@@ -67,20 +42,19 @@ interface ReduxEditorPageProps {
 }
 
 interface EditorPageState {
+  fileName: string;
+  workingScriptCode?: string;
   activePanel: number;
+  resetCodeAccept: boolean;
   sidePanelSize: Size.Type;
   language: ProgrammingLanguage;
-  code: Dict<string>;
-  workingScriptCode?: string;
   editorConsole: StyledText;
   modal: Modal;
-  fileName: string;
-  resetCodeAccept: boolean;
+  code: Dict<string>;
 }
 
 type Props = EditorPageProps;
 type State = EditorPageState;
-
 
 const Container = styled('div', {
   display: 'flex',
@@ -94,31 +68,30 @@ const SidePanelContainer = styled('div', {
   flexDirection: 'row',
 });
 
-
-const SimultorWidgetContainer = styled('div', {
+const SimultorWidgetContainer = styled('div', (props: ThemeProps) => ({
   display: 'flex',
   flex: '1 0 0',
   height: '100%',
   width: '100%',
-  overflow: 'hidden'
+  overflow: 'hidden',
+  backGroundColor: props.theme.editorConsoleBackground,
 
-});
-const SimulatorWidget = styled(Widget, {
+}));
+
+const SimulatorWidget = styled(Widget, (props: ThemeProps) => ({
   display: 'flex',
   flex: '1 1 0',
+  margin: '10px 0px 0px 0px',
   height: '100%',
   width: '100%',
-});
-
+  backgroundColor: props.theme.editorConsoleBackground,
+}));
 
 const FlexConsole = styled(Console, {
   flex: '1 1',
+  color: 'black',
 });
 
-const SideBarMinimizedTab = -1;
-const STDOUT_STYLE = (theme: Theme) => ({
-  color: theme.color
-});
 export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps, State> {
   private editorRef: React.MutableRefObject<Editor>;
   constructor(props: Props & ReduxEditorPageProps) {
@@ -130,10 +103,10 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
       modal: Modal.NONE,
       language: props.language,
       code: {
-        'c': ProgrammingLanguage.DEFAULT_CODE['c'],
-        'cpp': window.localStorage.getItem('code-cpp') || ProgrammingLanguage.DEFAULT_CODE['cpp'],
-        'python': window.localStorage.getItem('code-python') || ProgrammingLanguage.DEFAULT_CODE['python'],
-        'plaintext': ProgrammingLanguage.DEFAULT_CODE['plaintext'],
+        'c': '',
+        'cpp': '',
+        'python': '',
+        'plaintext': '',
 
       },
       editorConsole: props.editorConsole,
@@ -144,43 +117,29 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
 
   async componentDidUpdate(prevProps: Props, prevState: State) {
 
-
     if (this.props.fileName !== prevProps.fileName) {
-      console.log("Editor page current state:", this.state);
 
-      console.log("Editor page proped this.props:", this.props);
       this.setState({
-
+        language: this.props.language,
+        fileName: this.props.fileName,
         code: {
           ...this.state.code,
           [this.props.language]: this.props.code[this.props.language]
         },
-        language: this.props.language,
-        fileName: this.props.fileName
-      }, () => {
-        console.log("EditorPage updated state:", this.state);
-      });
 
+      });
     }
     else if (this.props.code !== prevProps.code) {
-      console.log("EditorPage previous props code:", prevProps.code);
-      console.log("EditorPage updated props code:", this.props.code);
 
       this.setState({
         code: {
           ...this.state.code,
           [this.state.language]: this.props.code[this.state.language]
         }
-
       });
     }
-
     if (this.props.editorConsole !== prevProps.editorConsole) {
-      console.log("EditorPage previous props console:", prevProps.editorConsole);
-      console.log("EditorPage updated props console:", this.props.editorConsole);
-
       this.setState({
-
         editorConsole: this.props.editorConsole
       });
 
@@ -188,36 +147,51 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
 
   }
   async componentDidMount() {
-
-    console.log("current activeLanguage:", this.state.language);
-    console.log("current user name:", this.props.userName);
-    console.log("current project name:", this.props.projectName);
-    console.log("current file name:", this.props.fileName);
-    console.log("Editor page current code:", this.state.code);
-
-    console.log("EditorPage mounted console:", this.state.editorConsole);
     try {
-      const content = await DatabaseService.getContentFromSrcFile(this.props.userName, this.props.projectName, this.props.fileName);
-      // console.log("Content from src file:", content);
-      if (content === null) {
-        this.setState({
-          code: {
-            ...this.state.code,
-            [this.state.language]: ProgrammingLanguage.DEFAULT_CODE[this.state.language]
-          }
 
-        });
+      const { userName, projectName } = this.props;
+
+      if (this.props.fileName.includes(".h")) {
+        const includeContent = await axios.get("/get-file-contents", { params: { filePath: `/home/kipr/Documents/KISS/${userName}/${projectName}/include/${this.props.fileName}` } });
+        // Ensure includeContent.data is a string
+        const fileContent = typeof includeContent.data === 'string' ? includeContent.data : JSON.stringify(includeContent.data);
+
+
+        this.setState((prevState) => ({
+          code: {
+            ...prevState.code,
+            [prevState.language]: fileContent,
+          }
+        }));
+      }
+      else if (this.props.fileName.includes(".txt")) {
+        const userFileContent = await axios.get("/get-file-contents", { params: { filePath: `/home/kipr/Documents/KISS/${userName}/${projectName}/data/${this.props.fileName}` } });
+        // Ensure userFileContent.data is a string
+        const fileContent = typeof userFileContent.data === 'string' ? userFileContent.data : JSON.stringify(userFileContent.data);
+
+        this.setState((prevState) => ({
+          code: {
+            ...prevState.code,
+            [prevState.language]: fileContent,
+          }
+        }));
       }
       else {
-        this.setState({
-          code: {
-            ...this.state.code,
-            [this.state.language]: content
-          }
-        });
 
+        const srcContent = await axios.get("/get-file-contents", { params: { filePath: `/home/kipr/Documents/KISS/${userName}/${projectName}/src/${this.props.fileName}` } });
+        // Ensure srcContent.data is a string
+        const fileContent = typeof srcContent.data === 'string' ? srcContent.data : JSON.stringify(srcContent.data);
+
+        this.setState((prevState) => ({
+          code: {
+            ...prevState.code,
+            [prevState.language]: fileContent,
+          }
+        }));
       }
+
       this.props.onFileNameChange(this.state.fileName);
+      this.props.code[this.state.language] = this.state.code[this.state.language];
     }
     catch (error) {
       console.error('Error getting content from src file:', error);
@@ -225,11 +199,9 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
 
   }
 
-
   private onErrorClick_ = (event: React.MouseEvent<HTMLDivElement>) => {
     // not implemented
   };
-
 
   private onActiveLanguageChange_ = (language: ProgrammingLanguage) => {
     this.setState({
@@ -240,16 +212,17 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
     });
 
   };
+  
   private onIndentCode_ = () => {
     if (this.editorRef.current) this.editorRef.current.ivygate.formatCode();
   };
 
   private onDownloadClick_ = () => {
-    const { language } = this.state;
+    const { language, fileName } = this.state;
 
     const element = document.createElement('a');
     element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(this.state.code[language])}`);
-    element.setAttribute('download', `program.${ProgrammingLanguage.FILE_EXTENSION[language]}`);
+    element.setAttribute('download', `${fileName}`);
     element.style.display = 'none';
     document.body.appendChild(element);
     element.click();
@@ -263,7 +236,6 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
       style,
       className,
       theme,
-
       messages,
       settings,
       onClearConsole,
@@ -275,42 +247,42 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
       locale,
       isleftbaropen,
       projectName,
-      fileName,
       userName
     } = props;
 
     const {
-      language,
-      code,
       editorConsole,
     } = this.state;
 
-    console.log("EditorPage render state:", this.state);
     let editorBarTarget: EditorBarTarget;
     let editor: JSX.Element;
     editorBarTarget = {
       type: EditorBarTarget.Type.Robot,
       messages,
       isleftbaropen_: isleftbaropen,
-      language: language,
+
+      isRunning: this.props.isRunning,
+      language: this.props.language,
       onRunClick: this.props.onRunClick,
+      onStopClick: this.props.onStopClick,
       onCompileClick: this.props.onCompileClick,
       onLanguageChange: this.onActiveLanguageChange_,
       onIndentCode,
-      onDownloadCode,
+      onDownloadCode: this.onDownloadClick_,
       onSaveCode,
       onErrorClick: this.onErrorClick_,
       userName: userName,
       projectName: projectName,
-      fileName: fileName,
+      fileName: this.props.fileName,
     };
     editor = (
       <Editor
         theme={theme}
         isleftbaropen={isleftbaropen}
+        isRunning={this.props.isRunning}
         ref={editorRef}
-        code={code[language]}
-        language={language}
+        code={this.props.code[this.props.language]}
+        language={this.props.language}
         onCodeChange={this.props.onCodeChange}
         onSaveCode={this.props.onSaveCode}
         messages={messages}
@@ -334,7 +306,7 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
         sizes={[3, 1]}
         visible={[true, true]}
       >
-        <SimultorWidgetContainer>
+        <SimultorWidgetContainer theme={theme}>
           <SimulatorWidget
             theme={theme}
             name={LocalizedString.lookup(tr('Editor'), locale)}
@@ -345,14 +317,14 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
           </SimulatorWidget>
         </SimultorWidgetContainer>
 
-        <SimultorWidgetContainer>
+        <SimultorWidgetContainer theme={theme}>
           <SimulatorWidget
             theme={theme}
             name={LocalizedString.lookup(tr('Console'), locale)}
             barComponents={editorConsoleBar}
             mode={Mode.Sidebar}
             hideActiveSize={true}
-            style={{ height: '85%' }}
+            style={{ height: '85%', paddingBottom: '20px' }}
           >
             <FlexConsole theme={theme} text={editorConsole} />
           </SimulatorWidget>

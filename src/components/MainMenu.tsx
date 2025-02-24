@@ -1,20 +1,14 @@
 import * as React from 'react';
-
-import { styled } from 'styletron-react';
-import { StyleProps } from '../style';
-import { Spacer } from './common';
-import { Fa } from './Fa';
-import { DARK, ThemeProps } from './theme';
-
-import { connect } from 'react-redux';
-
-import { State as ReduxState } from '../state';
-
 import KIPR_LOGO_BLACK from '../assets/KIPR-Logo-Black-Text-Clear-Large.png';
 import KIPR_LOGO_WHITE from '../assets/KIPR-Logo-White-Text-Clear-Large.png';
-import { signOutOfApp } from '../firebase/modules/auth';
 import LocalizedString from '../util/LocalizedString';
 import ExtraMenu from './ExtraMenu';
+import AboutDialog from './AboutDialog';
+import { styled } from 'styletron-react';
+import { StyleProps } from '../style';
+import { ThemeProps } from './theme';
+import { connect } from 'react-redux';
+import { State as ReduxState } from '../state';
 import { Modal } from '../pages/Modal';
 
 export interface MenuPublicProps extends StyleProps, ThemeProps { }
@@ -23,13 +17,16 @@ interface MenuPrivateProps {
   locale: LocalizedString.Language;
 }
 
-interface MenuState { }
+interface MenuState {
+  modal: Modal;
+ }
 
 type Props = MenuPublicProps & MenuPrivateProps;
 type State = MenuState;
 
 const Container = styled('div', (props: ThemeProps) => ({
-  backgroundColor: props.theme.backgroundColor,
+  backgroundColor: props.theme.titleBarBackground,
+
   color: props.theme.color,
   width: '100%',
   height: '48px',
@@ -66,7 +63,8 @@ interface ClickProps {
 
 
 const ExtraMenuContainer = styled('div', (props: ThemeProps) => ({
-  backgroundColor: props.theme.backgroundColor,
+  backgroundColor: props.theme.titleBarBackground,
+
   color: props.theme.color,
   top: '20px',
   width: '100%',
@@ -82,15 +80,14 @@ const ExtraMenuContainer = styled('div', (props: ThemeProps) => ({
 export class MainMenu extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
+
+    this.state = {
+      modal: Modal.NONE
+    }
   }
 
   private onDocumentationClick_ = () => {
     window.open("https://www.kipr.org/doc/index.html");
-  };
-
-
-  private onLogoutClick_ = (event: React.MouseEvent<HTMLDivElement>) => {
-    void signOutOfApp();
   };
 
   private onModalClick_ = (modal: Modal) => () => this.setState({ modal });
@@ -101,12 +98,11 @@ export class MainMenu extends React.Component<Props, State> {
 
 
   render() {
-    const { className, style, locale } = this.props;
-    const theme = DARK;
+    const { className, style, locale, theme } = this.props;
+    const {modal} = this.state;
     return (
       <Container className={className} style={style} theme={theme}>
         <Logo theme={theme} src={theme.foreground === 'white' ? KIPR_LOGO_BLACK as string : KIPR_LOGO_WHITE as string} onClick={this.onDashboardClick_} />
-        <Spacer style={{ borderRight: `1px solid ${theme.borderColor}` }} />
         <ExtraMenuContainer theme={theme}>
           <ExtraMenu
             style={{ zIndex: 9 }}
@@ -117,7 +113,15 @@ export class MainMenu extends React.Component<Props, State> {
 
           />
         </ExtraMenuContainer>
-        {/* <Item theme={theme} onClick={this.onDashboardClick_}><ItemIcon icon='compass'/> Dashboard</Item> */}
+
+
+        {modal.type === Modal.Type.About && (
+          <AboutDialog
+            theme={theme}
+            onClose={() => this.setState({ modal: Modal.NONE })}>
+
+          </AboutDialog>
+        )}
 
       </Container>
     );

@@ -32,6 +32,7 @@ namespace ExitStatusError {
 const startC = (message: Protocol.Worker.StartRequest) => {
   // message.code contains the user's code compiled to javascript
   let stoppedSent = false;
+  console.log("inside startC");
 
   const sendStopped = () => {
     if (stoppedSent) return;

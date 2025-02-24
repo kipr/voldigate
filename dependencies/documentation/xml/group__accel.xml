@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="group__accel" kind="group">
+    <compoundname>accel</compoundname>
+    <title>Accelerometer</title>
+    <innerpage refid="group__accel_Accelerometer"></innerpage>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="group__accel_1gaf5e5829bc8a5b1d877278d0266e79c34" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>signed short</type>
+        <definition>signed short accel_x</definition>
+        <argsstring>()</argsstring>
+        <name>accel_x</name>
+        <briefdescription>
+<para>Gets the sensed x acceleration. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Wallaby: +/- 2G range, 1024 per G</para>
+<para>Wombat: +/- 2G range, 1024 per G</para>
+<para>This should be approximately 0 when at rest and flat on a table <simplesect kind="return"><para>The latest signed x acceleration value </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/accel/public/kipr/accel/accel.h" line="28" column="14" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/accel/public/kipr/accel/accel.h" declline="28" declcolumn="14"/>
+      </memberdef>
+      <memberdef kind="function" id="group__accel_1ga8e37fddd2d8d473ccaefa2aa39455135" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>signed short</type>
+        <definition>signed short accel_y</definition>
+        <argsstring>()</argsstring>
+        <name>accel_y</name>
+        <briefdescription>
+<para>Gets the sensed y acceleration. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Wallaby: +/- 2G range, 1024 per G</para>
+<para>Wombat: +/- 2G range, 1024 per G</para>
+<para>This should be approximately 0 when at rest and flat on a table <simplesect kind="return"><para>The latest signed y acceleration value </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/accel/public/kipr/accel/accel.h" line="39" column="14" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/accel/public/kipr/accel/accel.h" declline="39" declcolumn="14"/>
+      </memberdef>
+      <memberdef kind="function" id="group__accel_1ga45cceb351be427425b10630c92e2c31e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>signed short</type>
+        <definition>signed short accel_z</definition>
+        <argsstring>()</argsstring>
+        <name>accel_z</name>
+        <briefdescription>
+<para>Gets the sensed z acceleration. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Wallaby: +/- 2G range, 1024 per G</para>
+<para>Wallaby: This should be approximately -1024 when at rest and flat on a table</para>
+<para>Wombat: +/- 2G range, 1024 per G</para>
+<para>Wombat: This should be approximately -512 when at rest and flat on a table <simplesect kind="return"><para>The latest signed z acceleration value </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/accel/public/kipr/accel/accel.h" line="51" column="14" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/accel/public/kipr/accel/accel.h" declline="51" declcolumn="14"/>
+      </memberdef>
+      <memberdef kind="function" id="group__accel_1ga12bc45f62d849a3187697dc1ec869d1c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int accel_calibrate</definition>
+        <argsstring>()</argsstring>
+        <name>accel_calibrate</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Initiates a calibration of the accelerometer <simplesect kind="note"><para>Not Yet Implemented </para>
+</simplesect>
+<simplesect kind="return"><para>1: success 0: failure </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/accel/public/kipr/accel/accel.h" line="60" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/accel/public/kipr/accel/accel.h" declline="60" declcolumn="5"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

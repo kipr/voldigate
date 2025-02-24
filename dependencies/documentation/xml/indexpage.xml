@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="indexpage" kind="page">
+    <compoundname>index</compoundname>
+    <title>libwallaby</title>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><simplesect kind="authors"><para>Braden McDorman, Nafis Zarman, Zachary Sasser, Tim Corbly</para>
+</simplesect>
+<image type="html" name="Botguy-KIPR_350x.webp"></image>
+ </para>
+<sect1 id="index_1autotoc_md0">
+<title>libkipr</title>
+<para>Library for interfacing with KIPR Robot Controllers.</para>
+<para>Documentation can be viewed at <ulink url="https://www.kipr.org/doc/index.html">https://www.kipr.org/doc/index.html</ulink> or by clicking the &quot;Help&quot; button in the KIPR Software Suite IDE.</para>
+</sect1>
+<sect1 id="index_1autotoc_md1">
+<title>CMake Options</title>
+<para>Each of the following options may be specified when executing CMake by prefixing the option with <computeroutput>-D</computeroutput> (e.g., <computeroutput>-Dwith_accel=OFF</computeroutput>).</para>
+<sect2 id="index_1autotoc_md2">
+<title>Modules</title>
+<para><itemizedlist>
+<listitem><para><computeroutput>with_accel</computeroutput> (default: <computeroutput>ON</computeroutput>) - Build accelerometer support.</para>
+</listitem><listitem><para><computeroutput>with_analog</computeroutput> (default: <computeroutput>ON</computeroutput>) - Build analog sensor support.</para>
+</listitem><listitem><para><computeroutput>with_audio</computeroutput> (default: <computeroutput>ON</computeroutput>) - Build audio support.</para>
+</listitem><listitem><para><computeroutput>with_battery</computeroutput> (default: <computeroutput>ON</computeroutput>) - Build battery support.</para>
+</listitem><listitem><para><computeroutput>with_botball</computeroutput> (default: <computeroutput>ON</computeroutput>) - Build botball support.</para>
+</listitem><listitem><para><computeroutput>with_camera</computeroutput> (default: <computeroutput>ON</computeroutput>) - Build camera support.</para>
+</listitem><listitem><para><computeroutput>with_compass</computeroutput> (default: <computeroutput>ON</computeroutput>) - Build compass support.</para>
+</listitem><listitem><para><computeroutput>with_console</computeroutput> (default: <computeroutput>ON</computeroutput>) - Build console support.</para>
+</listitem><listitem><para><computeroutput>with_create</computeroutput> (default: <computeroutput>ON</computeroutput>) - Build iRobot Create 2 support.</para>
+</listitem><listitem><para><computeroutput>with_digital</computeroutput> (default: <computeroutput>ON</computeroutput>) - Build digital sensor support.</para>
+</listitem><listitem><para><computeroutput>with_graphics</computeroutput> (default: <computeroutput>ON</computeroutput>) - Build graphics support (requires X11 development files, such as <computeroutput>x11proto-dev</computeroutput> on Debian/Ubuntu).</para>
+</listitem><listitem><para><computeroutput>with_gyro</computeroutput> (default: <computeroutput>ON</computeroutput>) - Build gyroscope support.</para>
+</listitem><listitem><para><computeroutput>with_magneto</computeroutput> (default: <computeroutput>ON</computeroutput>) - Build magnetometer support.</para>
+</listitem><listitem><para><computeroutput>with_motor</computeroutput> (default: <computeroutput>ON</computeroutput>) - Build motor support.</para>
+</listitem><listitem><para><computeroutput>with_network</computeroutput> (default: <computeroutput>ON</computeroutput>) - Build network support.</para>
+</listitem><listitem><para><computeroutput>with_servo</computeroutput> (default: <computeroutput>ON</computeroutput>) - Build servo support.</para>
+</listitem><listitem><para><computeroutput>with_tello</computeroutput> (default: <computeroutput>ON</computeroutput>) - Build Tello support.</para>
+</listitem><listitem><para><computeroutput>with_thread</computeroutput> (default: <computeroutput>ON</computeroutput>) - Build thread support.</para>
+</listitem><listitem><para><computeroutput>with_time</computeroutput> (default: <computeroutput>ON</computeroutput>) - Build time support.</para>
+</listitem><listitem><para><computeroutput>with_wait_for</computeroutput> (default: <computeroutput>ON</computeroutput>) - Build wait_for support.</para>
+</listitem></itemizedlist>
+</para>
+</sect2>
+<sect2 id="index_1autotoc_md3">
+<title>Bindings</title>
+<para><itemizedlist>
+<listitem><para><computeroutput>with_python_binding</computeroutput> (default: <computeroutput>ON</computeroutput>) - Build Python binding (requires Python 3+ development files, such as <computeroutput>libpython3.10-dev</computeroutput> on Debian/Ubuntu).</para>
+</listitem></itemizedlist>
+</para>
+</sect2>
+<sect2 id="index_1autotoc_md4">
+<title>Miscellaneous</title>
+<para><itemizedlist>
+<listitem><para><computeroutput>with_documentation</computeroutput> (default: <computeroutput>ON</computeroutput>) - Build documentation support (requires <computeroutput>doxygen</computeroutput> installed on system).</para>
+</listitem><listitem><para><computeroutput>with_tests</computeroutput> (default: <computeroutput>ON</computeroutput>) - Build tests.</para>
+</listitem></itemizedlist>
+</para>
+</sect2>
+</sect1>
+<sect1 id="index_1autotoc_md5">
+<title>Cross-compiling to aarch64-linux-gnu (e.g., Wombat)</title>
+<para><programlisting filename=".bash"><codeline><highlight class="normal">apt<sp/>install<sp/>gcc-aarch64-linux-gnu<sp/>g++-aarch64-linux-gnu</highlight></codeline>
+<codeline><highlight class="normal">cd<sp/>libkipr</highlight></codeline>
+<codeline><highlight class="normal">cmake<sp/>-Bbuild<sp/>-DCMAKE_TOOLCHAIN_FILE=$(pwd)/toolchain/aarch64-linux-gnu.cmake<sp/>.</highlight></codeline>
+</programlisting></para>
+</sect1>
+<sect1 id="index_1autotoc_md6">
+<title>Cross-compiling to JavaScript/WASM (e.g., Simulator)</title>
+<sect2 id="index_1autotoc_md7">
+<title>Without Python Support</title>
+<para>libkipr can be compiled to statically link to a C program that has been compiled to emscripten. The resulting <computeroutput>libkipr.a</computeroutput> should be used. <programlisting><codeline><highlight class="normal">source<sp/>emsdk/emsdk_env.sh</highlight></codeline>
+<codeline><highlight class="normal">cd<sp/>libkipr</highlight></codeline>
+<codeline><highlight class="normal">emcmake<sp/>cmake<sp/>-Bbuild<sp/>-Dwith_graphics=OFF<sp/>-Dwith_camera=OFF<sp/>-Dwith_tello=OFF<sp/>-Dwith_python_binding=OFF<sp/>.</highlight></codeline>
+</programlisting></para>
+</sect2>
+<sect2 id="index_1autotoc_md8">
+<title>With Python Support</title>
+<para>libkipr can be compiled to dynamically link to a <computeroutput>cpython</computeroutput> that has been compiled to emscripten. The resulting <computeroutput>kipr.wasm</computeroutput> should be placed in <computeroutput>cpython</computeroutput>&apos;s virtual filesystem on the <computeroutput>PYTHONPATH</computeroutput> (see simulator for details). <programlisting><codeline><highlight class="normal">source<sp/>emsdk/emsdk_env.sh</highlight></codeline>
+<codeline><highlight class="normal">cd<sp/>libkipr</highlight></codeline>
+<codeline><highlight class="normal">emcmake<sp/>cmake<sp/>-Bbuild<sp/>-Dwith_graphics=OFF<sp/>-Dwith_camera=OFF<sp/>-Dwith_tello=OFF<sp/>-DPYTHON_LIBRARY=$PYTHON_LIBRARY<sp/>-DPYTHON_INCLUDE_DIR=$PYTHON_INCLUDE_DIR<sp/>-Dwasm=ON<sp/>.</highlight></codeline>
+</programlisting> where:<itemizedlist>
+<listitem><para><computeroutput>$PYTHON_LIBRARY</computeroutput> is the <computeroutput>libpythonVERSION.a</computeroutput> file that has been compiled to emscripten-browser.</para>
+</listitem><listitem><para><computeroutput>$PYTHON_INCLUDE_DIR</computeroutput> is that python&apos;s include directory.</para>
+</listitem></itemizedlist>
+</para>
+</sect2>
+</sect1>
+<sect1 id="index_1autotoc_md9">
+<title>License</title>
+<para>libkipr is licensed under the terms of the GPLv3 License.</para>
+</sect1>
+<sect1 id="index_1autotoc_md10">
+<title>Contributing</title>
+<para>Want to Contribute? Start Here!: <ulink url="https://github.com/kipr/KIPR-Development-Toolkit">https://github.com/kipr/KIPR-Development-Toolkit</ulink> </para>
+</sect1>
+    </detaileddescription>
+    <location file="pages/mainpage.h"/>
+  </compounddef>
+</doxygen>

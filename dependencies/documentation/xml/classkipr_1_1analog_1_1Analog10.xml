@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classkipr_1_1analog_1_1Analog10" kind="class" language="C++" prot="public">
+    <compoundname>kipr::analog::Analog10</compoundname>
+    <basecompoundref refid="classkipr_1_1analog_1_1Analog" prot="public" virt="non-virtual">kipr::analog::Analog</basecompoundref>
+    <includes refid="analog_8hpp" local="no">analog.hpp</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classkipr_1_1analog_1_1Analog10_1a6e2a29ee884430ea8beb902f81d3a705" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>kipr::analog::Analog10::Analog10</definition>
+        <argsstring>(unsigned char port)</argsstring>
+        <name>Analog10</name>
+        <param>
+          <type>unsigned char</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog/analog.hpp" line="39" column="7"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1analog_1_1Analog10_1acc16e06a298b07c5e7ab900d43c79221" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type></type>
+        <definition>virtual kipr::analog::Analog10::~Analog10</definition>
+        <argsstring>()</argsstring>
+        <name>~Analog10</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog/analog.hpp" line="40" column="15"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1analog_1_1Analog10_1a374d70c8d94a89d90864df00695e8104" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+        <type>unsigned short</type>
+        <definition>virtual unsigned short kipr::analog::Analog10::value</definition>
+        <argsstring>() const</argsstring>
+        <name>value</name>
+        <reimplements refid="classkipr_1_1analog_1_1Analog_1aa40bd208e1fb3048d93ef27d33615561">value</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog/analog.hpp" line="42" column="30"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>kipr::analog::Analog</label>
+        <link refid="classkipr_1_1analog_1_1Analog"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>kipr::sensor::Sensor&lt; unsigned short &gt;</label>
+        <link refid="classkipr_1_1sensor_1_1Sensor"/>
+      </node>
+      <node id="1">
+        <label>kipr::analog::Analog10</label>
+        <link refid="classkipr_1_1analog_1_1Analog10"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>kipr::analog::Analog</label>
+        <link refid="classkipr_1_1analog_1_1Analog"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>kipr::sensor::Sensor&lt; unsigned short &gt;</label>
+        <link refid="classkipr_1_1sensor_1_1Sensor"/>
+      </node>
+      <node id="1">
+        <label>kipr::analog::Analog10</label>
+        <link refid="classkipr_1_1analog_1_1Analog10"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog/analog.hpp" line="36" column="5" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog/analog.hpp" bodystart="37" bodyend="43"/>
+    <listofallmembers>
+      <member refid="classkipr_1_1analog_1_1Analog_1a79dfbb210c8454b25f63e60122256cd5" prot="public" virt="non-virtual"><scope>kipr::analog::Analog10</scope><name>Analog</name></member>
+      <member refid="classkipr_1_1analog_1_1Analog10_1a6e2a29ee884430ea8beb902f81d3a705" prot="public" virt="non-virtual"><scope>kipr::analog::Analog10</scope><name>Analog10</name></member>
+      <member refid="classkipr_1_1analog_1_1Analog_1ab9b0dfe22f15f4ac1f4379de6d835b25" prot="public" virt="non-virtual"><scope>kipr::analog::Analog10</scope><name>port</name></member>
+      <member refid="classkipr_1_1analog_1_1Analog_1ab3badada2f9999109d61265e4ee9df82" prot="public" virt="non-virtual"><scope>kipr::analog::Analog10</scope><name>pullup</name></member>
+      <member refid="classkipr_1_1analog_1_1Analog_1ac995907cbcf7b3c19e43d703c56fc490" prot="public" virt="virtual"><scope>kipr::analog::Analog10</scope><name>setPullup</name></member>
+      <member refid="classkipr_1_1analog_1_1Analog10_1a374d70c8d94a89d90864df00695e8104" prot="public" virt="virtual"><scope>kipr::analog::Analog10</scope><name>value</name></member>
+      <member refid="classkipr_1_1analog_1_1Analog_1a39614c4ab6ce95748d67e34961446299" prot="public" virt="virtual"><scope>kipr::analog::Analog10</scope><name>~Analog</name></member>
+      <member refid="classkipr_1_1analog_1_1Analog10_1acc16e06a298b07c5e7ab900d43c79221" prot="public" virt="virtual"><scope>kipr::analog::Analog10</scope><name>~Analog10</name></member>
+      <member refid="classkipr_1_1sensor_1_1Sensor_1a7a2997c6ede6b25603032f2b110e8cb5" prot="public" virt="virtual"><scope>kipr::analog::Analog10</scope><name>~Sensor</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

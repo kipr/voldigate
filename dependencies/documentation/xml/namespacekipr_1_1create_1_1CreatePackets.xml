@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="namespacekipr_1_1create_1_1CreatePackets" kind="namespace" language="C++">
+    <compoundname>kipr::create::CreatePackets</compoundname>
+    <innerclass refid="structkipr_1_1create_1_1CreatePackets_1_1__1" prot="public">kipr::create::CreatePackets::_1</innerclass>
+    <innerclass refid="structkipr_1_1create_1_1CreatePackets_1_1__2" prot="public">kipr::create::CreatePackets::_2</innerclass>
+    <innerclass refid="structkipr_1_1create_1_1CreatePackets_1_1__3" prot="public">kipr::create::CreatePackets::_3</innerclass>
+    <innerclass refid="structkipr_1_1create_1_1CreatePackets_1_1__4" prot="public">kipr::create::CreatePackets::_4</innerclass>
+    <innerclass refid="structkipr_1_1create_1_1CreatePackets_1_1__5" prot="public">kipr::create::CreatePackets::_5</innerclass>
+    <innerclass refid="structkipr_1_1create_1_1CreatePackets_1_1__101" prot="public">kipr::create::CreatePackets::_101</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>See the create open interface documentation for more information about these structures </para>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/create/public/kipr/create/create.hpp" line="79" column="5"/>
+  </compounddef>
+</doxygen>

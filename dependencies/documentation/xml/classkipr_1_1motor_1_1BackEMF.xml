@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classkipr_1_1motor_1_1BackEMF" kind="class" language="C++" prot="public">
+    <compoundname>kipr::motor::BackEMF</compoundname>
+    <includes refid="motor_8hpp" local="no">motor.hpp</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classkipr_1_1motor_1_1BackEMF_1ade71583f4451dd64bcd3000cb7ac23f0" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int kipr::motor::BackEMF::m_port</definition>
+        <argsstring></argsstring>
+        <name>m_port</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.hpp" line="55" column="11" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.hpp" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classkipr_1_1motor_1_1BackEMF_1a58decb082f3349477f41d01907c70113" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>kipr::motor::BackEMF::BackEMF</definition>
+        <argsstring>(int port)</argsstring>
+        <name>BackEMF</name>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.hpp" line="51" column="7"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1motor_1_1BackEMF_1abe55ef718fbcdf570020f981b0cc8dc8" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int kipr::motor::BackEMF::value</definition>
+        <argsstring>() const</argsstring>
+        <name>value</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.hpp" line="52" column="11"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1motor_1_1BackEMF_1aaaaab063495c6d24dc984eca92dc83c4" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int kipr::motor::BackEMF::port</definition>
+        <argsstring>() const</argsstring>
+        <name>port</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.hpp" line="53" column="11"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.hpp" line="48" column="5" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.hpp" bodystart="49" bodyend="56"/>
+    <listofallmembers>
+      <member refid="classkipr_1_1motor_1_1BackEMF_1a58decb082f3349477f41d01907c70113" prot="public" virt="non-virtual"><scope>kipr::motor::BackEMF</scope><name>BackEMF</name></member>
+      <member refid="classkipr_1_1motor_1_1BackEMF_1ade71583f4451dd64bcd3000cb7ac23f0" prot="private" virt="non-virtual"><scope>kipr::motor::BackEMF</scope><name>m_port</name></member>
+      <member refid="classkipr_1_1motor_1_1BackEMF_1aaaaab063495c6d24dc984eca92dc83c4" prot="public" virt="non-virtual"><scope>kipr::motor::BackEMF</scope><name>port</name></member>
+      <member refid="classkipr_1_1motor_1_1BackEMF_1abe55ef718fbcdf570020f981b0cc8dc8" prot="public" virt="non-virtual"><scope>kipr::motor::BackEMF</scope><name>value</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

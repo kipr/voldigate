@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="dir_2c0d06035c6d1316d3957dd68091431e" kind="dir">
+    <compoundname>/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr</compoundname>
+    <innerdir refid="dir_7df3fbfdec0ff5445026d64f470b7da0">/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/analog</innerdir>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/analog/public/kipr/"/>
+  </compounddef>
+</doxygen>

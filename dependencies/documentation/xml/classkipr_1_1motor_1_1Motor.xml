@@ -1,0 +1,354 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classkipr_1_1motor_1_1Motor" kind="class" language="C++" prot="public">
+    <compoundname>kipr::motor::Motor</compoundname>
+    <includes refid="motor_8hpp" local="no">motor.hpp</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classkipr_1_1motor_1_1Motor_1a3844a318316d4168bcd32b94d1d529d0" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int kipr::motor::Motor::m_port</definition>
+        <argsstring></argsstring>
+        <name>m_port</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.hpp" line="45" column="11" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.hpp" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classkipr_1_1motor_1_1Motor_1a18685ec996c646e881d44b56c756111a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>kipr::motor::Motor::Motor</definition>
+        <argsstring>(int port)</argsstring>
+        <name>Motor</name>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.hpp" line="11" column="7"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1motor_1_1Motor_1ae38c11a12eca0ce953d40af2f552a12c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::motor::Motor::clearPositionCounter</definition>
+        <argsstring>()</argsstring>
+        <name>clearPositionCounter</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.hpp" line="13" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1motor_1_1Motor_1acb479b07528e755bcacf78509b7388c0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::motor::Motor::moveAtVelocity</definition>
+        <argsstring>(short velocity)</argsstring>
+        <name>moveAtVelocity</name>
+        <param>
+          <type>short</type>
+          <declname>velocity</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.hpp" line="15" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1motor_1_1Motor_1ad5743532f303261eddba2981c61bc679" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::motor::Motor::moveToPosition</definition>
+        <argsstring>(short speed, int goalPos)</argsstring>
+        <name>moveToPosition</name>
+        <param>
+          <type>short</type>
+          <declname>speed</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>goalPos</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.hpp" line="16" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1motor_1_1Motor_1a41ff4456f5fff373f35da0bc5857c518" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::motor::Motor::moveRelativePosition</definition>
+        <argsstring>(short speed, int deltaPos)</argsstring>
+        <name>moveRelativePosition</name>
+        <param>
+          <type>short</type>
+          <declname>speed</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>deltaPos</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.hpp" line="17" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1motor_1_1Motor_1adc673d5343e29c1796aa1376ee875cc0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::motor::Motor::setPidGains</definition>
+        <argsstring>(short p, short i, short d, short pd, short id, short dd)</argsstring>
+        <name>setPidGains</name>
+        <param>
+          <type>short</type>
+          <declname>p</declname>
+        </param>
+        <param>
+          <type>short</type>
+          <declname>i</declname>
+        </param>
+        <param>
+          <type>short</type>
+          <declname>d</declname>
+        </param>
+        <param>
+          <type>short</type>
+          <declname>pd</declname>
+        </param>
+        <param>
+          <type>short</type>
+          <declname>id</declname>
+        </param>
+        <param>
+          <type>short</type>
+          <declname>dd</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.hpp" line="20" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1motor_1_1Motor_1a411b3fbb39e0a7e25e355e213616211e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::motor::Motor::pidGains</definition>
+        <argsstring>(short &amp;p, short &amp;i, short &amp;d, short &amp;pd, short &amp;id, short &amp;dd)</argsstring>
+        <name>pidGains</name>
+        <param>
+          <type>short &amp;</type>
+          <declname>p</declname>
+        </param>
+        <param>
+          <type>short &amp;</type>
+          <declname>i</declname>
+        </param>
+        <param>
+          <type>short &amp;</type>
+          <declname>d</declname>
+        </param>
+        <param>
+          <type>short &amp;</type>
+          <declname>pd</declname>
+        </param>
+        <param>
+          <type>short &amp;</type>
+          <declname>id</declname>
+        </param>
+        <param>
+          <type>short &amp;</type>
+          <declname>dd</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.hpp" line="21" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1motor_1_1Motor_1a32a7e6f957875a1f8509c4155a4c79cd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::motor::Motor::freeze</definition>
+        <argsstring>()</argsstring>
+        <name>freeze</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.hpp" line="24" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1motor_1_1Motor_1a80b581d95ef3783b3f4176d932ed2ec2" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool kipr::motor::Motor::isMotorDone</definition>
+        <argsstring>() const</argsstring>
+        <name>isMotorDone</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.hpp" line="26" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1motor_1_1Motor_1ab72ac3d2ee3a9f6c53a3471770f5bd75" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::motor::Motor::blockMotorDone</definition>
+        <argsstring>() const</argsstring>
+        <name>blockMotorDone</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.hpp" line="28" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1motor_1_1Motor_1ab7643ecdc777b105f46208a2f5a838d3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::motor::Motor::forward</definition>
+        <argsstring>()</argsstring>
+        <name>forward</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.hpp" line="30" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1motor_1_1Motor_1af7c3c7b4a11497e68c37402de8300455" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::motor::Motor::backward</definition>
+        <argsstring>()</argsstring>
+        <name>backward</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.hpp" line="32" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1motor_1_1Motor_1a0a799c4cf7dff5ca53e8317fb8d3ff72" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::motor::Motor::motor</definition>
+        <argsstring>(int percent)</argsstring>
+        <name>motor</name>
+        <param>
+          <type>int</type>
+          <declname>percent</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.hpp" line="34" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1motor_1_1Motor_1af0b65791641c390f87d2d774767208df" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::motor::Motor::baasbennaguui</definition>
+        <argsstring>(int percent)</argsstring>
+        <name>baasbennaguui</name>
+        <param>
+          <type>int</type>
+          <declname>percent</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.hpp" line="36" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1motor_1_1Motor_1acb2e3785fdbf7b50857f65b16d06f6d4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::motor::Motor::motorPower</definition>
+        <argsstring>(int percent)</argsstring>
+        <name>motorPower</name>
+        <param>
+          <type>int</type>
+          <declname>percent</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.hpp" line="38" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1motor_1_1Motor_1afa7c31efb374ac08b3dd7097ae82e2be" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kipr::motor::Motor::off</definition>
+        <argsstring>()</argsstring>
+        <name>off</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.hpp" line="40" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1motor_1_1Motor_1a162aa66d2994a6e83e96b794d2e8b623" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int kipr::motor::Motor::port</definition>
+        <argsstring>() const</argsstring>
+        <name>port</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.hpp" line="42" column="11"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.hpp" line="8" column="5" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/motor/public/kipr/motor/motor.hpp" bodystart="9" bodyend="46"/>
+    <listofallmembers>
+      <member refid="classkipr_1_1motor_1_1Motor_1af0b65791641c390f87d2d774767208df" prot="public" virt="non-virtual"><scope>kipr::motor::Motor</scope><name>baasbennaguui</name></member>
+      <member refid="classkipr_1_1motor_1_1Motor_1af7c3c7b4a11497e68c37402de8300455" prot="public" virt="non-virtual"><scope>kipr::motor::Motor</scope><name>backward</name></member>
+      <member refid="classkipr_1_1motor_1_1Motor_1ab72ac3d2ee3a9f6c53a3471770f5bd75" prot="public" virt="non-virtual"><scope>kipr::motor::Motor</scope><name>blockMotorDone</name></member>
+      <member refid="classkipr_1_1motor_1_1Motor_1ae38c11a12eca0ce953d40af2f552a12c" prot="public" virt="non-virtual"><scope>kipr::motor::Motor</scope><name>clearPositionCounter</name></member>
+      <member refid="classkipr_1_1motor_1_1Motor_1ab7643ecdc777b105f46208a2f5a838d3" prot="public" virt="non-virtual"><scope>kipr::motor::Motor</scope><name>forward</name></member>
+      <member refid="classkipr_1_1motor_1_1Motor_1a32a7e6f957875a1f8509c4155a4c79cd" prot="public" virt="non-virtual"><scope>kipr::motor::Motor</scope><name>freeze</name></member>
+      <member refid="classkipr_1_1motor_1_1Motor_1a80b581d95ef3783b3f4176d932ed2ec2" prot="public" virt="non-virtual"><scope>kipr::motor::Motor</scope><name>isMotorDone</name></member>
+      <member refid="classkipr_1_1motor_1_1Motor_1a3844a318316d4168bcd32b94d1d529d0" prot="private" virt="non-virtual"><scope>kipr::motor::Motor</scope><name>m_port</name></member>
+      <member refid="classkipr_1_1motor_1_1Motor_1a18685ec996c646e881d44b56c756111a" prot="public" virt="non-virtual"><scope>kipr::motor::Motor</scope><name>Motor</name></member>
+      <member refid="classkipr_1_1motor_1_1Motor_1a0a799c4cf7dff5ca53e8317fb8d3ff72" prot="public" virt="non-virtual"><scope>kipr::motor::Motor</scope><name>motor</name></member>
+      <member refid="classkipr_1_1motor_1_1Motor_1acb2e3785fdbf7b50857f65b16d06f6d4" prot="public" virt="non-virtual"><scope>kipr::motor::Motor</scope><name>motorPower</name></member>
+      <member refid="classkipr_1_1motor_1_1Motor_1acb479b07528e755bcacf78509b7388c0" prot="public" virt="non-virtual"><scope>kipr::motor::Motor</scope><name>moveAtVelocity</name></member>
+      <member refid="classkipr_1_1motor_1_1Motor_1a41ff4456f5fff373f35da0bc5857c518" prot="public" virt="non-virtual"><scope>kipr::motor::Motor</scope><name>moveRelativePosition</name></member>
+      <member refid="classkipr_1_1motor_1_1Motor_1ad5743532f303261eddba2981c61bc679" prot="public" virt="non-virtual"><scope>kipr::motor::Motor</scope><name>moveToPosition</name></member>
+      <member refid="classkipr_1_1motor_1_1Motor_1afa7c31efb374ac08b3dd7097ae82e2be" prot="public" virt="non-virtual"><scope>kipr::motor::Motor</scope><name>off</name></member>
+      <member refid="classkipr_1_1motor_1_1Motor_1a411b3fbb39e0a7e25e355e213616211e" prot="public" virt="non-virtual"><scope>kipr::motor::Motor</scope><name>pidGains</name></member>
+      <member refid="classkipr_1_1motor_1_1Motor_1a162aa66d2994a6e83e96b794d2e8b623" prot="public" virt="non-virtual"><scope>kipr::motor::Motor</scope><name>port</name></member>
+      <member refid="classkipr_1_1motor_1_1Motor_1adc673d5343e29c1796aa1376ee875cc0" prot="public" virt="non-virtual"><scope>kipr::motor::Motor</scope><name>setPidGains</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

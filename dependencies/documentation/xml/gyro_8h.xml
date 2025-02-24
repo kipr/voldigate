@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="gyro_8h" kind="file" language="C++">
+    <compoundname>gyro.h</compoundname>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="group__gyro_1ga82db7c0ae49b907ee928cd0c187260f5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>signed short</type>
+        <definition>signed short gyro_x</definition>
+        <argsstring>()</argsstring>
+        <name>gyro_x</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the sensed x rotation <simplesect kind="return"><para>The latest signed x rotation value</para>
+</simplesect>
+Wallaby: +/- 250 degree/sec range, 1024 per 250 degrees</para>
+<para>Wombat: +/- 250 degree/sec range, 512 per 250 degrees </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/gyro/public/kipr/gyro/gyro.h" line="21" column="14" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/gyro/public/kipr/gyro/gyro.h" declline="21" declcolumn="14"/>
+      </memberdef>
+      <memberdef kind="function" id="group__gyro_1gaf030d5700d20d3def7857762936ed29e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>signed short</type>
+        <definition>signed short gyro_y</definition>
+        <argsstring>()</argsstring>
+        <name>gyro_y</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the sensed y rotation <simplesect kind="return"><para>The latest signed y rotation value</para>
+</simplesect>
+Wallaby: +/- 250 degree/sec range, 1024 per 250 degrees</para>
+<para>Wombat: +/- 250 degree/sec range, 512 per 250 degrees </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/gyro/public/kipr/gyro/gyro.h" line="30" column="14" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/gyro/public/kipr/gyro/gyro.h" declline="30" declcolumn="14"/>
+      </memberdef>
+      <memberdef kind="function" id="group__gyro_1ga5f23dcb4b7c0bc4c0cae7749e96c67d1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>signed short</type>
+        <definition>signed short gyro_z</definition>
+        <argsstring>()</argsstring>
+        <name>gyro_z</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets the sensed z rotation <simplesect kind="return"><para>The latest signed z rotation value</para>
+</simplesect>
+Wallaby: +/- 250 degree/sec range, 1024 per 250 degrees</para>
+<para>Wombat: +/- 250 degree/sec range, 512 per 250 degrees </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/gyro/public/kipr/gyro/gyro.h" line="39" column="14" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/gyro/public/kipr/gyro/gyro.h" declline="39" declcolumn="14"/>
+      </memberdef>
+      <memberdef kind="function" id="group__gyro_1ga0efcdfbafe6312deb924c1d9b37b6dd6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int gyro_calibrate</definition>
+        <argsstring>()</argsstring>
+        <name>gyro_calibrate</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Calibrates gyroscope</para>
+<para>Sets a low-pass filter. Put at beginning of your program or before you use gyroscope commands if you want calibrated output. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/gyro/public/kipr/gyro/gyro.h" line="46" column="5" declfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/gyro/public/kipr/gyro/gyro.h" declline="46" declcolumn="5"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><simplesect kind="copyright"><para>KISS Institute for Practical Robotics </para>
+</simplesect>
+</para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_KIPR_GYRO_GYRO_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_KIPR_GYRO_GYRO_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="21" refid="group__gyro_1ga82db7c0ae49b907ee928cd0c187260f5" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">signed</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="group__gyro_1ga82db7c0ae49b907ee928cd0c187260f5" kindref="member">gyro_x</ref>();</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30" refid="group__gyro_1gaf030d5700d20d3def7857762936ed29e" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">signed</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="group__gyro_1gaf030d5700d20d3def7857762936ed29e" kindref="member">gyro_y</ref>();</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39" refid="group__gyro_1ga5f23dcb4b7c0bc4c0cae7749e96c67d1" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">signed</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="group__gyro_1ga5f23dcb4b7c0bc4c0cae7749e96c67d1" kindref="member">gyro_z</ref>();</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46" refid="group__gyro_1ga0efcdfbafe6312deb924c1d9b37b6dd6" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__gyro_1ga0efcdfbafe6312deb924c1d9b37b6dd6" kindref="member">gyro_calibrate</ref>();</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/gyro/public/kipr/gyro/gyro.h"/>
+  </compounddef>
+</doxygen>

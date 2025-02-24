@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="group__button_button" kind="page">
+    <compoundname>button</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>The functions here allow for interfacing with the digital buttons on the wombat&apos;s screen. When you run a program using the controller&apos;s interface, there are buttons that can be pressed. These are the buttons that these functions relate to. </para>
+    </detaileddescription>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/button/public/kipr/button/button.h"/>
+  </compounddef>
+</doxygen>

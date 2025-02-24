@@ -5,6 +5,7 @@ import LoginPage from './LoginPage';
 
 import { Provider as StyletronProvider } from "styletron-react";
 import { Client as Styletron } from "styletron-engine-atomic";
+import Dashboard from '../pages/Dashboard';
 
 const reactRoot = document.getElementById('reactRoot');
 
@@ -12,7 +13,7 @@ const engine = new Styletron({ prefix: 'style' });
 
 ReactDom.render(
   <StyletronProvider value={engine} debugAfterHydration>
-    <LoginPage theme={DARK} />
+    <Dashboard history={undefined} location={undefined} match={undefined} theme={DARK}/>
   </StyletronProvider>,
   reactRoot
 );

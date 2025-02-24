@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classkipr_1_1sensor_1_1logic_1_1Or" kind="class" language="C++" prot="public">
+    <compoundname>kipr::sensor::logic::Or</compoundname>
+    <basecompoundref refid="classkipr_1_1sensor_1_1logic_1_1Base" prot="public" virt="non-virtual">kipr::sensor::logic::Base</basecompoundref>
+    <includes refid="logic_8hpp" local="no">logic.hpp</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classkipr_1_1sensor_1_1logic_1_1Or_1a94eb56dbc145c66018f96eed9fa59d42" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>kipr::sensor::logic::Or::Or</definition>
+        <argsstring>(const Sensor&lt; bool &gt; *a, const Sensor&lt; bool &gt; *b, bool owns=false)</argsstring>
+        <name>Or</name>
+        <param>
+          <type>const <ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">Sensor</ref>&lt; bool &gt; *</type>
+          <declname>a</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classkipr_1_1sensor_1_1Sensor" kindref="compound">Sensor</ref>&lt; bool &gt; *</type>
+          <declname>b</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>owns</declname>
+          <defval>false</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/sensor/public/kipr/sensor/logic.hpp" line="38" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="classkipr_1_1sensor_1_1logic_1_1Or_1a89d77eecfac650b7b66d1d8857f93aed" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+        <type>bool</type>
+        <definition>virtual bool kipr::sensor::logic::Or::value</definition>
+        <argsstring>() const</argsstring>
+        <name>value</name>
+        <reimplements refid="classkipr_1_1sensor_1_1Sensor_1a6ccd0837f3e12090bed823f841d3e318">value</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/sensor/public/kipr/sensor/logic.hpp" line="39" column="22"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>kipr::sensor::logic::Base</label>
+        <link refid="classkipr_1_1sensor_1_1logic_1_1Base"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>kipr::sensor::Sensor&lt; bool &gt;</label>
+        <link refid="classkipr_1_1sensor_1_1Sensor"/>
+      </node>
+      <node id="1">
+        <label>kipr::sensor::logic::Or</label>
+        <link refid="classkipr_1_1sensor_1_1logic_1_1Or"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>kipr::sensor::logic::Base</label>
+        <link refid="classkipr_1_1sensor_1_1logic_1_1Base"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>kipr::sensor::Sensor&lt; bool &gt;</label>
+        <link refid="classkipr_1_1sensor_1_1Sensor"/>
+      </node>
+      <node id="1">
+        <label>kipr::sensor::logic::Or</label>
+        <link refid="classkipr_1_1sensor_1_1logic_1_1Or"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/sensor/public/kipr/sensor/logic.hpp" line="35" column="7" bodyfile="/home/erin/Desktop/qt6Upgrade/voldigate/dependencies/libwallaby/module/sensor/public/kipr/sensor/logic.hpp" bodystart="36" bodyend="40"/>
+    <listofallmembers>
+      <member refid="classkipr_1_1sensor_1_1logic_1_1Base_1a7fd896a29df08f20644219ee74ab7a74" prot="public" virt="non-virtual"><scope>kipr::sensor::logic::Or</scope><name>a</name></member>
+      <member refid="classkipr_1_1sensor_1_1logic_1_1Base_1abb632f8d7609c9602edcbe10fdb398f2" prot="public" virt="non-virtual"><scope>kipr::sensor::logic::Or</scope><name>b</name></member>
+      <member refid="classkipr_1_1sensor_1_1logic_1_1Base_1a548e5ee539641e77da36006126143653" prot="public" virt="non-virtual"><scope>kipr::sensor::logic::Or</scope><name>Base</name></member>
+      <member refid="classkipr_1_1sensor_1_1logic_1_1Or_1a94eb56dbc145c66018f96eed9fa59d42" prot="public" virt="non-virtual"><scope>kipr::sensor::logic::Or</scope><name>Or</name></member>
+      <member refid="classkipr_1_1sensor_1_1logic_1_1Base_1a37b8870bb7d84ed44788ba297826ad0e" prot="public" virt="non-virtual"><scope>kipr::sensor::logic::Or</scope><name>owns</name></member>
+      <member refid="classkipr_1_1sensor_1_1logic_1_1Or_1a89d77eecfac650b7b66d1d8857f93aed" prot="public" virt="virtual"><scope>kipr::sensor::logic::Or</scope><name>value</name></member>
+      <member refid="classkipr_1_1sensor_1_1logic_1_1Base_1aa77a1e19124fef7a5c69ca78513dc4eb" prot="public" virt="non-virtual"><scope>kipr::sensor::logic::Or</scope><name>~Base</name></member>
+      <member refid="classkipr_1_1sensor_1_1Sensor_1a7a2997c6ede6b25603032f2b110e8cb5" prot="public" virt="virtual"><scope>kipr::sensor::logic::Or</scope><name>~Sensor</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

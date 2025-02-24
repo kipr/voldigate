@@ -1,27 +1,77 @@
 import * as React from 'react';
-
+import SettingsDialog from './SettingsDialog';
+import LocalizedString from '../util/LocalizedString';
+import ProgrammingLanguage from 'ProgrammingLanguage';
+import Root from './Root';
 import { styled } from 'styletron-react';
 import { StyleProps } from '../style';
-import { Spacer } from './common';
 import { Fa } from './Fa';
-import { DARK, ThemeProps } from './theme';
-
-import {faCog, faFolderTree } from '@fortawesome/free-solid-svg-icons';
-
+import { DARK, ThemeProps, LIGHT, Theme } from './theme';
+import { faCog, faFolderTree } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { DEFAULT_SETTINGS, Settings } from '../Settings';
-import SettingsDialog from './SettingsDialog';
 import { State as ReduxState } from '../state';
 import { Modal } from '../pages/Modal';
-
-import LocalizedString from '../util/LocalizedString';
-
 import { Size } from './Widget';
+import { FileExplorer } from './FileExplorer';
+import { Slider } from './Slider';
+
 
 export interface LeftBarPublicProps extends StyleProps, ThemeProps {
+  propedAddProjectFlag: boolean;
+  propedAddFileFlag: boolean;
+  propedUserDeleteFlag: boolean;
+  propedReloadFilesFlag: boolean;
+  propedSelectedProjectName: string;
+  propedUsers: string[];
+  propedUserData: Project[];
+  propedOnProjectSelected: (userName: string, projectName: string, fileName: string, activeLanguage: ProgrammingLanguage, fileType: string) => void;
+  propedOnFileSelected: (userName: string, projectName: string, fileName: string, language: ProgrammingLanguage, fileType: string) => void;
+  propedOnUserSelected: (userName: string, loadUserData: boolean) => void;
+  propedOnAddNewProject: (userName: string) => void;
+  propedOnAddNewFile: (userName: string, projectName: string, activeLanguage: ProgrammingLanguage, fileType: string) => void;
+  propedOnDeleteUser: (userName: string, deleteUserFlag: boolean) => void;
+  propedOnDeleteProject: (userName: string, projectName: Project, deleteProjectFlag: boolean) => void;
+  propedOnDeleteFile: (userName: string, projectName: string, fileName: string, deleteFileFlag: boolean) => void;
+  propedOnDownloadUser: (userName: string) => void;
+  propedOnDownloadProject: (userName: string, project: Project) => void;
+  propedOnDownloadFile: (userName: string, projectName: string, fileName: string) => void;
 
-  onToggle: () => void;
- }
+  rootSelectedProject: string;
+  rootFileName: string;
+  rootProjectName: string;
+  rootUserName: string;
+  rootContextMenuUser: string;
+  rootContextMenuFile: string;
+  rootOtherFileType: string;
+  rootIsLeftBarOpen: boolean;
+  rootAddNewProject: boolean;
+  rootAddNewFile: boolean;
+  rootClickFile: boolean;
+  rootLoadUserDataFlag: boolean;
+  rootDeleteUserFlag: boolean;
+  rootDeleteProjectFlag: boolean;
+  rootDeleteFileFlag: boolean;
+  rootDownloadUserFlag: boolean;
+  rootDownloadProjectFlag: boolean;
+  rootDownloadFileFlag: boolean;
+  rootActiveLanguage: ProgrammingLanguage;
+  rootContextMenuProject: Project;
+  rootSetAddNewProject: (addNewProject: boolean) => void;
+  rootSetAddNewFile: (addNewFile: boolean) => void;
+  rootSetClickFile: (clickFile: boolean) => void;
+  rootSetFileName_: (fileName: string) => void;
+  rootChangeProjectName: (projectName: string) => void;
+  rootOnUserUpdate: (users: string[]) => void;
+  rootOnLoadUserData: (project: Project[]) => void;
+  rootSetDeleteUserFlag: (deleteUserFlag: boolean) => void;
+  rootSetDeleteProjectFlag: (deleteProjectFlag: boolean) => void;
+  rootSetDeleteFileFlag: (deleteFileFlag: boolean) => void;
+  rootSetDownloadUserFlag: (downloadUserFlag: boolean) => void;
+  rootSetDownloadProjectFlag: (downloadProjectFlag: boolean) => void;
+  rootSetDownloadFileFlag: (downloadFileFlag: boolean) => void;
+  onThemeChange: (theme: Theme) => void;
+}
 
 interface LeftBarPrivateProps {
   locale: LocalizedString.Language;
@@ -32,37 +82,36 @@ interface LeftBarState {
   settings: Settings;
   activePanel: number;
   sidePanelSize: Size.Type;
+  sliderSizes: [number, number];
+  isPanelVisible: boolean;
+  storedTheme: Theme;
 
+}
+type Project = {
+  projectName: string;
+  binFolderFiles: string[];
+  includeFolderFiles: string[];
+  srcFolderFiles: string[];
+  dataFolderFiles: string[];
+  projectLanguage: ProgrammingLanguage;
 }
 
 type Props = LeftBarPublicProps & LeftBarPrivateProps;
 type State = LeftBarState;
-const sizeDict = (sizes: Size[]) => {
-  const forward: { [type: number]: number } = {};
 
-  for (let i = 0; i < sizes.length; ++i) {
-    const size = sizes[i];
-    forward[size.type] = i;
-  }
-
-  return forward;
-};
-const SIDEBAR_SIZES: Size[] = [Size.MINIMIZED, Size.PARTIAL_RIGHT, Size.MAXIMIZED];
-const SIDEBAR_SIZE = sizeDict(SIDEBAR_SIZES);
 const Container = styled('div', (props: ThemeProps) => ({
   backgroundColor: props.theme.backgroundColor,
   color: props.theme.color,
-  width: '3%',
-  height: '100%',
+  height: '100vh',
+  overflow: 'hidden',
   lineHeight: '28px',
   display: 'flex',
-  alignContent: 'center',
+  flexDirection: 'row',
+  alignItems: 'flex-start',
 
-  flexDirection: 'column',
-  borderRight: `1px solid ${props.theme.borderColor}`,
-  zIndex: 1,
-
-
+  zIndex: 0,
+  width: '100vw',
+  flexGrow: 1,
 }));
 
 interface ClickProps {
@@ -86,7 +135,7 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
   fontWeight: 400,
   ':hover': props.onClick && !props.disabled ? {
     cursor: 'pointer',
-    backgroundColor: `rgba(255, 255, 255, 0.1)`
+    backgroundColor: props.theme.hoverOptionBackground
   } : {},
   userSelect: 'none',
   transition: 'background-color 0.2s, opacity 0.2s'
@@ -97,11 +146,31 @@ const ItemIcon = styled(Fa, {
   alignItems: 'center',
   height: '30px'
 });
+const LeftBarContainer = styled('div', (props: ThemeProps & ClickProps) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  width: '50px',
+  height: '100vh',
+  flexShrink: 0,
+  justifyContent: 'space-between',
+  backgroundColor: props.theme.leftBarContainerBackground,
+  borderRight: `2px solid ${props.theme.borderColor}`,
+  boxShadow: `5px 0 6px ${props.theme.borderColor}`,
+}));
 
-const SideBarMinimizedTab = -1;
+const FileExplorerContainer = styled('div', (props: ThemeProps & ClickProps) => ({
+  flex: '1 1 0',
+  display: 'flex',
+  flexDirection: 'column',
+  overflow: 'visible',
+  height: '100%',
+  backgroundColor: props.theme.fileContainerBackground,
+  borderRight: `2px solid ${props.theme.borderColor}`,
+}));
 
 export class LeftBar extends React.Component<Props, State> {
 
+  private selectedFileRef: React.MutableRefObject<string>;
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -109,63 +178,263 @@ export class LeftBar extends React.Component<Props, State> {
       settings: DEFAULT_SETTINGS,
       activePanel: 0,
       sidePanelSize: Size.Type.Minimized,
+      sliderSizes: [4, 9],
+      isPanelVisible: false,
+      storedTheme: localStorage.getItem('ideEditorDarkMode') === 'true' ? DARK : LIGHT
 
     }
+    this.selectedFileRef = React.createRef();
   }
 
+  async componentDidUpdate(prevProps: Props, prevState: State) {
+    if (this.state.settings !== prevState.settings) {
+      if (this.state.settings.ideEditorDarkMode) {
+        this.setState({ storedTheme: DARK });
+        this.props.onThemeChange(DARK);
+      }
+      else {
+        this.setState({ storedTheme: LIGHT });
+        this.props.onThemeChange(LIGHT);
+      }
+    }
+
+  }
+
+  /**
+   * Settings change handler
+   * @param changedSettings - Partial<Settings> - The settings that have been changed
+   */
   private onSettingsChange_ = (changedSettings: Partial<Settings>) => {
     const nextSettings: Settings = {
       ...this.state.settings,
       ...changedSettings
     }
-
+    this.props.onThemeChange(nextSettings.ideEditorDarkMode ? DARK : LIGHT);
     this.setState({ settings: nextSettings });
   };
 
   private onModalClick_ = (modal: Modal) => () => this.setState({ modal });
   private onModalClose_ = () => this.setState({ modal: Modal.NONE });
 
+  /**
+   * Toggle the visibility of the leftbar
+   */
+  private togglePanelVisibility = () => {
+    this.setState((prevState) => {
+      const newIsPanelVisible = !prevState.isPanelVisible;
+      return {
+        isPanelVisible: newIsPanelVisible,
+      };
+    });
 
+  };
+
+  private setSelectedFileRef_ = (fileName: string) => {
+    this.selectedFileRef.current = fileName;
+  };
 
   render() {
-    const { className, style, locale,  } = this.props;
-    const theme = DARK;
+    const { className, theme } = this.props;
+
+    const {
+      propedSelectedProjectName,
+      propedOnProjectSelected,
+      propedOnFileSelected,
+      propedOnUserSelected,
+      propedOnAddNewProject,
+      propedOnAddNewFile,
+      propedOnDeleteUser,
+      propedOnDeleteProject,
+      propedOnDeleteFile,
+      propedOnDownloadUser,
+      propedOnDownloadProject,
+      propedOnDownloadFile,
+      propedAddProjectFlag,
+      propedAddFileFlag,
+      propedUserDeleteFlag,
+      propedReloadFilesFlag,
+      propedUsers,
+      propedUserData,
+
+      rootSelectedProject,
+      rootIsLeftBarOpen,
+      rootFileName,
+      rootProjectName,
+      rootActiveLanguage,
+      rootUserName,
+      rootContextMenuUser,
+      rootContextMenuProject,
+      rootContextMenuFile,
+      rootAddNewProject,
+      rootAddNewFile,
+      rootClickFile,
+      rootOtherFileType,
+      rootSetAddNewProject,
+      rootSetAddNewFile,
+      rootSetClickFile,
+      rootSetFileName_,
+      rootChangeProjectName,
+      rootOnUserUpdate,
+      rootLoadUserDataFlag,
+      rootOnLoadUserData,
+      rootDeleteUserFlag,
+      rootDeleteProjectFlag,
+      rootDeleteFileFlag,
+      rootDownloadUserFlag,
+      rootDownloadProjectFlag,
+      rootDownloadFileFlag,
+      rootSetDeleteUserFlag,
+      rootSetDeleteProjectFlag,
+      rootSetDeleteFileFlag,
+      rootSetDownloadUserFlag,
+      rootSetDownloadProjectFlag,
+      rootSetDownloadFileFlag
+
+
+
+    } = this.props;
     const {
       settings,
       modal,
-      activePanel,
-      sidePanelSize,
+      sliderSizes,
+      isPanelVisible,
+      storedTheme
 
     } = this.state;
 
+    let rootContent: JSX.Element;
+    rootContent = (
+      <div style={{ height: '80%', flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+        <Root
+          key={rootSelectedProject}
+          isLeftBarOpen={rootIsLeftBarOpen}
+          history={undefined}
+          location={undefined}
+          match={undefined}
+          propedTheme={storedTheme}
+          propFileName={rootFileName}
+          propProjectName={rootProjectName}
+          propActiveLanguage={rootActiveLanguage}
+          propUserName={rootUserName}
+          propContextMenuUser={rootContextMenuUser}
+          propContextMenuProject={rootContextMenuProject}
+          propContextMenuFile={rootContextMenuFile}
 
-    const handleToggle = () => {
-      console.log("LeftBar clicked, triggering toggle");
-      if (this.props.onToggle) {
-        this.props.onToggle(); // Call the passed `onToggle` prop
-      }
-    };
-    
+          addNewProject={rootAddNewProject}
+          addNewFile={rootAddNewFile}
+          clickFile={rootClickFile}
+          otherFileType={rootOtherFileType}
+          setAddNewProject={rootSetAddNewProject}
+          setAddNewFile={rootSetAddNewFile}
+          setClickFile={rootSetClickFile}
+          setFileName_={rootSetFileName_}
+          changeProjectName={rootChangeProjectName}
+          onUserUpdate={rootOnUserUpdate}
+          loadUserDataFlag={rootLoadUserDataFlag}
+          onLoadUserData={rootOnLoadUserData}
 
+
+          deleteUserFlag={rootDeleteUserFlag}
+          deleteProjectFlag={rootDeleteProjectFlag}
+          deleteFileFlag={rootDeleteFileFlag}
+
+          downloadUserFlag={rootDownloadUserFlag}
+          downloadProjectFlag={rootDownloadProjectFlag}
+          downloadFileFlag={rootDownloadFileFlag}
+
+          resetDeleteUserFlag={rootSetDeleteUserFlag}
+          resetDeleteProjectFlag={rootSetDeleteProjectFlag}
+          resetDeleteFileFlag={rootSetDeleteFileFlag}
+
+          resetDownloadUserFlag={rootSetDownloadUserFlag}
+          resetDownloadProjectFlag={rootSetDownloadProjectFlag}
+          resetDownloadFileFlag={rootSetDownloadFileFlag}
+
+          resetFileExplorerFileSelection={this.setSelectedFileRef_}
+        />
+      </div>
+    )
+
+    let fileExplorerContent: JSX.Element;
+
+    fileExplorerContent = (
+      <FileExplorerContainer theme={storedTheme}>
+        <FileExplorer
+          theme={storedTheme}
+          locale="en-US"
+          propsSelectedProjectName={propedSelectedProjectName}
+          onProjectSelected={propedOnProjectSelected}
+          onFileSelected={propedOnFileSelected}
+          onUserSelected={propedOnUserSelected}
+          onAddNewProject={propedOnAddNewProject}
+          onAddNewFile={propedOnAddNewFile}
+          onDeleteUser={propedOnDeleteUser}
+          onDeleteProject={propedOnDeleteProject}
+          onDeleteFile={propedOnDeleteFile}
+          onDownloadUser={propedOnDownloadUser}
+          onDownloadProject={propedOnDownloadProject}
+          onDownloadFile={propedOnDownloadFile}
+          addProjectFlag={propedAddProjectFlag}
+          addFileFlag={propedAddFileFlag}
+          userDeleteFlag={propedUserDeleteFlag}
+          reloadFilesFlag={propedReloadFilesFlag}
+          propUsers={propedUsers}
+          propUserData={propedUserData}
+          propFileName={this.selectedFileRef.current}
+
+          style={{
+            flex: 1,
+            width: `${sliderSizes[0] * 100}%`,
+            height: '100%',
+
+            zIndex: 1,
+          }}
+
+        />
+
+
+      </FileExplorerContainer>
+    );
 
     return (
-      <>
-        <Container className={className} style={style} theme={theme}>
-          <Item theme={theme} onClick={handleToggle}><ItemIcon icon={faFolderTree} /> </Item>
 
-          <Spacer style={{ marginBottom: '200px', borderBottom: `1px solid ${theme.borderColor}` }} />
-          <Item style={{ marginBottom: '10px' }} theme={theme} onClick={this.onModalClick_(Modal.SETTINGS)}><ItemIcon icon={faCog} /> </Item>
-        </Container>
+      <Container className={className} theme={storedTheme}>
+
+        <LeftBarContainer theme={storedTheme} >
+          <Item theme={storedTheme} onClick={this.togglePanelVisibility}>
+            <ItemIcon icon={faFolderTree} />
+          </Item>
+
+          <Item style={{ marginBottom: '50px', marginTop: 'auto' }} theme={storedTheme} onClick={this.onModalClick_(Modal.SETTINGS)}>
+            <ItemIcon icon={faCog} />
+          </Item>
+
+
+        </LeftBarContainer>
+        <Slider
+          isVertical={true}
+          theme={storedTheme}
+          minSizes={[50, 0]}
+          sizes={this.state.sliderSizes}
+          visible={[isPanelVisible, true]}
+
+        >
+          {fileExplorerContent}
+          {rootContent}
+        </Slider>
+
         {modal.type === Modal.Type.Settings && (
           <SettingsDialog
-            theme={theme}
+            theme={storedTheme}
             settings={settings}
             onSettingsChange={this.onSettingsChange_}
             onClose={this.onModalClose_}
           />
         )}
 
-      </>
+
+      </Container >
+
     );
   }
 }
