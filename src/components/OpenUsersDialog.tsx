@@ -13,15 +13,16 @@ import { connect } from 'react-redux';
 import { State as ReduxState } from '../state';
 import { Settings } from '../Settings';
 import { Project } from '../types/projectTypes';
+import { User } from '../types/userTypes';
 
 export interface OpenUsersDialogPublicProps extends ThemeProps, StyleProps {
   projectLanguage: ProgrammingLanguage;
   settings: Settings;
   onClose: () => void;
-  onOpenUserProject: (name: string, projectName: string, fileName: string, projectLanguage: string) => void;
+  onOpenUserProject: (name: User, project: Project, fileName: string, projectLanguage: string) => void;
   onSettingsChange: (settings: Partial<Settings>) => void;
-  onLoadUsers: () => Promise<string[]>;
-  onLoadUserData: (openedUserDialog: boolean, desiredUser: string) => Promise<Project[]>;
+  onLoadUsers: () => Promise<User[]>;
+  onLoadUserData: (openedUserDialog: boolean, createdUserDialog: boolean, desiredUser: User) => Promise<Project[]>;
 }
 
 interface ClickProps {
@@ -36,12 +37,12 @@ interface OpenUsersDialogPrivateProps {
 
 interface OpenUsersDialogState {
   loading: boolean;
-  selectedSection: string;
+  selectedUser: User;
   projectName: string;
-  selectedProject: string | null;
+  selectedProject: Project | null;
   error: string | null;
   activeLanguage: ProgrammingLanguage;
-  users: string[];
+  users: User[];
   projects: Project[] | null;
 }
 
@@ -163,7 +164,7 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      selectedSection: 'Default User',
+      selectedUser: null,
       users: [],
       projects: null,
       loading: true,
@@ -175,22 +176,31 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
     };
   };
 
-  private setSelectedSection = (selectedSection: string) => {
-    this.setState({ selectedSection }, this.getProjects);
-    this.setState({ selectedProject: null });
+  private setSelectedUser = (selectedUser: User) => {
+    this.setState({
+       selectedUser,
+       selectedProject: {
+        projectName: '',
+        projectLanguage: 'c',
+        includeFolderFiles: [],
+        srcFolderFiles: [],
+        dataFolderFiles: [],
+       }
+       }, this.getProjects);
+
   };
 
-  private handleProjectClick = async (projectId: string) => {
+  private handleProjectClick = async (project: Project) => {
     this.setState({
-      selectedProject: projectId,
-      projectName: projectId,
-      activeLanguage: this.state.projects!.find(project => project.projectName === projectId)!.projectLanguage
+      selectedProject: project,
+      projectName: project.projectName,
+      activeLanguage: this.state.projects!.find(project => project.projectName === project.projectName)!.projectLanguage
     });
   };
 
   private getProjects = async () => {
     this.setState({
-      projects: await this.props.onLoadUserData(true, this.state.selectedSection),
+      projects: await this.props.onLoadUserData(true, false, this.state.selectedUser),
       loading: false,
     })
   };
@@ -226,22 +236,22 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
 
     return (
       <div>
-        <ProjectTitle>Projects for {this.state.selectedSection}</ProjectTitle>
+        <ProjectTitle>Projects for {this.state.selectedUser.userName}</ProjectTitle>
         <ul>
           {projects.map((project) => (
             <ProjectItem
               key={project.projectName}
-              selected={selectedProject === project.projectName}
-              onClick={() => this.handleProjectClick(project.projectName)}
+              selected={selectedProject.projectName === project.projectName}
+              onClick={() => this.handleProjectClick(project)}
               theme={this.props.theme}>
               {project.projectName}
             </ProjectItem>
           ))}
         </ul>
         {
-          selectedProject && (
+          (selectedProject.projectName != '')&& (
             <BottomButtonContainer>
-              <OpenProjectButton onClick={() => this.props.onOpenUserProject(this.state.selectedSection, this.state.selectedProject, `main.${ProgrammingLanguage.FILE_EXTENSION[this.state.activeLanguage]}`, this.state.activeLanguage)} theme={theme}>
+              <OpenProjectButton onClick={() => this.props.onOpenUserProject(this.state.selectedUser, this.state.selectedProject, `main.${ProgrammingLanguage.FILE_EXTENSION[this.state.activeLanguage]}`, this.state.activeLanguage)} theme={theme}>
                 Open Project
               </OpenProjectButton>
             </BottomButtonContainer>
@@ -254,7 +264,7 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
   render() {
     const { props, state } = this;
     const { style, className, theme, onClose, locale } = props;
-    const { selectedSection, users } = state;
+    const { selectedUser, users } = state;
 
     let logo: JSX.Element;
 
@@ -271,12 +281,12 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
 
     const userSections = users.map((user) => (
       <SectionName
-        key={user}
+        key={user.userName}
         theme={theme}
-        selected={selectedSection === user}
-        onClick={() => this.setSelectedSection(user)}
+        selected={selectedUser === user}
+        onClick={() => this.setSelectedUser(user)}
       >
-        {LocalizedString.lookup(tr(user), locale)}
+        {LocalizedString.lookup(tr(user.userName), locale)}
       </SectionName>
     ));
 

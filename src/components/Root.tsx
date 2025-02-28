@@ -26,6 +26,8 @@ import { connect } from 'react-redux';
 import { HomeStartOptions } from './HomeStartOptions';
 import { Modal } from '../pages/Modal';
 import { Project } from '../types/projectTypes';
+import { InterfaceMode } from '../types/interfaceModes';
+import { User } from '../types/userTypes';
 
 interface RootParams {
   sceneId?: string;
@@ -34,10 +36,10 @@ interface RootParams {
 
 export interface RootPublicProps extends RouteComponentProps<RootParams> {
   propFileName: string;
-  propProjectName: string;
+  propProject: Project;
   otherFileType?: string;
-  propUserName: string;
-  propContextMenuUser?: string;
+  propUser: User;
+  propContextMenuUser?: User;
   propContextMenuFile?: string;
   loadUserDataFlag: boolean;
   addNewProject: boolean;
@@ -50,6 +52,7 @@ export interface RootPublicProps extends RouteComponentProps<RootParams> {
   downloadProjectFlag?: boolean;
   deleteFileFlag?: boolean;
   downloadFileFlag?: boolean;
+  reloadUserFlag?: boolean;
   propActiveLanguage: ProgrammingLanguage;
   propContextMenuProject?: Project;
   propedTheme: Theme;
@@ -58,7 +61,7 @@ export interface RootPublicProps extends RouteComponentProps<RootParams> {
   setAddNewFile: (addNewFile: boolean) => void;
   setClickFile: (clickFile: boolean) => void;
   setFileName_: (fileName: string) => void;
-  onUserUpdate: (users: {}) => void;
+  onUserUpdate: (users: User[]) => void;
   onLoadUserData: (userData: Project[]) => void;
   resetDeleteUserFlag: (deleteUserFlag: boolean) => void;
   resetDeleteProjectFlag: (deleteProjectFlag: boolean) => void;
@@ -83,6 +86,9 @@ interface RootPrivateProps {
 }
 
 interface RootState {
+
+  rootUser: User;
+  rootProject: Project,
 
   toDeleteName_?: string;
   toDeleteType_?: string;
@@ -126,8 +132,8 @@ interface RootState {
   includeFiles: [];
   srcFiles: [];
   userDataFiles: [];
-  projects: [] | null;
-  users: string[];
+  projects: Project[] | null;
+  users: User[];
   messages: Message[];
 }
 
@@ -171,6 +177,18 @@ class Root extends React.Component<Props, State> {
     super(props);
 
     this.state = {
+      rootUser: {
+        userName: '',
+        interfaceMode: InterfaceMode.SIMPLE,
+        projects: []
+      },
+      rootProject: {
+        projectName: '',
+        includeFolderFiles: [],
+        srcFolderFiles: [],
+        dataFolderFiles: [],
+        projectLanguage: 'c'
+      },
       layout: Layout.Side,
       activeLanguage: 'c',
       code: {
@@ -192,12 +210,12 @@ class Root extends React.Component<Props, State> {
       isCreateNewUserDialogVisible: false,
       isOpenUserProject: false,
       isSaveCodePromptVisible: false,
+      clickFileState: false,
       projectName: '',
       fileName: '',
       userName: '',
       addNewProject: this.props.addNewProject,
       addNewFile: this.props.addNewFile,
-      clickFileState: this.props.clickFile,
       includeFiles: [],
       srcFiles: [],
       userDataFiles: [],
@@ -218,10 +236,12 @@ class Root extends React.Component<Props, State> {
     window.addEventListener('resize', this.onWindowResize_);
     await this.loadUsers();
 
-    if (this.props.propUserName !== '' && this.props.propProjectName !== '' && this.props.propFileName !== '') {
+    if (this.props.propUser.userName !== '' && this.props.propProject.projectName !== '' && this.props.propFileName !== '') {
       this.setState({
-        userName: this.props.propUserName,
-        projectName: this.props.propProjectName,
+        rootUser: this.props.propUser,
+        rootProject: this.props.propProject,
+        userName: this.props.propUser.userName,
+        projectName: this.props.propProject.projectName,
         fileName: this.props.propFileName,
         activeLanguage: this.props.propActiveLanguage,
         isOpenUserProject: true,
@@ -235,11 +255,14 @@ class Root extends React.Component<Props, State> {
   shouldComponentUpdate(nextProps: Readonly<Props>, nextState: Readonly<RootState>, nextContext: any): boolean {
 
     if (this.state.saveCodePromptFlag == true) {
+      console.log("Root saveCodePromptFlag: ", this.state.saveCodePromptFlag);
+      console.log("Root saveCodePromptFlag this.props: ", this.props);
+      console.log("Root saveCodePromptFlag nextProps: ", nextProps);
 
       if (nextProps.propFileName === "") {
         return true;
       }
-      else if ((nextProps.propFileName !== this.props.propFileName)) {
+      else if ((nextProps.propFileName !== this.props.propFileName) || (nextProps.propProject !== this.props.propProject)) {
         this.saveFile_(nextProps.propFileName);
         return false;
       }
@@ -252,8 +275,23 @@ class Root extends React.Component<Props, State> {
     return true;
   }
 
+  componentWillUnmount(): void {
+    console.log("ROOT UNMOUNTED");
+  }
+
   componentDidUpdate = async (prevProps: Props, prevState: State) => {
 
+    console.log("Root compDidUpdate prevProps: ", prevProps);
+    console.log("Root compDidUpdate prevState: ", prevState);
+    console.log("Root compDidUpdate this.props: ", this.props);
+    console.log("Root compDidUpdate this.state: ", this.state);
+   
+    if(prevProps.reloadUserFlag !== this.props.reloadUserFlag && this.props.reloadUserFlag) {
+      console.log("Root compDidUpdate reloadUserFlag: ", this.props.reloadUserFlag);
+      this.props.onUserUpdate(await this.loadUsers());
+
+    }
+    
     if (prevProps.propedTheme.themeName !== this.props.propedTheme.themeName) {
       const rawText = StyledText.toString(this.state.editorConsole);
 
@@ -263,20 +301,27 @@ class Root extends React.Component<Props, State> {
       });
     }
 
+
     if (prevProps.addNewProject !== this.props.addNewProject) {
+      console.log("Root compDidUpdate addNewProject props.propUser: ", this.props.propUser);
       if (this.props.addNewProject) {
         this.setState({
-          userName: this.props.propUserName,
+          rootUser: this.props.propUser,
+          userName: this.props.propUser.userName,
           modal: Modal.CREATEPROJECT,
         });
       }
     }
 
     if (prevProps.loadUserDataFlag !== this.props.loadUserDataFlag) {
-      this.props.onLoadUserData(await this.loadUserProjects())
+      console.log("Root compdidUpdate loadUserDataFlag: ", this.props.loadUserDataFlag);
+      console.log("Root compDidUpdate loadUserDataFlag props.propUser: ", this.props.propUser);
+      this.props.onLoadUserData(await this.loadUserProjects(false, false, this.props.propUser));
     }
 
     if (prevProps.deleteUserFlag !== this.props.deleteUserFlag && this.props.deleteUserFlag) {
+      console.log("Root compDidUpdate deleteUser state: ", this.state);
+      console.log("Root compDidUpdate deleteUser props.propContextMenuUser: ", this.props.propContextMenuUser);
       this.deleteUser_();
     }
 
@@ -303,7 +348,7 @@ class Root extends React.Component<Props, State> {
     if (prevProps.addNewFile !== this.props.addNewFile) {
 
       if (this.props.addNewFile) {
-        const { propUserName, propProjectName } = this.props;
+        const { propUser, propProject } = this.props;
         switch (this.props.otherFileType) {
           case 'h':
             this.setState({
@@ -336,17 +381,21 @@ class Root extends React.Component<Props, State> {
         this.setState({
           isNewFileDialogVisible: true,
           modal: Modal.CREATEFILE,
-          userName: propUserName,
-          projectName: propProjectName,
+          rootUser: propUser,
+          rootProject: propProject,
+          userName: propUser.userName,
+          projectName: propProject.projectName,
         })
 
       }
     }
     if (((this.state.tempNewFile) && this.state.saveCodePromptFlag == false)) {
-
+      console.log("Root tempNewFile: ", this.state.tempNewFile, "with saveCodePromptFlag: ", this.state.saveCodePromptFlag);
       this.setState({
-        userName: this.props.propUserName,
-        projectName: this.props.propProjectName,
+        rootUser: this.props.propUser,
+        rootProject: this.props.propProject,
+        userName: this.props.propUser.userName,
+        projectName: this.props.propProject.projectName,
         otherFileType: this.props.otherFileType,
         fileName: this.state.tempNewFile,
         clickFileState: false,
@@ -369,73 +418,75 @@ class Root extends React.Component<Props, State> {
       this.props.setClickFile(false);
       this.clearTempName_();
     }
-    if ((prevProps.clickFile !== this.props.clickFile)) {
+   //console.log("Root clickFile: ", this.props.clickFile);
+    if ((this.props.clickFile && this.state.saveCodePromptFlag == false)) {
 
-      if ((this.props.clickFile)) {
-
-        const { propUserName, propProjectName, propActiveLanguage, propFileName, otherFileType } = this.props;
-
-        this.props.resetFileExplorerFileSelection(this.props.propFileName);
-        switch (otherFileType) {
-          case 'h':
-            const rootUpdateHeader = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUserName}/${propProjectName}/include/${propFileName}` } });
-            this.toSaveCodeRef.current = { ...this.toSaveCodeRef.current, [propActiveLanguage]: rootUpdateHeader.data };
-            this.setState({
-              code: {
-                ...this.state.code,
-                [propActiveLanguage]: rootUpdateHeader.data
-              }
-            });
-
-            break;
-          case 'c':
-          case 'cpp':
-          case 'py':
-            const rootUpdateCode = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUserName}/${propProjectName}/src/${propFileName}` } });
-            this.setState({
-              code: {
-                ...this.state.code,
-                [propActiveLanguage]: rootUpdateCode.data
-              }
-            });
-            this.toSaveCodeRef.current = { ...this.toSaveCodeRef.current, [propActiveLanguage]: rootUpdateCode.data };
-            break;
-          case 'txt':
-            const rootUpdateUserFiles = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUserName}/${propProjectName}/data/${propFileName}` } });
-            this.setState({
-              code: {
-                ...this.state.code,
-                [propActiveLanguage]: rootUpdateUserFiles.data
-              }
-            });
-            this.toSaveCodeRef.current = { ...this.toSaveCodeRef.current, [propActiveLanguage]: rootUpdateUserFiles.data };
-            break;
-        }
-
-        this.setState({
-          userName: this.props.propUserName,
-          projectName: this.props.propProjectName,
-          fileName: this.props.propFileName,
-          otherFileType: this.props.otherFileType,
-          clickFileState: false,
-          activeLanguage: this.props.propActiveLanguage,
-
-        });
-
-        if (this.state.isHomeStartOptionsVisible == true) {
+      const { propUser, propProject, propActiveLanguage, propFileName, otherFileType } = this.props;
+      console.log("Root clickFile passed in: ", propUser, propProject,"propActiveLanguage: ", propActiveLanguage,"propFileName: ",  propFileName, "otherFileType: ", otherFileType);
+      this.props.resetFileExplorerFileSelection(this.props.propFileName);
+      switch (otherFileType) {
+        case 'h':
+          const rootUpdateHeader = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUser.userName}/${propProject.projectName}/include/${propFileName}` } });
+          this.toSaveCodeRef.current = { ...this.toSaveCodeRef.current, [propActiveLanguage]: rootUpdateHeader.data };
           this.setState({
-            isHomeStartOptionsVisible: false
+            code: {
+              ...this.state.code,
+              [propActiveLanguage]: rootUpdateHeader.data
+            }
           });
-        }
 
-        if (this.state.isEditorPageVisible == false) {
+          break;
+        case 'c':
+        case 'cpp':
+        case 'py':
+          const rootUpdateCode = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUser.userName}/${propProject.projectName}/src/${propFileName}` } });
           this.setState({
-            isEditorPageVisible: true
+            code: {
+              ...this.state.code,
+              [propActiveLanguage]: rootUpdateCode.data
+            }
           });
-        }
-
-        this.props.setClickFile(false);
+          this.toSaveCodeRef.current = { ...this.toSaveCodeRef.current, [propActiveLanguage]: rootUpdateCode.data };
+          console.log("Root clickFile toSaveCodeRef: ", this.toSaveCodeRef.current);
+          break;
+        case 'txt':
+          const rootUpdateUserFiles = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUser.userName}/${propProject.projectName}/data/${propFileName}` } });
+          this.setState({
+            code: {
+              ...this.state.code,
+              [propActiveLanguage]: rootUpdateUserFiles.data
+            }
+          });
+          this.toSaveCodeRef.current = { ...this.toSaveCodeRef.current, [propActiveLanguage]: rootUpdateUserFiles.data };
+          break;
       }
+
+      this.setState({
+        rootUser: this.props.propUser,
+        rootProject: this.props.propProject,
+        userName: this.props.propUser.userName,
+        projectName: this.props.propProject.projectName,
+        fileName: this.props.propFileName,
+        otherFileType: this.props.otherFileType,
+        clickFileState: false,
+        activeLanguage: this.props.propActiveLanguage,
+
+      });
+
+      if (this.state.isHomeStartOptionsVisible == true) {
+        this.setState({
+          isHomeStartOptionsVisible: false
+        });
+      }
+
+      console.log("this.state.isEditorPageVisible: ", this.state.isEditorPageVisible);
+      if (this.state.isEditorPageVisible == false) {
+        this.setState({
+          isEditorPageVisible: true
+        });
+      }
+      console.log("Right before setClickFile false");
+      this.props.setClickFile(false);
     }
 
     this.prevPropsRef.current = this.props;
@@ -447,10 +498,10 @@ class Root extends React.Component<Props, State> {
    */
   private updateCode = async (tempNewFile: string) => {
 
-    const { propUserName, propProjectName, propActiveLanguage, otherFileType } = this.props;
+    const { propUser, propProject, propActiveLanguage, otherFileType } = this.props;
     switch (otherFileType) {
       case 'h':
-        const rootUpdateHeader = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUserName}/${propProjectName}/include/${tempNewFile}` } });
+        const rootUpdateHeader = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUser.userName}/${propProject.projectName}/include/${tempNewFile}` } });
         this.toSaveCodeRef.current = { ...this.toSaveCodeRef.current, [propActiveLanguage]: rootUpdateHeader.data };
         this.setState({
           code: {
@@ -463,7 +514,7 @@ class Root extends React.Component<Props, State> {
       case 'c':
       case 'cpp':
       case 'py':
-        const rootUpdateCode = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUserName}/${propProjectName}/src/${tempNewFile}` } });
+        const rootUpdateCode = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUser.userName}/${propProject.projectName}/src/${tempNewFile}` } });
         this.toSaveCodeRef.current = { ...this.toSaveCodeRef.current, [propActiveLanguage]: rootUpdateCode.data };
         this.setState({
           code: {
@@ -473,7 +524,7 @@ class Root extends React.Component<Props, State> {
         });
         break;
       case 'txt':
-        const rootUpdateUserFiles = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUserName}/${propProjectName}/data/${tempNewFile}` } });
+        const rootUpdateUserFiles = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUser.userName}/${propProject.projectName}/data/${tempNewFile}` } });
         this.toSaveCodeRef.current = { ...this.toSaveCodeRef.current, [propActiveLanguage]: rootUpdateUserFiles.data };
         this.setState({
           code: {
@@ -485,20 +536,36 @@ class Root extends React.Component<Props, State> {
     }
   }
 
-  private loadUsers = async (): Promise<string[]> => {
-
+  private loadUsers = async (): Promise<User[]> => {
+    console.log("Root loadUsers state: ", this.state);
+    console.log("Root loadUsers props: ", this.props);
+    console.log("Root prev props: ", this.prevPropsRef.current);
     try {
-      const getUserResponse = await axios.get('/get-users', { params: { filePath: "/home/kipr/Documents/KISS" } });
+      const getUserResponse = await axios.get('/load-user-data', { params: { filePath: "/home/kipr/Documents/KISS" } });
+      console.log("Root loadUsers getUserResponse: ", getUserResponse);
+      if (getUserResponse.data.users.length == 0) {
+        this.props.onUserUpdate([]);
+        return [];
+      }
+      else {
+        const userDirectories: User[] = getUserResponse.data.users.map((userData: any) => ({
+          userName: userData.userName,
+          interfaceMode: userData.interfaceMode,
+          projects: userData.projects
 
-      const userDirectories: string[] = getUserResponse.data.directories;
+        }));
+        console.log("Root loadUsers userDirectories: ", userDirectories);
 
-      this.setState({
-        users: userDirectories,
-      }, () => {
-        this.props.onUserUpdate(this.state.users);
-      });
+        this.setState({
+          users: userDirectories,
+        }, () => {
+          this.props.onUserUpdate(this.state.users);
+        });
 
-      return userDirectories;
+        return userDirectories;
+
+      }
+
     }
     catch (error) {
       console.error("Root loadUsers caught error: ", error);
@@ -507,52 +574,45 @@ class Root extends React.Component<Props, State> {
   }
 
 
-  private loadUserProjects = async (openedUserDialog?: boolean, desiredUser?: string): Promise<Project[]> => {
+  private loadUserProjects = async (openedUserDialog?: boolean, createdUserDialog?: boolean, desiredUser?: User): Promise<Project[]> => {
 
-    let chosenUser: string;
-    if (openedUserDialog && desiredUser) {
+    console.log("Root loadUserProjects passed in: ", openedUserDialog, createdUserDialog, desiredUser);
+    console.log("Root loadUserProjects props.propUser: ", this.props.propUser);
+    let chosenUser: User;
+    if ((openedUserDialog || createdUserDialog) && desiredUser) {
       chosenUser = desiredUser;
     }
     else {
-      chosenUser = this.props.propUserName;
+      chosenUser = this.props.propUser;
     }
 
     try {
-      const response = await axios.get('/get-projects', { params: { filePath: `/home/kipr/Documents/KISS/${chosenUser}` } });
+      const response = await axios.get('/get-projects', { params: { filePath: `/home/kipr/Documents/KISS/${chosenUser.userName}` } });
 
-      const projectDirectories = response.data.directories;
+      const userDirectories = response.data.directories;
+      console.log("loadUserProjects chosenUser: ", chosenUser);
+
+      console.log("loadUserProjects userDirectories: ", userDirectories);
 
       //each project into a Project object
       const projects: Project[] = await Promise.all(
-        projectDirectories.map(async (projectName) => {
+        userDirectories.map(async (projectName) => {
 
-          const projectDataResponse = await axios.get('/get-project-folders', {
-            params: { filePath: `/home/kipr/Documents/KISS/${chosenUser}/${projectName}` }
+          const projectDataResponse = await axios.get('/get-project-data', {
+            params: { filePath: `/home/kipr/Documents/KISS/${chosenUser.userName}/${projectName}` }
           });
 
-          const projectData = projectDataResponse.data.directories;
+          const projectData = projectDataResponse.data;
 
-
-          const dataFilesDataResponse = await axios.get('/get-folder-contents', { params: { filePath: `/home/kipr/Documents/KISS/${chosenUser}/${projectName}/${projectData[2]}` } });
-
-          const includeDataResponse = await axios.get('/get-folder-contents', { params: { filePath: `/home/kipr/Documents/KISS/${chosenUser}/${projectName}/${projectData[3]}` } });
-
-          const srcDataResponse = await axios.get('/get-folder-contents', { params: { filePath: `/home/kipr/Documents/KISS/${chosenUser}/${projectName}/${projectData[4]}` } });
-
-          const projectLanguageResponse = await axios.get('/get-project-language', { params: { filePath: `/home/kipr/Documents/KISS/${chosenUser}/${projectName}` } });
-
-          const filteredDataFiles = dataFilesDataResponse.data.files.filter(file => !file.startsWith('.'));
-          const filteredSrcFiles = srcDataResponse.data.files.filter(file => !file.startsWith('.'));
-          const filteredIncludeFiles = includeDataResponse.data.files.filter(file => !file.startsWith('.'));
+          console.log("loadUserProjects projectData: ", projectData);
 
           // Construct the Project object
           return {
             projectName,
-            binFolderFiles: [],
-            includeFolderFiles: filteredIncludeFiles || [],
-            srcFolderFiles: filteredSrcFiles || [],
-            dataFolderFiles: filteredDataFiles || [],
-            projectLanguage: projectLanguageResponse.data.language || '' as ProgrammingLanguage
+            includeFolderFiles: projectData.includeData || [],
+            srcFolderFiles: projectData.srcData || [],
+            dataFolderFiles: projectData.userFileData || [],
+            projectLanguage: projectData.projectLanguage || '' as ProgrammingLanguage
           } as Project;
         })
       );
@@ -569,7 +629,7 @@ class Root extends React.Component<Props, State> {
     this.setState({
       modal: Modal.DELETEUSERPROJECTFILE,
       deleteUserFlag_: true,
-      toDeleteName_: this.props.propContextMenuUser,
+      toDeleteName_: this.props.propContextMenuUser.userName,
       toDeleteType_: 'user'
     });
   }
@@ -578,7 +638,8 @@ class Root extends React.Component<Props, State> {
     this.setState({
       modal: Modal.DELETEUSERPROJECTFILE,
       deleteProjectFlag_: true,
-      userName: this.props.propUserName,
+      rootUser: this.props.propUser,
+      userName: this.props.propUser.userName,
       toDeleteName_: this.props.propContextMenuProject.projectName,
       toDeleteType_: 'project'
 
@@ -589,8 +650,10 @@ class Root extends React.Component<Props, State> {
     this.setState({
       modal: Modal.DELETEUSERPROJECTFILE,
       deleteFileFlag_: true,
-      userName: this.props.propUserName,
-      projectName: this.props.propProjectName,
+      rootUser: this.props.propUser,
+      rootProject: this.props.propProject,
+      userName: this.props.propUser.userName,
+      projectName: this.props.propProject.projectName,
       toDeleteName_: this.props.propContextMenuFile,
       toDeleteType_: 'file'
     });
@@ -600,7 +663,7 @@ class Root extends React.Component<Props, State> {
     this.setState({
       modal: Modal.DOWNLOADUSERPROJECTFILE,
       downloadUserFlag_: true,
-      toDownloadName_: this.props.propContextMenuUser,
+      toDownloadName_: this.props.propContextMenuUser.userName,
       toDownloadType_: 'user'
     });
 
@@ -610,7 +673,8 @@ class Root extends React.Component<Props, State> {
     this.setState({
       modal: Modal.DOWNLOADUSERPROJECTFILE,
       downloadProjectFlag_: true,
-      userName: this.props.propUserName,
+      rootUser: this.props.propUser,
+      userName: this.props.propUser.userName,
       toDownloadName_: this.props.propContextMenuProject.projectName,
       toDownloadType_: 'project'
     });
@@ -621,14 +685,19 @@ class Root extends React.Component<Props, State> {
     this.setState({
       modal: Modal.DOWNLOADUSERPROJECTFILE,
       downloadFileFlag_: true,
-      userName: this.props.propUserName,
-      projectName: this.props.propProjectName,
+      rootUser: this.props.propUser,
+      rootProject: this.props.propProject,
+      userName: this.props.propUser.userName,
+      projectName: this.props.propProject.projectName,
       toDownloadName_: this.props.propContextMenuFile,
       toDownloadType_: 'file'
     });
   }
 
   private saveFile_(tempNewFile_: string): void {
+    console.log("Root saveFile_ state: ", this.state);
+    console.log("Root saveFile_ toSaveCodeRef: ", this.toSaveCodeRef.current);
+    this.props.setFileName_('');
     this.setState({
       modal: Modal.SAVEFILE,
       isSaveCodePromptVisible: true,
@@ -651,21 +720,23 @@ class Root extends React.Component<Props, State> {
     });
   };
 
-  private onCloseProjectDialog_ = async (newProjName: string, newProjLanguage: ProgrammingLanguage) => {
-
-    const { userName } = this.state;
+  private onCloseProjectDialog_ = async (newProjName: string, newProjLanguage: ProgrammingLanguage, newInterfaceMode: InterfaceMode) => {
+    console.log("Root onCloseProjectDialog_ passed in: ", newProjName, newProjLanguage, newInterfaceMode);
+    console.log("Root oncloseProjectDialog props.propUser: ", this.props.propUser);
+    const { userName, rootUser } = this.state;
 
     try {
 
       this.setState((prevState) => {
         const updatedUsers = [...prevState.users];
 
-        if (!updatedUsers.includes(userName)) {
-          updatedUsers.push(userName);
+        if (!updatedUsers.includes(rootUser)) {
+          updatedUsers.push(rootUser);
         }
 
         return { users: updatedUsers };
       }, () => {
+        console.log("Root onCloseProjectDialog_ state.users: ", this.state.users);
         this.props.onUserUpdate(this.state.users);
       });
     }
@@ -673,13 +744,38 @@ class Root extends React.Component<Props, State> {
       console.error("Root onCloseProjectDialog_ error: ", error);
     }
 
+    console.log("Root onCloseProjectDialog_ state.rootUser: ", this.state.rootUser);
+
     this.setState({
       modal: Modal.NONE,
+      rootUser: {
+        ...this.state.rootUser,
+        interfaceMode: newInterfaceMode,
+        projects: [
+          ...this.state.rootUser.projects,
+          {
+            projectName: newProjName,
+            projectLanguage: newProjLanguage,
+            includeFolderFiles: [],
+            srcFolderFiles: [`main.${ProgrammingLanguage.FILE_EXTENSION[newProjLanguage]}`],
+            dataFolderFiles: []
+          }
+        ]
+      },
+      rootProject: {
+
+        projectName: newProjName,
+        projectLanguage: newProjLanguage,
+        includeFolderFiles: [],
+        srcFolderFiles: [`main.${ProgrammingLanguage.FILE_EXTENSION[newProjLanguage]}`],
+        dataFolderFiles: []
+      },
       userName: this.state.userName,
       projectName: newProjName,
       activeLanguage: newProjLanguage,
       fileName: `main.${ProgrammingLanguage.FILE_EXTENSION[newProjLanguage]}`,
     }, async () => {
+      console.log("Root onCloseProjectDialog_ AFTER state.rootUser: ", this.state.rootUser);
       this.toSaveCodeRef.current = { ...this.toSaveCodeRef.current, [newProjLanguage]: ProgrammingLanguage.DEFAULT_CODE[newProjLanguage] };
       if (this.state.isHomeStartOptionsVisible == true) {
         this.setState({
@@ -693,7 +789,7 @@ class Root extends React.Component<Props, State> {
         });
       }
 
-      this.props.onLoadUserData(await this.loadUserProjects())
+      this.props.onLoadUserData(await this.loadUserProjects(false, true, this.state.rootUser));
 
       if (this.props.addNewProject) {
         this.setState({
@@ -761,7 +857,7 @@ class Root extends React.Component<Props, State> {
       isCreateProjectDialogVisible: false,
       modal: Modal.NONE,
       fileName: `${newFileName}.${fileType}`,
-      projectName: this.props.propProjectName,
+      projectName: this.props.propProject.projectName,
     }, async () => {
       this.props.onLoadUserData(await this.loadUserProjects())
 
@@ -776,18 +872,27 @@ class Root extends React.Component<Props, State> {
           isEditorPageVisible: true
         });
       }
-
+      console.log("right before setAddNewFile false");
       this.props.setAddNewFile(false);
 
     });
   }
 
   private onCreateProjectDialogOpen_ = (name: string) => {
+
+    console.log("Root onCreateProjectDialogOpen_ name: ", name);
+    console.log("Root onCreateProjectDialogOpen_ state.rootUser: ", this.state.rootUser);
     this.setState({
+      rootUser: {
+        ...this.state.rootUser,
+        userName: name
+      },
       userName: name,
       isCreateNewUserDialogVisible: false,
       isCreateProjectDialogVisible: true,
       modal: Modal.CREATEPROJECT
+    }, () => {
+      console.log("Root onCreateProjectDialogOpen_ state.rootUser: ", this.state.rootUser);
     });
   }
 
@@ -805,7 +910,7 @@ class Root extends React.Component<Props, State> {
     });
   }
 
-  private onOpenUserProject_ = async (name: string, projectName: string, fileName: string, projectLanguage: ProgrammingLanguage) => {
+  private onOpenUserProject_ = async (passedUser: User, project: Project, fileName: string, projectLanguage: ProgrammingLanguage) => {
     const [file, extension] = fileName.split('.');
 
     let filePath = '';
@@ -814,22 +919,24 @@ class Root extends React.Component<Props, State> {
       case 'c':
       case 'cpp':
       case 'py':
-        filePath = `/home/kipr/Documents/KISS/${name}/${projectName}/src/${fileName}`;
+        filePath = `/home/kipr/Documents/KISS/${passedUser.userName}/${project.projectName}/src/${fileName}`;
         break;
       case 'h':
-        filePath = `/home/kipr/Documents/KISS/${name}/${projectName}/include/${fileName}`;
+        filePath = `/home/kipr/Documents/KISS/${passedUser.userName}/${project.projectName}/include/${fileName}`;
         break;
       case 'txt':
-        filePath = `/home/kipr/Documents/KISS/${name}/${projectName}/data/${fileName}`;
+        filePath = `/home/kipr/Documents/KISS/${passedUser.userName}/${project.projectName}/data/${fileName}`;
         break;
     }
-    const getProjects = await this.loadUserProjects(true, name);
-    let toOpenProject = getProjects.find(project => project.projectName === projectName);
+    const getProjects = await this.loadUserProjects(true, false, passedUser);
+    let toOpenProject = getProjects.find(project => project.projectName === project.projectName);
     let toOpenProjectMainCode = await axios.get('/get-file-contents', { params: { filePath: `${filePath}` } });
     this.toSaveCodeRef.current = { ...this.toSaveCodeRef.current, [projectLanguage]: toOpenProjectMainCode.data };
     this.setState({
-      userName: name,
+      rootUser: passedUser,
+      userName: passedUser.userName,
       projectName: toOpenProject.projectName,
+      rootProject: toOpenProject,
       activeLanguage: toOpenProject.projectLanguage,
       code: {
         ...this.state.code,
@@ -1088,7 +1195,7 @@ class Root extends React.Component<Props, State> {
               break;
             case 'file':
               const [name, extension] = confirmedName.split('.');
-                    const deleteFileResponse = await axios.post('/delete-file', { userName: this.state.userName, projectName: this.state.projectName, fileName: confirmedName, fileType: extension });
+              const deleteFileResponse = await axios.post('/delete-file', { userName: this.state.userName, projectName: this.state.projectName, fileName: confirmedName, fileType: extension });
               this.props.onLoadUserData(await this.loadUserProjects());
               break;
           }
@@ -1131,7 +1238,7 @@ class Root extends React.Component<Props, State> {
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({ userName: this.state.userName, projectName: confirmedName }),
                 });
-               
+
                 if (downloadUserResponse.ok) {
                   const blob = await downloadUserResponse.blob();
                   const url = URL.createObjectURL(blob);
@@ -1266,9 +1373,10 @@ class Root extends React.Component<Props, State> {
   }
 
   private onDenySave_ = (denyType: string) => {
-    
+    console.log("Root onDenySave_ denyType: ", denyType);
+
     if (denyType == 'continue') {
-           this.setState({
+      this.setState({
         saveCodePromptFlag: false
       }, async () => {
         this.onModalClose_('deny,continue');
@@ -1280,14 +1388,14 @@ class Root extends React.Component<Props, State> {
   }
 
   private onModalClose_ = async (action?: string) => {
-    
+
     this.setState({ modal: Modal.NONE, deleteUserFlag_: false });
 
     if (this.props.addNewProject) {
       this.props.setAddNewProject(false);
-      
+
       this.setState({
-        projectName: this.props.propProjectName,
+        projectName: this.props.propProject.projectName,
         fileName: this.props.propFileName,
         activeLanguage: this.props.propActiveLanguage
       });
@@ -1295,9 +1403,9 @@ class Root extends React.Component<Props, State> {
 
     if (this.props.addNewFile) {
       this.props.setAddNewFile(false);
-    
+
       this.setState({
-        projectName: this.props.propProjectName,
+        projectName: this.props.propProject.projectName,
         fileName: this.state.fileName,
         activeLanguage: this.props.propActiveLanguage
       });
@@ -1332,7 +1440,7 @@ class Root extends React.Component<Props, State> {
     if (this.state.fileName || this.state.tempNewFile) {
 
       if (action == 'save') {
-              this.props.resetFileExplorerFileSelection(this.state.tempNewFile);
+        this.props.resetFileExplorerFileSelection(this.state.tempNewFile);
       }
       else if (action == 'deny,continue') {
         this.props.resetFileExplorerFileSelection(this.state.tempNewFile);
@@ -1381,6 +1489,8 @@ class Root extends React.Component<Props, State> {
       projectName,
       fileName,
       userName,
+      rootUser,
+      rootProject,
       isEditorPageVisible,
       toDeleteName_,
       toDeleteType_,
@@ -1388,9 +1498,12 @@ class Root extends React.Component<Props, State> {
       toDownloadType_,
       toSaveName_,
       toSaveType_,
-      theme
+      theme,
+
     } = state;
 
+    console.log("Root render state: ", this.state);
+    console.log("Root render props: ", this.props);
     return (
       <RootContainer $windowInnerHeight={windowInnerHeight}>
 
@@ -1401,20 +1514,20 @@ class Root extends React.Component<Props, State> {
           />
         )}
         {isHomeStartOptionsVisible && (
-            <HomeStartOptions
-              theme={theme}
-              locale={locale}
-              onClearConsole={this.onClearConsole_}
-              activeLanguage={activeLanguage}
-              onEditorPageOpen={this.onEditorPageOpen_}
-              onChangeProjectName={this.onChangeProjectName}
-              onCreateProjectDialog={this.onCreateProjectDialogOpen_}
-              onOpenUserProject={this.onOpenUserProject_}
-              onLoadUsers={this.loadUsers}
-              onLoadUserData={this.loadUserProjects}
-              onOpenFile={this.onOpenUserProject_}
-            />
-          )
+          <HomeStartOptions
+            theme={theme}
+            locale={locale}
+            onClearConsole={this.onClearConsole_}
+            activeLanguage={activeLanguage}
+            onEditorPageOpen={this.onEditorPageOpen_}
+            onChangeProjectName={this.onChangeProjectName}
+            onCreateProjectDialog={this.onCreateProjectDialogOpen_}
+            onOpenUserProject={this.onOpenUserProject_}
+            onLoadUsers={this.loadUsers}
+            onLoadUserData={this.loadUserProjects}
+            onOpenFile={this.onOpenUserProject_}
+          />
+        )
         }
         {modal.type === Modal.Type.CreateFile && (
           <NewFileDialog
@@ -1435,33 +1548,39 @@ class Root extends React.Component<Props, State> {
         )
         }
         {isEditorPageVisible && (
+          console.log("Root isEditorPageVisible state: ", this.state),
+          console.log("Root isEditorPageVisible props: ", this.props),
+          console.log("Root isEditorPageVisible toSaveCodeRef: ", this.toSaveCodeRef.current),
           <EditorPage
-            isleftbaropen={isLeftBarOpen}
-            isRunning={this.state.isRunning}
-            editorTarget={undefined}
-            editorConsole={editorConsole}
-            messages={[]}
-            code={this.toSaveCodeRef.current || code}
-            language={activeLanguage}
-            settings={DEFAULT_SETTINGS}
-            onClearConsole={this.onClearConsole_}
-            onCodeChange={this.onCodeChange_}
-            onSaveCode={this.onSaveClick_}
-            onRunClick={this.onRunClick_}
-            onStopClick={this.onStopClick_}
-            onCompileClick={this.onCompileClick_}
-            onIndentCode={() => { }}
-            onDownloadCode={() => { }}
-            editorRef={undefined}
-            theme={theme}
-            onDocumentationSetLanguage={() => { }}
-            projectName={projectName}
-            fileName={fileName}
-            userName={userName}
-            onFileNameChange={this.handleFileNameChange}
-          />
+          isleftbaropen={isLeftBarOpen}
+          isRunning={this.state.isRunning}
+          editorTarget={undefined}
+          editorConsole={editorConsole}
+          messages={[]}
+          code={this.toSaveCodeRef.current}
+          language={activeLanguage}
+          settings={DEFAULT_SETTINGS}
+          onClearConsole={this.onClearConsole_}
+          onCodeChange={this.onCodeChange_}
+          onSaveCode={this.onSaveClick_}
+          onRunClick={this.onRunClick_}
+          onStopClick={this.onStopClick_}
+          onCompileClick={this.onCompileClick_}
+          onIndentCode={() => { }}
+          onDownloadCode={() => { }}
+          editorRef={undefined}
+          theme={theme}
+          onDocumentationSetLanguage={() => { }}
+          projectName={rootProject.projectName}
+          fileName={fileName}
+          userName={rootUser.userName}
+          onFileNameChange={this.handleFileNameChange}
+        />
+
         )}
 
+
+        
         {modal.type === Modal.Type.CreateProject && (
           <CreateProjectDialog
             onClose={this.onModalClose_}
@@ -1469,7 +1588,7 @@ class Root extends React.Component<Props, State> {
             closeProjectDialog={this.onCloseProjectDialog_}
             onDocumentationSetLanguage={this.onActiveLanguageChange_}
             onChangeProjectName={this.onChangeProjectName}
-            userName={userName}
+            userName={rootUser.userName}
             language={activeLanguage}
             onLanguageChange={this.onLanguageChange_}>
           </CreateProjectDialog>

@@ -55,11 +55,64 @@ function getAllFiles(dirPath) {
   }
 }
 
+function getUserInterfaceMode(userName) {
+  const userConfigPath = `/home/kipr/Documents/KISS/${userName}/.config.json`;
+  try {
+    // Check if the file exists
+    if (!fs.existsSync(userConfigPath)) {
+      console.error(
+        `getUserInterfaceMode: Config file not found for user ${userName}`
+      );
+      return null;
+    }
+
+    // Read and parse the JSON file
+    const configData = JSON.parse(fs.readFileSync(userConfigPath, "utf-8"));
+
+    // Return the interfaceMode if it exists
+    return configData.interfaceMode || null;
+  } catch (error) {
+    console.error("Error reading user config:", error);
+    return null;
+  }
+}
+
+function setUserInterfaceMode(userName, newMode){
+  const userConfigPath = `/home/kipr/Documents/KISS/${userName}/.config.json`;
+  try {
+    // Check if the file exists
+    if (!fs.existsSync(userConfigPath)) {
+      console.error(
+        `setUserInterfaceMode: Config file not found for user ${userName}`
+      );
+      return false;
+    }
+
+    // Read and parse the JSON file
+    const configData = JSON.parse(fs.readFileSync(userConfigPath, "utf-8"));
+
+    //Update interfaceMode
+    configData.interfaceMode = newMode;
+
+    // Write the updated config back to the file
+    fs.writeFileSync(userConfigPath, JSON.stringify(configData, null, 2), "utf-8");
+
+    console.log(`Successfully updated interfaceMode to ${newMode} for user ${userName}`);
+    return true;
+  } catch (error) {
+    console.error("Error updating user config:", error);
+    return false;
+  }
+}
+
 // Helper function to handle folder-based APIs
 function createFolderHandler() {
   return async (req, res) => {
     const folderPath = req.query.filePath;
-    console.log("createFolderHandler - Received request for folder path:", folderPath);
+    console.log(
+      "createFolderHandler - Received request for folder path:",
+      folderPath
+    );
 
     // Validate folderPath
     if (!folderPath) {
@@ -86,10 +139,13 @@ function createFolderHandler() {
   };
 }
 
-function getFolderContents() {
+async function getFolderContents() {
   return async (req, res) => {
     const folderPath = req.query.filePath;
-    console.log("getFolderContents - Received request for folder path:", folderPath);
+    console.log(
+      "getFolderContents - Received request for folder path:",
+      folderPath
+    );
 
     // Validate folderPath
     if (!folderPath) {
@@ -138,6 +194,7 @@ async function interalGetFileContents(filePath) {
   }
   return fs.promises.readFile(filePath, "utf-8"); // ✅ Now using async/await properly
 }
+
 function getFileContents() {
   return async (req, res) => {
     const filePath = req.query.filePath;
@@ -411,14 +468,31 @@ app.post("/compile-code", async (req, res) => {
 
 // API route to initialize a Git repository
 app.post("/initialize-repo", async (req, res) => {
-  const { userName, projectName, language } = req.body;
+  const { userName, projectName, language, interfaceMode } = req.body;
   console.log("Received request body:", req.body); // Log the entire request body
   const userDirectory = `/home/kipr/Documents/KISS/${userName}`;
+  const userConfigPath = path.join(userDirectory, ".config.json");
   const projectDirectory = path.join(userDirectory, projectName);
 
+  const userConfig = {
+    userName: userName,
+    interfaceMode: interfaceMode,
+  };
   // Ensure the user's directory exists
   if (!fs.existsSync(userDirectory)) {
     fs.mkdirSync(userDirectory, { recursive: true });
+
+    try {
+      console.log("Writing user config to:", userConfigPath);
+      fs.writeFileSync(
+        userConfigPath,
+        JSON.stringify(userConfig, null, 2),
+        "utf-8"
+      );
+    } catch (error) {
+      console.error("Error writing user config:", error);
+      return res.status(500).json({ error: "Error writing user config." });
+    }
   }
 
   // Ensure the project directory does not already exist
@@ -509,9 +583,6 @@ app.post("/initialize-repo", async (req, res) => {
     res.status(500).send("Error initializing repository");
   }
 });
-
-
-
 
 app.post("/delete-file", async (req, res) => {
   const { userName, projectName, fileName, fileType } = req.body;
@@ -733,7 +804,7 @@ app.get("/get-all-file-names", async (req, res) => {
     }
 
     // Directories to check
-    const allowedDirs = ['src', 'include', 'data'];
+    const allowedDirs = ["src", "include", "data"];
 
     // Function to recursively get all file names in allowed directories only
     const getAllFileNames = (dir) => {
@@ -745,7 +816,7 @@ app.get("/get-all-file-names", async (req, res) => {
       // Loop through the contents
       files.forEach((file) => {
         // Skip hidden files or directories (those starting with a dot)
-        if (file.startsWith('.')) {
+        if (file.startsWith(".")) {
           return;
         }
 
@@ -802,20 +873,110 @@ app.get("/get-project-language", async (req, res) => {
 });
 
 // User getters
+app.get("/load-user-data", async (req, res) => {
+  try {
+    console.log("/load-user-data filePath: ", req.query.filePath);
+    const userDirectories = fs.readdirSync("/home/kipr/Documents/KISS");
+
+    const users = userDirectories.map((user) => {
+      // Get the interface mode for the user
+      const userInterfaceMode = getUserInterfaceMode(user);
+
+      const userDirectory = `/home/kipr/Documents/KISS/${user}`;
+      const projects = getAllDirectories(userDirectory).filter(
+        (file) => !file.startsWith(".")
+      );
+
+      if (userInterfaceMode === null) {
+        console.log(`User interface mode not found for ${user}`);
+      }
+
+      return {
+        userName: user,
+        interfaceMode: userInterfaceMode || "simple", // Default to 'simple' if not found
+        projects: projects
+      };
+    });
+
+    console.log("/load-user-data: ", users);
+
+      // Send the list of users as the response
+    res.status(200).json({
+      users,
+    });
+  } catch (error) {
+    console.error("Error getting users:", error);
+    res.status(500).send("Error getting users");
+  }
+});
+
 app.get("/get-users", createFolderHandler());
 
 // Project getterss
 app.get("/get-projects", createFolderHandler());
 app.get("/get-project-folders", createFolderHandler());
 
+app.get("/get-project-data", async (req, res) => {
+ try {
+  console.log("Received request for get-project-data:", req.query);
+  console.log("filepath: ", req.query.filePath);
+  const projectDirectory = req.query.filePath;
+  const gitConfigPath = path.join(req.query.filePath, ".git/config");
+  const language = parseGitConfig(fs.readFileSync(gitConfigPath, "utf8"));
+
+  const includeData =  getAllFiles(path.join(projectDirectory, "include"));
+  const srcData = getAllFiles(path.join(projectDirectory, "src"));
+  const userFileData = getAllFiles(path.join(projectDirectory, "data"));
+
+  const filteredIncludeData = includeData.filter((file) => !file.startsWith("."));
+  const filteredSrcData = srcData.filter((file) => !file.startsWith("."));
+  const filteredUserFileData = userFileData.filter((file) => !file.startsWith("."));
+
+ 
+  const projectData = {
+    projectLanguage: language,
+    includeData: filteredIncludeData,
+    srcData: filteredSrcData,
+    userFileData:filteredUserFileData,
+  };
+
+  console.log("Project data:", projectData);
+
+  res.status(200).json(projectData);
+ }
+ catch (error) {
+  console.error("Error getting project data:", error);
+  res.status(500).send("Error getting project data");
+ }
+})
 // Folder content getters
-app.get("/get-folder-contents", getFolderContents());
+//app.get("/get-folder-contents", getFolderContents());
 
 // File content getters
 app.get("/get-file-contents", getFileContents());
 
 //File content setters
 app.post("/save-file-content", saveFileContents());
+
+//Change interface mode
+app.post("/change-interface-mode", (req, res) => {
+  const { userName, newMode } = req.body;
+
+  console.log("Received request to change interface mode:", req.body);
+
+  if (!userName || !newMode) {
+    return res.status(400).json({ error: "Missing userName or newMode" });
+  }
+
+  const success = setUserInterfaceMode(userName, newMode);
+
+  if (success) {
+    res.json({ message: `Interface mode updated to ${newMode} for ${userName}` });
+  } else {
+    res.status(500).json({ error: "Failed to update interface mode" });
+  }
+});
+
 
 app.get("/run-code", (req, res) => {
   console.log("Received run request:", req.query);
@@ -847,11 +1008,7 @@ app.get("/run-code", (req, res) => {
   console.log("Executing:", runCommand);
 
   // const child = spawn(runCommand, [], { shell: true, env: { ...process.env, PYTHONPATH: "/usr/local/lib" } });
-  const child = spawn(
-    "stdbuf",
-    ["-oL", runCommand],
-    { shell: true }
-  );
+  const child = spawn("stdbuf", ["-oL", runCommand], { shell: true });
 
   child.stdout.on("data", (data) => {
     const output = data.toString();
