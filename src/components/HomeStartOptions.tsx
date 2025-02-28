@@ -15,16 +15,16 @@ import { faBookReader, faFilePen, faUserPlus } from '@fortawesome/free-solid-svg
 import { DEFAULT_SETTINGS, Settings } from '../Settings';
 import { Modal } from '../pages/Modal';
 import { Project } from '../types/projectTypes';
-
+import { User } from '../types/userTypes';
 export interface HomeStartOptionsPublicProps extends StyleProps, ThemeProps {
     activeLanguage: ProgrammingLanguage;
     onEditorPageOpen: () => void;
     onChangeProjectName: (projectName: string) => void;
     onCreateProjectDialog: (name: string) => void;
-    onOpenUserProject: (name: string, projectName: string, fileName: string, projectLanguage: string) => void;
-    onLoadUsers: () => Promise<string[]>;
-    onLoadUserData: (openedUserDialog: boolean, desiredUser: string) => Promise<Project[]>;
-    onOpenFile: (userName: string, projectName: string, fileName: string, projectLanguage: string) => void;
+    onOpenUserProject: (name: User, project: Project, fileName: string, projectLanguage: string) => void;
+    onLoadUsers: () => Promise<User[]>;
+    onLoadUserData: (openedUserDialog: boolean, createdUserDialog?: boolean, desiredUser?: User) => Promise<Project[]>;
+    onOpenFile: (userName: User, project: Project, fileName: string, projectLanguage: string) => void;
     onClearConsole: () => void;
 }
 
@@ -50,7 +50,7 @@ const Container = styled('div', (props: ThemeProps) => ({
     lineHeight: '28px',
     display: 'flex',
     alignContent: 'flex-start',
-    poisition: 'relative',
+    position: 'relative',
     flexDirection: 'column',
     zIndex: 1,
 }));
@@ -65,8 +65,8 @@ const HomeStartContainer = styled('div', (props: ThemeProps) => ({
     marginLeft: '23%',
     lineHeight: '28px',
     display: 'flex',
-    alignContent: 'flex-start',
-    poisition: 'relative',
+    justifyContent: 'center',
+    alignItems: 'center',
     flexDirection: 'column',
     zIndex: 1,
     boxShadow: '0px 10px 13px -6px rgba(0, 0, 0, 0.2), 0px 20px 31px 3px rgba(0, 0, 0, 0.14), 0px 8px 38px 7px rgba(0, 0, 0, 0.12)'
@@ -75,15 +75,14 @@ const HomeStartContainer = styled('div', (props: ThemeProps) => ({
 const StartContainer = styled('div', (props: ThemeProps) => ({
     backgroundColor: props.theme.startContainerBackground,
     color: props.theme.color,
-    width: '45%',
+    width: '85%',
     height: '90%',
-    marginTop: '5%',
-    marginLeft: '10%',
     padding: '10px 5px 10px 5px',
     lineHeight: '28px',
     display: 'flex',
-    alignContent: 'start',
-    poisition: 'relative',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    position: 'relative',
     flexDirection: 'column',
     zIndex: 4,
     boxShadow: '0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 5px 8px 0px rgba(0, 0, 0, 0.14), 0px 1px 14px 0px rgba(0, 0, 0, 0.12)'
@@ -114,10 +113,10 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
 
 const Title = styled('div', (props: ThemeProps & ClickProps) => ({
     display: 'flex',
-    alignItems: 'start',
+    justifyContent: 'center',
     flexDirection: 'row',
     paddingRight: '20px',
-    marginLeft: '30%',
+    width: '100%',
     marginBottom: '12px',
     height: '45px',
     userSelect: 'none',
@@ -231,14 +230,7 @@ export class HomeStartOptions extends React.Component<Props, State> {
                     </HomeStartContainer>
                 </Container>
 
-                {modal.type === Modal.Type.Settings && (
-                    <SettingsDialog
-                        theme={theme}
-                        settings={settings}
-                        onSettingsChange={this.onSettingsChange_}
-                        onClose={this.onModalClose_}
-                    />
-                )}
+             
                 {modal.type === Modal.Type.CreateUser && (
                     <CreateUserDialog
                         theme={theme}
