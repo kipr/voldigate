@@ -14,6 +14,7 @@ import { connect } from 'react-redux';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { push } from 'connected-react-router';
 import { Fa } from './Fa';
+import { User } from '../types/userTypes';
 
 export interface CreateUserDialogPublicProps extends ThemeProps, StyleProps {
     showRepeatUserDialog: boolean;
@@ -114,7 +115,7 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
             }
             else {
                 this.props.onClose();
-                this.props.onCreateProjectDialog(values.userName);
+                this.props.onCreateProjectDialog(values.userName as User['userName']);
             }
         }
         catch (error) {

@@ -13,16 +13,17 @@ import { connect } from 'react-redux';
 import { State as ReduxState } from '../state';
 import { Settings } from '../Settings';
 import { Project } from '../types/projectTypes';
-
+import { User } from '../types/userTypes';
+import { InterfaceMode } from '../types/interfaceModes';
 export interface OpenFileDialogPublicProps extends ThemeProps, StyleProps {
   projectLanguage: ProgrammingLanguage;
   settings: Settings;
   onClose: () => void;
-  onOpenUserProject: (name: string, projectName: string, fileName: string, projectLanguage: string) => void;
+  onOpenUserProject: (name: User, project: Project, fileName: string, projectLanguage: string) => void;
   onSettingsChange: (settings: Partial<Settings>) => void;
-  onLoadUsers: () => Promise<string[]>;
-  onLoadUserData: (openedUserDialog: boolean, desiredUser: string) => Promise<Project[]>;
-  onOpenFile: (userName: string, projectName: string, fileName: string, projectLanguage: string) => void;
+  onLoadUsers: () => Promise<User[]>;
+  onLoadUserData: (openedUserDialog: boolean, createdUserDialog: boolean, desiredUser: User) => Promise<Project[]>;
+  onOpenFile: (userName: User, project: Project, fileName: string, projectLanguage: string) => void;
 }
 
 interface ClickProps {
@@ -38,14 +39,15 @@ interface OpenFileDialogPrivateProps {
 interface OpenFileDialogState {
   loading: boolean;
   showUserProjectFiles: boolean;
-  selectedSection: string;
+  selectedUser: User;
+
   projectName: string;
   error: string | null;
-  selectedProject: string | null;
+  selectedProject: Project | null;
   selectedFile: string | null;
   activeLanguage: ProgrammingLanguage;
   selectedProjectFiles: Project | null;
-  users: string[];
+  users: User[];
   projects: Project[] | null;
 }
 
@@ -136,8 +138,8 @@ const ProjectItem = styled('li', (props: ThemeProps & { selected: boolean }) => 
   margin: '5px 0',
   borderRadius: '5px',
   display: 'flex',
-  alignItems: 'center', 
-  justifyContent: 'space-between', 
+  alignItems: 'center',
+  justifyContent: 'space-between',
   ':hover': {
     backgroundColor: props.theme.hoverOptionBackground,
   },
@@ -150,7 +152,7 @@ const ProjectFileContainer = styled('div', (props: ThemeProps) => ({
   borderRadius: '5px',
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'space-between', 
+  justifyContent: 'space-between',
 }));
 
 const ProjectFileItem = styled('li', (props: ThemeProps) => ({
@@ -163,22 +165,22 @@ const ProjectFileItem = styled('li', (props: ThemeProps) => ({
   paddingTop: '5px',
   borderRadius: '5px',
   display: 'flex',
-  alignItems: 'center', 
-  justifyContent: 'space-between', 
+  alignItems: 'center',
+  justifyContent: 'space-between',
 }));
 
 const Button = styled('button', {
-  margin: '0 10px', 
-  padding: '10px 20px', 
+  margin: '0 10px',
+  padding: '10px 20px',
   border: 'none',
-  borderRadius: '5px', 
-  cursor: 'pointer', 
+  borderRadius: '5px',
+  cursor: 'pointer',
 });
 
 // Styled component button for the "Yes" button
 const OpenFileButton = styled(Button, (props: ThemeProps & ClickProps) => ({
   marginRight: '70px',
-  backgroundColor:  props.theme.yesButtonColor.standard,
+  backgroundColor: props.theme.yesButtonColor.standard,
   border: `1px solid ${props.theme.yesButtonColor.border}`,
   ':hover':
     props.onClick && !props.disabled
@@ -191,7 +193,7 @@ const OpenFileButton = styled(Button, (props: ThemeProps & ClickProps) => ({
   boxShadow: '2px 2px 4px rgba(0,0,0,0.9)',
   ':active': props.onClick && !props.disabled
     ? {
-      boxShadow: '1px 1px 2px rgba(0,0,0,0.7)', 
+      boxShadow: '1px 1px 2px rgba(0,0,0,0.7)',
       transform: 'translateY(1px, 1px)',
     }
     : {},
@@ -202,7 +204,7 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      selectedSection: 'Default User',
+      selectedUser: null,
       users: [],
       projects: null,
       loading: true,
@@ -217,18 +219,28 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
     };
   }
 
-  private setSelectedSection = (selectedSection: string) => {
-    this.setState({ selectedSection }, this.getProjects);
-    this.setState({ selectedProject: null });
+  private setSelectedUser = (selectedUser: User) => {
+    this.setState({
+      selectedUser,
+      selectedProject: {
+        projectName: '',
+        projectLanguage: 'c',
+        includeFolderFiles: [],
+        srcFolderFiles: [],
+        dataFolderFiles: [],
+      }
+    }, this.getProjects);
+
   };
 
-  private handleProjectClick = async (projectId: string) => {
+  private handleProjectClick = async (project: Project) => {
+    console.log("OpenFileDialog handleProjectClick project: ", project);
 
     this.setState((prevState) => ({
-      selectedProject: prevState.selectedProject === projectId ? null : projectId,
-      projectName: projectId,
-      activeLanguage: this.state.projects!.find(project => project.projectName === projectId)!.projectLanguage,
-      selectedProjectFiles: this.state.projects!.find(project => project.projectName === projectId),
+      selectedProject: prevState.selectedProject.projectName === project.projectName ? null : project,
+      projectName: project.projectName,
+      activeLanguage: this.state.projects!.find(project => project.projectName === project.projectName)!.projectLanguage,
+      selectedProjectFiles: this.state.projects!.find(project => project.projectName === project.projectName),
     }));
   };
 
@@ -240,12 +252,13 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
   };
 
   private handleButtonClick(file) {
-    this.props.onOpenFile(this.state.selectedSection, this.state.projectName, file, this.state.activeLanguage);
+    this.props.onOpenFile(this.state.selectedUser, this.state.selectedProject, file, this.state.activeLanguage);
   }
 
   private getProjects = async () => {
+    console.log("OpenFileDialog getProjects state: ", this.state);
     this.setState({
-      projects: await this.props.onLoadUserData(true, this.state.selectedSection),
+      projects: await this.props.onLoadUserData(true, false, this.state.selectedUser),
       loading: false,
     })
   }
@@ -257,13 +270,14 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
       this.setState({
         users: userDirectories,
       });
-     
+
     } catch (error) {
       console.error("Error loading users in OpenFileDialog:", error);
     }
   }
 
   renderProjects() {
+    console.log("OpenFileDialog renderProjects state: ", this.state);
     const { projects, loading, error, selectedProject } = this.state;
     const { theme } = this.props;
 
@@ -281,17 +295,19 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
 
     return (
       <div>
-        <ProjectTitle>Projects for {this.state.selectedSection}</ProjectTitle>
+        <ProjectTitle>Projects for {this.state.selectedUser.userName}</ProjectTitle>
         <ul>
           {projects.map((project) => (
+            console.log("OpenFileDialog renderProjects project: ", project),
+            console.log("OpenFileDialog renderProjects selectedProject: ", selectedProject),
             <div key={project.projectName}>
               <ProjectItem
-                selected={selectedProject === project.projectName}
-                onClick={() => this.handleProjectClick(project.projectName)}
+                selected={selectedProject.projectName === project.projectName}
+                onClick={() => this.handleProjectClick(project)}
                 theme={theme}>
                 {project.projectName}
               </ProjectItem>
-              {selectedProject === project.projectName && this.renderFiles()}
+              {selectedProject.projectName === project.projectName && this.renderFiles()}
             </div>
           ))}
         </ul>
@@ -302,69 +318,95 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
 
 
   renderFiles() {
-       return (
+    console.log("OpenFileDialog renderFiles state: ", this.state);
+    return (
       <div>
-        <ProjectFileTitle>Files for {this.state.selectedProject}</ProjectFileTitle>
-        <ul>
-          <FileTypeHeader>include:</FileTypeHeader>
+        <ProjectFileTitle>Files for {this.state.selectedProject.projectName}</ProjectFileTitle>
+        {this.state.selectedUser.interfaceMode === InterfaceMode.SIMPLE ? (
+          <ul>
+            <FileTypeHeader>src:</FileTypeHeader>
+            <ProjectFileContainer theme={this.props.theme} >
+              {this.state.selectedProjectFiles?.srcFolderFiles.map((file) => (
+                <ProjectFileItem key={file} theme={this.props.theme} onClick={() => this.handleFileClick(file)}>
+                  {file}
+                  {this.state.selectedFile === file && (
+                    <OpenFileButton
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        this.handleButtonClick(file)
+                      }}
+                      theme={this.props.theme}>
+                      Open File
+                    </OpenFileButton>
+                  )}
+                </ProjectFileItem>
+              ))}
+            </ProjectFileContainer>
+          </ul>
+        ) : this.state.selectedUser.interfaceMode === InterfaceMode.ADVANCED ? (
+          <ul>
+            <FileTypeHeader>include:</FileTypeHeader>
 
-          <ProjectFileContainer theme={this.props.theme} >
-            {this.state.selectedProjectFiles?.includeFolderFiles.map((file) => (
-              <ProjectFileItem key={file} theme={this.props.theme} onClick={() => this.handleFileClick(file)}>
-                {file}
-                {this.state.selectedFile === file && (
-                  <OpenFileButton
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      this.handleButtonClick(file)
-                    }}
-                    theme={this.props.theme}>
-                    Open File
-                  </OpenFileButton>
-                )}
-              </ProjectFileItem>
-            ))}
-          </ProjectFileContainer>
+            <ProjectFileContainer theme={this.props.theme} >
+              {this.state.selectedProjectFiles?.includeFolderFiles.map((file) => (
+                <ProjectFileItem key={file} theme={this.props.theme} onClick={() => this.handleFileClick(file)}>
+                  {file}
+                  {this.state.selectedFile === file && (
+                    <OpenFileButton
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        this.handleButtonClick(file)
+                      }}
+                      theme={this.props.theme}>
+                      Open File
+                    </OpenFileButton>
+                  )}
+                </ProjectFileItem>
+              ))}
+            </ProjectFileContainer>
 
-          <FileTypeHeader>src:</FileTypeHeader>
-          <ProjectFileContainer theme={this.props.theme} >
-            {this.state.selectedProjectFiles?.srcFolderFiles.map((file) => (
-              <ProjectFileItem key={file} theme={this.props.theme} onClick={() => this.handleFileClick(file)}>
-                {file}
-                {this.state.selectedFile === file && (
-                  <OpenFileButton
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      this.handleButtonClick(file)
-                    }}
-                    theme={this.props.theme}>
-                    Open File
-                  </OpenFileButton>
-                )}
-              </ProjectFileItem>
-            ))}
-          </ProjectFileContainer>
+            <FileTypeHeader>src:</FileTypeHeader>
+            <ProjectFileContainer theme={this.props.theme} >
+              {this.state.selectedProjectFiles?.srcFolderFiles.map((file) => (
+                <ProjectFileItem key={file} theme={this.props.theme} onClick={() => this.handleFileClick(file)}>
+                  {file}
+                  {this.state.selectedFile === file && (
+                    <OpenFileButton
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        this.handleButtonClick(file)
+                      }}
+                      theme={this.props.theme}>
+                      Open File
+                    </OpenFileButton>
+                  )}
+                </ProjectFileItem>
+              ))}
+            </ProjectFileContainer>
 
-          <FileTypeHeader>data:</FileTypeHeader>
-          <ProjectFileContainer theme={this.props.theme} >
-            {this.state.selectedProjectFiles?.dataFolderFiles.map((file) => (
-              <ProjectFileItem key={file} theme={this.props.theme} onClick={() => this.handleFileClick(file)}>
-                {file}
-                {this.state.selectedFile === file && (
-                  <OpenFileButton
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      this.handleButtonClick(file)
-                    }}
-                    theme={this.props.theme}>
-                    Open File
-                  </OpenFileButton>
-                )}
-              </ProjectFileItem>
-            ))}
-          </ProjectFileContainer>
+            <FileTypeHeader>data:</FileTypeHeader>
+            <ProjectFileContainer theme={this.props.theme} >
+              {this.state.selectedProjectFiles?.dataFolderFiles.map((file) => (
+                <ProjectFileItem key={file} theme={this.props.theme} onClick={() => this.handleFileClick(file)}>
+                  {file}
+                  {this.state.selectedFile === file && (
+                    <OpenFileButton
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        this.handleButtonClick(file)
+                      }}
+                      theme={this.props.theme}>
+                      Open File
+                    </OpenFileButton>
+                  )}
+                </ProjectFileItem>
+              ))}
+            </ProjectFileContainer>
 
-        </ul>
+          </ul>
+        ) : null}
+
+
       </div>
 
 
@@ -375,7 +417,7 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
   render() {
     const { props, state } = this;
     const { style, className, theme, onClose, locale } = props;
-    const { selectedSection, users, showUserProjectFiles } = state;
+    const { selectedUser, users, showUserProjectFiles } = state;
 
     let logo: JSX.Element;
 
@@ -391,13 +433,14 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
     }
 
     const userSections = users.map((user) => (
+      console.log("userSections selectedUser: ", selectedUser),
       <SectionName
-        key={user}
+        key={user.userName}
         theme={theme}
-        selected={selectedSection === user}
-        onClick={() => this.setSelectedSection(user)}
+        selected={selectedUser === user}
+        onClick={() => this.setSelectedUser(user)}
       >
-        {LocalizedString.lookup(tr(user), locale)}
+        {LocalizedString.lookup(tr(user.userName), locale)}
       </SectionName>
     ));
 
