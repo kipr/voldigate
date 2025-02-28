@@ -95,7 +95,7 @@ class ExtraMenu extends React.PureComponent<Props, State> {
 
       locale,
     } = props;
-    console.log("ExtraMenu theme: ", theme);
+
     return (
       <Container theme={theme} style={style} className={className}>
         <Item theme={theme} onClick={onDocumentationClick}><ItemIcon icon={faBook} /> {LocalizedString.lookup(tr('Documentation'), locale)}</Item>
