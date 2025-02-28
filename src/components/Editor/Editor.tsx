@@ -266,7 +266,7 @@ export const createEditorBarComponents = ({
         text: target.fileName
       }));
 
-      if (target.isleftbaropen_.toString() === 'true') {
+      if (target.isleftbaropen_=== true) {
         editorBar.push(BarComponent.create(rightBarSpacerOpen, {
 
         }));
@@ -358,6 +358,10 @@ class Editor extends React.PureComponent<Props, State> {
     };
   }
 
+  componentDidMount(): void {
+    console.log("Editor compDidMount state: ", this.state);
+    console.log("Editor compDidMount props: ", this.props);
+  }
   async componentDidUpdate(prevProps: Props) {
 
     if (this.props.isleftbaropen !== this.state.isleftbaropen) {
