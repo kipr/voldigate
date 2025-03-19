@@ -16,6 +16,7 @@ const simpleGit = require("simple-git");
 const JSZip = require("jszip");
 const { spawn } = require("child_process");
 
+
 let config;
 try {
   config = getConfig();
@@ -38,6 +39,56 @@ function getAllDirectories(dirPath) {
     );
   } catch (error) {
     console.error("Error reading directory:", error);
+    return [];
+  }
+}
+
+
+function getAllProjectDirectories(dirPath) {
+  try {
+    const files = fs.readdirSync(dirPath);
+
+    // Filter directories
+    const directories = files.filter((file) =>
+      fs.statSync(path.join(dirPath, file)).isDirectory()
+    );
+
+    // Mapping each directory to a Project structure
+    const projects = directories.map((dirName) => {
+      const projectPath = path.join(dirPath, dirName);
+
+      // Assuming you are determining project language based on some logic, e.g., folder name or file types
+      const projectLanguage = parseGitConfig(fs.readFileSync(path.join(projectPath , ".git/config"), "utf8"));; // Replace with your logic for language detection
+      console.log("For Project: ", dirName, "Language: ", projectLanguage);
+      // Assuming there are specific folders like 'src', 'data', and 'include' inside each project directory
+      const includeFolderFiles = getFilesInFolder(path.join(projectPath, 'include'));
+      const srcFolderFiles = getFilesInFolder(path.join(projectPath, 'src'));
+      const dataFolderFiles = getFilesInFolder(path.join(projectPath, 'data'));
+
+      // Create the project object
+      return {
+        projectName: dirName,
+        projectLanguage, // Set based on your logic
+        includeFolderFiles,
+        srcFolderFiles,
+        dataFolderFiles,
+      };
+    });
+
+    return projects;
+
+  } catch (error) {
+    console.error("Error reading directory:", error);
+    return []; // Return an empty array in case of error
+  }
+}
+function getFilesInFolder(folderPath) {
+  try {
+    const files = fs.readdirSync(folderPath);
+    // Filter out any files starting with a dot (.)
+    return files.filter(file => !file.startsWith('.'));
+  } catch (error) {
+    console.error("Error reading folder:", error);
     return [];
   }
 }
@@ -883,9 +934,11 @@ app.get("/load-user-data", async (req, res) => {
       const userInterfaceMode = getUserInterfaceMode(user);
 
       const userDirectory = `/home/kipr/Documents/KISS/${user}`;
-      const projects = getAllDirectories(userDirectory).filter(
-        (file) => !file.startsWith(".")
-      );
+      const projects = getAllProjectDirectories(userDirectory);
+      console.log("Projects: ", projects);
+      // const projects = getAllProjectDirectories(userDirectory).filter(
+      //   (file) => !file.startsWith(".")
+      // );
 
       if (userInterfaceMode === null) {
         console.log(`User interface mode not found for ${user}`);
