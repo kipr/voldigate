@@ -15,6 +15,8 @@ import { Settings } from '../Settings';
 import { Project } from '../types/projectTypes';
 import { User } from '../types/userTypes';
 import { InterfaceMode } from '../types/interfaceModes';
+import { JSX } from 'react';
+
 export interface OpenFileDialogPublicProps extends ThemeProps, StyleProps {
   projectLanguage: ProgrammingLanguage;
   settings: Settings;

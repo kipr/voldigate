@@ -9,7 +9,7 @@ import { Dialog } from './Dialog';
 import { ThemeProps, LIGHT, LIGHTMODE_YES, LIGHTMODE_NO } from './theme';
 import { connect } from 'react-redux';
 import { State as ReduxState } from '../state';
-
+import { JSX } from 'react';
 export interface SaveFileDialogPublicProps extends ThemeProps, StyleProps {
   toSaveName: string;
   toSaveType: string;

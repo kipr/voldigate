@@ -9,7 +9,7 @@ import { Dialog } from './Dialog';
 import { ThemeProps } from './theme';
 import { connect } from 'react-redux';
 import { State as ReduxState } from '../state';
-
+import { JSX } from 'react';
 export interface DownloadUserProjectFileDialogPublicProps extends ThemeProps, StyleProps {
   toDownloadName: string;
   toDownloadType: string;

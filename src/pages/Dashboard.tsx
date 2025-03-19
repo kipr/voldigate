@@ -50,16 +50,12 @@ class Dashboard extends React.PureComponent<Props, State> {
           history={undefined}
           location={undefined}
           match={undefined}
-          onThemeChange={this.onThemeChange_}>
-        </HomeNavigation>
+          onThemeChange={this.onThemeChange_}
+        />
       </>
 
     );
   }
 }
 
-export default connect((state: ReduxState) => ({
-  locale: state.i18n.locale,
-}), dispatch => ({
-
-}))(Dashboard) as React.ComponentType<DashboardPublicProps>;
+export default Dashboard;

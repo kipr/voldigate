@@ -5,7 +5,7 @@ import { ThemeProps } from './theme';
 import { Vector2 } from '../math';
 import { Box2 } from '../geometry';
 import resizeListener, { ResizeListener } from './ResizeListener';
-
+import { JSX } from 'react';
 export interface BooleanPlotProps extends ThemeProps, StyleProps {
   value: boolean;
   duration?: number;

@@ -13,7 +13,7 @@ import tr from '@i18n';
 import { connect } from 'react-redux';
 
 import { State as ReduxState } from '../state';
-
+import { JSX } from 'react';
 import KIPR_LOGO_BLACK from '../assets/KIPR-Logo-Black-Text-Clear-Large.png';
 import KIPR_LOGO_WHITE from '../assets/KIPR-Logo-White-Text-Clear-Large.png';
 import { faBars,faPlay, faStop } from '@fortawesome/free-solid-svg-icons';

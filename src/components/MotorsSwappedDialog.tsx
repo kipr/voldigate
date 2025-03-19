@@ -6,7 +6,7 @@ import { State } from '../state';
 import { StyleProps } from "../style";
 import { Dialog } from './Dialog';
 import { Theme, ThemeProps } from "./theme";
-
+import { JSX } from 'react';
 
 export interface MotorsSwappedDialogProps extends StyleProps {
   theme: Theme;

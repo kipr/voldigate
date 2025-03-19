@@ -371,7 +371,7 @@ class SettingsDialog extends React.PureComponent<Props, State> {
       this.setState({
         confirmMessage: (
           <span style={{ marginRight: '5px' }}>
-            Are you sure you want to change to: <strong>{option.data}</strong>?
+            Are you sure you want to change to: <strong>{option.data as React.ReactNode}</strong>?
           </span>
         ),
         interfaceMode: option.data as InterfaceMode.SIMPLE | InterfaceMode.ADVANCED

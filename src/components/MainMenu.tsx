@@ -118,9 +118,8 @@ export class MainMenu extends React.Component<Props, State> {
         {modal.type === Modal.Type.About && (
           <AboutDialog
             theme={theme}
-            onClose={() => this.setState({ modal: Modal.NONE })}>
-
-          </AboutDialog>
+            onClose={() => this.setState({ modal: Modal.NONE })}
+          />
         )}
 
       </Container>
@@ -128,6 +127,4 @@ export class MainMenu extends React.Component<Props, State> {
   }
 }
 
-export default connect((state: ReduxState) => ({
-  locale: state.i18n.locale
-}))(MainMenu) as React.ComponentType<MenuPublicProps>;
+export default MainMenu;

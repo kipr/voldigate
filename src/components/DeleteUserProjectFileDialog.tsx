@@ -4,7 +4,7 @@ import { StyleProps } from '../style';
 import { Dialog } from './Dialog';
 import { ThemeProps, LIGHTMODE_YES,LIGHTMODE_NO,LIGHT } from './theme';
 import { Fa } from './Fa';
-
+import { JSX } from 'react';
 import { faCopyright } from '@fortawesome/free-solid-svg-icons';
 
 import KIPR_LOGO_BLACK from '../assets/KIPR-Logo-Black-Text-Clear-Large.png';
@@ -29,15 +29,10 @@ export interface DeleteUserProjectFileDialogPublicProps extends ThemeProps, Styl
 interface DeleteUserProjectFileDialogPrivateProps {
   locale: LocalizedString.Language;
 }
-interface DeleteUserProjectFileDialogState {
 
-}
-interface ClickProps {
-  onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
-  disabled?: boolean;
-}
+
 type Props = DeleteUserProjectFileDialogPublicProps & DeleteUserProjectFileDialogPrivateProps;
-type State = DeleteUserProjectFileDialogState;
+
 
 namespace Modal {
   export enum Type {
@@ -138,7 +133,7 @@ const Button = styled('button', {
 
 
 // Styled component button for the "Yes" button
-const YesItem = styled(Button, (props: ThemeProps & ClickProps) => ({
+const YesItem = styled(Button, (props: ThemeProps & {onClick?: () => void; disabled?: boolean}) => ({
   backgroundColor: LIGHTMODE_YES.standard,
   border: `1px solid ${LIGHTMODE_YES.border}`,
   ':hover':
@@ -159,7 +154,7 @@ const YesItem = styled(Button, (props: ThemeProps & ClickProps) => ({
 }));
 
 // Styled component button for the "No, don't save and continue" button
-const NoItem = styled(Button, (props: ThemeProps & ClickProps) => ({
+const NoItem = styled(Button, (props: ThemeProps & {onClick?: () => void; disabled?: boolean}) => ({
   backgroundColor: LIGHTMODE_NO.standard,
   border: `1px solid ${LIGHTMODE_NO.border}`,
   ':hover':
@@ -180,9 +175,9 @@ const NoItem = styled(Button, (props: ThemeProps & ClickProps) => ({
 }));
 
 
-class DeleteUserProjectFileDialog extends React.PureComponent<Props, State> {
+class DeleteUserProjectFileDialog extends React.PureComponent<Props> {
 
-  constructor(props: Props, state: State) {
+  constructor(props: Props) {
     super(props);
     this.state = {
       }
@@ -236,6 +231,4 @@ class DeleteUserProjectFileDialog extends React.PureComponent<Props, State> {
   }
 }
 
-export default connect((state: ReduxState) => ({
-  locale: state.i18n.locale,
-}))(DeleteUserProjectFileDialog) as React.ComponentType<DeleteUserProjectFileDialogPublicProps>;
+export default DeleteUserProjectFileDialog;

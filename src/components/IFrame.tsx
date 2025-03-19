@@ -72,13 +72,17 @@ export class IFrame extends React.Component<Props, State> {
       <Container
         className={className}
         theme={theme}
-        ref={(ref: HTMLDivElement) => (this.container = ref)}
+        ref={(ref: HTMLDivElement | null) => {
+          if (ref) this.container = ref;
+        }}
       >
         <Iframe
           className={className}
           theme={theme}
           src={src}
-          ref={(ref: HTMLIFrameElement) => (this.iframe = ref)}
+          ref={(ref: HTMLIFrameElement | null) => {
+            if (ref) this.iframe = ref;
+          }}
           onLoad={() => this.setState({ loaded: true })}
           width={width}
           height={height}

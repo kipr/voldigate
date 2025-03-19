@@ -14,7 +14,7 @@ import { State as ReduxState } from '../state';
 import { Settings } from '../Settings';
 import { Project } from '../types/projectTypes';
 import { User } from '../types/userTypes';
-
+import { JSX } from 'react';
 export interface OpenUsersDialogPublicProps extends ThemeProps, StyleProps {
   projectLanguage: ProgrammingLanguage;
   settings: Settings;
