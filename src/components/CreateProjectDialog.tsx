@@ -31,8 +31,7 @@ export interface CreateProjectDialogPublicProps extends ThemeProps, StyleProps {
 
 interface CreateProjectDialogPrivateProps {
   locale: LocalizedString.Language;
-  onLocaleChange: (locale: LocalizedString.Language) => void;
-  onUserCreation: (userName: string) => void;
+
 }
 
 interface CreateProjectDialogState {
@@ -244,8 +243,8 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
                 theme={theme}
                 onSelect={this.onSelectLanguage_}
                 options={LANGUAGE_OPTIONS}
-                index={languageIndex}>
-              </StyledComboBox>
+                index={languageIndex}
+              />
             </ComboBoxContainer>
 
             {/* Show error message if it exists */}
@@ -265,8 +264,8 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
                 theme={theme}
                 onSelect={this.onSelectInterface_}
                 options={INTERFACE_OPTIONS}
-                index={interfaceIndex}>
-              </StyledComboBox>
+                index={interfaceIndex}
+              />
             </ComboBoxContainer>
 
             <Container theme={theme} style={style} className={className}>
@@ -288,11 +287,4 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
   }
 }
 
-export default connect((state: ReduxState) => ({
-  locale: state.i18n.locale
-}), dispatch => ({
-  onLocaleChange: (locale: LocalizedString.Language) => dispatch(I18nAction.setLocale({ locale })),
-
-}))(CreateProjectDialog) as React.ComponentType<CreateProjectDialogPublicProps>;
-
-
+export default CreateProjectDialog;

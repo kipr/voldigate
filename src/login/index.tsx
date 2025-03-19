@@ -13,7 +13,7 @@ const engine = new Styletron({ prefix: 'style' });
 
 ReactDom.render(
   <StyletronProvider value={engine} debugAfterHydration>
-    <Dashboard history={undefined} location={undefined} match={undefined} theme={DARK}/>
+    <Dashboard history={undefined} location={undefined} match={undefined} theme={DARK}  locale={'en-US'}/>
   </StyletronProvider>,
   reactRoot
 );

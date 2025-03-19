@@ -11,8 +11,7 @@ export interface DashboardPublicProps extends RouteComponentProps, ThemeProps, S
 }
 
 interface DashboardPrivateProps {
-  onTutorialsClick: () => void;
-  onSimulatorClick: () => void;
+
   locale: LocalizedString.Language;
 }
 
