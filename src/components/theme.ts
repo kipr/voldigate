@@ -94,6 +94,8 @@ export interface Theme {
   selectedFileBackground: string;
   hoverFileBackground: string;
   hoverOptionBackground: string;
+  confirmMessageBackground: string;
+  successMessageBackground: string;
 
   dialogBoxTitleBackground: string;
   unselectedBackground: string;
@@ -142,6 +144,8 @@ export const COMMON: Theme = {
   leftBarContainerBackground: undefined,
   editorPageBackground: undefined,
   editorConsoleBackground: undefined,
+  confirmMessageBackground: undefined,
+  successMessageBackground: undefined,
   editorBackground: undefined,
   yesButtonColor: undefined,
   noButtonColor: undefined,
@@ -194,6 +198,8 @@ export const LIGHT: Theme = {
   fileContainerBackground: '#f4ecec',
   leftBarContainerBackground: '#f4ecec',
   homeStartContainerBackground: '#f4ebec',
+  confirmMessageBackground: '#ff4d4d',
+  successMessageBackground: '#5dd5cb',
 
   selectedUserBackground: '#dadada',
   selectedProjectBackground: '#dadada',
@@ -241,6 +247,8 @@ export const DARK: Theme = {
   homeStartContainerBackground: '#333333',
   startContainerBackground: '#404040',
   unselectedBackground: '#343436',
+  confirmMessageBackground: '#ff1a1a',
+  successMessageBackground: '#488b49',
 
   selectedUserBackground: '#3f3f3f',
   selectedProjectBackground: '#3f3f3f',

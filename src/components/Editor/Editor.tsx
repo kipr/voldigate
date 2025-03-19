@@ -14,6 +14,7 @@ import { Text } from '../Text';
 import { BarComponent } from '../Widget';
 import { WarningCharm, ErrorCharm } from './';
 import { GREEN, LIGHTMODE_GREEN, RED, ThemeProps } from '../theme';
+import ForwardedIvygate from 'ivygate/dist/Ivygate';
 import { Ivygate, Message } from 'ivygate';
 import { FontAwesome } from '../FontAwesome';
 import { faFileDownload, faFloppyDisk, faIndent, faLink, faPlay, faStop } from '@fortawesome/free-solid-svg-icons';
@@ -38,6 +39,7 @@ export interface EditorPublicProps extends StyleProps, ThemeProps {
 
 interface EditorState {
   isleftbaropen: boolean;
+  code: string;
 }
 
 type Props = EditorPublicProps;
@@ -266,7 +268,7 @@ export const createEditorBarComponents = ({
         text: target.fileName
       }));
 
-      if (target.isleftbaropen_.toString() === 'true') {
+      if (target.isleftbaropen_=== true) {
         editorBar.push(BarComponent.create(rightBarSpacerOpen, {
 
         }));
@@ -335,9 +337,9 @@ export const createEditorBarComponents = ({
 
 export const IVYGATE_LANGUAGE_MAPPING: Dict<string> = {
   'ecmascript': 'javascript',
-  'python': 'python',
-  'c': 'c',
-  'cpp': 'c',
+  'python': 'customPython',
+  'c': 'customCpp',
+  'cpp': 'customCpp',
   'plaintext': 'plaintext',
 };
 
@@ -353,13 +355,24 @@ class Editor extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-
+      code: '',
       isleftbaropen: props.isleftbaropen,
     };
   }
 
+  componentDidMount(): void {
+
+  }
   async componentDidUpdate(prevProps: Props) {
 
+
+    if(prevProps.code !== this.props.code) {
+
+      this.setState({ code: this.props.code }, () => {
+        this.ivygate_.editor.getModel().setValue(this.state.code); // Ensures update happens AFTER state is set
+      });
+
+    }
     if (this.props.isleftbaropen !== this.state.isleftbaropen) {
       this.setState({ isleftbaropen: this.props.isleftbaropen });
     }
@@ -420,15 +433,18 @@ class Editor extends React.PureComponent<Props, State> {
       language
     } = this.props;
 
+
     return (
       <Container theme={theme} style={style} className={className} >
         <Ivygate
           ref={this.bindIvygate_}
-          code={code}
+          
+          code={this.state.code}
           language={IVYGATE_LANGUAGE_MAPPING[language] || language}
           messages={messages}
           onCodeChange={onCodeChange}
           autocomplete={autocomplete}
+          theme = {theme.themeName}
         />
       </Container>
     );

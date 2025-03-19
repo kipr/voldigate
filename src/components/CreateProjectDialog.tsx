@@ -5,6 +5,7 @@ import LocalizedString from '../util/LocalizedString';
 import ComboBox from './ComboBox';
 import Form from './Form';
 import ProgrammingLanguage from '../ProgrammingLanguage';
+import { InterfaceMode } from '../types/interfaceModes';
 import { ThemeProps } from './theme';
 import { StyleProps } from '../style';
 import { styled } from 'styletron-react';
@@ -24,14 +25,13 @@ export interface CreateProjectDialogPublicProps extends ThemeProps, StyleProps {
   onClose: () => void;
   onChangeProjectName: (name: string) => void;
   onLanguageChange: (language: ProgrammingLanguage) => void;
-  closeProjectDialog: (newProjName: string, newProjLanguage: ProgrammingLanguage) => void;
+  closeProjectDialog: (newProjName: string, newProjLanguage: ProgrammingLanguage, newInterfaceMode: InterfaceMode) => void;
   onDocumentationSetLanguage: (language: 'c' | 'python') => void;
 }
 
 interface CreateProjectDialogPrivateProps {
   locale: LocalizedString.Language;
-  onLocaleChange: (locale: LocalizedString.Language) => void;
-  onUserCreation: (userName: string) => void;
+
 }
 
 interface CreateProjectDialogState {
@@ -39,6 +39,7 @@ interface CreateProjectDialogState {
   modal: Modal;
   showRepeatProjectDialog: boolean;
   language: string;
+  interfaceMode: InterfaceMode;
   errorMessage: string;
 }
 
@@ -71,6 +72,7 @@ const ComboBoxContainer = styled('div', (props: ThemeProps) => ({
   minHeight: '30px',
   marginLeft: '8px',
   marginRight: '8px',
+  marginBottom: '8px',
 }));
 
 const NewProjectContainer = styled('div', (props: ThemeProps) => ({
@@ -93,7 +95,7 @@ const StyledForm = styled(Form, (props: ThemeProps) => ({
   paddingRight: `${props.theme.itemPadding * 2}px`,
 }));
 
-const OPTIONS: ComboBox.Option[] = [{
+const LANGUAGE_OPTIONS: ComboBox.Option[] = [{
   text: 'C',
   data: 'c'
 }, {
@@ -102,6 +104,16 @@ const OPTIONS: ComboBox.Option[] = [{
 }, {
   text: 'Python',
   data: 'python'
+}];
+
+
+const INTERFACE_OPTIONS: ComboBox.Option[] = [{
+  text: 'Simple',
+  data: 'Simple'
+}, {
+  text: 'Advanced',
+  data: 'Advanced'
+
 }];
 
 const ErrorMessageContainer = styled('div', (props: ThemeProps) => ({
@@ -129,13 +141,23 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
       userName: this.props.userName,
       showRepeatProjectDialog: false,
       language: 'c',
-      errorMessage: ''
+      errorMessage: '',
+      interfaceMode: InterfaceMode.SIMPLE
     }
   }
 
-  private onSelect_ = (index: number, option: ComboBox.Option) => {
+  componentDidMount(): void {
+    console.log("CreateProjectDialog state: ", this.state);
+  }
+
+  private onSelectLanguage_ = (languageIndex: number, option: ComboBox.Option) => {
     this.onLanguageChange(option.data as ProgrammingLanguage);
   };
+
+  private onSelectInterface_ = (interfaceIndex: number, option: ComboBox.Option) => {
+    this.onInterfaceChange(option.data as InterfaceMode);
+  };
+
 
   private onLanguageChange = (language: ProgrammingLanguage) => {
     this.setState({
@@ -143,7 +165,18 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
     });
   };
 
+  private onInterfaceChange = (interfaceMode: InterfaceMode) => {
+    this.setState({
+      interfaceMode: interfaceMode
+    }, () => {
+      console.log("Interface Mode: ", this.state.interfaceMode);
+    });
+  };
+
+
   onFinalize_ = async (values: { [id: string]: string }) => {
+
+    console.log("CreateProjectDialog onFinalize_ state: ", this.state);
 
     const projectName = values.projectName;
 
@@ -166,11 +199,11 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
     this.setState({ errorMessage: "" }); // Clear error message if input is valid
     try {
 
-      const response = await axios.post('/initialize-repo', { userName: this.props.userName, projectName: values.projectName, language: this.state.language as ProgrammingLanguage });
+      const response = await axios.post('/initialize-repo', { userName: this.props.userName, projectName: values.projectName, language: this.state.language as ProgrammingLanguage, interfaceMode: this.state.interfaceMode });
       console.log("initialize-repo Response: ", response);
 
       if (response.status === 200) {
-        this.props.closeProjectDialog(values.projectName, this.state.language as ProgrammingLanguage);
+        this.props.closeProjectDialog(values.projectName, this.state.language as ProgrammingLanguage, this.state.interfaceMode);
       }
 
     }
@@ -192,7 +225,9 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
       Form.projectName('projectName', 'Project Name')
     ];
 
-    const index = OPTIONS.findIndex(option => option.data === this.state.language);
+    const languageIndex = LANGUAGE_OPTIONS.findIndex(option => option.data === this.state.language);
+    
+    const interfaceIndex = INTERFACE_OPTIONS.findIndex(option => option.data === this.state.interfaceMode);
 
     return (
       <div>
@@ -206,10 +241,10 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
               <ComboBoxLabel theme={theme}>Language:</ComboBoxLabel>
               <StyledComboBox
                 theme={theme}
-                onSelect={this.onSelect_}
-                options={OPTIONS}
-                index={index}>
-              </StyledComboBox>
+                onSelect={this.onSelectLanguage_}
+                options={LANGUAGE_OPTIONS}
+                index={languageIndex}
+              />
             </ComboBoxContainer>
 
             {/* Show error message if it exists */}
@@ -222,6 +257,17 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
 
               </ErrorMessageContainer>
             )}
+
+            <ComboBoxContainer theme={theme} style={style} className={className}>
+              <ComboBoxLabel theme={theme}>Interface Mode:</ComboBoxLabel>
+              <StyledComboBox
+                theme={theme}
+                onSelect={this.onSelectInterface_}
+                options={INTERFACE_OPTIONS}
+                index={interfaceIndex}
+              />
+            </ComboBoxContainer>
+
             <Container theme={theme} style={style} className={className}>
               <StyledForm
                 theme={theme}
@@ -241,11 +287,4 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
   }
 }
 
-export default connect((state: ReduxState) => ({
-  locale: state.i18n.locale
-}), dispatch => ({
-  onLocaleChange: (locale: LocalizedString.Language) => dispatch(I18nAction.setLocale({ locale })),
-
-}))(CreateProjectDialog) as React.ComponentType<CreateProjectDialogPublicProps>;
-
-
+export default CreateProjectDialog;

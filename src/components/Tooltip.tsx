@@ -12,7 +12,7 @@ export interface TooltipProps extends ThemeProps, StyleProps {
   target: Tooltip.Target;
   contentHint: Tooltip.ContentHint;
 
-  children: unknown;
+  children: React.ReactNode;
 }
 
 interface TooltipState {

@@ -58,7 +58,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@types/node": "^20.6.2",
-    "@types/react": "^16.9.25",
+    "@types/react": "^19.0.10",
     "axios": "^1.7.5",
     "body-parser": "^1.19.0",
     "child_process": "^1.0.2",
@@ -75,13 +75,13 @@
     "image-webpack-loader": "^6.0.0",
     "immer": "^9.0.15",
     "isarray": "^2.0.5",
-    "ivygate": "git+https://github.com/kipr/ivygate.git",
+    "ivygate": "file:../ivygate",
     "jszip": "^3.10.1",
+    "monaco-editor": "^0.52.2",
     "morgan": "^1.10.0",
-    "pouchdb": "^9.0.0",
     "prop-types": "^15.8.1",
     "qs": "^6.11.0",
-    "react": "^17.0.1",
+    "react": "^18.2.0",
     "react-dom": "^17.0.1",
     "react-loading": "^2.0.3",
     "react-redux": "^7.2.4",
@@ -99,4 +99,5 @@
     "url-loader": "^4.1.1",
     "uuid": "^8.3.2"
   }
+
 }

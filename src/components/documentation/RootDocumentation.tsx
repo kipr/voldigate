@@ -10,7 +10,7 @@ import Section from '../Section';
 import { ThemeProps } from '../theme';
 import FileBrief from './FileBrief';
 import FunctionBrief from './FunctionBrief';
-
+import { JSX } from 'react';
 import Color from 'colorjs.io';
 import ModuleDocumentation from '../../state/State/Documentation/ModuleDocumentation';
 import ModuleBrief from './ModuleBrief';
@@ -48,8 +48,7 @@ const StyledInput = styled(Input, ({ theme }: ThemeProps) => ({
   borderRadius: 0,
   position: 'sticky',
   top: 0,
-  backgroundColor: new Color(theme.backgroundColor).darken(0.1)
-    .toString(),
+  //backgroundColor: new Color(theme.backgroundColor).set({ lightness: '-10%' }).toString(),
 }));
 
 const StyledFileBrief = styled(FileBrief, ({ theme }: ThemeProps) => ({

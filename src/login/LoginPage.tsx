@@ -17,6 +17,7 @@ import { Validators } from '../util/Validator';
 import { faSignInAlt, faUnlock, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import qs from 'qs';
+import { JSX } from 'react';
 
 export interface LoginPagePublicProps extends ThemeProps, StyleProps {
   externalIndex?: number;

@@ -112,7 +112,7 @@ class Tutorials extends React.Component<Props, State> {
 
     return (
       <Container style={style} theme={theme}>
-        <MainMenu theme={theme} />
+        <MainMenu theme={theme} locale={'en-US'} />
         <TutorialsContainer style={style} theme={theme}>
           {this.state.selected !== '' ? (
             <VideoContainer theme={theme}>

@@ -7,7 +7,7 @@ import { styled } from 'styletron-react';
 import { StyleProps } from '../style';
 import { Fa } from './Fa';
 import { DARK, ThemeProps, LIGHT, Theme } from './theme';
-import { faCog, faFolderTree } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faFolderTree, faWaveSquare } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { DEFAULT_SETTINGS, Settings } from '../Settings';
 import { State as ReduxState } from '../state';
@@ -15,61 +15,14 @@ import { Modal } from '../pages/Modal';
 import { Size } from './Widget';
 import { FileExplorer } from './FileExplorer';
 import { Slider } from './Slider';
+import { BLANK_PROJECT, Project } from '../types/projectTypes';
+import { User } from '../types/userTypes';
+import { InterfaceMode } from '../types/interfaceModes';
+import { JSX } from 'react';
 
 
 export interface LeftBarPublicProps extends StyleProps, ThemeProps {
-  propedAddProjectFlag: boolean;
-  propedAddFileFlag: boolean;
-  propedUserDeleteFlag: boolean;
-  propedReloadFilesFlag: boolean;
-  propedSelectedProjectName: string;
-  propedUsers: string[];
-  propedUserData: Project[];
-  propedOnProjectSelected: (userName: string, projectName: string, fileName: string, activeLanguage: ProgrammingLanguage, fileType: string) => void;
-  propedOnFileSelected: (userName: string, projectName: string, fileName: string, language: ProgrammingLanguage, fileType: string) => void;
-  propedOnUserSelected: (userName: string, loadUserData: boolean) => void;
-  propedOnAddNewProject: (userName: string) => void;
-  propedOnAddNewFile: (userName: string, projectName: string, activeLanguage: ProgrammingLanguage, fileType: string) => void;
-  propedOnDeleteUser: (userName: string, deleteUserFlag: boolean) => void;
-  propedOnDeleteProject: (userName: string, projectName: Project, deleteProjectFlag: boolean) => void;
-  propedOnDeleteFile: (userName: string, projectName: string, fileName: string, deleteFileFlag: boolean) => void;
-  propedOnDownloadUser: (userName: string) => void;
-  propedOnDownloadProject: (userName: string, project: Project) => void;
-  propedOnDownloadFile: (userName: string, projectName: string, fileName: string) => void;
 
-  rootSelectedProject: string;
-  rootFileName: string;
-  rootProjectName: string;
-  rootUserName: string;
-  rootContextMenuUser: string;
-  rootContextMenuFile: string;
-  rootOtherFileType: string;
-  rootIsLeftBarOpen: boolean;
-  rootAddNewProject: boolean;
-  rootAddNewFile: boolean;
-  rootClickFile: boolean;
-  rootLoadUserDataFlag: boolean;
-  rootDeleteUserFlag: boolean;
-  rootDeleteProjectFlag: boolean;
-  rootDeleteFileFlag: boolean;
-  rootDownloadUserFlag: boolean;
-  rootDownloadProjectFlag: boolean;
-  rootDownloadFileFlag: boolean;
-  rootActiveLanguage: ProgrammingLanguage;
-  rootContextMenuProject: Project;
-  rootSetAddNewProject: (addNewProject: boolean) => void;
-  rootSetAddNewFile: (addNewFile: boolean) => void;
-  rootSetClickFile: (clickFile: boolean) => void;
-  rootSetFileName_: (fileName: string) => void;
-  rootChangeProjectName: (projectName: string) => void;
-  rootOnUserUpdate: (users: string[]) => void;
-  rootOnLoadUserData: (project: Project[]) => void;
-  rootSetDeleteUserFlag: (deleteUserFlag: boolean) => void;
-  rootSetDeleteProjectFlag: (deleteProjectFlag: boolean) => void;
-  rootSetDeleteFileFlag: (deleteFileFlag: boolean) => void;
-  rootSetDownloadUserFlag: (downloadUserFlag: boolean) => void;
-  rootSetDownloadProjectFlag: (downloadProjectFlag: boolean) => void;
-  rootSetDownloadFileFlag: (downloadFileFlag: boolean) => void;
   onThemeChange: (theme: Theme) => void;
 }
 
@@ -85,16 +38,40 @@ interface LeftBarState {
   sliderSizes: [number, number];
   isPanelVisible: boolean;
   storedTheme: Theme;
+  users: User[];
+  user?: User;
+  isLoadUserFiles?: boolean;
+  isAddNewFile?: boolean;
+  reloadUser?: boolean;
+  activeLanguage?: ProgrammingLanguage;
+  fileType?: string;
+  project?: Project;
+  rehighlightProject?: Project;
+  rehighlightFile?: string;
+  contextMenuUser?: User;
+  contextMenuProject?: Project;
+  contextMenuFile?: string;
+
+  deleteUserFlag?: boolean;
+  deleteProjectFlag?: boolean;
+  deleteFileFlag?: boolean;
+  downloadUserFlag?: boolean;
+  downloadProjectFlag?: boolean;
+  downloadFileFlag?: boolean;
+  addProjectFlag?: boolean;
+  addFileFlag?: boolean;
+  fileName?: string;
+  isClickFile: boolean;
+  isAddNewProject?: boolean;
+  isLeftBarOpen?: boolean;
+  isReloadFiles?: boolean;
+  isReloadRootUserFiles?: boolean;
+
+  loadedUserData?: Project[];
+  userShown?: User;
 
 }
-type Project = {
-  projectName: string;
-  binFolderFiles: string[];
-  includeFolderFiles: string[];
-  srcFolderFiles: string[];
-  dataFolderFiles: string[];
-  projectLanguage: ProgrammingLanguage;
-}
+
 
 type Props = LeftBarPublicProps & LeftBarPrivateProps;
 type State = LeftBarState;
@@ -123,10 +100,10 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
   display: 'flex',
   alignItems: 'center',
   flexDirection: 'row',
-  borderRight: `1px solid ${props.theme.borderColor}`,
+ // borderRight: `1px solid ${props.theme.borderColor}`,
 
   paddingRight: '20px',
-  marginBottom: '70px',
+  //marginBottom: '70px',
   height: '45px',
   opacity: props.disabled ? '0.5' : '1.0',
   ':last-child': {
@@ -154,7 +131,7 @@ const LeftBarContainer = styled('div', (props: ThemeProps & ClickProps) => ({
   flexShrink: 0,
   justifyContent: 'space-between',
   backgroundColor: props.theme.leftBarContainerBackground,
-  borderRight: `2px solid ${props.theme.borderColor}`,
+  //borderRight: `2px solid ${props.theme.borderColor}`,
   boxShadow: `5px 0 6px ${props.theme.borderColor}`,
 }));
 
@@ -171,6 +148,9 @@ const FileExplorerContainer = styled('div', (props: ThemeProps & ClickProps) => 
 export class LeftBar extends React.Component<Props, State> {
 
   private selectedFileRef: React.MutableRefObject<string>;
+  private isClickedFileRef: React.MutableRefObject<boolean>;
+  private clickTimeout: any;
+  private clickInProgress: boolean = false;
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -180,13 +160,39 @@ export class LeftBar extends React.Component<Props, State> {
       sidePanelSize: Size.Type.Minimized,
       sliderSizes: [4, 9],
       isPanelVisible: false,
-      storedTheme: localStorage.getItem('ideEditorDarkMode') === 'true' ? DARK : LIGHT
+      isClickFile: false,
+      storedTheme: localStorage.getItem('ideEditorDarkMode') === 'true' ? DARK : LIGHT,
+      users: [],
+      user: {
+        userName: '',
+        interfaceMode: InterfaceMode.SIMPLE,
+        projects: []
+      },
+      project: {
+        projectName: '',
+        includeFolderFiles: [],
+        srcFolderFiles: [],
+        dataFolderFiles: [],
+        projectLanguage: 'c'
+      },
+      addFileFlag: false,
+      addProjectFlag: false,
 
     }
     this.selectedFileRef = React.createRef();
+    this.isClickedFileRef = React.createRef();
+
+    this.isClickedFileRef.current = false;
+    this.clickTimeout = null;
+
+    this.clickInProgress = false;
   }
 
   async componentDidUpdate(prevProps: Props, prevState: State) {
+    console.log("LeftBar compDidUPdate state: ", this.state);
+    console.log("LeftBar compDidUPdate prevstate: ", prevState);
+    console.log("LeftBar compDidUPdate prevProps: ", prevProps);
+    console.log("LeftBar compDidUPdate props: ", this.props);
     if (this.state.settings !== prevState.settings) {
       if (this.state.settings.ideEditorDarkMode) {
         this.setState({ storedTheme: DARK });
@@ -198,8 +204,27 @@ export class LeftBar extends React.Component<Props, State> {
       }
     }
 
+    if (prevState.user !== this.state.user && (prevState.user !== undefined)) {
+      console.log("LeftBar compDidUPdate user changed from ", prevState.user, " to ", this.state.user);
+      this.setState({
+        isLoadUserFiles: false
+      })
+    }
+
+    if (prevState.isAddNewFile !== this.state.isAddNewFile) {
+      console.log("LeftBar compDidUPdate isAddNewFile changed from ", prevState.isAddNewFile, " to ", this.state.isAddNewFile);
+      this.setState({
+        isReloadFiles: true
+      })
+    }
+
   }
 
+  componentWillUnmount(): void {
+    if (this.clickTimeout) {
+      clearTimeout(this.clickTimeout);
+    }
+  }
   /**
    * Settings change handler
    * @param changedSettings - Partial<Settings> - The settings that have been changed
@@ -229,76 +254,439 @@ export class LeftBar extends React.Component<Props, State> {
 
   };
 
+  private selectPanel = (panel: string) => {
+    console.log("LeftBar selectPanel panel: ", panel);
+  };
+
   private setSelectedFileRef_ = (fileName: string) => {
+    console.log("LeftBar setSelectedFileRef_ fileName: ", fileName);
     this.selectedFileRef.current = fileName;
+  };
+
+
+  private setRootInfo_ = (user: User, project: Project, fileName: string, activeLanguage: ProgrammingLanguage) => {
+    console.log("LeftBar setRootInfo_ user: ", user, " project: ", project, " fileName: ", fileName, " activeLanguage: ", activeLanguage);
+    this.selectedFileRef.current = fileName;
+    this.setState({
+      userShown: user,
+      project: project,
+      fileName: fileName,
+    })
+  
+  };
+
+  private onUserUpdate_ = (users: User[]) => {
+    console.log("LeftBar onUserUpdate_ users: ", users);
+    if (JSON.stringify(this.state.users) !== JSON.stringify(users)) {
+      this.setState({ users });
+    }
+    if (this.state.reloadUser) {
+      this.setState({ reloadUser: false });
+    }
+  };
+
+  private onUserSelected_ = (user: User, loadUserData: boolean) => {
+    try {
+      if (this.state.user !== user) {
+        this.setState({ isLoadUserFiles: false });
+      }
+    }
+    catch (error) {
+      console.error('Error selecting user:', error);
+    }
+
+    try {
+      this.setState({
+        user: user,
+        isLoadUserFiles: loadUserData
+      });
+    }
+    catch (error) {
+      console.error('Error selecting user:', error);
+    }
+  };
+
+  /**
+   * Sets the state loadedUserData based on the list of projects
+   * @param userData - The list of projects
+   */
+  private onLoadUserData_ = (userData: Project[], loadedUser: User) => {
+    console.log("LeftBar onLoadUserData_ userData: ", userData);
+    console.log("LeftBar onLoadUserData_ loadedUser: ", loadedUser);
+    console.log("LeftBar onLoadUserData_ state: ", this.state);
+
+    if (loadedUser) {
+      this.setState({
+        user: loadedUser,
+        loadedUserData: userData,
+        isReloadRootUserFiles: false,
+        userShown: loadedUser
+      }, () => {
+        console.log("LeftBar onLoadUserData_ AFTER state: ", this.state);
+      })
+    } else {
+      this.setState({
+        user: {
+          ...this.state.user,
+          projects: userData
+        },
+        loadedUserData: userData,
+        isReloadRootUserFiles: false
+      });
+    }
+
+  };
+
+  /**
+ * Sets the Root state's deleteUserFlag to given boolean value
+ * @param deleteUserFlag - A boolean value to set the state deleteUserFlag
+ */
+  private onSetUserDeleteFlag_ = (deleteUserFlag: boolean) => {
+    this.setState({
+      deleteUserFlag: deleteUserFlag,
+      contextMenuUser: undefined
+    });
+  };
+
+  /**
+   * Sets the Root state's deleteUserFlag to given boolean value
+   * @param deleteUserFlag - A boolean value to set the state deleteUserFlag
+   */
+  private onSetUserDownloadFlag_ = (downloadUserFlag: boolean) => {
+    this.setState({
+      downloadUserFlag: downloadUserFlag,
+      contextMenuUser: undefined
+    });
+
+  };
+
+  /**
+ * Sets the Root state's deleteUserFlag based on the user selected to be deleted
+ * @param user - The User object
+ * @param deleteUserFlag - A boolean value to set the state deleteUserFlag
+ */
+  private onDeleteUser_ = (user: User, deleteUserFlag: boolean) => {
+    this.setState({
+      contextMenuUser: user,
+      deleteUserFlag: deleteUserFlag
+    });
+  };
+
+  /**
+   * Sets the Root state's downloadUserFlag based on the user selected to be downloaded
+   * @param user - The User object
+   */
+  private onDownloadUser_ = (user: User) => {
+    this.setState({
+      contextMenuUser: user,
+      downloadUserFlag: true
+    });
+  };
+
+  private reloadUser_ = async () => {
+
+    this.setState({
+      reloadUser: true
+    })
+  };
+
+  private reloadRootUserProjects_ = async () => {
+    console.log("LeftBar reloadUserProjects_ loadedUserData: ", this.state.loadedUserData);
+    console.log("LeftBar reloadUserProjects isloadUserFiles: ", this.state.isLoadUserFiles);
+
+    this.setState({
+      isReloadRootUserFiles: true
+    })
+  };
+
+  /**
+   * Sets the state based on the project name
+   * @param projectName - The name of the project
+   */
+  private onChangeProjectName_ = (projectName: string) => {
+    this.setState({
+      project: {
+        ...this.state.project,
+        projectName: projectName
+      }
+    });
+  };
+
+
+  /**
+   * Sets the user and project to be deleted based on the user and project selected
+   * @param user - The User object
+   * @param project - The project to be deleted
+   * @param deleteProjectFlag - A boolean value to set the state rootDeleteProjectFlag
+   */
+  private onDeleteProject_ = (user: User, project: Project, deleteProjectFlag: boolean) => {
+    this.setState({
+      user: user,
+      contextMenuProject: project,
+      deleteProjectFlag: deleteProjectFlag
+    });
+  };
+
+  /**
+   * Sets the user and project to be downloaded based on the user and project selected
+   * @param user - The User object
+   * @param project - The project to be downloaded
+   */
+  private onDownloadProject_ = (user: User, project: Project) => {
+    this.setState({
+      user: user,
+      contextMenuProject: project,
+      downloadProjectFlag: true
+    });
+  };
+
+  /**
+   * Sets the state userName based on the user selected and sets isAddNewProject flag to true
+   * @param user - The User object
+   */
+  private onAddNewProject_ = (user: User) => {
+    console.log("LeftBar onAddNewProject_ user: ", user);
+    this.setState({
+      isAddNewProject: true,
+      user: user
+    });
+
+  };
+
+
+  /**
+   * Resets isAddNewProject flag to given boolean value
+   * @param isAddNewProject - A boolean value to set the state isAddNewProject
+   */
+  private setAddNewProject_ = (isAddNewProject: boolean, newProj?: Project) => {
+    if (newProj) {
+      console.log("LeftBar setAddNewProject_ state: ", this.state);
+      console.log("LeftBar setAddNewProject_ newProj: ", newProj);
+      this.selectedFileRef.current = newProj.srcFolderFiles[0];
+      this.setState({
+        rehighlightProject: newProj,
+        project: newProj,
+        fileName: newProj.srcFolderFiles[0]
+      })
+    }
+    this.setState({
+      isAddNewProject: isAddNewProject
+    });
+  };
+
+
+  /**
+   * Sets the state based on the project selected from File Explorer
+   * @param userName - The username of the user
+   * @param projectName - The name of the project
+   * @param fileName - The name of the file
+   * @param activeLanguage - The programming language of the project
+   * @param fileType - The type of file (header, source, data)
+   */
+  private onProjectSelected_ = (user: User, project: Project, fileName: string, activeLanguage: ProgrammingLanguage) => {
+
+    this.setState({
+      user: user,
+      project: project,
+      fileName: fileName,
+      activeLanguage: activeLanguage,
+
+    });
+
+  };
+
+  /**
+   * Sets Root's deleteProjectFlag to given boolean value
+   * @param deleteProjectFlag - A boolean value to set the state rootDeleteProjectFlag
+   */
+  private onSetProjectDeleteFlag_ = (deleteProjectFlag: boolean) => {
+    this.setState({
+      deleteProjectFlag: deleteProjectFlag,
+      contextMenuProject: undefined
+    });
+  };
+
+
+  /**
+   * Sets Root's downloadProjectFlag to given boolean value
+   * @param downloadProjectFlag - A boolean value to set the state rootDownloadProjectFlag
+   */
+  private onSetProjectDownloadFlag_ = (downloadProjectFlag: boolean) => {
+    this.setState({
+      downloadProjectFlag: downloadProjectFlag,
+      contextMenuProject: undefined
+    });
+  };
+
+  private onSetSelectedProject_ = (project: Project, file: string) => {
+    console.log("LeftBar onSetSelectedProject_ project: ", project, " file: ", file);
+    this.setState({
+      rehighlightProject: project,
+      rehighlightFile: file
+    });
+
+  };
+
+  private onResetHighlightFlag_ = () => {
+    console.log("onResetHighlightFlag_ prevProps.rehighlightProject: ", this.state.rehighlightProject, " prevProps.rehighlightFile: ", this.state.rehighlightFile);
+    this.setState((prevProps) => {
+      return {
+        rehighlightProject: BLANK_PROJECT,
+        rehighlightFile: ''
+      }
+
+    });
+  }
+
+  private onAddNewFile_ = (user: User, project: Project, activeLanguage: ProgrammingLanguage, fileType: string) => {
+    this.setState({
+      isAddNewFile: true,
+      user: user,
+      activeLanguage: activeLanguage,
+      fileType: fileType,
+      project: project
+    });
+
+  };
+
+  /**
+ * Sets the state fileName based on the file selected
+ * @param fileName - The name of the file
+ */
+  private onSetFileName_ = (fileName: string) => {
+    this.setState({
+      fileName: fileName
+    });
+  };
+
+  /**
+   * Sets the state isAddNewFile flag to given boolean value
+   * @param isAddNewFile - A boolean value to set the state isAddNewFile
+   */
+  private setAddNewFile_ = (isAddNewFile: boolean) => {
+
+    this.setState({
+      isAddNewFile: isAddNewFile
+    });
+  };
+
+
+  private onDeleteFile_ = (user: User, project: Project, fileName: string, deleteFileFlag: boolean) => {
+    console.log("LeftBar onDeleteFile_ user: ", user, " project: ", project, " fileName: ", fileName, " deleteFileFlag: ", deleteFileFlag);
+    this.setState({
+      user: user,
+      project: project,
+      contextMenuFile: fileName,
+      deleteFileFlag: deleteFileFlag
+    })
+  };
+
+  private onDownloadFile_ = (user: User, project: Project, fileName: string) => {
+    console.log("LeftBar onDownloadFile_ user: ", user, " project: ", project, " fileName: ", fileName);
+    this.setState({
+      user: user,
+      project: project,
+      contextMenuFile: fileName,
+      downloadFileFlag: true
+    })
+  };
+  /**
+ * Sets the Root state's downloadFileFlag to given boolean value
+ * @param downloadFileFlag - A boolean value to set the state rootDownloadFileFlag
+ */
+  private onSetFileDownloadFlag_ = (downloadFileFlag: boolean) => {
+    this.setState({
+      downloadFileFlag: downloadFileFlag,
+      contextMenuFile: undefined
+    })
+  }
+
+  /**
+ * Sets the Root state's deleteFileFlag to given boolean value
+ * @param deleteFileFlag - A boolean value to set the state rootDeleteFileFlag
+ */
+  private onSetFileDeleteFlag_ = (deleteFileFlag: boolean) => {
+    this.setState({
+      deleteFileFlag: deleteFileFlag,
+      contextMenuProject: undefined
+    })
+  }
+
+  private onFileSelected_ = async (user: User, project: Project, fileName: string, language: ProgrammingLanguage, fileType: string) => {
+    console.log("LeftBar onFileSelected_ user: ", user, " project: ", project, " fileName: ", fileName, " language: ", language, " fileType: ", fileType);
+    console.log("LeftBar before state: ", this.state);
+    this.isClickedFileRef.current = true;
+    this.setState({
+      user: user,
+      project: project,
+      fileName: fileName,
+      activeLanguage: language,
+      fileType: fileType,
+      isClickFile: true,
+      userShown: user
+    }, () => {
+
+      console.log("LeftBar onFileSelected_ state: ", this.state);
+
+    })
+  };
+
+
+
+
+  /**
+   * Sets state isClickFile flag to given boolean value
+   * @param isClickFile - A boolean value to set the state isClickFile
+   */
+  private setClickFile_ = (isClickFile: boolean) => {
+    console.log("LeftBar setClickFile_ isClickFile: ", isClickFile);
+    //this.isClickedFileRef.current = isClickFile;
+    this.setState({
+      isClickFile: isClickFile
+    });
+
   };
 
   render() {
     const { className, theme } = this.props;
 
     const {
-      propedSelectedProjectName,
-      propedOnProjectSelected,
-      propedOnFileSelected,
-      propedOnUserSelected,
-      propedOnAddNewProject,
-      propedOnAddNewFile,
-      propedOnDeleteUser,
-      propedOnDeleteProject,
-      propedOnDeleteFile,
-      propedOnDownloadUser,
-      propedOnDownloadProject,
-      propedOnDownloadFile,
-      propedAddProjectFlag,
-      propedAddFileFlag,
-      propedUserDeleteFlag,
-      propedReloadFilesFlag,
-      propedUsers,
-      propedUserData,
-
-      rootSelectedProject,
-      rootIsLeftBarOpen,
-      rootFileName,
-      rootProjectName,
-      rootActiveLanguage,
-      rootUserName,
-      rootContextMenuUser,
-      rootContextMenuProject,
-      rootContextMenuFile,
-      rootAddNewProject,
-      rootAddNewFile,
-      rootClickFile,
-      rootOtherFileType,
-      rootSetAddNewProject,
-      rootSetAddNewFile,
-      rootSetClickFile,
-      rootSetFileName_,
-      rootChangeProjectName,
-      rootOnUserUpdate,
-      rootLoadUserDataFlag,
-      rootOnLoadUserData,
-      rootDeleteUserFlag,
-      rootDeleteProjectFlag,
-      rootDeleteFileFlag,
-      rootDownloadUserFlag,
-      rootDownloadProjectFlag,
-      rootDownloadFileFlag,
-      rootSetDeleteUserFlag,
-      rootSetDeleteProjectFlag,
-      rootSetDeleteFileFlag,
-      rootSetDownloadUserFlag,
-      rootSetDownloadProjectFlag,
-      rootSetDownloadFileFlag
-
-
-
-    } = this.props;
-    const {
       settings,
       modal,
       sliderSizes,
       isPanelVisible,
-      storedTheme
+      storedTheme,
+      users,
+      user,
+      project,
+      rehighlightProject,
+      rehighlightFile,
+      fileName,
+      activeLanguage,
+      loadedUserData,
+      isReloadRootUserFiles,
+      isLoadUserFiles,
+      isClickFile,
+      isAddNewFile,
+      isAddNewProject,
+      isLeftBarOpen,
+      isReloadFiles,
+      fileType,
+      reloadUser,
+      userShown,
+
+      downloadFileFlag,
+      deleteFileFlag,
+      deleteUserFlag,
+      deleteProjectFlag,
+      downloadUserFlag,
+      downloadProjectFlag,
+      addProjectFlag,
+      addFileFlag,
+
+      contextMenuFile,
+      contextMenuProject,
+      contextMenuUser,
 
     } = this.state;
 
@@ -306,51 +694,55 @@ export class LeftBar extends React.Component<Props, State> {
     rootContent = (
       <div style={{ height: '80%', flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         <Root
-          key={rootSelectedProject}
-          isLeftBarOpen={rootIsLeftBarOpen}
+          isLeftBarOpen={isLeftBarOpen}
           history={undefined}
           location={undefined}
           match={undefined}
           propedTheme={storedTheme}
-          propFileName={rootFileName}
-          propProjectName={rootProjectName}
-          propActiveLanguage={rootActiveLanguage}
-          propUserName={rootUserName}
-          propContextMenuUser={rootContextMenuUser}
-          propContextMenuProject={rootContextMenuProject}
-          propContextMenuFile={rootContextMenuFile}
+          propFileName={fileName}
+          propProject={project}
+          propActiveLanguage={activeLanguage}
+          propUser={user}
+          propContextMenuUser={contextMenuUser}
+          propContextMenuProject={contextMenuProject}
+          propContextMenuFile={contextMenuFile}
+          reloadUserFlag={reloadUser}
+          reloadRootUserFlag={isReloadRootUserFiles} 
 
-          addNewProject={rootAddNewProject}
-          addNewFile={rootAddNewFile}
-          clickFile={rootClickFile}
-          otherFileType={rootOtherFileType}
-          setAddNewProject={rootSetAddNewProject}
-          setAddNewFile={rootSetAddNewFile}
-          setClickFile={rootSetClickFile}
-          setFileName_={rootSetFileName_}
-          changeProjectName={rootChangeProjectName}
-          onUserUpdate={rootOnUserUpdate}
-          loadUserDataFlag={rootLoadUserDataFlag}
-          onLoadUserData={rootOnLoadUserData}
+          addNewProject={isAddNewProject}
+          addNewFile={isAddNewFile}
+          clickFile={isClickFile}
+          otherFileType={fileType}
+          setRootInfo={this.setRootInfo_}
+          setAddNewProject={this.setAddNewProject_}
+          setAddNewFile={this.setAddNewFile_}
+          setClickFile={this.setClickFile_}
+          setFileName_={this.onSetFileName_}
+          changeProjectName={this.onChangeProjectName_}
+          onUserUpdate={this.onUserUpdate_}
+          loadUserDataFlag={isLoadUserFiles}
+          onLoadUserData={this.onLoadUserData_}
 
 
-          deleteUserFlag={rootDeleteUserFlag}
-          deleteProjectFlag={rootDeleteProjectFlag}
-          deleteFileFlag={rootDeleteFileFlag}
 
-          downloadUserFlag={rootDownloadUserFlag}
-          downloadProjectFlag={rootDownloadProjectFlag}
-          downloadFileFlag={rootDownloadFileFlag}
+          deleteUserFlag={deleteUserFlag}
+          deleteProjectFlag={deleteProjectFlag}
+          deleteFileFlag={deleteFileFlag}
 
-          resetDeleteUserFlag={rootSetDeleteUserFlag}
-          resetDeleteProjectFlag={rootSetDeleteProjectFlag}
-          resetDeleteFileFlag={rootSetDeleteFileFlag}
+          downloadUserFlag={downloadUserFlag}
+          downloadProjectFlag={downloadProjectFlag}
+          downloadFileFlag={downloadFileFlag}
 
-          resetDownloadUserFlag={rootSetDownloadUserFlag}
-          resetDownloadProjectFlag={rootSetDownloadProjectFlag}
-          resetDownloadFileFlag={rootSetDownloadFileFlag}
+          resetDeleteUserFlag={this.onSetUserDeleteFlag_}
+          resetDeleteProjectFlag={this.onSetProjectDeleteFlag_}
+          resetDeleteFileFlag={this.onSetFileDeleteFlag_}
+
+          resetDownloadUserFlag={this.onSetUserDownloadFlag_}
+          resetDownloadProjectFlag={this.onSetProjectDownloadFlag_}
+          resetDownloadFileFlag={this.onSetFileDownloadFlag_}
 
           resetFileExplorerFileSelection={this.setSelectedFileRef_}
+          resetFileExplorerProjectSelection={this.onSetSelectedProject_}
         />
       </div>
     )
@@ -358,29 +750,36 @@ export class LeftBar extends React.Component<Props, State> {
     let fileExplorerContent: JSX.Element;
 
     fileExplorerContent = (
+      console.log("LeftBar render() fileExplorerContent state: ", this.state),
       <FileExplorerContainer theme={storedTheme}>
         <FileExplorer
           theme={storedTheme}
           locale="en-US"
-          propsSelectedProjectName={propedSelectedProjectName}
-          onProjectSelected={propedOnProjectSelected}
-          onFileSelected={propedOnFileSelected}
-          onUserSelected={propedOnUserSelected}
-          onAddNewProject={propedOnAddNewProject}
-          onAddNewFile={propedOnAddNewFile}
-          onDeleteUser={propedOnDeleteUser}
-          onDeleteProject={propedOnDeleteProject}
-          onDeleteFile={propedOnDeleteFile}
-          onDownloadUser={propedOnDownloadUser}
-          onDownloadProject={propedOnDownloadProject}
-          onDownloadFile={propedOnDownloadFile}
-          addProjectFlag={propedAddProjectFlag}
-          addFileFlag={propedAddFileFlag}
-          userDeleteFlag={propedUserDeleteFlag}
-          reloadFilesFlag={propedReloadFilesFlag}
-          propUsers={propedUsers}
-          propUserData={propedUserData}
+          propsSelectedProjectName={project.projectName}
+          onProjectSelected={this.onProjectSelected_}
+          onFileSelected={this.onFileSelected_}
+          onUserSelected={this.onUserSelected_}
+          onAddNewProject={this.onAddNewProject_}
+          onAddNewFile={this.onAddNewFile_}
+          onDeleteUser={this.onDeleteUser_}
+          onDeleteProject={this.onDeleteProject_}
+          onDeleteFile={this.onDeleteFile_}
+          onDownloadUser={this.onDownloadUser_}
+          onDownloadProject={this.onDownloadProject_}
+          onDownloadFile={this.onDownloadFile_}
+          onResetHighlightFlag={this.onResetHighlightFlag_}
+          onReloadProjects={this.reloadRootUserProjects_}
+          addProjectFlag={addProjectFlag}
+          addFileFlag={isAddNewFile}
+          userDeleteFlag={deleteUserFlag}
+          reloadFilesFlag={isReloadFiles}
+          propUserShown={userShown}
+          propUsers={users}
+          propUserData={loadedUserData}
           propFileName={this.selectedFileRef.current}
+          reloadUser={reloadUser}
+          reHighlightProject={rehighlightProject}
+          reHighlightFile={rehighlightFile}
 
           style={{
             flex: 1,
@@ -397,12 +796,15 @@ export class LeftBar extends React.Component<Props, State> {
     );
 
     return (
-
+      console.log("LeftBar render() state: ", this.state),
       <Container className={className} theme={storedTheme}>
 
         <LeftBarContainer theme={storedTheme} >
-          <Item theme={storedTheme} onClick={this.togglePanelVisibility}>
+          <Item theme={storedTheme} onClick={() => this.selectPanel('fileExplorer')}>
             <ItemIcon icon={faFolderTree} />
+          </Item>
+          <Item style={{marginTop: '15px'}}theme={storedTheme} onClick={() =>this.selectPanel('motor_sensor_servo')}>
+            <ItemIcon icon={faWaveSquare} />
           </Item>
 
           <Item style={{ marginBottom: '50px', marginTop: 'auto' }} theme={storedTheme} onClick={this.onModalClick_(Modal.SETTINGS)}>
@@ -428,7 +830,9 @@ export class LeftBar extends React.Component<Props, State> {
             theme={storedTheme}
             settings={settings}
             onSettingsChange={this.onSettingsChange_}
+            reloadUser={this.reloadUser_}
             onClose={this.onModalClose_}
+            users={users}
           />
         )}
 

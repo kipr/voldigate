@@ -13,7 +13,7 @@ import { faCopyright } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { State as ReduxState } from '../state';
 import { sprintf } from 'sprintf-js';
-
+import { JSX } from 'react';
 export interface AboutDialogPublicProps extends ThemeProps, StyleProps {
   onClose: () => void;
 }

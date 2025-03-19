@@ -3,7 +3,7 @@ import * as React from 'react';
 import { StyleProps } from '../style';
 import { ThemeProps } from './theme';
 import resizeListener, { ResizeListener } from './ResizeListener';
-
+import { JSX } from 'react';
 export interface Vector2 {
   x: number;
   y: number;

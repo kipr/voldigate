@@ -183,14 +183,8 @@ export class TabBar extends React.Component<Props, State> {
           
         </TabBarContainer>
           
-        {modal.type === Modal.Type.Settings && (
-          <SettingsDialog
-            theme={theme}
-            settings={settings}
-            onSettingsChange={this.onSettingsChange_}
-            onClose={this.onModalClose_}
-          />
-        )}
+     
+       
       
       </>
 

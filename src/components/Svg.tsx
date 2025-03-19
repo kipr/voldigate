@@ -30,12 +30,12 @@ const RootContainer = styled('div', {
   userSelect: 'none'
 });
 
-const Container = styled('svg', (props: { $width: number, $height: number }) => ({
+const Container = styled('svg', (props: { $width: number; $height: number }) => ({
   position: 'absolute',
   top: 0,
   left: 0,
-  width: props.$width,
-  height: props.$height
+  width: `${props.$width}px`,
+  height: `${props.$height}px`
 }));
 
 class Svg extends React.Component<Props, State> {

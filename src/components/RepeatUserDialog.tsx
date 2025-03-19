@@ -4,7 +4,7 @@ import { StyleProps } from '../style';
 import { Dialog } from './Dialog';
 import { ThemeProps } from './theme';
 import { Fa } from './Fa';
-
+import { JSX } from 'react';
 import { faCopyright } from '@fortawesome/free-solid-svg-icons';
 
 import KIPR_LOGO_BLACK from '../assets/KIPR-Logo-Black-Text-Clear-Large.png';

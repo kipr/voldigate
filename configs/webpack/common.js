@@ -65,8 +65,9 @@ module.exports = {
     },
     alias: {
       '@i18n': resolve(__dirname, '../../src/i18n'),
+      '@ivygate': resolve(__dirname, '../../node_modules/ivygate'),
     },
-    symlinks: false,
+    symlinks: true,
     modules
   },
   context: resolve(__dirname, '../../src'),
@@ -120,10 +121,35 @@ module.exports = {
         ],
       },
       {
-        test: /\.(jpe?g|png|gif|svg|PNG)$/i,
+        test: /\.(png|jpe?g|gif|svg)$/i,
         use: [
-          'file-loader?hash=sha512&digest=hex&name=img/[hash].[ext]',
-          'image-webpack-loader?bypassOnDebug&optipng.optimizationLevel=7&gifsicle.interlaced=false',
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[path][name].[ext]',
+            },
+          },
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              mozjpeg: {
+                progressive: true,
+              },
+              optipng: {
+                enabled: true,
+              },
+              pngquant: {
+                quality: [0.65, 0.90],
+                speed: 4,
+              },
+              gifsicle: {
+                interlaced: false,
+              },
+              webp: {
+                quality: 75,
+              },
+            },
+          },
         ],
       },
       {
