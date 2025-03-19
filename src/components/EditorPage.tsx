@@ -15,6 +15,7 @@ import { State as ReduxState } from '../state';
 import { StyledText } from '../util';
 import { ThemeProps } from './theme';
 import { Modal } from '../pages/Modal';
+import { JSX } from 'react';
 
 
 export interface EditorPageProps extends LayoutProps, ThemeProps {
@@ -117,7 +118,7 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
 
   async componentDidUpdate(prevProps: Props, prevState: State) {
 
-    if (this.props.fileName !== prevProps.fileName) {
+    if (this.props.fileName !== prevProps.fileName || this.props.code !== prevProps.code) { 
 
       this.setState({
         language: this.props.language,
@@ -127,24 +128,28 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
           [this.props.language]: this.props.code[this.props.language]
         },
 
-      });
-    }
-    else if (this.props.code !== prevProps.code) {
+      }, () => {
 
-      this.setState({
-        code: {
-          ...this.state.code,
-          [this.state.language]: this.props.code[this.state.language]
-        }
       });
     }
+    // if (this.props.code !== prevProps.code) {
+    //   console.log("EditorPage compDidUpdate changing code from: ", prevProps.code, " to: ", this.props.code);
+    //   this.setState({
+    //     code: {
+    //       ...this.state.code,
+    //       [this.state.language]: this.props.code[this.state.language]
+    //     }
+    //   }, () => {
+    //     console.log("EditorPage compDidUpdate code state: ", this.state.code);
+    //   });
+    // }
     if (this.props.editorConsole !== prevProps.editorConsole) {
       this.setState({
         editorConsole: this.props.editorConsole
       });
 
     }
-
+    //
   }
   async componentDidMount() {
     try {
@@ -212,7 +217,7 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
     });
 
   };
-  
+
   private onIndentCode_ = () => {
     if (this.editorRef.current) this.editorRef.current.ivygate.formatCode();
   };
@@ -228,7 +233,6 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
     element.click();
     document.body.removeChild(element);
   };
-
 
   render() {
     const { props } = this;
@@ -277,11 +281,12 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
     };
     editor = (
       <Editor
+      
         theme={theme}
         isleftbaropen={isleftbaropen}
         isRunning={this.props.isRunning}
         ref={editorRef}
-        code={this.props.code[this.props.language]}
+        code={this.state.code[this.state.language]}
         language={this.props.language}
         onCodeChange={this.props.onCodeChange}
         onSaveCode={this.props.onSaveCode}
@@ -343,12 +348,4 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
   }
 }
 
-export default connect((state: ReduxState) => {
-
-  return {
-
-    locale: state.i18n.locale,
-  };
-}, dispatch => ({
-
-}), null, { forwardRef: true })(EditorPage) as React.ComponentType<EditorPageProps>;
+export default EditorPage;

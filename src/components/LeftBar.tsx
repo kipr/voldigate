@@ -7,7 +7,7 @@ import { styled } from 'styletron-react';
 import { StyleProps } from '../style';
 import { Fa } from './Fa';
 import { DARK, ThemeProps, LIGHT, Theme } from './theme';
-import { faCog, faFolderTree } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faFolderTree, faWaveSquare } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { DEFAULT_SETTINGS, Settings } from '../Settings';
 import { State as ReduxState } from '../state';
@@ -15,9 +15,11 @@ import { Modal } from '../pages/Modal';
 import { Size } from './Widget';
 import { FileExplorer } from './FileExplorer';
 import { Slider } from './Slider';
-import { Project } from '../types/projectTypes';
+import { BLANK_PROJECT, Project } from '../types/projectTypes';
 import { User } from '../types/userTypes';
 import { InterfaceMode } from '../types/interfaceModes';
+import { JSX } from 'react';
+
 
 export interface LeftBarPublicProps extends StyleProps, ThemeProps {
 
@@ -44,6 +46,8 @@ interface LeftBarState {
   activeLanguage?: ProgrammingLanguage;
   fileType?: string;
   project?: Project;
+  rehighlightProject?: Project;
+  rehighlightFile?: string;
   contextMenuUser?: User;
   contextMenuProject?: Project;
   contextMenuFile?: string;
@@ -61,8 +65,10 @@ interface LeftBarState {
   isAddNewProject?: boolean;
   isLeftBarOpen?: boolean;
   isReloadFiles?: boolean;
+  isReloadRootUserFiles?: boolean;
 
   loadedUserData?: Project[];
+  userShown?: User;
 
 }
 
@@ -94,10 +100,10 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
   display: 'flex',
   alignItems: 'center',
   flexDirection: 'row',
-  borderRight: `1px solid ${props.theme.borderColor}`,
+ // borderRight: `1px solid ${props.theme.borderColor}`,
 
   paddingRight: '20px',
-  marginBottom: '70px',
+  //marginBottom: '70px',
   height: '45px',
   opacity: props.disabled ? '0.5' : '1.0',
   ':last-child': {
@@ -125,7 +131,7 @@ const LeftBarContainer = styled('div', (props: ThemeProps & ClickProps) => ({
   flexShrink: 0,
   justifyContent: 'space-between',
   backgroundColor: props.theme.leftBarContainerBackground,
-  borderRight: `2px solid ${props.theme.borderColor}`,
+  //borderRight: `2px solid ${props.theme.borderColor}`,
   boxShadow: `5px 0 6px ${props.theme.borderColor}`,
 }));
 
@@ -248,9 +254,25 @@ export class LeftBar extends React.Component<Props, State> {
 
   };
 
+  private selectPanel = (panel: string) => {
+    console.log("LeftBar selectPanel panel: ", panel);
+  };
+
   private setSelectedFileRef_ = (fileName: string) => {
     console.log("LeftBar setSelectedFileRef_ fileName: ", fileName);
     this.selectedFileRef.current = fileName;
+  };
+
+
+  private setRootInfo_ = (user: User, project: Project, fileName: string, activeLanguage: ProgrammingLanguage) => {
+    console.log("LeftBar setRootInfo_ user: ", user, " project: ", project, " fileName: ", fileName, " activeLanguage: ", activeLanguage);
+    this.selectedFileRef.current = fileName;
+    this.setState({
+      userShown: user,
+      project: project,
+      fileName: fileName,
+    })
+  
   };
 
   private onUserUpdate_ = (users: User[]) => {
@@ -258,8 +280,8 @@ export class LeftBar extends React.Component<Props, State> {
     if (JSON.stringify(this.state.users) !== JSON.stringify(users)) {
       this.setState({ users });
     }
-    if(this.state.reloadUser){
-      this.setState({reloadUser: false});
+    if (this.state.reloadUser) {
+      this.setState({ reloadUser: false });
     }
   };
 
@@ -288,10 +310,31 @@ export class LeftBar extends React.Component<Props, State> {
    * Sets the state loadedUserData based on the list of projects
    * @param userData - The list of projects
    */
-  private onLoadUserData_ = (userData: Project[]) => {
-    this.setState({
-      loadedUserData: userData
-    });
+  private onLoadUserData_ = (userData: Project[], loadedUser: User) => {
+    console.log("LeftBar onLoadUserData_ userData: ", userData);
+    console.log("LeftBar onLoadUserData_ loadedUser: ", loadedUser);
+    console.log("LeftBar onLoadUserData_ state: ", this.state);
+
+    if (loadedUser) {
+      this.setState({
+        user: loadedUser,
+        loadedUserData: userData,
+        isReloadRootUserFiles: false,
+        userShown: loadedUser
+      }, () => {
+        console.log("LeftBar onLoadUserData_ AFTER state: ", this.state);
+      })
+    } else {
+      this.setState({
+        user: {
+          ...this.state.user,
+          projects: userData
+        },
+        loadedUserData: userData,
+        isReloadRootUserFiles: false
+      });
+    }
+
   };
 
   /**
@@ -347,6 +390,14 @@ export class LeftBar extends React.Component<Props, State> {
     })
   };
 
+  private reloadRootUserProjects_ = async () => {
+    console.log("LeftBar reloadUserProjects_ loadedUserData: ", this.state.loadedUserData);
+    console.log("LeftBar reloadUserProjects isloadUserFiles: ", this.state.isLoadUserFiles);
+
+    this.setState({
+      isReloadRootUserFiles: true
+    })
+  };
 
   /**
    * Sets the state based on the project name
@@ -407,7 +458,17 @@ export class LeftBar extends React.Component<Props, State> {
    * Resets isAddNewProject flag to given boolean value
    * @param isAddNewProject - A boolean value to set the state isAddNewProject
    */
-  private setAddNewProject_ = (isAddNewProject: boolean) => {
+  private setAddNewProject_ = (isAddNewProject: boolean, newProj?: Project) => {
+    if (newProj) {
+      console.log("LeftBar setAddNewProject_ state: ", this.state);
+      console.log("LeftBar setAddNewProject_ newProj: ", newProj);
+      this.selectedFileRef.current = newProj.srcFolderFiles[0];
+      this.setState({
+        rehighlightProject: newProj,
+        project: newProj,
+        fileName: newProj.srcFolderFiles[0]
+      })
+    }
     this.setState({
       isAddNewProject: isAddNewProject
     });
@@ -457,8 +518,28 @@ export class LeftBar extends React.Component<Props, State> {
     });
   };
 
+  private onSetSelectedProject_ = (project: Project, file: string) => {
+    console.log("LeftBar onSetSelectedProject_ project: ", project, " file: ", file);
+    this.setState({
+      rehighlightProject: project,
+      rehighlightFile: file
+    });
+
+  };
+
+  private onResetHighlightFlag_ = () => {
+    console.log("onResetHighlightFlag_ prevProps.rehighlightProject: ", this.state.rehighlightProject, " prevProps.rehighlightFile: ", this.state.rehighlightFile);
+    this.setState((prevProps) => {
+      return {
+        rehighlightProject: BLANK_PROJECT,
+        rehighlightFile: ''
+      }
+
+    });
+  }
+
   private onAddNewFile_ = (user: User, project: Project, activeLanguage: ProgrammingLanguage, fileType: string) => {
-      this.setState({
+    this.setState({
       isAddNewFile: true,
       user: user,
       activeLanguage: activeLanguage,
@@ -541,7 +622,8 @@ export class LeftBar extends React.Component<Props, State> {
       fileName: fileName,
       activeLanguage: language,
       fileType: fileType,
-       isClickFile: true
+      isClickFile: true,
+      userShown: user
     }, () => {
 
       console.log("LeftBar onFileSelected_ state: ", this.state);
@@ -563,7 +645,7 @@ export class LeftBar extends React.Component<Props, State> {
       isClickFile: isClickFile
     });
 
-   };
+  };
 
   render() {
     const { className, theme } = this.props;
@@ -577,9 +659,12 @@ export class LeftBar extends React.Component<Props, State> {
       users,
       user,
       project,
+      rehighlightProject,
+      rehighlightFile,
       fileName,
       activeLanguage,
       loadedUserData,
+      isReloadRootUserFiles,
       isLoadUserFiles,
       isClickFile,
       isAddNewFile,
@@ -588,6 +673,7 @@ export class LeftBar extends React.Component<Props, State> {
       isReloadFiles,
       fileType,
       reloadUser,
+      userShown,
 
       downloadFileFlag,
       deleteFileFlag,
@@ -621,11 +707,13 @@ export class LeftBar extends React.Component<Props, State> {
           propContextMenuProject={contextMenuProject}
           propContextMenuFile={contextMenuFile}
           reloadUserFlag={reloadUser}
+          reloadRootUserFlag={isReloadRootUserFiles} 
 
           addNewProject={isAddNewProject}
           addNewFile={isAddNewFile}
           clickFile={isClickFile}
           otherFileType={fileType}
+          setRootInfo={this.setRootInfo_}
           setAddNewProject={this.setAddNewProject_}
           setAddNewFile={this.setAddNewFile_}
           setClickFile={this.setClickFile_}
@@ -634,6 +722,7 @@ export class LeftBar extends React.Component<Props, State> {
           onUserUpdate={this.onUserUpdate_}
           loadUserDataFlag={isLoadUserFiles}
           onLoadUserData={this.onLoadUserData_}
+
 
 
           deleteUserFlag={deleteUserFlag}
@@ -653,6 +742,7 @@ export class LeftBar extends React.Component<Props, State> {
           resetDownloadFileFlag={this.onSetFileDownloadFlag_}
 
           resetFileExplorerFileSelection={this.setSelectedFileRef_}
+          resetFileExplorerProjectSelection={this.onSetSelectedProject_}
         />
       </div>
     )
@@ -677,14 +767,19 @@ export class LeftBar extends React.Component<Props, State> {
           onDownloadUser={this.onDownloadUser_}
           onDownloadProject={this.onDownloadProject_}
           onDownloadFile={this.onDownloadFile_}
+          onResetHighlightFlag={this.onResetHighlightFlag_}
+          onReloadProjects={this.reloadRootUserProjects_}
           addProjectFlag={addProjectFlag}
           addFileFlag={isAddNewFile}
           userDeleteFlag={deleteUserFlag}
           reloadFilesFlag={isReloadFiles}
+          propUserShown={userShown}
           propUsers={users}
           propUserData={loadedUserData}
           propFileName={this.selectedFileRef.current}
           reloadUser={reloadUser}
+          reHighlightProject={rehighlightProject}
+          reHighlightFile={rehighlightFile}
 
           style={{
             flex: 1,
@@ -705,8 +800,11 @@ export class LeftBar extends React.Component<Props, State> {
       <Container className={className} theme={storedTheme}>
 
         <LeftBarContainer theme={storedTheme} >
-          <Item theme={storedTheme} onClick={this.togglePanelVisibility}>
+          <Item theme={storedTheme} onClick={() => this.selectPanel('fileExplorer')}>
             <ItemIcon icon={faFolderTree} />
+          </Item>
+          <Item style={{marginTop: '15px'}}theme={storedTheme} onClick={() =>this.selectPanel('motor_sensor_servo')}>
+            <ItemIcon icon={faWaveSquare} />
           </Item>
 
           <Item style={{ marginBottom: '50px', marginTop: 'auto' }} theme={storedTheme} onClick={this.onModalClick_(Modal.SETTINGS)}>
@@ -734,7 +832,7 @@ export class LeftBar extends React.Component<Props, State> {
             onSettingsChange={this.onSettingsChange_}
             reloadUser={this.reloadUser_}
             onClose={this.onModalClose_}
-            users = {users}
+            users={users}
           />
         )}
 
