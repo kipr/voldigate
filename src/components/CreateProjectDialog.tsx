@@ -10,9 +10,6 @@ import { ThemeProps } from './theme';
 import { StyleProps } from '../style';
 import { styled } from 'styletron-react';
 import { Dialog } from './Dialog';
-import { State as ReduxState } from '../state';
-import { I18nAction } from '../state/reducer';
-import { connect } from 'react-redux';
 import { Modal } from '../pages/Modal';
 import { Fa } from './Fa';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
@@ -22,6 +19,7 @@ export interface CreateProjectDialogPublicProps extends ThemeProps, StyleProps {
   userName: string;
   language: string;
   projectName: string;
+  interfaceMode: InterfaceMode;
   onClose: () => void;
   onChangeProjectName: (name: string) => void;
   onLanguageChange: (language: ProgrammingLanguage) => void;
@@ -106,16 +104,6 @@ const LANGUAGE_OPTIONS: ComboBox.Option[] = [{
   data: 'python'
 }];
 
-
-const INTERFACE_OPTIONS: ComboBox.Option[] = [{
-  text: 'Simple',
-  data: 'Simple'
-}, {
-  text: 'Advanced',
-  data: 'Advanced'
-
-}];
-
 const ErrorMessageContainer = styled('div', (props: ThemeProps) => ({
   display: 'flex',
   flexDirection: 'row',
@@ -142,21 +130,20 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
       showRepeatProjectDialog: false,
       language: 'c',
       errorMessage: '',
-      interfaceMode: InterfaceMode.SIMPLE
+      interfaceMode: this.props.interfaceMode
     }
   }
 
   componentDidMount(): void {
     console.log("CreateProjectDialog state: ", this.state);
+    console.log("CreateProjectDialog props: ", this.props);
   }
 
   private onSelectLanguage_ = (languageIndex: number, option: ComboBox.Option) => {
     this.onLanguageChange(option.data as ProgrammingLanguage);
   };
 
-  private onSelectInterface_ = (interfaceIndex: number, option: ComboBox.Option) => {
-    this.onInterfaceChange(option.data as InterfaceMode);
-  };
+ 
 
 
   private onLanguageChange = (language: ProgrammingLanguage) => {
@@ -164,15 +151,6 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
       language: language
     });
   };
-
-  private onInterfaceChange = (interfaceMode: InterfaceMode) => {
-    this.setState({
-      interfaceMode: interfaceMode
-    }, () => {
-      console.log("Interface Mode: ", this.state.interfaceMode);
-    });
-  };
-
 
   onFinalize_ = async (values: { [id: string]: string }) => {
 
@@ -205,10 +183,14 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
       if (response.status === 200) {
         this.props.closeProjectDialog(values.projectName, this.state.language as ProgrammingLanguage, this.state.interfaceMode);
       }
+      
 
     }
     catch (error) {
       console.error('Error adding user to database:', error);
+      if(error.response.status === 409) {
+        this.setState({ errorMessage: 'Project name already exists. Please choose a different name.' });
+      }
     }
 
   };
@@ -227,8 +209,7 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
 
     const languageIndex = LANGUAGE_OPTIONS.findIndex(option => option.data === this.state.language);
     
-    const interfaceIndex = INTERFACE_OPTIONS.findIndex(option => option.data === this.state.interfaceMode);
-
+    
     return (
       <div>
         <Dialog
@@ -258,15 +239,7 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
               </ErrorMessageContainer>
             )}
 
-            <ComboBoxContainer theme={theme} style={style} className={className}>
-              <ComboBoxLabel theme={theme}>Interface Mode:</ComboBoxLabel>
-              <StyledComboBox
-                theme={theme}
-                onSelect={this.onSelectInterface_}
-                options={INTERFACE_OPTIONS}
-                index={interfaceIndex}
-              />
-            </ComboBoxContainer>
+  
 
             <Container theme={theme} style={style} className={className}>
               <StyledForm

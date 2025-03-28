@@ -15,12 +15,14 @@ import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { push } from 'connected-react-router';
 import { Fa } from './Fa';
 import { User } from '../types/userTypes';
+import ComboBox from './ComboBox';
+import { InterfaceMode } from '../types/interfaceModes';
 
 export interface CreateUserDialogPublicProps extends ThemeProps, StyleProps {
     showRepeatUserDialog: boolean;
     userName: string;
     onClose: () => void;
-    onCreateProjectDialog: (userName: string) => void;
+    onCreateProjectDialog: (userName: string, interfaceMode: InterfaceMode) => void;
 }
 
 interface CreateUserDialogPrivateProps {
@@ -33,6 +35,7 @@ interface CreateUserDialogState {
     userName: string;
     errorMessage: string;
     showRepeatUserDialog: boolean;
+    interfaceMode: InterfaceMode;
 }
 
 type Props = CreateUserDialogPublicProps & CreateUserDialogPrivateProps;
@@ -51,6 +54,17 @@ const StyledForm = styled(Form, (props: ThemeProps) => ({
     paddingRight: `${props.theme.itemPadding * 2}px`,
 }));
 
+const ComboBoxContainer = styled('div', (props: ThemeProps) => ({
+    display: 'flex',
+    flexDirection: 'row',
+    color: props.theme.color,
+    spacing: '10px',
+    minHeight: '30px',
+    marginLeft: '8px',
+    marginRight: '8px',
+    marginBottom: '4px',
+    marginTop: '4px',
+}));
 const ErrorMessageContainer = styled('div', (props: ThemeProps) => ({
     display: 'flex',
     flexDirection: 'row',
@@ -60,6 +74,9 @@ const ErrorMessageContainer = styled('div', (props: ThemeProps) => ({
     alignItems: 'center',
     marginTop: '10px',
 }));
+const StyledComboBox = styled(ComboBox, {
+    flex: '1 0',
+});
 
 const ItemIcon = styled(Fa, {
     paddingLeft: '10px',
@@ -67,7 +84,24 @@ const ItemIcon = styled(Fa, {
     alignItems: 'center',
     height: '30px'
 });
+const ComboBoxLabel = styled('label', (theme: ThemeProps) => ({
+    display: 'block',
+    color: theme.theme.color,
+    fontSize: '1.1em',
+    fontWeight: 'normal',
+    marginTop: `${theme.theme.itemPadding * 2}px`,
+    marginBottom: `${theme.theme.itemPadding}px`,
+    marginRight: `${theme.theme.itemPadding}px`,
+    userSelect: 'none'
+}));
+const INTERFACE_OPTIONS: ComboBox.Option[] = [{
+    text: 'Simple',
+    data: 'Simple'
+}, {
+    text: 'Advanced',
+    data: 'Advanced'
 
+}];
 export class CreateUserDialog extends React.PureComponent<Props, State> {
 
     constructor(props: Props) {
@@ -75,7 +109,8 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
         this.state = {
             userName: '',
             showRepeatUserDialog: false,
-            errorMessage: ''
+            errorMessage: '',
+            interfaceMode: InterfaceMode.SIMPLE
         }
     }
 
@@ -83,7 +118,16 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
 
         this.setState({ showRepeatUserDialog: false });
     };
-
+    private onInterfaceChange = (interfaceMode: InterfaceMode) => {
+        this.setState({
+            interfaceMode: interfaceMode
+        }, () => {
+            console.log("Interface Mode: ", this.state.interfaceMode);
+        });
+    };
+    private onSelectInterface_ = (interfaceIndex: number, option: ComboBox.Option) => {
+        this.onInterfaceChange(option.data as InterfaceMode);
+    };
     onFinalize_ = async (values: { [id: string]: string }) => {
 
         const userName = values.userName;
@@ -115,7 +159,7 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
             }
             else {
                 this.props.onClose();
-                this.props.onCreateProjectDialog(values.userName as User['userName']);
+                this.props.onCreateProjectDialog(values.userName as User['userName'], this.state.interfaceMode);
             }
         }
         catch (error) {
@@ -136,6 +180,7 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
         const CREATEUSER_FORM_ITEMS: Form.Item[] = [
             Form.username('userName', 'User Name')
         ];
+        const interfaceIndex = INTERFACE_OPTIONS.findIndex(option => option.data === this.state.interfaceMode);
 
         return (
             <div>
@@ -156,6 +201,15 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
 
                                 </ErrorMessageContainer>
                             )}
+                            <ComboBoxContainer theme={theme} style={style} className={className}>
+                                <ComboBoxLabel theme={theme}>Interface Mode:</ComboBoxLabel>
+                                <StyledComboBox
+                                    theme={theme}
+                                    onSelect={this.onSelectInterface_}
+                                    options={INTERFACE_OPTIONS}
+                                    index={interfaceIndex}
+                                />
+                            </ComboBoxContainer>
                             <StyledForm
                                 theme={theme}
                                 onFinalize={this.onFinalize_}
