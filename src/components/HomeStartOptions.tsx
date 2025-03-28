@@ -16,11 +16,12 @@ import { DEFAULT_SETTINGS, Settings } from '../Settings';
 import { Modal } from '../pages/Modal';
 import { Project } from '../types/projectTypes';
 import { User } from '../types/userTypes';
+import { InterfaceMode } from 'types/interfaceModes';
 export interface HomeStartOptionsPublicProps extends StyleProps, ThemeProps {
     activeLanguage: ProgrammingLanguage;
     onEditorPageOpen: () => void;
     onChangeProjectName: (projectName: string) => void;
-    onCreateProjectDialog: (name: string) => void;
+    onCreateProjectDialog: (name: string, interfaceMode: InterfaceMode) => void;
     onOpenUserProject: (name: User, project: Project, fileName: string, projectLanguage: string) => void;
     onLoadUsers: () => Promise<User[]>;
     onLoadUserData: (openedUserDialog: boolean, createdUserDialog?: boolean, desiredUser?: User) => Promise<Project[]>;

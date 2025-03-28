@@ -119,6 +119,7 @@ export class NewFileDialog extends React.PureComponent<Props, State> {
     const specialCharRegex = /[^a-zA-Z0-9 _-]/;
     const isOnlySpaces = !fileName.trim(); // Check if the name is empty or only spaces
 
+    console.log("File Name: ", fileName); 
     try {
 
       let finalDirectory = ''
@@ -137,8 +138,18 @@ export class NewFileDialog extends React.PureComponent<Props, State> {
 
       }
       const projectData = await axios.get('/get-all-file-names', { params: { dirPath: `${finalDirectory}` } });
+      console.log("Project Data: ", projectData.data);
 
-      if (projectData.data.fileNames.some(name => name.includes(fileName))) {
+      let newFileName = `${fileName}.${this.props.otherFileType}`;
+      console.log("New File Name: ", newFileName);
+      let filePath = `${finalDirectory}/${newFileName}`;
+      console.log("File Path: ", filePath);
+      let trimmedFilePath = filePath.trim();
+
+
+
+      
+      if (projectData.data.fileNames.some(name => name.trim() === trimmedFilePath)) {
         this.setState({ errorMessage: 'File name already exists. Please choose a different name.' });
         return;
       }

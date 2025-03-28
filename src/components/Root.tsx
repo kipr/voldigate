@@ -12,6 +12,7 @@ import CreateProjectDialog from './CreateProjectDialog';
 import DeleteUserProjectFileDialog from './DeleteUserProjectFileDialog';
 import DownloadUserProjectFileDialog from './DownloadUserProjectFileDialog';
 import SaveFileDialog from './SaveFileDialog';
+import RenameUserProjectFileDialog from './RenameUserProjectFileDialog';
 import { State as ReduxState } from '../state';
 import { styled } from 'styletron-react';
 import { DARK, Theme } from './theme';
@@ -25,7 +26,7 @@ import { RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
 import { HomeStartOptions } from './HomeStartOptions';
 import { Modal } from '../pages/Modal';
-import { Project } from '../types/projectTypes';
+import { BLANK_PROJECT, Project } from '../types/projectTypes';
 import { InterfaceMode } from '../types/interfaceModes';
 import { User } from '../types/userTypes';
 
@@ -47,16 +48,20 @@ export interface RootPublicProps extends RouteComponentProps<RootParams> {
   clickFile: boolean;
   deleteUserFlag?: boolean;
   downloadUserFlag?: boolean;
+  renameUserFlag?: boolean;
+  renameProjectFlag?: boolean;
   isLeftBarOpen: boolean;
   deleteProjectFlag?: boolean;
   downloadProjectFlag?: boolean;
   deleteFileFlag?: boolean;
   downloadFileFlag?: boolean;
+  renameFileFlag?: boolean;
   reloadUserFlag?: boolean;
   reloadRootUserFlag?: boolean;
   propActiveLanguage: ProgrammingLanguage;
   propContextMenuProject?: Project;
   propedTheme: Theme;
+  propedMotorPositions?: { [key: string]: number };
   changeProjectName: (projectName: string) => void;
   setAddNewProject: (addNewProject: boolean, newProj?: Project) => void;
   setAddNewFile: (addNewFile: boolean) => void;
@@ -64,7 +69,7 @@ export interface RootPublicProps extends RouteComponentProps<RootParams> {
   setRootInfo: (user: User, project: Project, fileName: string, activeLanguage: ProgrammingLanguage) => void;
   setFileName_: (fileName: string) => void;
   onUserUpdate: (users: User[]) => void;
-  onLoadUserData: (userData: Project[], loadedUser?: User,) => void;
+  onLoadUserData: (userData: Project[], loadedUser?: User, renamedUser?: boolean, oldUserName?: string) => void;
   resetDeleteUserFlag: (deleteUserFlag: boolean) => void;
   resetDeleteProjectFlag: (deleteProjectFlag: boolean) => void;
   resetDeleteFileFlag: (deleteFileFlag: boolean) => void;
@@ -73,6 +78,9 @@ export interface RootPublicProps extends RouteComponentProps<RootParams> {
   resetDownloadFileFlag: (downloadFileFlag: boolean) => void;
   resetFileExplorerFileSelection: (resetSelectionToFile: string) => void;
   resetFileExplorerProjectSelection: (resetSelectionToProject: Project, resetSelectionToFile: string) => void;
+  resetRenameUserFlag: (renameUserFlag: boolean, renamedUser?: User) => void;
+  resetRenameProjectFlag: (renameProjectFlag: boolean, renamedProject?: Project) => void;
+  resetRenameFileFlag: (renameFileFlag: boolean, renamedFile?: string) => void;
 }
 
 interface RootPrivateProps {
@@ -92,7 +100,7 @@ interface RootState {
 
   rootUser: User;
   rootProject: Project,
-
+  rootInterfaceMode?: InterfaceMode,
   toDeleteName_?: string;
   toDeleteType_?: string;
   toDownloadName_?: string;
@@ -100,6 +108,8 @@ interface RootState {
   toSaveName_?: string;
   toSaveType_?: string;
   toSaveCode_?: string;
+  toRenameName_?: string;
+  toRenameType_?: string;
   otherFileType?: string;
   tempNewFile?: string;
   projectName: string;
@@ -113,6 +123,7 @@ interface RootState {
   isCreateNewUserDialogVisible: boolean;
   isOpenUserProject: boolean;
   isSaveCodePromptVisible: boolean;
+  isRenameUserProjectFileDialogVisible: boolean;
   addNewProject: boolean;
   addNewFile: boolean;
   isRunning: boolean;
@@ -138,6 +149,8 @@ interface RootState {
   projects: Project[] | null;
   users: User[];
   messages: Message[];
+
+  rootMotorPositions: { [key: string]: number };
 }
 
 type Props = RootPublicProps & RootPrivateProps;
@@ -213,6 +226,7 @@ class Root extends React.Component<Props, State> {
       isCreateNewUserDialogVisible: false,
       isOpenUserProject: false,
       isSaveCodePromptVisible: false,
+      isRenameUserProjectFileDialogVisible: false,
       clickFileState: false,
       projectName: '',
       fileName: '',
@@ -227,6 +241,7 @@ class Root extends React.Component<Props, State> {
       saveCodePromptFlag: false,
       isRunning: false,
       theme: this.props.propedTheme,
+      rootMotorPositions: {},
     };
 
     this.editorRef = React.createRef();
@@ -236,6 +251,7 @@ class Root extends React.Component<Props, State> {
   }
 
   async componentDidMount() {
+    console.log("ROOT MOUNTED");
     window.addEventListener('resize', this.onWindowResize_);
     await this.loadUsers();
 
@@ -289,9 +305,29 @@ class Root extends React.Component<Props, State> {
     console.log("Root compDidUpdate this.props: ", this.props);
     console.log("Root compDidUpdate this.state: ", this.state);
 
+    if (prevProps.renameUserFlag !== this.props.renameUserFlag && this.props.renameUserFlag) {
+      console.log("Root compDidUpdate renameUserFlag: ", this.props.renameUserFlag);
+      this.renameUser_();
+
+    }
+    if (prevProps.renameProjectFlag !== this.props.renameProjectFlag && this.props.renameProjectFlag) {
+      console.log("Root compDidUpdate renameProjectFlag: ", this.props.renameProjectFlag);
+      this.renameProject_();
+    }
+    if (prevProps.renameFileFlag !== this.props.renameFileFlag && this.props.renameFileFlag) {
+      console.log("Root compDidUpdate renameFileFlag: ", this.props.renameFileFlag);
+      this.renameFile_();
+    }
+    if (prevProps.propedMotorPositions !== this.props.propedMotorPositions) {
+      console.log("Root compDidUpdate propedMotorPositions: ", this.props.propedMotorPositions);
+      this.setState({
+        rootMotorPositions: this.props.propedMotorPositions
+      })
+    }
+
     if (prevProps.reloadRootUserFlag !== this.props.reloadRootUserFlag && this.props.reloadRootUserFlag) {
       console.log("Root compDidUpdate reloadRootUserFlag: ", this.props.reloadRootUserFlag);
-      this.props.onLoadUserData(await this.loadUserProjects(true, false, this.state.rootUser));
+      this.props.onLoadUserData(await this.loadUserProjects(false, false, this.state.rootUser));
     }
     if (prevProps.reloadUserFlag !== this.props.reloadUserFlag && this.props.reloadUserFlag) {
       console.log("Root compDidUpdate reloadUserFlag: ", this.props.reloadUserFlag);
@@ -596,10 +632,13 @@ class Root extends React.Component<Props, State> {
     if ((openedUserDialog || createdUserDialog) && desiredUser) {
       chosenUser = desiredUser;
     }
+    else if (desiredUser) {
+      chosenUser = desiredUser;
+    }
     else {
       chosenUser = this.props.propUser;
     }
-
+    console.log("Root loadUserProjects chosenUser: ", chosenUser);
     try {
       const response = await axios.get('/get-projects', { params: { filePath: `/home/kipr/Documents/KISS/${chosenUser.userName}` } });
 
@@ -708,6 +747,33 @@ class Root extends React.Component<Props, State> {
     });
   }
 
+  private renameUser_ = () => {
+    this.setState({
+      modal: Modal.RENAMEUSERPROJECTFILE,
+      isRenameUserProjectFileDialogVisible: true,
+      toRenameName_: this.props.propContextMenuUser.userName,
+      toRenameType_: 'User'
+    })
+  }
+
+  private renameProject_ = () => {
+    this.setState({
+      modal: Modal.RENAMEUSERPROJECTFILE,
+      isRenameUserProjectFileDialogVisible: true,
+      toRenameName_: this.props.propContextMenuProject.projectName,
+      toRenameType_: 'Project'
+    })
+  }
+
+  private renameFile_ = () => {
+    this.setState({
+      modal: Modal.RENAMEUSERPROJECTFILE,
+      isRenameUserProjectFileDialogVisible: true,
+      toRenameName_: this.props.propContextMenuFile,
+      toRenameType_: 'File'
+    })
+  }
+
   private saveFile_(tempNewFile_: string): void {
     console.log("Root saveFile_ state: ", this.state);
     console.log("Root saveFile_ toSaveCodeRef: ", this.toSaveCodeRef.current);
@@ -734,10 +800,176 @@ class Root extends React.Component<Props, State> {
     });
   };
 
+  private onCloseRenameUserProjectFileDialog_ = async (renamedType: string, user: User, renamedData: {}) => {
+    console.log("Root onCloseRenameUserProjectFileDialog_ passed in: ", renamedType, user, renamedData);
+    console.log("Root onCloseRenameUserProjectFileDialog_ BEFORE state: ", this.state);
+
+
+    if (renamedType === 'User') {
+
+      user = {
+        ...user,
+        userName: renamedData['newUserName'],
+      }
+      console.log("onCloseRenameUserProjectFileDialog_ edited user: ", user);
+      let loadUserProject = await this.loadUserProjects(false, false, user);
+      console.log("Root onCloseRenameUserProjectFileDialog_ loadUserProject: ", loadUserProject);
+      this.props.onLoadUserData(loadUserProject, user, true, renamedData['oldUserName']);
+      console.log("Root onCloseRenameUserProjectFileDialog_ AFTER state: ", this.state);
+
+      this.props.resetRenameUserFlag(false, user);
+
+      if (this.state.isEditorPageVisible) {
+        this.setState({
+          rootUser: user,
+        })
+      }
+      this.setState({
+        modal: Modal.NONE,
+        isRenameUserProjectFileDialogVisible: false,
+      });
+    }
+    else if (renamedType === 'Project') {
+      let newRenamedProject = {
+        ...this.state.rootProject,
+        projectName: renamedData['newProjectName'],
+      }
+      //console.log("Root onCloseRenameUserProjectFileDialog_ newRenamedProject: ", newRenamedProject);
+
+      let loadUserProject = await this.loadUserProjects(false, false, user);
+      console.log("Root onCloseRenameUserProjectFileDialog_ loadUserProject: ", loadUserProject);
+      this.props.onLoadUserData(loadUserProject, user);
+      console.log("Root onCloseRenameUserProjectFileDialog_ AFTER state: ", this.state);
+      if (this.state.isEditorPageVisible) { // User Project file already open
+        this.setState(prevState => ({
+          rootUser: {
+            ...prevState.rootUser,
+            projects: prevState.rootUser.projects.map(project =>
+              project.projectName === renamedData['oldProjectName']
+                ? { ...project, projectName: renamedData['newProjectName'] }
+                : project
+            )
+          },
+          rootProject: {
+            ...prevState.rootProject,
+            projectName: renamedData['newProjectName']
+          }
+        }));
+      }
+      this.setState({
+        modal: Modal.NONE,
+        isRenameUserProjectFileDialogVisible: false,
+      });
+      this.props.resetRenameProjectFlag(false, newRenamedProject);
+    }
+    else if (renamedType === 'File') {
+
+      let loadUserProject = await this.loadUserProjects(false, false, user);
+      console.log("Root onCloseRenameUserProjectFileDialog_ loadUserProject: ", loadUserProject);
+      this.props.onLoadUserData(loadUserProject, user);
+      console.log("Root onCloseRenameUserProjectFileDialog_ AFTER state: ", this.state);
+      if (this.state.isEditorPageVisible) { // User Project file already open
+        const [file, extension] = renamedData['oldFileName'].split(".");
+
+        switch (extension) {
+          case 'h':
+            this.setState(prevState => ({
+              rootUser: {
+                ...prevState.rootUser,
+                projects: prevState.rootUser.projects.map(project =>
+                  project.projectName === this.state.rootProject.projectName
+                    ? {
+                      ...project, includeFolderFiles: project.includeFolderFiles.map(file =>
+                        file === renamedData['oldFileName']
+                          ? renamedData['newFileName']
+                          : file
+                      )
+                    }
+                    : project
+                )
+              },
+              rootProject: {
+                ...prevState.rootProject,
+                includeFolderFiles: prevState.rootProject.includeFolderFiles.map(file =>
+                  file === renamedData['oldFileName']
+                    ? renamedData['newFileName']
+                    : file
+                )
+              },
+              fileName: renamedData['newFileName']
+            }));
+            break;
+          case 'c':
+          case 'cpp':
+          case 'py':
+            this.setState(prevState => ({
+              rootUser: {
+                ...prevState.rootUser,
+                projects: prevState.rootUser.projects.map(project =>
+                  project.projectName === this.state.rootProject.projectName
+                    ? {
+                      ...project, srcFolderFiles: project.srcFolderFiles.map(file =>
+                        file === renamedData['oldFileName']
+                          ? renamedData['newFileName']
+                          : file
+                      )
+                    }
+                    : project
+                )
+              },
+              rootProject: {
+                ...prevState.rootProject,
+                srcFolderFiles: prevState.rootProject.srcFolderFiles.map(file =>
+                  file === renamedData['oldFileName']
+                    ? renamedData['newFileName']
+                    : file
+                )
+              },
+              fileName: renamedData['newFileName']
+            }));
+            break;
+          case 'txt':
+            this.setState(prevState => ({
+              rootUser: {
+                ...prevState.rootUser,
+                projects: prevState.rootUser.projects.map(project =>
+                  project.projectName === this.state.rootProject.projectName
+                    ? {
+                      ...project, dataFolderFiles: project.dataFolderFiles.map(file =>
+                        file === renamedData['oldFileName']
+                          ? renamedData['newFileName']
+                          : file
+                      )
+                    }
+                    : project
+                )
+              },
+              rootProject: {
+                ...prevState.rootProject,
+                dataFolderFiles: prevState.rootProject.dataFolderFiles.map(file =>
+                  file === renamedData['oldFileName']
+                    ? renamedData['newFileName']
+                    : file
+                )
+              },
+              fileName: renamedData['newFileName']
+            }));
+        }
+
+      }
+      this.setState({
+        modal: Modal.NONE,
+        isRenameUserProjectFileDialogVisible: false,
+      });
+      this.props.resetRenameFileFlag(false, renamedData['newFileName']);
+    }
+  }
+
   private onCloseProjectDialog_ = async (newProjName: string, newProjLanguage: ProgrammingLanguage, newInterfaceMode: InterfaceMode) => {
     console.log("Root onCloseProjectDialog_ passed in: ", newProjName, newProjLanguage, newInterfaceMode);
     console.log("Root oncloseProjectDialog props.propUser: ", this.props.propUser);
     const { userName, rootUser } = this.state;
+    console.log("Root onCloseProjectDialog_ state: ", this.state);
 
     try {
 
@@ -746,6 +978,7 @@ class Root extends React.Component<Props, State> {
         const userNames = prevStateUsers.map(user => user.userName);
         console.log("Root onCloseProjectDialog_ ...prevState.users: ", ...prevState.users);
         console.log("Root onCloseProjectDialog_ this.state.users: ", this.state.users);
+
 
         if (!userNames.includes(rootUser.userName)) {
           prevStateUsers.push(rootUser);
@@ -763,6 +996,7 @@ class Root extends React.Component<Props, State> {
     }
 
     console.log("Root onCloseProjectDialog_ state.rootUser: ", this.state.rootUser);
+    console.log("Root onCloseProjectDialog_ newInterfaceMode: ", newInterfaceMode);
 
     this.toSaveCodeRef.current = { ...this.toSaveCodeRef.current, [newProjLanguage]: ProgrammingLanguage.DEFAULT_CODE[newProjLanguage] };
     this.setState({
@@ -808,9 +1042,6 @@ class Root extends React.Component<Props, State> {
         });
       }
 
-      // let loadUserProject = await this.loadUserProjects(false, false, this.state.rootUser);
-      // console.log("Root onCloseProjectDialog_ loadUserProject: ", loadUserProject);
-      // this.props.onLoadUserData(await this.loadUserProjects(false, true, this.state.rootUser));
       this.props.onLoadUserData(await this.loadUserProjects(false, true, this.state.rootUser), this.state.rootUser);
       if (this.props.addNewProject) {
         this.setState({
@@ -899,21 +1130,24 @@ class Root extends React.Component<Props, State> {
     });
   }
 
-  private onCreateProjectDialogOpen_ = (name: string) => {
+  private onCreateProjectDialogOpen_ = (name: string, interfaceMode: InterfaceMode) => {
 
     console.log("Root onCreateProjectDialogOpen_ name: ", name);
+    console.log("Root onCreateProjectDialogOpen_ interfaceMode: ", interfaceMode);
     console.log("Root onCreateProjectDialogOpen_ state.rootUser: ", this.state.rootUser);
     this.setState({
       rootUser: {
         ...this.state.rootUser,
-        userName: name
+        userName: name,
+        interfaceMode: interfaceMode,
       },
+      rootInterfaceMode: interfaceMode,
       userName: name,
       isCreateNewUserDialogVisible: false,
       isCreateProjectDialogVisible: true,
       modal: Modal.CREATEPROJECT
     }, () => {
-      console.log("Root onCreateProjectDialogOpen_ state.rootUser: ", this.state.rootUser);
+      console.log("Root onCreateProjectDialogOpen_ AFTER state.rootUser: ", this.state.rootUser);
     });
   }
 
@@ -966,9 +1200,10 @@ class Root extends React.Component<Props, State> {
       },
       fileName: fileName,
       isEditorPageVisible: true,
-    },async () => {
+    }, async () => {
       this.props.setRootInfo(passedUser, toOpenProject, fileName, projectLanguage);
-      this.props.onLoadUserData(await this.loadUserProjects(false, true, this.state.rootUser), this.state.rootUser);    });
+      this.props.onLoadUserData(await this.loadUserProjects(false, true, this.state.rootUser), this.state.rootUser);
+    });
 
     if (this.state.isHomeStartOptionsVisible == true) {
       this.setState({
@@ -1061,20 +1296,25 @@ class Root extends React.Component<Props, State> {
     const { locale } = this.props;
     const { userName, projectName, fileName, activeLanguage, editorConsole, code } = this.state;
 
+
     try {
       if (this.toSaveCodeRef !== undefined) {
         await this.onSaveCode_();
       }
 
-      let compilingConsole: StyledText = StyledText.extend(editorConsole, StyledText.text({
+      let compilingConsole: StyledText = StyledText.text({
+        text: LocalizedString.lookup(tr(''), locale),
+        style: STDOUT_STYLE(this.state.theme)
+      });
+      compilingConsole = StyledText.extend(compilingConsole, StyledText.text({
         text: LocalizedString.lookup(tr('Compiling...\n'), locale),
         style: STDOUT_STYLE(this.state.theme)
       }));
-
       this.setState({
         editorConsole: compilingConsole
       }, async () => {
 
+     
         const response = await axios.post('/compile-code', { userName, projectName, fileName, activeLanguage }); // This calls the backend route
 
         let nextConsole: StyledText;
@@ -1478,6 +1718,15 @@ class Root extends React.Component<Props, State> {
         this.props.resetFileExplorerProjectSelection(this.state.rootProject, this.state.fileName);
       }
     }
+    if (this.props.renameUserFlag) {
+      this.props.resetRenameUserFlag(false);
+    }
+    if (this.props.renameProjectFlag) {
+      this.props.resetRenameProjectFlag(false);
+    }
+    if (this.props.renameFileFlag) {
+      this.props.resetRenameFileFlag(false);
+    }
   }
 
   private onClearConsole_ = () => {
@@ -1508,7 +1757,11 @@ class Root extends React.Component<Props, State> {
     const {
       otherFileType,
       isLeftBarOpen,
-      locale
+      locale,
+      propUser,
+      propContextMenuUser,
+      propContextMenuProject,
+      propContextMenuFile
     } = props;
 
     const {
@@ -1523,6 +1776,7 @@ class Root extends React.Component<Props, State> {
       userName,
       rootUser,
       rootProject,
+      rootInterfaceMode,
       isEditorPageVisible,
       toDeleteName_,
       toDeleteType_,
@@ -1530,6 +1784,8 @@ class Root extends React.Component<Props, State> {
       toDownloadType_,
       toSaveName_,
       toSaveType_,
+      toRenameName_,
+      toRenameType_,
       theme,
 
     } = state;
@@ -1620,6 +1876,7 @@ class Root extends React.Component<Props, State> {
             language={activeLanguage}
             onLanguageChange={this.onLanguageChange_}
             locale={'en-US'}
+            interfaceMode={rootInterfaceMode}
           />
         )}
 
@@ -1657,6 +1914,19 @@ class Root extends React.Component<Props, State> {
           />
         )}
 
+        {this.state.isRenameUserProjectFileDialogVisible && modal.type === Modal.Type.RenameUserProjectFile && (
+          <RenameUserProjectFileDialog
+            onClose={this.onModalClose_}
+            onCloseRenameUserProjectFileDialog={this.onCloseRenameUserProjectFileDialog_}
+            theme={theme}
+            locale={'en-US'}
+            user={propContextMenuUser}
+            project={propContextMenuProject}
+            toRenameName={toRenameName_}
+            toRenameType={toRenameType_}
+          />
+
+        )}
       </RootContainer>
     );
   }

@@ -16,7 +16,6 @@ const simpleGit = require("simple-git");
 const JSZip = require("jszip");
 const { spawn } = require("child_process");
 
-
 let config;
 try {
   config = getConfig();
@@ -43,7 +42,6 @@ function getAllDirectories(dirPath) {
   }
 }
 
-
 function getAllProjectDirectories(dirPath) {
   try {
     const files = fs.readdirSync(dirPath);
@@ -58,12 +56,16 @@ function getAllProjectDirectories(dirPath) {
       const projectPath = path.join(dirPath, dirName);
 
       // Assuming you are determining project language based on some logic, e.g., folder name or file types
-      const projectLanguage = parseGitConfig(fs.readFileSync(path.join(projectPath , ".git/config"), "utf8"));; // Replace with your logic for language detection
+      const projectLanguage = parseGitConfig(
+        fs.readFileSync(path.join(projectPath, ".git/config"), "utf8")
+      ); // Replace with your logic for language detection
       console.log("For Project: ", dirName, "Language: ", projectLanguage);
       // Assuming there are specific folders like 'src', 'data', and 'include' inside each project directory
-      const includeFolderFiles = getFilesInFolder(path.join(projectPath, 'include'));
-      const srcFolderFiles = getFilesInFolder(path.join(projectPath, 'src'));
-      const dataFolderFiles = getFilesInFolder(path.join(projectPath, 'data'));
+      const includeFolderFiles = getFilesInFolder(
+        path.join(projectPath, "include")
+      );
+      const srcFolderFiles = getFilesInFolder(path.join(projectPath, "src"));
+      const dataFolderFiles = getFilesInFolder(path.join(projectPath, "data"));
 
       // Create the project object
       return {
@@ -76,7 +78,6 @@ function getAllProjectDirectories(dirPath) {
     });
 
     return projects;
-
   } catch (error) {
     console.error("Error reading directory:", error);
     return []; // Return an empty array in case of error
@@ -86,7 +87,7 @@ function getFilesInFolder(folderPath) {
   try {
     const files = fs.readdirSync(folderPath);
     // Filter out any files starting with a dot (.)
-    return files.filter(file => !file.startsWith('.'));
+    return files.filter((file) => !file.startsWith("."));
   } catch (error) {
     console.error("Error reading folder:", error);
     return [];
@@ -128,7 +129,7 @@ function getUserInterfaceMode(userName) {
   }
 }
 
-function setUserInterfaceMode(userName, newMode){
+function setUserInterfaceMode(userName, newMode) {
   const userConfigPath = `/home/kipr/Documents/KISS/${userName}/.config.json`;
   try {
     // Check if the file exists
@@ -146,9 +147,15 @@ function setUserInterfaceMode(userName, newMode){
     configData.interfaceMode = newMode;
 
     // Write the updated config back to the file
-    fs.writeFileSync(userConfigPath, JSON.stringify(configData, null, 2), "utf-8");
+    fs.writeFileSync(
+      userConfigPath,
+      JSON.stringify(configData, null, 2),
+      "utf-8"
+    );
 
-    console.log(`Successfully updated interfaceMode to ${newMode} for user ${userName}`);
+    console.log(
+      `Successfully updated interfaceMode to ${newMode} for user ${userName}`
+    );
     return true;
   } catch (error) {
     console.error("Error updating user config:", error);
@@ -548,7 +555,7 @@ app.post("/initialize-repo", async (req, res) => {
 
   // Ensure the project directory does not already exist
   if (fs.existsSync(projectDirectory)) {
-    return res.status(400).json({ error: "Project directory already exists." });
+    return res.status(409).json({ error: "Project directory already exists." });
   } else {
     console.log(`Creating project directory: ${projectDirectory}`);
     fs.mkdirSync(projectDirectory, { recursive: true });
@@ -947,13 +954,13 @@ app.get("/load-user-data", async (req, res) => {
       return {
         userName: user,
         interfaceMode: userInterfaceMode || "simple", // Default to 'simple' if not found
-        projects: projects
+        projects: projects,
       };
     });
 
     console.log("/load-user-data: ", users);
 
-      // Send the list of users as the response
+    // Send the list of users as the response
     res.status(200).json({
       users,
     });
@@ -970,38 +977,40 @@ app.get("/get-projects", createFolderHandler());
 app.get("/get-project-folders", createFolderHandler());
 
 app.get("/get-project-data", async (req, res) => {
- try {
-  console.log("Received request for get-project-data:", req.query);
-  console.log("filepath: ", req.query.filePath);
-  const projectDirectory = req.query.filePath;
-  const gitConfigPath = path.join(req.query.filePath, ".git/config");
-  const language = parseGitConfig(fs.readFileSync(gitConfigPath, "utf8"));
+  try {
+    console.log("Received request for get-project-data:", req.query);
+    console.log("filepath: ", req.query.filePath);
+    const projectDirectory = req.query.filePath;
+    const gitConfigPath = path.join(req.query.filePath, ".git/config");
+    const language = parseGitConfig(fs.readFileSync(gitConfigPath, "utf8"));
 
-  const includeData =  getAllFiles(path.join(projectDirectory, "include"));
-  const srcData = getAllFiles(path.join(projectDirectory, "src"));
-  const userFileData = getAllFiles(path.join(projectDirectory, "data"));
+    const includeData = getAllFiles(path.join(projectDirectory, "include"));
+    const srcData = getAllFiles(path.join(projectDirectory, "src"));
+    const userFileData = getAllFiles(path.join(projectDirectory, "data"));
 
-  const filteredIncludeData = includeData.filter((file) => !file.startsWith("."));
-  const filteredSrcData = srcData.filter((file) => !file.startsWith("."));
-  const filteredUserFileData = userFileData.filter((file) => !file.startsWith("."));
+    const filteredIncludeData = includeData.filter(
+      (file) => !file.startsWith(".")
+    );
+    const filteredSrcData = srcData.filter((file) => !file.startsWith("."));
+    const filteredUserFileData = userFileData.filter(
+      (file) => !file.startsWith(".")
+    );
 
- 
-  const projectData = {
-    projectLanguage: language,
-    includeData: filteredIncludeData,
-    srcData: filteredSrcData,
-    userFileData:filteredUserFileData,
-  };
+    const projectData = {
+      projectLanguage: language,
+      includeData: filteredIncludeData,
+      srcData: filteredSrcData,
+      userFileData: filteredUserFileData,
+    };
 
-  console.log("Project data:", projectData);
+    console.log("Project data:", projectData);
 
-  res.status(200).json(projectData);
- }
- catch (error) {
-  console.error("Error getting project data:", error);
-  res.status(500).send("Error getting project data");
- }
-})
+    res.status(200).json(projectData);
+  } catch (error) {
+    console.error("Error getting project data:", error);
+    res.status(500).send("Error getting project data");
+  }
+});
 // Folder content getters
 //app.get("/get-folder-contents", getFolderContents());
 
@@ -1024,12 +1033,146 @@ app.post("/change-interface-mode", (req, res) => {
   const success = setUserInterfaceMode(userName, newMode);
 
   if (success) {
-    res.json({ message: `Interface mode updated to ${newMode} for ${userName}` });
+    res.json({
+      message: `Interface mode updated to ${newMode} for ${userName}`,
+    });
   } else {
     res.status(500).json({ error: "Failed to update interface mode" });
   }
 });
 
+
+
+app.post("/rename", async (req, res) => {
+  //const { userName, oldProjectName, newProjectName } = req.body;
+  console.log("Received request to rename:", req.body);
+
+  const defaultDirectory = `/home/kipr/Documents/KISS`;
+
+  if (req.body.renameType === "User") {
+    try {
+      const oldUserDirectory = path.join(
+        defaultDirectory,
+        req.body.oldUserName
+      );
+      const desiredUserDirectory = path.join(
+        defaultDirectory,
+        req.body.newUserName
+      );
+      // Check if the new desired user directory already exists
+      if (fs.existsSync(desiredUserDirectory)) {
+        return res.status(409).json({ error: "User directory already exists" });
+      }
+
+      // Rename the user directory asynchronously
+      await fs.promises.rename(oldUserDirectory, desiredUserDirectory);
+
+      console.log(
+        `Renamed user directory: ${oldUserDirectory} to ${desiredUserDirectory}`
+      );
+
+      res.status(200).json({
+        message: "User renamed successfully",
+        oldUserName: req.body.oldUserName,
+        newUserName: req.body.newUserName,
+        path: desiredUserDirectory,
+      });
+    } catch (error) {
+      console.error("Error renaming user:", error);
+      res.status(500).send("Error renaming user.");
+    }
+  } else if (req.body.renameType === "Project") {
+    try {
+      const userDirectory = path.join(defaultDirectory, req.body.userName);
+      const oldProjectDirectory = path.join(
+        userDirectory,
+        req.body.oldProjectName
+      );
+      const newProjectDirectory = path.join(
+        userDirectory,
+        req.body.newProjectName
+      );
+      // Check if the project directory exists
+      console.log("inside rename-project try RIGHT BEFORE access");
+      if (!fs.existsSync(oldProjectDirectory)) {
+        return res.status(404).json({ error: "Project directory not found" });
+      }
+
+      if (fs.existsSync(newProjectDirectory)) {
+        return res
+          .status(409)
+          .json({ error: "Project directory already exists" });
+      }
+
+      console.log("inside rename-project try RIGHT BEFORE rename");
+      // Rename the project directory asynchronously
+      await fs.promises.rename(oldProjectDirectory, newProjectDirectory);
+
+      console.log(
+        `Renamed project directory: ${oldProjectDirectory} to ${newProjectDirectory}`
+      );
+
+      res.status(200).json({
+        message: "Project renamed successfully.",
+        oldProjectName: req.body.oldProjectName,
+        newProjectName: req.body.newProjectName,
+        userName: req.body.userName,
+        path: newProjectDirectory,
+      });
+    } catch (error) {
+      console.error("Error renaming project:", error);
+      res.status(500).send("Error renaming project.");
+    }
+  } else if (req.body.renameType === "File") {
+    try {
+      const [file, extension] = req.body.oldFileName.split(".");
+      const userDirectory = path.join(defaultDirectory, req.body.userName);
+      const projectDirectory = path.join(userDirectory, req.body.projectName);
+      let oldFilePath = "";
+      let newFilePath = "";
+      switch (extension) {
+        case "h":
+          oldFilePath = path.join(projectDirectory, `include/${req.body.oldFileName}`);
+          newFilePath = path.join(projectDirectory, `include/${req.body.newFileName}`);
+          break;
+        case "c":
+        case "cpp":
+        case "py":
+          oldFilePath = path.join(projectDirectory, `src/${req.body.oldFileName}`);
+          newFilePath = path.join(projectDirectory, `src/${req.body.newFileName}`);
+          break;
+        case "txt":
+          oldFilePath = path.join(projectDirectory, `data/${req.body.oldFileName}`);
+          newFilePath = path.join(projectDirectory, `data/${req.body.newFileName}`);
+          break;
+      }
+
+      if (!fs.existsSync(oldFilePath)) {
+        return res.status(404).json({ error: "Old file not found" });
+      }
+
+      // Check if the new desired file exists already
+      if (fs.existsSync(newFilePath)) {
+        return res.status(409).json({ error: "File already exists" });
+      }
+
+      await fs.promises.rename(oldFilePath, newFilePath);
+
+      console.log(`Renamed file: ${oldFilePath} to ${newFilePath}`);
+
+      res.status(200).json({
+        message: "File renamed successfully",
+        oldFileName: req.body.oldFileName,
+        newFileName: req.body.newFileName,
+        projectName: req.body.projectName,
+        userName: req.body.userName,
+        path: newFilePath,
+      });
+    } catch (error) {
+      console.error("Error renaming file:", error);
+    }
+  }
+});
 
 app.get("/run-code", (req, res) => {
   console.log("Received run request:", req.query);

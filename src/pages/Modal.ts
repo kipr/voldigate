@@ -22,7 +22,11 @@ export namespace Modal {
     DownloadUserProjectFile,
     OpenUsers,
     OpenFile,
-    SaveFile
+    SaveFile,
+    KeepMotorsRunning,
+    RenameUserProjectFile,
+    RenameProject,
+    RenameFile
   }
   
   export interface Settings {
@@ -115,6 +119,17 @@ export namespace Modal {
 
   export const SAVEFILE: SaveFile = { type: Type.SaveFile };
 
+  export interface KeepMotorsRunning {
+    type: Type.KeepMotorsRunning;
+  }
+
+  export const KEEPMOTORSRUNNING: KeepMotorsRunning = { type: Type.KeepMotorsRunning };
+
+  export interface RenameUserProjectFile {
+    type: Type.RenameUserProjectFile;
+  }
+
+  export const RENAMEUSERPROJECTFILE: RenameUserProjectFile = { type: Type.RenameUserProjectFile };
 
 }
   
@@ -133,6 +148,8 @@ export type Modal = (
   Modal.DeleteUserProjectFile |
   Modal.DownloadUserProjectFile |
   Modal.SaveFile |
-  Modal.OpenFile
+  Modal.OpenFile  |
+  Modal.KeepMotorsRunning |
+  Modal.RenameUserProjectFile
 
 );
