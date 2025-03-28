@@ -308,7 +308,7 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
         isVertical={false}
         theme={theme}
         minSizes={[100, 100]}
-        sizes={[3, 1]}
+        sizes={[3, 2]}
         visible={[true, true]}
       >
         <SimultorWidgetContainer theme={theme}>
