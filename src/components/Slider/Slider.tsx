@@ -56,6 +56,11 @@ export const Slider = function (props: SliderProps) {
     resizing: false,
   });
 
+  React.useEffect(() => {
+    dispatch({ actionType: Actions.SetSizes, sizes });
+  }, [sizes]);
+  
+
   const [selected, setSelected] = React.useState(false);
 
   const onMouseMove = (e: MouseEvent) => {

@@ -13,15 +13,17 @@ export enum Actions {
   MouseDown,
   MouseUp,
   MouseMove,
+  SetSizes,
 }
 interface ResizeAction {
   actionType: Actions,
   x?: number,
   y?: number,
+  sizes?: number[],
 }
 export function resizeOnPointerMove(state: ResizeState, action: ResizeAction): ResizeState {
   const { isVertical, refs, minSizes, scaledMinSizes, grows, startGrows, startPos, resizing } = state;
-  const { actionType, x, y } = action;
+  const { actionType, x, y, sizes } = action;
   const pos = (isVertical) ? x : y;
 
   // stop the resize on mouseup
@@ -41,6 +43,10 @@ export function resizeOnPointerMove(state: ResizeState, action: ResizeAction): R
   const sumSize = currSizes[0] + currSizes[1];
   const sumGrow = grows[0] + grows[1];
   
+  if (actionType === Actions.SetSizes && sizes) {
+    return { ...state, grows: action.sizes };  // Set sizes based on passed `sizes` prop
+  }
+
   // When we start our resize, store the size of each element and the mouse
   if (actionType === Actions.MouseDown) {
     // scale the min sizes
