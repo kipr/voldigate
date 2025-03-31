@@ -228,7 +228,10 @@ export const createEditorBarComponents = ({
 
 
       editorBar.push(BarComponent.create(Text, {
-        text: 'User:'
+        text: 'User:',
+        style: {
+           fontWeight: '500'
+        }
       }));
 
       editorBar.push(BarComponent.create(middleBarSpacer, {
@@ -245,7 +248,10 @@ export const createEditorBarComponents = ({
 
 
       editorBar.push(BarComponent.create(Text, {
-        text: 'Project Name:'
+        text: 'Project:',
+        style: {
+          fontWeight: '500'
+       }
       }));
 
       editorBar.push(BarComponent.create(middleBarSpacer, {
@@ -258,7 +264,10 @@ export const createEditorBarComponents = ({
 
       }));
       editorBar.push(BarComponent.create(Text, {
-        text: 'File Name:',
+        text: 'File:',
+        style: {
+          fontWeight: '500'
+       }
 
       }));
       editorBar.push(BarComponent.create(middleBarSpacer, {
@@ -268,7 +277,7 @@ export const createEditorBarComponents = ({
         text: target.fileName
       }));
 
-      if (target.isleftbaropen_=== true) {
+      if (target.isleftbaropen_ === true) {
         editorBar.push(BarComponent.create(rightBarSpacerOpen, {
 
         }));
@@ -366,7 +375,7 @@ class Editor extends React.PureComponent<Props, State> {
   async componentDidUpdate(prevProps: Props) {
 
 
-    if(prevProps.code !== this.props.code) {
+    if (prevProps.code !== this.props.code) {
 
       this.setState({ code: this.props.code }, () => {
         this.ivygate_.editor.getModel().setValue(this.state.code); // Ensures update happens AFTER state is set
@@ -387,7 +396,7 @@ class Editor extends React.PureComponent<Props, State> {
   };
 
   private openDocumentationAction_?: monaco.IDisposable;
-  
+
   private setupCodeEditor_ = (editor: monaco.editor.IStandaloneCodeEditor) => {
     if (this.props.onDocumentationGoToFuzzy) this.openDocumentationAction_ = editor.addAction({
       id: 'open-documentation',
@@ -438,13 +447,13 @@ class Editor extends React.PureComponent<Props, State> {
       <Container theme={theme} style={style} className={className} >
         <Ivygate
           ref={this.bindIvygate_}
-          
+
           code={this.state.code}
           language={IVYGATE_LANGUAGE_MAPPING[language] || language}
           messages={messages}
           onCodeChange={onCodeChange}
           autocomplete={autocomplete}
-          theme = {theme.themeName}
+          theme={theme.themeName}
         />
       </Container>
     );

@@ -46,7 +46,7 @@ const Container = styled('div', (props: ThemeProps) => ({
     color: props.theme.color,
     width: '50%',
     height: '80%',
-    marginTop: '3%',
+    marginTop: '1%',
     marginLeft: '19%',
     lineHeight: '28px',
     display: 'flex',
@@ -61,8 +61,8 @@ const HomeStartContainer = styled('div', (props: ThemeProps) => ({
     border: `2px solid ${props.theme.borderColor}`,
     color: props.theme.color,
     width: '45%',
-    height: '50%',
-    marginTop: '3%',
+    height: '60%',
+    marginTop: '4%',
     marginLeft: '23%',
     lineHeight: '28px',
     display: 'flex',
@@ -100,7 +100,7 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
     alignItems: 'center',
     flexDirection: 'row',
     fontSize: '25px',
-    padding: '30px 20px 30px 20px',
+    padding: '30px 10px 30px 20px',
     marginBottom: '16px',
     height: '45px',
     userSelect: 'none',
@@ -119,6 +119,7 @@ const Title = styled('div', (props: ThemeProps & ClickProps) => ({
     paddingRight: '20px',
     width: '100%',
     marginBottom: '12px',
+    marginTop: '10px',
     height: '45px',
     userSelect: 'none',
     transition: 'background-color 0.2s, opacity 0.2s'
@@ -135,7 +136,7 @@ const ItemIcon = styled(Fa, {
 
 const LogoContainer = styled('div', (props: ThemeProps) => ({
     position: 'relative',
-    top: '10px',
+    
     display: 'flex',
     flexWrap: 'wrap',
     marginLeft: '10%',
@@ -226,7 +227,7 @@ export class HomeStartOptions extends React.Component<Props, State> {
                             <Title theme={theme} style={{ fontSize: 35 }}>Start</Title>
                             <Item onClick={this.onModalClick_(Modal.CREATEUSER)} theme={theme}><ItemIcon icon={faUserPlus}></ItemIcon>{LocalizedString.lookup(tr('New User...'), locale)}</Item>
                             <Item onClick={this.onModalClick_(Modal.OPENFILE)} theme={theme}><ItemIcon icon={faFilePen}></ItemIcon>{LocalizedString.lookup(tr('Open File...'), locale)}</Item>
-                            <Item onClick={this.onModalClick_(Modal.OPENUSERS)} theme={theme}><ItemIcon style={{ paddingRight: '9%' }} icon={faBookReader}></ItemIcon>{LocalizedString.lookup(tr('Open User...'), locale)}</Item>
+                            <Item onClick={this.onModalClick_(Modal.OPENUSERS)} theme={theme}><ItemIcon  icon={faBookReader}></ItemIcon>{LocalizedString.lookup(tr('Open User...'), locale)}</Item>
                         </StartContainer>
                     </HomeStartContainer>
                 </Container>

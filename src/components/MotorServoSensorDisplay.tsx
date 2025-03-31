@@ -184,7 +184,14 @@ const SectionInfoText = styled('span', {
 });
 const SectionText = styled('span', {
     paddingRight: '5px',
+
 });
+
+const SectionTitleText = styled('span', {
+    paddingRight: '5px',
+    fontWeight: '500',
+});
+
 
 const SettingInfoSubtext = styled(SectionInfoText, {
     fontSize: '10pt',
@@ -757,7 +764,7 @@ export class MotorServoSensorDisplay extends React.PureComponent<Props & MotorSe
                 <SectionsColumn theme={theme} style={{ paddingBottom: '10px' }}>
 
                     <SectionTitleContainer theme={theme}>
-                        <SectionText>{LocalizedString.lookup(tr('Analog Sensors'), locale)}</SectionText>
+                        <SectionTitleText>{LocalizedString.lookup(tr('Analog Sensors'), locale)}</SectionTitleText>
                     </SectionTitleContainer>
                     <SensorTypeContainer theme={theme}>
                         {Object.entries(this.state.sensorValues)
@@ -783,7 +790,7 @@ export class MotorServoSensorDisplay extends React.PureComponent<Props & MotorSe
 
 
                     <SectionTitleContainer theme={theme}>
-                        <SectionText>{LocalizedString.lookup(tr('Digital Sensors'), locale)}</SectionText>
+                        <SectionTitleText>{LocalizedString.lookup(tr('Digital Sensors'), locale)}</SectionTitleText>
                     </SectionTitleContainer>
                     <SensorTypeContainer theme={theme}>
                         {Object.entries(this.state.sensorValues)
@@ -806,7 +813,7 @@ export class MotorServoSensorDisplay extends React.PureComponent<Props & MotorSe
                     </SensorTypeContainer>
 
                     <SectionTitleContainer theme={theme}>
-                        <SectionText>{LocalizedString.lookup(tr('Accelerometers'), locale)}</SectionText>
+                        <SectionTitleText>{LocalizedString.lookup(tr('Accelerometers'), locale)}</SectionTitleText>
                     </SectionTitleContainer>
                     <SensorTypeContainer theme={theme}>
                         {Object.entries(this.state.sensorValues)
@@ -829,7 +836,7 @@ export class MotorServoSensorDisplay extends React.PureComponent<Props & MotorSe
                     </SensorTypeContainer>
 
                     <SectionTitleContainer theme={theme}>
-                        <SectionText>{LocalizedString.lookup(tr('Gyroscope'), locale)}</SectionText>
+                        <SectionTitleText>{LocalizedString.lookup(tr('Gyroscope'), locale)}</SectionTitleText>
                     </SectionTitleContainer>
                     <SensorTypeContainer theme={theme}>
                         {Object.entries(this.state.sensorValues)
@@ -852,7 +859,7 @@ export class MotorServoSensorDisplay extends React.PureComponent<Props & MotorSe
                     </SensorTypeContainer>
 
                     <SectionTitleContainer theme={theme}>
-                        <SectionText>{LocalizedString.lookup(tr('Magnetometer'), locale)}</SectionText>
+                        <SectionTitleText>{LocalizedString.lookup(tr('Magnetometer'), locale)}</SectionTitleText>
                     </SectionTitleContainer>
                     <SensorTypeContainer theme={theme}>
                         {Object.entries(this.state.sensorValues)
@@ -875,7 +882,7 @@ export class MotorServoSensorDisplay extends React.PureComponent<Props & MotorSe
                     </SensorTypeContainer>
 
                     <SectionTitleContainer theme={theme}>
-                        <SectionText>{LocalizedString.lookup(tr('Buttons'), locale)}</SectionText>
+                        <SectionTitleText>{LocalizedString.lookup(tr('Buttons'), locale)}</SectionTitleText>
                     </SectionTitleContainer>
                     <SensorTypeContainer theme={theme}>
                         {Object.entries(this.state.sensorValues)

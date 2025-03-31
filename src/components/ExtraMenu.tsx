@@ -75,7 +75,7 @@ const ItemIcon = styled(Fa, {
   minWidth: '20px',
   maxWidth: '20px',
   textAlign: 'center',
-  marginRight: '10px'
+  marginRight: '5px'
 });
 
 class ExtraMenu extends React.PureComponent<Props, State> {
