@@ -265,7 +265,7 @@ const IndividualFile = styled('div', (props: ThemeProps & { selected: boolean, }
     },
 }));
 
-const ContextMenu = styled('div', (props: ThemeProps & { x: number, y: number }) => ({
+const ContextMenu = styled('div', (props: ThemeProps & { x: number; y: number }) => ({
     position: "absolute",
     top: `${props.y}px`,
     left: `${props.x}px`,
@@ -387,14 +387,14 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
         console.log("FileExplorer compDidUpdate selectedFileRefFE.current: ", this.selectedFileRefFE.current);
 
 
-        if(prevProps.propsSelectedProjectName !== this.props.propsSelectedProjectName){
+        if (prevProps.propsSelectedProjectName !== this.props.propsSelectedProjectName) {
             console.log("FileExplorer compDidUpdate propsSelectedProjectName changed from: ", prevProps.propsSelectedProjectName, " to: ", this.props.propsSelectedProjectName);
             this.setState({
                 selectedProject: this.props.propUserData.find(
                     (project) => project.projectName === this.props.propsSelectedProjectName
                 ),
             })
-        
+
         }
         if (this.props.propUserShown !== prevProps.propUserShown) {
             console.log("FileExplorer componentDidUpdate propUserShown changed from: ", prevProps.propUserShown, " to: ", this.props.propUserShown);
@@ -434,7 +434,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
         }
         if (this.props.propUsers !== prevProps.propUsers) {
 
-            if(this.props.renameUserFlag){
+            if (this.props.renameUserFlag) {
                 console.log("FileExplorer compDidUpdate renameUserFlag changed from: ", prevProps.renameUserFlag, " to: ", this.props.renameUserFlag);
                 this.setState({
                     selectedUser: this.props.propUserShown
@@ -444,16 +444,16 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                 const foundUser = this.props.propUsers.find((user) => user.userName === this.state.selectedUser.userName);
 
                 if (foundUser) {
-    
+
                     this.setState({
                         selectedUser: foundUser
                     })
-    
+
                 } else {
                     console.log("Selected user not found in updated propUsers.");
                 }
             }
-           
+
         }
         if (this.props.propFileName !== prevProps.propFileName) {
             console.log("FileExplorer compDidUpdate propFileName changed from: ", prevProps.propFileName, " to: ", this.props.propFileName);
@@ -641,7 +641,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
     downloadUser = (user: User) => {
         this.props.onDownloadUser(user);
     }
-    
+
     renameUser = (user: User) => {
         this.props.onRenameUser(user);
     }
@@ -649,7 +649,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
     downloadProject = (project: Project) => {
         this.props.onDownloadProject(this.state.selectedUser, project);
     }
-    
+
     renameProject = (project: Project) => {
         this.props.onRenameProject(this.state.selectedUser, project);
     }
@@ -667,9 +667,21 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
         if (!contextMenuPosition) return null;
 
         const { x, y, } = contextMenuPosition;
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+
+        console.log("Viewport Width: ", viewportWidth);
+        console.log("Viewport Height: ", viewportHeight);
+
+        const menuWidth = 200;  // Adjust as needed
+        const menuHeight = 185; // Adjust as needed
+
+
+        const adjustedX = Math.min(x, viewportWidth - menuWidth);
+        const adjustedY = Math.min(y, viewportHeight - menuHeight);
 
         return (
-            <ContextMenu x={x} y={y} theme={theme} onClick={this.closeContextMenu}>
+            <ContextMenu x={adjustedX} y={adjustedY} theme={theme} onClick={this.closeContextMenu}>
                 <ContextMenuItem theme={theme}>
                     <li
                         style={{ padding: "5px 10px" }}
@@ -1117,7 +1129,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
         });
 
         return (
-            <div onClick={this.closeContextMenu}>
+            <div onClick={this.closeContextMenu} style={{ backgroundColor: 'green' }}>
                 <SidePanel
                     theme={theme}
                     style={{
