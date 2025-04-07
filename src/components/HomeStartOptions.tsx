@@ -50,43 +50,50 @@ const Container = styled('div', (props: ThemeProps) => ({
     marginLeft: '19%',
     lineHeight: '28px',
     display: 'flex',
-    alignContent: 'flex-start',
+    alignItems: 'center',
     position: 'relative',
     flexDirection: 'column',
+    gap: '20px',
     zIndex: 1,
 }));
+
 
 const HomeStartContainer = styled('div', (props: ThemeProps) => ({
     backgroundColor: props.theme.homeStartContainerBackground,
     border: `2px solid ${props.theme.borderColor}`,
     color: props.theme.color,
-    width: '45%',
-    height: '60%',
-    marginTop: '4%',
-    marginLeft: '23%',
-    lineHeight: '28px',
+    width: '50vw', // Use viewport width for better scaling
+    maxWidth: '240px', // Prevents it from getting too big
+    height: 'auto',
+    minHeight: '60vh',
     display: 'flex',
     justifyContent: 'center',
+    gap: '20px',
     alignItems: 'center',
     flexDirection: 'column',
     zIndex: 1,
-    boxShadow: '0px 10px 13px -6px rgba(0, 0, 0, 0.2), 0px 20px 31px 3px rgba(0, 0, 0, 0.14), 0px 8px 38px 7px rgba(0, 0, 0, 0.12)'
+    padding: '20px',
+    boxShadow: '0px 10px 13px -6px rgba(0, 0, 0, 0.2), 0px 20px 31px 3px rgba(0, 0, 0, 0.14), 0px 8px 38px 7px rgba(0, 0, 0, 0.12)',
 }));
+
+
 
 const StartContainer = styled('div', (props: ThemeProps) => ({
     backgroundColor: props.theme.startContainerBackground,
     color: props.theme.color,
-    width: '85%',
-    height: '90%',
-    padding: '10px 5px 10px 5px',
-    lineHeight: '28px',
+    width: '100%', // Ensure it takes full width of HomeStartContainer
+    maxWidth: '400px', // Prevents it from stretching too much
+    height: 'auto', // Let it expand based on content
+    minHeight: '20vh', // Ensures a minimum height
+    padding: '10px',
     display: 'flex',
     justifyContent: 'center',
+    alignContent: 'center',
     alignItems: 'flex-start',
-    position: 'relative',
     flexDirection: 'column',
+    position: 'relative',
     zIndex: 4,
-    boxShadow: '0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 5px 8px 0px rgba(0, 0, 0, 0.14), 0px 1px 14px 0px rgba(0, 0, 0, 0.12)'
+    boxShadow: '0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 5px 8px 0px rgba(0, 0, 0, 0.14), 0px 1px 14px 0px rgba(0, 0, 0, 0.12)',
 }));
 
 interface ClickProps {
@@ -136,12 +143,16 @@ const ItemIcon = styled(Fa, {
 
 const LogoContainer = styled('div', (props: ThemeProps) => ({
     position: 'relative',
-    
     display: 'flex',
-    flexWrap: 'wrap',
-    marginLeft: '10%',
-    flexDirection: 'column',
-    width: '80%',
+
+    gap: '20px',
+    alignItems: 'flex-end',
+    alignContent: 'center',
+    justifyContent: 'center',
+    //flexWrap: 'wrap',
+  //  marginLeft: '10%',
+    flexDirection: 'row',
+    width: '100%',
     height: '40%',
     zIndex: 0,
 }));
@@ -149,10 +160,10 @@ const LogoContainer = styled('div', (props: ThemeProps) => ({
 const Logo = styled('img', (props: ThemeProps) => ({
     position: 'relative',
     backgroundColor: '#373737',
-    alignItems: 'flex-end',
-    width: '250px',
-    height: '250px',
-    marginLeft: '6%',
+   // alignItems: 'flex-end',
+    width: '150px',
+    height: '150px',
+    marginLeft: '15%',
     userSelect: 'none',
     transition: 'background-color 0.2s, opacity 0.2s'
 }));
@@ -216,7 +227,7 @@ export class HomeStartOptions extends React.Component<Props, State> {
         } = this.state;
 
         return (
-            <>
+            <div style={{height: '80%',maxHeight: '80%'}}>
                 <Container className={className} style={style} theme={theme}>
                     <LogoContainer theme={theme}>
                         <Logo src={KIPR_LOGO_WHITE as string} theme={theme} />
@@ -267,7 +278,7 @@ export class HomeStartOptions extends React.Component<Props, State> {
                         onOpenFile={this.props.onOpenFile}
                     />
                 )}
-            </>
+            </div>
         );
     }
 }

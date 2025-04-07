@@ -71,7 +71,9 @@ const HomeNavigationContainer = styled('div', (props: ThemeProps) => ({
   justifyContent: 'center',
   width: '100%',
   height: '100vh',
+  maxHeight: '100vh',
   backgroundColor: props.theme.backgroundColor,
+
   color: props.theme.color,
 }));
 
@@ -81,7 +83,7 @@ const LeftBarContainer = styled('div', (props: ThemeProps) => ({
   overflow: 'hidden',
   alignItems: 'left',
   justifyContent: 'center',
-  width: '100vh',
+  width: '100%',
 
   backgroundColor: props.theme.backgroundColor,
   color: props.theme.color,

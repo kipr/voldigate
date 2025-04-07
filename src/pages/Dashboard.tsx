@@ -43,7 +43,7 @@ class Dashboard extends React.PureComponent<Props, State> {
     const { props, state } = this;
     const { storedTheme } = state;
     return (
-      <>
+      <div style ={{ overflow: 'hidden', maxHeight: '100vh', maxWidth: '100vw'}}>
         <HomeNavigation
           theme={storedTheme}
           history={undefined}
@@ -51,7 +51,7 @@ class Dashboard extends React.PureComponent<Props, State> {
           match={undefined}
           onThemeChange={this.onThemeChange_}
         />
-      </>
+      </div>
 
     );
   }
