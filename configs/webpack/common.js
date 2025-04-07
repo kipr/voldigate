@@ -66,6 +66,12 @@ module.exports = {
     alias: {
       '@i18n': resolve(__dirname, '../../src/i18n'),
       '@ivygate': resolve(__dirname, '../../node_modules/ivygate'),
+      'react': resolve(__dirname, '../../node_modules/react'),
+      'react-dom': resolve(__dirname, '../../node_modules/react-dom'),
+      'styletron-react': resolve(__dirname, '../../node_modules/styletron-react'),
+      '@fortawesome/fontawesome-solid-svg-icons': resolve(__dirname, '../../node_modules/@fortawesome/fontawesome-solid-svg-icons'),
+      '@fortawesome/react-fontawesome': resolve(__dirname, '../../node_modules/@fortawesome/react-fontawesome'),
+      
     },
     symlinks: true,
     modules
