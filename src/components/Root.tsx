@@ -18,7 +18,7 @@ import { styled } from 'styletron-react';
 import { DARK, Theme } from './theme';
 import { Layout } from './Layout';
 import { StyledText } from '../util';
-import { Message } from 'ivygate';
+import { Ivygate, Message } from 'ivygate';
 import { DEFAULT_SETTINGS, Settings } from '../Settings';
 import { DEFAULT_FEEDBACK, Feedback } from '../Feedback';
 import { Editor } from './Editor';
@@ -29,6 +29,8 @@ import { Modal } from '../pages/Modal';
 import { BLANK_PROJECT, Project } from '../types/projectTypes';
 import { InterfaceMode } from '../types/interfaceModes';
 import { User } from '../types/userTypes';
+import { IvygateFileExplorer } from 'ivygate';
+import TestStyled from 'ivygate/dist/testStyled';
 
 interface RootParams {
   sceneId?: string;
@@ -168,7 +170,8 @@ const RootContainer = styled('div', (props: ContainerProps) => ({
   display: 'flex',
   flexDirection: 'column',
   overflow: 'hidden',
-  position: 'fixed',
+  maxHeight: '100vh',
+
 }));
 
 const STDOUT_STYLE = (theme: Theme) => ({
@@ -1314,7 +1317,7 @@ class Root extends React.Component<Props, State> {
         editorConsole: compilingConsole
       }, async () => {
 
-     
+
         const response = await axios.post('/compile-code', { userName, projectName, fileName, activeLanguage }); // This calls the backend route
 
         let nextConsole: StyledText;
@@ -1929,6 +1932,7 @@ class Root extends React.Component<Props, State> {
         )}
       </RootContainer>
     );
+ 
   }
 }
 

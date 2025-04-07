@@ -20,8 +20,10 @@ import { BLANK_PROJECT, Project } from '../types/projectTypes';
 import { User } from '../types/userTypes';
 import { InterfaceMode } from '../types/interfaceModes';
 import { JSX } from 'react';
-import { MotorServoSensorDisplay } from './MotorServoSensorDisplay';
+//import { MotorServoSensorDisplay } from './MotorServoSensorDisplay';
 import { Motors, Servos, Sensors, ServoType, DEFAULT_MOTORS, DEFAULT_SERVOS } from '../types/motorServoSensorTypes';
+import { Ivygate, IvygateFileExplorer, MotorServoSensorDisplay } from 'ivygate';
+import TestStyled from 'ivygate/dist/testStyled';
 
 export interface LeftBarPublicProps extends StyleProps, ThemeProps {
 
@@ -87,15 +89,14 @@ type Props = LeftBarPublicProps & LeftBarPrivateProps;
 type State = LeftBarState;
 
 const Container = styled('div', (props: ThemeProps) => ({
-  //backgroundColor: props.theme.backgroundColor,
   color: props.theme.color,
   height: '100vh',
-  overflow: 'visible',
+  maxHeight: '100vh',
+  overflow: 'hidden',
   lineHeight: '28px',
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'flex-start',
-
   zIndex: 0,
   width: '100vw',
   flexGrow: 1,
@@ -149,7 +150,7 @@ const FileExplorerContainer = styled('div', (props: ThemeProps & ClickProps) => 
   flex: '1 1 0',
   display: 'flex',
   flexDirection: 'column',
-  overflow: 'visible',
+  overflow: 'hidden',
   height: '100%',
   backgroundColor: props.theme.fileContainerBackground,
   borderRight: `2px solid ${props.theme.borderColor}`,
@@ -293,10 +294,10 @@ export class LeftBar extends React.Component<Props, State> {
       if (panel !== this.state.panelSelection) {
         let newSizes: [number, number] = this.state.sliderSizes;
         if (panel === "motor_sensor_servo") {
-          newSizes = [10, 9];
+          newSizes = [5, 9];
         }
         else if (panel === "fileExplorer") {
-          newSizes = [5, 9];
+          newSizes = [2, 9];
         }
         this.setState({
           panelSelection: panel,
@@ -347,10 +348,10 @@ export class LeftBar extends React.Component<Props, State> {
       console.log("LeftBar panel is not visible");
       let newSizes: [number, number] = this.state.sliderSizes;
       if (panel === "motor_sensor_servo") {
-        newSizes = [11, 9];
+        newSizes = [5,9];
       }
       else if (panel === "fileExplorer") {
-        newSizes = [5, 9];
+        newSizes = [2, 9];
       }
 
       this.setState({
@@ -473,7 +474,7 @@ export class LeftBar extends React.Component<Props, State> {
           this.setState(prevState => (
             console.log("LeftBar onLoadUserData_ prevState: ", prevState),
             {
-              user:loadedUser,
+              user: loadedUser,
               loadedUserData: userData,
               isReloadRootUserFiles: false,
 
@@ -834,7 +835,7 @@ export class LeftBar extends React.Component<Props, State> {
       renameFileFlag: renameFileFlag
     })
   };
-  
+
   /**
  * Sets the Root state's downloadFileFlag to given boolean value
  * @param downloadFileFlag - A boolean value to set the state rootDownloadFileFlag
@@ -952,7 +953,7 @@ export class LeftBar extends React.Component<Props, State> {
 
     let rootContent: JSX.Element;
     rootContent = (
-      <div style={{ height: '80%', flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+      <div style={{ height: '100%', flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         <Root
           isLeftBarOpen={isLeftBarOpen}
           history={undefined}
@@ -1021,7 +1022,11 @@ export class LeftBar extends React.Component<Props, State> {
     fileExplorerContent = (
       console.log("LeftBar render() fileExplorerContent state: ", this.state),
       <FileExplorerContainer theme={storedTheme}>
-        <FileExplorer
+
+        {/* <TestStyled
+        
+         /> */}
+        <IvygateFileExplorer
           theme={storedTheme}
           locale="en-US"
           propsSelectedProjectName={project.projectName}
@@ -1062,10 +1067,9 @@ export class LeftBar extends React.Component<Props, State> {
             zIndex: 1,
           }}
 
+
         />
-
-
-      </FileExplorerContainer>
+          </FileExplorerContainer>
     );
 
     let motorServoSensorDisplay: JSX.Element;
@@ -1114,10 +1118,12 @@ export class LeftBar extends React.Component<Props, State> {
           sizes={this.state.sliderSizes}
           visible={[isPanelVisible, true]}
 
+
         >
           {this.state.panelSelection === 'fileExplorer' ? fileExplorerContent : motorServoSensorDisplay}
           {rootContent}
         </Slider>
+
 
 
         {modal.type === Modal.Type.Settings && (
