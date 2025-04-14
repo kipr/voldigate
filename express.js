@@ -504,6 +504,7 @@ app.post("/compile-code", async (req, res) => {
 app.post("/initialize-project", async (req, res) => {
   const { userName, projectName, language, interfaceMode } = req.body;
   console.log("Received request body:", req.body); // Log the entire request body
+  const jsonDirectory = "/home/kipr/Documents/KISS/users.json";
   const userDirectory = `/home/kipr/Documents/KISS/${userName}`;
   const userConfigPath = path.join(userDirectory, ".config.json");
   const projectDirectory = path.join(userDirectory, projectName);
@@ -513,6 +514,34 @@ app.post("/initialize-project", async (req, res) => {
     userName: userName,
     interfaceMode: interfaceMode,
   };
+
+  const userJsonEntry = {
+    [userName]: interfaceMode,
+  };
+
+  console.log("users.json path: ", jsonDirectory);
+  if (!fs.existsSync(jsonDirectory)) {
+    console.log("users.json not found. Creating now...");
+    try {
+      fs.writeFileSync(jsonDirectory, JSON.stringify(userJsonEntry, null, 2));
+   
+    } catch (error) {
+      console.error("Error writing users.json:", error);
+      return res.status(500).json({ error: "Error writing users.json." });
+    }
+  }
+  else {
+    try {
+      const existingData = JSON.parse(fs.readFileSync(jsonDirectory, 'utf8'));
+      existingData[req.body.userName] = req.body.interfaceMode;
+  
+      fs.writeFileSync(jsonDirectory, JSON.stringify(existingData, null, 2));
+ 
+    } catch (error) {
+      console.error("Error updating users.json:", error);
+      return res.status(500).json({ error: "Error updating users.json." });
+    }
+  }
   // Ensure the user's directory exists
   if (!fs.existsSync(userDirectory)) {
     fs.mkdirSync(userDirectory, { recursive: true });
@@ -541,15 +570,14 @@ app.post("/initialize-project", async (req, res) => {
       language: language,
     };
 
-    try{
+    try {
       console.log("Writing project config to:", projectConfigPath);
       fs.writeFileSync(
         projectConfigPath,
         JSON.stringify(projectConfig, null, 2),
         "utf-8"
       );
-    }
-    catch (error){
+    } catch (error) {
       console.error("Error writing project config:", error);
       return res.status(500).json({ error: "Error writing project config." });
     }
@@ -695,9 +723,29 @@ app.post("/delete-user", async (req, res) => {
   if (!userName) {
     return res.status(400).json({ error: "Missing required fields." });
   }
-
+  const jsonPath = "/home/kipr/Documents/KISS/users.json";
   const userDirectory = `/home/kipr/Documents/KISS/${userName}`;
 
+  try{
+    if(!fs.existsSync(jsonPath)){
+      return res.status(404).json({error: "users.json not found."});
+    }
+
+    const existingData = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+
+    if(!existingData[userName]){
+      return res.status(404).json({error: "User not found in users.json."});
+    }
+
+    delete existingData[userName];
+
+    fs.writeFileSync(jsonPath, JSON.stringify(existingData, null, 2));
+  }
+  catch (error) { 
+    console.error("Error deleting from users.json:", error);
+    return res.status(500).json({ error: "Error deleting from users.json." });
+  }
+  
   try {
     // Check if the project directory exists
     if (!fs.existsSync(userDirectory)) {
@@ -902,7 +950,18 @@ app.get("/get-project-language", async (req, res) => {
 app.get("/load-user-data", async (req, res) => {
   try {
     console.log("/load-user-data filePath: ", req.query.filePath);
-    const userDirectories = fs.readdirSync("/home/kipr/Documents/KISS");
+    const allEntries = fs.readdirSync("/home/kipr/Documents/KISS");
+
+    //Filter out users.json
+    const userDirectories = allEntries.filter((file) => {
+      const filePath = path.join("/home/kipr/Documents/KISS", file);
+      return (
+        file !== "users.json" &&
+        fs.statSync(filePath).isDirectory() &&
+        !file.startsWith(".")
+      );
+    });
+    console.log("User directories: ", userDirectories);
 
     const users = userDirectories.map((user) => {
       // Get the interface mode for the user
