@@ -177,8 +177,8 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
     this.setState({ errorMessage: "" }); // Clear error message if input is valid
     try {
 
-      const response = await axios.post('/initialize-repo', { userName: this.props.userName, projectName: values.projectName, language: this.state.language as ProgrammingLanguage, interfaceMode: this.state.interfaceMode });
-      console.log("initialize-repo Response: ", response);
+      const response = await axios.post('/initialize-project', { userName: this.props.userName, projectName: values.projectName, language: this.state.language as ProgrammingLanguage, interfaceMode: this.state.interfaceMode });
+      console.log("initialize-project Response: ", response);
 
       if (response.status === 200) {
         this.props.closeProjectDialog(values.projectName, this.state.language as ProgrammingLanguage, this.state.interfaceMode);

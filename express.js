@@ -56,8 +56,8 @@ function getAllProjectDirectories(dirPath) {
       const projectPath = path.join(dirPath, dirName);
 
       // Assuming you are determining project language based on some logic, e.g., folder name or file types
-      const projectLanguage = parseGitConfig(
-        fs.readFileSync(path.join(projectPath, ".git/config"), "utf8")
+      const projectLanguage = parseConfig(
+        fs.readFileSync(path.join(projectPath, ".config.json"), "utf8")
       ); // Replace with your logic for language detection
       console.log("For Project: ", dirName, "Language: ", projectLanguage);
       // Assuming there are specific folders like 'src', 'data', and 'include' inside each project directory
@@ -312,39 +312,16 @@ function saveFileContents() {
   };
 }
 
-function parseGitConfig(configContent) {
-  let language = null;
-  let currentSection = null;
-
-  const lines = configContent.split("\n");
-
-  for (const line of lines) {
-    const trimmedLine = line.trim();
-
-    // Skip empty lines or comments
-    if (trimmedLine === "" || trimmedLine.startsWith("#")) {
-      continue;
-    }
-
-    // Detect section headers, e.g., [repo]
-    const sectionMatch = trimmedLine.match(/^\[(.+)\]$/);
-    if (sectionMatch) {
-      currentSection = sectionMatch[1].trim();
-      continue;
-    }
-
-    // Parse key-value pairs within a section
-    if (currentSection === "repo" && trimmedLine.includes("=")) {
-      const [key, value] = trimmedLine.split("=").map((part) => part.trim());
-      if (key === "language") {
-        language = value;
-        break; // Stop once 'language' is found in [repo]
-      }
-    }
+function parseConfig(configContent) {
+  try {
+    const config = JSON.parse(configContent);
+    const language = config.language || null;
+    console.log("Language:", language);
+    return language;
+  } catch (error) {
+    console.error("Failed to parse config JSON:", error.message);
+    return null;
   }
-
-  console.log("Language: ", language);
-  return language;
 }
 
 app.use((req, res, next) => {
@@ -524,13 +501,13 @@ app.post("/compile-code", async (req, res) => {
   //res.json({ message: "Received data", userName, projectName, fileName });
 });
 
-// API route to initialize a Git repository
-app.post("/initialize-repo", async (req, res) => {
+app.post("/initialize-project", async (req, res) => {
   const { userName, projectName, language, interfaceMode } = req.body;
   console.log("Received request body:", req.body); // Log the entire request body
   const userDirectory = `/home/kipr/Documents/KISS/${userName}`;
   const userConfigPath = path.join(userDirectory, ".config.json");
   const projectDirectory = path.join(userDirectory, projectName);
+  const projectConfigPath = path.join(projectDirectory, ".config.json");
 
   const userConfig = {
     userName: userName,
@@ -559,26 +536,32 @@ app.post("/initialize-repo", async (req, res) => {
   } else {
     console.log(`Creating project directory: ${projectDirectory}`);
     fs.mkdirSync(projectDirectory, { recursive: true });
+    const projectConfig = {
+      projectName: projectName,
+      language: language,
+    };
+
+    try{
+      console.log("Writing project config to:", projectConfigPath);
+      fs.writeFileSync(
+        projectConfigPath,
+        JSON.stringify(projectConfig, null, 2),
+        "utf-8"
+      );
+    }
+    catch (error){
+      console.error("Error writing project config:", error);
+      return res.status(500).json({ error: "Error writing project config." });
+    }
   }
   // Validate input
   if (!userName || !projectName || !language) {
     return res.status(400).json({ error: "Missing required fields." });
   }
 
-  // Define the full path for the new repository
-  const repoPath = path.join(userDirectory, projectName);
-  const git = simpleGit();
   try {
     // Initialize the Git repository
     console.log("Current directory before init:", process.cwd());
-    await git.cwd(repoPath).init();
-    console.log(`Git repository initialized at ${repoPath}`);
-
-    // Set custom attributes in .git/config
-    await git.addConfig("repo.language", language);
-    await git.addConfig("repo.owner", userName);
-
-    console.log(`Set repo.language=${language} and repo.owner=${userName}`);
 
     // Create default folders and files
     const folders = ["bin", "include", "src", "data"];
@@ -586,10 +569,6 @@ app.post("/initialize-repo", async (req, res) => {
       const folderPath = path.join(projectDirectory, folder);
       fs.mkdirSync(folderPath, { recursive: true });
       // Add a placeholder file to ensure Git tracks empty directories
-      fs.writeFileSync(
-        path.join(folderPath, `.gitkeep`),
-        "This file ensures Git tracks this directory."
-      );
     });
 
     //Ensure the main.[language] file isn't already created
@@ -621,24 +600,13 @@ app.post("/initialize-repo", async (req, res) => {
         break;
     }
 
-    // Optionally, create a README.md or other initial files
-    const readmePath = path.join(projectDirectory, "README.md");
-    fs.writeFileSync(
-      readmePath,
-      `# ${projectName}\n\nProject initialized for ${userName} using ${language}.`
-    );
-
-    // Stage and commit the initial files
-    await git.add(".");
-    await git.commit("Initial commit: Add default folder structure and README");
-
     console.log("Initial files and folder structure committed.");
 
     // Send success response
-    res.status(200).send("Git repository initialized successfully");
+    res.status(200).send("User Project folder created successfully");
   } catch (error) {
-    console.error("Error initializing repository:", error);
-    res.status(500).send("Error initializing repository");
+    console.error("Error creating project folder:", error);
+    res.status(500).send("Error creating project folder");
   }
 });
 
@@ -918,7 +886,7 @@ app.get("/get-project-language", async (req, res) => {
       return res.status(400).json({ error: ".git/config not found" });
     }
 
-    const language = parseGitConfig(fs.readFileSync(gitConfigPath, "utf8"));
+    const language = parseConfig(fs.readFileSync(gitConfigPath, "utf8"));
 
     //send the language as the response
     res.status(200).json({
@@ -979,10 +947,10 @@ app.get("/get-project-folders", createFolderHandler());
 app.get("/get-project-data", async (req, res) => {
   try {
     console.log("Received request for get-project-data:", req.query);
-    console.log("filepath: ", req.query.filePath);
+    console.log("projectPath: ", req.query.filePath);
     const projectDirectory = req.query.filePath;
-    const gitConfigPath = path.join(req.query.filePath, ".git/config");
-    const language = parseGitConfig(fs.readFileSync(gitConfigPath, "utf8"));
+    const projectConfigPath = path.join(projectDirectory, ".config.json");
+    const language = parseConfig(fs.readFileSync(projectConfigPath, "utf8"));
 
     const includeData = getAllFiles(path.join(projectDirectory, "include"));
     const srcData = getAllFiles(path.join(projectDirectory, "src"));
@@ -1040,8 +1008,6 @@ app.post("/change-interface-mode", (req, res) => {
     res.status(500).json({ error: "Failed to update interface mode" });
   }
 });
-
-
 
 app.post("/rename", async (req, res) => {
   //const { userName, oldProjectName, newProjectName } = req.body;
@@ -1132,18 +1098,36 @@ app.post("/rename", async (req, res) => {
       let newFilePath = "";
       switch (extension) {
         case "h":
-          oldFilePath = path.join(projectDirectory, `include/${req.body.oldFileName}`);
-          newFilePath = path.join(projectDirectory, `include/${req.body.newFileName}`);
+          oldFilePath = path.join(
+            projectDirectory,
+            `include/${req.body.oldFileName}`
+          );
+          newFilePath = path.join(
+            projectDirectory,
+            `include/${req.body.newFileName}`
+          );
           break;
         case "c":
         case "cpp":
         case "py":
-          oldFilePath = path.join(projectDirectory, `src/${req.body.oldFileName}`);
-          newFilePath = path.join(projectDirectory, `src/${req.body.newFileName}`);
+          oldFilePath = path.join(
+            projectDirectory,
+            `src/${req.body.oldFileName}`
+          );
+          newFilePath = path.join(
+            projectDirectory,
+            `src/${req.body.newFileName}`
+          );
           break;
         case "txt":
-          oldFilePath = path.join(projectDirectory, `data/${req.body.oldFileName}`);
-          newFilePath = path.join(projectDirectory, `data/${req.body.newFileName}`);
+          oldFilePath = path.join(
+            projectDirectory,
+            `data/${req.body.oldFileName}`
+          );
+          newFilePath = path.join(
+            projectDirectory,
+            `data/${req.body.newFileName}`
+          );
           break;
       }
 
