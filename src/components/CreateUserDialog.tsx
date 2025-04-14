@@ -47,6 +47,7 @@ const Container = styled('div', (props: ThemeProps) => ({
     backgroundColor: props.theme.backgroundColor,
     color: props.theme.color,
     minHeight: '200px',
+    height: '9em'
 }));
 
 const StyledForm = styled(Form, (props: ThemeProps) => ({

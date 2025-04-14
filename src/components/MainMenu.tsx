@@ -19,17 +19,17 @@ interface MenuPrivateProps {
 
 interface MenuState {
   modal: Modal;
- }
+}
 
 type Props = MenuPublicProps & MenuPrivateProps;
 type State = MenuState;
 
 const Container = styled('div', (props: ThemeProps) => ({
   backgroundColor: props.theme.titleBarBackground,
-
   color: props.theme.color,
+  justifyContent: 'space-between',
   width: '100%',
-  height: '48px',
+  height: '7vh',
   lineHeight: '28px',
   display: 'flex',
   alignItems: 'center',
@@ -39,8 +39,8 @@ const Container = styled('div', (props: ThemeProps) => ({
 }));
 
 const Logo = styled('img', (props: ThemeProps & ClickProps) => ({
-  width: '36px',
-  height: '36px',
+  width: '50px',
+  height: '50px',
   marginLeft: '20px',
   marginRight: '20px',
   opacity: props.disabled ? '0.5' : '1.0',
@@ -64,16 +64,17 @@ interface ClickProps {
 
 const ExtraMenuContainer = styled('div', (props: ThemeProps) => ({
   backgroundColor: props.theme.titleBarBackground,
-
+  marginRight: '5px',
   color: props.theme.color,
   top: '20px',
-  width: '100%',
+  width: '20%',
   height: '48px',
   lineHeight: '28px',
   display: 'flex',
   alignItems: 'center',
+  justifyContent: 'flex-end',
   flexDirection: 'row',
-  borderBottom: `1px solid ${props.theme.borderColor}`,
+
   zIndex: 1
 }));
 
@@ -99,7 +100,7 @@ export class MainMenu extends React.Component<Props, State> {
 
   render() {
     const { className, style, locale, theme } = this.props;
-    const {modal} = this.state;
+    const { modal } = this.state;
     return (
       <Container className={className} style={style} theme={theme}>
         <Logo theme={theme} src={theme.foreground === 'white' ? KIPR_LOGO_BLACK as string : KIPR_LOGO_WHITE as string} onClick={this.onDashboardClick_} />

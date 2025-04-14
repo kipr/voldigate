@@ -20,10 +20,9 @@ import { BLANK_PROJECT, Project } from '../types/projectTypes';
 import { User } from '../types/userTypes';
 import { InterfaceMode } from '../types/interfaceModes';
 import { JSX } from 'react';
-//import { MotorServoSensorDisplay } from './MotorServoSensorDisplay';
-import { Motors, Servos, Sensors, ServoType, DEFAULT_MOTORS, DEFAULT_SERVOS } from '../types/motorServoSensorTypes';
-import { Ivygate, IvygateFileExplorer, MotorServoSensorDisplay } from 'ivygate';
-import TestStyled from 'ivygate/dist/testStyled';
+import {  ServoType, DEFAULT_MOTORS, DEFAULT_SERVOS } from '../types/motorServoSensorTypes';
+import { IvygateFileExplorer, MotorServoSensorDisplay } from 'ivygate';
+
 
 export interface LeftBarPublicProps extends StyleProps, ThemeProps {
 
@@ -90,9 +89,10 @@ type State = LeftBarState;
 
 const Container = styled('div', (props: ThemeProps) => ({
   color: props.theme.color,
+
   height: '100vh',
   maxHeight: '100vh',
-  overflow: 'hidden',
+  overflow: 'auto',
   lineHeight: '28px',
   display: 'flex',
   flexDirection: 'row',
@@ -100,6 +100,15 @@ const Container = styled('div', (props: ThemeProps) => ({
   zIndex: 0,
   width: '100vw',
   flexGrow: 1,
+}));
+
+const RootContainer = styled('div', (props: ThemeProps) => ({
+  height: '100%', 
+  flex: 1, 
+  display: 'flex', 
+  maxWidth: '99%',
+  flexDirection: 'column', 
+  overflow: 'visible'
 }));
 
 interface ClickProps {
@@ -110,12 +119,11 @@ interface ClickProps {
 const Item = styled('div', (props: ThemeProps & ClickProps) => ({
   display: 'flex',
   alignItems: 'center',
+  justifyContent: 'center',
   flexDirection: 'row',
-  // borderRight: `1px solid ${props.theme.borderColor}`,
 
-  paddingRight: '20px',
-  //marginBottom: '70px',
-  height: '45px',
+  height: '55px',
+  width: '100%',
   opacity: props.disabled ? '0.5' : '1.0',
   ':last-child': {
     borderRight: 'none'
@@ -130,19 +138,20 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
 }));
 
 const ItemIcon = styled(Fa, {
-  paddingLeft: '8px',
   alignItems: 'center',
-  height: '30px'
+  height: '40px'
 });
 const LeftBarContainer = styled('div', (props: ThemeProps & ClickProps) => ({
   display: 'flex',
   flexDirection: 'column',
-  width: '50px',
+  paddingTop: '10px',
+  width: '4vw',
   height: '100vh',
   flexShrink: 0,
   justifyContent: 'space-between',
+  alignItems: 'center',
   backgroundColor: props.theme.leftBarContainerBackground,
-  //borderRight: `2px solid ${props.theme.borderColor}`,
+  gap: '10px',
   boxShadow: `5px 0 6px ${props.theme.borderColor}`,
 }));
 
@@ -273,19 +282,6 @@ export class LeftBar extends React.Component<Props, State> {
   private onModalClick_ = (modal: Modal) => () => this.setState({ modal });
   private onModalClose_ = () => this.setState({ modal: Modal.NONE });
 
-  /**
-   * Toggle the visibility of the leftbar
-   */
-  private togglePanelVisibility = () => {
-    this.setState((prevState) => {
-      const newIsPanelVisible = !prevState.isPanelVisible;
-      return {
-        isPanelVisible: newIsPanelVisible,
-      };
-    });
-
-  };
-
 
   private selectPanel = (panel: string) => {
     console.log("LeftBar selectPanel panel: ", panel);
@@ -294,7 +290,7 @@ export class LeftBar extends React.Component<Props, State> {
       if (panel !== this.state.panelSelection) {
         let newSizes: [number, number] = this.state.sliderSizes;
         if (panel === "motor_sensor_servo") {
-          newSizes = [5, 9];
+          newSizes = [4, 9];
         }
         else if (panel === "fileExplorer") {
           newSizes = [2, 9];
@@ -348,14 +344,14 @@ export class LeftBar extends React.Component<Props, State> {
       console.log("LeftBar panel is not visible");
       let newSizes: [number, number] = this.state.sliderSizes;
       if (panel === "motor_sensor_servo") {
-        newSizes = [5,9];
+        newSizes = [4, 9];
       }
       else if (panel === "fileExplorer") {
         newSizes = [2, 9];
       }
 
       this.setState({
-        sliderSizes: [...newSizes], // Update the slider sizes dynamically
+        sliderSizes: [...newSizes], 
         panelSelection: panel,
         isPanelVisible: true
       });
@@ -953,9 +949,10 @@ export class LeftBar extends React.Component<Props, State> {
 
     let rootContent: JSX.Element;
     rootContent = (
-      <div style={{ height: '100%', flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+      <RootContainer theme ={theme}>
+
         <Root
-          isLeftBarOpen={isLeftBarOpen}
+          isLeftBarOpen={isPanelVisible}
           history={undefined}
           location={undefined}
           match={undefined}
@@ -1014,7 +1011,7 @@ export class LeftBar extends React.Component<Props, State> {
 
           propedMotorPositions={this.state.motorPositions}
         />
-      </div>
+      </RootContainer>
     )
 
     let fileExplorerContent: JSX.Element;
@@ -1023,9 +1020,6 @@ export class LeftBar extends React.Component<Props, State> {
       console.log("LeftBar render() fileExplorerContent state: ", this.state),
       <FileExplorerContainer theme={storedTheme}>
 
-        {/* <TestStyled
-        
-         /> */}
         <IvygateFileExplorer
           theme={storedTheme}
           locale="en-US"
@@ -1069,7 +1063,9 @@ export class LeftBar extends React.Component<Props, State> {
 
 
         />
-          </FileExplorerContainer>
+
+
+      </FileExplorerContainer>
     );
 
     let motorServoSensorDisplay: JSX.Element;
@@ -1100,11 +1096,11 @@ export class LeftBar extends React.Component<Props, State> {
           <Item theme={storedTheme} onClick={() => this.selectPanel('fileExplorer')}>
             <ItemIcon icon={faFolderTree} />
           </Item>
-          <Item style={{ marginTop: '15px' }} theme={storedTheme} onClick={() => this.selectPanel('motor_sensor_servo')}>
+          <Item style={{}} theme={storedTheme} onClick={() => this.selectPanel('motor_sensor_servo')}>
             <ItemIcon icon={faWaveSquare} />
           </Item>
 
-          <Item style={{ marginBottom: '50px', marginTop: 'auto' }} theme={storedTheme} onClick={this.onModalClick_(Modal.SETTINGS)}>
+          <Item style={{ marginBottom: '75px', marginTop: 'auto' }} theme={storedTheme} onClick={this.onModalClick_(Modal.SETTINGS)}>
             <ItemIcon icon={faCog} />
           </Item>
 

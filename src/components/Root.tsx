@@ -153,6 +153,7 @@ interface RootState {
   messages: Message[];
 
   rootMotorPositions: { [key: string]: number };
+  rootWidth: number;
 }
 
 type Props = RootPublicProps & RootPrivateProps;
@@ -161,15 +162,18 @@ type State = RootState;
 // We can't set innerheight statically, becasue the window can change
 // but we also must use innerheight to fix mobile issues
 interface ContainerProps {
-  $windowInnerHeight: number
+  $windowInnerHeight: number,
+ 
 }
 
-const RootContainer = styled('div', (props: ContainerProps) => ({
-  width: '100vw',
+const RootContainer = styled('div', (props: ContainerProps & {rootWidth: number}) => ({
+
+  width: '100%',
   height: `${props.$windowInnerHeight}px`, // fix for mobile, see https://chanind.github.io/javascript/2019/09/28/avoid-100vh-on-mobile-web.html
   display: 'flex',
   flexDirection: 'column',
-  overflow: 'hidden',
+  overflow: 'visible',
+  flex: '4 1 0',
   maxHeight: '100vh',
 
 }));
@@ -245,6 +249,7 @@ class Root extends React.Component<Props, State> {
       isRunning: false,
       theme: this.props.propedTheme,
       rootMotorPositions: {},
+      rootWidth: 100
     };
 
     this.editorRef = React.createRef();
@@ -1790,13 +1795,14 @@ class Root extends React.Component<Props, State> {
       toRenameName_,
       toRenameType_,
       theme,
+      rootWidth
 
     } = state;
 
     console.log("Root render state: ", this.state);
     console.log("Root render props: ", this.props);
     return (
-      <RootContainer $windowInnerHeight={windowInnerHeight}>
+      <RootContainer $windowInnerHeight={windowInnerHeight} rootWidth={this.state.rootWidth}>
 
         {modal.type === Modal.Type.About && (
           <AboutDialog

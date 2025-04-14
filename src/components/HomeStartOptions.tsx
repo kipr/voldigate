@@ -1,6 +1,7 @@
 import CreateUserDialog from './CreateUserDialog';
 import tr from '@i18n';
 import KIPR_LOGO_WHITE from '../assets/KIPR-Logo-White-Text-Clear-Large.png';
+import IDE_Logo from '../assets/IDE_Logo.png';
 import React from 'react';
 import LocalizedString from '../util/LocalizedString';
 import SettingsDialog from './SettingsDialog';
@@ -46,15 +47,17 @@ const Container = styled('div', (props: ThemeProps) => ({
     color: props.theme.color,
     width: '50%',
     height: '80%',
-    marginTop: '1%',
+    paddingTop: '2%',
+    //marginTop: '1%',
     marginLeft: '19%',
     lineHeight: '28px',
     display: 'flex',
     alignItems: 'center',
     position: 'relative',
     flexDirection: 'column',
-    gap: '20px',
+    gap: '3em',
     zIndex: 1,
+
 }));
 
 
@@ -62,10 +65,10 @@ const HomeStartContainer = styled('div', (props: ThemeProps) => ({
     backgroundColor: props.theme.homeStartContainerBackground,
     border: `2px solid ${props.theme.borderColor}`,
     color: props.theme.color,
-    width: '50vw', // Use viewport width for better scaling
-    maxWidth: '240px', // Prevents it from getting too big
+    width: '150vw', // Use viewport width for better scaling
+    maxWidth: '500px', // Prevents it from getting too big
     height: 'auto',
-    minHeight: '60vh',
+    minHeight: '40vh',
     display: 'flex',
     justifyContent: 'center',
     gap: '20px',
@@ -106,7 +109,7 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    fontSize: '25px',
+    fontSize: '2.074em',
     padding: '30px 10px 30px 20px',
     marginBottom: '16px',
     height: '45px',
@@ -138,32 +141,30 @@ const ItemIcon = styled(Fa, {
     paddingRight: '12px',
     alignItems: 'center',
 
-    height: '30px'
+    height: '35px'
 });
 
 const LogoContainer = styled('div', (props: ThemeProps) => ({
     position: 'relative',
     display: 'flex',
 
-    gap: '20px',
-    alignItems: 'flex-end',
     alignContent: 'center',
     justifyContent: 'center',
-    //flexWrap: 'wrap',
-  //  marginLeft: '10%',
+
     flexDirection: 'row',
     width: '100%',
-    height: '40%',
+    height: '60%',
     zIndex: 0,
+
 }));
 
 const Logo = styled('img', (props: ThemeProps) => ({
     position: 'relative',
     backgroundColor: '#373737',
-   // alignItems: 'flex-end',
-    width: '150px',
-    height: '150px',
-    marginLeft: '15%',
+    // alignItems: 'flex-end',
+    width: '16em',
+    height: '16em',
+   // marginLeft: '15%',
     userSelect: 'none',
     transition: 'background-color 0.2s, opacity 0.2s'
 }));
@@ -177,7 +178,6 @@ const IDEName = styled('div', (props: ThemeProps) => ({
     fontFamily: "bebas-neue-pro-semiexpanded, sans-serif",
     fontStyle: 'normal',
     fontWeight: 600,
-    fontSize: "500",
     width: '500px',
     height: '50%',
     zIndex: 0,
@@ -227,23 +227,23 @@ export class HomeStartOptions extends React.Component<Props, State> {
         } = this.state;
 
         return (
-            <div style={{height: '80%',maxHeight: '80%'}}>
+            <div style={{ height: '80%', maxHeight: '80%' }}>
                 <Container className={className} style={style} theme={theme}>
                     <LogoContainer theme={theme}>
-                        <Logo src={KIPR_LOGO_WHITE as string} theme={theme} />
-                        <IDEName style={{ fontSize: 50 }} theme={theme}>KISS IDE</IDEName>
+                        <Logo src={IDE_Logo as string} theme={theme} />
+                        {/* <IDEName style={{ fontSize: '4em' }} theme={theme}>KISS IDE</IDEName> */}
                     </LogoContainer>
                     <HomeStartContainer theme={theme}>
                         <StartContainer theme={theme}>
-                            <Title theme={theme} style={{ fontSize: 35 }}>Start</Title>
+                            <Title theme={theme} style={{ fontSize: '2.488em' }}>Start</Title>
                             <Item onClick={this.onModalClick_(Modal.CREATEUSER)} theme={theme}><ItemIcon icon={faUserPlus}></ItemIcon>{LocalizedString.lookup(tr('New User...'), locale)}</Item>
                             <Item onClick={this.onModalClick_(Modal.OPENFILE)} theme={theme}><ItemIcon icon={faFilePen}></ItemIcon>{LocalizedString.lookup(tr('Open File...'), locale)}</Item>
-                            <Item onClick={this.onModalClick_(Modal.OPENUSERS)} theme={theme}><ItemIcon  icon={faBookReader}></ItemIcon>{LocalizedString.lookup(tr('Open User...'), locale)}</Item>
+                            <Item onClick={this.onModalClick_(Modal.OPENUSERS)} theme={theme}><ItemIcon icon={faBookReader}></ItemIcon>{LocalizedString.lookup(tr('Open User...'), locale)}</Item>
                         </StartContainer>
                     </HomeStartContainer>
                 </Container>
 
-             
+
                 {modal.type === Modal.Type.CreateUser && (
                     <CreateUserDialog
                         theme={theme}
