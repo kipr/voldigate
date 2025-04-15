@@ -9,6 +9,8 @@
       "include_dirs": [
             "motor/include",                  
         "<(module_root_dir)/motor/protected" 
+        "<(module_root_dir)/core/protected" 
+
       ],
       "libraries": [
         "-lwallaby"  
@@ -26,6 +28,7 @@
       "include_dirs": [
         "servo/include",                 
         "<(module_root_dir)/servo/protected" 
+        "<(module_root_dir)/core/protected" 
       ],
       "libraries": [
         "-lwallaby"  
