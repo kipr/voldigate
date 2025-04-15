@@ -8,12 +8,15 @@
       ],
       "include_dirs": [
             "motor/include",                  
-        "<(module_root_dir)/motor/protected" 
-        "<(module_root_dir)/core/protected" 
+        "motor/protected", 
+        "core/protected" 
 
       ],
       "libraries": [
-        "-lwallaby"  
+        "-lkipr"  
+      ],
+      "library_dirs": [
+        "/usr/local/lib"
       ],
       "dependencies": [],
       "cflags": ["-std=c++11"],
@@ -27,11 +30,14 @@
       ],
       "include_dirs": [
         "servo/include",                 
-        "<(module_root_dir)/servo/protected" 
-        "<(module_root_dir)/core/protected" 
+        "servo/protected",
+        "core/protected" 
       ],
       "libraries": [
-        "-lwallaby"  
+        "-lkipr"  
+      ],
+       "library_dirs": [
+        "/usr/local/lib"
       ],
        "dependencies": [],
       "cflags": ["-std=c++11"],
