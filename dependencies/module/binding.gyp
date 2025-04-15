@@ -32,9 +32,9 @@
       "libraries": [
         "-lwallaby"  
       ],
-      "dependencies": [
-        "<!(node -e \"require('nan')\")" 
-      ]
+       "dependencies": [],
+      "cflags": ["-std=c++11"],
+      "defines": ["NAPI_ENABLE_CPP_EXCEPTIONS"]
     }
   ]
 }
