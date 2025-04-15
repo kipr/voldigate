@@ -7,16 +7,15 @@
         "motor/src/motor_p.cpp"         
       ],
       "include_dirs": [
-        "<!(node -e \"require('nan')\")", 
-        "motor/include",                  
+            "motor/include",                  
         "<(module_root_dir)/dependencies/libwallaby/include" 
       ],
       "libraries": [
         "-lwallaby"  
       ],
-      "dependencies": [
-        "<!(node -e \"require('nan')\")"
-      ]
+      "dependencies": [],
+      "cflags": ["-std=c++11"],
+      "defines": ["NAPI_ENABLE_CPP_EXCEPTIONS"]
     },
     {
       "target_name": "servo_addon",      
@@ -25,7 +24,6 @@
         "servo/src/servo_p.cpp"          
       ],
       "include_dirs": [
-        "<!(node -e \"require('nan')\")",
         "servo/include",                 
         "<(module_root_dir)/dependencies/libwallaby/include" 
       ],
