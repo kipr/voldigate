@@ -8,7 +8,7 @@
       ],
       "include_dirs": [
             "motor/include",                  
-        "<(module_root_dir)/dependencies/libwallaby/include" 
+        "<(module_root_dir)/motor/protected" 
       ],
       "libraries": [
         "-lwallaby"  
@@ -25,7 +25,7 @@
       ],
       "include_dirs": [
         "servo/include",                 
-        "<(module_root_dir)/dependencies/libwallaby/include" 
+        "<(module_root_dir)/servo/protected" 
       ],
       "libraries": [
         "-lwallaby"  
