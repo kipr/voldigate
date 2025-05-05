@@ -20,13 +20,22 @@ import { BLANK_PROJECT, Project } from '../types/projectTypes';
 import { User } from '../types/userTypes';
 import { InterfaceMode } from '../types/interfaceModes';
 import { JSX } from 'react';
-import {  ServoType, DEFAULT_MOTORS, DEFAULT_SERVOS } from '../types/motorServoSensorTypes';
+import { Motors, ServoType, Servos, DEFAULT_SENSORS, DEFAULT_MOTORS, DEFAULT_SERVOS, SensorValues, SensorSelectionKey, SensorSelection, MotorVelocities, MotorPositions, GraphSelectionKey, ServoPositions } from '../types/motorServoSensorTypes';
 import { IvygateFileExplorer, MotorServoSensorDisplay } from 'ivygate';
+import { useProgramRun } from '../ProgramRunContext';
 
 
 export interface LeftBarPublicProps extends StyleProps, ThemeProps {
 
   onThemeChange: (theme: Theme) => void;
+  isRunning: boolean;
+  propedMotorVelocities?: MotorVelocities;
+  propedMotorPositions?: MotorPositions;
+  propedServoPositions?: ServoType[];
+
+  setShouldStreamMotorVelocities?: (shouldStreamMotorVelocities: boolean) => void;
+  setGraphSelection?: (graphSelection: GraphSelectionKey[]) => void;
+  repollServos?: (repollServoFlag: boolean) => void;
 }
 
 interface LeftBarPrivateProps {
@@ -79,13 +88,313 @@ interface LeftBarState {
   panelSelection: string;
 
   motorPositions?: { [key: string]: number };
-  servoPositions?: ServoType[];
+  stoppedMotor?: number;
+  stoppedMotorFlag?: boolean;
+  stoppedAllMotorsFlag?: boolean;
+  motorView?: 'Power' | 'Velocity';
 
+  motorVelocities?: MotorVelocities
+
+  servoPositions?: ServoType[];
+  enabledServo?: ServoType;
+  disabledServos?: ServoType[];
+  enabledServoFlag?: boolean;
+  disabledServoFlag?: boolean;
+  disableAllServosFlag?: boolean;
+
+  sensorDisplayShown?: boolean;
+  sensorSelection?: SensorSelectionKey[] | null;
+  sensorValues?: SensorValues;
+  analogValues?: number;
+  digitalValues?: number;
+  accelValues?: number;
+  gyroValues?: number;
+  magnetoValues?: number;
+  buttonValues?: number;
+
+  graphSelection?: GraphSelectionKey[] | null;
 }
-//
+
 
 type Props = LeftBarPublicProps & LeftBarPrivateProps;
 type State = LeftBarState;
+
+
+const LeftBarWrapper = (props: Props) => {
+  const { isRunning } = useProgramRun();
+  const [motorVelocities, setMotorVelocities] = React.useState<MotorVelocities>({});
+  const [motorPositions, setMotorPositions] = React.useState<MotorPositions>({});
+  const [servoPositions, setServoPositions] = React.useState<ServoType[]>([]); 
+  const [shouldStreamMotorVelocities, setShouldStreamMotorVelocities] = React.useState(false); // <-- controlled by LeftBar
+  const [graphSelection, setGraphSelection] = React.useState<GraphSelectionKey[]>([]); // <-- controlled by LeftBar
+  const [repollServos, setRepollServos] = React.useState(false); // <-- controlled by LeftBar
+  const repollServosHandler = (flag: boolean) => {
+    setRepollServos(flag);
+    console.log("LeftBarWrapper repollServos: ", repollServos);
+  };
+  
+  //let motorVelocities: MotorVelocities = {};
+  console.log("LeftBarWrapper graphSelection: ", graphSelection);
+  // React.useEffect(() => {
+  //   let motorEventVelocitySource: EventSource | null = null;
+  //   let motorEventPositionSource: EventSource | null = null;
+  //   if (isRunning && (graphSelection.includes('MotorVelocities') || graphSelection.includes('MotorPositions'))) {
+
+  //     console.log("LeftBarWrapper if graphSelection.includes('MotorPositions'): ", graphSelection.includes('MotorPositions'));
+  //     if(graphSelection.includes('MotorVelocities')) {
+  //       motorEventVelocitySource = new EventSource('/stream-motor-velocities');
+  //       motorEventVelocitySource.onmessage = (event) => {
+  //         const data = JSON.parse(event.data);
+
+  //         const tempVelocities: MotorVelocities = {};
+
+  //         for (let i = 0; i < 4; ++i) {
+
+
+  //           if (data[`motor${i}`] !== undefined) {
+
+  //             tempVelocities[`Motor ${i}`] = data[`motor${i}`] / 65536.0; // 2^16 = 65536
+  //           }
+
+  //         }
+  //         setMotorVelocities(tempVelocities);
+  //         console.log("Motor event data (velocities): ", tempVelocities);
+  //       };
+
+  //       motorEventVelocitySource.onerror = (error) => {
+  //         console.error("Error in motor event source: ", error);
+  //         if (motorEventVelocitySource) {
+  //           motorEventVelocitySource.close();
+  //         }
+  //       };
+
+
+  //     }
+
+  //     if(graphSelection.includes('MotorPositions')) {
+  //       motorEventPositionSource = new EventSource('/stream-motor-positions');
+  //       motorEventPositionSource.onmessage = (event) => {
+  //         const data = JSON.parse(event.data);
+
+  //         const tempPositions: MotorPositions = {};
+
+  //         for (let i = 0; i < 4; ++i) {
+
+
+  //           if (data[`motor${i}`] !== undefined) {
+
+  //             tempPositions[`Motor ${i}`] = data[`motor${i}`] / 65536.0; // 2^16 = 65536
+  //           }
+
+  //         }
+  //         setMotorPositions(tempPositions);
+  //         console.log("Motor event data (positions): ", tempPositions);
+  //       };
+
+  //       motorEventPositionSource.onerror = (error) => {
+  //         console.error("Error in motor event source: ", error);
+  //         if (motorEventPositionSource) {
+  //           motorEventPositionSource.close();
+  //         }
+  //       };
+
+
+  //     }
+
+
+  //   }
+  //   return () => {
+  //     if (motorEventVelocitySource) {
+  //       motorEventVelocitySource.close();
+  //       setMotorVelocities({
+  //         "Motor 0": 0,
+  //         "Motor 1": 0,
+  //         "Motor 2": 0,
+  //         "Motor 3": 0,
+  //       });
+  //     }
+  //     if (motorEventPositionSource) {
+  //       motorEventPositionSource.close();
+  //       setMotorPositions({
+  //         "Motor 0": 0,
+  //         "Motor 1": 0,
+  //         "Motor 2": 0,
+  //         "Motor 3": 0,
+  //       });
+  //     }
+  //   };
+  // }, [isRunning, shouldStreamMotorVelocities, graphSelection]);
+  // Effect for motor velocities
+  React.useEffect(() => {
+    console.log("Render triggered velocities: isRunning =", isRunning, "graphSelection =", graphSelection);
+    if (!isRunning || !graphSelection.includes('MotorVelocities')) return;
+
+    const motorEventVelocitySource = new EventSource('/stream-motor-velocities');
+
+    motorEventVelocitySource.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      const tempVelocities: MotorVelocities = {};
+
+      for (let i = 0; i < 4; ++i) {
+        if (data[`motor${i}`] !== undefined) {
+          tempVelocities[`Motor ${i}`] = data[`motor${i}`] / 65536.0;
+
+        }
+      }
+
+      setMotorVelocities(tempVelocities);
+      console.log("Motor event data (velocities): ", tempVelocities);
+    };
+
+    motorEventVelocitySource.onerror = (error) => {
+      console.error("Error in motor velocities event source: ", error);
+      motorEventVelocitySource.close();
+    };
+
+    return () => {
+      motorEventVelocitySource.close();
+      setMotorVelocities({
+        "Motor 0": 0,
+        "Motor 1": 0,
+        "Motor 2": 0,
+        "Motor 3": 0,
+      });
+    };
+  }, [isRunning, graphSelection]);
+
+  // Effect for motor positions
+  React.useEffect(() => {
+    console.log("Render triggered positions: isRunning =", isRunning, "graphSelection =", graphSelection);
+    if (!isRunning || !graphSelection.includes('MotorPositions')) return;
+
+    const motorEventPositionSource = new EventSource('/stream-motor-positions');
+
+    motorEventPositionSource.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      const tempPositions: MotorPositions = {};
+
+      for (let i = 0; i < 4; ++i) {
+        if (data[`motor${i}`] !== undefined) {
+          tempPositions[`Motor ${i}`] = data[`motor${i}`];
+        }
+      }
+
+      setMotorPositions(tempPositions);
+      console.log("Motor event data (positions): ", tempPositions);
+    };
+
+    motorEventPositionSource.onerror = (error) => {
+      console.error("Error in motor positions event source: ", error);
+      motorEventPositionSource.close();
+    };
+
+    return () => {
+      motorEventPositionSource.close();
+      setMotorPositions({
+        "Motor 0": 0,
+        "Motor 1": 0,
+        "Motor 2": 0,
+        "Motor 3": 0,
+      });
+    };
+  }, [isRunning, graphSelection]);
+
+  // Effect for servo positions
+  React.useEffect(() => {
+    console.log("Render triggered positions: isRunning =", isRunning, "graphSelection =", graphSelection);
+    if (!isRunning || !graphSelection.includes('ServoGraphs') ) return;
+
+    const servoEventPositionSource = new EventSource('/stream-servo-positions');
+
+    servoEventPositionSource.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      //const tempPositions: ServoPositions = {};
+      console.log("data: ", data);
+      const tempServos: ServoType[] = [];
+      for (let i = 0; i < 4; ++i) {
+        if (data[i] !== undefined) {
+          //tempServos[`Servo ${i}`] = data[`servo${i}`];
+          tempServos[i] = {
+            name: Servos[`SERVO${i}` as keyof typeof Servos],
+            value: data[i].value,
+            enable: data[i].enable,
+          }
+        }
+      }
+
+      setServoPositions(tempServos);
+      console.log("Servo event tempServos: ", tempServos);
+    };
+
+    servoEventPositionSource.onerror = (error) => {
+      console.error("Error in servo positions event source: ", error);
+      servoEventPositionSource.close();
+    };
+
+    return () => {
+      servoEventPositionSource.close();
+      //setServoPositions(DEFAULT_SERVOS);
+    };
+  }, [isRunning, graphSelection]);
+
+
+  React.useEffect(() => {
+    if(repollServos){
+      const servoEventPositionSource = new EventSource('/stream-servo-positions');
+
+      servoEventPositionSource.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        //const tempPositions: ServoPositions = {};
+        console.log("data: ", data);
+        const tempServos: ServoType[] = [];
+        for (let i = 0; i < 4; ++i) {
+          if (data[i] !== undefined) {
+            //tempServos[`Servo ${i}`] = data[`servo${i}`];
+            tempServos[i] = {
+              name: Servos[`SERVO${i}` as keyof typeof Servos],
+              value: data[i].value,
+              enable: data[i].enable,
+            }
+          }
+        }
+  
+        setServoPositions(tempServos);
+        console.log("Servo event tempServos: ", tempServos);
+
+        setRepollServos(false);
+        servoEventPositionSource.close(); // Close the stream after handling one message
+      };
+  
+      servoEventPositionSource.onerror = (error) => {
+        console.error("Error in servo positions event source: ", error);
+        servoEventPositionSource.close();
+        setRepollServos(false);
+      };
+  
+      return () => {
+        servoEventPositionSource.close();
+       
+        //setServoPositions(DEFAULT_SERVOS);
+      };
+    }
+  }, [repollServos]);
+
+
+  return <LeftBar
+    {...props}
+    isRunning={isRunning}
+    propedMotorVelocities={motorVelocities}
+    propedMotorPositions={motorPositions}
+    propedServoPositions={servoPositions} 
+    setShouldStreamMotorVelocities={setShouldStreamMotorVelocities}
+    setGraphSelection={setGraphSelection}
+    repollServos={repollServosHandler}
+  />;
+};
+
+
+
+
 
 const Container = styled('div', (props: ThemeProps) => ({
   color: props.theme.color,
@@ -103,11 +412,11 @@ const Container = styled('div', (props: ThemeProps) => ({
 }));
 
 const RootContainer = styled('div', (props: ThemeProps) => ({
-  height: '100%', 
-  flex: 1, 
-  display: 'flex', 
+  height: '100%',
+  flex: 1,
+  display: 'flex',
   maxWidth: '99%',
-  flexDirection: 'column', 
+  flexDirection: 'column',
   overflow: 'visible'
 }));
 
@@ -179,7 +488,7 @@ const MotorServoSensorDisplayContainer = styled('div', (props: ThemeProps & Clic
 }));
 
 
-export class LeftBar extends React.Component<Props, State> {
+class LeftBar extends React.Component<Props, State> {
 
   private selectedFileRef: React.MutableRefObject<string>;
   private isClickedFileRef: React.MutableRefObject<boolean>;
@@ -212,7 +521,11 @@ export class LeftBar extends React.Component<Props, State> {
       addFileFlag: false,
       addProjectFlag: false,
       panelSelection: '',
-      motorPositions: DEFAULT_MOTORS
+      servoPositions: DEFAULT_SERVOS,
+      motorPositions: DEFAULT_MOTORS,
+      stoppedMotorFlag: false,
+      stoppedAllMotorsFlag: false,
+      sensorValues: DEFAULT_SENSORS,
 
     }
     this.selectedFileRef = React.createRef();
@@ -229,6 +542,8 @@ export class LeftBar extends React.Component<Props, State> {
     console.log("LeftBar compDidUPdate prevstate: ", prevState);
     console.log("LeftBar compDidUPdate prevProps: ", prevProps);
     console.log("LeftBar compDidUPdate props: ", this.props);
+
+
 
     if (prevState.sliderSizes !== this.state.sliderSizes) {
       console.log("LeftBar compDidUPdate sliderSizes changed from ", prevState.sliderSizes, " to ", this.state.sliderSizes);
@@ -291,9 +606,11 @@ export class LeftBar extends React.Component<Props, State> {
         let newSizes: [number, number] = this.state.sliderSizes;
         if (panel === "motor_sensor_servo") {
           newSizes = [4, 9];
+          this.props.setShouldStreamMotorVelocities(true);
         }
         else if (panel === "fileExplorer") {
           newSizes = [2, 9];
+          this.props.setShouldStreamMotorVelocities(false);
         }
         this.setState({
           panelSelection: panel,
@@ -308,6 +625,7 @@ export class LeftBar extends React.Component<Props, State> {
         console.log("LeftBar DEFAULT_MOTORS: ", DEFAULT_MOTORS);
         if (JSON.stringify(this.state.motorPositions) === JSON.stringify(DEFAULT_MOTORS)) {
           console.log("motorPositions is default");
+          this.props.setShouldStreamMotorVelocities(false);
           this.setState({
             isPanelVisible: false
           })
@@ -345,13 +663,15 @@ export class LeftBar extends React.Component<Props, State> {
       let newSizes: [number, number] = this.state.sliderSizes;
       if (panel === "motor_sensor_servo") {
         newSizes = [4, 9];
+        this.props.setShouldStreamMotorVelocities(true);
       }
       else if (panel === "fileExplorer") {
         newSizes = [2, 9];
+        this.props.setShouldStreamMotorVelocities(false);
       }
 
       this.setState({
-        sliderSizes: [...newSizes], 
+        sliderSizes: [...newSizes],
         panelSelection: panel,
         isPanelVisible: true
       });
@@ -886,19 +1206,181 @@ export class LeftBar extends React.Component<Props, State> {
 
   };
 
-  private storeMotorPositions_ = (motorPositions: { [key: string]: number }) => {
-    console.log("LeftBar storeMotorPositions_ motorPositions: ", motorPositions);
+  private storeMotorPositions_ = (view: 'Power' | 'Velocity', motorPositions: { [key: string]: number }) => {
+    console.log("LeftBar storeMotorPositions_ motorPositions: ", motorPositions, " with view: ", view);
     this.setState({
+      motorView: view,
       motorPositions: motorPositions
     });
   };
 
+  private stopMotor_ = (motor: Motors) => {
+    console.log("LeftBar stopMotor_ motor: ", motor);
+    let motorNumber: number = parseInt(motor.split(' ')[1]);
+    console.log("LeftBar stopMotor_ motorNumber: ", motorNumber);
+    this.setState({ stoppedMotor: motorNumber, stoppedMotorFlag: true });
+
+  };
+
+  private stopAllMotors_ = () => {
+    console.log("LeftBar stopAllMotors_");
+    this.setState({ stoppedAllMotorsFlag: true });
+  }
+  private onSetStoppedMotorFlag_ = (stoppedMotorFlag: boolean) => {
+    console.log("LeftBar onSetStoppedMotorFlag_ stoppedMotorFlag: ", stoppedMotorFlag);
+    this.setState({
+      stoppedMotorFlag: stoppedMotorFlag
+    })
+  };
+
+  private onSetStoppedAllMotorsFlag_ = (stoppedAllMotorsFlag: boolean) => {
+    console.log("LeftBar onSetStoppedAllMotorsFlag_ stoppedAllMotorsFlag: ", stoppedAllMotorsFlag);
+    this.setState({
+      stoppedAllMotorsFlag: stoppedAllMotorsFlag
+    })
+  }
+
   private storeServoPositions_ = (servoPositions: ServoType[]) => {
     console.log("LeftBar storeServoPositions_ servoPositions: ", servoPositions);
+
+    this.setState(prevState => {
+      console.log("LeftBar storeServoPositions_ prevState: ", prevState);
+      const prevServoPositions = prevState.servoPositions || [];
+
+      const newlyEnabledServos = servoPositions.filter(newServo => {
+        const oldServo = prevServoPositions.find(s => s.name === newServo.name);
+        return oldServo && !oldServo.enable && newServo.enable;
+      });
+
+      const newlyDisabledServos = servoPositions.filter(newServo => {
+        const oldServo = prevServoPositions.find(s => s.name === newServo.name);
+        return oldServo && oldServo.enable && !newServo.enable;
+      });
+
+      if (newlyEnabledServos.length > 0) {
+        console.log("Newly enabled servos:", newlyEnabledServos);
+        this.setState({
+          enabledServo: newlyEnabledServos[0],
+          enabledServoFlag: true
+        });
+
+      }
+      else if (newlyDisabledServos.length > 0) {
+        console.log("Newly disabled servos:", newlyDisabledServos);
+        this.setState({
+          disabledServos: newlyDisabledServos,
+          disabledServoFlag: true
+        });
+      }
+      this.props.repollServos(true);
+      return {
+        servoPositions: servoPositions,
+
+      }
+
+    })
     this.setState({
       servoPositions: servoPositions
     });
   }
+
+  private onSetEnabledServoFlag_ = (enabledServoFlag: boolean) => {
+    console.log("LeftBar onSetEnabledServoFlag_ enabledServoFlag: ", enabledServoFlag);
+    this.setState({
+      enabledServoFlag: enabledServoFlag
+    })
+  }
+
+  private onSetDisabledServoFlag_ = (disabledServoFlag: boolean) => {
+    console.log("LeftBar onSetEnabledServoFlag_ disabledServoFlag: ", disabledServoFlag);
+    this.setState({
+      disabledServoFlag: disabledServoFlag
+    })
+  }
+
+  private onSetSensorDisplayShown_ = (sensorDisplayShown: boolean) => {
+    console.log("LeftBar onSetSensorDisplayShown_ sensorDisplayShown: ", sensorDisplayShown);
+    this.setState({
+      sensorDisplayShown: sensorDisplayShown
+    })
+  };
+
+  private onSensorSelection_ = (selectedSensors: SensorSelectionKey[]) => {
+    console.log("LeftBar onSensorSelection_ selectedSensors: ", selectedSensors);
+    this.setState({
+      sensorSelection: selectedSensors
+    })
+
+  };
+
+  private onGraphSelection_ = (selectedGraphs: GraphSelectionKey[]) => {
+    console.log("LeftBar onGraphSelection_ selectedGraphs: ", selectedGraphs);
+    this.setState({
+      graphSelection: selectedGraphs
+    }, () => {
+      this.props.setGraphSelection(this.state.graphSelection);
+    })
+
+  };
+
+  private onSetSensorValues_ = (sensorType: string, sensorValue: number) => {
+    console.log("LeftBar onSetSensorValues sensorType: ", sensorType, " sensorValue: ", sensorValue);
+    console.log("LeftBar onSetSensorValues state.sensorValues: ", this.state.sensorValues);
+    this.setState({
+      sensorValues: {
+        ...this.state.sensorValues,
+        [sensorType]: sensorValue
+      }
+    }, () => {
+      console.log("LeftBar onSetSensorValues state: ", this.state);
+    })
+  };
+
+
+  private onSetAnalogValues_ = (analogValues: number) => {
+    console.log("LeftBar setAnalogValues_ analogValues: ", analogValues);
+    this.setState({
+      analogValues: analogValues
+    })
+  };
+
+  private onSetDigitalValues_ = (digitalValues: number) => {
+
+    console.log("LeftBar onSetDigitalValues digitalValues: ", digitalValues);
+    this.setState({
+      digitalValues: digitalValues
+    })
+  };
+
+
+  private onSetAccelValues_ = (accelValues: number) => {
+    console.log("LeftBar onSetAccelValues accelValues: ", accelValues);
+    this.setState({
+      accelValues: accelValues
+    })
+  };
+
+
+  private onSetGyroValues_ = (gyroValues: number) => {
+    console.log("LeftBar onSetGyroValues gyroValues: ", gyroValues);
+    this.setState({
+      gyroValues: gyroValues
+    })
+  };
+
+  private onSetMagnetoValues_ = (magnetoValues: number) => {
+    console.log("LeftBar onSetMagnetoValues magnetoValues: ", magnetoValues);
+    this.setState({
+      magnetoValues: magnetoValues
+    })
+  };
+
+  private onSetButtonValues_ = (buttonValues: number) => {
+    console.log("LeftBar onSetButtonValues buttonValues: ", buttonValues);
+    this.setState({
+      buttonValues: buttonValues
+    })
+  };
 
   render() {
     const { className, theme } = this.props;
@@ -949,7 +1431,7 @@ export class LeftBar extends React.Component<Props, State> {
 
     let rootContent: JSX.Element;
     rootContent = (
-      <RootContainer theme ={theme}>
+      <RootContainer theme={theme}>
 
         <Root
           isLeftBarOpen={isPanelVisible}
@@ -1010,6 +1492,31 @@ export class LeftBar extends React.Component<Props, State> {
           resetRenameFileFlag={this.onSetRenameFileFlag}
 
           propedMotorPositions={this.state.motorPositions}
+          stoppedMotor={this.state.stoppedMotor}
+          propedStoppedMotorFlag={this.state.stoppedMotorFlag}
+          propedStoppedAllMotorsFlag={this.state.stoppedAllMotorsFlag}
+          propedMotorView={this.state.motorView}
+          resetStoppedMotorFlag={this.onSetStoppedMotorFlag_}
+          resetStoppedAllMotorsFlag={this.onSetStoppedAllMotorsFlag_}
+
+          propedServoPositions={this.state.servoPositions}
+          enabledServo={this.state.enabledServo}
+          disabledServos={this.state.disabledServos}
+          propedEnabledServoFlag={this.state.enabledServoFlag}
+          propedDisabledServoFlag={this.state.disabledServoFlag}
+          resetEnabledServoFlag={this.onSetEnabledServoFlag_}
+          resetDisabledServoFlag={this.onSetDisabledServoFlag_}
+
+          propedSensorDisplayFlag={this.state.sensorDisplayShown}
+          setAnalogValues={this.onSetAnalogValues_}
+          setDigitalValues={this.onSetDigitalValues_}
+          setAccelValues={this.onSetAccelValues_}
+          setGyroValues={this.onSetGyroValues_}
+          setMagnetoValues={this.onSetMagnetoValues_}
+          setButtonValues={this.onSetButtonValues_}
+
+          propedSensorSelection={this.state.sensorSelection}
+
         />
       </RootContainer>
     )
@@ -1075,11 +1582,26 @@ export class LeftBar extends React.Component<Props, State> {
         <MotorServoSensorDisplay
           theme={storedTheme}
           locale="en-US"
-
+          stopMotor={this.stopMotor_}
+          stopAllMotors={this.stopAllMotors_}
           storeMotorPositions={this.storeMotorPositions_}
           getMotorPositions={() => this.state.motorPositions}
           storeServoPositions={this.storeServoPositions_}
           getServoPositions={() => this.state.servoPositions}
+          sensorDisplayShown={this.onSetSensorDisplayShown_}
+          sensorSelections={this.onSensorSelection_}
+          graphSelections={this.onGraphSelection_}
+          propedSensorValues={this.state.sensorValues} //Needs to be [] not analogvalues
+          propedAnalogValues={this.state.analogValues}
+          propedDigitalValues={this.state.digitalValues}
+          propedAccelValues={this.state.accelValues}
+          propedGyroValues={this.state.gyroValues}
+          propedMagnetoValues={this.state.magnetoValues}
+          propedButtonValues={this.state.buttonValues}
+          propedProgramRunning={this.props.isRunning}
+          propedMotorVelocities={this.props.propedMotorVelocities}
+          propedMotorPositions={this.props.propedMotorPositions}
+          propedServoPositions={this.props.propedServoPositions}
 
         />
 
@@ -1149,6 +1671,4 @@ export class LeftBar extends React.Component<Props, State> {
   }
 }
 
-export default connect((state: ReduxState) => ({
-  locale: state.i18n.locale
-}))(LeftBar) as React.ComponentType<LeftBarPublicProps>;
+export default LeftBarWrapper;

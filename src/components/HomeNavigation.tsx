@@ -1,6 +1,6 @@
 import * as React from 'react';
 import MainMenu from '../components/MainMenu';
-import LeftBar from '../components/LeftBar';
+
 import LocalizedString from '../util/LocalizedString';
 import ProgrammingLanguage from '../ProgrammingLanguage';
 import { DARK, ThemeProps, LIGHT, Theme } from '../components/theme';
@@ -13,6 +13,7 @@ import { State as ReduxState } from '../state';
 import { Project } from '../types/projectTypes';
 import { User } from '../types/userTypes';
 import { InterfaceMode } from '../types/interfaceModes';
+import LeftBarWrapper from '../components/LeftBar';
 
 export interface HomeNavigationPublicProps extends RouteComponentProps, ThemeProps, StyleProps {
   propedUsers?: string[];
@@ -145,17 +146,24 @@ class HomeNavigation extends React.PureComponent<Props, State> {
 
       theme
     } = state;
-
+    const {locale} = this.props;
 
     return (
       <HomeNavigationContainer theme={theme}>
 
-        <MainMenu theme={theme} locale={'en-US'}/>
+        <MainMenu theme={theme} locale={locale}/>
         <LeftBarContainer theme={theme}>
-          <LeftBar theme={theme}
+          {/* <LeftBar theme={theme}
             onThemeChange={this.onThemeChange_}
-          />
+          /> */}
 
+          <LeftBarWrapper
+           onThemeChange={this.onThemeChange_ } 
+           isRunning={false} 
+           theme={theme} 
+           locale={locale}
+            
+          />
         </LeftBarContainer>
 
       </HomeNavigationContainer>
