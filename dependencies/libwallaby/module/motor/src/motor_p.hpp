@@ -31,6 +31,8 @@ namespace kipr
 
     int get_motor_bemf_vel(unsigned int port);
 
+    bool set_motor_bemf_vel(unsigned int port, unsigned int vel);
+
     bool set_motor_direction(unsigned int port, unsigned char dir);
 
     unsigned char get_motor_direction(unsigned int port);

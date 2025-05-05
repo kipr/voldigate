@@ -6,15 +6,25 @@ const morgan = require("morgan");
 const fs = require("fs");
 const uuid = require("uuid");
 const { exec } = require("child_process");
-const app = express();
+const app = require("express")();
 const sourceDir = "dist";
 const { get: getConfig } = require("./config");
 const path = require("path");
 const proxy = require("express-http-proxy");
 const https = require("https");
+const http = require("http");
 const simpleGit = require("simple-git");
 const JSZip = require("jszip");
 const { spawn } = require("child_process");
+//const servoAddon = require("./build/Release/servo_addon.node");
+//const motorAddon = require("./build/Release/motor_addon.node");
+//const analogAddon = require("./build/Release/analog_addon.node");
+//const digitalAddon = require("./build/Release/digital_addon.node");
+//const accelAddon = require("./build/Release/accel_addon.node");
+//const gyroAddon = require("./build/Release/gyro_addon.node");
+//const magnetoAddon = require("./build/Release/magneto_addon.node");
+//const buttonAddon = require("./build/Release/button_addon.node");
+const WebSocket = require("ws");
 
 let config;
 try {
@@ -24,10 +34,530 @@ try {
   throw e;
 }
 
-const options = {
-  key: fs.readFileSync("key.pem"),
-  cert: fs.readFileSync("cert.pem"),
+app.use(express.json());
+let latestAnalogValues = [];
+
+let sensorValues = {
+  analog: [0, 0, 0, 0, 0, 0], // 6 analog values
+  digital: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 10 digital values
+  accelerometer: [0, 0, 0], // 3 accelerometer values
+  gyro: [0, 0, 0], // 3 gyro values
+  magnetometer: [0, 0, 0], // 3 magnetometer values
+  button: [0], // 1 button value
 };
+
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
+console.log("WebSocket server initialized");
+
+function broadcastAnalogValue() {
+  const message = JSON.stringify({
+    type: "analog",
+    value: sensorValues.analog,
+  });
+
+  wss.clients.forEach((client) => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(message);
+    }
+  });
+}
+
+function broadcastDigitalValue() {
+  const message = JSON.stringify({
+    type: "digital",
+    value: sensorValues.digital,
+  });
+
+  wss.clients.forEach((client) => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(message);
+    }
+  });
+}
+
+function broadcastAccelerometerValue() {
+  const message = JSON.stringify({
+    type: "accel",
+    value: sensorValues.accelerometer,
+  });
+
+  wss.clients.forEach((client) => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(message);
+    }
+  });
+}
+
+function broadcastGyroValue() {
+  const message = JSON.stringify({
+    type: "gyro",
+    value: sensorValues.gyro,
+  });
+
+  wss.clients.forEach((client) => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(message);
+    }
+  });
+}
+
+function broadcastMagnetometerValue() {
+  const message = JSON.stringify({
+    type: "magneto",
+    value: sensorValues.magnetometer,
+  });
+  wss.clients.forEach((client) => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(message);
+    }
+  });
+}
+
+function broadcastButtonValue() {
+  const message = JSON.stringify({
+    type: "button",
+    value: sensorValues.button,
+  });
+
+  wss.clients.forEach((client) => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(message);
+    }
+  });
+}
+
+let analogPolling = false;
+let digitalPolling = false;
+let accelerometerPolling = false;
+let gyroPolling = false;
+let magnetometerPolling = false;
+let buttonPolling = false;
+
+function startAnalogPolling() {
+  if (analogPolling) return;
+  analogPolling = true;
+  console.log("Starting analog polling");
+  console.log("Before loop, analogPolling: ", analogPolling);
+  (function loop() {
+    if (!analogPolling) return;
+    console.log("Inside loop, analogPolling: ", analogPolling);
+    sensorValues.analog.forEach((value, index) => {
+      sensorValues.analog[index] = Math.floor(Math.random() * 4096);
+    });
+
+    // sensorValues.analog.forEach((value, index) => {
+    //   sensorValues.analog[index] = analogAddon.analog(index);
+    // });
+
+    console.log("sensorValues.analog: ", sensorValues.analog);
+    broadcastAnalogValue();
+    setTimeout(loop, 500);
+  })();
+}
+
+function startDigitalPolling() {
+  if (digitalPolling) return;
+  digitalPolling = true;
+  console.log("Starting digital polling");
+  (function loop() {
+    if (!digitalPolling) return;
+    console.log("Inside loop, digitalPolling: ", digitalPolling);
+    sensorValues.digital.forEach((value, index) => {
+      sensorValues.digital[index] = Math.floor(Math.random() * 2);
+    });
+    // sensorValues.digital.forEach((value, index) => {
+    //   sensorValues.digital[index] = digitalAddon.digital(index);
+    // });
+    broadcastDigitalValue();
+    setTimeout(loop, 500);
+  })();
+}
+
+function startAccelerometerPolling() {
+  if (accelerometerPolling) return;
+  accelerometerPolling = true;
+  console.log("Starting accel polling");
+  (function loop() {
+    if (!accelerometerPolling) return;
+    console.log("Inside loop, accelerometerPolling: ", accelerometerPolling);
+    sensorValues.accelerometer.forEach((value, index) => {
+      sensorValues.accelerometer[index] = Math.floor(Math.random() * 2);
+    });
+
+    // sensorValues.accelerometer[0] = accelAddon.accel_x();
+    // sensorValues.accelerometer[1] = accelAddon.accel_y();
+    // sensorValues.accelerometer[2] = accelAddon.accel_z();
+    broadcastAccelerometerValue();
+    setTimeout(loop, 500);
+  })();
+}
+
+function startGyroPolling() {
+  if (gyroPolling) return;
+  gyroPolling = true;
+  console.log("Starting gyro polling");
+  (function loop() {
+    if (!gyroPolling) return;
+    console.log("Inside loop, gyroPolling: ", gyroPolling);
+    sensorValues.gyro.forEach((value, index) => {
+      sensorValues.gyro[index] = Math.floor(Math.random() * 2);
+    });
+
+    // sensorValues.gyro[0] = gyroAddon.gyro_x();
+    // sensorValues.gyro[1] = gyroAddon.gyro_y();
+    // sensorValues.gyro[2] = gyroAddon.gyro_z();
+    broadcastGyroValue();
+    setTimeout(loop, 500);
+  })();
+}
+
+function startMagnetometerPolling() {
+  if (magnetometerPolling) return;
+  magnetometerPolling = true;
+  console.log("Starting magneto polling");
+  (function loop() {
+    if (!magnetometerPolling) return;
+    console.log("Inside loop, magnetometerPolling: ", magnetometerPolling);
+    sensorValues.magnetometer.forEach((value, index) => {
+      sensorValues.magnetometer[index] = Math.floor(Math.random() * 2);
+    });
+
+    // sensorValues.magnetometer[0] = magnetoAddon.magneto_x();
+    // sensorValues.magnetometer[1] = magnetoAddon.magneto_y();
+    // sensorValues.magnetometer[2] = magnetoAddon.magneto_z();
+
+    broadcastMagnetometerValue();
+    setTimeout(loop, 500);
+  })();
+}
+
+function startButtonPolling() {
+  if (buttonPolling) return;
+  buttonPolling = true;
+  console.log("Starting button polling");
+  (function loop() {
+    if (!buttonPolling) return;
+    console.log("Inside loop, buttonPolling: ", buttonPolling);
+    sensorValues.button[0] = Math.floor(Math.random() * 2);
+    // sensorValues.button[0] = buttonAddon.push_button();
+    broadcastButtonValue();
+    setTimeout(loop, 500);
+  })();
+}
+function stopPolling() {
+  console.log("Stopping all polling");
+  analogPolling = false;
+  digitalPolling = false;
+  accelerometerPolling = false;
+  gyroPolling = false;
+  magnetometerPolling = false;
+  buttonPolling = false;
+}
+
+wss.on("connection", (ws) => {
+  console.log("WebSocket connection established");
+
+  ws.on("message", (message) => {
+    try {
+      const data = JSON.parse(message);
+      switch (data.type) {
+        case "start-analog":
+          console.log("Received start-analog message");
+          startAnalogPolling();
+          break;
+        case "start-digital":
+          console.log("Received start-digital message");
+          startDigitalPolling();
+          break;
+        case "start-accelerometer":
+          console.log("Received start-accelerometer message");
+          startAccelerometerPolling();
+          break;
+        case "start-gyroscope":
+          console.log("Received start-gyro message");
+          startGyroPolling();
+          break;
+        case "start-magnetometer":
+          console.log("Received start-magnetometer message");
+          startMagnetometerPolling();
+          break;
+        case "start-button":
+          console.log("Received start-button message");
+          startButtonPolling();
+          break;
+        case "stop-all":
+          console.log("Received stop-all message");
+          stopPolling();
+          break;
+      }
+    } catch (error) {
+      console.error("Error handling message: ", error);
+    }
+  });
+
+  ws.send(JSON.stringify({ analog: latestAnalogValues }));
+});
+
+app.post("/enable-servo", (req, res) => {
+  const { servo, value } = req.body;
+  console.log("/enable-servo servo: ", servo);
+  console.log("/enable-servo value: ", value);
+
+  if (typeof servo !== "number") {
+    return res.status(400).json({ error: "Servo type incorrect, need number" });
+  }
+  try {
+    console.log(`Enabling servo: ${servo}`);
+    //servoAddon.enable_servo(servo);
+
+    console.log(`Setting servo: ${servo} to value: ${value}`);
+    //servoAddon.set_servo_position(servo, value);
+
+    return res
+      .status(200)
+      .json({ message: `Servo ${servo} enabled and set to value ${value}` });
+  } catch (error) {
+    console.error("Error enabling servo:", error);
+    res.status(500).json({ error: "Failed to enable servo" });
+  }
+});
+
+app.post("/disable-all-servos", (req, res) => {
+  try {
+    console.log(`Disabling all servos`);
+    //servoAddon.disable_servos();
+
+    res.status(200).json({ message: `Disabled all servos` });
+  } catch (error) {
+    console.error("Error disabling all servos:", error);
+    res.status(500).json({ error: "Failed to disable all servos" });
+  }
+});
+
+app.post("/disable-servo", (req, res) => {
+  const { servo, value } = req.body;
+  console.log("/disable-servo servo: ", servo);
+  console.log("/disable-servo value: ", value);
+
+  if (typeof servo !== "number") {
+    return res.status(400).json({ error: "Servo type incorrect, need number" });
+  }
+  try {
+    console.log(`Disabling servo: ${servo}`);
+    //servoAddon.disable_servo(servo);
+
+    res.status(200).json({ message: `Servo ${servo} disable` });
+  } catch (error) {
+    console.error("Error disabling servo:", error);
+    res.status(500).json({ error: "Failed to disable servo" });
+  }
+});
+app.post("/move-servo", (req, res) => {
+  const { servo, value } = req.body;
+
+  console.log("/move-servo servo: ", servo);
+  console.log("/move-servo value: ", value);
+
+  if (typeof servo !== "number") {
+    return res.status(400).json({ error: "Servo type incorrect, need number" });
+  }
+
+  try {
+    console.log(`Moving servo: ${servo} to value: ${value}`);
+    //servoAddon.set_servo_position(servo, value);
+    res.status(200).json({ message: `Servo ${servo} moved to value ${value}` });
+  } catch (error) {
+    console.error("Error moving servo:", error);
+    res.status(500).json({ error: "Failed to move servo" });
+  }
+});
+
+// Define the POST route to control the motor
+app.post("/move-motor", (req, res) => {
+  const { view, motor, value } = req.body; // Get motor and value from the request body
+
+  console.log("view: ", view);
+  console.log("typeof motor: ", typeof motor);
+  console.log("typeof value: ", typeof value);
+  if (typeof motor !== "number" || typeof value !== "number") {
+    return res.status(400).json({ error: "Invalid input" });
+  }
+
+  try {
+    console.log(`Moving motor: ${motor}, to value: ${value}`);
+    // Call the function from your addon to move the motor
+
+    if (view === "Power") {
+      console.log("using motor power");
+      //motorAddon.motor_power(motor, value);
+    } else if (view === "Velocity") {
+      console.log("using motor velocity");
+      // motorAddon.mav(motor, value);
+    }
+
+    // Send back a success response
+    res.status(200).json({ message: `Motor ${motor} moved to value ${value}` });
+  } catch (error) {
+    console.error("Error moving motor:", error);
+    res.status(500).json({ error: "Failed to move motor" });
+  }
+});
+
+app.post("/stop-motor", (req, res) => {
+  const { motor } = req.body;
+
+  console.log("type of motor: ", typeof motor);
+
+  if (typeof motor !== "number") {
+    return res.status(400).json({ error: "Invalid input" });
+  }
+
+  try {
+    console.log(`Turning motor: ${motor} off`);
+
+    //motorAddon.off(motor);
+
+    // Send back a success response
+    res.status(200).json({ message: `Motor ${motor} turned off` });
+  } catch (error) {
+    console.error("Error turning off motor:", error);
+    res.status(500).json({ error: "Failed to turn off motor" });
+  }
+});
+
+app.post("/stop-all-motors", (req, res) => {
+  console.log("Express.js stopping all motors");
+  try {
+    // motorAddon.allOff();
+    res.status(200).json({ message: "All motors turned off" });
+  } catch (error) {
+    console.error("Error turning off all motors:", error);
+    res.status(500).json({ error: "Failed to turn off all motors" });
+  }
+});
+
+let motorVelPollingInterval = null;
+let motorPosPollingInterval = null;
+let servoPosPollingInterval = null;
+app.get("/stream-motor-velocities", (req, res) => {
+  res.setHeader("Content-Type", "text/event-stream");
+  res.setHeader("Cache-Control", "no-cache");
+  res.setHeader("Connection", "keep-alive");
+  //res.setHeader('X-Accel-Buffering', 'no');
+
+  console.log("Started motor velocity stream");
+
+  motorAddon.reset_all_motors();
+  motorVelPollingInterval = setInterval(() => {
+    try {
+      const data = {
+        motor0: motorAddon.get_motor_bemf_vel(0),
+        motor1: motorAddon.get_motor_bemf_vel(1),
+        motor2: motorAddon.get_motor_bemf_vel(2),
+        motor3: motorAddon.get_motor_bemf_vel(3),
+      };
+      console.log("motor stream data: ", data);
+      res.write(`data: ${JSON.stringify(data)}\n\n`);
+    } catch (err) {
+      console.error("Motor polling error:", err);
+      res.write(`data: ERROR: ${err.toString()}\n\n`);
+    }
+  }, 500); // every 500ms
+
+  req.on("close", () => {
+    console.log("Closing motor velocity stream");
+    clearInterval(motorVelPollingInterval);
+
+    res.end();
+  });
+});
+
+app.get("/stream-motor-positions", (req, res) => {
+  res.setHeader("Content-Type", "text/event-stream");
+  res.setHeader("Cache-Control", "no-cache");
+  res.setHeader("Connection", "keep-alive");
+  console.log("inside stream-motor-positions");
+  motorPosPollingInterval = setInterval(() => {
+    try {
+      const data = {
+        motor0: motorAddon.get_motor_position_counter(0),
+        motor1: motorAddon.get_motor_position_counter(1),
+        motor2: motorAddon.get_motor_position_counter(2),
+        motor3: motorAddon.get_motor_position_counter(3),
+      };
+
+      res.write(`data: ${JSON.stringify(data)}\n\n`);
+    } catch (err) {
+      console.error("Motor polling error:", err);
+      res.write(`data: ERROR: ${err.toString()}\n\n`);
+    }
+  }, 500); // every 500ms
+
+  req.on("close", () => {
+    clearInterval(motorPosPollingInterval);
+    res.end();
+  });
+});
+
+app.get("/stream-servo-positions", (req, res) => {
+  res.setHeader("Content-Type", "text/event-stream");
+  res.setHeader("Cache-Control", "no-cache");
+  res.setHeader("Connection", "keep-alive");
+  console.log("inside stream-servo-positions");
+  // servoPosPollingInterval = setInterval(() => {
+  //   try {
+  //     const data = {
+  //       motor0: servoAddon.get_servo_position(0),
+  //       motor1: servoAddon.get_servo_position(1),
+  //       motor2: servoAddon.get_servo_position(2),
+  //       motor3: servoAddon.get_servo_position(3),
+  //     };
+
+  //     res.write(`data: ${JSON.stringify(data)}\n\n`);
+  //   } catch (err) {
+  //     console.error("Servo polling error:", err);
+  //     res.write(`data: ERROR: ${err.toString()}\n\n`);
+  //   }
+  // }, 500); // every 500ms
+
+  servoPosPollingInterval = setInterval(() => {
+    try {
+      const data = {
+        0: {
+          name: "Servo 0",
+          value: Math.floor(Math.random() * 1024),
+          enable: true,
+        },
+        1: {
+          name: "Servo 1",
+          value: Math.floor(Math.random() * 1024),
+          enable: false,
+        },
+        2: {
+          name: "Servo 2",
+          value: Math.floor(Math.random() * 1024),
+          enable: true,
+        },
+        3: {
+          name: "Servo 3",
+          value: Math.floor(Math.random() * 1024),
+          enable: false,
+        },
+      };
+
+      res.write(`data: ${JSON.stringify(data)}\n\n`);
+    } catch (err) {
+      console.error("Servo polling error:", err);
+      res.write(`data: ERROR: ${err.toString()}\n\n`);
+    }
+  }, 500); // every 500ms
+
+  req.on("close", () => {
+    clearInterval(servoPosPollingInterval);
+    res.end();
+  });
+});
 
 // Helper function to get all folders in a directory
 function getAllDirectories(dirPath) {
@@ -524,19 +1054,16 @@ app.post("/initialize-project", async (req, res) => {
     console.log("users.json not found. Creating now...");
     try {
       fs.writeFileSync(jsonDirectory, JSON.stringify(userJsonEntry, null, 2));
-   
     } catch (error) {
       console.error("Error writing users.json:", error);
       return res.status(500).json({ error: "Error writing users.json." });
     }
-  }
-  else {
+  } else {
     try {
-      const existingData = JSON.parse(fs.readFileSync(jsonDirectory, 'utf8'));
+      const existingData = JSON.parse(fs.readFileSync(jsonDirectory, "utf8"));
       existingData[req.body.userName] = req.body.interfaceMode;
-  
+
       fs.writeFileSync(jsonDirectory, JSON.stringify(existingData, null, 2));
- 
     } catch (error) {
       console.error("Error updating users.json:", error);
       return res.status(500).json({ error: "Error updating users.json." });
@@ -726,26 +1253,25 @@ app.post("/delete-user", async (req, res) => {
   const jsonPath = "/home/kipr/Documents/KISS/users.json";
   const userDirectory = `/home/kipr/Documents/KISS/${userName}`;
 
-  try{
-    if(!fs.existsSync(jsonPath)){
-      return res.status(404).json({error: "users.json not found."});
+  try {
+    if (!fs.existsSync(jsonPath)) {
+      return res.status(404).json({ error: "users.json not found." });
     }
 
-    const existingData = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+    const existingData = JSON.parse(fs.readFileSync(jsonPath, "utf8"));
 
-    if(!existingData[userName]){
-      return res.status(404).json({error: "User not found in users.json."});
+    if (!existingData[userName]) {
+      return res.status(404).json({ error: "User not found in users.json." });
     }
 
     delete existingData[userName];
 
     fs.writeFileSync(jsonPath, JSON.stringify(existingData, null, 2));
-  }
-  catch (error) { 
+  } catch (error) {
     console.error("Error deleting from users.json:", error);
     return res.status(500).json({ error: "Error deleting from users.json." });
   }
-  
+
   try {
     // Check if the project directory exists
     if (!fs.existsSync(userDirectory)) {
@@ -1217,6 +1743,8 @@ app.post("/rename", async (req, res) => {
   }
 });
 
+let currentChild = null;
+
 app.get("/run-code", (req, res) => {
   console.log("Received run request:", req.query);
   const { userName, projectName, activeLanguage } = req.query;
@@ -1247,8 +1775,11 @@ app.get("/run-code", (req, res) => {
   console.log("Executing:", runCommand);
 
   // const child = spawn(runCommand, [], { shell: true, env: { ...process.env, PYTHONPATH: "/usr/local/lib" } });
-  const child = spawn("stdbuf", ["-oL", runCommand], { shell: true });
-
+  const child = spawn("stdbuf", ["-oL", runCommand], {
+    shell: true,
+    detached: true,
+  });
+  currentChild = child;
   child.stdout.on("data", (data) => {
     const output = data.toString();
 
@@ -1268,6 +1799,15 @@ app.get("/run-code", (req, res) => {
   });
 
   child.on("close", (code) => {
+    currentChild = null;
+    if (motorPosPollingInterval) {
+      clearInterval(motorPosPollingInterval);
+      motorPosPollingInterval = null;
+    }
+    if (motorVelPollingInterval) {
+      clearInterval(motorVelPollingInterval);
+      motorVelPollingInterval = null;
+    }
     console.log(`Process exited with code ${code}`);
     res.write(`data: Process exited with code ${code}\n\n`);
     res.write("event: end\ndata: END\n\n");
@@ -1289,6 +1829,29 @@ app.get("/run-code", (req, res) => {
   //     output: stdout,
   //   });
   // });
+});
+
+app.post("/stop-code", (req, res) => {
+  if (currentChild) {
+    console.log("Stopping process group:", -currentChild.pid);
+    try {
+      process.kill(-currentChild.pid, "SIGKILL"); // Use negative PID to kill the group
+      try {
+        motorAddon.alloff(); // or motorAddon.off(0), etc.
+        console.log("Motors stopped via addon.");
+      } catch (motorErr) {
+        console.error("Failed to stop motors:", motorErr);
+      }
+
+      res.send("Execution stopped");
+    } catch (err) {
+      console.error("Failed to stop process:", err);
+      res.status(500).send("Failed to stop execution");
+    }
+    currentChild = null;
+  } else {
+    res.status(400).send("No process running");
+  }
 });
 
 app.post("/feedback", (req, res) => {
@@ -1428,13 +1991,12 @@ app.use("*", (req, res) => {
   res.sendFile(`${__dirname}/${sourceDir}/index.html`);
 });
 
-app.listen(config.server.port, "0.0.0.0", () => {
+server.listen(config.server.port, "0.0.0.0", () => {
   console.log(
-    `Express web server started: http://localhost:${config.server.port}`
+    `Express and WebSocket server started: http://localhost:${config.server.port}`
   );
   console.log(`Serving content from /${sourceDir}/`);
 });
-
 app.use((req, res, next) => {
   res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
   res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
