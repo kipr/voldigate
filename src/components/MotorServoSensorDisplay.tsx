@@ -50,12 +50,12 @@ interface MotorServoSensorDisplayState {
     servoSubArcs: { limit: number, color: string, tooltip?: { text: string } }[];
 
     sensorValues: {
-        analogs: { [key: string]: number }
-        digitals: { [key: string]: number }
-        accelerometers: { [key: string]: number }
-        gyroscopes: { [key: string]: number }
-        magnetometers: { [key: string]: number }
-        button: number
+        Analogs: { [key: string]: number };
+        Digitals: { [key: string]: number };
+        Accelerometers: { [key: string]: number };
+        Gyroscopes: { [key: string]: number };
+        Magnetometers: { [key: string]: number };
+        Button: number;
     };
 
 }
@@ -189,7 +189,7 @@ const SectionText = styled('span', {
 
 const SectionTitleText = styled('span', {
     paddingRight: '5px',
-    fontWeight: '500',
+    fontWeight: 500,
 });
 
 
@@ -288,7 +288,7 @@ const VIEW_OPTIONS: ComboBox.Option[] = (() => {
     return ret;
 })();
 export class MotorServoSensorDisplay extends React.PureComponent<Props & MotorServoSensorDisplayReduxSideLayoutProps, State> {
-
+    private newMotorRef: React.RefObject<Motors | undefined> = React.createRef();
     constructor(props: Props & MotorServoSensorDisplayReduxSideLayoutProps) {
         super(props);
 
@@ -350,11 +350,12 @@ export class MotorServoSensorDisplay extends React.PureComponent<Props & MotorSe
             ],
             sensorValues: DEFAULT_SENSORS,
         };
+        this.newMotorRef = React.createRef<Motors | undefined>();
 
 
     }
 
-    private newMotorRef: React.RefObject<Motors | undefined> = React.createRef();
+
 
     async componentDidMount(): Promise<void> {
         console.log("MOTOSERVOSENSORDISPLAY MOUNTED");
@@ -394,7 +395,7 @@ export class MotorServoSensorDisplay extends React.PureComponent<Props & MotorSe
         console.log("MotorServoSensorDisplay compDidUpdate prevState: ", prevState);
         console.log("MotorServoSensorDisplay compDidUpdate state: ", this.state);
 
-        if(prevState.shownServoValue !== this.state.shownServoValue){
+        if (prevState.shownServoValue !== this.state.shownServoValue) {
             console.log("MotorServoSensorDisplay compDidUpdate state shownServoValue CHANGED from: ", prevState.shownServoValue);
             console.log("MotorServoSensorDisplay compDidUpdate state shownServoValue CHANGED to: ", this.state.shownServoValue);
 
@@ -604,7 +605,7 @@ export class MotorServoSensorDisplay extends React.PureComponent<Props & MotorSe
 
     private onSectionSelect_ = (section: "Motor" | "Servo" | "Sensor") => {
         console.log("Section selected: ", section);
-        if(section === "Servo"){
+        if (section === "Servo") {
             console.log("Setting shownServoValue to: ", this.state.servoPositions[0].value);
             this.setState({
                 shownServoValue: this.state.servoPositions[0].value,

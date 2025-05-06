@@ -31,7 +31,7 @@ class App extends React.Component<Props, State> {
 
   render() {
     return (
-      <div style={{ overflow: 'hidden' }}>
+      <div style={{ maxHeight: '100vh', maxWidth: '100vw' }}>
         <Switch>
           <Route path="/" exact component={Dashboard} />
         </Switch>

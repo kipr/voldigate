@@ -7,7 +7,7 @@ import LocalizedString from '../../util/LocalizedString';
 import { styled, withStyleDeep } from 'styletron-react';
 import { StyleProps } from '../../style';
 import { Theme } from '../theme';
-import { middleBarSpacer, rightBarSpacerOpen, rightBarSpacerClosed, leftBarSpacerOpen, leftBarSpacerClosed } from '../common';
+import { middleBarSpacer, leftBarSpacer,rightBarSpacer, Spacer } from '../common';
 import { Fa } from '../Fa';
 import { Button } from '../Button';
 import { Text } from '../Text';
@@ -53,6 +53,7 @@ interface ClickProps {
 const Container = styled('div', (props: ThemeProps) => ({
   flex: '1',
   backgroundColor: props.theme.backgroundColor,
+  width: '100%',
   color: props.theme.color,
   resize: 'none',
   border: 'none',
@@ -87,6 +88,7 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
 }));
 
 const RunItem = withStyleDeep(Item, (props: ClickProps & ThemeProps) => ({
+  fontSize: '0.9em',
   backgroundColor: props.disabled ? (props.theme.themeName === 'DARK' ? props.theme.runButtonColor.disabled : props.theme.runButtonColor.disabled) : (props.theme.themeName === 'DARK' ? props.theme.runButtonColor.standard : props.theme.runButtonColor.standard),
   ':hover':
     props.onClick && !props.disabled
@@ -101,6 +103,7 @@ const ItemIcon = styled(FontAwesome, {
 });
 
 const StopItem = withStyleDeep(Item, (props: ClickProps) => ({
+  fontSize: '0.9em',
   backgroundColor: props.disabled ? RED.disabled : RED.standard,
   ':hover':
     props.onClick && !props.disabled
@@ -200,6 +203,7 @@ export const createEditorBarComponents = ({
       editorBar.push(BarComponent.create(Button, {
         theme,
         onClick: target.onCompileClick,
+        style:{fontSize: '0.9em'},
         children:
           <>
             <Fa icon={faLink} />
@@ -209,6 +213,7 @@ export const createEditorBarComponents = ({
       editorBar.push(BarComponent.create(Button, {
         theme,
         onClick: target.onSaveCode,
+        style:{fontSize: '0.9em'},
         children:
           <>
             <Fa icon={faFloppyDisk} />
@@ -216,21 +221,15 @@ export const createEditorBarComponents = ({
           </>
       }));
 
-      if (target.isleftbaropen_) {
-        editorBar.push(BarComponent.create(leftBarSpacerOpen, {
-        }));
-      }
-      else {
-        editorBar.push(BarComponent.create(leftBarSpacerClosed, {
-        }));
-
-      }
+      editorBar.push(BarComponent.create(leftBarSpacer, {
+      }));
 
 
       editorBar.push(BarComponent.create(Text, {
         text: 'User:',
         style: {
-           fontWeight: '500'
+           fontWeight: '500',
+           fontSize: '0.9em'
         }
       }));
 
@@ -239,7 +238,9 @@ export const createEditorBarComponents = ({
       }));
 
       editorBar.push(BarComponent.create(Text, {
+        style:{fontSize: '0.9em'},
         text: target.userName
+        
       }));
 
       editorBar.push(BarComponent.create(middleBarSpacer, {
@@ -250,7 +251,8 @@ export const createEditorBarComponents = ({
       editorBar.push(BarComponent.create(Text, {
         text: 'Project:',
         style: {
-          fontWeight: '500'
+          fontWeight: '500',
+          fontSize: '0.9em'
        }
       }));
 
@@ -258,6 +260,7 @@ export const createEditorBarComponents = ({
 
       }));
       editorBar.push(BarComponent.create(Text, {
+        style:{fontSize: '0.9em'},
         text: target.projectName
       }));
       editorBar.push(BarComponent.create(middleBarSpacer, {
@@ -266,7 +269,8 @@ export const createEditorBarComponents = ({
       editorBar.push(BarComponent.create(Text, {
         text: 'File:',
         style: {
-          fontWeight: '500'
+          fontWeight: '500',
+          fontSize: '0.9em'
        }
 
       }));
@@ -274,26 +278,19 @@ export const createEditorBarComponents = ({
 
       }));
       editorBar.push(BarComponent.create(Text, {
+        style:{fontSize: '0.9em'},
         text: target.fileName
       }));
 
-      if (target.isleftbaropen_ === true) {
-        editorBar.push(BarComponent.create(rightBarSpacerOpen, {
+      editorBar.push(BarComponent.create(rightBarSpacer, {
 
-        }));
-
-      }
-      else {
-        editorBar.push(BarComponent.create(rightBarSpacerClosed, {
-
-        }));
-      }
-
+      }));
 
 
       editorBar.push(BarComponent.create(Button, {
         theme,
         onClick: target.onIndentCode,
+        style:{fontSize: '0.9em'},
         children:
           <>
             <Fa icon={faIndent} />
@@ -304,6 +301,7 @@ export const createEditorBarComponents = ({
       editorBar.push(BarComponent.create(Button, {
         theme,
         onClick: target.onDownloadCode,
+        style:{fontSize: '0.9em'},
         children:
           <>
             <Fa icon={faFileDownload} />

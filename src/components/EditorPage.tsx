@@ -59,6 +59,7 @@ type State = EditorPageState;
 
 const Container = styled('div', {
   display: 'flex',
+
   flex: '1 1',
   position: 'relative'
 });
@@ -67,24 +68,28 @@ const SidePanelContainer = styled('div', {
   display: 'flex',
   flex: '1 1',
   flexDirection: 'row',
+
 });
 
-const SimultorWidgetContainer = styled('div', (props: ThemeProps) => ({
+const WidgetContainer = styled('div', (props: ThemeProps) => ({
+  
   display: 'flex',
   flex: '1 0 0',
-  height: '100%',
+  height:'100%',
   width: '100%',
+  minHeight: 0,
+  minWidth: 0,
   overflow: 'hidden',
-  backGroundColor: props.theme.editorConsoleBackground,
-
+ backGroundColor: props.theme.editorConsoleBackground,
 }));
 
-const SimulatorWidget = styled(Widget, (props: ThemeProps) => ({
+const EPWidget = styled(Widget, (props: ThemeProps) => ({
   display: 'flex',
-  flex: '1 1 0',
-  margin: '10px 0px 0px 0px',
+  flex: '1 1 auto',
+     margin: '10px 0px 0px 0px',
   height: '100%',
-  width: '100%',
+  width: '500px',
+  fontSize: '22px',
   backgroundColor: props.theme.editorConsoleBackground,
 }));
 
@@ -280,6 +285,7 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
       fileName: this.props.fileName,
     };
     editor = (
+      console.log("EditorPage render isleftbaropen: ", isleftbaropen),
       <Editor
       
         theme={theme}
@@ -298,7 +304,7 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
     const editorBar = createEditorBarComponents({
       theme,
       target: editorBarTarget,
-      locale
+      locale,
     });
     const editorConsoleBar = createConsoleBarComponents(theme, this.props.onClearConsole, locale);
 
@@ -311,29 +317,31 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
         sizes={[3, 2]}
         visible={[true, true]}
       >
-        <SimultorWidgetContainer theme={theme}>
-          <SimulatorWidget
+        <WidgetContainer theme={theme} >
+          <EPWidget
             theme={theme}
             name={LocalizedString.lookup(tr('Editor'), locale)}
             mode={Mode.Sidebar}
             barComponents={editorBar}
+            fontSize={'1em'}
+            
           >
             {editor}
-          </SimulatorWidget>
-        </SimultorWidgetContainer>
+          </EPWidget>
+        </WidgetContainer>
 
-        <SimultorWidgetContainer theme={theme}>
-          <SimulatorWidget
+        <WidgetContainer theme={theme}>
+          <EPWidget
             theme={theme}
             name={LocalizedString.lookup(tr('Console'), locale)}
             barComponents={editorConsoleBar}
             mode={Mode.Sidebar}
             hideActiveSize={true}
-            style={{ height: '85%', paddingBottom: '20px' }}
+            fontSize={'24px'}
           >
             <FlexConsole theme={theme} text={editorConsole} />
-          </SimulatorWidget>
-        </SimultorWidgetContainer>
+          </EPWidget>
+        </WidgetContainer>
       </Slider>
 
     );

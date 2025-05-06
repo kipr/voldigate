@@ -102,7 +102,7 @@ const SectionName = styled('span', (props: ThemeProps & SectionProps & { selecte
         backgroundColor: props.theme.hoverOptionBackground
     },
     width: '100%',
-
+    fontSize: '1.6em',
     backgroundColor: props.selected ? props.theme.selectedUserBackground : props.theme.unselectedBackground,
     boxShadow: props.theme.themeName === 'DARK' ? '0px 10px 13px -6px rgba(0, 0, 0, 0.2), 0px 20px 31px 3px rgba(0, 0, 0, 0.14), 0px 8px 38px 7px rgba(0, 0, 0, 0.12)' : undefined,
     transition: 'background-color 0.2s, opacity 0.2s',
@@ -155,11 +155,12 @@ const ProjectHeaderContainer = styled('div', (props: ThemeProps) => ({
     display: 'flex',
     flexDirection: 'row',
     borderBottom: `3px solid ${props.theme.borderColor}`,
-    padding: '0.5px'
+    padding: '0.5px',
+    justifyContent: 'space-between',
 }));
 
 const ProjectTitle = styled('h2', {
-    fontSize: '1.2em',
+    fontSize: '1.5em',
     marginBottom: '0px',
     textAlign: 'left',
     paddingRight: '20px',
@@ -168,10 +169,11 @@ const ProjectTitle = styled('h2', {
 const AddProjectButtonContainer = styled('div', (props: ThemeProps & { selected: boolean }) => ({
     borderRadius: '5px',
     cursor: 'pointer',
-    marginTop: '10px',
-    padding: '5px 5px 30px 5px',
-    height: '5px',
-    fontSize: '12px',
+    marginTop: '18px',
+    
+    padding: '3px 5px 3px 5px',
+    height: '30px',
+    fontSize: '18px',
     alignItems: 'right',
     ':hover': {
         cursor: 'pointer',
@@ -193,6 +195,7 @@ const ProjectItem = styled('li', (props: ThemeProps & { selected: boolean, }) =>
     flexWrap: 'wrap',
     cursor: 'pointer',
     padding: '5px',
+    fontSize: '1.4em',
     width: '100%',
     boxSizing: 'border-box',
     textOverflow: 'ellipsis',
@@ -229,6 +232,7 @@ const FileTypeContainer = styled('span', (props: ThemeProps & { selected: boolea
     padding: `5px`,
     border: `3px solid ${props.theme.borderColor}`,
     userSelect: 'none',
+    fontSize: '19px'
 }));
 
 const FileTypeItem = styled('li', (props: ThemeProps) => ({
@@ -265,7 +269,7 @@ const IndividualFile = styled('div', (props: ThemeProps & { selected: boolean, }
     },
 }));
 
-const ContextMenu = styled('div', (props: ThemeProps & { x: number, y: number }) => ({
+const ContextMenu = styled('div', (props: ThemeProps & { x: number; y: number }) => ({
     position: "absolute",
     top: `${props.y}px`,
     left: `${props.x}px`,
@@ -337,12 +341,12 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
         console.log("FileExplorer mounted!");
         // console.log("FileExplorer state: ", this.state);
         console.log("FileExplorer compDidMount props.propUserShown: ", this.props.propUserShown);
-        await this.props.onReloadProjects(this.props.propUserShown);
+        
         console.log("FileExplorer props: ", this.props);
 
 
         if (this.props.propUserShown !== undefined) {
-
+            await this.props.onReloadProjects(this.props.propUserShown);
             if (this.props.propUserShown.userName !== '') {
                 console.log("FileExplorer componentDidMount propUserShown: ", this.props.propUserShown);
                 console.log("FileExplorer componentDidMount propsSelectedProjectName: ", this.props.propsSelectedProjectName);
@@ -387,14 +391,14 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
         console.log("FileExplorer compDidUpdate selectedFileRefFE.current: ", this.selectedFileRefFE.current);
 
 
-        if(prevProps.propsSelectedProjectName !== this.props.propsSelectedProjectName){
+        if (prevProps.propsSelectedProjectName !== this.props.propsSelectedProjectName) {
             console.log("FileExplorer compDidUpdate propsSelectedProjectName changed from: ", prevProps.propsSelectedProjectName, " to: ", this.props.propsSelectedProjectName);
             this.setState({
                 selectedProject: this.props.propUserData.find(
                     (project) => project.projectName === this.props.propsSelectedProjectName
                 ),
             })
-        
+
         }
         if (this.props.propUserShown !== prevProps.propUserShown) {
             console.log("FileExplorer componentDidUpdate propUserShown changed from: ", prevProps.propUserShown, " to: ", this.props.propUserShown);
@@ -434,7 +438,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
         }
         if (this.props.propUsers !== prevProps.propUsers) {
 
-            if(this.props.renameUserFlag){
+            if (this.props.renameUserFlag) {
                 console.log("FileExplorer compDidUpdate renameUserFlag changed from: ", prevProps.renameUserFlag, " to: ", this.props.renameUserFlag);
                 this.setState({
                     selectedUser: this.props.propUserShown
@@ -444,16 +448,16 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                 const foundUser = this.props.propUsers.find((user) => user.userName === this.state.selectedUser.userName);
 
                 if (foundUser) {
-    
+
                     this.setState({
                         selectedUser: foundUser
                     })
-    
+
                 } else {
                     console.log("Selected user not found in updated propUsers.");
                 }
             }
-           
+
         }
         if (this.props.propFileName !== prevProps.propFileName) {
             console.log("FileExplorer compDidUpdate propFileName changed from: ", prevProps.propFileName, " to: ", this.props.propFileName);
@@ -641,7 +645,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
     downloadUser = (user: User) => {
         this.props.onDownloadUser(user);
     }
-    
+
     renameUser = (user: User) => {
         this.props.onRenameUser(user);
     }
@@ -649,7 +653,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
     downloadProject = (project: Project) => {
         this.props.onDownloadProject(this.state.selectedUser, project);
     }
-    
+
     renameProject = (project: Project) => {
         this.props.onRenameProject(this.state.selectedUser, project);
     }
@@ -667,9 +671,21 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
         if (!contextMenuPosition) return null;
 
         const { x, y, } = contextMenuPosition;
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+
+        console.log("Viewport Width: ", viewportWidth);
+        console.log("Viewport Height: ", viewportHeight);
+
+        const menuWidth = 200;  // Adjust as needed
+        const menuHeight = 185; // Adjust as needed
+
+
+        const adjustedX = Math.min(x, viewportWidth - menuWidth);
+        const adjustedY = Math.min(y, viewportHeight - menuHeight);
 
         return (
-            <ContextMenu x={x} y={y} theme={theme} onClick={this.closeContextMenu}>
+            <ContextMenu x={adjustedX} y={adjustedY} theme={theme} onClick={this.closeContextMenu}>
                 <ContextMenuItem theme={theme}>
                     <li
                         style={{ padding: "5px 10px" }}
@@ -1117,7 +1133,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
         });
 
         return (
-            <div onClick={this.closeContextMenu}>
+            <div onClick={this.closeContextMenu} >
                 <SidePanel
                     theme={theme}
                     style={{
@@ -1125,7 +1141,7 @@ export class FileExplorer extends React.PureComponent<Props & FileExplorerReduxS
                         overflowY: 'hidden',
                     }}
                 >
-                    <h2 style={{ marginLeft: '6px' }}>Explorer</h2>
+                    <h2 style={{ marginLeft: '6px', fontSize: '1.2em' }}>Explorer</h2>
                     <UsersContainer theme={theme}>
                         {userSections}
                     </UsersContainer>

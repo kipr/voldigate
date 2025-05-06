@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
 import { Provider as ReduxProvider } from 'react-redux';
-
+import { ProgramRunProvider } from './ProgramRunContext';
 import { Provider as StyletronProvider, DebugEngine } from "styletron-react";
 import { Client as Styletron } from "styletron-engine-atomic";
 
@@ -21,7 +21,9 @@ ReactDom.render(
   <StyletronProvider value={engine} debug={debug} debugAfterHydration>
     <ReduxProvider store={store}>
       <ConnectedRouter history={history}>
-        <App />
+        <ProgramRunProvider>
+          <App />
+        </ProgramRunProvider>
       </ConnectedRouter>
     </ReduxProvider>
   </StyletronProvider>,

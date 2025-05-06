@@ -28,9 +28,6 @@ type State = ExtraMenuState;
 
 const Container = styled('div', (props: ThemeProps) => ({
   position: 'absolute',
-  right: `${(window.innerWidth * 0.04)}px`,
-  width: '240px',
-  
   backgroundColor: props.theme.titleBarBackground,
   color: props.theme.color,
   display: 'flex',
@@ -52,11 +49,8 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
   alignItems: 'center',
   flexDirection: 'row',
   padding: '10px',
+  fontSize: '1em',
   borderBottom: `1px solid ${props.theme.borderColor}`,
-  backgroundColor: `${props.theme.iconColor}`,
-  ':last-child': {
-    borderBottom: 'none'
-  },
   opacity: props.disabled ? '0.5' : '1.0',
   fontWeight: 400,
   ':hover': !props.disabled && props.onClick ? {
@@ -66,14 +60,18 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
     cursor: 'auto',
   },
   userSelect: 'none',
-  transition: 'background-color 0.2s, opacity 0.2s'
+  transition: 'background-color 0.2s, opacity 0.2s',
+  
+  boxShadow: '0px 10px 13px -6px rgba(255, 105, 180, 0.1), 0px 1px 31px 0px rgba(135, 206, 250, 0.08), 0px 8px 38px 7px rgba(144, 238, 144, 0.1)',
+
 }));
 
 
 const ItemIcon = styled(Fa, {
-  width: '20px',
+  width: '30px',
+  height: '30px',
   minWidth: '20px',
-  maxWidth: '20px',
+  maxWidth: '40px',
   textAlign: 'center',
   marginRight: '5px'
 });

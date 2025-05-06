@@ -1,16 +1,17 @@
 import { styled } from 'styletron-react';
 
 export const Spacer = styled('div', {
-  flex: '1 1'
+  flex: '1 1 0',
+  minWidth: 0
 });
-export const leftBarSpacerOpen = styled('div', {
+
+
+export const leftBarSpacer= styled('div', {
   //marginLeft: '250px'
-  flex: '1.5 1'
+  flex: '8 1',
+  minWidth: 0
 });
-export const leftBarSpacerClosed = styled('div', {
-  //marginLeft: '250px'
-  flex: '5 1'
-});
+
 
 export const middleBarSpacer = styled('div', {
   marginLeft: '5px',
@@ -18,12 +19,9 @@ export const middleBarSpacer = styled('div', {
   
 });
 
-export const rightBarSpacerOpen = styled('div', {
+export const rightBarSpacer = styled('div', {
   // marginRight: '210px'
-  flex: '1.25 1'
+  flex: '9 1',
+  minWidth: 0
 });
 
-export const rightBarSpacerClosed= styled('div', {
-  // marginRight: '210px'
-  flex: '5 1'
-});

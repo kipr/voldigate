@@ -18,7 +18,7 @@ import { styled } from 'styletron-react';
 import { DARK, Theme } from './theme';
 import { Layout } from './Layout';
 import { StyledText } from '../util';
-import { Message } from 'ivygate';
+import { Ivygate, Message } from 'ivygate';
 import { DEFAULT_SETTINGS, Settings } from '../Settings';
 import { DEFAULT_FEEDBACK, Feedback } from '../Feedback';
 import { Editor } from './Editor';
@@ -29,6 +29,9 @@ import { Modal } from '../pages/Modal';
 import { BLANK_PROJECT, Project } from '../types/projectTypes';
 import { InterfaceMode } from '../types/interfaceModes';
 import { User } from '../types/userTypes';
+import { Motors, SensorSelectionKey, ServoType } from 'types/motorServoSensorTypes';
+import { programRunContextHelper } from '../ProgramRunContext';
+
 
 interface RootParams {
   sceneId?: string;
@@ -62,6 +65,19 @@ export interface RootPublicProps extends RouteComponentProps<RootParams> {
   propContextMenuProject?: Project;
   propedTheme: Theme;
   propedMotorPositions?: { [key: string]: number };
+  stoppedMotor?: number;
+  propedStoppedMotorFlag?: boolean;
+  propedStoppedAllMotorsFlag?: boolean;
+  propedMotorView?: 'Power' | 'Velocity';
+  propedServoPositions?: ServoType[];
+  enabledServo?: ServoType;
+  disabledServos?: ServoType[];
+  propedEnabledServoFlag?: boolean;
+  propedDisabledServoFlag?: boolean;
+  propedStoppedAllServosFlag?: boolean;
+  propedSensorDisplayFlag?: boolean;
+  propedSensorSelection: SensorSelectionKey[];
+
   changeProjectName: (projectName: string) => void;
   setAddNewProject: (addNewProject: boolean, newProj?: Project) => void;
   setAddNewFile: (addNewFile: boolean) => void;
@@ -81,6 +97,16 @@ export interface RootPublicProps extends RouteComponentProps<RootParams> {
   resetRenameUserFlag: (renameUserFlag: boolean, renamedUser?: User) => void;
   resetRenameProjectFlag: (renameProjectFlag: boolean, renamedProject?: Project) => void;
   resetRenameFileFlag: (renameFileFlag: boolean, renamedFile?: string) => void;
+  resetStoppedMotorFlag: (stoppedMotorFlag: boolean) => void;
+  resetStoppedAllMotorsFlag: (stoppedAllMotorsFlag: boolean) => void;
+  resetEnabledServoFlag: (enabledServoFlag: boolean) => void;
+  resetDisabledServoFlag: (disabledServoFlag: boolean) => void;
+  setAnalogValues: (analogValue: number) => void;
+  setDigitalValues: (digitalValue: number) => void;
+  setAccelValues: (accelValue: number) => void;
+  setGyroValues: (gyroValue: number) => void;
+  setMagnetoValues: (magnetoValue: number) => void;
+  setButtonValues: (buttonValue: number) => void;
 }
 
 interface RootPrivateProps {
@@ -135,6 +161,8 @@ interface RootState {
   downloadProjectFlag_?: boolean;
   downloadFileFlag_?: boolean;
   saveCodePromptFlag?: boolean;
+  //stoppedMotorFlag?: boolean;
+  //stoppedAllMotorsFlag?: boolean;
   layout: Layout;
   activeLanguage: ProgrammingLanguage;
   modal: Modal;
@@ -151,6 +179,9 @@ interface RootState {
   messages: Message[];
 
   rootMotorPositions: { [key: string]: number };
+  rootWidth: number;
+
+  analog?: number;
 }
 
 type Props = RootPublicProps & RootPrivateProps;
@@ -159,16 +190,20 @@ type State = RootState;
 // We can't set innerheight statically, becasue the window can change
 // but we also must use innerheight to fix mobile issues
 interface ContainerProps {
-  $windowInnerHeight: number
+  $windowInnerHeight: number,
+
 }
 
-const RootContainer = styled('div', (props: ContainerProps) => ({
-  width: '100vw',
+const RootContainer = styled('div', (props: ContainerProps & { rootWidth: number }) => ({
+
+  width: '100%',
   height: `${props.$windowInnerHeight}px`, // fix for mobile, see https://chanind.github.io/javascript/2019/09/28/avoid-100vh-on-mobile-web.html
   display: 'flex',
   flexDirection: 'column',
-  overflow: 'hidden',
-  position: 'fixed',
+  overflow: 'visible',
+  flex: '4 1 0',
+  maxHeight: '100vh',
+
 }));
 
 const STDOUT_STYLE = (theme: Theme) => ({
@@ -242,6 +277,9 @@ class Root extends React.Component<Props, State> {
       isRunning: false,
       theme: this.props.propedTheme,
       rootMotorPositions: {},
+      //stoppedMotorFlag: false,
+      //stoppedAllMotorsFlag: false,
+      rootWidth: 100
     };
 
     this.editorRef = React.createRef();
@@ -296,6 +334,7 @@ class Root extends React.Component<Props, State> {
 
   componentWillUnmount(): void {
     console.log("ROOT UNMOUNTED");
+    this.stopSensorWebSocket();
   }
 
   componentDidUpdate = async (prevProps: Props, prevState: State) => {
@@ -304,6 +343,41 @@ class Root extends React.Component<Props, State> {
     console.log("Root compDidUpdate prevState: ", prevState);
     console.log("Root compDidUpdate this.props: ", this.props);
     console.log("Root compDidUpdate this.state: ", this.state);
+
+    const displayNowVisible = this.props.propedSensorDisplayFlag && !prevProps.propedSensorDisplayFlag;
+    const displayNowHidden = !this.props.propedSensorDisplayFlag && prevProps.propedSensorDisplayFlag;
+
+    if (prevProps.propedSensorSelection !== this.props.propedSensorSelection) {
+      console.log("Root compDidUpdate propedSensorSelection: ", this.props.propedSensorSelection);
+      this.sendSensorMessage(this.props.propedSensorSelection);
+    }
+
+    if (displayNowVisible) {
+      console.log("Root Sensor display became visible — starting WebSocket connection");
+      this.startSensorWebSocket(); // Create the connection
+    }
+
+    if (displayNowHidden) {
+      console.log("Root Sensor display hidden — closing WebSocket connection");
+      this.stopSensorWebSocket(); // Clean up connection
+    }
+
+    if (prevProps.propedSensorSelection === this.props.propedSensorSelection && this.props.propedSensorSelection !== undefined && displayNowVisible) {
+      console.log("Root compDidUpdate propedSensorSelection: ", this.props.propedSensorSelection, " with displayNowVisible: ", displayNowVisible);
+      if (this.props.propedSensorSelection !== null) {
+        const trySend = () => {
+          if (this.socket?.readyState === WebSocket.OPEN) {
+            //this.socket.send(JSON.stringify({ type: "start-analog" }));
+            this.sendSensorMessage(this.props.propedSensorSelection);
+          } else {
+            setTimeout(trySend, 50); // Retry shortly if WebSocket is not yet open
+          }
+        };
+
+        trySend();
+      }
+
+    }
 
     if (prevProps.renameUserFlag !== this.props.renameUserFlag && this.props.renameUserFlag) {
       console.log("Root compDidUpdate renameUserFlag: ", this.props.renameUserFlag);
@@ -318,11 +392,74 @@ class Root extends React.Component<Props, State> {
       console.log("Root compDidUpdate renameFileFlag: ", this.props.renameFileFlag);
       this.renameFile_();
     }
+    if (prevProps.propedServoPositions !== this.props.propedServoPositions) {
+      console.log("Root compDidUpdate propedServoPositions: ", this.props.propedServoPositions);
+
+
+      this.props.propedServoPositions.forEach((servo, index) => {
+        const prev = prevProps.propedServoPositions[index];
+        const next = this.props.propedServoPositions[index];
+      
+        const valueChanged = prev.value !== next.value;
+        const enableChanged = prev.enable !== next.enable;
+      
+        if ((valueChanged || enableChanged) && next.enable === true) {
+          console.log(`1st: Root ${index} changed: value ${prev.value} → ${next.value}, enable ${prev.enable} → ${next.enable}`);
+          if(prev.enable === false) {
+            this.enableServo(next); 
+          }
+          this.moveServo(next);
+        }
+        else if (next.enable === false) {
+          console.log(`2nd: Root ${index} changed: value ${prev.value} → ${next.value}, enable ${prev.enable} → ${next.enable}`);
+          this.disableServos([next]);
+        }
+        else if (next.enable === true) {
+          console.log(`3rd: Root ${index} changed: value ${prev.value} → ${next.value}, enable ${prev.enable} → ${next.enable}`);
+          this.enableServo(next);
+        }
+      });
+      
+
+
+    }
     if (prevProps.propedMotorPositions !== this.props.propedMotorPositions) {
       console.log("Root compDidUpdate propedMotorPositions: ", this.props.propedMotorPositions);
-      this.setState({
-        rootMotorPositions: this.props.propedMotorPositions
-      })
+
+      if (this.props.propedStoppedMotorFlag && this.props.stoppedMotor !== undefined) {
+        console.log("Root compDidUpdate propedStoppedMotorFlag: ", this.props.propedStoppedMotorFlag);
+
+        this.stopMotor(this.props.stoppedMotor);
+        this.props.resetStoppedMotorFlag(false);
+        this.setState({
+          //stoppedMotorFlag: false,
+          rootMotorPositions: this.props.propedMotorPositions
+        });
+      }
+      else if (this.props.propedStoppedAllMotorsFlag) {
+        console.log("Root compDidUpdate propedStoppedAllMotorsFlag: ", this.props.propedStoppedAllMotorsFlag);
+        this.stopAllMotors();
+        this.props.resetStoppedAllMotorsFlag(false)
+        this.setState({
+          //stoppedAllMotorsFlag: false,
+          rootMotorPositions: this.props.propedMotorPositions
+        })
+      }
+      else {
+        Object.keys(this.props.propedMotorPositions).forEach(motor => {
+          if (prevProps.propedMotorPositions[motor] !== this.props.propedMotorPositions[motor]) {
+            console.log(`${motor} value changed from ${prevProps.propedMotorPositions[motor]} to ${this.props.propedMotorPositions[motor]}`);
+            let motorNumber: number = parseInt(motor.split(' ')[1]);
+            let motorName = `Motor ${motorNumber}`;
+            this.moveMotor(this.props.propedMotorView, motorNumber, this.props.propedMotorPositions[motorName]);
+          }
+        });
+
+        this.setState({
+          rootMotorPositions: this.props.propedMotorPositions
+        });
+      }
+
     }
 
     if (prevProps.reloadRootUserFlag !== this.props.reloadRootUserFlag && this.props.reloadRootUserFlag) {
@@ -534,6 +671,202 @@ class Root extends React.Component<Props, State> {
     }
 
     this.prevPropsRef.current = this.props;
+  }
+
+  private socket?: WebSocket;
+
+
+  private sendSensorMessage = (sensorSelections: SensorSelectionKey[]) => {
+    console.log("Root sendSensorMessage sensorSelections: ", sensorSelections);
+    if (this.socket?.readyState === WebSocket.OPEN) {
+      this.socket.send(JSON.stringify({ type: "stop-all" }));
+
+      sensorSelections.forEach((sensorSelection) => {
+        switch (sensorSelection) {
+          case 'Analog':
+            this.socket.send(JSON.stringify({ type: "start-analog" }));
+            break;
+          case "Digital":
+            this.socket.send(JSON.stringify({ type: "start-digital" }));
+            break;
+          case  "Accelerometer":
+            this.socket.send(JSON.stringify({ type: "start-accelerometer" }));
+            break;
+          case "Gyroscope":
+            this.socket.send(JSON.stringify({ type: "start-gyroscope" }));
+            break;
+          case "Magnetometer":
+            this.socket.send(JSON.stringify({ type: "start-magnetometer" }));
+            break;
+          case "Button":
+            this.socket.send(JSON.stringify({ type: "start-button" }));
+            break;
+          default:
+            console.warn("Unknown sensor selection:", sensorSelection);
+        }
+      });
+
+      this.socket.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          if (data.type === "analog") {
+             console.log("Root Sensor data.analog: ", data.value);
+            this.props.setAnalogValues(data.value);
+            //this.setState({ analog: data.value });
+          }
+          if(data.type === "digital") {
+            console.log("Root Sensor data.digital: ", data.value);
+            this.props.setDigitalValues(data.value);
+          }
+          if(data.type === "accel") {
+            console.log("Root Sensor data.accel: ", data.value);
+            this.props.setAccelValues(data.value);
+          }
+          if(data.type === "gyro") {
+            console.log("Root Sensor data.gyro: ", data.value);
+            this.props.setGyroValues(data.value);
+          }
+          if(data.type === "magneto") {
+            console.log("Root Sensor data.magneto: ", data.value);
+            this.props.setMagnetoValues(data.value);
+          }
+          if(data.type === "button") {
+            console.log("Root Sensor data.button: ", data.value);
+            this.props.setButtonValues(data.value);
+          }
+        } catch (error) {
+          console.error("Invalid WebSocket message:", error);
+        }
+      };
+    }
+  };
+  private startSensorWebSocket = async () => {
+    console.log("Before websocket create");
+    //this.socket = new WebSocket('ws://localhost:3000'); // DEVELOPMENT ONLY
+    this.socket = new WebSocket('ws://192.168.86.44:3000'); // WOMBAT
+
+    //this.socket = new WebSocket('ws://192.168.125.1:3000'); //USE THIS FOR PRODUCTION
+    console.log("After websocket create");
+    this.socket.onopen = () => {
+      console.log('WebSocket connection opened');
+
+    };
+ 
+
+    this.socket.onclose = () => {
+      console.log("WebSocket closed");
+    };
+
+    this.socket.onerror = (err) => {
+      console.error("WebSocket error:", err);
+    };
+  };
+
+  private stopSensorWebSocket = () => {
+    if (this.socket) {
+      this.socket?.send(JSON.stringify({ type: "stop-all" }));
+      this.socket.close();
+      this.socket = undefined;
+    }
+  };
+
+  private handleSensorDisplayChange = (visible: boolean) => {
+    if (this.socket?.readyState === WebSocket.OPEN) {
+      this.socket.send(JSON.stringify({ type: visible ? "start-analog" : "stop-analog" }));
+    }
+  };
+  private enableServo = async (servo: ServoType) => {
+    console.log("Root enableServo servo: ", servo);
+    let servoNumber: number = parseInt(servo.name.split(' ')[1]);
+    let servoValue: number = servo.value;
+    console.log("Root enableServo servoNumber: ", servoNumber);
+
+    try {
+
+      const servoResponse = await axios.post('/enable-servo', { servo: servoNumber, value: servoValue });
+      console.log("Root enableServo servoResponse: ", servoResponse);
+    }
+    catch (error) {
+      console.error("Root enableServo caught error: ", error);
+    }
+  }
+
+  private disableServos = async (servos: ServoType[]) => {
+    console.log("Root disableServo servo: ", servos);
+
+    if (servos.length > 1) {
+      console.log("Root disable all servos!");
+      try {
+        const disableAllServosResponse = await axios.post('/disable-all-servos');
+        console.log("Root disableAllServosResponse: ", disableAllServosResponse);
+      }
+      catch (error) {
+        console.error("Root disableAllServos caught error: ", error);
+      }
+    }
+    else {
+      let servoNumber: number = parseInt(servos[0].name.split(' ')[1]);
+      let servoValue: number = servos[0].value;
+      console.log("Root disableServo servoNumber: ", servoNumber);
+
+      try {
+
+        const servoResponse = await axios.post('/disable-servo', { servo: servoNumber, value: servoValue });
+        console.log("Root disableServo servoResponse: ", servoResponse);
+      }
+      catch (error) {
+        console.error("Root disableServo caught error: ", error);
+      }
+    }
+
+
+  }
+
+  private moveServo = async (servo: ServoType) => {
+    console.log("Root moveServo servo: ", servo);
+    let servoNumber: number = parseInt(servo.name.split(' ')[1]);
+    let servoValue: number = servo.value;
+    console.log("Root moveServo servoNumber: ", servoNumber);
+    try {
+      const servoResponse = await axios.post('/move-servo', { servo: servoNumber, value: servoValue });
+      console.log("Root moveServo servoResponse: ", servoResponse);
+    }
+    catch (error) {
+      console.error("Root moveServo caught error: ", error);
+    }
+  }
+
+  private moveMotor = async (view: 'Power' | 'Velocity', motor: number, value: number) => {
+    console.log("Root moveMotor view: ", view, ", motor: ", motor, ", value: ", value);
+    try {
+      const motorResponse = await axios.post('/move-motor', { view: view, motor: motor, value: value });
+      console.log("Root moveMotor motorResponse: ", motorResponse);
+    }
+    catch (error) {
+      console.error("Root moveMotor caught error: ", error);
+    }
+  }
+
+  private stopMotor = async (motor: number) => {
+    console.log("Root stopMotor motor: ", motor);
+    try {
+      const motorResponse = await axios.post('/stop-motor', { motor: motor });
+      console.log("Root stopMotor motorResponse: ", motorResponse);
+    }
+    catch (error) {
+      console.error("Root stopMotor caught error: ", error);
+    }
+  }
+
+  private stopAllMotors = async () => {
+    console.log("Root stopAllMotors");
+    try {
+      const allOffMotorResponse = await axios.post('/stop-all-motors');
+      console.log("Root stopAllMotors allOffMotorResponse: ", allOffMotorResponse);
+    }
+    catch (error) {
+      console.error("Root stopAllMotors caught error: ", error);
+    }
   }
 
   /**
@@ -1243,6 +1576,7 @@ class Root extends React.Component<Props, State> {
 
     this.onSaveCode_();
     this.setState({ isRunning: true });
+    programRunContextHelper.setIsRunning(true);
 
     this.eventSource = new EventSource(`/run-code?userName=${userName}&projectName=${projectName}&fileName=${fileName}&activeLanguage=${activeLanguage}`);
 
@@ -1256,39 +1590,48 @@ class Root extends React.Component<Props, State> {
     // Listen for streamed output
     this.eventSource.onmessage = (event) => {
       let output = event.data;
-
-      // Filter out "[core/wombat]" lines if needed
-      if (output.includes("[core/wombat]")) {
-        output = output.split("\n")
-          .filter(line => !line.startsWith("[core/wombat]"))
-          .join("\n");
-      }
-
-      // Append new output lines to console
-      nextConsole = StyledText.extend(nextConsole, StyledText.text({
-        text: LocalizedString.lookup(tr(output + '\n'), locale),
-        style: STDOUT_STYLE(this.state.theme)
-      }));
-
+    
+      const filteredLines = output.split("\n").filter(line => {
+        // Remove all lines that start with [core/wombat]
+        return !line.startsWith("[core/wombat]");
+      });
+    
+      if (filteredLines.length === 0) return; // nothing to append
+    
+      const cleanOutput = filteredLines.join("\n");
+    
+      const nextConsole = StyledText.extend(
+        this.state.editorConsole,
+        StyledText.text({
+          text: LocalizedString.lookup(tr(cleanOutput + '\n'), locale),
+          style: STDOUT_STYLE(this.state.theme)
+        })
+      );
+    
       this.setState({ editorConsole: nextConsole });
     };
 
     this.eventSource.onerror = (error) => {
       this.eventSource.close();
       this.setState({ isRunning: false });
+      programRunContextHelper.setIsRunning(false);
     };
 
     // Close connection when the process ends
     this.eventSource.addEventListener("end", () => {
+ 
       this.eventSource.close();
       this.setState({ isRunning: false });
+      programRunContextHelper.setIsRunning(false);
     });
   };
 
   private onStopClick_ = async () => {
+    await fetch("/stop-code", { method: "POST" });
     if (this.eventSource) {
       this.eventSource.close();
       this.setState({ isRunning: false });
+      programRunContextHelper.setIsRunning(false);
     }
   };
 
@@ -1314,7 +1657,7 @@ class Root extends React.Component<Props, State> {
         editorConsole: compilingConsole
       }, async () => {
 
-     
+
         const response = await axios.post('/compile-code', { userName, projectName, fileName, activeLanguage }); // This calls the backend route
 
         let nextConsole: StyledText;
@@ -1787,13 +2130,14 @@ class Root extends React.Component<Props, State> {
       toRenameName_,
       toRenameType_,
       theme,
+      rootWidth
 
     } = state;
 
     console.log("Root render state: ", this.state);
     console.log("Root render props: ", this.props);
     return (
-      <RootContainer $windowInnerHeight={windowInnerHeight}>
+      <RootContainer $windowInnerHeight={windowInnerHeight} rootWidth={this.state.rootWidth}>
 
         {modal.type === Modal.Type.About && (
           <AboutDialog
@@ -1929,6 +2273,7 @@ class Root extends React.Component<Props, State> {
         )}
       </RootContainer>
     );
+
   }
 }
 

@@ -97,6 +97,7 @@ export interface WidgetProps extends StyleProps, ThemeProps, ModeProps {
   onSizeChange?: (index: number) => void;
   size?: number;
   sizes?: Size[];
+  fontSize?: string;
 
   hideActiveSize?: boolean;
 
@@ -153,9 +154,9 @@ const Chrome = styled('div', (props: ThemeProps & ModeProps & { $onChromeMouseDo
   cursor: props.$onChromeMouseDown || props.$onChromeMouseUp ? 'grab' : undefined,
 }));
 
-const Title = styled('span', (props: ThemeProps & { $hasComponents: boolean }) => ({
+const Title = styled('span', (props: ThemeProps & { $hasComponents: boolean, $fontSize: string}) => ({
   fontWeight: 400,
-  fontSize: '18px',
+  fontSize: props.$fontSize? props.$fontSize : '18px',
   userSelect: 'none',
   paddingRight: props.$hasComponents ? `${props.theme.itemPadding}px` : undefined,
   marginRight: props.$hasComponents ? `${props.theme.itemPadding}px` : undefined,
@@ -204,6 +205,11 @@ class Widget extends React.PureComponent<Props, State> {
     event.preventDefault();
     onSizeChange(index);
   };
+  
+
+  componentDidMount() {
+    console.log("Widget mounted props:", this.props);
+  }
 
   render() {
     const { props } = this;
@@ -216,6 +222,7 @@ class Widget extends React.PureComponent<Props, State> {
       onSizeChange,
       size,
       sizes,
+      fontSize,
       mode,
       barComponents,
       hideActiveSize,
@@ -234,7 +241,7 @@ class Widget extends React.PureComponent<Props, State> {
           $onChromeMouseDown={!!onChromeMouseDown}
           $onChromeMouseUp={!!onChromeMouseUp}
         >
-          <Title theme={theme} $hasComponents={barComponents && barComponents.length > 0}>{name}</Title>
+          <Title theme={theme} $fontSize={fontSize} $hasComponents={barComponents && barComponents.length > 0}>{name}</Title>
           {barComponents ? barComponents.map((barComponent, i) => {
             const Component = barComponent.component;
             return <Component key={i} {...barComponent.props} />;
