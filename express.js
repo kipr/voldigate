@@ -16,14 +16,14 @@ const http = require("http");
 const simpleGit = require("simple-git");
 const JSZip = require("jszip");
 const { spawn } = require("child_process");
-//const servoAddon = require("./build/Release/servo_addon.node");
-//const motorAddon = require("./build/Release/motor_addon.node");
-//const analogAddon = require("./build/Release/analog_addon.node");
-//const digitalAddon = require("./build/Release/digital_addon.node");
-//const accelAddon = require("./build/Release/accel_addon.node");
-//const gyroAddon = require("./build/Release/gyro_addon.node");
-//const magnetoAddon = require("./build/Release/magneto_addon.node");
-//const buttonAddon = require("./build/Release/button_addon.node");
+const servoAddon = require("./build/Release/servo_addon.node");
+const motorAddon = require("./build/Release/motor_addon.node");
+const analogAddon = require("./build/Release/analog_addon.node");
+const digitalAddon = require("./build/Release/digital_addon.node");
+const accelAddon = require("./build/Release/accel_addon.node");
+const gyroAddon = require("./build/Release/gyro_addon.node");
+const magnetoAddon = require("./build/Release/magneto_addon.node");
+const buttonAddon = require("./build/Release/button_addon.node");
 const WebSocket = require("ws");
 
 let config;
@@ -138,19 +138,11 @@ function startAnalogPolling() {
   if (analogPolling) return;
   analogPolling = true;
   console.log("Starting analog polling");
-  console.log("Before loop, analogPolling: ", analogPolling);
   (function loop() {
     if (!analogPolling) return;
-    console.log("Inside loop, analogPolling: ", analogPolling);
-    sensorValues.analog.forEach((value, index) => {
-      sensorValues.analog[index] = Math.floor(Math.random() * 4096);
-    });
-
-    // sensorValues.analog.forEach((value, index) => {
-    //   sensorValues.analog[index] = analogAddon.analog(index);
-    // });
-
-    console.log("sensorValues.analog: ", sensorValues.analog);
+     sensorValues.analog.forEach((value, index) => {
+       sensorValues.analog[index] = analogAddon.analog(index);
+     });
     broadcastAnalogValue();
     setTimeout(loop, 500);
   })();
@@ -162,13 +154,9 @@ function startDigitalPolling() {
   console.log("Starting digital polling");
   (function loop() {
     if (!digitalPolling) return;
-    console.log("Inside loop, digitalPolling: ", digitalPolling);
-    sensorValues.digital.forEach((value, index) => {
-      sensorValues.digital[index] = Math.floor(Math.random() * 2);
-    });
-    // sensorValues.digital.forEach((value, index) => {
-    //   sensorValues.digital[index] = digitalAddon.digital(index);
-    // });
+     sensorValues.digital.forEach((value, index) => {
+       sensorValues.digital[index] = digitalAddon.digital(index);
+     });
     broadcastDigitalValue();
     setTimeout(loop, 500);
   })();
@@ -180,14 +168,10 @@ function startAccelerometerPolling() {
   console.log("Starting accel polling");
   (function loop() {
     if (!accelerometerPolling) return;
-    console.log("Inside loop, accelerometerPolling: ", accelerometerPolling);
-    sensorValues.accelerometer.forEach((value, index) => {
-      sensorValues.accelerometer[index] = Math.floor(Math.random() * 2);
-    });
-
-    // sensorValues.accelerometer[0] = accelAddon.accel_x();
-    // sensorValues.accelerometer[1] = accelAddon.accel_y();
-    // sensorValues.accelerometer[2] = accelAddon.accel_z();
+   
+     sensorValues.accelerometer[0] = accelAddon.accel_x();
+     sensorValues.accelerometer[1] = accelAddon.accel_y();
+     sensorValues.accelerometer[2] = accelAddon.accel_z();
     broadcastAccelerometerValue();
     setTimeout(loop, 500);
   })();
@@ -199,14 +183,9 @@ function startGyroPolling() {
   console.log("Starting gyro polling");
   (function loop() {
     if (!gyroPolling) return;
-    console.log("Inside loop, gyroPolling: ", gyroPolling);
-    sensorValues.gyro.forEach((value, index) => {
-      sensorValues.gyro[index] = Math.floor(Math.random() * 2);
-    });
-
-    // sensorValues.gyro[0] = gyroAddon.gyro_x();
-    // sensorValues.gyro[1] = gyroAddon.gyro_y();
-    // sensorValues.gyro[2] = gyroAddon.gyro_z();
+     sensorValues.gyro[0] = gyroAddon.gyro_x();
+     sensorValues.gyro[1] = gyroAddon.gyro_y();
+     sensorValues.gyro[2] = gyroAddon.gyro_z();
     broadcastGyroValue();
     setTimeout(loop, 500);
   })();
@@ -218,14 +197,10 @@ function startMagnetometerPolling() {
   console.log("Starting magneto polling");
   (function loop() {
     if (!magnetometerPolling) return;
-    console.log("Inside loop, magnetometerPolling: ", magnetometerPolling);
-    sensorValues.magnetometer.forEach((value, index) => {
-      sensorValues.magnetometer[index] = Math.floor(Math.random() * 2);
-    });
-
-    // sensorValues.magnetometer[0] = magnetoAddon.magneto_x();
-    // sensorValues.magnetometer[1] = magnetoAddon.magneto_y();
-    // sensorValues.magnetometer[2] = magnetoAddon.magneto_z();
+    
+     sensorValues.magnetometer[0] = magnetoAddon.magneto_x();
+     sensorValues.magnetometer[1] = magnetoAddon.magneto_y();
+     sensorValues.magnetometer[2] = magnetoAddon.magneto_z();
 
     broadcastMagnetometerValue();
     setTimeout(loop, 500);
@@ -238,15 +213,14 @@ function startButtonPolling() {
   console.log("Starting button polling");
   (function loop() {
     if (!buttonPolling) return;
-    console.log("Inside loop, buttonPolling: ", buttonPolling);
-    sensorValues.button[0] = Math.floor(Math.random() * 2);
-    // sensorValues.button[0] = buttonAddon.push_button();
+  
+     sensorValues.button[0] = buttonAddon.push_button();
     broadcastButtonValue();
     setTimeout(loop, 500);
   })();
 }
 function stopPolling() {
-  console.log("Stopping all polling");
+
   analogPolling = false;
   digitalPolling = false;
   accelerometerPolling = false;
@@ -301,18 +275,17 @@ wss.on("connection", (ws) => {
 
 app.post("/enable-servo", (req, res) => {
   const { servo, value } = req.body;
-  console.log("/enable-servo servo: ", servo);
-  console.log("/enable-servo value: ", value);
+
 
   if (typeof servo !== "number") {
     return res.status(400).json({ error: "Servo type incorrect, need number" });
   }
   try {
     console.log(`Enabling servo: ${servo}`);
-    //servoAddon.enable_servo(servo);
+    servoAddon.enable_servo(servo);
 
     console.log(`Setting servo: ${servo} to value: ${value}`);
-    //servoAddon.set_servo_position(servo, value);
+    servoAddon.set_servo_position(servo, value);
 
     return res
       .status(200)
@@ -326,7 +299,7 @@ app.post("/enable-servo", (req, res) => {
 app.post("/disable-all-servos", (req, res) => {
   try {
     console.log(`Disabling all servos`);
-    //servoAddon.disable_servos();
+    servoAddon.disable_servos();
 
     res.status(200).json({ message: `Disabled all servos` });
   } catch (error) {
@@ -337,15 +310,14 @@ app.post("/disable-all-servos", (req, res) => {
 
 app.post("/disable-servo", (req, res) => {
   const { servo, value } = req.body;
-  console.log("/disable-servo servo: ", servo);
-  console.log("/disable-servo value: ", value);
+
 
   if (typeof servo !== "number") {
     return res.status(400).json({ error: "Servo type incorrect, need number" });
   }
   try {
     console.log(`Disabling servo: ${servo}`);
-    //servoAddon.disable_servo(servo);
+    servoAddon.disable_servo(servo);
 
     res.status(200).json({ message: `Servo ${servo} disable` });
   } catch (error) {
@@ -365,7 +337,7 @@ app.post("/move-servo", (req, res) => {
 
   try {
     console.log(`Moving servo: ${servo} to value: ${value}`);
-    //servoAddon.set_servo_position(servo, value);
+    servoAddon.set_servo_position(servo, value);
     res.status(200).json({ message: `Servo ${servo} moved to value ${value}` });
   } catch (error) {
     console.error("Error moving servo:", error);
@@ -373,27 +345,24 @@ app.post("/move-servo", (req, res) => {
   }
 });
 
-// Define the POST route to control the motor
-app.post("/move-motor", (req, res) => {
-  const { view, motor, value } = req.body; // Get motor and value from the request body
 
-  console.log("view: ", view);
-  console.log("typeof motor: ", typeof motor);
-  console.log("typeof value: ", typeof value);
+app.post("/move-motor", (req, res) => {
+  const { view, motor, value } = req.body; 
+
   if (typeof motor !== "number" || typeof value !== "number") {
     return res.status(400).json({ error: "Invalid input" });
   }
 
   try {
     console.log(`Moving motor: ${motor}, to value: ${value}`);
-    // Call the function from your addon to move the motor
+ 
 
     if (view === "Power") {
-      console.log("using motor power");
-      //motorAddon.motor_power(motor, value);
+
+      motorAddon.motor_power(motor, value);
     } else if (view === "Velocity") {
-      console.log("using motor velocity");
-      // motorAddon.mav(motor, value);
+
+       motorAddon.mav(motor, value);
     }
 
     // Send back a success response
@@ -416,7 +385,7 @@ app.post("/stop-motor", (req, res) => {
   try {
     console.log(`Turning motor: ${motor} off`);
 
-    //motorAddon.off(motor);
+    motorAddon.off(motor);
 
     // Send back a success response
     res.status(200).json({ message: `Motor ${motor} turned off` });
@@ -429,7 +398,7 @@ app.post("/stop-motor", (req, res) => {
 app.post("/stop-all-motors", (req, res) => {
   console.log("Express.js stopping all motors");
   try {
-    // motorAddon.allOff();
+     motorAddon.allOff();
     res.status(200).json({ message: "All motors turned off" });
   } catch (error) {
     console.error("Error turning off all motors:", error);
@@ -440,11 +409,12 @@ app.post("/stop-all-motors", (req, res) => {
 let motorVelPollingInterval = null;
 let motorPosPollingInterval = null;
 let servoPosPollingInterval = null;
+
 app.get("/stream-motor-velocities", (req, res) => {
   res.setHeader("Content-Type", "text/event-stream");
   res.setHeader("Cache-Control", "no-cache");
   res.setHeader("Connection", "keep-alive");
-  //res.setHeader('X-Accel-Buffering', 'no');
+
 
   console.log("Started motor velocity stream");
 
@@ -463,7 +433,7 @@ app.get("/stream-motor-velocities", (req, res) => {
       console.error("Motor polling error:", err);
       res.write(`data: ERROR: ${err.toString()}\n\n`);
     }
-  }, 500); // every 500ms
+  }, 500); 
 
   req.on("close", () => {
     console.log("Closing motor velocity stream");
@@ -492,7 +462,7 @@ app.get("/stream-motor-positions", (req, res) => {
       console.error("Motor polling error:", err);
       res.write(`data: ERROR: ${err.toString()}\n\n`);
     }
-  }, 500); // every 500ms
+  }, 500); 
 
   req.on("close", () => {
     clearInterval(motorPosPollingInterval);
@@ -505,44 +475,28 @@ app.get("/stream-servo-positions", (req, res) => {
   res.setHeader("Cache-Control", "no-cache");
   res.setHeader("Connection", "keep-alive");
   console.log("inside stream-servo-positions");
-  // servoPosPollingInterval = setInterval(() => {
-  //   try {
-  //     const data = {
-  //       motor0: servoAddon.get_servo_position(0),
-  //       motor1: servoAddon.get_servo_position(1),
-  //       motor2: servoAddon.get_servo_position(2),
-  //       motor3: servoAddon.get_servo_position(3),
-  //     };
-
-  //     res.write(`data: ${JSON.stringify(data)}\n\n`);
-  //   } catch (err) {
-  //     console.error("Servo polling error:", err);
-  //     res.write(`data: ERROR: ${err.toString()}\n\n`);
-  //   }
-  // }, 500); // every 500ms
-
   servoPosPollingInterval = setInterval(() => {
     try {
       const data = {
         0: {
           name: "Servo 0",
-          value: Math.floor(Math.random() * 1024),
-          enable: true,
+          value: servoAddon.get_servo_position(0),
+          enable: servoAddon.get_servo_enabled(0),
         },
         1: {
           name: "Servo 1",
-          value: Math.floor(Math.random() * 1024),
-          enable: false,
+          value: servoAddon.get_servo_position(1),
+          enable: servoAddon.get_servo_enabled(1),
         },
         2: {
           name: "Servo 2",
-          value: Math.floor(Math.random() * 1024),
-          enable: true,
+          value: servoAddon.get_servo_position(2),
+          enable: servoAddon.get_servo_enabled(2)
         },
         3: {
           name: "Servo 3",
-          value: Math.floor(Math.random() * 1024),
-          enable: false,
+          value: servoAddon.get_servo_position(3),
+          enable: servoAddon.get_servo_enabled(3)
         },
       };
 
@@ -551,7 +505,7 @@ app.get("/stream-servo-positions", (req, res) => {
       console.error("Servo polling error:", err);
       res.write(`data: ERROR: ${err.toString()}\n\n`);
     }
-  }, 500); // every 500ms
+  }, 500);
 
   req.on("close", () => {
     clearInterval(servoPosPollingInterval);
@@ -572,6 +526,7 @@ function getAllDirectories(dirPath) {
   }
 }
 
+//Get all project directories from given path
 function getAllProjectDirectories(dirPath) {
   try {
     const files = fs.readdirSync(dirPath);
@@ -581,26 +536,25 @@ function getAllProjectDirectories(dirPath) {
       fs.statSync(path.join(dirPath, file)).isDirectory()
     );
 
-    // Mapping each directory to a Project structure
     const projects = directories.map((dirName) => {
       const projectPath = path.join(dirPath, dirName);
 
-      // Assuming you are determining project language based on some logic, e.g., folder name or file types
+     
       const projectLanguage = parseConfig(
         fs.readFileSync(path.join(projectPath, ".config.json"), "utf8")
-      ); // Replace with your logic for language detection
+      ); 
       console.log("For Project: ", dirName, "Language: ", projectLanguage);
-      // Assuming there are specific folders like 'src', 'data', and 'include' inside each project directory
+
       const includeFolderFiles = getFilesInFolder(
         path.join(projectPath, "include")
       );
       const srcFolderFiles = getFilesInFolder(path.join(projectPath, "src"));
       const dataFolderFiles = getFilesInFolder(path.join(projectPath, "data"));
 
-      // Create the project object
+      
       return {
         projectName: dirName,
-        projectLanguage, // Set based on your logic
+        projectLanguage, 
         includeFolderFiles,
         srcFolderFiles,
         dataFolderFiles,
@@ -610,9 +564,11 @@ function getAllProjectDirectories(dirPath) {
     return projects;
   } catch (error) {
     console.error("Error reading directory:", error);
-    return []; // Return an empty array in case of error
+    return []; 
   }
 }
+
+//Get all files in a folder
 function getFilesInFolder(folderPath) {
   try {
     const files = fs.readdirSync(folderPath);
@@ -624,7 +580,7 @@ function getFilesInFolder(folderPath) {
   }
 }
 
-// Helper function to get all files in a directory
+//Get all files in a directory
 function getAllFiles(dirPath) {
   try {
     const files = fs.readdirSync(dirPath);
@@ -640,7 +596,7 @@ function getAllFiles(dirPath) {
 function getUserInterfaceMode(userName) {
   const userConfigPath = `/home/kipr/Documents/KISS/${userName}/.config.json`;
   try {
-    // Check if the file exists
+
     if (!fs.existsSync(userConfigPath)) {
       console.error(
         `getUserInterfaceMode: Config file not found for user ${userName}`
@@ -648,10 +604,10 @@ function getUserInterfaceMode(userName) {
       return null;
     }
 
-    // Read and parse the JSON file
+
     const configData = JSON.parse(fs.readFileSync(userConfigPath, "utf-8"));
 
-    // Return the interfaceMode if it exists
+
     return configData.interfaceMode || null;
   } catch (error) {
     console.error("Error reading user config:", error);
@@ -659,10 +615,11 @@ function getUserInterfaceMode(userName) {
   }
 }
 
+//Set the user interface mode
 function setUserInterfaceMode(userName, newMode) {
   const userConfigPath = `/home/kipr/Documents/KISS/${userName}/.config.json`;
   try {
-    // Check if the file exists
+
     if (!fs.existsSync(userConfigPath)) {
       console.error(
         `setUserInterfaceMode: Config file not found for user ${userName}`
@@ -670,13 +627,12 @@ function setUserInterfaceMode(userName, newMode) {
       return false;
     }
 
-    // Read and parse the JSON file
+
     const configData = JSON.parse(fs.readFileSync(userConfigPath, "utf-8"));
 
-    //Update interfaceMode
+
     configData.interfaceMode = newMode;
 
-    // Write the updated config back to the file
     fs.writeFileSync(
       userConfigPath,
       JSON.stringify(configData, null, 2),
@@ -702,24 +658,21 @@ function createFolderHandler() {
       folderPath
     );
 
-    // Validate folderPath
     if (!folderPath) {
       return res
         .status(400)
         .json({ error: "Missing filePath query parameter" });
     }
 
-    // Check if the path exists and is a directory
+
     if (!fs.existsSync(folderPath) || !fs.statSync(folderPath).isDirectory()) {
       return res
         .status(400)
         .json({ error: "Invalid or non-existent directory path" });
     }
 
-    // Get all directories inside the specified folder
     const directories = getAllDirectories(folderPath);
 
-    // Send the list of directories as the response
     res.status(200).json({
       folderPath: folderPath,
       directories,
@@ -727,38 +680,7 @@ function createFolderHandler() {
   };
 }
 
-async function getFolderContents() {
-  return async (req, res) => {
-    const folderPath = req.query.filePath;
-    console.log(
-      "getFolderContents - Received request for folder path:",
-      folderPath
-    );
-
-    // Validate folderPath
-    if (!folderPath) {
-      return res
-        .status(400)
-        .json({ error: "Missing filePath query parameter" });
-    }
-
-    // Check if the path exists and is a directory
-    if (!fs.existsSync(folderPath) || !fs.statSync(folderPath).isDirectory()) {
-      return res
-        .status(400)
-        .json({ error: "Invalid or non-existent directory path" });
-    }
-
-    // Get all directories inside the specified folder
-    const files = getAllFiles(folderPath);
-
-    // Send the list of files as the response
-    res.status(200).json({
-      folderPath: folderPath,
-      files,
-    });
-  };
-}
+//Get all files in a directory and zip them
 async function getAllUserFiles(directory, zipFolder) {
   const files = await fs.promises.readdir(directory, { withFileTypes: true });
 
@@ -766,50 +688,48 @@ async function getAllUserFiles(directory, zipFolder) {
     const filePath = path.join(directory, file.name);
 
     if (file.isDirectory()) {
-      // Create a folder in the zip and recurse
       const subFolder = zipFolder.folder(file.name);
       await getAllUserFiles(filePath, subFolder);
     } else {
-      // Add file content to the zip
+
       const fileContent = await fs.promises.readFile(filePath);
       zipFolder.file(file.name, fileContent);
     }
   }
 }
+
+//Get file contents
 async function interalGetFileContents(filePath) {
   if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
     throw new Error("Invalid or non-existent file path");
   }
-  return fs.promises.readFile(filePath, "utf-8"); // ✅ Now using async/await properly
+  return fs.promises.readFile(filePath, "utf-8"); 
 }
 
 function getFileContents() {
   return async (req, res) => {
     const filePath = req.query.filePath;
-    console.log("Received request for file path:", filePath);
 
-    // Validate filePath
     if (!filePath) {
       return res
         .status(400)
         .json({ error: "Missing filePath query parameter" });
     }
 
-    // Check if the path exists and is a file
     if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
       return res
         .status(400)
         .json({ error: "Invalid or non-existent file path" });
     }
 
-    // Read the file contents
     const fileContents = fs.readFileSync(filePath, "utf-8");
 
-    // Send the file contents as the response
     res.status(200).send(fileContents);
   };
 }
 
+
+//Save file contents
 function saveFileContents() {
   return async (req, res) => {
     const { filePath, fileContents } = req.body;
@@ -820,28 +740,27 @@ function saveFileContents() {
       fileContents
     );
 
-    // Validate filePath
     if (!filePath) {
       return res
         .status(400)
         .json({ error: "Missing filePath in request body" });
     }
 
-    // Validate fileContents
     if (!fileContents) {
       return res
         .status(400)
         .json({ error: "Missing fileContents in request body" });
     }
 
-    // Write the file contents to the specified path
+
     fs.writeFileSync(filePath, fileContents);
 
-    // Send a success response
     res.status(200).send("File saved successfully");
   };
 }
 
+
+//Parse the config JSON
 function parseConfig(configContent) {
   try {
     const config = JSON.parse(configContent);
@@ -983,16 +902,10 @@ if (
   });
 }
 
+
+//Compile code
 app.post("/compile-code", async (req, res) => {
-  console.log("Received request body:", req.body); // Log the entire request body
-
   const { userName, projectName, fileName, activeLanguage } = req.body;
-
-  console.log("Extracted username from body:", userName);
-  console.log("Extracted projectName from body:", projectName);
-  console.log("Extracted fileName from body:", fileName);
-  console.log("Extracted activeLanguage from body:", activeLanguage);
-  // Proceed with your logic here
 
   const env = {
     ...process.env,
@@ -1002,13 +915,8 @@ app.post("/compile-code", async (req, res) => {
     FILE_NAME: fileName,
     ACTIVE_LANGUAGE: activeLanguage,
   };
-  console.log("Project username: ", userName);
-  console.log("Project name: ", projectName);
-  console.log("Current working directory:", process.cwd());
 
   const filePath = `/home/kipr/Documents/KISS/${userName}/${projectName}/src/${fileName}`;
-
-  console.log("Code to compile: ", await interalGetFileContents(filePath));
 
   exec("node compiler.js", { env }, (error, stdout, stderr) => {
     if (error) {
@@ -1028,9 +936,11 @@ app.post("/compile-code", async (req, res) => {
       });
     }
   });
-  //res.json({ message: "Received data", userName, projectName, fileName });
+
 });
 
+
+//Create project
 app.post("/initialize-project", async (req, res) => {
   const { userName, projectName, language, interfaceMode } = req.body;
   console.log("Received request body:", req.body); // Log the entire request body
@@ -1049,9 +959,8 @@ app.post("/initialize-project", async (req, res) => {
     [userName]: interfaceMode,
   };
 
-  console.log("users.json path: ", jsonDirectory);
   if (!fs.existsSync(jsonDirectory)) {
-    console.log("users.json not found. Creating now...");
+
     try {
       fs.writeFileSync(jsonDirectory, JSON.stringify(userJsonEntry, null, 2));
     } catch (error) {
@@ -1090,7 +999,7 @@ app.post("/initialize-project", async (req, res) => {
   if (fs.existsSync(projectDirectory)) {
     return res.status(409).json({ error: "Project directory already exists." });
   } else {
-    console.log(`Creating project directory: ${projectDirectory}`);
+
     fs.mkdirSync(projectDirectory, { recursive: true });
     const projectConfig = {
       projectName: projectName,
@@ -1098,7 +1007,7 @@ app.post("/initialize-project", async (req, res) => {
     };
 
     try {
-      console.log("Writing project config to:", projectConfigPath);
+    
       fs.writeFileSync(
         projectConfigPath,
         JSON.stringify(projectConfig, null, 2),
@@ -1115,15 +1024,13 @@ app.post("/initialize-project", async (req, res) => {
   }
 
   try {
-    // Initialize the Git repository
-    console.log("Current directory before init:", process.cwd());
-
+    
     // Create default folders and files
     const folders = ["bin", "include", "src", "data"];
     folders.forEach((folder) => {
       const folderPath = path.join(projectDirectory, folder);
       fs.mkdirSync(folderPath, { recursive: true });
-      // Add a placeholder file to ensure Git tracks empty directories
+  
     });
 
     //Ensure the main.[language] file isn't already created
@@ -1165,9 +1072,10 @@ app.post("/initialize-project", async (req, res) => {
   }
 });
 
+//Delete file
 app.post("/delete-file", async (req, res) => {
   const { userName, projectName, fileName, fileType } = req.body;
-  console.log("/Delete-file: ", req.body);
+
   if (!userName || !projectName || !fileName || !fileType) {
     return res.status(400).json({ error: "Missing required fields." });
   }
@@ -1190,7 +1098,7 @@ app.post("/delete-file", async (req, res) => {
   }
 
   const filePath = path.join(userProjectDirectory, fileName);
-  console.log("File path: ", filePath);
+
   try {
     // Check if the file exists
     await fs.promises.access(filePath);
@@ -1214,9 +1122,10 @@ app.post("/delete-file", async (req, res) => {
   }
 });
 
+//Delete project
 app.post("/delete-project", async (req, res) => {
   const { userName, projectName } = req.body;
-  console.log("/Delete-project: ", req.body);
+
   if (!userName || !projectName) {
     return res.status(400).json({ error: "Missing required fields." });
   }
@@ -1244,6 +1153,7 @@ app.post("/delete-project", async (req, res) => {
   }
 });
 
+//Delete user
 app.post("/delete-user", async (req, res) => {
   const { userName } = req.body;
 
@@ -1292,6 +1202,7 @@ app.post("/delete-user", async (req, res) => {
   }
 });
 
+//Download zip
 app.post("/download-zip", async (req, res) => {
   const { userName, projectName, fileName } = req.body;
 
@@ -1299,7 +1210,6 @@ app.post("/download-zip", async (req, res) => {
     return res.status(400).json({ error: "UserName is required" });
   }
 
-  console.log("download-zip Received request body:", req.body); // Log the entire request body
   const userDirectory = `/home/kipr/Documents/KISS/${userName}`;
   // Check if the directory exists
   if (!fs.existsSync(userDirectory)) {
@@ -1308,10 +1218,8 @@ app.post("/download-zip", async (req, res) => {
 
   try {
     if (fileName) {
-      console.log("Single file download");
       const [name, extension] = fileName.split(".");
-      console.log("File extension is: ", extension);
-      //Single file download
+        //Single file download
       if (!projectName) {
         return res.status(400).json({ error: "ProjectName is required" });
       }
@@ -1330,8 +1238,6 @@ app.post("/download-zip", async (req, res) => {
           break;
       }
 
-      console.log("single file download file path: ", filePath);
-
       if (!fs.existsSync(filePath)) {
         return res.status(404).json({ error: "File not found" });
       }
@@ -1346,20 +1252,17 @@ app.post("/download-zip", async (req, res) => {
         contentType = "text/html"; // If it's an HTML file
       }
 
-      console.log("File contents: ", fileContents);
-      // Set the correct headers for downloading the file as text
       res.setHeader("Content-Type", contentType);
       res.setHeader(
         "Content-Disposition",
         `attachment; filename="${fileName}"`
       );
 
-      // Send the file content as a plain text response
       res.status(200).send(fileContents);
 
       return;
     } else if (projectName) {
-      console.log("Single project download");
+
       const projectDirectory = path.join(userDirectory, projectName);
       // Check if the project directory exists
       if (!fs.existsSync(projectDirectory)) {
@@ -1395,6 +1298,8 @@ app.post("/download-zip", async (req, res) => {
     res.status(500).json({ error: "Failed to create ZIP file" });
   }
 });
+
+//Get all file names in a directory
 app.get("/get-all-file-names", async (req, res) => {
   try {
     const dirPath = req.query.dirPath;
@@ -1406,7 +1311,6 @@ app.get("/get-all-file-names", async (req, res) => {
     // Directories to check
     const allowedDirs = ["src", "include", "data"];
 
-    // Function to recursively get all file names in allowed directories only
     const getAllFileNames = (dir) => {
       let fileNames = [];
 
@@ -1426,7 +1330,7 @@ app.get("/get-all-file-names", async (req, res) => {
         // If it's a directory, check if it's in the allowedDirs list
         if (stats.isDirectory()) {
           if (allowedDirs.includes(file)) {
-            fileNames = fileNames.concat(getAllFileNames(filePath)); // Recursion only if the directory is allowed
+            fileNames = fileNames.concat(getAllFileNames(filePath));
           }
         } else {
           // If it's a file, add it to the fileNames array
@@ -1449,10 +1353,10 @@ app.get("/get-all-file-names", async (req, res) => {
   }
 });
 
+//Get project language
 app.get("/get-project-language", async (req, res) => {
   try {
-    console.log("/get-project-language filePath: ", req.query.filePath);
-
+   
     const gitConfigPath = path.join(req.query.filePath, ".git/config");
 
     //check if .git/config exists
@@ -1475,7 +1379,7 @@ app.get("/get-project-language", async (req, res) => {
 // User getters
 app.get("/load-user-data", async (req, res) => {
   try {
-    console.log("/load-user-data filePath: ", req.query.filePath);
+
     const allEntries = fs.readdirSync("/home/kipr/Documents/KISS");
 
     //Filter out users.json
@@ -1496,10 +1400,7 @@ app.get("/load-user-data", async (req, res) => {
       const userDirectory = `/home/kipr/Documents/KISS/${user}`;
       const projects = getAllProjectDirectories(userDirectory);
       console.log("Projects: ", projects);
-      // const projects = getAllProjectDirectories(userDirectory).filter(
-      //   (file) => !file.startsWith(".")
-      // );
-
+   
       if (userInterfaceMode === null) {
         console.log(`User interface mode not found for ${user}`);
       }
@@ -1511,8 +1412,6 @@ app.get("/load-user-data", async (req, res) => {
       };
     });
 
-    console.log("/load-user-data: ", users);
-
     // Send the list of users as the response
     res.status(200).json({
       users,
@@ -1523,6 +1422,7 @@ app.get("/load-user-data", async (req, res) => {
   }
 });
 
+// Get all users
 app.get("/get-users", createFolderHandler());
 
 // Project getterss
@@ -1531,8 +1431,6 @@ app.get("/get-project-folders", createFolderHandler());
 
 app.get("/get-project-data", async (req, res) => {
   try {
-    console.log("Received request for get-project-data:", req.query);
-    console.log("projectPath: ", req.query.filePath);
     const projectDirectory = req.query.filePath;
     const projectConfigPath = path.join(projectDirectory, ".config.json");
     const language = parseConfig(fs.readFileSync(projectConfigPath, "utf8"));
@@ -1564,8 +1462,6 @@ app.get("/get-project-data", async (req, res) => {
     res.status(500).send("Error getting project data");
   }
 });
-// Folder content getters
-//app.get("/get-folder-contents", getFolderContents());
 
 // File content getters
 app.get("/get-file-contents", getFileContents());
@@ -1576,8 +1472,6 @@ app.post("/save-file-content", saveFileContents());
 //Change interface mode
 app.post("/change-interface-mode", (req, res) => {
   const { userName, newMode } = req.body;
-
-  console.log("Received request to change interface mode:", req.body);
 
   if (!userName || !newMode) {
     return res.status(400).json({ error: "Missing userName or newMode" });
@@ -1594,9 +1488,8 @@ app.post("/change-interface-mode", (req, res) => {
   }
 });
 
+//Rename user, project, or file
 app.post("/rename", async (req, res) => {
-  //const { userName, oldProjectName, newProjectName } = req.body;
-  console.log("Received request to rename:", req.body);
 
   const defaultDirectory = `/home/kipr/Documents/KISS`;
 
@@ -1644,7 +1537,6 @@ app.post("/rename", async (req, res) => {
         req.body.newProjectName
       );
       // Check if the project directory exists
-      console.log("inside rename-project try RIGHT BEFORE access");
       if (!fs.existsSync(oldProjectDirectory)) {
         return res.status(404).json({ error: "Project directory not found" });
       }
@@ -1655,8 +1547,6 @@ app.post("/rename", async (req, res) => {
           .json({ error: "Project directory already exists" });
       }
 
-      console.log("inside rename-project try RIGHT BEFORE rename");
-      // Rename the project directory asynchronously
       await fs.promises.rename(oldProjectDirectory, newProjectDirectory);
 
       console.log(
@@ -1745,8 +1635,9 @@ app.post("/rename", async (req, res) => {
 
 let currentChild = null;
 
+// Run code
 app.get("/run-code", (req, res) => {
-  console.log("Received run request:", req.query);
+
   const { userName, projectName, activeLanguage } = req.query;
   if (!userName || !projectName || !activeLanguage) {
     return res.status(400).send("Missing parameters");
@@ -1767,7 +1658,7 @@ app.get("/run-code", (req, res) => {
       runCommand = `/bin/bash -c 'export PYTHONPATH=/usr/local/lib && python3 "${bin_directory}/botball_user_program"'`;
       break;
   }
-  console.log("runCommand: ", runCommand);
+
   res.setHeader("Content-Type", "text/event-stream");
   res.setHeader("Cache-Control", "no-cache");
   res.setHeader("Connection", "keep-alive");
@@ -1814,23 +1705,10 @@ app.get("/run-code", (req, res) => {
     res.flush?.();
     res.end();
   });
-  // exec(runCommand, (error, stdout, stderr) => {
-  //   if (error) {
-  //     console.error(`Error during execution: ${error.message}`);
-  //     return res.status(500).json({ error: "Execution failed" });
-  //   }
-  //   if (stderr) {
-  //     console.error(`Execution errors: ${stderr}`);
-  //   }
 
-  //   // Respond with the execution output
-  //   res.json({
-  //     message: "Execution successful",
-  //     output: stdout,
-  //   });
-  // });
 });
 
+// Stop code
 app.post("/stop-code", (req, res) => {
   if (currentChild) {
     console.log("Stopping process group:", -currentChild.pid);
