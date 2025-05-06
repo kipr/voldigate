@@ -340,6 +340,7 @@ const LeftBarWrapper = (props: Props) => {
 
   React.useEffect(() => {
     if(repollServos){
+      console.log("REPOLLING SERVOS");
       const servoEventPositionSource = new EventSource('/stream-servo-positions');
 
       servoEventPositionSource.onmessage = (event) => {
@@ -1257,21 +1258,21 @@ class LeftBar extends React.Component<Props, State> {
         return oldServo && oldServo.enable && !newServo.enable;
       });
 
-      if (newlyEnabledServos.length > 0) {
-        console.log("Newly enabled servos:", newlyEnabledServos);
-        this.setState({
-          enabledServo: newlyEnabledServos[0],
-          enabledServoFlag: true
-        });
+      // if (newlyEnabledServos.length > 0) {
+      //   console.log("Newly enabled servos:", newlyEnabledServos);
+      //   this.setState({
+      //     enabledServo: newlyEnabledServos[0],
+      //     enabledServoFlag: true
+      //   });
 
-      }
-      else if (newlyDisabledServos.length > 0) {
-        console.log("Newly disabled servos:", newlyDisabledServos);
-        this.setState({
-          disabledServos: newlyDisabledServos,
-          disabledServoFlag: true
-        });
-      }
+      // }
+      // else if (newlyDisabledServos.length > 0) {
+      //   console.log("Newly disabled servos:", newlyDisabledServos);
+      //   this.setState({
+      //     disabledServos: newlyDisabledServos,
+      //     disabledServoFlag: true
+      //   });
+      // }
       this.props.repollServos(true);
       return {
         servoPositions: servoPositions,
@@ -1591,7 +1592,7 @@ class LeftBar extends React.Component<Props, State> {
           sensorDisplayShown={this.onSetSensorDisplayShown_}
           sensorSelections={this.onSensorSelection_}
           graphSelections={this.onGraphSelection_}
-          propedSensorValues={this.state.sensorValues} //Needs to be [] not analogvalues
+          propedSensorValues={this.state.sensorValues} 
           propedAnalogValues={this.state.analogValues}
           propedDigitalValues={this.state.digitalValues}
           propedAccelValues={this.state.accelValues}

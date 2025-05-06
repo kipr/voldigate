@@ -395,20 +395,6 @@ class Root extends React.Component<Props, State> {
     if (prevProps.propedServoPositions !== this.props.propedServoPositions) {
       console.log("Root compDidUpdate propedServoPositions: ", this.props.propedServoPositions);
 
-      // if (this.props.propedEnabledServoFlag && this.props.enabledServo !== undefined) {
-      //   console.log("Root compDidUpdate enabledServo: ", this.props.enabledServo);
-      //   this.enableServo(this.props.enabledServo);
-      //   this.props.resetEnabledServoFlag(false);
-      // }
-      // else if (this.props.propedDisabledServoFlag && this.props.disabledServos !== undefined) {
-      //   console.log("Root compDidUpdate disabledServo: ", this.props.disabledServos);
-      //   this.disableServos(this.props.disabledServos);
-      //   this.props.resetDisabledServoFlag(false);
-      // }
-
-      // else {
-        
-      // }
 
       this.props.propedServoPositions.forEach((servo, index) => {
         const prev = prevProps.propedServoPositions[index];
@@ -418,12 +404,19 @@ class Root extends React.Component<Props, State> {
         const enableChanged = prev.enable !== next.enable;
       
         if ((valueChanged || enableChanged) && next.enable === true) {
-          console.log(`Root ${index} changed: value ${prev.value} → ${next.value}, enable ${prev.enable} → ${next.enable}`);
+          console.log(`1st: Root ${index} changed: value ${prev.value} → ${next.value}, enable ${prev.enable} → ${next.enable}`);
+          if(prev.enable === false) {
+            this.enableServo(next); 
+          }
           this.moveServo(next);
         }
         else if (next.enable === false) {
-          console.log(`Root ${index} changed: value ${prev.value} → ${next.value}, enable ${prev.enable} → ${next.enable}`);
+          console.log(`2nd: Root ${index} changed: value ${prev.value} → ${next.value}, enable ${prev.enable} → ${next.enable}`);
           this.disableServos([next]);
+        }
+        else if (next.enable === true) {
+          console.log(`3rd: Root ${index} changed: value ${prev.value} → ${next.value}, enable ${prev.enable} → ${next.enable}`);
+          this.enableServo(next);
         }
       });
       
