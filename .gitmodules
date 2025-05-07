@@ -1,3 +1,4 @@
+
 [submodule "dependencies/kipr-scratch"]
 	path = dependencies/kipr-scratch
-	url = https://github.com/kipr/kipr-scratch.git
+	url = ../kipr-scratch
