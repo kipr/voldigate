@@ -135,96 +135,9 @@ const LeftBarWrapper = (props: Props) => {
   
   //let motorVelocities: MotorVelocities = {};
   console.log("LeftBarWrapper graphSelection: ", graphSelection);
-  // React.useEffect(() => {
-  //   let motorEventVelocitySource: EventSource | null = null;
-  //   let motorEventPositionSource: EventSource | null = null;
-  //   if (isRunning && (graphSelection.includes('MotorVelocities') || graphSelection.includes('MotorPositions'))) {
-
-  //     console.log("LeftBarWrapper if graphSelection.includes('MotorPositions'): ", graphSelection.includes('MotorPositions'));
-  //     if(graphSelection.includes('MotorVelocities')) {
-  //       motorEventVelocitySource = new EventSource('/stream-motor-velocities');
-  //       motorEventVelocitySource.onmessage = (event) => {
-  //         const data = JSON.parse(event.data);
-
-  //         const tempVelocities: MotorVelocities = {};
-
-  //         for (let i = 0; i < 4; ++i) {
 
 
-  //           if (data[`motor${i}`] !== undefined) {
 
-  //             tempVelocities[`Motor ${i}`] = data[`motor${i}`] / 65536.0; // 2^16 = 65536
-  //           }
-
-  //         }
-  //         setMotorVelocities(tempVelocities);
-  //         console.log("Motor event data (velocities): ", tempVelocities);
-  //       };
-
-  //       motorEventVelocitySource.onerror = (error) => {
-  //         console.error("Error in motor event source: ", error);
-  //         if (motorEventVelocitySource) {
-  //           motorEventVelocitySource.close();
-  //         }
-  //       };
-
-
-  //     }
-
-  //     if(graphSelection.includes('MotorPositions')) {
-  //       motorEventPositionSource = new EventSource('/stream-motor-positions');
-  //       motorEventPositionSource.onmessage = (event) => {
-  //         const data = JSON.parse(event.data);
-
-  //         const tempPositions: MotorPositions = {};
-
-  //         for (let i = 0; i < 4; ++i) {
-
-
-  //           if (data[`motor${i}`] !== undefined) {
-
-  //             tempPositions[`Motor ${i}`] = data[`motor${i}`] / 65536.0; // 2^16 = 65536
-  //           }
-
-  //         }
-  //         setMotorPositions(tempPositions);
-  //         console.log("Motor event data (positions): ", tempPositions);
-  //       };
-
-  //       motorEventPositionSource.onerror = (error) => {
-  //         console.error("Error in motor event source: ", error);
-  //         if (motorEventPositionSource) {
-  //           motorEventPositionSource.close();
-  //         }
-  //       };
-
-
-  //     }
-
-
-  //   }
-  //   return () => {
-  //     if (motorEventVelocitySource) {
-  //       motorEventVelocitySource.close();
-  //       setMotorVelocities({
-  //         "Motor 0": 0,
-  //         "Motor 1": 0,
-  //         "Motor 2": 0,
-  //         "Motor 3": 0,
-  //       });
-  //     }
-  //     if (motorEventPositionSource) {
-  //       motorEventPositionSource.close();
-  //       setMotorPositions({
-  //         "Motor 0": 0,
-  //         "Motor 1": 0,
-  //         "Motor 2": 0,
-  //         "Motor 3": 0,
-  //       });
-  //     }
-  //   };
-  // }, [isRunning, shouldStreamMotorVelocities, graphSelection]);
-  // Effect for motor velocities
   React.useEffect(() => {
     console.log("Render triggered velocities: isRunning =", isRunning, "graphSelection =", graphSelection);
     if (!isRunning || !graphSelection.includes('MotorVelocities')) return;
@@ -268,7 +181,10 @@ const LeftBarWrapper = (props: Props) => {
     if (!isRunning || !graphSelection.includes('MotorPositions')) return;
 
     const motorEventPositionSource = new EventSource('/stream-motor-positions');
-
+    motorEventPositionSource.onopen = () => {
+      console.log("SSE connection opened");
+    };
+    
     motorEventPositionSource.onmessage = (event) => {
       const data = JSON.parse(event.data);
       const tempPositions: MotorPositions = {};
@@ -299,6 +215,17 @@ const LeftBarWrapper = (props: Props) => {
     };
   }, [isRunning, graphSelection]);
 
+  // React.useEffect(() => {
+  //   console.log("Mounting SSE connection");
+  //   const source = new EventSource('/stream-test');
+  //   source.onmessage = (e) => console.log("Received:", e.data);
+  //   source.onerror = (err) => console.error("SSE error:", err);
+  
+  //   return () => {
+  //     console.log("Unmounting SSE connection");
+  //     source.close();
+  //   };
+  // }, []);
   // Effect for servo positions
   React.useEffect(() => {
     console.log("Render triggered positions: isRunning =", isRunning, "graphSelection =", graphSelection);
@@ -1246,33 +1173,8 @@ class LeftBar extends React.Component<Props, State> {
 
     this.setState(prevState => {
       console.log("LeftBar storeServoPositions_ prevState: ", prevState);
-      const prevServoPositions = prevState.servoPositions || [];
 
-      const newlyEnabledServos = servoPositions.filter(newServo => {
-        const oldServo = prevServoPositions.find(s => s.name === newServo.name);
-        return oldServo && !oldServo.enable && newServo.enable;
-      });
 
-      const newlyDisabledServos = servoPositions.filter(newServo => {
-        const oldServo = prevServoPositions.find(s => s.name === newServo.name);
-        return oldServo && oldServo.enable && !newServo.enable;
-      });
-
-      // if (newlyEnabledServos.length > 0) {
-      //   console.log("Newly enabled servos:", newlyEnabledServos);
-      //   this.setState({
-      //     enabledServo: newlyEnabledServos[0],
-      //     enabledServoFlag: true
-      //   });
-
-      // }
-      // else if (newlyDisabledServos.length > 0) {
-      //   console.log("Newly disabled servos:", newlyDisabledServos);
-      //   this.setState({
-      //     disabledServos: newlyDisabledServos,
-      //     disabledServoFlag: true
-      //   });
-      // }
       this.props.repollServos(true);
       return {
         servoPositions: servoPositions,
