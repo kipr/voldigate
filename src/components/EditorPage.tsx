@@ -13,7 +13,7 @@ import { LayoutProps } from './Layout/Layout';
 import { Slider } from './Slider';
 import { State as ReduxState } from '../state';
 import { StyledText } from '../util';
-import { ThemeProps } from './theme';
+import { ThemeProps, Theme } from './theme';
 import { Modal } from '../pages/Modal';
 import { JSX } from 'react';
 
@@ -52,6 +52,7 @@ interface EditorPageState {
   editorConsole: StyledText;
   modal: Modal;
   code: Dict<string>;
+  theme: Theme;
 }
 
 type Props = EditorPageProps;
@@ -113,11 +114,13 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
         'cpp': '',
         'python': '',
         'plaintext': '',
-
+        'scratch': '',
+      
       },
       editorConsole: props.editorConsole,
       fileName: props.fileName,
       resetCodeAccept: false,
+      theme: props.theme
     };
   }
 
@@ -137,17 +140,12 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
 
       });
     }
-    // if (this.props.code !== prevProps.code) {
-    //   console.log("EditorPage compDidUpdate changing code from: ", prevProps.code, " to: ", this.props.code);
-    //   this.setState({
-    //     code: {
-    //       ...this.state.code,
-    //       [this.state.language]: this.props.code[this.state.language]
-    //     }
-    //   }, () => {
-    //     console.log("EditorPage compDidUpdate code state: ", this.state.code);
-    //   });
-    // }
+
+    if(prevProps.theme !== this.props.theme) {
+      this.setState({
+        theme: prevProps.theme
+      })
+    }
     if (this.props.editorConsole !== prevProps.editorConsole) {
       this.setState({
         editorConsole: this.props.editorConsole
@@ -160,7 +158,7 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
     try {
 
       const { userName, projectName } = this.props;
-
+      console.log("EditorPage compDidMount");
       if (this.props.fileName.includes(".h")) {
         const includeContent = await axios.get("/get-file-contents", { params: { filePath: `/home/kipr/Documents/KISS/${userName}/${projectName}/include/${this.props.fileName}` } });
         // Ensure includeContent.data is a string
@@ -191,7 +189,7 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
         const srcContent = await axios.get("/get-file-contents", { params: { filePath: `/home/kipr/Documents/KISS/${userName}/${projectName}/src/${this.props.fileName}` } });
         // Ensure srcContent.data is a string
         const fileContent = typeof srcContent.data === 'string' ? srcContent.data : JSON.stringify(srcContent.data);
-
+        console.log("EditorPage componentDidMount srcContent: ", fileContent);
         this.setState((prevState) => ({
           code: {
             ...prevState.code,
@@ -286,6 +284,8 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
     };
     editor = (
       console.log("EditorPage render isleftbaropen: ", isleftbaropen),
+      console.log("EditorPage state: ", this.state),
+      console.log("EditorPage props: ", this.props),
       <Editor
       
         theme={theme}
