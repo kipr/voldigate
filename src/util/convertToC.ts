@@ -1,16 +1,5 @@
 const { DOMParser: XmlDomParser } = require("xmldom");
 
-const modules = [
-  "wait_for",
-  "time",
-  "motor",
-  "servo",
-  "digital",
-  "analog",
-  "Control",
-  "Operators",
-  "Variables",
-];
 
 type BlockNode = {
   type: string;
