@@ -41,6 +41,7 @@ try {
 
 try {
   switch (envLanguage) {
+    case "scratch":
     case "c":
       sourceFiles = fs
         .readdirSync(src_directory)
