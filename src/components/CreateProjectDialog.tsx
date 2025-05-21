@@ -102,7 +102,12 @@ const LANGUAGE_OPTIONS: ComboBox.Option[] = [{
 }, {
   text: 'Python',
   data: 'python'
-}];
+},
+{
+  text: 'Scratch',
+  data: 'scratch'
+}
+];
 
 const ErrorMessageContainer = styled('div', (props: ThemeProps) => ({
   display: 'flex',
