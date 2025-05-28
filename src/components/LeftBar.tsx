@@ -249,7 +249,7 @@ const LeftBarWrapper = (props: Props) => {
         }
       }
 
-      setServoPositions(tempServos);
+      //setServoPositions(tempServos);
       console.log("Servo event tempServos: ", tempServos);
     };
 
@@ -376,7 +376,7 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
 
 const ItemIcon = styled(Fa, {
   alignItems: 'center',
-  height: '40px'
+  height: '3vw'
 });
 const LeftBarContainer = styled('div', (props: ThemeProps & ClickProps) => ({
   display: 'flex',
