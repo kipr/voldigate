@@ -317,7 +317,7 @@ wss.on("connection", (ws) => {
   ws.send(JSON.stringify({ analog: latestAnalogValues }));
 });
 
-app.post("/enable-servo", (req, res) => {
+app.post("/enable-servo", express.json(), (req, res) => {
   const { servo, value } = req.body;
 
   if (typeof servo !== "number") {
@@ -339,7 +339,7 @@ app.post("/enable-servo", (req, res) => {
   }
 });
 
-app.post("/disable-all-servos", (req, res) => {
+app.post("/disable-all-servos", express.json(), (req, res) => {
   try {
     console.log(`Disabling all servos`);
     servoAddon.disable_servos();
@@ -351,9 +351,11 @@ app.post("/disable-all-servos", (req, res) => {
   }
 });
 
-app.post("/disable-servo", (req, res) => {
-  const { servo, value } = req.body;
+app.post("/disable-servo", express.json(), (req, res) => {
 
+  const { servo, value } = req.body;
+  console.log("/disable-servo servo: ", servo);
+  console.log("/disable-servo value: ", value);
   if (typeof servo !== "number") {
     return res.status(400).json({ error: "Servo type incorrect, need number" });
   }
@@ -367,7 +369,7 @@ app.post("/disable-servo", (req, res) => {
     res.status(500).json({ error: "Failed to disable servo" });
   }
 });
-app.post("/move-servo", (req, res) => {
+app.post("/move-servo", express.json(), (req, res) => {
   const { servo, value } = req.body;
 
   console.log("/move-servo servo: ", servo);
@@ -379,7 +381,7 @@ app.post("/move-servo", (req, res) => {
 
   try {
     console.log(`Moving servo: ${servo} to value: ${value}`);
-    servoAddon.set_servo_position(servo, value);
+   // servoAddon.set_servo_position(servo, value);
     res.status(200).json({ message: `Servo ${servo} moved to value ${value}` });
   } catch (error) {
     console.error("Error moving servo:", error);
@@ -387,7 +389,7 @@ app.post("/move-servo", (req, res) => {
   }
 });
 
-app.post("/move-motor", (req, res) => {
+app.post("/move-motor", express.json(), (req, res) => {
   const { view, motor, value } = req.body;
 
   if (typeof motor !== "number" || typeof value !== "number") {
@@ -411,7 +413,7 @@ app.post("/move-motor", (req, res) => {
   }
 });
 
-app.post("/stop-motor", (req, res) => {
+app.post("/stop-motor", express.json(),(req, res) => {
   const { motor } = req.body;
 
   console.log("type of motor: ", typeof motor);
@@ -433,7 +435,7 @@ app.post("/stop-motor", (req, res) => {
   }
 });
 
-app.post("/stop-all-motors", (req, res) => {
+app.post("/stop-all-motors", express.json(),(req, res) => {
   console.log("Express.js stopping all motors");
   try {
     motorAddon.allOff();
@@ -2361,13 +2363,13 @@ app.use((req, res) => {
   res.sendFile(`${__dirname}/${sourceDir}/index.html`);
 });
 
-// server.listen(config.server.port, "0.0.0.0", () => {
-//   console.log(
-//     `Express and WebSocket server started: http://localhost:${config.server.port}`
-//   );
-//   console.log(`Serving content from /${sourceDir}/`);
-// });
-
-app.listen(3001, () => {
-  console.log("SSE server listening on http://localhost:3001");
+server.listen(config.server.port, "0.0.0.0", () => {
+  console.log(
+    `Express and WebSocket server started: http://localhost:${config.server.port}`
+  );
+  console.log(`Serving content from /${sourceDir}/`);
 });
+
+// app.listen(3001, () => {
+//   console.log("SSE server listening on http://localhost:3001");
+// });
