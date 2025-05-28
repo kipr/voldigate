@@ -1,1 +1,0 @@
-add_test(motor_pwm_test core motor time)

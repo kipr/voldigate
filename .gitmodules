@@ -1,3 +1,6 @@
 [submodule "dependencies/kipr-scratch"]
 	path = dependencies/kipr-scratch
 	url = ../kipr-scratch
+[submodule "dependencies/libwallaby"]
+	path = dependencies/libwallaby
+	url = https://github.com/kipr/libwallaby.git

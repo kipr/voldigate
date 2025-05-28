@@ -1,1 +1,0 @@
-add_test(analog_test analog time)

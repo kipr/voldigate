@@ -1,1 +1,0 @@
-add_test(digital_in_test digital time)

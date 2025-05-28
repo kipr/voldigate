@@ -1,1 +1,0 @@
-A `Device` implementation for the Wombat that uses SPI.
