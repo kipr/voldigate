@@ -64,6 +64,7 @@ module.exports = {
       path: false,
     },
     alias: {
+      'dependencies/kipr-scratch': resolve(__dirname, 'dependencies/kipr-scratch'),
       '@i18n': resolve(__dirname, '../../src/i18n'),
       '@ivygate': resolve(__dirname, '../../node_modules/ivygate'),
       'react': resolve(__dirname, '../../node_modules/react'),

@@ -1,0 +1,3 @@
+[submodule "dependencies/kipr-scratch"]
+	path = dependencies/kipr-scratch
+	url = ../kipr-scratch

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import Dict from '../Dict';
 import ProgrammingLanguage from '../ProgrammingLanguage';
 import AboutDialog from './AboutDialog';
@@ -246,7 +246,8 @@ class Root extends React.Component<Props, State> {
         'c': window.localStorage.getItem('code-c') || ProgrammingLanguage.DEFAULT_CODE['c'],
         'cpp': window.localStorage.getItem('code-cpp') || ProgrammingLanguage.DEFAULT_CODE['cpp'],
         'python': window.localStorage.getItem('code-python') || ProgrammingLanguage.DEFAULT_CODE['python'],
-        'plaintext': window.localStorage.getItem('code-plaintext') || ProgrammingLanguage.DEFAULT_USER_DATA_CODE
+        'plaintext': window.localStorage.getItem('code-plaintext') || ProgrammingLanguage.DEFAULT_USER_DATA_CODE,
+        'scratch': window.localStorage.getItem('code-scratch') || ProgrammingLanguage.DEFAULT_CODE['scratch']
       },
       modal: Modal.NONE,
       editorConsole: StyledText.text({ text: LocalizedString.lookup(tr('Welcome to the KIPR IDE!\n'), props.locale), style: STDOUT_STYLE(this.props.propedTheme) }),
@@ -285,7 +286,7 @@ class Root extends React.Component<Props, State> {
     this.editorRef = React.createRef();
     this.prevPropsRef = React.createRef();
     this.prevStateRef = React.createRef();
-    this.toSaveCodeRef = { current: { 'c': '', 'cpp': '', 'python': '', 'plaintext': '' } };
+    this.toSaveCodeRef = { current: { 'c': '', 'cpp': '', 'python': '', 'plaintext': '', 'scratch': '' } };
   }
 
   async componentDidMount() {
@@ -399,27 +400,25 @@ class Root extends React.Component<Props, State> {
       this.props.propedServoPositions.forEach((servo, index) => {
         const prev = prevProps.propedServoPositions[index];
         const next = this.props.propedServoPositions[index];
-      
+
         const valueChanged = prev.value !== next.value;
         const enableChanged = prev.enable !== next.enable;
-      
-        if ((valueChanged || enableChanged) && next.enable === true) {
+
+        console.log("Root compDidUpdate propedServoPositions: ", prev, next);
+        if ((valueChanged || enableChanged)) {
           console.log(`1st: Root ${index} changed: value ${prev.value} → ${next.value}, enable ${prev.enable} → ${next.enable}`);
-          if(prev.enable === false) {
-            this.enableServo(next); 
+          if (next.enable === true) {
+            this.enableServo(next);
           }
+          else if(next.enable === false) {
+            this.disableServos([next]);
+          }
+
           this.moveServo(next);
         }
-        else if (next.enable === false) {
-          console.log(`2nd: Root ${index} changed: value ${prev.value} → ${next.value}, enable ${prev.enable} → ${next.enable}`);
-          this.disableServos([next]);
-        }
-        else if (next.enable === true) {
-          console.log(`3rd: Root ${index} changed: value ${prev.value} → ${next.value}, enable ${prev.enable} → ${next.enable}`);
-          this.enableServo(next);
-        }
+
       });
-      
+
 
 
     }
@@ -619,6 +618,7 @@ class Root extends React.Component<Props, State> {
         case 'c':
         case 'cpp':
         case 'py':
+        case 'scratch':
           const rootUpdateCode = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUser.userName}/${propProject.projectName}/src/${propFileName}` } });
           this.setState({
             code: {
@@ -689,7 +689,7 @@ class Root extends React.Component<Props, State> {
           case "Digital":
             this.socket.send(JSON.stringify({ type: "start-digital" }));
             break;
-          case  "Accelerometer":
+          case "Accelerometer":
             this.socket.send(JSON.stringify({ type: "start-accelerometer" }));
             break;
           case "Gyroscope":
@@ -710,27 +710,27 @@ class Root extends React.Component<Props, State> {
         try {
           const data = JSON.parse(event.data);
           if (data.type === "analog") {
-             console.log("Root Sensor data.analog: ", data.value);
+            console.log("Root Sensor data.analog: ", data.value);
             this.props.setAnalogValues(data.value);
             //this.setState({ analog: data.value });
           }
-          if(data.type === "digital") {
+          if (data.type === "digital") {
             console.log("Root Sensor data.digital: ", data.value);
             this.props.setDigitalValues(data.value);
           }
-          if(data.type === "accel") {
+          if (data.type === "accel") {
             console.log("Root Sensor data.accel: ", data.value);
             this.props.setAccelValues(data.value);
           }
-          if(data.type === "gyro") {
+          if (data.type === "gyro") {
             console.log("Root Sensor data.gyro: ", data.value);
             this.props.setGyroValues(data.value);
           }
-          if(data.type === "magneto") {
+          if (data.type === "magneto") {
             console.log("Root Sensor data.magneto: ", data.value);
             this.props.setMagnetoValues(data.value);
           }
-          if(data.type === "button") {
+          if (data.type === "button") {
             console.log("Root Sensor data.button: ", data.value);
             this.props.setButtonValues(data.value);
           }
@@ -742,7 +742,7 @@ class Root extends React.Component<Props, State> {
   };
   private startSensorWebSocket = async () => {
     console.log("Before websocket create");
-    //this.socket = new WebSocket('ws://localhost:3000'); // DEVELOPMENT ONLY
+   // this.socket = new WebSocket('ws://localhost:3000'); // DEVELOPMENT ONLY
     this.socket = new WebSocket('ws://192.168.86.44:3000'); // WOMBAT
 
     //this.socket = new WebSocket('ws://192.168.125.1:3000'); //USE THIS FOR PRODUCTION
@@ -751,7 +751,7 @@ class Root extends React.Component<Props, State> {
       console.log('WebSocket connection opened');
 
     };
- 
+
 
     this.socket.onclose = () => {
       console.log("WebSocket closed");
@@ -893,6 +893,7 @@ class Root extends React.Component<Props, State> {
       case 'c':
       case 'cpp':
       case 'py':
+      case 'scratch':
         console.log("ROOT UPDATECODE");
         console.log(`Root Update Code: /home/kipr/Documents/KISS/${propUser.userName}/${propProject.projectName}/src/${tempNewFile}`);
         const rootUpdateCode = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUser.userName}/${propProject.projectName}/src/${tempNewFile}` } });
@@ -1554,6 +1555,7 @@ class Root extends React.Component<Props, State> {
   }
 
   private onCodeChange_ = (code: string) => {
+    console.log("Root onCodeChange_ code: ", code);
     this.toSaveCodeRef.current = { ...this.toSaveCodeRef.current, [this.state.activeLanguage]: code };
 
     const { activeLanguage } = this.state;
@@ -1590,16 +1592,16 @@ class Root extends React.Component<Props, State> {
     // Listen for streamed output
     this.eventSource.onmessage = (event) => {
       let output = event.data;
-    
+
       const filteredLines = output.split("\n").filter(line => {
         // Remove all lines that start with [core/wombat]
         return !line.startsWith("[core/wombat]");
       });
-    
+
       if (filteredLines.length === 0) return; // nothing to append
-    
+
       const cleanOutput = filteredLines.join("\n");
-    
+
       const nextConsole = StyledText.extend(
         this.state.editorConsole,
         StyledText.text({
@@ -1607,7 +1609,7 @@ class Root extends React.Component<Props, State> {
           style: STDOUT_STYLE(this.state.theme)
         })
       );
-    
+
       this.setState({ editorConsole: nextConsole });
     };
 
@@ -1619,7 +1621,7 @@ class Root extends React.Component<Props, State> {
 
     // Close connection when the process ends
     this.eventSource.addEventListener("end", () => {
- 
+
       this.eventSource.close();
       this.setState({ isRunning: false });
       programRunContextHelper.setIsRunning(false);
@@ -1639,7 +1641,7 @@ class Root extends React.Component<Props, State> {
     const { locale } = this.props;
     const { userName, projectName, fileName, activeLanguage, editorConsole, code } = this.state;
 
-
+    console.log("onCompileClick toSaveCodeRef: ", this.toSaveCodeRef.current);
     try {
       if (this.toSaveCodeRef !== undefined) {
         await this.onSaveCode_();
@@ -1657,9 +1659,18 @@ class Root extends React.Component<Props, State> {
         editorConsole: compilingConsole
       }, async () => {
 
+        let response: AxiosResponse<any>;
+        if (activeLanguage === 'scratch') {
+          console.log("Root onCompileClick scratch: /convert-xml-to-c");
+          response = await axios.post('/convert-xml-to-c', { filePath: `/home/kipr/Documents/KISS/${userName}/${projectName}/src/xmlToC.c`,xml: this.toSaveCodeRef.current[activeLanguage] });
+          console.log("Root onCompileClick response: ", response);
 
-        const response = await axios.post('/compile-code', { userName, projectName, fileName, activeLanguage }); // This calls the backend route
-
+          response = await axios.post('/compile-code', { userName, projectName, fileName: 'xmlToC.c', activeLanguage });
+        }
+        else {
+          console.log("Root onCompileClick else: /compile-code");
+          response = await axios.post('/compile-code', { userName, projectName, fileName, activeLanguage }); // This calls the backend route
+        }
         let nextConsole: StyledText;
 
         switch (activeLanguage) {
@@ -1704,6 +1715,7 @@ class Root extends React.Component<Props, State> {
             });
             break;
           }
+          case 'scratch': 
           case 'python': {
             if (response.data.message === 'successful') {
               nextConsole = StyledText.extend(compilingConsole, StyledText.text({
@@ -1723,6 +1735,7 @@ class Root extends React.Component<Props, State> {
             break;
           }
         }
+
       });
 
     } catch (error) {
@@ -1760,6 +1773,7 @@ class Root extends React.Component<Props, State> {
         case 'c':
         case 'cpp':
         case 'py':
+        case 'scratch':
 
           filePath = `${prePath}/${userName}/${projectName}/src/${fileName}`;
           break;
@@ -1769,6 +1783,8 @@ class Root extends React.Component<Props, State> {
         case 'h':
           filePath = `${prePath}/${userName}/${projectName}/include/${fileName}`;
           break;
+
+
       }
       const updateFileContent = await axios.post('/save-file-content', { filePath, fileContents });
 
@@ -1941,6 +1957,19 @@ class Root extends React.Component<Props, State> {
                 saveCodePromptFlag: false,
                 fileName: this.state.tempNewFile,
                 activeLanguage: 'python',
+                toSaveCode_: undefined
+              });
+              break;
+            case 'scratch':
+              saveFileResponse = await axios.post('/save-file-content', { filePath: `/home/kipr/Documents/KISS/${this.state.userName}/${this.state.projectName}/src/${this.state.fileName}`, fileContents: this.toSaveCodeRef.current.scratch });
+              this.setState({
+                code: {
+                  ...this.state.code,
+                  [this.state.activeLanguage]: this.toSaveCodeRef.current[this.state.activeLanguage]
+                },
+                saveCodePromptFlag: false,
+                fileName: this.state.tempNewFile,
+                activeLanguage: 'scratch',
                 toSaveCode_: undefined
               });
               break;

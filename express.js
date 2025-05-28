@@ -1,5 +1,5 @@
 /* eslint-env node */
-
+require("ts-node").register();
 const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
@@ -7,15 +7,17 @@ const fs = require("fs");
 const uuid = require("uuid");
 const { exec } = require("child_process");
 const app = require("express")();
+
 const sourceDir = "dist";
 const { get: getConfig } = require("./config");
 const path = require("path");
 const proxy = require("express-http-proxy");
-const https = require("https");
+
 const http = require("http");
-const simpleGit = require("simple-git");
+
 const JSZip = require("jszip");
 const { spawn } = require("child_process");
+
 const servoAddon = require("./build/Release/servo_addon.node");
 const motorAddon = require("./build/Release/motor_addon.node");
 const analogAddon = require("./build/Release/analog_addon.node");
@@ -25,6 +27,11 @@ const gyroAddon = require("./build/Release/gyro_addon.node");
 const magnetoAddon = require("./build/Release/magneto_addon.node");
 const buttonAddon = require("./build/Release/button_addon.node");
 const WebSocket = require("ws");
+const {
+  parseBlockXml,
+  convertToC,
+  parseXml,
+} = require("./src/util/convertToC.ts");
 
 let config;
 try {
@@ -34,7 +41,45 @@ try {
   throw e;
 }
 
-app.use(express.json());
+// Cross-origin isolation required for using features like SharedArrayBuffer
+function setCrossOriginIsolationHeaders(res) {
+  res.header("Cross-Origin-Opener-Policy", "same-origin");
+  res.header("Cross-Origin-Embedder-Policy", "require-corp");
+}
+
+app.use((req, res, next) => {
+  res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+  res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+  next();
+});
+
+if (config.server.dependencies.scratch_rt) {
+  console.log("Scratch Runtime is enabled.");
+  app.use(
+    "/scratch/rt.js",
+    express.static(`${config.server.dependencies.scratch_rt}`, {
+      maxAge: config.caching.staticMaxAge,
+    })
+  );
+}
+
+app.use(
+  "/scratch",
+  express.static(path.resolve(__dirname, "node_modules", "kipr-scratch"), {
+    maxAge: config.caching.staticMaxAge,
+  })
+);
+
+app.use(
+  "/media",
+  express.static(
+    path.resolve(__dirname, "node_modules", "kipr-scratch", "media"),
+    {
+      maxAge: config.caching.staticMaxAge,
+    }
+  )
+);
+
 let latestAnalogValues = [];
 
 let sensorValues = {
@@ -140,9 +185,9 @@ function startAnalogPolling() {
   console.log("Starting analog polling");
   (function loop() {
     if (!analogPolling) return;
-     sensorValues.analog.forEach((value, index) => {
-       sensorValues.analog[index] = analogAddon.analog(index);
-     });
+    sensorValues.analog.forEach((value, index) => {
+      sensorValues.analog[index] = analogAddon.analog(index);
+    });
     broadcastAnalogValue();
     setTimeout(loop, 500);
   })();
@@ -154,9 +199,9 @@ function startDigitalPolling() {
   console.log("Starting digital polling");
   (function loop() {
     if (!digitalPolling) return;
-     sensorValues.digital.forEach((value, index) => {
-       sensorValues.digital[index] = digitalAddon.digital(index);
-     });
+    sensorValues.digital.forEach((value, index) => {
+      sensorValues.digital[index] = digitalAddon.digital(index);
+    });
     broadcastDigitalValue();
     setTimeout(loop, 500);
   })();
@@ -168,10 +213,10 @@ function startAccelerometerPolling() {
   console.log("Starting accel polling");
   (function loop() {
     if (!accelerometerPolling) return;
-   
-     sensorValues.accelerometer[0] = accelAddon.accel_x();
-     sensorValues.accelerometer[1] = accelAddon.accel_y();
-     sensorValues.accelerometer[2] = accelAddon.accel_z();
+
+    sensorValues.accelerometer[0] = accelAddon.accel_x();
+    sensorValues.accelerometer[1] = accelAddon.accel_y();
+    sensorValues.accelerometer[2] = accelAddon.accel_z();
     broadcastAccelerometerValue();
     setTimeout(loop, 500);
   })();
@@ -183,9 +228,9 @@ function startGyroPolling() {
   console.log("Starting gyro polling");
   (function loop() {
     if (!gyroPolling) return;
-     sensorValues.gyro[0] = gyroAddon.gyro_x();
-     sensorValues.gyro[1] = gyroAddon.gyro_y();
-     sensorValues.gyro[2] = gyroAddon.gyro_z();
+    sensorValues.gyro[0] = gyroAddon.gyro_x();
+    sensorValues.gyro[1] = gyroAddon.gyro_y();
+    sensorValues.gyro[2] = gyroAddon.gyro_z();
     broadcastGyroValue();
     setTimeout(loop, 500);
   })();
@@ -197,10 +242,10 @@ function startMagnetometerPolling() {
   console.log("Starting magneto polling");
   (function loop() {
     if (!magnetometerPolling) return;
-    
-     sensorValues.magnetometer[0] = magnetoAddon.magneto_x();
-     sensorValues.magnetometer[1] = magnetoAddon.magneto_y();
-     sensorValues.magnetometer[2] = magnetoAddon.magneto_z();
+
+    sensorValues.magnetometer[0] = magnetoAddon.magneto_x();
+    sensorValues.magnetometer[1] = magnetoAddon.magneto_y();
+    sensorValues.magnetometer[2] = magnetoAddon.magneto_z();
 
     broadcastMagnetometerValue();
     setTimeout(loop, 500);
@@ -213,14 +258,13 @@ function startButtonPolling() {
   console.log("Starting button polling");
   (function loop() {
     if (!buttonPolling) return;
-  
-     sensorValues.button[0] = buttonAddon.push_button();
+
+    sensorValues.button[0] = buttonAddon.push_button();
     broadcastButtonValue();
     setTimeout(loop, 500);
   })();
 }
 function stopPolling() {
-
   analogPolling = false;
   digitalPolling = false;
   accelerometerPolling = false;
@@ -273,9 +317,8 @@ wss.on("connection", (ws) => {
   ws.send(JSON.stringify({ analog: latestAnalogValues }));
 });
 
-app.post("/enable-servo", (req, res) => {
+app.post("/enable-servo", express.json(), (req, res) => {
   const { servo, value } = req.body;
-
 
   if (typeof servo !== "number") {
     return res.status(400).json({ error: "Servo type incorrect, need number" });
@@ -296,7 +339,7 @@ app.post("/enable-servo", (req, res) => {
   }
 });
 
-app.post("/disable-all-servos", (req, res) => {
+app.post("/disable-all-servos", express.json(), (req, res) => {
   try {
     console.log(`Disabling all servos`);
     servoAddon.disable_servos();
@@ -308,10 +351,11 @@ app.post("/disable-all-servos", (req, res) => {
   }
 });
 
-app.post("/disable-servo", (req, res) => {
+app.post("/disable-servo", express.json(), (req, res) => {
+
   const { servo, value } = req.body;
-
-
+  console.log("/disable-servo servo: ", servo);
+  console.log("/disable-servo value: ", value);
   if (typeof servo !== "number") {
     return res.status(400).json({ error: "Servo type incorrect, need number" });
   }
@@ -325,7 +369,7 @@ app.post("/disable-servo", (req, res) => {
     res.status(500).json({ error: "Failed to disable servo" });
   }
 });
-app.post("/move-servo", (req, res) => {
+app.post("/move-servo", express.json(), (req, res) => {
   const { servo, value } = req.body;
 
   console.log("/move-servo servo: ", servo);
@@ -337,7 +381,7 @@ app.post("/move-servo", (req, res) => {
 
   try {
     console.log(`Moving servo: ${servo} to value: ${value}`);
-    servoAddon.set_servo_position(servo, value);
+   // servoAddon.set_servo_position(servo, value);
     res.status(200).json({ message: `Servo ${servo} moved to value ${value}` });
   } catch (error) {
     console.error("Error moving servo:", error);
@@ -345,9 +389,8 @@ app.post("/move-servo", (req, res) => {
   }
 });
 
-
-app.post("/move-motor", (req, res) => {
-  const { view, motor, value } = req.body; 
+app.post("/move-motor", express.json(), (req, res) => {
+  const { view, motor, value } = req.body;
 
   if (typeof motor !== "number" || typeof value !== "number") {
     return res.status(400).json({ error: "Invalid input" });
@@ -355,14 +398,11 @@ app.post("/move-motor", (req, res) => {
 
   try {
     console.log(`Moving motor: ${motor}, to value: ${value}`);
- 
 
     if (view === "Power") {
-
       motorAddon.motor_power(motor, value);
     } else if (view === "Velocity") {
-
-       motorAddon.mav(motor, value);
+      motorAddon.mav(motor, value);
     }
 
     // Send back a success response
@@ -373,7 +413,7 @@ app.post("/move-motor", (req, res) => {
   }
 });
 
-app.post("/stop-motor", (req, res) => {
+app.post("/stop-motor", express.json(),(req, res) => {
   const { motor } = req.body;
 
   console.log("type of motor: ", typeof motor);
@@ -395,10 +435,10 @@ app.post("/stop-motor", (req, res) => {
   }
 });
 
-app.post("/stop-all-motors", (req, res) => {
+app.post("/stop-all-motors", express.json(),(req, res) => {
   console.log("Express.js stopping all motors");
   try {
-     motorAddon.allOff();
+    motorAddon.allOff();
     res.status(200).json({ message: "All motors turned off" });
   } catch (error) {
     console.error("Error turning off all motors:", error);
@@ -414,7 +454,6 @@ app.get("/stream-motor-velocities", (req, res) => {
   res.setHeader("Content-Type", "text/event-stream");
   res.setHeader("Cache-Control", "no-cache");
   res.setHeader("Connection", "keep-alive");
-
 
   console.log("Started motor velocity stream");
 
@@ -433,7 +472,7 @@ app.get("/stream-motor-velocities", (req, res) => {
       console.error("Motor polling error:", err);
       res.write(`data: ERROR: ${err.toString()}\n\n`);
     }
-  }, 500); 
+  }, 500);
 
   req.on("close", () => {
     console.log("Closing motor velocity stream");
@@ -447,28 +486,27 @@ app.get("/stream-motor-positions", (req, res) => {
   res.setHeader("Content-Type", "text/event-stream");
   res.setHeader("Cache-Control", "no-cache");
   res.setHeader("Connection", "keep-alive");
+  res.flushHeaders();
   console.log("inside stream-motor-positions");
-  motorPosPollingInterval = setInterval(() => {
-    try {
-      const data = {
-        motor0: motorAddon.get_motor_position_counter(0),
-        motor1: motorAddon.get_motor_position_counter(1),
-        motor2: motorAddon.get_motor_position_counter(2),
-        motor3: motorAddon.get_motor_position_counter(3),
-      };
 
-      res.write(`data: ${JSON.stringify(data)}\n\n`);
-    } catch (err) {
-      console.error("Motor polling error:", err);
-      res.write(`data: ERROR: ${err.toString()}\n\n`);
-    }
-  }, 500); 
+  const interval = setInterval(() => {
+    console.log("Interval running, sending data");
+    const data = {
+      motor0: motorAddon.get_motor_position_counter(0),
+      motor1: motorAddon.get_motor_position_counter(1),
+      motor2: motorAddon.get_motor_position_counter(2),
+      motor3: motorAddon.get_motor_position_counter(3),
+    };
+    console.log("Sending motor data:", data);
+    res.write(`data: ${JSON.stringify(data)}\n\n`);
+    if (res.flush) res.flush();
+  }, 500);
 
   req.on("close", () => {
-    clearInterval(motorPosPollingInterval);
-    res.end();
+    clearInterval(interval);
   });
 });
+
 
 app.get("/stream-servo-positions", (req, res) => {
   res.setHeader("Content-Type", "text/event-stream");
@@ -491,12 +529,12 @@ app.get("/stream-servo-positions", (req, res) => {
         2: {
           name: "Servo 2",
           value: servoAddon.get_servo_position(2),
-          enable: servoAddon.get_servo_enabled(2)
+          enable: servoAddon.get_servo_enabled(2),
         },
         3: {
           name: "Servo 3",
           value: servoAddon.get_servo_position(3),
-          enable: servoAddon.get_servo_enabled(3)
+          enable: servoAddon.get_servo_enabled(3),
         },
       };
 
@@ -512,6 +550,459 @@ app.get("/stream-servo-positions", (req, res) => {
     res.end();
   });
 });
+let declaredVariables;
+app.post("/convert-xml-to-c", express.json(), async (req, res) => {
+  const { xml, filePath } = req.body;
+
+  console.log("/convert-xml-to-c received XML:", xml);
+  console.log("/convert-xml-to-c filePath:", filePath);
+  let finalCode = "";
+
+  try {
+    // Parse the XML string into a DOM
+    const xmlDoc = parseXml(xml);
+
+
+    // Parse the XML document into blocks
+    const blockNodes = xmlDoc.getElementsByTagName("block");
+    const topBlocks = Array.from(blockNodes).map(parseBlockXml);
+
+    declaredVariables = new Map();
+
+    finalCode = convertToCode(topBlocks[0]);
+    console.log("finalCode: ", finalCode);
+    createAndSaveFile(filePath, finalCode);
+    return res.status(200).json({
+      code: finalCode,
+      variables: Array.from(declaredVariables.keys()),
+    });
+  } catch (error) {
+    console.error("Error parsing XML:", error);
+    return res.status(500).json({ error: "Failed to parse XML" });
+  }
+});
+
+const modules = [
+  "wait_for",
+  "time",
+  "motor",
+  "servo",
+  "digital",
+  "analog",
+  "control",
+  "operator",
+  "data",
+];
+
+const operatorMap = {
+  true: () => "1",
+  false: () => "0",
+  add: (a, b) => `${a} + ${b}`,
+  subtract: (a, b) => `${a} - ${b}`,
+  multiply: (a, b) => `${a} * ${b}`,
+  divide: (a, b) => `${a} / ${b}`,
+  random: (min, max) => `rand() % (${max} - ${min} + 1) + ${min}`,
+  equals: (a, b) => `${a} == ${b}`,
+  lt: (a, b) => `${a} < ${b}`,
+  gt: (a, b) => `${a} > ${b}`,
+  and: (a, b) => `${a} && ${b}`,
+  or: (a, b) => `${a} || ${b}`,
+  not: (a) => `!${a}`,
+  join: (a, b) => {
+    const format = (v) => (declaredVariables.has(v) ? v : `"${v}"`);
+    return `strcat(${format(a)}, ${format(b)})`;
+  },
+  letter_of: (a, b) => `strchr(${a}, ${b})`,
+  length: (a) => `strlen(${a})`,
+  contains: (a, b) => `strstr(${a}, ${b})`,
+  mod: (a, b) => `${a} % ${b}`,
+  round: (a) => `round(${a})`,
+  mathop: (a, b) => {
+    if (mathOpMap[a]) {
+      return mathOpMap[a](b);
+    } else {
+      return `/* unknown math operation: ${a} */`;
+    }
+  },
+};
+
+const mathOpMap = {
+  abs: (a) => `abs(${a})`,
+  floor: (a) => `floor(${a})`,
+  ceiling: (a) => `ceil(${a})`,
+  sqrt: (a) => `sqrt(${a})`,
+  sin: (a) => `sin(${a})`,
+  cos: (a) => `cos(${a})`,
+  tan: (a) => `tan(${a})`,
+  asin: (a) => `asin(${a})`,
+  acos: (a) => `acos(${a})`,
+  atan: (a) => `atan(${a})`,
+  ln: (a) => `log(${a})`,
+  log: (a) => `log10(${a})`,
+  "e ^": (a) => `exp(${a})`,
+  "10 ^": (a) => `pow(10, ${a})`,
+};
+
+function getValue(child) {
+  if (!child) return null;
+  if (child.fields?.TEXT !== undefined) return child.fields.TEXT;
+  if (child.fields?.NUM !== undefined) return child.fields.NUM;
+  if (child.fields?.VARIABLE !== undefined) return child.fields.VARIABLE;
+  return convertToCode(child, 0, true).trim();
+}
+function extractCategoryAndFunction(type) {
+  console.log("Type received:", type);
+
+  for (const module of modules) {
+    console.log("Checking module:", module); 
+    if (type.startsWith(module + "_")) {
+      const functionName = type.substring(module.length + 1);
+      console.log("Found function:", functionName); 
+      return { category: module, functionName };
+    }
+  }
+
+  console.log("No match found for type:", type); // Log if no match was found
+  return null;
+}
+
+/**
+ * 
+ * @param {*} block - XML block
+ * @param {*} indentLevel - Indentation level for the generated code
+ * @param {*} asExpression - Whether to treat the block as an expression
+ * 
+ * @returns {string} C code
+ */
+function convertToCode(block, indentLevel = 1, asExpression = false) {
+  const indent = "\t".repeat(indentLevel);
+  let categoryName = "";
+  let functionName = "";
+  let cCode = "";
+
+  let result = extractCategoryAndFunction(block.type);
+  if (result) {
+    categoryName = result.category;
+    functionName = result.functionName;
+  }
+
+  if (categoryName === "control") {
+    switch (functionName) {
+      case "run":
+        cCode +=
+          "#include <stdio.h>\n#include <kipr/wombat.h>\n\nint main()\n{\n";
+        const nextBlock = block.next;
+        if (nextBlock) {
+          cCode += convertToCode(nextBlock, indentLevel + 1); 
+        }
+        cCode += "\n\treturn 0;\n}\n"; 
+        return cCode;
+      case "printf":
+        const printText = block.children?.find((child) => child.fields?.TEXT);
+        if (printText) {
+          cCode += `${indent}printf("${printText.fields.TEXT}\\n");\n`;
+        } else {
+          cCode += `${indent}/* missing printf text */\n`;
+        }
+        break;
+      case "wait":
+        const waitTime = block.children?.find((child) => child.fields?.NUM);
+        if (waitTime) {
+          cCode += `${indent}msleep(${waitTime.fields.NUM});\n`;
+        } else {
+          cCode += `${indent}/* missing wait time */\n`;
+        }
+        break;
+      case "repeat":
+        const repeatCount = block.children?.find((child) => child.fields?.NUM);
+        const repeatSubstack = block.children?.find(
+          (child) => child.role === "substack"
+        );
+        if (repeatCount) {
+          cCode += `${indent}for (int i = 0; i < ${repeatCount.fields.NUM}; i++) {\n`;
+          if (repeatSubstack) {
+            cCode += convertToCode(repeatSubstack, indentLevel + 1); 
+          } else {
+            cCode += `${indent}\t// missing repeat substack\n`;
+          }
+          cCode += `${indent}}\n`;
+        } else {
+          cCode += `${indent}/* missing repeat count */\n`;
+        }
+        break;
+      case "forever":
+        const foreverSubstack = block.children?.find(
+          (child) => child.role === "substack"
+        );
+        cCode += `${indent}while (1) {\n`;
+        if (foreverSubstack) {
+          cCode += convertToCode(foreverSubstack, indentLevel + 1);
+        } else {
+          cCode += `${indent}\t// missing forever substack\n`;
+        }
+        cCode += `${indent}}\n`;
+        break;
+      case "if":
+        const condition = block.children?.find((c) => c.role === "condition");
+        const substack = block.children?.find((c) => c.role === "substack");
+
+        cCode += `${indent}if (`;
+
+        if (condition) {
+          cCode += convertToCode(condition, 0, true).trim();
+        } else {
+          cCode += "/* missing condition */";
+        }
+
+        cCode += `) {\n`;
+
+        if (substack) {
+          cCode += convertToCode(substack, indentLevel + 1); 
+        } else {
+          cCode += `${indent}\t// missing substack\n`;
+        }
+
+        cCode += `${indent}}\n`;
+        break;
+      case "if_else":
+        const conditionElse = block.children?.find(
+          (c) => c.role === "condition"
+        );
+        const substackElse = block.children?.find((c) => c.role === "substack");
+        const elseSubstack = block.children?.find(
+          (c) => c.role === "substack2"
+        );
+
+        cCode += `${indent}if (`;
+
+        if (conditionElse) {
+          cCode += convertToCode(conditionElse, 0, true).trim();
+        } else {
+          cCode += "/* missing condition */";
+        }
+
+        cCode += `) {\n`;
+
+        if (substackElse) {
+          cCode += convertToCode(substackElse, indentLevel + 1);
+        } else {
+          cCode += `${indent}\t// missing substack\n`;
+        }
+
+        cCode += `${indent}} else {\n`;
+
+        if (elseSubstack) {
+          cCode += convertToCode(elseSubstack, indentLevel + 1);
+        } else {
+          cCode += `${indent}\t// missing else substack\n`;
+        }
+
+        cCode += `${indent}}\n`;
+        break;
+      case "wait_until":
+        const waitCondition = block.children?.find(
+          (c) => c.role === "condition"
+        );
+   
+
+        cCode += `${indent}while (!(`;
+
+        if (waitCondition) {
+          cCode += convertToCode(waitCondition, 0, true).trim();
+        } else {
+          cCode += "/* missing condition */";
+        }
+
+        cCode += `);\n`;
+
+        break;
+      case "repeat_until":
+        const repeatUntilSubstack = block.children?.find(
+          (child) => child.role === "substack"
+        );
+        const repeatUntilCondition = block.children?.find(
+          (c) => c.role === "condition"
+        );
+        cCode += `${indent}do {\n`;
+
+        if (repeatUntilSubstack) {
+          cCode += `${indent}${convertToCode(
+            repeatUntilSubstack,
+            indentLevel + 1,
+            true
+          ).trim()}`;
+        } else {
+          cCode += `${indent}\t/* missing substack */\n`;
+        }
+
+        cCode += `\n${indent}} while (!(`;
+
+        if (repeatUntilCondition) {
+          cCode += `${convertToCode(repeatUntilCondition, 0, true)})); \n`; 
+        } else {
+          cCode += `${indent}\t\t// missing repeat condition\n`;
+        }
+        break;
+    }
+  } else if (categoryName === "operator") {
+    let op1Value = null;
+    let op2Value = null;
+
+    const operand1 = block.children?.find((c) => c.role === "operand1");
+    const operand2 = block.children?.find((c) => c.role === "operand2");
+    if (operand1 || operand2) {
+      op1Value = getValue(operand1) ?? op1Value;
+      op2Value = getValue(operand2) ?? op2Value;
+    }
+
+    if (!op1Value) {
+      const operand = block.children?.find((c) => c.role === "operand");
+      op1Value = getValue(operand) ?? op1Value;
+    }
+
+    const num1 = block.children?.find((c) => c.role === "num1");
+    const num2 = block.children?.find((c) => c.role === "num2");
+    if (!op1Value) op1Value = getValue(num1);
+    if (!op2Value) op2Value = getValue(num2);
+
+    if (!op1Value) {
+      const num = block.children?.find((c) => c.role === "num");
+      op1Value = getValue(num);
+    }
+
+    const string1 = block.children?.find((c) => c.role === "string1");
+    const string2 = block.children?.find((c) => c.role === "string2");
+    if (!op1Value) op1Value = getValue(string1);
+    if (!op2Value) op2Value = getValue(string2);
+
+    if (!op1Value) {
+      const string = block.children?.find((c) => c.role === "string");
+      op1Value = getValue(string) ?? op1Value;
+    }
+
+    if (!op1Value) op1Value = "/* missing operand1 */";
+    if (
+      !op2Value &&
+      ["add", "subtract", "multiply", "divide", "mod"].includes(functionName)
+    ) {
+      op2Value = "/* missing operand2 */";
+    }
+
+    console.log("op1Value: ", op1Value);
+    console.log("op2Value: ", op2Value);
+    if (functionName === "random") {
+      const rand1 = block.children?.[0]?.fields?.NUM ?? "/* missing min */";
+      const rand2 = block.children?.[1]?.fields?.NUM ?? "/* missing max */";
+      cCode += `${indent}${operatorMap.random(rand1, rand2)}`;
+    } else if (functionName === "mathop") {
+      const operator = block.fields?.OPERATOR;
+      cCode += `${indent}${operatorMap.mathop(operator, op1Value)}`;
+    } else if (operatorMap[functionName]) {
+      cCode += `${indent}${operatorMap[functionName](op1Value, op2Value)}`;
+    } else {
+      cCode += `${indent}/* unknown operator: ${functionName} */`;
+    }
+  } else if (categoryName === "data") {
+    switch (functionName) {
+      case "setvariableto":
+        const variableName = block.fields?.VARIABLE;
+        let variableValue = getValue(block.children?.[0]);
+
+        // Regular expressions to detect expressions and function calls
+        const isExpression = /[\+\-\*\/\%\(\)]/.test(variableValue);
+        const isFunctionCall = /^[a-zA-Z_][a-zA-Z0-9_]*\s*\(.*\)$/.test(
+          variableValue
+        );
+
+        if (variableName && variableValue !== undefined) {
+          if (!isNaN(variableValue)) {
+            // Case for number assignment
+            variableValue = parseInt(variableValue);
+            if (!declaredVariables.has(variableName)) {
+              cCode += `${indent}int ${variableName} = ${variableValue};\n`;
+              declaredVariables.set(variableName, "int");
+            } else {
+              cCode += `${indent}${variableName} = ${variableValue};\n`;
+            }
+          } else if (isFunctionCall) {
+            cCode += `${indent}${variableValue};\n`;
+          } else if (isExpression) {
+            if (!declaredVariables.has(variableName)) {
+              cCode += `${indent}int ${variableName} = ${variableValue};\n`;
+              declaredVariables.set(variableName, "int");
+            } else {
+              cCode += `${indent}${variableName} = ${variableValue};\n`;
+            }
+          } else {
+            // Case for string assignment
+            if (!declaredVariables.has(variableName)) {
+              cCode += `${indent}char ${variableName}[100] = "${variableValue}";\n`;
+              declaredVariables.set(variableName, "char[100]");
+            } else {
+              cCode += `${indent}${variableName} = "${variableValue}";\n`;
+            }
+          }
+        } else {
+          cCode += `${indent}/* missing variable name or value */\n`;
+        }
+        console.log("declaredVariables: ", declaredVariables);
+        break;
+
+      case "changevariableby":
+        const changeVariableName = block.fields?.VARIABLE;
+        let changeVariableValue = block.children?.[0]?.fields?.NUM;
+        if (changeVariableName && changeVariableValue) {
+          if (!isNaN(changeVariableValue)) {
+            changeVariableValue = parseInt(changeVariableValue);
+            cCode += `${indent}${changeVariableName} += ${changeVariableValue};\n`;
+          } else {
+            cCode += `${indent}/* invalid value for variable: ${changeVariableName} */\n`;
+          }
+        } else {
+          cCode += `${indent}/* missing variable name or value */\n`;
+        }
+        break;
+      case "showvariable":
+        const showVariableName = block.fields?.VARIABLE;
+        if (showVariableName && declaredVariables.has(showVariableName)) {
+          if (declaredVariables.get(showVariableName) === "char[100]") {
+            cCode += `${indent}printf("%s: %s\\n", "${showVariableName}", ${showVariableName});\n`;
+          } else if (declaredVariables.get(showVariableName) === "int") {
+            cCode += `${indent}printf("%s: %d\\n", "${showVariableName}", ${showVariableName});\n`;
+          } else {
+            cCode += `${indent}/* unknown variable type for: ${showVariableName} */\n`;
+          }
+        } else {
+          cCode += `${indent}/* missing variable name */\n`;
+        }
+        break;
+    }
+  } else if (block.shadow && block.fields?.NUM) {
+    
+    cCode += block.fields.NUM;
+  } else if (block.fields && Object.keys(block.fields).length > 0) {
+
+    const args = (block.children || [])
+      .map((child) => convertToCode(child, 0))
+      .join(", ");
+    cCode += `${indent}${functionName}(${args});\n`;
+  } else {
+
+    const args = (block.children || []).map((child) =>
+      convertToCode(child, 0, true).trim()
+    );
+    const call = `${functionName}(${args.join(", ")})`;
+    cCode += asExpression ? `${call}` : `${indent}${call};\n`;
+  }
+
+
+  const next = block.next;
+  if (next) {
+    cCode += convertToCode(next, indentLevel); 
+  }
+
+  return cCode;
+}
 
 // Helper function to get all folders in a directory
 function getAllDirectories(dirPath) {
@@ -539,10 +1030,9 @@ function getAllProjectDirectories(dirPath) {
     const projects = directories.map((dirName) => {
       const projectPath = path.join(dirPath, dirName);
 
-     
       const projectLanguage = parseConfig(
         fs.readFileSync(path.join(projectPath, ".config.json"), "utf8")
-      ); 
+      );
       console.log("For Project: ", dirName, "Language: ", projectLanguage);
 
       const includeFolderFiles = getFilesInFolder(
@@ -551,10 +1041,9 @@ function getAllProjectDirectories(dirPath) {
       const srcFolderFiles = getFilesInFolder(path.join(projectPath, "src"));
       const dataFolderFiles = getFilesInFolder(path.join(projectPath, "data"));
 
-      
       return {
         projectName: dirName,
-        projectLanguage, 
+        projectLanguage,
         includeFolderFiles,
         srcFolderFiles,
         dataFolderFiles,
@@ -564,7 +1053,7 @@ function getAllProjectDirectories(dirPath) {
     return projects;
   } catch (error) {
     console.error("Error reading directory:", error);
-    return []; 
+    return [];
   }
 }
 
@@ -596,7 +1085,6 @@ function getAllFiles(dirPath) {
 function getUserInterfaceMode(userName) {
   const userConfigPath = `/home/kipr/Documents/KISS/${userName}/.config.json`;
   try {
-
     if (!fs.existsSync(userConfigPath)) {
       console.error(
         `getUserInterfaceMode: Config file not found for user ${userName}`
@@ -604,9 +1092,7 @@ function getUserInterfaceMode(userName) {
       return null;
     }
 
-
     const configData = JSON.parse(fs.readFileSync(userConfigPath, "utf-8"));
-
 
     return configData.interfaceMode || null;
   } catch (error) {
@@ -619,7 +1105,6 @@ function getUserInterfaceMode(userName) {
 function setUserInterfaceMode(userName, newMode) {
   const userConfigPath = `/home/kipr/Documents/KISS/${userName}/.config.json`;
   try {
-
     if (!fs.existsSync(userConfigPath)) {
       console.error(
         `setUserInterfaceMode: Config file not found for user ${userName}`
@@ -627,9 +1112,7 @@ function setUserInterfaceMode(userName, newMode) {
       return false;
     }
 
-
     const configData = JSON.parse(fs.readFileSync(userConfigPath, "utf-8"));
-
 
     configData.interfaceMode = newMode;
 
@@ -664,7 +1147,6 @@ function createFolderHandler() {
         .json({ error: "Missing filePath query parameter" });
     }
 
-
     if (!fs.existsSync(folderPath) || !fs.statSync(folderPath).isDirectory()) {
       return res
         .status(400)
@@ -691,7 +1173,6 @@ async function getAllUserFiles(directory, zipFolder) {
       const subFolder = zipFolder.folder(file.name);
       await getAllUserFiles(filePath, subFolder);
     } else {
-
       const fileContent = await fs.promises.readFile(filePath);
       zipFolder.file(file.name, fileContent);
     }
@@ -703,13 +1184,13 @@ async function interalGetFileContents(filePath) {
   if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
     throw new Error("Invalid or non-existent file path");
   }
-  return fs.promises.readFile(filePath, "utf-8"); 
+  return fs.promises.readFile(filePath, "utf-8");
 }
 
 function getFileContents() {
   return async (req, res) => {
     const filePath = req.query.filePath;
-
+    console.log("getFileContents - Received request for file path:", filePath);
     if (!filePath) {
       return res
         .status(400)
@@ -727,7 +1208,6 @@ function getFileContents() {
     res.status(200).send(fileContents);
   };
 }
-
 
 //Save file contents
 function saveFileContents() {
@@ -752,14 +1232,25 @@ function saveFileContents() {
         .json({ error: "Missing fileContents in request body" });
     }
 
-
     fs.writeFileSync(filePath, fileContents);
 
     res.status(200).send("File saved successfully");
   };
 }
 
-
+function createAndSaveFile(filePath, fileContents) {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(filePath, fileContents, (err) => {
+      if (err) {
+        console.error("Error writing file:", err);
+        reject(err);
+      } else {
+        console.log("File saved successfully");
+        resolve();
+      }
+    });
+  });
+}
 //Parse the config JSON
 function parseConfig(configContent) {
   try {
@@ -902,10 +1393,14 @@ if (
   });
 }
 
-
 //Compile code
 app.post("/compile-code", async (req, res) => {
   const { userName, projectName, fileName, activeLanguage } = req.body;
+  console.log("Received request body:", req.body); // Log the entire request body
+  console.log("Extracted username from body:", userName);
+  console.log("Extracted projectName from body:", projectName);
+  console.log("Extracted fileName from body:", fileName);
+  console.log("Extracted activeLanguage from body:", activeLanguage);
 
   const env = {
     ...process.env,
@@ -915,8 +1410,13 @@ app.post("/compile-code", async (req, res) => {
     FILE_NAME: fileName,
     ACTIVE_LANGUAGE: activeLanguage,
   };
+  console.log("Project username: ", userName);
+  console.log("Project name: ", projectName);
+  console.log("Current working directory:", process.cwd());
 
   const filePath = `/home/kipr/Documents/KISS/${userName}/${projectName}/src/${fileName}`;
+
+  console.log("Code to compile: ", await interalGetFileContents(filePath));
 
   exec("node compiler.js", { env }, (error, stdout, stderr) => {
     if (error) {
@@ -936,9 +1436,7 @@ app.post("/compile-code", async (req, res) => {
       });
     }
   });
-
 });
-
 
 //Create project
 app.post("/initialize-project", async (req, res) => {
@@ -960,7 +1458,6 @@ app.post("/initialize-project", async (req, res) => {
   };
 
   if (!fs.existsSync(jsonDirectory)) {
-
     try {
       fs.writeFileSync(jsonDirectory, JSON.stringify(userJsonEntry, null, 2));
     } catch (error) {
@@ -999,7 +1496,6 @@ app.post("/initialize-project", async (req, res) => {
   if (fs.existsSync(projectDirectory)) {
     return res.status(409).json({ error: "Project directory already exists." });
   } else {
-
     fs.mkdirSync(projectDirectory, { recursive: true });
     const projectConfig = {
       projectName: projectName,
@@ -1007,7 +1503,6 @@ app.post("/initialize-project", async (req, res) => {
     };
 
     try {
-    
       fs.writeFileSync(
         projectConfigPath,
         JSON.stringify(projectConfig, null, 2),
@@ -1024,13 +1519,11 @@ app.post("/initialize-project", async (req, res) => {
   }
 
   try {
-    
     // Create default folders and files
     const folders = ["bin", "include", "src", "data"];
     folders.forEach((folder) => {
       const folderPath = path.join(projectDirectory, folder);
       fs.mkdirSync(folderPath, { recursive: true });
-  
     });
 
     //Ensure the main.[language] file isn't already created
@@ -1057,6 +1550,16 @@ app.post("/initialize-project", async (req, res) => {
           fs.writeFileSync(
             path.join(projectDirectory, "src", `main.py`),
             `#!/usr/bin/python3\nimport os, sys\nsys.path.append("/usr/lib")\nfrom kipr import *\n\nprint(\'Hello, World!\')`
+          );
+        }
+        break;
+      case "scratch":
+        if (
+          !fs.existsSync(path.join(projectDirectory, "src", `main.scratch`))
+        ) {
+          fs.writeFileSync(
+            path.join(projectDirectory, "src", `main.scratch`),
+            ``
           );
         }
         break;
@@ -1219,7 +1722,7 @@ app.post("/download-zip", async (req, res) => {
   try {
     if (fileName) {
       const [name, extension] = fileName.split(".");
-        //Single file download
+      //Single file download
       if (!projectName) {
         return res.status(400).json({ error: "ProjectName is required" });
       }
@@ -1262,7 +1765,6 @@ app.post("/download-zip", async (req, res) => {
 
       return;
     } else if (projectName) {
-
       const projectDirectory = path.join(userDirectory, projectName);
       // Check if the project directory exists
       if (!fs.existsSync(projectDirectory)) {
@@ -1356,7 +1858,6 @@ app.get("/get-all-file-names", async (req, res) => {
 //Get project language
 app.get("/get-project-language", async (req, res) => {
   try {
-   
     const gitConfigPath = path.join(req.query.filePath, ".git/config");
 
     //check if .git/config exists
@@ -1379,7 +1880,6 @@ app.get("/get-project-language", async (req, res) => {
 // User getters
 app.get("/load-user-data", async (req, res) => {
   try {
-
     const allEntries = fs.readdirSync("/home/kipr/Documents/KISS");
 
     //Filter out users.json
@@ -1400,7 +1900,7 @@ app.get("/load-user-data", async (req, res) => {
       const userDirectory = `/home/kipr/Documents/KISS/${user}`;
       const projects = getAllProjectDirectories(userDirectory);
       console.log("Projects: ", projects);
-   
+
       if (userInterfaceMode === null) {
         console.log(`User interface mode not found for ${user}`);
       }
@@ -1490,7 +1990,6 @@ app.post("/change-interface-mode", (req, res) => {
 
 //Rename user, project, or file
 app.post("/rename", async (req, res) => {
-
   const defaultDirectory = `/home/kipr/Documents/KISS`;
 
   if (req.body.renameType === "User") {
@@ -1637,7 +2136,6 @@ let currentChild = null;
 
 // Run code
 app.get("/run-code", (req, res) => {
-
   const { userName, projectName, activeLanguage } = req.query;
   if (!userName || !projectName || !activeLanguage) {
     return res.status(400).send("Missing parameters");
@@ -1651,6 +2149,7 @@ app.get("/run-code", (req, res) => {
   switch (activeLanguage) {
     case "c":
     case "cpp":
+    case "scratch":
       runCommand = `"${bin_directory}/botball_user_program"`;
 
       break;
@@ -1705,7 +2204,6 @@ app.get("/run-code", (req, res) => {
     res.flush?.();
     res.end();
   });
-
 });
 
 // Stop code
@@ -1860,11 +2358,7 @@ app.use(
   })
 );
 
-app.get("/login", (req, res) => {
-  res.sendFile(`${__dirname}/${sourceDir}/login.html`);
-});
-
-app.use("*", (req, res) => {
+app.use((req, res) => {
   setCrossOriginIsolationHeaders(res);
   res.sendFile(`${__dirname}/${sourceDir}/index.html`);
 });
@@ -1875,14 +2369,7 @@ server.listen(config.server.port, "0.0.0.0", () => {
   );
   console.log(`Serving content from /${sourceDir}/`);
 });
-app.use((req, res, next) => {
-  res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
-  res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
-  next();
-});
 
-// Cross-origin isolation required for using features like SharedArrayBuffer
-function setCrossOriginIsolationHeaders(res) {
-  res.header("Cross-Origin-Opener-Policy", "same-origin");
-  res.header("Cross-Origin-Embedder-Policy", "require-corp");
-}
+// app.listen(3001, () => {
+//   console.log("SSE server listening on http://localhost:3001");
+// });

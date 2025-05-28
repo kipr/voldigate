@@ -177,6 +177,15 @@ export const COMMON: Theme = {
   iconColor: undefined
 };
 
+
+export const SCRATCH_LIGHT ={
+  toolbox: '#fbfbfb',
+  toolboxSelected: '#dadada',
+  toolboxText: "#212121",
+  toolboxHover: '#4C97FF',
+  flyout: '#fbfbfb',
+  workspace: '#fbfbfb',
+}
 export const LIGHT: Theme = {
   ...COMMON,
   themeName: 'LIGHT',
@@ -226,6 +235,17 @@ export const LIGHT: Theme = {
   lighten: (frac) => `rgba(0, 0, 0, ${frac})`,
   darken: (frac) => `rgba(255, 255, 255, ${frac})`,
 };
+
+export const SCRATCH_DARK = {
+  toolbox: '#212121',
+  toolboxSelected: '#313131',
+  toolboxText: "#EEEEEE",
+  toolbBoxHover: '#4C97FF',
+  flyout: '#212121',
+  workspace: '#212121',
+  
+  
+}
 
 export const DARK: Theme = {
   ...COMMON,

@@ -7,7 +7,7 @@ import LocalizedString from '../../util/LocalizedString';
 import { styled, withStyleDeep } from 'styletron-react';
 import { StyleProps } from '../../style';
 import { Theme } from '../theme';
-import { middleBarSpacer, leftBarSpacer,rightBarSpacer, Spacer } from '../common';
+import { middleBarSpacer, leftBarSpacer, rightBarSpacer, Spacer } from '../common';
 import { Fa } from '../Fa';
 import { Button } from '../Button';
 import { Text } from '../Text';
@@ -18,6 +18,7 @@ import ForwardedIvygate from 'ivygate/dist/Ivygate';
 import { Ivygate, Message } from 'ivygate';
 import { FontAwesome } from '../FontAwesome';
 import { faFileDownload, faFloppyDisk, faIndent, faLink, faPlay, faStop } from '@fortawesome/free-solid-svg-icons';
+import ScratchEditor from './ScratchEditor';
 
 export enum EditorActionState {
   None,
@@ -34,7 +35,9 @@ export interface EditorPublicProps extends StyleProps, ThemeProps {
   messages?: Message[];
   onCodeChange: (code: string) => void;
   onSaveCode: () => void;
-  onDocumentationGoToFuzzy?: (query: string, language: 'c' | 'python' | 'plaintext') => void;
+  onDocumentationGoToFuzzy?: (query: string, language: 'c' | 'python' | 'plaintext' | 'scratch') => void;
+
+  mini? : boolean;
 }
 
 interface EditorState {
@@ -203,7 +206,7 @@ export const createEditorBarComponents = ({
       editorBar.push(BarComponent.create(Button, {
         theme,
         onClick: target.onCompileClick,
-        style:{fontSize: '0.9em'},
+        style: { fontSize: '0.9em' },
         children:
           <>
             <Fa icon={faLink} />
@@ -213,7 +216,7 @@ export const createEditorBarComponents = ({
       editorBar.push(BarComponent.create(Button, {
         theme,
         onClick: target.onSaveCode,
-        style:{fontSize: '0.9em'},
+        style: { fontSize: '0.9em' },
         children:
           <>
             <Fa icon={faFloppyDisk} />
@@ -228,8 +231,8 @@ export const createEditorBarComponents = ({
       editorBar.push(BarComponent.create(Text, {
         text: 'User:',
         style: {
-           fontWeight: '500',
-           fontSize: '0.9em'
+          fontWeight: '500',
+          fontSize: '0.9em'
         }
       }));
 
@@ -238,9 +241,9 @@ export const createEditorBarComponents = ({
       }));
 
       editorBar.push(BarComponent.create(Text, {
-        style:{fontSize: '0.9em'},
+        style: { fontSize: '0.9em' },
         text: target.userName
-        
+
       }));
 
       editorBar.push(BarComponent.create(middleBarSpacer, {
@@ -253,14 +256,14 @@ export const createEditorBarComponents = ({
         style: {
           fontWeight: '500',
           fontSize: '0.9em'
-       }
+        }
       }));
 
       editorBar.push(BarComponent.create(middleBarSpacer, {
 
       }));
       editorBar.push(BarComponent.create(Text, {
-        style:{fontSize: '0.9em'},
+        style: { fontSize: '0.9em' },
         text: target.projectName
       }));
       editorBar.push(BarComponent.create(middleBarSpacer, {
@@ -271,14 +274,14 @@ export const createEditorBarComponents = ({
         style: {
           fontWeight: '500',
           fontSize: '0.9em'
-       }
+        }
 
       }));
       editorBar.push(BarComponent.create(middleBarSpacer, {
 
       }));
       editorBar.push(BarComponent.create(Text, {
-        style:{fontSize: '0.9em'},
+        style: { fontSize: '0.9em' },
         text: target.fileName
       }));
 
@@ -290,7 +293,7 @@ export const createEditorBarComponents = ({
       editorBar.push(BarComponent.create(Button, {
         theme,
         onClick: target.onIndentCode,
-        style:{fontSize: '0.9em'},
+        style: { fontSize: '0.9em' },
         children:
           <>
             <Fa icon={faIndent} />
@@ -301,7 +304,7 @@ export const createEditorBarComponents = ({
       editorBar.push(BarComponent.create(Button, {
         theme,
         onClick: target.onDownloadCode,
-        style:{fontSize: '0.9em'},
+        style: { fontSize: '0.9em' },
         children:
           <>
             <Fa icon={faFileDownload} />
@@ -350,12 +353,12 @@ export const IVYGATE_LANGUAGE_MAPPING: Dict<string> = {
   'plaintext': 'plaintext',
 };
 
-const DOCUMENTATION_LANGUAGE_MAPPING: { [key in ProgrammingLanguage]: 'c' | 'python' | 'plaintext' } = {
-
+const DOCUMENTATION_LANGUAGE_MAPPING: { [key in ProgrammingLanguage]?: 'c' | 'python' | 'plaintext' | 'scratch' | undefined } = {
   'python': 'python',
   'c': 'c',
   'cpp': 'c',
   'plaintext': 'plaintext',
+
 };
 
 class Editor extends React.PureComponent<Props, State> {
@@ -368,15 +371,23 @@ class Editor extends React.PureComponent<Props, State> {
   }
 
   componentDidMount(): void {
+    console.log("Editor compDidMount", this.props);
 
   }
   async componentDidUpdate(prevProps: Props) {
 
-
+    console.log("Editor compDidUpdate prevProps: ", prevProps);
+    console.log("Editor compDidUpdate this.props: ", this.props);
+    console.log("Editor compDidUpdate this.prevProps.code: ", prevProps.code);
+    console.log("Editor compDidUpdate this.props.code: ", this.props.code);
     if (prevProps.code !== this.props.code) {
 
+      console.log("Editor compDidUpdate", this.props.code);
       this.setState({ code: this.props.code }, () => {
-        this.ivygate_.editor.getModel().setValue(this.state.code); // Ensures update happens AFTER state is set
+        if(this.ivygate_ && this.ivygate_.editor) {
+          this.ivygate_.editor.getModel().setValue(this.state.code); 
+
+        }
       });
 
     }
@@ -437,22 +448,42 @@ class Editor extends React.PureComponent<Props, State> {
       onCodeChange,
       messages,
       autocomplete,
-      language
+      language,
+      mini
     } = this.props;
 
+    let component: JSX.Element;
 
+    if (language === 'scratch') {
+      component =(
+        <ScratchEditor
+          code={code}
+          onCodeChange={onCodeChange}
+          theme={theme}
+          toolboxHidden={mini}
+        />
+      );
+    }
+    else {
+      component = (
+        <Ivygate
+        ref={this.bindIvygate_}
+
+        code={this.state.code}
+        language={IVYGATE_LANGUAGE_MAPPING[language] || language}
+        messages={messages}
+        onCodeChange={onCodeChange}
+        autocomplete={autocomplete}
+        theme={theme.themeName}
+      />
+      );
+    }
+
+    console.log("Editor render component", component);
+    console.log("Editor state", this.state);
     return (
       <Container theme={theme} style={style} className={className} >
-        <Ivygate
-          ref={this.bindIvygate_}
-
-          code={this.state.code}
-          language={IVYGATE_LANGUAGE_MAPPING[language] || language}
-          messages={messages}
-          onCodeChange={onCodeChange}
-          autocomplete={autocomplete}
-          theme={theme.themeName}
-        />
+        {component}
       </Container>
     );
   }

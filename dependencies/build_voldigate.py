@@ -164,12 +164,40 @@ subprocess.run(
   check = True
 )
 
+print('Building kipr-scratch...')
+kipr_scratch_path = working_dir / 'kipr-scratch'
+subprocess.run(
+  [ python, kipr_scratch_path / 'build.py' ],
+  cwd = kipr_scratch_path,
+  check = True
+)
+
+print('Packaging kipr-scratch...')
+subprocess.run(
+  [ python, kipr_scratch_path / 'package.py' ],
+  cwd = kipr_scratch_path,
+  check = True
+)
+
+print('Generating scratch runtime...')
+scratch_runtime_path = working_dir / 'scratch-rt'
+# emcc -s WASM=0 -s INVOKE_RUN=0 -s ASYNCIFY -s EXIT_RUNTIME=1 -s "EXPORTED_FUNCTIONS=['_main', '_simMainWrapper']" -I${config.server.dependencies.libkipr_c}/include -Wl,--whole-archive -L${config.server.dependencies.libkipr_c}/lib -lkipr -o ${path}.js ${path}
+subprocess.run([
+    'gcc',
+    '-o', f'{scratch_runtime_path}',
+    f'{scratch_runtime_path}.c',
+    f'-I{libkipr_install_c_dir}/include',
+    f'-L{libkipr_install_c_dir}/lib',
+    '-lkipr'
+], env=env, check=True)
+
 
 print('Outputting results...')
 output = json.dumps({
 
   'libkipr_c': f'{libkipr_install_c_dir}',
   'libkipr_python': f'{libkipr_build_python_dir}',
+  'scratch_rt': f'{scratch_runtime_path}.js',
   # 'cpython': f'{cpython_emscripten_build_dir}',
   #"libkipr_c_documentation": libkipr_c_documentation_json,
 })

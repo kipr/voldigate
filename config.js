@@ -15,7 +15,7 @@ module.exports = {
   get: () => {
     return {
       server: {
-        port: getEnvVarOrDefault('SERVER_PORT', 3000),
+        port: getEnvVarOrDefault('SERVER_PORT', 8888),
         feedbackWebhookURL: getEnvVarOrDefault('FEEDBACK_WEBHOOK_URL', ''),
         dependencies
       },
