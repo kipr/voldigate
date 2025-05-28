@@ -404,21 +404,19 @@ class Root extends React.Component<Props, State> {
         const valueChanged = prev.value !== next.value;
         const enableChanged = prev.enable !== next.enable;
 
-        if ((valueChanged || enableChanged) && next.enable === true) {
+        console.log("Root compDidUpdate propedServoPositions: ", prev, next);
+        if ((valueChanged || enableChanged)) {
           console.log(`1st: Root ${index} changed: value ${prev.value} → ${next.value}, enable ${prev.enable} → ${next.enable}`);
-          if (prev.enable === false) {
+          if (next.enable === true) {
             this.enableServo(next);
           }
+          else if(next.enable === false) {
+            this.disableServos([next]);
+          }
+
           this.moveServo(next);
         }
-        else if (next.enable === false) {
-          console.log(`2nd: Root ${index} changed: value ${prev.value} → ${next.value}, enable ${prev.enable} → ${next.enable}`);
-          this.disableServos([next]);
-        }
-        else if (next.enable === true) {
-          console.log(`3rd: Root ${index} changed: value ${prev.value} → ${next.value}, enable ${prev.enable} → ${next.enable}`);
-          this.enableServo(next);
-        }
+
       });
 
 
@@ -744,7 +742,7 @@ class Root extends React.Component<Props, State> {
   };
   private startSensorWebSocket = async () => {
     console.log("Before websocket create");
-    //this.socket = new WebSocket('ws://localhost:3000'); // DEVELOPMENT ONLY
+   // this.socket = new WebSocket('ws://localhost:3000'); // DEVELOPMENT ONLY
     this.socket = new WebSocket('ws://192.168.86.44:3000'); // WOMBAT
 
     //this.socket = new WebSocket('ws://192.168.125.1:3000'); //USE THIS FOR PRODUCTION
