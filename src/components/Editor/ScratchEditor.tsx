@@ -37,6 +37,7 @@ const Container = styled('div', (props: ThemeProps) => ({
 
 class ScratchEditor extends React.Component<Props, State> {
   private resizeListener_ = resizeListener(size => this.setState({ size }));
+  private isApplyingCodeFromBlockly = false
 
   constructor(props: Props) {
     super(props);
@@ -142,12 +143,30 @@ class ScratchEditor extends React.Component<Props, State> {
         Blockly.svgResize(this.workspace_);
       }
 
-      if (prevProps.code !== nextProps.code && !this.debounce_) {
-        this.workspace_.clear(); // Clear before applying new XML
-        if (this.props.code !== '') {
+      // if (prevProps.code !== nextProps.code && !this.debounce_) {
+      //   this.workspace_.clear(); // Clear before applying new XML
+      //   if (this.props.code !== '') {
+      //     try {
+      //       Blockly.Xml.domToWorkspace(
+      //         Blockly.Xml.textToDom(this.props.code),
+      //         this.workspace_
+      //       );
+      //     } catch (e) {
+      //       console.error("Failed to parse Blockly XML:", e);
+      //     }
+      //   }
+      // }
+      if (
+        prevProps.code !== nextProps.code &&
+        !this.isApplyingCodeFromBlockly &&
+        nextProps.code !== Blockly.Xml.domToPrettyText(Blockly.Xml.workspaceToDom(this.workspace_))
+      ) {
+        this.workspace_.clear();
+
+        if (nextProps.code !== '') {
           try {
             Blockly.Xml.domToWorkspace(
-              Blockly.Xml.textToDom(this.props.code),
+              Blockly.Xml.textToDom(nextProps.code),
               this.workspace_
             );
           } catch (e) {
@@ -155,7 +174,6 @@ class ScratchEditor extends React.Component<Props, State> {
           }
         }
       }
-      
     }
 
   }
