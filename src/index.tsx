@@ -4,8 +4,9 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { ProgramRunProvider } from './ProgramRunContext';
 import { Provider as StyletronProvider, DebugEngine } from "styletron-react";
 import { Client as Styletron } from "styletron-engine-atomic";
-
-import store from './state';
+import { BrowserRouter } from 'react-router-dom';
+import store from 'ivygate/src/state';
+import { createRoot } from 'react-dom/client';
 
 const reactRoot = document.getElementById('reactRoot');
 
@@ -13,19 +14,17 @@ const engine = new Styletron({ prefix: 'style' });
 
 const debug = process.env.NODE_ENV === "production" ? void 0 : new DebugEngine();
 
-import { ConnectedRouter } from 'connected-react-router';
+
 import history from './state/history';
 import App from './App';
-
-ReactDom.render(
-  <StyletronProvider value={engine} debug={debug} debugAfterHydration>
-    <ReduxProvider store={store}>
-      <ConnectedRouter history={history}>
+if (reactRoot) {
+  createRoot(reactRoot).render(
+    <StyletronProvider value={engine} debug={debug} debugAfterHydration>
+      <ReduxProvider store={store}>
         <ProgramRunProvider>
           <App />
         </ProgramRunProvider>
-      </ConnectedRouter>
-    </ReduxProvider>
-  </StyletronProvider>,
-  reactRoot
-);
+      </ReduxProvider>
+    </StyletronProvider>
+  );
+}
