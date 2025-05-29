@@ -4,6 +4,7 @@
     "allowJs": true,
     "outDir": "dist",
     "jsx": "react",
+    "resolveJsonModule": true,
     "typeRoots": ["node_modules/@types", "src/typings"],
     "types": ["node"],
     "target": "es6",
