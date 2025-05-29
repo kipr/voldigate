@@ -12,7 +12,7 @@ import { State as ReduxState } from '../state';
 import { I18nAction } from '../state/reducer';
 import { connect } from 'react-redux';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import { push } from 'connected-react-router';
+
 import { Fa } from './Fa';
 import { User } from '../types/userTypes';
 import ComboBox from './ComboBox';
@@ -237,9 +237,7 @@ export default connect((state: ReduxState) => ({
     locale: state.i18n.locale
 }), dispatch => ({
     onLocaleChange: (locale: LocalizedString.Language) => dispatch(I18nAction.setLocale({ locale })),
-    onUserCreation: (userName: string) => {
-        dispatch(push(`/scene/${userName}`));
-    }
+ 
 }))(CreateUserDialog) as React.ComponentType<CreateUserDialogPublicProps>;
 
 

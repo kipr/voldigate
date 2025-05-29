@@ -22,7 +22,7 @@ import { Ivygate, Message } from 'ivygate';
 import { DEFAULT_SETTINGS, Settings } from '../Settings';
 import { DEFAULT_FEEDBACK, Feedback } from '../Feedback';
 import { Editor } from './Editor';
-import { RouteComponentProps } from 'react-router';
+import {useParams} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { HomeStartOptions } from './HomeStartOptions';
 import { Modal } from '../pages/Modal';
@@ -38,7 +38,7 @@ interface RootParams {
   challengeId?: string;
 }
 
-export interface RootPublicProps extends RouteComponentProps<RootParams> {
+export interface RootPublicProps {
   propFileName: string;
   propProject: Project;
   otherFileType?: string;
@@ -179,7 +179,7 @@ interface RootState {
   messages: Message[];
 
   rootMotorPositions: { [key: string]: number };
-  rootWidth: number;
+  rootwidth: number;
 
   analog?: number;
 }
@@ -194,7 +194,7 @@ interface ContainerProps {
 
 }
 
-const RootContainer = styled('div', (props: ContainerProps & { rootWidth: number }) => ({
+const RootContainer = styled('div', (props: ContainerProps & { rootwidth: number }) => ({
 
   width: '100%',
   height: `${props.$windowInnerHeight}px`, // fix for mobile, see https://chanind.github.io/javascript/2019/09/28/avoid-100vh-on-mobile-web.html
@@ -203,6 +203,10 @@ const RootContainer = styled('div', (props: ContainerProps & { rootWidth: number
   overflow: 'visible',
   flex: '4 1 0',
   maxHeight: '100vh',
+
+  alignContent: 'center',
+  alignItems: 'center',
+
 
 }));
 
@@ -280,7 +284,7 @@ class Root extends React.Component<Props, State> {
       rootMotorPositions: {},
       //stoppedMotorFlag: false,
       //stoppedAllMotorsFlag: false,
-      rootWidth: 100
+      rootwidth: 100
     };
 
     this.editorRef = React.createRef();
@@ -598,7 +602,7 @@ class Root extends React.Component<Props, State> {
       this.clearTempName_();
     }
     //console.log("Root clickFile: ", this.props.clickFile);
-    if ((this.props.clickFile && this.state.saveCodePromptFlag == false)) {
+    else if ((this.props.clickFile && this.state.saveCodePromptFlag == false)) {
 
       const { propUser, propProject, propActiveLanguage, propFileName, otherFileType } = this.props;
       console.log("Root clickFile passed in: ", propUser, propProject, "propActiveLanguage: ", propActiveLanguage, "propFileName: ", propFileName, "otherFileType: ", otherFileType);
@@ -619,7 +623,13 @@ class Root extends React.Component<Props, State> {
         case 'cpp':
         case 'py':
         case 'scratch':
-          const rootUpdateCode = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUser.userName}/${propProject.projectName}/src/${propFileName}` } });
+          console.log("Root clickFile state: ", this.state);
+          console.log("Root clickFile props: ", this.props);
+          let rootUpdateCode: AxiosResponse<string>;
+          rootUpdateCode = this.state.tempNewFile ?
+            await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUser.userName}/${propProject.projectName}/src/${this.state.tempNewFile}` } }) :
+            await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUser.userName}/${propProject.projectName}/src/${propFileName}` } });
+          console.log("Root clickFile rootUpdateCode: ", rootUpdateCode.data);
           this.setState({
             code: {
               ...this.state.code,
@@ -743,15 +753,14 @@ class Root extends React.Component<Props, State> {
   private startSensorWebSocket = async () => {
     console.log("Before websocket create");
    // this.socket = new WebSocket('ws://localhost:3000'); // DEVELOPMENT ONLY
-    this.socket = new WebSocket('ws://192.168.86.44:3000'); // WOMBAT
-
-    //this.socket = new WebSocket('ws://192.168.125.1:3000'); //USE THIS FOR PRODUCTION
+   //this.socket = new WebSocket('ws://192.168.86.44:3000'); // WOMBAT
+    this.socket = new WebSocket('ws://192.168.125.1:8888'); //USE THIS FOR PRODUCTION
     console.log("After websocket create");
     this.socket.onopen = () => {
       console.log('WebSocket connection opened');
 
     };
-
+///////
 
     this.socket.onclose = () => {
       console.log("WebSocket closed");
@@ -1508,6 +1517,7 @@ class Root extends React.Component<Props, State> {
       case 'c':
       case 'cpp':
       case 'py':
+      case 'scratch':
         filePath = `/home/kipr/Documents/KISS/${passedUser.userName}/${project.projectName}/src/${fileName}`;
         break;
       case 'h':
@@ -2159,14 +2169,14 @@ class Root extends React.Component<Props, State> {
       toRenameName_,
       toRenameType_,
       theme,
-      rootWidth
+      rootwidth
 
     } = state;
 
     console.log("Root render state: ", this.state);
     console.log("Root render props: ", this.props);
     return (
-      <RootContainer $windowInnerHeight={windowInnerHeight} rootWidth={this.state.rootWidth}>
+      <RootContainer $windowInnerHeight={windowInnerHeight} rootwidth={this.state.rootwidth}>
 
         {modal.type === Modal.Type.About && (
           <AboutDialog
