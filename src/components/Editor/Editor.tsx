@@ -87,7 +87,7 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
       }
       : {},
   userSelect: 'none',
-  transition: 'background-color 0.2s, opacity 0.2s',
+
 }));
 
 const RunItem = withStyleDeep(Item, (props: ClickProps & ThemeProps) => ({
@@ -380,16 +380,20 @@ class Editor extends React.PureComponent<Props, State> {
     console.log("Editor compDidUpdate this.props: ", this.props);
     console.log("Editor compDidUpdate this.prevProps.code: ", prevProps.code);
     console.log("Editor compDidUpdate this.props.code: ", this.props.code);
+    
     if (prevProps.code !== this.props.code) {
+      console.log("Editor compDidUpdate code changed from: ", prevProps.code, " to: ", this.props.code);
+      const editorValue = this.ivygate_?.editor?.getValue();
+      
+      if (editorValue !== this.props.code) {
+        this.setState({ code: this.props.code }, () => {
+         if( this.ivygate_ && this.ivygate_.editor) {
+          this.ivygate_.editor.getModel().setValue(this.props.code);
+         }
 
-      console.log("Editor compDidUpdate", this.props.code);
-      this.setState({ code: this.props.code }, () => {
-        if(this.ivygate_ && this.ivygate_.editor) {
-          this.ivygate_.editor.getModel().setValue(this.state.code); 
-
-        }
-      });
-
+          
+        });
+      }
     }
     if (this.props.isleftbaropen !== this.state.isleftbaropen) {
       this.setState({ isleftbaropen: this.props.isleftbaropen });
@@ -407,6 +411,7 @@ class Editor extends React.PureComponent<Props, State> {
   private openDocumentationAction_?: monaco.IDisposable;
 
   private setupCodeEditor_ = (editor: monaco.editor.IStandaloneCodeEditor) => {
+    console.log("Editor setupCodeEditor_ editor: ", editor);
     if (this.props.onDocumentationGoToFuzzy) this.openDocumentationAction_ = editor.addAction({
       id: 'open-documentation',
       label: 'Open Documentation',
@@ -439,7 +444,8 @@ class Editor extends React.PureComponent<Props, State> {
   }
 
   render() {
-
+    console.log("Editor render props", this.props);
+    console.log("Editor render state", this.state);
     const {
       style,
       className,
