@@ -1,5 +1,5 @@
 /* eslint-env node */
-require("ts-node").register();
+//require("ts-node").register();
 const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
@@ -18,20 +18,25 @@ const http = require("http");
 const JSZip = require("jszip");
 const { spawn } = require("child_process");
 
-const servoAddon = require("./build/Release/servo_addon.node");
-const motorAddon = require("./build/Release/motor_addon.node");
-const analogAddon = require("./build/Release/analog_addon.node");
-const digitalAddon = require("./build/Release/digital_addon.node");
-const accelAddon = require("./build/Release/accel_addon.node");
-const gyroAddon = require("./build/Release/gyro_addon.node");
-const magnetoAddon = require("./build/Release/magneto_addon.node");
-const buttonAddon = require("./build/Release/button_addon.node");
+// const servoAddon = require("./build/Release/servo_addon.node");
+// const motorAddon = require("./build/Release/motor_addon.node");
+// const analogAddon = require("./build/Release/analog_addon.node");
+// const digitalAddon = require("./build/Release/digital_addon.node");
+// const accelAddon = require("./build/Release/accel_addon.node");
+// const gyroAddon = require("./build/Release/gyro_addon.node");
+// const magnetoAddon = require("./build/Release/magneto_addon.node");
+// const buttonAddon = require("./build/Release/button_addon.node");
 const WebSocket = require("ws");
+// const {
+//   parseBlockXml,
+//   convertToC,
+//   parseXml,
+// } = require("./src/util/convertToC.ts");
 const {
   parseBlockXml,
   convertToC,
   parseXml,
-} = require("./src/util/convertToC.ts");
+} = require("./utils/convertToC.js");
 
 let config;
 try {
@@ -178,11 +183,19 @@ let accelerometerPolling = false;
 let gyroPolling = false;
 let magnetometerPolling = false;
 let buttonPolling = false;
+let servoAddon;
+let motorAddon;
+let analogAddon;
+let digitalAddon;
+let accelAddon;
+let gyroAddon;
+let magnetoAddon;
+let buttonAddon;
 
 function startAnalogPolling() {
   if (analogPolling) return;
   analogPolling = true;
-  console.log("Starting analog polling");
+  if (!analogAddon) analogAddon = require("./build/Release/analog_addon.node");
   (function loop() {
     if (!analogPolling) return;
     sensorValues.analog.forEach((value, index) => {
@@ -196,7 +209,7 @@ function startAnalogPolling() {
 function startDigitalPolling() {
   if (digitalPolling) return;
   digitalPolling = true;
-  console.log("Starting digital polling");
+  if (!digitalAddon) digitalAddon = require("./build/Release/digital_addon.node");
   (function loop() {
     if (!digitalPolling) return;
     sensorValues.digital.forEach((value, index) => {
@@ -210,7 +223,7 @@ function startDigitalPolling() {
 function startAccelerometerPolling() {
   if (accelerometerPolling) return;
   accelerometerPolling = true;
-  console.log("Starting accel polling");
+  if (!accelAddon) accelAddon = require("./build/Release/accel_addon.node");
   (function loop() {
     if (!accelerometerPolling) return;
 
@@ -225,7 +238,7 @@ function startAccelerometerPolling() {
 function startGyroPolling() {
   if (gyroPolling) return;
   gyroPolling = true;
-  console.log("Starting gyro polling");
+  if (!gyroAddon) gyroAddon = require("./build/Release/gyro_addon.node");
   (function loop() {
     if (!gyroPolling) return;
     sensorValues.gyro[0] = gyroAddon.gyro_x();
@@ -239,7 +252,7 @@ function startGyroPolling() {
 function startMagnetometerPolling() {
   if (magnetometerPolling) return;
   magnetometerPolling = true;
-  console.log("Starting magneto polling");
+  if (!magnetoAddon) magnetoAddon = require("./build/Release/magneto_addon.node");
   (function loop() {
     if (!magnetometerPolling) return;
 
@@ -255,7 +268,7 @@ function startMagnetometerPolling() {
 function startButtonPolling() {
   if (buttonPolling) return;
   buttonPolling = true;
-  console.log("Starting button polling");
+  if (!buttonAddon) buttonAddon = require("./build/Release/button_addon.node");
   (function loop() {
     if (!buttonPolling) return;
 
@@ -323,11 +336,10 @@ app.post("/enable-servo", express.json(), (req, res) => {
   if (typeof servo !== "number") {
     return res.status(400).json({ error: "Servo type incorrect, need number" });
   }
+  if (!servoAddon) servoAddon = require("./build/Release/servo_addon.node");
   try {
-    console.log(`Enabling servo: ${servo}`);
+    
     servoAddon.enable_servo(servo);
-
-    console.log(`Setting servo: ${servo} to value: ${value}`);
     servoAddon.set_servo_position(servo, value);
 
     return res
@@ -340,8 +352,8 @@ app.post("/enable-servo", express.json(), (req, res) => {
 });
 
 app.post("/disable-all-servos", express.json(), (req, res) => {
+  if (!servoAddon) servoAddon = require("./build/Release/servo_addon.node");
   try {
-    console.log(`Disabling all servos`);
     servoAddon.disable_servos();
 
     res.status(200).json({ message: `Disabled all servos` });
@@ -354,8 +366,7 @@ app.post("/disable-all-servos", express.json(), (req, res) => {
 app.post("/disable-servo", express.json(), (req, res) => {
 
   const { servo, value } = req.body;
-  console.log("/disable-servo servo: ", servo);
-  console.log("/disable-servo value: ", value);
+  if (!servoAddon) servoAddon = require("./build/Release/servo_addon.node");
   if (typeof servo !== "number") {
     return res.status(400).json({ error: "Servo type incorrect, need number" });
   }
@@ -371,17 +382,14 @@ app.post("/disable-servo", express.json(), (req, res) => {
 });
 app.post("/move-servo", express.json(), (req, res) => {
   const { servo, value } = req.body;
-
-  console.log("/move-servo servo: ", servo);
-  console.log("/move-servo value: ", value);
-
+  if (!servoAddon) servoAddon = require("./build/Release/servo_addon.node");
   if (typeof servo !== "number") {
     return res.status(400).json({ error: "Servo type incorrect, need number" });
   }
 
   try {
-    console.log(`Moving servo: ${servo} to value: ${value}`);
-   // servoAddon.set_servo_position(servo, value);
+    
+    servoAddon.set_servo_position(servo, value);
     res.status(200).json({ message: `Servo ${servo} moved to value ${value}` });
   } catch (error) {
     console.error("Error moving servo:", error);
@@ -396,8 +404,9 @@ app.post("/move-motor", express.json(), (req, res) => {
     return res.status(400).json({ error: "Invalid input" });
   }
 
+  if (!motorAddon) motorAddon = require("./build/Release/motor_addon.node");
   try {
-    console.log(`Moving motor: ${motor}, to value: ${value}`);
+    
 
     if (view === "Power") {
       motorAddon.motor_power(motor, value);
@@ -416,15 +425,11 @@ app.post("/move-motor", express.json(), (req, res) => {
 app.post("/stop-motor", express.json(),(req, res) => {
   const { motor } = req.body;
 
-  console.log("type of motor: ", typeof motor);
-
+  if (!motorAddon) motorAddon = require("./build/Release/motor_addon.node");
   if (typeof motor !== "number") {
     return res.status(400).json({ error: "Invalid input" });
   }
-
   try {
-    console.log(`Turning motor: ${motor} off`);
-
     motorAddon.off(motor);
 
     // Send back a success response
@@ -436,7 +441,7 @@ app.post("/stop-motor", express.json(),(req, res) => {
 });
 
 app.post("/stop-all-motors", express.json(),(req, res) => {
-  console.log("Express.js stopping all motors");
+  if (!motorAddon) motorAddon = require("./build/Release/motor_addon.node");
   try {
     motorAddon.allOff();
     res.status(200).json({ message: "All motors turned off" });
@@ -455,7 +460,7 @@ app.get("/stream-motor-velocities", (req, res) => {
   res.setHeader("Cache-Control", "no-cache");
   res.setHeader("Connection", "keep-alive");
 
-  console.log("Started motor velocity stream");
+  if (!motorAddon) motorAddon = require("./build/Release/motor_addon.node");
 
   motorAddon.reset_all_motors();
   motorVelPollingInterval = setInterval(() => {
@@ -466,10 +471,10 @@ app.get("/stream-motor-velocities", (req, res) => {
         motor2: motorAddon.get_motor_bemf_vel(2),
         motor3: motorAddon.get_motor_bemf_vel(3),
       };
-      console.log("motor stream data: ", data);
+  
       res.write(`data: ${JSON.stringify(data)}\n\n`);
     } catch (err) {
-      console.error("Motor polling error:", err);
+    
       res.write(`data: ERROR: ${err.toString()}\n\n`);
     }
   }, 500);
@@ -487,17 +492,17 @@ app.get("/stream-motor-positions", (req, res) => {
   res.setHeader("Cache-Control", "no-cache");
   res.setHeader("Connection", "keep-alive");
   res.flushHeaders();
-  console.log("inside stream-motor-positions");
+  if (!motorAddon) motorAddon = require("./build/Release/motor_addon.node");
 
   const interval = setInterval(() => {
-    console.log("Interval running, sending data");
+    
     const data = {
       motor0: motorAddon.get_motor_position_counter(0),
       motor1: motorAddon.get_motor_position_counter(1),
       motor2: motorAddon.get_motor_position_counter(2),
       motor3: motorAddon.get_motor_position_counter(3),
     };
-    console.log("Sending motor data:", data);
+    
     res.write(`data: ${JSON.stringify(data)}\n\n`);
     if (res.flush) res.flush();
   }, 500);
@@ -512,7 +517,7 @@ app.get("/stream-servo-positions", (req, res) => {
   res.setHeader("Content-Type", "text/event-stream");
   res.setHeader("Cache-Control", "no-cache");
   res.setHeader("Connection", "keep-alive");
-  console.log("inside stream-servo-positions");
+  if (!servoAddon) servoAddon = require("./build/Release/servo_addon.node");
   servoPosPollingInterval = setInterval(() => {
     try {
       const data = {
@@ -565,17 +570,25 @@ app.post("/convert-xml-to-c", express.json(), async (req, res) => {
 
     // Parse the XML document into blocks
     const blockNodes = xmlDoc.getElementsByTagName("block");
-    const topBlocks = Array.from(blockNodes).map(parseBlockXml);
+    if(blockNodes){
+      const topBlocks = Array.from(blockNodes).map(parseBlockXml);
 
-    declaredVariables = new Map();
-
-    finalCode = convertToCode(topBlocks[0]);
-    console.log("finalCode: ", finalCode);
-    createAndSaveFile(filePath, finalCode);
-    return res.status(200).json({
-      code: finalCode,
-      variables: Array.from(declaredVariables.keys()),
-    });
+      declaredVariables = new Map();
+  
+      finalCode = convertToCode(topBlocks[0]);
+      console.log("finalCode: ", finalCode);
+      createAndSaveFile(filePath, finalCode);
+      return res.status(200).json({
+        code: finalCode,
+        variables: Array.from(declaredVariables.keys()),
+      });
+    }
+    else {
+      return res.status(400).json({
+        error: "No blocks found in the provided XML",
+      })
+    }
+    
   } catch (error) {
     console.error("Error parsing XML:", error);
     return res.status(500).json({ error: "Failed to parse XML" });
@@ -1285,112 +1298,6 @@ if (
 ) {
   console.log("Compiling C programs is enabled.");
 
-  app.post("/compile", (req, res) => {
-    if (!("code" in req.body)) {
-      return res.status(400).json({
-        error: "Expected code key in body",
-      });
-    }
-
-    if (typeof req.body.code !== "string") {
-      return res.status(400).json({
-        error: "Expected code key in body to be a string",
-      });
-    }
-
-    // Wrap user's main() in our own "main()" that exits properly
-    // Required because Asyncify keeps emscripten runtime alive, which would prevent cleanup code from running
-    const augmentedCode = `${req.body.code}
-      #include <emscripten.h>
-  
-      EM_JS(void, on_stop, (), {
-        if (Module.context.onStop) Module.context.onStop();
-      })
-    
-      void simMainWrapper()
-      {
-        main();
-        on_stop();
-        emscripten_force_exit(0);
-      }
-    `;
-    console.log("inside compile");
-
-    const id = uuid.v4();
-    const path = `/tmp/${id}.c`;
-    console.log(`Writing to ${path}`);
-    fs.writeFile(path, augmentedCode, (err) => {
-      if (err) {
-        return res.status(500).json({
-          error: "Failed to write ${}",
-        });
-      }
-
-      // ...process.env causes a linter error for some reason.
-      // We work around this by doing it manually.
-
-      const env = {};
-      for (const key of Object.keys(process.env)) {
-        env[key] = process.env[key];
-      }
-
-      env[
-        "PATH"
-      ] = `${config.server.dependencies.emsdk_env.PATH}:${process.env.PATH}`;
-      env["EMSDK"] = config.server.dependencies.emsdk_env.EMSDK;
-      env["EM_CONFIG"] = config.server.dependencies.emsdk_env.EM_CONFIG;
-      exec(
-        `emcc -s WASM=0 -s INVOKE_RUN=0 -s ASYNCIFY -s EXIT_RUNTIME=1 -s "EXPORTED_FUNCTIONS=['_main', '_simMainWrapper']" -I${config.server.dependencies.libkipr_c}/include -L${config.server.dependencies.libkipr_c}/lib -lkipr -o ${path}.js ${path}`,
-        { env },
-        (err, stdout, stderr) => {
-          // Always log both stdout and stderr, regardless of errors
-          console.log("emcc stdout:", stdout);
-          console.log("emcc stderr:", stderr);
-
-          if (err) {
-            console.error("Compilation error:", stderr);
-            return res.status(200).json({
-              stdout,
-              stderr,
-            });
-          }
-
-          fs.readFile(`${path}.js`, (err, data) => {
-            if (err) {
-              return res.status(400).json({
-                error: `Failed to open ${path}.js for reading`,
-              });
-            }
-
-            // Log the stdout when the compilation is successful
-            console.log("Compilation result (after file read):", stdout);
-
-            fs.unlink(`${path}.js`, (err) => {
-              if (err) {
-                return res.status(500).json({
-                  error: `Failed to delete ${path}.js`,
-                });
-              }
-              fs.unlink(`${path}`, (err) => {
-                if (err) {
-                  return res.status(500).json({
-                    error: `Failed to delete ${path}`,
-                  });
-                }
-
-                // Return the result, stdout, and stderr as the final response
-                res.status(200).json({
-                  result: data.toString(),
-                  stdout,
-                  stderr,
-                });
-              });
-            });
-          });
-        }
-      );
-    });
-  });
 }
 
 //Compile code
@@ -1591,6 +1498,7 @@ app.post("/delete-file", async (req, res) => {
     case "c":
     case "cpp":
     case "py":
+    case "scratch":
       userProjectDirectory = `/home/kipr/Documents/KISS/${userName}/${projectName}/src`;
       break;
     case "txt":
@@ -1991,6 +1899,7 @@ app.post("/change-interface-mode", (req, res) => {
 //Rename user, project, or file
 app.post("/rename", async (req, res) => {
   const defaultDirectory = `/home/kipr/Documents/KISS`;
+  const usersJsonPath = path.join(defaultDirectory, "users.json");
 
   if (req.body.renameType === "User") {
     try {
@@ -2013,6 +1922,44 @@ app.post("/rename", async (req, res) => {
       console.log(
         `Renamed user directory: ${oldUserDirectory} to ${desiredUserDirectory}`
       );
+
+      fs.readFile(usersJsonPath, "utf8", (err, data) => {
+        if (err) {
+          console.error("Error reading users.json:", err);
+          return res.status(500).send("Error reading users.json.");
+        }
+
+        let usersData;
+        try {
+          usersData = JSON.parse(data);
+        } catch (parseError) {
+          console.error("Error parsing users.json:", parseError);
+          return res.status(500).send("Error parsing users.json.");
+        }
+
+        // Update the user entry
+        if (usersData[req.body.oldUserName]) {
+          usersData[req.body.newUserName] = usersData[req.body.oldUserName];
+          delete usersData[req.body.oldUserName];
+
+          fs.writeFile(
+            usersJsonPath,
+            JSON.stringify(usersData, null, 2),
+            "utf8",
+            (writeErr) => {
+              if (writeErr) {
+                console.error("Error writing to users.json:", writeErr);
+                return res.status(500).send("Error writing to users.json.");
+              }
+              console.log("Updated users.json successfully.");
+            }
+          );
+        } else {
+          console.warn(
+            `User ${req.body.oldUserName} not found in users.json.`
+          );
+        }
+      });
 
       res.status(200).json({
         message: "User renamed successfully",
@@ -2209,7 +2156,7 @@ app.get("/run-code", (req, res) => {
 // Stop code
 app.post("/stop-code", (req, res) => {
   if (currentChild) {
-    console.log("Stopping process group:", -currentChild.pid);
+    if (!motorAddon) motorAddon = require("./build/Release/motor_addon.node");
     try {
       process.kill(-currentChild.pid, "SIGKILL"); // Use negative PID to kill the group
       try {
