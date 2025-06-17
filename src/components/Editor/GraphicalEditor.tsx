@@ -1,4 +1,4 @@
-import { ThemeProps, SCRATCH_DARK, SCRATCH_LIGHT, DARK, LIGHT } from '../theme';
+import { ThemeProps, GRAPHICAL_DARK, GRAPHICAL_LIGHT, DARK, LIGHT } from '../theme';
 import { Vector2 } from '../../math';
 import * as React from 'react';
 import { styled } from 'styletron-react';
@@ -6,20 +6,20 @@ import { styled } from 'styletron-react';
 
 import resizeListener, { ResizeListener } from '../ResizeListener';
 
-export interface ScratchEditorProps extends ThemeProps {
+export interface GraphicalEditorProps extends ThemeProps {
   code: string;
   onCodeChange: (code: string) => void;
 
   toolboxHidden?: boolean;
 }
 
-interface ScratchEditorState {
+interface GraphicalEditorState {
   size: Vector2;
   blocklyOptions: {};
 }
 
-type Props = ScratchEditorProps;
-type State = ScratchEditorState;
+type Props = GraphicalEditorProps;
+type State = GraphicalEditorState;
 
 const OuterContainer = styled('div', (props: ThemeProps) => ({
   position: 'relative',
@@ -35,10 +35,10 @@ const Container = styled('div', (props: ThemeProps) => ({
   backgroundColor: '#75ba75'
 }));
 
-class ScratchEditor extends React.Component<Props, State> {
+class GraphicalEditor extends React.Component<Props, State> {
   private resizeListener_ = resizeListener(size => this.setState({ size }));
   private isApplyingCodeFromBlockly = false
-
+  private lastXML: string = '';
   constructor(props: Props) {
     super(props);
 
@@ -67,21 +67,21 @@ class ScratchEditor extends React.Component<Props, State> {
         },
 
         colours: this.props.theme === DARK ? {
-          flyout: SCRATCH_DARK.flyout,
-          toolbox: SCRATCH_DARK.toolbox,
-          toolboxSelected: SCRATCH_DARK.toolboxSelected,
-          toolboxText: SCRATCH_DARK.toolboxText,
-          toolbBoxHover: SCRATCH_DARK.toolbBoxHover,
-          workspace: SCRATCH_DARK.workspace,
+          flyout: GRAPHICAL_DARK.flyout,
+          toolbox: GRAPHICAL_DARK.toolbox,
+          toolboxSelected: GRAPHICAL_DARK.toolboxSelected,
+          toolboxText: GRAPHICAL_DARK.toolboxText,
+          toolbBoxHover: GRAPHICAL_DARK.toolbBoxHover,
+          workspace: GRAPHICAL_DARK.workspace,
           text: '#FFFFFF',
         } :
           {
-            flyout: SCRATCH_LIGHT.flyout,
-            toolbox: SCRATCH_LIGHT.toolbox,
-            toolboxSelected: SCRATCH_LIGHT.toolboxSelected,
-            toolboxText: SCRATCH_LIGHT.toolboxText,
-            toolbBoxHover: SCRATCH_LIGHT.toolboxHover,
-            workspace: SCRATCH_LIGHT.workspace,
+            flyout: GRAPHICAL_LIGHT.flyout,
+            toolbox: GRAPHICAL_LIGHT.toolbox,
+            toolboxSelected: GRAPHICAL_LIGHT.toolboxSelected,
+            toolboxText: GRAPHICAL_LIGHT.toolboxText,
+            toolbBoxHover: GRAPHICAL_LIGHT.toolboxHover,
+            workspace: GRAPHICAL_LIGHT.workspace,
             text: '#000000',
           },
  
@@ -90,23 +90,25 @@ class ScratchEditor extends React.Component<Props, State> {
   }
 
   private debounce_: boolean;
-  componentDidUpdate(prevProps: Readonly<ScratchEditorProps>, prevState: Readonly<ScratchEditorState>) {
+  componentDidUpdate(prevProps: Readonly<GraphicalEditorProps>, prevState: Readonly<GraphicalEditorState>) {
     const { props: nextProps, state: nextState } = this;
 
+    console.log("GraphicalEditor compDidUpdate workspace options: ", this.state.blocklyOptions);
+
     if (prevProps.theme !== nextProps.theme) {
-      console.log("ScratchEditor compDidUpdate theme changed from: ", prevProps.theme, " to: ", nextProps.theme);
+      console.log("GraphicalEditor compDidUpdate theme changed from: ", prevProps.theme, " to: ", nextProps.theme);
 
       if (nextProps.theme === DARK) {
         this.setState({
           blocklyOptions: {
             ...this.state.blocklyOptions,
             colours: {
-              flyout: SCRATCH_DARK.flyout,
-              toolbox: SCRATCH_DARK.toolbox,
-              toolboxSelected: SCRATCH_DARK.toolboxSelected,
-              toolboxText: SCRATCH_DARK.toolboxText,
-              toolboxHover: SCRATCH_DARK.toolbBoxHover,
-              workspace: SCRATCH_DARK.workspace,
+              flyout: GRAPHICAL_DARK.flyout,
+              toolbox: GRAPHICAL_DARK.toolbox,
+              toolboxSelected: GRAPHICAL_DARK.toolboxSelected,
+              toolboxText: GRAPHICAL_DARK.toolboxText,
+              toolboxHover: GRAPHICAL_DARK.toolbBoxHover,
+              workspace: GRAPHICAL_DARK.workspace,
               text: '#FFFFFF',
             }
           }
@@ -119,13 +121,14 @@ class ScratchEditor extends React.Component<Props, State> {
         this.setState({
           blocklyOptions: {
             ...this.state.blocklyOptions,
+            
             colours: {
-              flyout: SCRATCH_LIGHT.flyout,
-              toolbox: SCRATCH_LIGHT.toolbox,
-              toolboxSelected: SCRATCH_LIGHT.toolboxSelected,
-              toolboxText: SCRATCH_LIGHT.toolboxText,
-              toolboxHover: SCRATCH_LIGHT.toolboxHover,
-              workspace: SCRATCH_LIGHT.workspace,
+              flyout: GRAPHICAL_LIGHT.flyout,
+              toolbox: GRAPHICAL_LIGHT.toolbox,
+              toolboxSelected: GRAPHICAL_LIGHT.toolboxSelected,
+              toolboxText: GRAPHICAL_LIGHT.toolboxText,
+              toolboxHover: GRAPHICAL_LIGHT.toolboxHover,
+              workspace: GRAPHICAL_LIGHT.workspace,
               text: '#000000',
             }
           }
@@ -143,25 +146,10 @@ class ScratchEditor extends React.Component<Props, State> {
         Blockly.svgResize(this.workspace_);
       }
 
-      // if (prevProps.code !== nextProps.code && !this.debounce_) {
-      //   this.workspace_.clear(); // Clear before applying new XML
-      //   if (this.props.code !== '') {
-      //     try {
-      //       Blockly.Xml.domToWorkspace(
-      //         Blockly.Xml.textToDom(this.props.code),
-      //         this.workspace_
-      //       );
-      //     } catch (e) {
-      //       console.error("Failed to parse Blockly XML:", e);
-      //     }
-      //   }
-      // }
-      if (
-        prevProps.code !== nextProps.code &&
-        !this.isApplyingCodeFromBlockly &&
-        nextProps.code !== Blockly.Xml.domToPrettyText(Blockly.Xml.workspaceToDom(this.workspace_))
-      ) {
+      if (prevProps.code !== nextProps.code && nextProps.code !== this.lastXML) {
+
         this.workspace_.clear();
+        
 
         if (nextProps.code !== '') {
           try {
@@ -173,15 +161,22 @@ class ScratchEditor extends React.Component<Props, State> {
             console.error("Failed to parse Blockly XML:", e);
           }
         }
+
+
       }
+    
     }
 
   }
 
   componentDidMount(): void {
+    console.log("GRAPHICAL EDITOR MOUNTED");
+
+    console.log("GRAPHICAL EDITOR PROPS: ", this.props);
+    console.log("GRAPHICAL EDITOR STATE: ", this.state);
   }
   componentWillUnmount() {
-    console.log("SCRATCH EDITOR UNMOUNTED");
+    console.log("GRAPHICAL EDITOR UNMOUNTED");
     this.workspace_.removeChangeListener(this.onChange_);
     this.resizeListener_.disconnect();
   }
@@ -240,15 +235,15 @@ class ScratchEditor extends React.Component<Props, State> {
 
   private onChange_ = async () => {
 
-    this.debounce_ = true;
-    try {
-      const code = Blockly.Xml.domToPrettyText(Blockly.Xml.workspaceToDom(this.workspace_));
+    const xml = Blockly.Xml.domToPrettyText(Blockly.Xml.workspaceToDom(this.workspace_));
+    if(xml === this.lastXML) return;
+    this.isApplyingCodeFromBlockly = true;
+    this.lastXML = xml;
+    this.props.onCodeChange(xml);
+    this.isApplyingCodeFromBlockly = false;
 
-      this.props.onCodeChange(code);
-      this.debounce_ = false;
-    } catch (e) {
-      // console.error(e);
-    }
+  
+  
     this.debounce_ = false;
   };
 
@@ -270,4 +265,4 @@ class ScratchEditor extends React.Component<Props, State> {
   }
 }
 
-export default ScratchEditor;
+export default GraphicalEditor;

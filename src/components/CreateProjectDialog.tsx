@@ -104,8 +104,8 @@ const LANGUAGE_OPTIONS: ComboBox.Option[] = [{
   data: 'python'
 },
 {
-  text: 'Scratch',
-  data: 'scratch'
+  text: 'Graphical',
+  data: 'graphical'
 }
 ];
 
