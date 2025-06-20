@@ -33,7 +33,7 @@ const mapDispatchToProps = (dispatch) => ({
   openDocumentation: () => {
     console.log("Open Documentation");
     dispatch(DocumentationAction.setSize({ size: Size.PARTIAL }));
-   // dispatch(DocumentationAction.pushLocation({ location: DocumentationLocation.NONE }));
+    // dispatch(DocumentationAction.pushLocation({ location: DocumentationLocation.NONE }));
   },
   closeDocumentation: () => {
     dispatch(DocumentationAction.setSize({ size: Size.MINIMIZED }));
@@ -84,7 +84,7 @@ interface ClickProps {
 
 
 const ExtraMenuContainer = styled('div', (props: ThemeProps) => ({
-  backgroundColor: props.theme.titleBarBackground,
+  // backgroundColor: props.theme.titleBarBackground,
   marginRight: '5px',
   color: props.theme.color,
   top: '20px',
@@ -96,7 +96,8 @@ const ExtraMenuContainer = styled('div', (props: ThemeProps) => ({
   justifyContent: 'flex-end',
   flexDirection: 'row',
 
-  zIndex: 1
+  zIndex: 1,
+
 }));
 
 export class MainMenu extends React.Component<Props, State> {
