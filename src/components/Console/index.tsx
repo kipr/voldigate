@@ -52,7 +52,8 @@ const ConsoleText = styled(Text, (props: ThemeProps) => ({
   fontSize: '0.9em',
   padding: `${props.theme.itemPadding * 2}px`,
   wordWrap: 'break-word',
-  display: 'block'
+  display: 'block',
+ // color: props.theme.color,
 }));
 
 export class Console extends React.PureComponent<Props, State> {
@@ -60,6 +61,10 @@ export class Console extends React.PureComponent<Props, State> {
     super(props);
   }
 
+  componentDidUpdate(prevProps: Readonly<ConsoleProps>, prevState: Readonly<ConsoleState>, snapshot?: any): void {
+    console.log("Console compDidUPdate prevProps: ", prevProps);
+    console.log("Console compDidUpdate props: ", this.props);
+  }
   render() {
     const { style, className, theme, text } = this.props;
     return (
