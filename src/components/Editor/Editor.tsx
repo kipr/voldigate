@@ -7,18 +7,17 @@ import LocalizedString from '../../util/LocalizedString';
 import { styled, withStyleDeep } from 'styletron-react';
 import { StyleProps } from '../../style';
 import { Theme } from '../theme';
-import { middleBarSpacer, leftBarSpacer, rightBarSpacer, Spacer } from '../common';
+import { middleBarSpacer, leftBarSpacer, rightBarSpacer} from '../common';
 import { Fa } from '../Fa';
 import { Button } from '../Button';
 import { Text } from '../Text';
 import { BarComponent } from '../Widget';
 import { WarningCharm, ErrorCharm } from './';
 import { GREEN, LIGHTMODE_GREEN, RED, ThemeProps } from '../theme';
-import ForwardedIvygate from 'ivygate/dist/Ivygate';
 import { Ivygate, Message } from 'ivygate';
 import { FontAwesome } from '../FontAwesome';
 import { faFileDownload, faFloppyDisk, faIndent, faLink, faPlay, faStop } from '@fortawesome/free-solid-svg-icons';
-import ScratchEditor from './ScratchEditor';
+import GraphicalEditor from './GraphicalEditor';
 
 export enum EditorActionState {
   None,
@@ -35,9 +34,9 @@ export interface EditorPublicProps extends StyleProps, ThemeProps {
   messages?: Message[];
   onCodeChange: (code: string) => void;
   onSaveCode: () => void;
-  onDocumentationGoToFuzzy?: (query: string, language: 'c' | 'python' | 'plaintext' | 'scratch') => void;
+  onDocumentationGoToFuzzy?: (query: string, language: 'c' | 'python' | 'plaintext' | 'graphical') => void;
 
-  mini? : boolean;
+  mini?: boolean;
 }
 
 interface EditorState {
@@ -71,8 +70,8 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
   alignItems: 'center',
   flexDirection: 'row',
   borderRight: `1px solid ${props.theme.borderColor}`,
-  paddingLeft: '30px',
-  paddingRight: '30px',
+  paddingLeft: '1em',
+  paddingRight: '1em',
   height: '100%',
   opacity: props.disabled ? '0.5' : '1.0',
   ':last-child': {
@@ -87,11 +86,13 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
       }
       : {},
   userSelect: 'none',
+  marginTop: '0.1em',
+  marginBottom: '0.1em',
 
 }));
 
 const RunItem = withStyleDeep(Item, (props: ClickProps & ThemeProps) => ({
-  fontSize: '0.9em',
+
   backgroundColor: props.disabled ? (props.theme.themeName === 'DARK' ? props.theme.runButtonColor.disabled : props.theme.runButtonColor.disabled) : (props.theme.themeName === 'DARK' ? props.theme.runButtonColor.standard : props.theme.runButtonColor.standard),
   ':hover':
     props.onClick && !props.disabled
@@ -195,11 +196,12 @@ export const createEditorBarComponents = ({
             <RunItem
               theme={theme}
               onClick={target.onRunClick}
-              style={{ borderLeft: `1px solid ${theme.borderColor}` }}
+
             >
               <ItemIcon icon={faPlay} />
               {LocalizedString.lookup(tr('Run', 'Begin program execution'), locale)}
             </RunItem>
+            
           )
       }));
 
@@ -241,7 +243,14 @@ export const createEditorBarComponents = ({
       }));
 
       editorBar.push(BarComponent.create(Text, {
-        style: { fontSize: '0.9em' },
+        style: {
+          minWidth: '1.5em', 
+          maxWidth: '15em',
+          fontSize: '0.9em',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap'
+        },
         text: target.userName
 
       }));
@@ -263,7 +272,14 @@ export const createEditorBarComponents = ({
 
       }));
       editorBar.push(BarComponent.create(Text, {
-        style: { fontSize: '0.9em' },
+        style: {
+          minWidth: '1.5em', 
+          maxWidth: '15em',
+          fontSize: '0.9em',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap'
+        },
         text: target.projectName
       }));
       editorBar.push(BarComponent.create(middleBarSpacer, {
@@ -281,9 +297,18 @@ export const createEditorBarComponents = ({
 
       }));
       editorBar.push(BarComponent.create(Text, {
-        style: { fontSize: '0.9em' },
+        style: {
+          minWidth: '0.9em', 
+          maxWidth: '15em',
+          fontSize: '0.9em',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap'
+        },
         text: target.fileName
       }));
+
+  
 
       editorBar.push(BarComponent.create(rightBarSpacer, {
 
@@ -311,19 +336,6 @@ export const createEditorBarComponents = ({
             {' '} {LocalizedString.lookup(tr('Download'), locale)}
           </>
       }));
-
-      target.messages.forEach(message => {
-        switch (message.severity) {
-          case 'error': {
-            ++errors;
-            break;
-          }
-          case 'warning': {
-            ++warnings;
-            break;
-          }
-        }
-      });
 
       if (errors > 0) editorBar.push(BarComponent.create(ErrorCharm, {
         theme,
@@ -353,7 +365,7 @@ export const IVYGATE_LANGUAGE_MAPPING: Dict<string> = {
   'plaintext': 'plaintext',
 };
 
-const DOCUMENTATION_LANGUAGE_MAPPING: { [key in ProgrammingLanguage]?: 'c' | 'python' | 'plaintext' | 'scratch' | undefined } = {
+const DOCUMENTATION_LANGUAGE_MAPPING: { [key in ProgrammingLanguage]?: 'c' | 'python' | 'plaintext' | 'graphical' | undefined } = {
   'python': 'python',
   'c': 'c',
   'cpp': 'c',
@@ -380,18 +392,22 @@ class Editor extends React.PureComponent<Props, State> {
     console.log("Editor compDidUpdate this.props: ", this.props);
     console.log("Editor compDidUpdate this.prevProps.code: ", prevProps.code);
     console.log("Editor compDidUpdate this.props.code: ", this.props.code);
-    
+
     if (prevProps.code !== this.props.code) {
-      console.log("Editor compDidUpdate code changed from: ", prevProps.code, " to: ", this.props.code);
+      console.log("Editor compDidUpdate code changed from:\n ", prevProps.code, " to:\n ", this.props.code);
       const editorValue = this.ivygate_?.editor?.getValue();
-      
+
       if (editorValue !== this.props.code) {
         this.setState({ code: this.props.code }, () => {
-         if( this.ivygate_ && this.ivygate_.editor) {
-          this.ivygate_.editor.getModel().setValue(this.props.code);
-         }
+          if (this.ivygate_ && this.ivygate_.editor) {
+            this.ivygate_.editor.getModel().setValue(this.props.code);
+            this.ivygate_.editor.setScrollLeft(0);
+            this.ivygate_.editor.setScrollTop(0);
+            this.ivygate_.editor.setPosition({ lineNumber: 1, column: 1 });
+            
+          }
 
-          
+
         });
       }
     }
@@ -460,9 +476,9 @@ class Editor extends React.PureComponent<Props, State> {
 
     let component: JSX.Element;
 
-    if (language === 'scratch') {
-      component =(
-        <ScratchEditor
+    if (language === 'graphical') {
+      component = (
+        <GraphicalEditor
           code={code}
           onCodeChange={onCodeChange}
           theme={theme}
@@ -471,17 +487,18 @@ class Editor extends React.PureComponent<Props, State> {
       );
     }
     else {
+      console.log("Editor render Ivygate props: ", this.props);
       component = (
         <Ivygate
-        ref={this.bindIvygate_}
+          ref={this.bindIvygate_}
 
-        code={this.state.code}
-        language={IVYGATE_LANGUAGE_MAPPING[language] || language}
-        messages={messages}
-        onCodeChange={onCodeChange}
-        autocomplete={autocomplete}
-        theme={theme.themeName}
-      />
+          code={this.props.code}
+          language={IVYGATE_LANGUAGE_MAPPING[language] || language}
+          messages={messages}
+          onCodeChange={onCodeChange}
+          autocomplete={autocomplete}
+          theme={theme.themeName}
+        />
       );
     }
 
