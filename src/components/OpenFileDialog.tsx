@@ -71,6 +71,7 @@ const Container = styled('div', (props: ThemeProps) => ({
   color: props.theme.color,
   backgroundColor: props.theme.backgroundColor,
   minHeight: '300px',
+  maxHeight: '50vh',
 }));
 
 const SettingContainer = styled('div', (props: ThemeProps) => ({
@@ -85,6 +86,14 @@ const SettingInfoContainer = styled('div', {
   flex: '1 0',
 });
 
+
+const StyledScrollArea = styled(ScrollArea, ({ theme }: ThemeProps) => ({
+  flex: 1,
+  maxWidth: '12em',
+  //backgroundColor: 'pink'
+}));
+
+
 interface SectionProps {
   selected?: boolean;
 }
@@ -92,7 +101,11 @@ interface SectionProps {
 const SectionsColumn = styled('div', (props: ThemeProps) => ({
   display: 'flex',
   flexDirection: 'column',
-  flex: '0 0 150px',
+  //flex: '0 0 150px',
+  overflow: 'hidden',
+  //overflowY: 'scroll',
+  width: '100%',
+  //maxWidth: '5em',
   borderRight: `1px solid ${props.theme.borderColor}`,
 }));
 
@@ -105,6 +118,8 @@ const SectionName = styled('span', (props: ThemeProps & SectionProps) => ({
   transition: 'background-color 0.2s, opacity 0.2s',
   padding: `${props.theme.itemPadding * 2}px`,
   fontWeight: props.selected ? 400 : undefined,
+  wordBreak: 'break-word',
+  overflowWrap: 'anywhere',
   userSelect: 'none',
 }));
 
@@ -117,6 +132,9 @@ const ProjectTitle = styled('h2', {
   marginBottom: '10px',
   fontSize: '1.2em',
   textAlign: 'center',
+  maxWidth: '50em',
+  wordBreak: 'break-word',
+  overflowWrap: 'anywhere',
 });
 
 const ProjectFileTitle = styled('h3', {
@@ -124,6 +142,9 @@ const ProjectFileTitle = styled('h3', {
   marginBottom: '10px',
   fontSize: '1.0em',
   textAlign: 'center',
+  maxWidth: '25em',
+  wordBreak: 'break-word',
+  overflowWrap: 'anywhere',
   textDecoration: 'underline',
 });
 
@@ -138,6 +159,9 @@ const ProjectItem = styled('li', (props: ThemeProps & { selected: boolean }) => 
   backgroundColor: props.selected ? props.theme.selectedUserBackground : props.theme.unselectedBackground,
   padding: '10px 20px',
   margin: '5px 0',
+  maxWidth: '30em',
+  wordBreak: 'break-word',
+  overflowWrap: 'anywhere',
   borderRadius: '5px',
   display: 'flex',
   alignItems: 'center',
@@ -154,6 +178,7 @@ const ProjectFileContainer = styled('div', (props: ThemeProps) => ({
   borderRadius: '5px',
   display: 'flex',
   flexDirection: 'column',
+  maxWidth: '30em',
   justifyContent: 'space-between',
 }));
 
@@ -162,7 +187,10 @@ const ProjectFileItem = styled('li', (props: ThemeProps) => ({
   ':hover': {
     backgroundColor: props.theme.hoverOptionBackground,
   },
-  paddingLeft: '50px',
+  maxWidth: '30em',
+  wordBreak: 'break-word',
+  overflowWrap: 'anywhere',
+  //dpaddingLeft: '50px',
   paddingBottom: '5px',
   paddingTop: '5px',
   borderRadius: '5px',
@@ -183,6 +211,8 @@ const Button = styled('button', {
 const OpenFileButton = styled(Button, (props: ThemeProps & ClickProps) => ({
   marginRight: '70px',
   backgroundColor: props.theme.yesButtonColor.standard,
+  minWidth: '7em',
+  maxWidth: '20em',
   border: `1px solid ${props.theme.yesButtonColor.border}`,
   ':hover':
     props.onClick && !props.disabled
@@ -237,13 +267,18 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
 
   private handleProjectClick = async (project: Project) => {
     console.log("OpenFileDialog handleProjectClick project: ", project);
+    console.log("OpenFileDialog handleProjectClick state: ", this.state);
 
-    this.setState((prevState) => ({
-      selectedProject: prevState.selectedProject.projectName === project.projectName ? null : project,
-      projectName: project.projectName,
-      activeLanguage: this.state.projects!.find(project => project.projectName === project.projectName)!.projectLanguage,
-      selectedProjectFiles: this.state.projects!.find(project => project.projectName === project.projectName),
-    }));
+    this.setState((prevState) => (
+      console.log("OpenFileDialog handleProjectClick prevState: ", prevState), {
+        selectedProject: project,
+        projectName: project.projectName,
+        activeLanguage: this.state.projects!.find(project => project.projectName === project.projectName)!.projectLanguage,
+        selectedProjectFiles: project,
+      }), () => {
+        console.log("OpenFileDialog handleProjectClick updated state: ", this.state);
+
+      });
   };
 
   private handleFileClick = async (fileId: string) => {
@@ -300,8 +335,8 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
         <ProjectTitle>Projects for {this.state.selectedUser.userName}</ProjectTitle>
         <ul>
           {projects.map((project) => (
-            console.log("OpenFileDialog renderProjects project: ", project),
-            console.log("OpenFileDialog renderProjects selectedProject: ", selectedProject),
+            // console.log("OpenFileDialog renderProjects project: ", project),
+            // console.log("OpenFileDialog renderProjects selectedProject: ", selectedProject),
             <div key={project.projectName}>
               <ProjectItem
                 selected={selectedProject.projectName === project.projectName}
@@ -454,11 +489,15 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
         onClose={onClose}
       >
         <Container theme={theme} style={style} className={className}>
-          <SectionsColumn theme={theme}>
 
-            {userSections}
 
-          </SectionsColumn>
+          <StyledScrollArea theme={theme} >
+            <SectionsColumn theme={theme}>
+
+              {userSections}
+
+            </SectionsColumn>
+          </StyledScrollArea>
           <SettingsColumn theme={theme}>
             <SettingContainer theme={theme}>
               <SettingInfoContainer>
