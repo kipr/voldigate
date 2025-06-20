@@ -12,8 +12,29 @@ extern "C"
     void motor(int motor, int percent);
     int get_motor_goal_velocity(unsigned int motor);
     int get_motor_position_counter(int motor);
+    void clear_motor_position_counter(int motor);
 }
 
+
+Napi::Value js_clear_motor_position_counter(const Napi::CallbackInfo &info)
+{
+    Napi::Env env = info.Env();
+
+    if (info.Length() < 1 || !info[0].IsNumber())
+    {
+        Napi::TypeError::New(env, "Expected one number argument").ThrowAsJavaScriptException();
+        return env.Null();
+    }
+
+    int motor = info[0].As<Napi::Number>().Int32Value();
+
+    std::cout << "Calling clear_motor_position_counter(motor=" << motor << ")" << std::endl;
+
+    clear_motor_position_counter(motor);
+    std::cout << "Motor position counter cleared for motor: " << motor << std::endl;
+
+    return env.Undefined();
+}
 
 Napi::Value js_get_motor_position_counter(const Napi::CallbackInfo &info)
 {
@@ -193,6 +214,7 @@ Napi::Object InitAll(Napi::Env env, Napi::Object exports)
     exports.Set("reset_motor", Napi::Function::New(env, js_reset_motor));                         // Now using the JS-friendly wrapper
     exports.Set("reset_all_motors", Napi::Function::New(env, js_reset_all_motors));             // Now using the JS-friendly wrapper
     exports.Set("get_motor_position_counter", Napi::Function::New(env, js_get_motor_position_counter)); // Now using the JS-friendly wrapper
+    exports.Set("clear_motor_position_counter", Napi::Function::New(env, js_clear_motor_position_counter)); // Now using the JS-friendly wrapper
     return exports;
 }
 
