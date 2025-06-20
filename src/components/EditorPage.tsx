@@ -4,19 +4,21 @@ import Dict from '../Dict';
 import tr from '@i18n';
 import LocalizedString from '../util/LocalizedString';
 import ProgrammingLanguage from '../ProgrammingLanguage';
-import Widget, { Mode, Size } from './Widget';
+import Widget, { BarComponent, Mode, Size } from './Widget';
 import { connect } from 'react-redux';
-import { styled } from 'styletron-react';
+import { styled, withStyleDeep } from 'styletron-react';
 import { Console, createConsoleBarComponents } from './Console';
 import { Editor, createEditorBarComponents, EditorBarTarget } from './Editor';
 import { LayoutProps } from './Layout/Layout';
 import { Slider } from './Slider';
-import { State as ReduxState } from '../state';
+import { FontAwesome } from './FontAwesome';
 import { StyledText } from '../util';
-import { ThemeProps, Theme } from './theme';
+import { ThemeProps, Theme, GREEN, RED, LIGHTMODE_GREEN, } from './theme';
 import { Modal } from '../pages/Modal';
 import { JSX } from 'react';
-
+import { faFileDownload, faFloppyDisk, faIndent, faLink, faPlay, faStop } from '@fortawesome/free-solid-svg-icons';
+import { Fa } from './Fa';
+import { Text } from './Text';
 
 export interface EditorPageProps extends LayoutProps, ThemeProps {
 
@@ -33,6 +35,7 @@ export interface EditorPageProps extends LayoutProps, ThemeProps {
   onStopClick: () => void;
   onCompileClick: () => void;
   onSaveCode: () => void;
+  onIndentCode: () => void;
   onDocumentationSetLanguage: (language: 'c' | 'python') => void;
   onFileNameChange: (newFileName: string) => void;
   onClearConsole: () => void;
@@ -53,6 +56,11 @@ interface EditorPageState {
   modal: Modal;
   code: Dict<string>;
   theme: Theme;
+  screenWidth: number;
+}
+interface ClickProps {
+  onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
+  disabled?: boolean;
 }
 
 type Props = EditorPageProps;
@@ -70,28 +78,137 @@ const SidePanelContainer = styled('div', {
   flex: '1 1',
   flexDirection: 'row',
 
+
 });
 
+const Item = styled('div', (props: ThemeProps & ClickProps) => ({
+  display: 'flex',
+  alignItems: 'center',
+  flexDirection: 'row',
+  borderRight: `1px solid ${props.theme.borderColor}`,
+  paddingLeft: '30px',
+  paddingRight: '30px',
+  height: '100%',
+  opacity: props.disabled ? '0.5' : '1.0',
+  ':last-child': {
+    borderRight: 'none',
+  },
+  fontWeight: 400,
+  ':hover':
+    props.onClick && !props.disabled
+      ? {
+        cursor: 'pointer',
+        backgroundColor: `rgba(255, 255, 255, 0.1)`,
+      }
+      : {},
+  userSelect: 'none',
+
+}));
+
+const RunItem = withStyleDeep(Item, (props: ClickProps & ThemeProps) => ({
+  fontSize: '0.9em',
+  backgroundColor: props.disabled ? (props.theme.themeName === 'DARK' ? props.theme.runButtonColor.disabled : props.theme.runButtonColor.disabled) : (props.theme.themeName === 'DARK' ? props.theme.runButtonColor.standard : props.theme.runButtonColor.standard),
+  ':hover':
+    props.onClick && !props.disabled
+      ? {
+        backgroundColor: props.theme.themeName === 'DARK' ? GREEN.hover : LIGHTMODE_GREEN.hover,
+      }
+      : {},
+}));
+
+const ItemIcon = styled(FontAwesome, {
+  paddingRight: '10px',
+});
+
+const StopItem = withStyleDeep(Item, (props: ClickProps) => ({
+  fontSize: '0.9em',
+  backgroundColor: props.disabled ? RED.disabled : RED.standard,
+  ':hover':
+    props.onClick && !props.disabled
+      ? {
+        backgroundColor: RED.hover,
+      }
+      : {},
+}));
+
 const WidgetContainer = styled('div', (props: ThemeProps) => ({
-  
+
   display: 'flex',
   flex: '1 0 0',
-  height:'100%',
+  height: '100%',
   width: '100%',
   minHeight: 0,
   minWidth: 0,
   overflow: 'hidden',
  backGroundColor: props.theme.editorConsoleBackground,
+ 
 }));
 
 const EPWidget = styled(Widget, (props: ThemeProps) => ({
   display: 'flex',
   flex: '1 1 auto',
-     margin: '10px 0px 0px 0px',
+  //margin: '10px 0px 0px 0px',
   height: '100%',
   width: '500px',
+    border: `1px solid ${props.theme.borderColor}`,
   fontSize: '22px',
   backgroundColor: props.theme.editorConsoleBackground,
+ 
+}));
+
+const MobileEPWidget = styled('div', (props: ThemeProps) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  flex: '1 1 auto',
+  margin: '10px 0px 0px 0px',
+  height: '100%',
+  width: '100%',
+  fontSize: '22px',
+}));
+
+const MobileEditorBar = styled('div', (props: ThemeProps) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'stretch',
+  margin: '10px 0px 0px 0px',
+  //height: '1em',
+  width: '100%',
+  fontSize: '22px',
+  borderBottom: `1px solid ${props.theme.borderColor}`,
+  backgroundColor: props.theme.mobileEditorBarBackground,
+
+  //backgroundColor: '#e6ddde'
+}));
+
+const MobileEditorBarContainer = styled('div', (props: ThemeProps) => ({
+  display: 'flex',
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+  //justifyContent: 'space-between',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: '10px',
+  margin: '10px 0px 0px 0px',
+  width: '100%',
+  fontSize: '22px',
+  //backgroundColor: props.theme.editorConsoleBackground,
+  //backgroundColor: 'lightblue'
+}));
+
+const InfoLabel = styled('span', (props: ThemeProps) => ({
+
+  fontWeight: '500',
+  fontSize: '0.9em',
+  marginRight: '5px',
+}));
+
+
+const InformationText = styled('div', (props: ThemeProps) => ({
+
+  color: props.theme.color,
+  fontSize: '0.9em',
+  marginLeft: '10px',
+  marginRight: '10px',
 }));
 
 const FlexConsole = styled(Console, {
@@ -99,8 +216,24 @@ const FlexConsole = styled(Console, {
   color: 'black',
 });
 
+const Button = styled('button', (props: ThemeProps) => ({
+  //backgroundColor: props.theme.buttonBackground,
+  //color: props.theme.buttonColor,
+  border: `1px solid ${props.theme.borderColor}`,
+  borderRadius: `${props.theme.borderRadius}px`,
+  padding: `${props.theme.itemPadding}px ${props.theme.itemPadding * 2}px`,
+  cursor: 'pointer',
+  fontSize: '1em',
+  // ':hover': {
+  //   backgroundColor: props.theme.buttonHoverBackground,
+  //   color: props.theme.buttonHoverColor,
+  // }
+}));
+
+
 export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps, State> {
   private editorRef: React.MutableRefObject<Editor>;
+
   constructor(props: Props & ReduxEditorPageProps) {
     super(props);
 
@@ -114,19 +247,25 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
         'cpp': '',
         'python': '',
         'plaintext': '',
-        'scratch': '',
-      
+        'graphical': '',
+
       },
       editorConsole: props.editorConsole,
       fileName: props.fileName,
       resetCodeAccept: false,
-      theme: props.theme
+      theme: props.theme,
+      screenWidth: window.innerWidth,
     };
   }
 
-  async componentDidUpdate(prevProps: Props, prevState: State) {
 
-    if (this.props.fileName !== prevProps.fileName || this.props.code !== prevProps.code) { 
+  async componentDidUpdate(prevProps: Props, prevState: State) {
+    console.log("EditorPage componentDidUpdate prevState: ", prevState);
+    console.log("EditorPage componentDidUpdate prevProps: ", prevProps);
+    console.log("EditorPage componentDidUpdate state: ", this.state);
+    console.log("EditorPage componentDidUpdate props: ", this.props);
+
+    if (this.props.fileName !== prevProps.fileName || this.props.code !== prevProps.code) {
 
       this.setState({
         language: this.props.language,
@@ -141,7 +280,7 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
       });
     }
 
-    if(prevProps.theme !== this.props.theme) {
+    if (prevProps.theme !== this.props.theme) {
       this.setState({
         theme: prevProps.theme
       })
@@ -155,6 +294,8 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
     //
   }
   async componentDidMount() {
+    window.addEventListener('resize', this.handleResize);
+
     try {
 
       const { userName, projectName } = this.props;
@@ -206,6 +347,13 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
     }
 
   }
+  componentWillUnmount(): void {
+    window.removeEventListener('resize', this.handleResize);
+  }
+
+  private handleResize = () => {
+    this.setState({ screenWidth: window.innerWidth });
+  };
 
   private onErrorClick_ = (event: React.MouseEvent<HTMLDivElement>) => {
     // not implemented
@@ -222,7 +370,9 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
   };
 
   private onIndentCode_ = () => {
-    if (this.editorRef.current) this.editorRef.current.ivygate.formatCode();
+    console.log("EditorPage onIndentCode_ state: ", this.state);
+    console.log("EditorPage onIndentCode_ props: ", this.props);
+    if (this.props.editorRef) this.props.editorRef.current.ivygate.formatCode();
   };
 
   private onDownloadClick_ = () => {
@@ -274,7 +424,7 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
       onStopClick: this.props.onStopClick,
       onCompileClick: this.props.onCompileClick,
       onLanguageChange: this.onActiveLanguageChange_,
-      onIndentCode,
+      onIndentCode: this.onIndentCode_,
       onDownloadCode: this.onDownloadClick_,
       onSaveCode,
       onErrorClick: this.onErrorClick_,
@@ -287,7 +437,7 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
       console.log("EditorPage state: ", this.state),
       console.log("EditorPage props: ", this.props),
       <Editor
-      
+
         theme={theme}
         isleftbaropen={isleftbaropen}
         isRunning={this.props.isRunning}
@@ -301,14 +451,80 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
         onDocumentationGoToFuzzy={onDocumentationGoToFuzzy}
       />
     );
+
+    const isMobile = this.state.screenWidth < 1050; // Example breakpoint for mobile devices
+
+
     const editorBar = createEditorBarComponents({
       theme,
       target: editorBarTarget,
       locale,
     });
+
+
     const editorConsoleBar = createConsoleBarComponents(theme, this.props.onClearConsole, locale);
 
+    console.log("EditorPage render isMobile: ", isMobile);
     let content: JSX.Element;
+    let mobileEditorBarContent: JSX.Element;
+    mobileEditorBarContent = (
+      <div>
+        <MobileEditorBarContainer theme={theme}>
+          {this.props.isRunning ? (
+            <StopItem
+              theme={theme}
+              onClick={this.props.onStopClick}
+              disabled={!this.props.isRunning}
+            >
+              <ItemIcon icon={faStop} />
+              {LocalizedString.lookup(tr('Stop'), locale)}
+            </StopItem>
+          ) : (
+            <RunItem
+              theme={theme}
+              onClick={this.props.onRunClick}
+              disabled={this.props.isRunning}
+            >
+              <ItemIcon icon={faPlay} />
+              {LocalizedString.lookup(tr('Run'), locale)}
+            </RunItem>
+          )}
+          <Button theme={theme} onClick={() => this.props.onCompileClick()}>
+            <Fa icon={faLink} />
+            {' '} {LocalizedString.lookup(tr('Compile'), locale)}
+
+          </Button>
+          <Button theme={theme} onClick={() => this.props.onSaveCode()}>
+            <Fa icon={faFloppyDisk} />
+            {' '} {LocalizedString.lookup(tr('Save'), locale)}
+          </Button>
+        </MobileEditorBarContainer>
+        <MobileEditorBarContainer
+          theme={theme}>
+          <InformationText theme={theme}>
+            <InfoLabel theme={theme}>
+              {LocalizedString.lookup(tr('User Name'), locale)}:
+            </InfoLabel>
+            {this.props.userName}
+          </InformationText>
+          <InformationText theme={theme}>
+            <InfoLabel theme={theme}>
+
+              {LocalizedString.lookup(tr('Project Name'), locale)}:
+            </InfoLabel>
+            {this.props.projectName}
+          </InformationText>
+          <InformationText theme={theme}>
+            <InfoLabel theme={theme}>
+              {LocalizedString.lookup(tr('File Name'), locale)}:
+            </InfoLabel>
+            {this.props.fileName}
+          </InformationText>
+
+        </MobileEditorBarContainer>
+      </div>
+
+    );
     content = (
       <Slider
         isVertical={false}
@@ -316,18 +532,32 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
         minSizes={[100, 100]}
         sizes={[3, 2]}
         visible={[true, true]}
+      
       >
-        <WidgetContainer theme={theme} >
-          <EPWidget
-            theme={theme}
-            name={LocalizedString.lookup(tr('Editor'), locale)}
-            mode={Mode.Sidebar}
-            barComponents={editorBar}
-            fontSize={'1em'}
-            
-          >
-            {editor}
-          </EPWidget>
+        <WidgetContainer theme={theme}  >
+
+
+          {isMobile ? (
+            <MobileEPWidget
+              theme={theme}>
+              <MobileEditorBar theme={theme}>
+                {mobileEditorBarContent}
+              </MobileEditorBar>
+              {editor}
+            </MobileEPWidget>
+          ) : (
+
+            <EPWidget
+              theme={theme}
+              name={LocalizedString.lookup(tr('Editor'), locale)}
+              mode={Mode.Sidebar}
+              barComponents={editorBar}
+              fontSize={'1em'}
+
+            >
+              {editor}
+            </EPWidget>
+          )}
         </WidgetContainer>
 
         <WidgetContainer theme={theme}>
