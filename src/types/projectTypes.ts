@@ -1,5 +1,5 @@
 import ProgrammingLanguage from '../ProgrammingLanguage';
-
+import { FileInfo } from './fileInfo';
 export type Project = {
   projectName: string;
   projectLanguage: ProgrammingLanguage;
@@ -7,6 +7,16 @@ export type Project = {
   srcFolderFiles: string[];
   dataFolderFiles: string[];
 };
+
+export type UploadedProject = {
+  projectName: string;
+  configFile: FileInfo;
+  projectLanguage: ProgrammingLanguage;
+  includeFolderFiles: FileInfo[];
+  srcFolderFiles: FileInfo[];
+  dataFolderFiles: FileInfo[];
+}
+
 
 export const BLANK_PROJECT: Project = {
   projectName: '',
