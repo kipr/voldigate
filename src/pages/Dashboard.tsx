@@ -2,11 +2,11 @@ import * as React from 'react';
 import LocalizedString from '../util/LocalizedString';
 import HomeNavigation from '../components/HomeNavigation';
 import { StyleProps } from '../style';
-import { RouteComponentProps } from 'react-router';
+
 import { connect } from 'react-redux';
 import { State as ReduxState } from '../state';
 import { Theme, LIGHT, DARK, ThemeProps } from '../components/theme';
-export interface DashboardPublicProps extends RouteComponentProps, ThemeProps, StyleProps {
+export interface DashboardPublicProps extends  ThemeProps, StyleProps {
 
 }
 
@@ -46,9 +46,7 @@ class Dashboard extends React.PureComponent<Props, State> {
       <div style ={{ overflow: 'hidden', maxHeight: '100vh', maxWidth: '100vw'}}>
         <HomeNavigation
           theme={storedTheme}
-          history={undefined}
-          location={undefined}
-          match={undefined}
+         
           onThemeChange={this.onThemeChange_}
         />
       </div>

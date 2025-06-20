@@ -1,1 +1,0 @@
-add_test(magneto_test core magneto time)

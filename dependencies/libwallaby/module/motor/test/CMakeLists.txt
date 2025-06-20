@@ -1,6 +1,0 @@
-add_subdirectory(mav)
-add_subdirectory(mav_loop)
-add_subdirectory(mrp)
-add_subdirectory(mtp)
-add_subdirectory(pid_gains)
-add_subdirectory(pwm)

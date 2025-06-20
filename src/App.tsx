@@ -34,7 +34,7 @@ class App extends React.Component<Props, State> {
       <div style={{ maxHeight: '100vh', maxWidth: '100vw' }}>
         <Router>
           <Routes>
-            <Route path="/" element={<Dashboard history={undefined} location={undefined} match={undefined} theme={this.state.storedTheme} locale={'en-US'} />} />
+            <Route path="/" element={<Dashboard  theme={this.state.storedTheme} locale={'en-US'} />} />
           </Routes>
         </Router>
       </div>

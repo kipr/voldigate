@@ -84,16 +84,17 @@ class AboutDialog extends React.PureComponent<Props> {
           <ul>
             <li>Tim Corbly</li>
             <li>Erin Harrington</li>
-            <li>Will Hawkins</li>
+            
             <li>Braden McDorman</li>
-            <li>Zachary Sasser</li>
+           
+            <li>Thomas Wells</li>
             <li>Jack Williams</li>
             <li>Nafis Zaman</li>
           </ul>
 
-          {LocalizedString.lookup(tr('Want to help improve the simulator and get your name listed here?'), locale)} <br />
-          {LocalizedString.lookup(tr('Visit our', 'URL link to github repository follows'), locale)} <Link theme={theme} href="https://github.com/kipr/simulator" target="_blank">{LocalizedString.lookup(tr('GitHub repository'), locale)}</Link>.
-          {LocalizedString.lookup(tr('We\'re happy to help you get started!'), locale)}
+          {LocalizedString.lookup(tr('Want to help improve the IDE and get your name listed here?'), locale)} <br />
+          {LocalizedString.lookup(tr('Visit our', 'URL link to github repository follows'), locale)} <Link theme={theme} href="https://github.com/kipr/voldigate" target="_blank">{LocalizedString.lookup(tr('GitHub repository'), locale)}</Link>.
+          {LocalizedString.lookup(tr(' We\'re happy to help you get started!'), locale)}
         </Container>
       </Dialog>
     );

@@ -18,27 +18,27 @@ import { styled } from 'styletron-react';
 import { DARK, Theme } from './theme';
 import { Layout } from './Layout';
 import { StyledText } from '../util';
-import { Ivygate, Message } from 'ivygate';
+import { Message } from 'ivygate';
 import { DEFAULT_SETTINGS, Settings } from '../Settings';
 import { DEFAULT_FEEDBACK, Feedback } from '../Feedback';
 import { Editor } from './Editor';
-import { RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
 import { HomeStartOptions } from './HomeStartOptions';
 import { Modal } from '../pages/Modal';
-import { BLANK_PROJECT, Project } from '../types/projectTypes';
+import { Project, UploadedProject } from '../types/projectTypes';
 import { InterfaceMode } from '../types/interfaceModes';
 import { User } from '../types/userTypes';
-import { Motors, SensorSelectionKey, ServoType } from 'types/motorServoSensorTypes';
+import {SensorSelectionKey, ServoType } from 'types/motorServoSensorTypes';
 import { programRunContextHelper } from '../ProgramRunContext';
-
+import parseMessages, {sort, toStyledText } from '../util/parse-messages';
+import { FileInfo } from 'types/fileInfo';
 
 interface RootParams {
   sceneId?: string;
   challengeId?: string;
 }
 
-export interface RootPublicProps extends RouteComponentProps<RootParams> {
+export interface RootPublicProps {
   propFileName: string;
   propProject: Project;
   otherFileType?: string;
@@ -48,6 +48,7 @@ export interface RootPublicProps extends RouteComponentProps<RootParams> {
   loadUserDataFlag: boolean;
   addNewProject: boolean;
   addNewFile: boolean;
+  simpleProjectLoadFlag?: boolean;
   clickFile: boolean;
   deleteUserFlag?: boolean;
   downloadUserFlag?: boolean;
@@ -77,6 +78,13 @@ export interface RootPublicProps extends RouteComponentProps<RootParams> {
   propedStoppedAllServosFlag?: boolean;
   propedSensorDisplayFlag?: boolean;
   propedSensorSelection: SensorSelectionKey[];
+  propedTerminalDisplayFlag?: boolean;
+
+  propedUploadUser: User;
+  propedUploadProject: Project | UploadedProject;
+  propedUploadFiles: FileInfo[];
+  propedUploadFilesFlag: boolean;
+  propedUploadedProjectFlag: boolean;
 
   changeProjectName: (projectName: string) => void;
   setAddNewProject: (addNewProject: boolean, newProj?: Project) => void;
@@ -92,6 +100,8 @@ export interface RootPublicProps extends RouteComponentProps<RootParams> {
   resetDownloadUserFlag: (downloadUserFlag: boolean) => void;
   resetDownloadProjectFlag: (downloadProjectFlag: boolean) => void;
   resetDownloadFileFlag: (downloadFileFlag: boolean) => void;
+  resetUploadFilesFlag: (uploadFilesFlag: boolean) => void;
+  resetUploadProjectFlag: (uploadProjectFlag: boolean) => void;
   resetFileExplorerFileSelection: (resetSelectionToFile: string) => void;
   resetFileExplorerProjectSelection: (resetSelectionToProject: Project, resetSelectionToFile: string) => void;
   resetRenameUserFlag: (renameUserFlag: boolean, renamedUser?: User) => void;
@@ -107,6 +117,8 @@ export interface RootPublicProps extends RouteComponentProps<RootParams> {
   setGyroValues: (gyroValue: number) => void;
   setMagnetoValues: (magnetoValue: number) => void;
   setButtonValues: (buttonValue: number) => void;
+  //setPanelSelection(panelSelection: string): void;
+  fileExplorerOnCreation: (user: User, project: Project) => void;
 }
 
 interface RootPrivateProps {
@@ -161,8 +173,7 @@ interface RootState {
   downloadProjectFlag_?: boolean;
   downloadFileFlag_?: boolean;
   saveCodePromptFlag?: boolean;
-  //stoppedMotorFlag?: boolean;
-  //stoppedAllMotorsFlag?: boolean;
+
   layout: Layout;
   activeLanguage: ProgrammingLanguage;
   modal: Modal;
@@ -179,7 +190,7 @@ interface RootState {
   messages: Message[];
 
   rootMotorPositions: { [key: string]: number };
-  rootWidth: number;
+  rootwidth: number;
 
   analog?: number;
 }
@@ -194,7 +205,7 @@ interface ContainerProps {
 
 }
 
-const RootContainer = styled('div', (props: ContainerProps & { rootWidth: number }) => ({
+const RootContainer = styled('div', (props: ContainerProps & { rootwidth: number }) => ({
 
   width: '100%',
   height: `${props.$windowInnerHeight}px`, // fix for mobile, see https://chanind.github.io/javascript/2019/09/28/avoid-100vh-on-mobile-web.html
@@ -203,6 +214,9 @@ const RootContainer = styled('div', (props: ContainerProps & { rootWidth: number
   overflow: 'visible',
   flex: '4 1 0',
   maxHeight: '100vh',
+
+
+
 
 }));
 
@@ -215,7 +229,7 @@ const STDERR_STYLE = (theme: Theme) => ({
 });
 
 const STDWAR_STYLE = (theme: Theme) => ({
-  color: 'yellow'
+  color: theme.compileWarningColor
 });
 
 class Root extends React.Component<Props, State> {
@@ -247,7 +261,7 @@ class Root extends React.Component<Props, State> {
         'cpp': window.localStorage.getItem('code-cpp') || ProgrammingLanguage.DEFAULT_CODE['cpp'],
         'python': window.localStorage.getItem('code-python') || ProgrammingLanguage.DEFAULT_CODE['python'],
         'plaintext': window.localStorage.getItem('code-plaintext') || ProgrammingLanguage.DEFAULT_USER_DATA_CODE,
-        'scratch': window.localStorage.getItem('code-scratch') || ProgrammingLanguage.DEFAULT_CODE['scratch']
+        'graphical': window.localStorage.getItem('code-graphical') || ProgrammingLanguage.DEFAULT_CODE['graphical']
       },
       modal: Modal.NONE,
       editorConsole: StyledText.text({ text: LocalizedString.lookup(tr('Welcome to the KIPR IDE!\n'), props.locale), style: STDOUT_STYLE(this.props.propedTheme) }),
@@ -280,13 +294,13 @@ class Root extends React.Component<Props, State> {
       rootMotorPositions: {},
       //stoppedMotorFlag: false,
       //stoppedAllMotorsFlag: false,
-      rootWidth: 100
+      rootwidth: 100
     };
 
     this.editorRef = React.createRef();
     this.prevPropsRef = React.createRef();
     this.prevStateRef = React.createRef();
-    this.toSaveCodeRef = { current: { 'c': '', 'cpp': '', 'python': '', 'plaintext': '', 'scratch': '' } };
+    this.toSaveCodeRef = { current: { 'c': '', 'cpp': '', 'python': '', 'plaintext': '', 'graphical': '' } };
   }
 
   async componentDidMount() {
@@ -317,15 +331,14 @@ class Root extends React.Component<Props, State> {
       console.log("Root saveCodePromptFlag this.props: ", this.props);
       console.log("Root saveCodePromptFlag nextProps: ", nextProps);
 
+      console.log("Root saveCodePromptFlag this.state: ", this.state);
+      console.log("Root saveCodePromptFlag nextState: ", nextState);
+
       if (nextProps.propFileName === "") {
         return true;
       }
       else if ((nextProps.propFileName !== this.props.propFileName) || (nextProps.propProject !== this.props.propProject)) {
         this.saveFile_(nextProps.propFileName);
-        return false;
-      }
-
-      if (this.state.editorConsole !== nextState.editorConsole) {
         return false;
       }
 
@@ -348,6 +361,68 @@ class Root extends React.Component<Props, State> {
     const displayNowVisible = this.props.propedSensorDisplayFlag && !prevProps.propedSensorDisplayFlag;
     const displayNowHidden = !this.props.propedSensorDisplayFlag && prevProps.propedSensorDisplayFlag;
 
+
+    if (prevProps.propedUploadedProjectFlag !== this.props.propedUploadedProjectFlag && this.props.propedUploadedProjectFlag) {
+      console.log("Root compDidUpdate propedUploadProject: ", this.props.propedUploadProject);
+      console.log("Root compDidUpdate propedUploadUser: ", this.props.propedUploadUser);
+      const uploadProjectResponse = await axios.post('/upload-project', {
+        user: this.props.propedUploadUser,
+        project: this.props.propedUploadProject,
+        srcFiles: this.props.propedUploadProject.srcFolderFiles,
+        includeFiles: this.props.propedUploadProject.includeFolderFiles,
+        dataFiles: this.props.propedUploadProject.dataFolderFiles
+      });
+
+      if (uploadProjectResponse.status === 200) {
+        console.log("Root compDidUpdate uploadProjectResponse: ", uploadProjectResponse.data);
+        this.props.onLoadUserData(await this.loadUserProjects(false, false, this.props.propedUploadUser), this.props.propedUploadUser, false);
+        this.props.resetUploadProjectFlag(false); // Reset the flag and indicate success
+        const files = this.props.propedUploadProject.srcFolderFiles as FileInfo[];
+        const mainFile = files.find(file => file.name.includes('main'));
+
+        if (mainFile) {
+          console.log("Root compDidUpdate mainFile: ", mainFile);
+          this.toSaveCodeRef.current = {
+            ...this.toSaveCodeRef.current,
+            [this.props.propedUploadProject.projectLanguage]: mainFile.content
+          };
+        }
+        this.props.setRootInfo(this.props.propedUploadUser, uploadProjectResponse.data.createdProject, mainFile.name, this.props.propedUploadProject.projectLanguage);
+
+        this.setState({
+          rootUser: this.props.propedUploadUser,
+          rootProject: uploadProjectResponse.data.createdProject,
+          userName: this.props.propedUploadUser.userName,
+          projectName: uploadProjectResponse.data.createdProject.projectName,
+          fileName: `main.${this.props.propedUploadProject.projectLanguage}`,
+          activeLanguage: this.props.propedUploadProject.projectLanguage,
+          isEditorPageVisible: true,
+          isHomeStartOptionsVisible: this.state.isHomeStartOptionsVisible ? false : this.state.isHomeStartOptionsVisible,
+        })
+      }
+      else {
+        console.error("Root compDidUpdate uploadProjectResponse failed: ", uploadProjectResponse.data);
+        this.props.resetUploadProjectFlag(false); // Reset the flag and indicate failure
+      }
+
+    }
+    if (prevProps.propedUploadFilesFlag !== this.props.propedUploadFilesFlag && this.props.propedUploadFilesFlag) {
+      console.log("Root compDidUpdate propedUploadFile: ", this.props.propedUploadFiles);
+      console.log("Root compDidUpdate propedUploadUser: ", this.props.propedUploadUser);
+      console.log("Root compDidUpdate propedUploadProject: ", this.props.propedUploadProject);
+
+      const uploadFileResponse = await axios.post('/upload-file', {
+        user: this.props.propedUploadUser,
+        project: this.props.propedUploadProject,
+        files: this.props.propedUploadFiles
+      });
+      console.log("Root compDidUpdate uploadFileResponse: ", uploadFileResponse.data);
+      this.props.onLoadUserData(await this.loadUserProjects(false, false, this.props.propedUploadUser), this.props.propedUploadUser, false);
+
+    }
+    if (prevProps.simpleProjectLoadFlag !== this.props.simpleProjectLoadFlag && this.props.simpleProjectLoadFlag) {
+      console.log("Root compDidUpdate simpleProjectLoadFlag: ", this.props.simpleProjectLoadFlag);
+    }
     if (prevProps.propedSensorSelection !== this.props.propedSensorSelection) {
       console.log("Root compDidUpdate propedSensorSelection: ", this.props.propedSensorSelection);
       this.sendSensorMessage(this.props.propedSensorSelection);
@@ -393,6 +468,10 @@ class Root extends React.Component<Props, State> {
       console.log("Root compDidUpdate renameFileFlag: ", this.props.renameFileFlag);
       this.renameFile_();
     }
+    if (prevProps.propedMotorView !== this.props.propedMotorView) {
+      console.log("Root compDidUpdate propedMotorView: ", this.props.propedMotorView, "from: ", prevProps.propedMotorView);
+
+    }
     if (prevProps.propedServoPositions !== this.props.propedServoPositions) {
       console.log("Root compDidUpdate propedServoPositions: ", this.props.propedServoPositions);
 
@@ -410,7 +489,7 @@ class Root extends React.Component<Props, State> {
           if (next.enable === true) {
             this.enableServo(next);
           }
-          else if(next.enable === false) {
+          else if (next.enable === false) {
             this.disableServos([next]);
           }
 
@@ -472,11 +551,55 @@ class Root extends React.Component<Props, State> {
     }
 
     if (prevProps.propedTheme.themeName !== this.props.propedTheme.themeName) {
-      const rawText = StyledText.toString(this.state.editorConsole);
+      const messages = this.state.messages;
+
+      const getStyleForText = (text: string): React.CSSProperties => {
+        const matchedMessage = messages.find(
+          m => m.message === text || m.file === text
+        );
+
+        if (matchedMessage) {
+          switch (matchedMessage.severity) {
+            case "error":
+              return STDERR_STYLE(this.props.propedTheme);
+            case "warning":
+              return STDWAR_STYLE(this.props.propedTheme);
+            default:
+              return STDOUT_STYLE(this.props.propedTheme);
+          }
+        }
+
+        return STDOUT_STYLE(this.props.propedTheme);
+      };
+
+      const applyStyleUpdate = (node: StyledText): StyledText => {
+        switch (node.type) {
+          case StyledText.Type.Text:
+            return {
+              ...node,
+              style: {
+                ...node.style,
+                ...getStyleForText(node.text)
+              }
+            };
+          case StyledText.Type.Composition:
+            return {
+              ...node,
+              items: node.items.map(applyStyleUpdate)
+            };
+          default:
+            return node;
+        }
+      };
+
+
+      const updatedConsole = applyStyleUpdate(this.state.editorConsole);
+
 
       this.setState({
         theme: this.props.propedTheme,
-        editorConsole: StyledText.text({ text: LocalizedString.lookup(tr(rawText), this.props.locale), style: STDOUT_STYLE(this.props.propedTheme) })
+        //editorConsole: StyledText.text({ text: LocalizedString.lookup(tr(rawText), this.props.locale), style: STDOUT_STYLE(this.props.propedTheme) })
+        editorConsole: updatedConsole,
       });
     }
 
@@ -495,7 +618,10 @@ class Root extends React.Component<Props, State> {
     if (prevProps.loadUserDataFlag !== this.props.loadUserDataFlag && this.props.loadUserDataFlag) {
       console.log("Root compdidUpdate loadUserDataFlag: ", this.props.loadUserDataFlag);
       console.log("Root compDidUpdate loadUserDataFlag props.propUser: ", this.props.propUser);
-      this.props.onLoadUserData(await this.loadUserProjects(false, false, this.props.propUser));
+      const userProj = await this.loadUserProjects(false, false, this.props.propUser);
+      console.log("Root compDidUpdate loadUserDataFlag userProj: ", userProj);
+      this.props.onLoadUserData(userProj, this.props.propUser, false, this.props.propUser.userName);
+      //this.props.onLoadUserData(await this.loadUserProjects(false, false, this.props.propUser));
     }
 
     if (prevProps.deleteUserFlag !== this.props.deleteUserFlag && this.props.deleteUserFlag) {
@@ -598,7 +724,7 @@ class Root extends React.Component<Props, State> {
       this.clearTempName_();
     }
     //console.log("Root clickFile: ", this.props.clickFile);
-    if ((this.props.clickFile && this.state.saveCodePromptFlag == false)) {
+    else if ((this.props.clickFile && this.state.saveCodePromptFlag == false)) {
 
       const { propUser, propProject, propActiveLanguage, propFileName, otherFileType } = this.props;
       console.log("Root clickFile passed in: ", propUser, propProject, "propActiveLanguage: ", propActiveLanguage, "propFileName: ", propFileName, "otherFileType: ", otherFileType);
@@ -618,8 +744,14 @@ class Root extends React.Component<Props, State> {
         case 'c':
         case 'cpp':
         case 'py':
-        case 'scratch':
-          const rootUpdateCode = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUser.userName}/${propProject.projectName}/src/${propFileName}` } });
+        case 'graphical':
+          console.log("Root clickFile state: ", this.state);
+          console.log("Root clickFile props: ", this.props);
+          let rootUpdateCode: AxiosResponse<string>;
+          rootUpdateCode = this.state.tempNewFile ?
+            await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUser.userName}/${propProject.projectName}/src/${this.state.tempNewFile}` } }) :
+            await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUser.userName}/${propProject.projectName}/src/${propFileName}` } });
+          console.log("Root clickFile rootUpdateCode: ", rootUpdateCode.data);
           this.setState({
             code: {
               ...this.state.code,
@@ -742,16 +874,15 @@ class Root extends React.Component<Props, State> {
   };
   private startSensorWebSocket = async () => {
     console.log("Before websocket create");
-   // this.socket = new WebSocket('ws://localhost:3000'); // DEVELOPMENT ONLY
-    this.socket = new WebSocket('ws://192.168.86.44:3000'); // WOMBAT
-
-    //this.socket = new WebSocket('ws://192.168.125.1:3000'); //USE THIS FOR PRODUCTION
+    //this.socket = new WebSocket('ws://localhost:8888'); // DEVELOPMENT ONLY
+    //this.socket = new WebSocket('ws://192.168.86.30:8888'); // WOMBAT
+    this.socket = new WebSocket('ws://192.168.125.1:8888'); //USE THIS FOR PRODUCTION
     console.log("After websocket create");
     this.socket.onopen = () => {
       console.log('WebSocket connection opened');
 
     };
-
+    ///////
 
     this.socket.onclose = () => {
       console.log("WebSocket closed");
@@ -770,11 +901,41 @@ class Root extends React.Component<Props, State> {
     }
   };
 
-  private handleSensorDisplayChange = (visible: boolean) => {
-    if (this.socket?.readyState === WebSocket.OPEN) {
-      this.socket.send(JSON.stringify({ type: visible ? "start-analog" : "stop-analog" }));
+  private terminalSocket?: WebSocket;
+
+  private startTerminalWebSocket = () => {
+    console.log("Before terminal websocket create");
+    //this.terminalSocket = new WebSocket('ws://192.168.125.1:8888/ws/terminal'); //USE THIS FOR PRODUCTION
+    this.terminalSocket = new WebSocket('ws://localhost:8888/ws/terminal'); // DEVELOPMENT ONLY
+    console.log("After terminal websocket create");
+    this.terminalSocket.onopen = () => {
+      console.log('Terminal WebSocket connection opened');
+
     }
-  };
+
+    this.terminalSocket.onmessage = (event) => {
+      const output = event.data;
+      console.log("Root terminalSocket onmessage output: ", output);
+    };
+
+    this.terminalSocket.onclose = () => {
+      console.log("Terminal WebSocket closed");
+    };
+    this.terminalSocket.onerror = (err) => {
+      console.error("Terminal WebSocket error:", err);
+    }
+
+  }
+
+  private stopTerminalWebSocket = () => {
+    if (this.terminalSocket) {
+      this.terminalSocket.close();
+      this.terminalSocket = undefined;
+    }
+  }
+
+
+
   private enableServo = async (servo: ServoType) => {
     console.log("Root enableServo servo: ", servo);
     let servoNumber: number = parseInt(servo.name.split(' ')[1]);
@@ -893,7 +1054,7 @@ class Root extends React.Component<Props, State> {
       case 'c':
       case 'cpp':
       case 'py':
-      case 'scratch':
+      case 'graphical':
         console.log("ROOT UPDATECODE");
         console.log(`Root Update Code: /home/kipr/Documents/KISS/${propUser.userName}/${propProject.projectName}/src/${tempNewFile}`);
         const rootUpdateCode = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUser.userName}/${propProject.projectName}/src/${tempNewFile}` } });
@@ -1364,6 +1525,7 @@ class Root extends React.Component<Props, State> {
     }, async () => {
       console.log("Root onCloseProjectDialog_ AFTER state.rootUser: ", this.state.rootUser);
       this.toSaveCodeRef.current = { ...this.toSaveCodeRef.current, [newProjLanguage]: ProgrammingLanguage.DEFAULT_CODE[newProjLanguage] };
+      console.log("Root onCloseProjectDialog_ toSaveCodeRef: ", this.toSaveCodeRef.current);
       if (this.state.isHomeStartOptionsVisible == true) {
         this.setState({
           isHomeStartOptionsVisible: false
@@ -1371,6 +1533,7 @@ class Root extends React.Component<Props, State> {
       }
 
       if (this.state.isEditorPageVisible == false) {
+        this.props.fileExplorerOnCreation(this.state.rootUser, this.state.rootProject);
         this.setState({
           isEditorPageVisible: true
         });
@@ -1378,6 +1541,7 @@ class Root extends React.Component<Props, State> {
 
       this.props.onLoadUserData(await this.loadUserProjects(false, true, this.state.rootUser), this.state.rootUser);
       if (this.props.addNewProject) {
+
         this.setState({
           addNewProject: false
         });
@@ -1409,11 +1573,11 @@ class Root extends React.Component<Props, State> {
       case 'c':
       case 'cpp':
       case 'py':
-        this.toSaveCodeRef.current = { ...this.toSaveCodeRef.current, [activeLanguage]: ProgrammingLanguage.DEFAULT_CODE[activeLanguage] };
+        this.toSaveCodeRef.current = { ...this.toSaveCodeRef.current, [activeLanguage]: ProgrammingLanguage.BLANK_CODE[activeLanguage] };
         this.setState({
           code: {
             ...this.state.code,
-            [this.state.activeLanguage]: ProgrammingLanguage.DEFAULT_CODE[this.state.activeLanguage]
+            [this.state.activeLanguage]: ProgrammingLanguage.BLANK_CODE[this.state.activeLanguage]
           }
         }, async () => {
           filePath = `${prePath}/${userName}/${projectName}/src/${newFileName}.${fileType}`;
@@ -1501,13 +1665,14 @@ class Root extends React.Component<Props, State> {
 
   private onOpenUserProject_ = async (passedUser: User, project: Project, fileName: string, projectLanguage: ProgrammingLanguage) => {
     const [file, extension] = fileName.split('.');
-
+    console.log("Root onOpenUserProject passed in: ", passedUser, project, fileName, projectLanguage);
     let filePath = '';
 
     switch (extension) {
       case 'c':
       case 'cpp':
       case 'py':
+      case 'graphical':
         filePath = `/home/kipr/Documents/KISS/${passedUser.userName}/${project.projectName}/src/${fileName}`;
         break;
       case 'h':
@@ -1519,23 +1684,25 @@ class Root extends React.Component<Props, State> {
     }
     const getProjects = await this.loadUserProjects(true, false, passedUser);
     let toOpenProject = getProjects.find(project => project.projectName === project.projectName);
+    console.log("Root onOpenUserProject filePath: ", filePath);
+    console.log("Root onOpenUserProject toOpenProject: ", toOpenProject);
     console.log("ROOT ONOPENUSERPROJECT");
     let toOpenProjectMainCode = await axios.get('/get-file-contents', { params: { filePath: `${filePath}` } });
     this.toSaveCodeRef.current = { ...this.toSaveCodeRef.current, [projectLanguage]: toOpenProjectMainCode.data };
     this.setState({
       rootUser: passedUser,
       userName: passedUser.userName,
-      projectName: toOpenProject.projectName,
-      rootProject: toOpenProject,
-      activeLanguage: toOpenProject.projectLanguage,
+      projectName: project.projectName,
+      rootProject: project,
+      activeLanguage: project.projectLanguage,
       code: {
         ...this.state.code,
-        [toOpenProject.projectLanguage]: toOpenProjectMainCode.data
+        [project.projectLanguage]: toOpenProjectMainCode.data
       },
       fileName: fileName,
       isEditorPageVisible: true,
     }, async () => {
-      this.props.setRootInfo(passedUser, toOpenProject, fileName, projectLanguage);
+      this.props.setRootInfo(passedUser, project, fileName, projectLanguage);
       this.props.onLoadUserData(await this.loadUserProjects(false, true, this.state.rootUser), this.state.rootUser);
     });
 
@@ -1556,20 +1723,43 @@ class Root extends React.Component<Props, State> {
 
   private onCodeChange_ = (code: string) => {
     console.log("Root onCodeChange_ code: ", code);
-    this.toSaveCodeRef.current = { ...this.toSaveCodeRef.current, [this.state.activeLanguage]: code };
 
     const { activeLanguage } = this.state;
 
-    if (this.toSaveCodeRef.current[activeLanguage] !== ProgrammingLanguage.DEFAULT_CODE[activeLanguage]) {
-      if (this.state.code[activeLanguage] !== code && this.state.saveCodePromptFlag == false) {
-        this.setState({
-          saveCodePromptFlag: true,
-        });
+    const prevCode = this.toSaveCodeRef.current?.[activeLanguage] ?? "";
+    const defaultCode = ProgrammingLanguage.DEFAULT_CODE[activeLanguage];
+
+    console.log("Root onCodeChange_ prevCode: ", prevCode);
+    console.log("Root onCodeChange_ newCode: ", code);
+    console.log("Root onCodeChange_ saveFlag: ", this.state.saveCodePromptFlag);
+
+    // Compare before updating
+    if (prevCode !== defaultCode && prevCode !== '') {
+      if (prevCode !== code && this.state.saveCodePromptFlag === false) {
+        console.log("SAVEEEEEEE");
+        this.setState(
+          {
+            saveCodePromptFlag: true,
+          },
+          () => {
+            console.log("Root onCodeChange_ AFTER state: ", this.state);
+          }
+        );
       }
     }
+
+    // Update ref after checking
+    this.toSaveCodeRef.current = {
+      ...this.toSaveCodeRef.current,
+      [activeLanguage]: code,
+    };
   };
 
+
   private eventSource: EventSource | null = null;
+  private onErrorMessageClick_ = (line: number) => () => {
+    if (this.editorRef.current) this.editorRef.current.ivygate.revealLineInCenter(line);
+  };
 
   private onRunClick_ = async () => {
     const { props, state } = this;
@@ -1601,16 +1791,18 @@ class Root extends React.Component<Props, State> {
       if (filteredLines.length === 0) return; // nothing to append
 
       const cleanOutput = filteredLines.join("\n");
+      console.log("Root onRunClick_ cleanOutput: ", cleanOutput);
 
-      const nextConsole = StyledText.extend(
-        this.state.editorConsole,
-        StyledText.text({
-          text: LocalizedString.lookup(tr(cleanOutput + '\n'), locale),
-          style: STDOUT_STYLE(this.state.theme)
-        })
-      );
 
-      this.setState({ editorConsole: nextConsole });
+      this.setState((prevState) => ({
+        editorConsole: StyledText.extend(
+          prevState.editorConsole,
+          StyledText.text({
+            text: LocalizedString.lookup(tr(cleanOutput + '\n'), locale),
+            style: STDOUT_STYLE(prevState.theme)
+          })
+        )
+      }));
     };
 
     this.eventSource.onerror = (error) => {
@@ -1643,7 +1835,7 @@ class Root extends React.Component<Props, State> {
 
     console.log("onCompileClick toSaveCodeRef: ", this.toSaveCodeRef.current);
     try {
-      if (this.toSaveCodeRef !== undefined) {
+      if (this.toSaveCodeRef !== undefined && this.toSaveCodeRef.current[activeLanguage] != '') {
         await this.onSaveCode_();
       }
 
@@ -1660,74 +1852,166 @@ class Root extends React.Component<Props, State> {
       }, async () => {
 
         let response: AxiosResponse<any>;
-        if (activeLanguage === 'scratch') {
-          console.log("Root onCompileClick scratch: /convert-xml-to-c");
-          response = await axios.post('/convert-xml-to-c', { filePath: `/home/kipr/Documents/KISS/${userName}/${projectName}/src/xmlToC.c`,xml: this.toSaveCodeRef.current[activeLanguage] });
-          console.log("Root onCompileClick response: ", response);
+        let messages: Message[];
 
-          response = await axios.post('/compile-code', { userName, projectName, fileName: 'xmlToC.c', activeLanguage });
+        if (activeLanguage === 'graphical') {
+
+          if (this.toSaveCodeRef.current[activeLanguage] === undefined || this.toSaveCodeRef.current[activeLanguage] === '') {
+            console.log("nothing to compile!");
+            const failedResponse: AxiosResponse<any> = {
+              data: { message: 'Nothing to compile!' },
+              status: 200,
+              statusText: 'OK',
+              headers: {},
+              config: {
+                headers: undefined
+              },
+            };
+            response = failedResponse;
+          } else {
+            console.log("Root onCompileClick graphical: /convert-xml-to-c");
+            response = await axios.post('/convert-xml-to-c', { filePath: `/home/kipr/Documents/KISS/${userName}/${projectName}/src/xmlToC.c`, xml: this.toSaveCodeRef.current[activeLanguage] });
+            console.log("Root onCompileClick response: ", response);
+
+            if (response.data.error === 'No blocks found!') {
+              console.log("NO BLOCKS");
+
+            }
+            else {
+              response = await axios.post('/compile-code', { userName, projectName, fileName: 'xmlToC.c', activeLanguage });
+              console.log("Root onCompileClick response after compile-code: ", response);
+            }
+          }
+
+          console.log("Response.data.message: ", response.data.message);
+
         }
         else {
           console.log("Root onCompileClick else: /compile-code");
           response = await axios.post('/compile-code', { userName, projectName, fileName, activeLanguage }); // This calls the backend route
+          console.log("Root onCompileClick response: ", response);
         }
         let nextConsole: StyledText;
 
         switch (activeLanguage) {
           case 'c':
           case 'cpp': {
+
+            if (response.data.message === 'successful') {
+              if (response.data.warnings && response.data.warnings.length > 0) {
+                messages = sort(parseMessages(response.data.warnings));
+                console.log("Root onCompileClick warning messages: ", messages);
+                for (const message of messages) {
+                  if (nextConsole === undefined) {
+
+                    nextConsole = StyledText.extend(compilingConsole, StyledText.text({
+                      text: LocalizedString.lookup(tr(`${message.file}\n`), locale),
+                      style: STDWAR_STYLE(this.state.theme)
+                    }));
+                  }
+                  nextConsole = StyledText.extend(nextConsole, toStyledText(message, this.state.theme, {
+                    onClick: message.ranges.length > 0
+                      ? this.onErrorMessageClick_(message.ranges[0].start.line)
+                      : undefined
+                  }));
+
+                }
+                nextConsole = StyledText.extend(nextConsole, StyledText.text({
+                  text: LocalizedString.lookup(tr('Compilation Succeeded with Warnings!\n'), locale),
+                  style: STDOUT_STYLE(this.state.theme)
+                }));
+              }
+              else {
+                nextConsole = StyledText.extend(compilingConsole, StyledText.text({
+                  text: LocalizedString.lookup(tr('Compilation Succeeded!\n'), locale),
+                  style: STDOUT_STYLE(this.state.theme)
+                }));
+              }
+
+            }
+
+            else if (response.data.message === 'failed') {
+
+              messages = sort(parseMessages(response.data.error));
+
+              for (const message of messages) {
+                if (nextConsole === undefined) {
+
+                  nextConsole = StyledText.extend(compilingConsole, StyledText.text({
+                    text: LocalizedString.lookup(tr(`${message.file}\n`), locale),
+                    style: STDERR_STYLE(this.state.theme)
+                  }));
+                }
+                nextConsole = StyledText.extend(nextConsole, toStyledText(message, this.state.theme, {
+                  onClick: message.ranges.length > 0
+                    ? this.onErrorMessageClick_(message.ranges[0].start.line)
+                    : undefined
+                }));
+
+              }
+              nextConsole = StyledText.extend(nextConsole, StyledText.text({
+                text: LocalizedString.lookup(tr('Compilation failed.\n'), locale),
+                style: STDERR_STYLE(this.state.theme)
+              }));
+              console.log("Root onCompileClick nextConsole: ", nextConsole);
+            }
+            this.setState({
+              messages: messages,
+              editorConsole: nextConsole
+            });
+            break;
+          }
+          case 'python': {
             if (response.data.message === 'successful') {
               nextConsole = StyledText.extend(compilingConsole, StyledText.text({
-                text: LocalizedString.lookup(tr('Compilation Succeded!\n'), locale),
+                text: LocalizedString.lookup(tr('Compilation Succeeded!\n'), locale),
                 style: STDOUT_STYLE(this.state.theme)
               }));
             }
-            else if (response.data.message === 'failed') {
+            else {
 
-              let errorRegex = /\/home\/kipr\/Documents\/KISS\/([^:\n]+:\d+:\d+: error: .*?)\n/g;
-              let errorMatches = [...response.data.output.matchAll(errorRegex)];
-              let filteredError = errorMatches.map(match => match[1]).join('\n');
+              let wombatDirectory = '/home/kipr/Documents/KISS/';
+              let filteredError = response.data.error.replaceAll(wombatDirectory, '');
+              console.log("Root onCompileClick filteredError: ", filteredError);
 
-              const warningRegex = /\/home\/kipr\/Documents\/KISS\/([^:\n]+:\d+:\d+: warning: .*?)\n/g;
-              const warningMatches = [...response.data.output.matchAll(warningRegex)];
-
-              if (filteredError.length == 0) {
-                errorRegex = /-lkipr\s*([\s\S]*)/g;
-                errorMatches = [...response.data.output.matchAll(errorRegex)];
-                filteredError = errorMatches.map(match => match[1]).join('\n');
-              }
-
-              nextConsole = StyledText.extend(compilingConsole, StyledText.text({
-                text: LocalizedString.lookup(tr(`${filteredError}\n`), locale),
-                style: STDERR_STYLE(this.state.theme)
-              }));
-
-              if (warningMatches.length > 0) {
-                const filteredWarning = "Compilation Succeeded with Warnings\n" + warningMatches.map(match => match[1]).join('\n');
-                nextConsole = StyledText.extend(nextConsole, StyledText.text({
-                  text: LocalizedString.lookup(tr(`${filteredWarning}\n`), locale),
-                  style: STDWAR_STYLE(this.state.theme)
-                }));
-              }
+              nextConsole = StyledText.extend(
+                compilingConsole,
+                StyledText.text({
+                  text: LocalizedString.lookup(tr('Compilation Failed!\n'), locale) + filteredError,
+                  style: STDERR_STYLE(this.state.theme),
+                })
+              );
             }
             this.setState({
               editorConsole: nextConsole
             });
             break;
           }
-          case 'scratch': 
-          case 'python': {
-            if (response.data.message === 'successful') {
+          case 'graphical': {
+            console.error("Root onCompileClick graphical: ", response.data);
+            console.log("Root onCompileClick graphical state: ", this.state);
+            if (response.data.error === 'No blocks found!') {
+              console.log("Root onCompileClick graphical: No blocks found!");
               nextConsole = StyledText.extend(compilingConsole, StyledText.text({
-                text: LocalizedString.lookup(tr('Compilation Succeded!\n'), locale),
-                style: STDOUT_STYLE(this.state.theme)
-              }));
-            }
-            else {
-              nextConsole = StyledText.extend(compilingConsole, StyledText.text({
-                text: LocalizedString.lookup(tr('Compilation Failed!\n'), locale),
+                text: LocalizedString.lookup(tr('No blocks found! Please add blocks to your graphical project.\n'), locale),
                 style: STDERR_STYLE(this.state.theme)
               }));
+            } else if (response.data.message === 'Nothing to compile!') {
+              console.log("Root onCompileClick graphical: Nothing to compile!");
+              nextConsole = StyledText.extend(compilingConsole, StyledText.text({
+                text: LocalizedString.lookup(tr('Nothing to compile! Please add blocks to your graphical project.\n'), locale),
+                style: STDERR_STYLE(this.state.theme)
+              }));
+
+            }
+            else if (response.data.message === 'successful') {
+              console.log("Root onCompileClick graphical: Compilation Succeeded!");
+              nextConsole = StyledText.extend(compilingConsole, StyledText.text({
+                text: LocalizedString.lookup(tr('Compilation Succeeded!\n'), locale),
+                style: STDOUT_STYLE(this.state.theme)
+              }));
+
+
             }
             this.setState({
               editorConsole: nextConsole
@@ -1748,7 +2032,12 @@ class Root extends React.Component<Props, State> {
     const { locale } = this.props;
     const { editorConsole } = this.state;
 
-    let savingConsole: StyledText = StyledText.extend(editorConsole, StyledText.text({
+
+    let savingConsole: StyledText = StyledText.text({
+      text: LocalizedString.lookup(tr(''), locale),
+      style: STDOUT_STYLE(this.state.theme)
+    });
+    savingConsole = StyledText.extend(savingConsole, StyledText.text({
       text: LocalizedString.lookup(tr('Saving...\n'), locale),
       style: STDOUT_STYLE(this.state.theme)
     }));
@@ -1773,7 +2062,7 @@ class Root extends React.Component<Props, State> {
         case 'c':
         case 'cpp':
         case 'py':
-        case 'scratch':
+        case 'graphical':
 
           filePath = `${prePath}/${userName}/${projectName}/src/${fileName}`;
           break;
@@ -1787,6 +2076,17 @@ class Root extends React.Component<Props, State> {
 
       }
       const updateFileContent = await axios.post('/save-file-content', { filePath, fileContents });
+      console.log("onSaveCode_ updateFileContent: ", updateFileContent);
+      if (updateFileContent.status === 200 && updateFileContent.data === 'File saved successfully') {
+        let savedConsole: StyledText = StyledText.extend(this.state.editorConsole, StyledText.text({
+          text: LocalizedString.lookup(tr('File saved successfully!\n'), this.props.locale),
+          style: STDOUT_STYLE(this.state.theme)
+
+        }));
+        this.setState({
+          editorConsole: savedConsole
+        });
+      }
 
       this.setState({
         code: {
@@ -1960,8 +2260,8 @@ class Root extends React.Component<Props, State> {
                 toSaveCode_: undefined
               });
               break;
-            case 'scratch':
-              saveFileResponse = await axios.post('/save-file-content', { filePath: `/home/kipr/Documents/KISS/${this.state.userName}/${this.state.projectName}/src/${this.state.fileName}`, fileContents: this.toSaveCodeRef.current.scratch });
+            case 'graphical':
+              saveFileResponse = await axios.post('/save-file-content', { filePath: `/home/kipr/Documents/KISS/${this.state.userName}/${this.state.projectName}/src/${this.state.fileName}`, fileContents: this.toSaveCodeRef.current.graphical });
               this.setState({
                 code: {
                   ...this.state.code,
@@ -1969,7 +2269,7 @@ class Root extends React.Component<Props, State> {
                 },
                 saveCodePromptFlag: false,
                 fileName: this.state.tempNewFile,
-                activeLanguage: 'scratch',
+                activeLanguage: 'graphical',
                 toSaveCode_: undefined
               });
               break;
@@ -2088,6 +2388,11 @@ class Root extends React.Component<Props, State> {
       else if (action == 'cancel') {
         console.log("Root onModalClose_ cancel action");
         this.props.resetFileExplorerProjectSelection(this.state.rootProject, this.state.fileName);
+        if (this.state.tempNewFile) {
+          this.setState({
+            tempNewFile: ''
+          })
+        }
       }
     }
     if (this.props.renameUserFlag) {
@@ -2102,15 +2407,19 @@ class Root extends React.Component<Props, State> {
   }
 
   private onClearConsole_ = () => {
-
+    console.log("ROOT CLEAR CONSOLE");
     this.setState({
       editorConsole: StyledText.text({ text: LocalizedString.lookup(tr(''), this.props.locale), style: STDOUT_STYLE(DARK) }),
     });
   };
 
-  // private onIndentCode_ = () => {
-  //   if (this.editorRef.current) this.editorRef.current.ivygate.formatCode();
-  // };
+  private onIndentCode_ = () => {
+    console.log("Root onIndentCode_ state: ", this.state);
+    console.log("Root onIndentCode_ props: ", this.props);
+    console.log("Root onIndentCode_ editorRef: ", this.editorRef.current);
+    if (this.editorRef.current) this.editorRef.current.ivygate.formatCode();
+    console.log("Root onIndentCode_ after editorRef: ", this.editorRef.current);
+  };
 
   private onLanguageChange_ = (language: ProgrammingLanguage) => {
     this.setState({
@@ -2159,14 +2468,15 @@ class Root extends React.Component<Props, State> {
       toRenameName_,
       toRenameType_,
       theme,
-      rootWidth
+      rootwidth,
+      messages
 
     } = state;
 
     console.log("Root render state: ", this.state);
     console.log("Root render props: ", this.props);
     return (
-      <RootContainer $windowInnerHeight={windowInnerHeight} rootWidth={this.state.rootWidth}>
+      <RootContainer $windowInnerHeight={windowInnerHeight} rootwidth={this.state.rootwidth}>
 
         {modal.type === Modal.Type.About && (
           <AboutDialog
@@ -2213,7 +2523,7 @@ class Root extends React.Component<Props, State> {
             isRunning={this.state.isRunning}
             editorTarget={undefined}
             editorConsole={editorConsole}
-            messages={[]}
+            messages={messages}
             code={this.toSaveCodeRef.current}
             language={activeLanguage}
             settings={DEFAULT_SETTINGS}
@@ -2223,9 +2533,9 @@ class Root extends React.Component<Props, State> {
             onRunClick={this.onRunClick_}
             onStopClick={this.onStopClick_}
             onCompileClick={this.onCompileClick_}
-            onIndentCode={() => { }}
+            onIndentCode={this.onIndentCode_}
             onDownloadCode={() => { }}
-            editorRef={undefined}
+            editorRef={this.editorRef}
             theme={theme}
             onDocumentationSetLanguage={() => { }}
             projectName={rootProject.projectName}

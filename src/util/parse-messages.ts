@@ -2,6 +2,7 @@
 
 import { Message } from 'ivygate';
 import { StyledText } from './StyledText';
+import { Theme, ThemeProps } from '../components/theme';
 
 export const hasErrors = (messages: Message[]) => {
   for (const message of messages) {
@@ -28,6 +29,9 @@ export default (stderr: string) => {
     
     if (parts.length < 5) continue;
 
+    let wombatDirectory = '/home/kipr/Documents/KISS/';
+    const fileName = parts[0].trim().slice(wombatDirectory.length);
+    console.log("Parse messages fileName:", fileName);
     const lineNumber = +parts[1];
     const column = +parts[2];
     const type = parts[3].trim();
@@ -48,6 +52,7 @@ export default (stderr: string) => {
       case 'fatal error':
       case 'error': {
         ret.push({
+          file: fileName,
           severity: 'error', 
           ranges: [{
             start: {
@@ -62,6 +67,7 @@ export default (stderr: string) => {
       }
       case 'warning': {
         ret.push({
+          file: fileName,
           severity: 'warning', 
           ranges: [{
             start: {
@@ -80,17 +86,17 @@ export default (stderr: string) => {
   return ret;
 };
 
-const ERROR_STYLE = (props: React.HTMLProps<HTMLSpanElement>): React.CSSProperties => ({
+const ERROR_STYLE = (theme: Theme, props: React.HTMLProps<HTMLSpanElement>): React.CSSProperties => ({
   color: 'red',
   cursor: props && props.onClick ? 'pointer' : undefined
 });
 
-const WARNING_STYLE = (props: React.HTMLProps<HTMLSpanElement>): React.CSSProperties => ({
-  color: 'yellow',
+const WARNING_STYLE = (theme: Theme,props: React.HTMLProps<HTMLSpanElement>): React.CSSProperties => ({
+  color: theme.compileWarningColor || 'yellow',
   cursor: props && props.onClick ? 'pointer' : undefined
 });
 
-const INFO_STYLE = (props: React.HTMLProps<HTMLSpanElement>): React.CSSProperties => ({
+const INFO_STYLE = (theme: Theme, props: React.HTMLProps<HTMLSpanElement>): React.CSSProperties => ({
   color: 'white',
   cursor: props && props.onClick ? 'pointer' : undefined
 });
@@ -103,21 +109,22 @@ const ORDERING = {
 
 export const sort = (message: Message[]) => message.sort((a, b) => ORDERING[a.severity] - ORDERING[b.severity]);
 
-export const toStyledText = (message: Message, props?: React.HTMLProps<HTMLSpanElement>) => {
+export const toStyledText = (message: Message, theme: Theme, props?: React.HTMLProps<HTMLSpanElement>) => {
+  console.log("toStyledText theme:", theme);
   switch (message.severity) {
     case 'error': return StyledText.text({
       text: `${message.message}\n`,
-      style: ERROR_STYLE(props),
+      style: ERROR_STYLE(theme, props),
       props
     });
     case 'warning': return StyledText.text({
       text: `${message.message}\n`,
-      style: WARNING_STYLE(props),
+      style: WARNING_STYLE(theme, props),
       props
     });
     case 'info': return StyledText.text({
       text: `${message.message}\n`,
-      style: INFO_STYLE(props),
+      style: INFO_STYLE(theme,props),
       props
     });
   }

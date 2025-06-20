@@ -10,6 +10,14 @@ import { ThemeProps } from './theme';
 import { connect } from 'react-redux';
 import { State as ReduxState } from '../state';
 import { Modal } from '../pages/Modal';
+import { DocumentationWindow } from 'ivygate';
+import { DocumentationAction } from 'ivygate/dist/state/reducer';
+import documentation from '../../dependencies/libkipr_voldigate/libkipr_build_c/documentation/json.json';
+import DocumentationLocation from 'ivygate/dist/state/State/Documentation/DocumentationLocation';
+import { Size } from 'ivygate/dist/components/interface/Widget';
+
+
+
 
 export interface MenuPublicProps extends StyleProps, ThemeProps { }
 
@@ -21,7 +29,20 @@ interface MenuState {
   modal: Modal;
 }
 
-type Props = MenuPublicProps & MenuPrivateProps;
+const mapDispatchToProps = (dispatch) => ({
+  openDocumentation: () => {
+    console.log("Open Documentation");
+    dispatch(DocumentationAction.setSize({ size: Size.PARTIAL }));
+    // dispatch(DocumentationAction.pushLocation({ location: DocumentationLocation.NONE }));
+  },
+  closeDocumentation: () => {
+    dispatch(DocumentationAction.setSize({ size: Size.MINIMIZED }));
+    dispatch(DocumentationAction.POP);
+  }
+});
+
+type Props = MenuPublicProps & MenuPrivateProps & ReturnType<typeof mapDispatchToProps>;
+
 type State = MenuState;
 
 const Container = styled('div', (props: ThemeProps) => ({
@@ -63,7 +84,7 @@ interface ClickProps {
 
 
 const ExtraMenuContainer = styled('div', (props: ThemeProps) => ({
-  backgroundColor: props.theme.titleBarBackground,
+  // backgroundColor: props.theme.titleBarBackground,
   marginRight: '5px',
   color: props.theme.color,
   top: '20px',
@@ -75,7 +96,8 @@ const ExtraMenuContainer = styled('div', (props: ThemeProps) => ({
   justifyContent: 'flex-end',
   flexDirection: 'row',
 
-  zIndex: 1
+  zIndex: 1,
+
 }));
 
 export class MainMenu extends React.Component<Props, State> {
@@ -87,8 +109,9 @@ export class MainMenu extends React.Component<Props, State> {
     }
   }
 
+
   private onDocumentationClick_ = () => {
-    window.open("https://www.kipr.org/doc/index.html");
+    this.props.openDocumentation();
   };
 
   private onModalClick_ = (modal: Modal) => () => this.setState({ modal });
@@ -101,6 +124,7 @@ export class MainMenu extends React.Component<Props, State> {
   render() {
     const { className, style, locale, theme } = this.props;
     const { modal } = this.state;
+    console.log("DocumentationWindow: ", DocumentationWindow);
     return (
       <Container className={className} style={style} theme={theme}>
         <Logo theme={theme} src={theme.foreground === 'white' ? KIPR_LOGO_BLACK as string : KIPR_LOGO_WHITE as string} onClick={this.onDashboardClick_} />
@@ -113,19 +137,23 @@ export class MainMenu extends React.Component<Props, State> {
             onAboutClick={this.onModalClick_(Modal.ABOUT)}
 
           />
+
+
         </ExtraMenuContainer>
 
 
-        {modal.type === Modal.Type.About && (
+        {modal === Modal.ABOUT && (
           <AboutDialog
             theme={theme}
             onClose={() => this.setState({ modal: Modal.NONE })}
           />
         )}
-
+        <DocumentationWindow theme={theme} />
       </Container>
     );
   }
 }
 
-export default MainMenu;
+
+
+export default connect(null, mapDispatchToProps)(MainMenu);

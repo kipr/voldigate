@@ -6,16 +6,16 @@ import ProgrammingLanguage from '../ProgrammingLanguage';
 import { DARK, ThemeProps, LIGHT, Theme } from '../components/theme';
 import { StyleProps } from '../style';
 import { styled } from 'styletron-react';
-import { RouteComponentProps } from 'react-router';
+
 import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
+
 import { State as ReduxState } from '../state';
 import { Project } from '../types/projectTypes';
 import { User } from '../types/userTypes';
 import { InterfaceMode } from '../types/interfaceModes';
 import LeftBarWrapper from '../components/LeftBar';
 
-export interface HomeNavigationPublicProps extends RouteComponentProps, ThemeProps, StyleProps {
+export interface HomeNavigationPublicProps extends ThemeProps, StyleProps {
   propedUsers?: string[];
   onThemeChange: (theme: Theme) => void;
 }
@@ -174,6 +174,5 @@ class HomeNavigation extends React.PureComponent<Props, State> {
 export default connect((state: ReduxState) => ({
   locale: state.i18n.locale,
 }), dispatch => ({
-  onTutorialsClick: () => dispatch(push('/tutorials')),
-  onSimulatorClick: () => dispatch(push('/scene/jbcSandboxA')),
+
 }))(HomeNavigation) as React.ComponentType<HomeNavigationPublicProps>;

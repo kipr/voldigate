@@ -1,38 +1,40 @@
 /* eslint-env node */
-require("ts-node").register();
+//require("ts-node").register();
 const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
-const fs = require("fs");
+const fs = require("fs").promises;
 const uuid = require("uuid");
 const { exec } = require("child_process");
-const app = require("express")();
-
+const app = express();
+const { execFile } = require("child_process");
 const sourceDir = "dist";
 const { get: getConfig } = require("./config");
 const path = require("path");
 const proxy = require("express-http-proxy");
-
 const http = require("http");
-
 const JSZip = require("jszip");
 const { spawn } = require("child_process");
-
-const servoAddon = require("./build/Release/servo_addon.node");
-const motorAddon = require("./build/Release/motor_addon.node");
-const analogAddon = require("./build/Release/analog_addon.node");
-const digitalAddon = require("./build/Release/digital_addon.node");
-const accelAddon = require("./build/Release/accel_addon.node");
-const gyroAddon = require("./build/Release/gyro_addon.node");
-const magnetoAddon = require("./build/Release/magneto_addon.node");
-const buttonAddon = require("./build/Release/button_addon.node");
 const WebSocket = require("ws");
+const compression = require("compression");
+app.use(compression());
+const expressStaticGzip = require("express-static-gzip");
+
 const {
   parseBlockXml,
   convertToC,
   parseXml,
-} = require("./src/util/convertToC.ts");
+} = require("./dist/utils/convertToC.js");
+const { error } = require("console");
 
+const extensions = {
+  c: "c",
+  cpp: "cpp",
+  python: "py",
+  graphical: "graphical",
+};
+
+const defaultPath = "/home/kipr/Documents/KISS";
 let config;
 try {
   config = getConfig();
@@ -40,7 +42,11 @@ try {
   process.exitCode = 1;
   throw e;
 }
-
+app.use(
+  express.static(path.join(__dirname, "dist"), {
+    maxAge: "1d",
+  })
+);
 // Cross-origin isolation required for using features like SharedArrayBuffer
 function setCrossOriginIsolationHeaders(res) {
   res.header("Cross-Origin-Opener-Policy", "same-origin");
@@ -79,6 +85,148 @@ app.use(
     }
   )
 );
+
+app.post("/upload-project", express.json(), async (req, res) => {
+  const { user, project, srcFiles, includeFiles, dataFiles } = req.body;
+  console.log("Received project upload request:", {
+    user,
+    project,
+    srcFiles,
+    includeFiles,
+    dataFiles,
+  });
+  if (!user || !project || !srcFiles || !includeFiles || !dataFiles) {
+    return res.status(400).json({ error: "Invalid request data" });
+  }
+
+  const userPath = `${defaultPath}/${user.userName}`;
+  const projectPath = `${userPath}/${project.projectName}`;
+  const projectName = project.projectName;
+  const includePath = `${projectPath}/include`;
+  const srcPath = `${projectPath}/src`;
+  const dataPath = `${projectPath}/data`;
+  const configPath = `${projectPath}/.config.json`;
+  const configContent = project.configFile.content;
+  console.log("Config content:", configContent);
+
+  let sourceNames = [];
+  let includeNames = [];
+  let dataNames = [];
+
+  try {
+    // Create user directory if it doesn't exist
+    await fs.mkdir(userPath, { recursive: true });
+    console.log("User directory created:", userPath);
+
+    // Create project directory if it doesn't exist
+    await fs.mkdir(projectPath, { recursive: true });
+    console.log("Project directory created:", projectPath);
+
+    // Create include directory if it doesn't exist
+    await fs.mkdir(includePath, { recursive: true });
+    console.log("Include directory created:", includePath);
+
+    // Create src directory if it doesn't exist
+    await fs.mkdir(srcPath, { recursive: true });
+    console.log("Src directory created:", srcPath);
+
+    // Create data directory if it doesn't exist
+    await fs.mkdir(dataPath, { recursive: true });
+    console.log("Data directory created:", dataPath);
+
+    if (!configContent) {
+      console.log("Config content is empty, creating default config");
+      await fs.writeFile(
+        configPath,
+        JSON.stringify({ projectName, language }, null, 2),
+        "utf-8"
+      );
+    } else {
+      createAndSaveFile(configPath, configContent);
+    }
+
+    // Save source files
+    for (const file of srcFiles) {
+      const filePath = `${srcPath}/${file.name}`;
+      await fs.writeFile(filePath, file.content);
+      sourceNames.push(file.name);
+      console.log(`Source file saved: ${filePath}`);
+    }
+
+    // Save include files
+    for (const file of includeFiles) {
+      const filePath = `${includePath}/${file.name}`;
+      await fs.writeFile(filePath, file.content);
+      includeNames.push(file.name);
+      console.log(`Include file saved: ${filePath}`);
+    }
+
+    // Save data files
+    for (const file of dataFiles) {
+      const filePath = `${dataPath}/${file.name}`;
+      await fs.writeFile(filePath, file.content);
+      dataNames.push(file.name);
+      console.log(`Data file saved: ${filePath}`);
+    }
+
+    return res.status(200).json({
+      message: "Project uploaded successfully",
+      createdProject: {
+        projectName: project.projectName,
+        projectLanguage: project.projectLanguage,
+        srcFolderFiles: sourceNames,
+        includeFolderFiles: includeNames,
+        dataFolderFiles: dataNames,
+      },
+    });
+  } catch (error) {
+    console.error("Error creating project directories:", error);
+    return res
+      .status(500)
+      .json({ error: "Failed to create project directories" });
+  }
+});
+
+app.post("/upload-file", express.json(), async (req, res) => {
+  const { user, project, files } = req.body;
+  console.log("Received file upload request:", { user, project, files });
+  if (!user || !project || !files) {
+    return res.status(400).json({ error: "Invalid request data" });
+  }
+  const defaultPath = "/home/kipr/Documents/KISS";
+  let filePath;
+  files.map((file) => {
+    if (file.uploadType === "include") {
+      if (file.name.endsWith(".h")) {
+        filePath = `${defaultPath}/${user.userName}/${project.projectName}/include/${file.name}`;
+      } else {
+        filePath = `${defaultPath}/${user.userName}/${project.projectName}/include/${file.name}.h`;
+      }
+    } else if (file.uploadType === "src") {
+      if (file.name.endsWith(extensions[file.language])) {
+        filePath = `${defaultPath}/${user.userName}/${project.projectName}/src/${file.name}`;
+      } else {
+        filePath = `${defaultPath}/${user.userName}/${
+          project.projectName
+        }/src/${file.name}.${extensions[file.language]}`;
+      }
+    } else if (file.uploadType === "data") {
+      if (file.name.endsWith(".txt")) {
+        filePath = `${defaultPath}/${user.userName}/${project.projectName}/data/${file.name}`;
+      } else {
+        filePath = `${defaultPath}/${user.userName}/${project.projectName}/data/${file.name}.txt`;
+      }
+    }
+    console.log("Saving file:", filePath);
+    try {
+      createAndSaveFile(filePath, file.content);
+      return res.status(200).json({ message: "File saved successfully" });
+    } catch (error) {
+      console.error("Error saving file:", error);
+      return res.status(500).json({ error: "Failed to save file" });
+    }
+  });
+});
 
 let latestAnalogValues = [];
 
@@ -178,11 +326,19 @@ let accelerometerPolling = false;
 let gyroPolling = false;
 let magnetometerPolling = false;
 let buttonPolling = false;
+let servoAddon;
+let motorAddon;
+let analogAddon;
+let digitalAddon;
+let accelAddon;
+let gyroAddon;
+let magnetoAddon;
+let buttonAddon;
 
 function startAnalogPolling() {
   if (analogPolling) return;
   analogPolling = true;
-  console.log("Starting analog polling");
+  if (!analogAddon) analogAddon = require("./build/Release/analog_addon.node");
   (function loop() {
     if (!analogPolling) return;
     sensorValues.analog.forEach((value, index) => {
@@ -196,7 +352,8 @@ function startAnalogPolling() {
 function startDigitalPolling() {
   if (digitalPolling) return;
   digitalPolling = true;
-  console.log("Starting digital polling");
+  if (!digitalAddon)
+    digitalAddon = require("./build/Release/digital_addon.node");
   (function loop() {
     if (!digitalPolling) return;
     sensorValues.digital.forEach((value, index) => {
@@ -210,7 +367,7 @@ function startDigitalPolling() {
 function startAccelerometerPolling() {
   if (accelerometerPolling) return;
   accelerometerPolling = true;
-  console.log("Starting accel polling");
+  if (!accelAddon) accelAddon = require("./build/Release/accel_addon.node");
   (function loop() {
     if (!accelerometerPolling) return;
 
@@ -225,7 +382,7 @@ function startAccelerometerPolling() {
 function startGyroPolling() {
   if (gyroPolling) return;
   gyroPolling = true;
-  console.log("Starting gyro polling");
+  if (!gyroAddon) gyroAddon = require("./build/Release/gyro_addon.node");
   (function loop() {
     if (!gyroPolling) return;
     sensorValues.gyro[0] = gyroAddon.gyro_x();
@@ -239,7 +396,8 @@ function startGyroPolling() {
 function startMagnetometerPolling() {
   if (magnetometerPolling) return;
   magnetometerPolling = true;
-  console.log("Starting magneto polling");
+  if (!magnetoAddon)
+    magnetoAddon = require("./build/Release/magneto_addon.node");
   (function loop() {
     if (!magnetometerPolling) return;
 
@@ -255,13 +413,13 @@ function startMagnetometerPolling() {
 function startButtonPolling() {
   if (buttonPolling) return;
   buttonPolling = true;
-  console.log("Starting button polling");
+  if (!buttonAddon) buttonAddon = require("./build/Release/button_addon.node");
   (function loop() {
     if (!buttonPolling) return;
 
     sensorValues.button[0] = buttonAddon.push_button();
     broadcastButtonValue();
-    setTimeout(loop, 500);
+    setTimeout(loop, 100);
   })();
 }
 function stopPolling() {
@@ -273,48 +431,82 @@ function stopPolling() {
   buttonPolling = false;
 }
 
-wss.on("connection", (ws) => {
+let pty;
+let os;
+wss.on("connection", (ws, req) => {
   console.log("WebSocket connection established");
+  console.log("WebSocket request pathname:", req.url);
 
-  ws.on("message", (message) => {
-    try {
-      const data = JSON.parse(message);
-      switch (data.type) {
-        case "start-analog":
-          console.log("Received start-analog message");
-          startAnalogPolling();
-          break;
-        case "start-digital":
-          console.log("Received start-digital message");
-          startDigitalPolling();
-          break;
-        case "start-accelerometer":
-          console.log("Received start-accelerometer message");
-          startAccelerometerPolling();
-          break;
-        case "start-gyroscope":
-          console.log("Received start-gyro message");
-          startGyroPolling();
-          break;
-        case "start-magnetometer":
-          console.log("Received start-magnetometer message");
-          startMagnetometerPolling();
-          break;
-        case "start-button":
-          console.log("Received start-button message");
-          startButtonPolling();
-          break;
-        case "stop-all":
-          console.log("Received stop-all message");
-          stopPolling();
-          break;
+  if (req.url === "/ws/sensors") {
+    console.log("WebSocket connection for sensors established");
+
+    ws.on("message", (message) => {
+      try {
+        const data = JSON.parse(message);
+        switch (data.type) {
+          case "start-analog":
+            console.log("Received start-analog message");
+            startAnalogPolling();
+            break;
+          case "start-digital":
+            console.log("Received start-digital message");
+            startDigitalPolling();
+            break;
+          case "start-accelerometer":
+            console.log("Received start-accelerometer message");
+            startAccelerometerPolling();
+            break;
+          case "start-gyroscope":
+            console.log("Received start-gyro message");
+            startGyroPolling();
+            break;
+          case "start-magnetometer":
+            console.log("Received start-magnetometer message");
+            startMagnetometerPolling();
+            break;
+          case "start-button":
+            console.log("Received start-button message");
+            startButtonPolling();
+            break;
+          case "stop-all":
+            console.log("Received stop-all message");
+            stopPolling();
+            break;
+        }
+      } catch (error) {
+        console.error("Error handling message: ", error);
       }
-    } catch (error) {
-      console.error("Error handling message: ", error);
-    }
-  });
+    });
 
-  ws.send(JSON.stringify({ analog: latestAnalogValues }));
+    ws.send(JSON.stringify({ analog: latestAnalogValues }));
+  } else if (req.url === "/ws/terminal") {
+    console.log("WebSocket connection for terminal established");
+
+    if (!pty) pty = require("node-pty");
+    if (!os) os = require("os");
+    const shell = os.platform() === "win32" ? "powershell.exe" : "bash";
+    const ptyProcess = pty.spawn(shell, [], {
+      name: "xterm-color",
+      cols: 80,
+      rows: 30,
+      cwd: process.env.HOME,
+      env: process.env,
+    });
+
+    ptyProcess.on("data", (data) => {
+      ws.send(data);
+    });
+
+    ws.on("message", (message) => {
+      console.log("Received message from terminal:", message);
+      ptyProcess.write(message);
+    });
+
+    ws.on("close", () => {
+      console.log("WebSocket connection closed for terminal");
+      ptyProcess.kill();
+    });
+  }
 });
 
 app.post("/enable-servo", express.json(), (req, res) => {
@@ -323,11 +515,9 @@ app.post("/enable-servo", express.json(), (req, res) => {
   if (typeof servo !== "number") {
     return res.status(400).json({ error: "Servo type incorrect, need number" });
   }
+  if (!servoAddon) servoAddon = require("./build/Release/servo_addon.node");
   try {
-    console.log(`Enabling servo: ${servo}`);
     servoAddon.enable_servo(servo);
-
-    console.log(`Setting servo: ${servo} to value: ${value}`);
     servoAddon.set_servo_position(servo, value);
 
     return res
@@ -340,8 +530,8 @@ app.post("/enable-servo", express.json(), (req, res) => {
 });
 
 app.post("/disable-all-servos", express.json(), (req, res) => {
+  if (!servoAddon) servoAddon = require("./build/Release/servo_addon.node");
   try {
-    console.log(`Disabling all servos`);
     servoAddon.disable_servos();
 
     res.status(200).json({ message: `Disabled all servos` });
@@ -352,10 +542,8 @@ app.post("/disable-all-servos", express.json(), (req, res) => {
 });
 
 app.post("/disable-servo", express.json(), (req, res) => {
-
   const { servo, value } = req.body;
-  console.log("/disable-servo servo: ", servo);
-  console.log("/disable-servo value: ", value);
+  if (!servoAddon) servoAddon = require("./build/Release/servo_addon.node");
   if (typeof servo !== "number") {
     return res.status(400).json({ error: "Servo type incorrect, need number" });
   }
@@ -371,17 +559,13 @@ app.post("/disable-servo", express.json(), (req, res) => {
 });
 app.post("/move-servo", express.json(), (req, res) => {
   const { servo, value } = req.body;
-
-  console.log("/move-servo servo: ", servo);
-  console.log("/move-servo value: ", value);
-
+  if (!servoAddon) servoAddon = require("./build/Release/servo_addon.node");
   if (typeof servo !== "number") {
     return res.status(400).json({ error: "Servo type incorrect, need number" });
   }
 
   try {
-    console.log(`Moving servo: ${servo} to value: ${value}`);
-   // servoAddon.set_servo_position(servo, value);
+    servoAddon.set_servo_position(servo, value);
     res.status(200).json({ message: `Servo ${servo} moved to value ${value}` });
   } catch (error) {
     console.error("Error moving servo:", error);
@@ -396,9 +580,8 @@ app.post("/move-motor", express.json(), (req, res) => {
     return res.status(400).json({ error: "Invalid input" });
   }
 
+  if (!motorAddon) motorAddon = require("./build/Release/motor_addon.node");
   try {
-    console.log(`Moving motor: ${motor}, to value: ${value}`);
-
     if (view === "Power") {
       motorAddon.motor_power(motor, value);
     } else if (view === "Velocity") {
@@ -413,18 +596,14 @@ app.post("/move-motor", express.json(), (req, res) => {
   }
 });
 
-app.post("/stop-motor", express.json(),(req, res) => {
+app.post("/stop-motor", express.json(), (req, res) => {
   const { motor } = req.body;
 
-  console.log("type of motor: ", typeof motor);
-
+  if (!motorAddon) motorAddon = require("./build/Release/motor_addon.node");
   if (typeof motor !== "number") {
     return res.status(400).json({ error: "Invalid input" });
   }
-
   try {
-    console.log(`Turning motor: ${motor} off`);
-
     motorAddon.off(motor);
 
     // Send back a success response
@@ -435,14 +614,32 @@ app.post("/stop-motor", express.json(),(req, res) => {
   }
 });
 
-app.post("/stop-all-motors", express.json(),(req, res) => {
-  console.log("Express.js stopping all motors");
+app.post("/stop-all-motors", express.json(), (req, res) => {
+  if (!motorAddon) motorAddon = require("./build/Release/motor_addon.node");
   try {
     motorAddon.allOff();
     res.status(200).json({ message: "All motors turned off" });
   } catch (error) {
     console.error("Error turning off all motors:", error);
     res.status(500).json({ error: "Failed to turn off all motors" });
+  }
+});
+
+app.post("/clear-motor-position", express.json(), (req, res) => {
+  const { motor } = req.body;
+  console.log("Clearing motor position for motor:", motor);
+  if (!motorAddon) motorAddon = require("./build/Release/motor_addon.node");
+  if (typeof motor !== "number") {
+    return res.status(400).json({ error: "Invalid input" });
+  }
+  try {
+    motorAddon.clear_motor_position_counter(motor);
+    res
+      .status(200)
+      .json({ message: `Motor ${motor} position counter cleared` });
+  } catch (error) {
+    console.error("Error clearing motor position:", error);
+    res.status(500).json({ error: "Failed to clear motor position" });
   }
 });
 
@@ -455,7 +652,7 @@ app.get("/stream-motor-velocities", (req, res) => {
   res.setHeader("Cache-Control", "no-cache");
   res.setHeader("Connection", "keep-alive");
 
-  console.log("Started motor velocity stream");
+  if (!motorAddon) motorAddon = require("./build/Release/motor_addon.node");
 
   motorAddon.reset_all_motors();
   motorVelPollingInterval = setInterval(() => {
@@ -466,10 +663,9 @@ app.get("/stream-motor-velocities", (req, res) => {
         motor2: motorAddon.get_motor_bemf_vel(2),
         motor3: motorAddon.get_motor_bemf_vel(3),
       };
-      console.log("motor stream data: ", data);
+
       res.write(`data: ${JSON.stringify(data)}\n\n`);
     } catch (err) {
-      console.error("Motor polling error:", err);
       res.write(`data: ERROR: ${err.toString()}\n\n`);
     }
   }, 500);
@@ -487,17 +683,24 @@ app.get("/stream-motor-positions", (req, res) => {
   res.setHeader("Cache-Control", "no-cache");
   res.setHeader("Connection", "keep-alive");
   res.flushHeaders();
-  console.log("inside stream-motor-positions");
+  console.log("Starting motor position stream");
+  if (!motorAddon) motorAddon = require("./build/Release/motor_addon.node");
 
   const interval = setInterval(() => {
-    console.log("Interval running, sending data");
+    // const data = {
+    //   motor0: motorAddon.get_motor_position_counter(0),
+    //   motor1: motorAddon.get_motor_position_counter(1),
+    //   motor2: motorAddon.get_motor_position_counter(2),
+    //   motor3: motorAddon.get_motor_position_counter(3),
+    // };
+
     const data = {
-      motor0: motorAddon.get_motor_position_counter(0),
-      motor1: motorAddon.get_motor_position_counter(1),
-      motor2: motorAddon.get_motor_position_counter(2),
-      motor3: motorAddon.get_motor_position_counter(3),
+      motor0: Math.floor(Math.random() * 1000), // Random number from 0 to 999
+      motor1: Math.floor(Math.random() * 1000),
+      motor2: Math.floor(Math.random() * 1000),
+      motor3: Math.floor(Math.random() * 1000),
     };
-    console.log("Sending motor data:", data);
+
     res.write(`data: ${JSON.stringify(data)}\n\n`);
     if (res.flush) res.flush();
   }, 500);
@@ -507,12 +710,11 @@ app.get("/stream-motor-positions", (req, res) => {
   });
 });
 
-
 app.get("/stream-servo-positions", (req, res) => {
   res.setHeader("Content-Type", "text/event-stream");
   res.setHeader("Cache-Control", "no-cache");
   res.setHeader("Connection", "keep-alive");
-  console.log("inside stream-servo-positions");
+  if (!servoAddon) servoAddon = require("./build/Release/servo_addon.node");
   servoPosPollingInterval = setInterval(() => {
     try {
       const data = {
@@ -539,6 +741,8 @@ app.get("/stream-servo-positions", (req, res) => {
       };
 
       res.write(`data: ${JSON.stringify(data)}\n\n`);
+
+      if (res.flush) res.flush();
     } catch (err) {
       console.error("Servo polling error:", err);
       res.write(`data: ERROR: ${err.toString()}\n\n`);
@@ -547,7 +751,6 @@ app.get("/stream-servo-positions", (req, res) => {
 
   req.on("close", () => {
     clearInterval(servoPosPollingInterval);
-    res.end();
   });
 });
 let declaredVariables;
@@ -561,21 +764,30 @@ app.post("/convert-xml-to-c", express.json(), async (req, res) => {
   try {
     // Parse the XML string into a DOM
     const xmlDoc = parseXml(xml);
-
+    console.log("xml: ", xml);
 
     // Parse the XML document into blocks
+    const blockDetected = xml.includes("block");
+    console.log("blockDetected: ", blockDetected);
     const blockNodes = xmlDoc.getElementsByTagName("block");
-    const topBlocks = Array.from(blockNodes).map(parseBlockXml);
+    if (blockNodes && blockDetected) {
+      const topBlocks = Array.from(blockNodes).map(parseBlockXml);
 
-    declaredVariables = new Map();
+      declaredVariables = new Map();
 
-    finalCode = convertToCode(topBlocks[0]);
-    console.log("finalCode: ", finalCode);
-    createAndSaveFile(filePath, finalCode);
-    return res.status(200).json({
-      code: finalCode,
-      variables: Array.from(declaredVariables.keys()),
-    });
+      finalCode = convertToCode(topBlocks[0]);
+      console.log("finalCode: ", finalCode);
+      createAndSaveFile(filePath, finalCode);
+      return res.status(200).json({
+        code: finalCode,
+        variables: Array.from(declaredVariables.keys()),
+      });
+    } else {
+      res.json({
+        message: "failed",
+        error: "No blocks found!",
+      });
+    }
   } catch (error) {
     console.error("Error parsing XML:", error);
     return res.status(500).json({ error: "Failed to parse XML" });
@@ -654,10 +866,10 @@ function extractCategoryAndFunction(type) {
   console.log("Type received:", type);
 
   for (const module of modules) {
-    console.log("Checking module:", module); 
+    console.log("Checking module:", module);
     if (type.startsWith(module + "_")) {
       const functionName = type.substring(module.length + 1);
-      console.log("Found function:", functionName); 
+      console.log("Found function:", functionName);
       return { category: module, functionName };
     }
   }
@@ -667,11 +879,11 @@ function extractCategoryAndFunction(type) {
 }
 
 /**
- * 
+ *
  * @param {*} block - XML block
  * @param {*} indentLevel - Indentation level for the generated code
  * @param {*} asExpression - Whether to treat the block as an expression
- * 
+ *
  * @returns {string} C code
  */
 function convertToCode(block, indentLevel = 1, asExpression = false) {
@@ -693,9 +905,9 @@ function convertToCode(block, indentLevel = 1, asExpression = false) {
           "#include <stdio.h>\n#include <kipr/wombat.h>\n\nint main()\n{\n";
         const nextBlock = block.next;
         if (nextBlock) {
-          cCode += convertToCode(nextBlock, indentLevel + 1); 
+          cCode += convertToCode(nextBlock, indentLevel + 1);
         }
-        cCode += "\n\treturn 0;\n}\n"; 
+        cCode += "\n\treturn 0;\n}\n";
         return cCode;
       case "printf":
         const printText = block.children?.find((child) => child.fields?.TEXT);
@@ -721,7 +933,7 @@ function convertToCode(block, indentLevel = 1, asExpression = false) {
         if (repeatCount) {
           cCode += `${indent}for (int i = 0; i < ${repeatCount.fields.NUM}; i++) {\n`;
           if (repeatSubstack) {
-            cCode += convertToCode(repeatSubstack, indentLevel + 1); 
+            cCode += convertToCode(repeatSubstack, indentLevel + 1);
           } else {
             cCode += `${indent}\t// missing repeat substack\n`;
           }
@@ -757,7 +969,7 @@ function convertToCode(block, indentLevel = 1, asExpression = false) {
         cCode += `) {\n`;
 
         if (substack) {
-          cCode += convertToCode(substack, indentLevel + 1); 
+          cCode += convertToCode(substack, indentLevel + 1);
         } else {
           cCode += `${indent}\t// missing substack\n`;
         }
@@ -803,7 +1015,6 @@ function convertToCode(block, indentLevel = 1, asExpression = false) {
         const waitCondition = block.children?.find(
           (c) => c.role === "condition"
         );
-   
 
         cCode += `${indent}while (!(`;
 
@@ -838,7 +1049,7 @@ function convertToCode(block, indentLevel = 1, asExpression = false) {
         cCode += `\n${indent}} while (!(`;
 
         if (repeatUntilCondition) {
-          cCode += `${convertToCode(repeatUntilCondition, 0, true)})); \n`; 
+          cCode += `${convertToCode(repeatUntilCondition, 0, true)})); \n`;
         } else {
           cCode += `${indent}\t\t// missing repeat condition\n`;
         }
@@ -978,16 +1189,13 @@ function convertToCode(block, indentLevel = 1, asExpression = false) {
         break;
     }
   } else if (block.shadow && block.fields?.NUM) {
-    
     cCode += block.fields.NUM;
   } else if (block.fields && Object.keys(block.fields).length > 0) {
-
     const args = (block.children || [])
       .map((child) => convertToCode(child, 0))
       .join(", ");
     cCode += `${indent}${functionName}(${args});\n`;
   } else {
-
     const args = (block.children || []).map((child) =>
       convertToCode(child, 0, true).trim()
     );
@@ -995,22 +1203,26 @@ function convertToCode(block, indentLevel = 1, asExpression = false) {
     cCode += asExpression ? `${call}` : `${indent}${call};\n`;
   }
 
-
   const next = block.next;
   if (next) {
-    cCode += convertToCode(next, indentLevel); 
+    cCode += convertToCode(next, indentLevel);
   }
 
   return cCode;
 }
 
 // Helper function to get all folders in a directory
-function getAllDirectories(dirPath) {
+async function getAllDirectories(dirPath) {
   try {
-    const files = fs.readdirSync(dirPath);
-    return files.filter((file) =>
-      fs.statSync(path.join(dirPath, file)).isDirectory()
-    );
+    const files = await fs.readdir(dirPath);
+
+    const statPromises = files.map(async (file) => {
+      const stats = await fs.stat(path.join(dirPath, file));
+      return { file, isDir: stats.isDirectory() };
+    });
+
+    const results = await Promise.all(statPromises);
+    return results.filter(({ isDir }) => isDir).map(({ file }) => file);
   } catch (error) {
     console.error("Error reading directory:", error);
     return [];
@@ -1018,38 +1230,53 @@ function getAllDirectories(dirPath) {
 }
 
 //Get all project directories from given path
-function getAllProjectDirectories(dirPath) {
+async function getAllProjectDirectories(dirPath) {
   try {
-    const files = fs.readdirSync(dirPath);
+    const files = await fs.readdir(dirPath);
+    const directories = [];
 
-    // Filter directories
-    const directories = files.filter((file) =>
-      fs.statSync(path.join(dirPath, file)).isDirectory()
+    for (const file of files) {
+      const fullPath = path.join(dirPath, file);
+      const stat = await fs.stat(fullPath);
+      if (stat.isDirectory()) {
+        directories.push(file);
+      }
+    }
+
+    const projects = await Promise.all(
+      directories.map(async (dirName) => {
+        const projectPath = path.join(dirPath, dirName);
+
+        let projectLanguage = "unknown";
+        try {
+          const configContent = await fs.readFile(
+            path.join(projectPath, ".config.json"),
+            "utf8"
+          );
+          projectLanguage = parseConfig(configContent);
+        } catch (err) {
+          console.warn(`Missing or invalid config in ${dirName}`);
+        }
+
+        const includeFolderFiles = await getFilesInFolder(
+          path.join(projectPath, "include")
+        );
+        const srcFolderFiles = await getFilesInFolder(
+          path.join(projectPath, "src")
+        );
+        const dataFolderFiles = await getFilesInFolder(
+          path.join(projectPath, "data")
+        );
+
+        return {
+          projectName: dirName,
+          projectLanguage,
+          includeFolderFiles,
+          srcFolderFiles,
+          dataFolderFiles,
+        };
+      })
     );
-
-    const projects = directories.map((dirName) => {
-      const projectPath = path.join(dirPath, dirName);
-
-      const projectLanguage = parseConfig(
-        fs.readFileSync(path.join(projectPath, ".config.json"), "utf8")
-      );
-      console.log("For Project: ", dirName, "Language: ", projectLanguage);
-
-      const includeFolderFiles = getFilesInFolder(
-        path.join(projectPath, "include")
-      );
-      const srcFolderFiles = getFilesInFolder(path.join(projectPath, "src"));
-      const dataFolderFiles = getFilesInFolder(path.join(projectPath, "data"));
-
-      return {
-        projectName: dirName,
-        projectLanguage,
-        includeFolderFiles,
-        srcFolderFiles,
-        dataFolderFiles,
-      };
-    });
-
     return projects;
   } catch (error) {
     console.error("Error reading directory:", error);
@@ -1058,9 +1285,9 @@ function getAllProjectDirectories(dirPath) {
 }
 
 //Get all files in a folder
-function getFilesInFolder(folderPath) {
+async function getFilesInFolder(folderPath) {
   try {
-    const files = fs.readdirSync(folderPath);
+    const files = await fs.readdir(folderPath);
     // Filter out any files starting with a dot (.)
     return files.filter((file) => !file.startsWith("."));
   } catch (error) {
@@ -1070,61 +1297,65 @@ function getFilesInFolder(folderPath) {
 }
 
 //Get all files in a directory
-function getAllFiles(dirPath) {
+async function getAllFiles(dirPath) {
   try {
-    const files = fs.readdirSync(dirPath);
-    return files.filter((file) =>
-      fs.statSync(path.join(dirPath, file)).isFile()
-    );
+    const files = await fs.readdir(dirPath);
+    const statPromises = files.map(async (file) => {
+      const stats = await fs.stat(path.join(dirPath, file));
+      return { file, isFile: stats.isFile() };
+    });
+
+    const results = await Promise.all(statPromises);
+    return results.filter(({ isFile }) => isFile).map(({ file }) => file);
   } catch (error) {
     console.error("Error reading directory:", error);
     return [];
   }
 }
 
-function getUserInterfaceMode(userName) {
-  const userConfigPath = `/home/kipr/Documents/KISS/${userName}/.config.json`;
-  try {
-    if (!fs.existsSync(userConfigPath)) {
-      console.error(
-        `getUserInterfaceMode: Config file not found for user ${userName}`
-      );
-      return null;
-    }
+async function getUserInterfaceMode(userName) {
+  const userConfigPath = path.join(
+    "/home/kipr/Documents/KISS",
+    userName,
+    ".config.json"
+  );
 
-    const configData = JSON.parse(fs.readFileSync(userConfigPath, "utf-8"));
+  try {
+    await fs.access(userConfigPath); // throws if file doesn't exist
+
+    const configRaw = await fs.readFile(userConfigPath, "utf-8");
+    const configData = JSON.parse(configRaw);
 
     return configData.interfaceMode || null;
   } catch (error) {
-    console.error("Error reading user config:", error);
+    if (error.code === "ENOENT") {
+      console.error(
+        `getUserInterfaceMode: Config file not found for user ${userName}`
+      );
+    } else {
+      console.error("Error reading user config:", error);
+    }
     return null;
   }
 }
 
 //Set the user interface mode
-function setUserInterfaceMode(userName, newMode) {
+async function setUserInterfaceMode(userName, newMode) {
   const userConfigPath = `/home/kipr/Documents/KISS/${userName}/.config.json`;
   try {
-    if (!fs.existsSync(userConfigPath)) {
-      console.error(
-        `setUserInterfaceMode: Config file not found for user ${userName}`
-      );
-      return false;
-    }
+    await fs.access(userConfigPath); // throws if file doesn't exist
 
-    const configData = JSON.parse(fs.readFileSync(userConfigPath, "utf-8"));
+    const configRaw = await fs.readFile(userConfigPath, "utf-8");
+    const configData = JSON.parse(configRaw);
 
     configData.interfaceMode = newMode;
 
-    fs.writeFileSync(
+    await fs.writeFile(
       userConfigPath,
       JSON.stringify(configData, null, 2),
       "utf-8"
     );
 
-    console.log(
-      `Successfully updated interfaceMode to ${newMode} for user ${userName}`
-    );
     return true;
   } catch (error) {
     console.error("Error updating user config:", error);
@@ -1136,10 +1367,6 @@ function setUserInterfaceMode(userName, newMode) {
 function createFolderHandler() {
   return async (req, res) => {
     const folderPath = req.query.filePath;
-    console.log(
-      "createFolderHandler - Received request for folder path:",
-      folderPath
-    );
 
     if (!folderPath) {
       return res
@@ -1147,24 +1374,35 @@ function createFolderHandler() {
         .json({ error: "Missing filePath query parameter" });
     }
 
-    if (!fs.existsSync(folderPath) || !fs.statSync(folderPath).isDirectory()) {
-      return res
-        .status(400)
-        .json({ error: "Invalid or non-existent directory path" });
+    try {
+      const stats = await fs.stat(folderPath);
+      if (!stats.isDirectory()) {
+        return res
+          .status(400)
+          .json({ error: "Provided path is not a directory" });
+      }
+    } catch (error) {
+      console.error("Error in createFolderHandler:", error);
+      return res.status(500).json({ error: "Internal server error" });
     }
 
-    const directories = getAllDirectories(folderPath);
+    try {
+      const directories = await getAllDirectories(folderPath);
 
-    res.status(200).json({
-      folderPath: folderPath,
-      directories,
-    });
+      res.status(200).json({
+        folderPath: folderPath,
+        directories,
+      });
+    } catch (error) {
+      console.error("Error in createFolderHandler:", error);
+      return res.status(500).json({ error: "Internal server error" });
+    }
   };
 }
 
 //Get all files in a directory and zip them
 async function getAllUserFiles(directory, zipFolder) {
-  const files = await fs.promises.readdir(directory, { withFileTypes: true });
+  const files = await fs.readdir(directory, { withFileTypes: true });
 
   for (const file of files) {
     const filePath = path.join(directory, file.name);
@@ -1173,39 +1411,41 @@ async function getAllUserFiles(directory, zipFolder) {
       const subFolder = zipFolder.folder(file.name);
       await getAllUserFiles(filePath, subFolder);
     } else {
-      const fileContent = await fs.promises.readFile(filePath);
+      const fileContent = await fs.readFile(filePath);
       zipFolder.file(file.name, fileContent);
     }
   }
 }
 
-//Get file contents
-async function interalGetFileContents(filePath) {
-  if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
-    throw new Error("Invalid or non-existent file path");
-  }
-  return fs.promises.readFile(filePath, "utf-8");
-}
-
 function getFileContents() {
   return async (req, res) => {
     const filePath = req.query.filePath;
-    console.log("getFileContents - Received request for file path:", filePath);
+    console.log("getFileContents called with filePath:", filePath);
+
     if (!filePath) {
       return res
         .status(400)
         .json({ error: "Missing filePath query parameter" });
     }
 
-    if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
-      return res
-        .status(400)
-        .json({ error: "Invalid or non-existent file path" });
+    try {
+      const stats = await fs.stat(filePath);
+      if (!stats.isFile()) {
+        return res.status(400).json({ error: "Provided path is not a file" });
+      }
+    } catch (error) {
+      console.error("Error in getFileContents:", error);
+      return res.status(500).json({ error: "Internal server error" });
     }
 
-    const fileContents = fs.readFileSync(filePath, "utf-8");
+    try {
+      const fileContents = await fs.readFile(filePath, "utf-8");
 
-    res.status(200).send(fileContents);
+      res.status(200).send(fileContents);
+    } catch (error) {
+      console.error("Error in getFileContents:", error);
+      return res.status(500).json({ error: "Internal server error" });
+    }
   };
 }
 
@@ -1213,12 +1453,6 @@ function getFileContents() {
 function saveFileContents() {
   return async (req, res) => {
     const { filePath, fileContents } = req.body;
-    console.log(
-      "Received request to save file:",
-      filePath,
-      "with fileContents: ",
-      fileContents
-    );
 
     if (!filePath) {
       return res
@@ -1232,12 +1466,16 @@ function saveFileContents() {
         .json({ error: "Missing fileContents in request body" });
     }
 
-    fs.writeFileSync(filePath, fileContents);
+    try {
+      await fs.writeFile(filePath, fileContents);
 
-    res.status(200).send("File saved successfully");
+      res.status(200).send("File saved successfully");
+    } catch (error) {
+      console.error("Error in saveFileContents:", error);
+      return res.status(500).json({ error: "Internal server error" });
+    }
   };
 }
-
 function createAndSaveFile(filePath, fileContents) {
   return new Promise((resolve, reject) => {
     fs.writeFile(filePath, fileContents, (err) => {
@@ -1255,9 +1493,7 @@ function createAndSaveFile(filePath, fileContents) {
 function parseConfig(configContent) {
   try {
     const config = JSON.parse(configContent);
-    const language = config.language || null;
-    console.log("Language:", language);
-    return language;
+    return (language = config.language || null);
   } catch (error) {
     console.error("Failed to parse config JSON:", error.message);
     return null;
@@ -1284,124 +1520,14 @@ if (
   config.server.dependencies.emsdk_env
 ) {
   console.log("Compiling C programs is enabled.");
-
-  app.post("/compile", (req, res) => {
-    if (!("code" in req.body)) {
-      return res.status(400).json({
-        error: "Expected code key in body",
-      });
-    }
-
-    if (typeof req.body.code !== "string") {
-      return res.status(400).json({
-        error: "Expected code key in body to be a string",
-      });
-    }
-
-    // Wrap user's main() in our own "main()" that exits properly
-    // Required because Asyncify keeps emscripten runtime alive, which would prevent cleanup code from running
-    const augmentedCode = `${req.body.code}
-      #include <emscripten.h>
-  
-      EM_JS(void, on_stop, (), {
-        if (Module.context.onStop) Module.context.onStop();
-      })
-    
-      void simMainWrapper()
-      {
-        main();
-        on_stop();
-        emscripten_force_exit(0);
-      }
-    `;
-    console.log("inside compile");
-
-    const id = uuid.v4();
-    const path = `/tmp/${id}.c`;
-    console.log(`Writing to ${path}`);
-    fs.writeFile(path, augmentedCode, (err) => {
-      if (err) {
-        return res.status(500).json({
-          error: "Failed to write ${}",
-        });
-      }
-
-      // ...process.env causes a linter error for some reason.
-      // We work around this by doing it manually.
-
-      const env = {};
-      for (const key of Object.keys(process.env)) {
-        env[key] = process.env[key];
-      }
-
-      env[
-        "PATH"
-      ] = `${config.server.dependencies.emsdk_env.PATH}:${process.env.PATH}`;
-      env["EMSDK"] = config.server.dependencies.emsdk_env.EMSDK;
-      env["EM_CONFIG"] = config.server.dependencies.emsdk_env.EM_CONFIG;
-      exec(
-        `emcc -s WASM=0 -s INVOKE_RUN=0 -s ASYNCIFY -s EXIT_RUNTIME=1 -s "EXPORTED_FUNCTIONS=['_main', '_simMainWrapper']" -I${config.server.dependencies.libkipr_c}/include -L${config.server.dependencies.libkipr_c}/lib -lkipr -o ${path}.js ${path}`,
-        { env },
-        (err, stdout, stderr) => {
-          // Always log both stdout and stderr, regardless of errors
-          console.log("emcc stdout:", stdout);
-          console.log("emcc stderr:", stderr);
-
-          if (err) {
-            console.error("Compilation error:", stderr);
-            return res.status(200).json({
-              stdout,
-              stderr,
-            });
-          }
-
-          fs.readFile(`${path}.js`, (err, data) => {
-            if (err) {
-              return res.status(400).json({
-                error: `Failed to open ${path}.js for reading`,
-              });
-            }
-
-            // Log the stdout when the compilation is successful
-            console.log("Compilation result (after file read):", stdout);
-
-            fs.unlink(`${path}.js`, (err) => {
-              if (err) {
-                return res.status(500).json({
-                  error: `Failed to delete ${path}.js`,
-                });
-              }
-              fs.unlink(`${path}`, (err) => {
-                if (err) {
-                  return res.status(500).json({
-                    error: `Failed to delete ${path}`,
-                  });
-                }
-
-                // Return the result, stdout, and stderr as the final response
-                res.status(200).json({
-                  result: data.toString(),
-                  stdout,
-                  stderr,
-                });
-              });
-            });
-          });
-        }
-      );
-    });
-  });
 }
 
 //Compile code
 app.post("/compile-code", async (req, res) => {
   const { userName, projectName, fileName, activeLanguage } = req.body;
-  console.log("Received request body:", req.body); // Log the entire request body
-  console.log("Extracted username from body:", userName);
-  console.log("Extracted projectName from body:", projectName);
-  console.log("Extracted fileName from body:", fileName);
-  console.log("Extracted activeLanguage from body:", activeLanguage);
-
+  if (!userName || !projectName || !fileName || !activeLanguage) {
+    return res.status(400).json({ error: "Missing required fields" });
+  }
   const env = {
     ...process.env,
 
@@ -1410,168 +1536,137 @@ app.post("/compile-code", async (req, res) => {
     FILE_NAME: fileName,
     ACTIVE_LANGUAGE: activeLanguage,
   };
-  console.log("Project username: ", userName);
-  console.log("Project name: ", projectName);
-  console.log("Current working directory:", process.cwd());
 
-  const filePath = `/home/kipr/Documents/KISS/${userName}/${projectName}/src/${fileName}`;
-
-  console.log("Code to compile: ", await interalGetFileContents(filePath));
-
-  exec("node compiler.js", { env }, (error, stdout, stderr) => {
+  execFile("node", ["compiler.js"], { env }, (error, stdout, stderr) => {
     if (error) {
       console.error(`Error during execution: ${error.message}`);
-      return res.status(500).json({ error: "Execution failed" });
-    } else if (stderr) {
-      console.error(`Compilation warnings/errors: ${stderr}`);
-      res.json({
-        message: "failed",
-        output: stderr,
+      return res.status(500).json({
+        error: "Compilation execution failed",
+        details: error.message,
       });
-    } else {
-      console.log(`stdout: ${stdout}`);
-      res.json({
-        message: "successful",
-        output: stdout,
-      });
+    }
+
+    if (stderr) {
+      console.warn(`Compiler warnings/errors: ${stderr}`);
+    }
+
+    // stdout should contain JSON string from compiler.js
+    try {
+      const result = JSON.parse(stdout);
+      console.log("Compiler result:", result);
+      if (result.success) {
+        return res.json({
+          message: "successful",
+          error: result.error ? result.error : null,
+          warnings: result.warnings || [],
+          messages: result.messages || [],
+        });
+      } else {
+        res.json({
+          message: "failed",
+          error: result.error,
+          messages: result.messages || [],
+        });
+      }
+    } catch (parseErr) {
+      console.error("Failed to parse compiler output:", parseErr.message);
+      return res.status(500).json({ error: "Failed to parse compiler output" });
     }
   });
 });
 
-//Create project
 app.post("/initialize-project", async (req, res) => {
   const { userName, projectName, language, interfaceMode } = req.body;
-  console.log("Received request body:", req.body); // Log the entire request body
+  console.log("Received request body:", req.body);
+
+  // Validate input early
+  if (!userName || !projectName || !language) {
+    return res.status(400).json({ error: "Missing required fields." });
+  }
+
   const jsonDirectory = "/home/kipr/Documents/KISS/users.json";
   const userDirectory = `/home/kipr/Documents/KISS/${userName}`;
   const userConfigPath = path.join(userDirectory, ".config.json");
   const projectDirectory = path.join(userDirectory, projectName);
   const projectConfigPath = path.join(projectDirectory, ".config.json");
 
-  const userConfig = {
-    userName: userName,
-    interfaceMode: interfaceMode,
-  };
-
-  const userJsonEntry = {
-    [userName]: interfaceMode,
-  };
-
-  if (!fs.existsSync(jsonDirectory)) {
+  try {
+    let data = {};
     try {
-      fs.writeFileSync(jsonDirectory, JSON.stringify(userJsonEntry, null, 2));
+      const fileContent = await fs.readFile(jsonDirectory, "utf8");
+      data = JSON.parse(fileContent);
     } catch (error) {
-      console.error("Error writing users.json:", error);
-      return res.status(500).json({ error: "Error writing users.json." });
+      data = {};
     }
-  } else {
-    try {
-      const existingData = JSON.parse(fs.readFileSync(jsonDirectory, "utf8"));
-      existingData[req.body.userName] = req.body.interfaceMode;
+    data[userName] = interfaceMode;
+    await fs.writeFile(jsonDirectory, JSON.stringify(data, null, 2), "utf8");
 
-      fs.writeFileSync(jsonDirectory, JSON.stringify(existingData, null, 2));
-    } catch (error) {
-      console.error("Error updating users.json:", error);
-      return res.status(500).json({ error: "Error updating users.json." });
-    }
-  }
-  // Ensure the user's directory exists
-  if (!fs.existsSync(userDirectory)) {
-    fs.mkdirSync(userDirectory, { recursive: true });
+    await fs.mkdir(userDirectory, { recursive: true });
+    await fs.writeFile(
+      userConfigPath,
+      JSON.stringify({ userName, interfaceMode }, null, 2),
+      "utf-8"
+    );
 
     try {
-      console.log("Writing user config to:", userConfigPath);
-      fs.writeFileSync(
-        userConfigPath,
-        JSON.stringify(userConfig, null, 2),
-        "utf-8"
-      );
-    } catch (error) {
-      console.error("Error writing user config:", error);
-      return res.status(500).json({ error: "Error writing user config." });
+      await fs.access(projectDirectory);
+      return res
+        .status(409)
+        .json({ error: "Project directory already exists." });
+    } catch {
+      // Continue to create project
     }
-  }
 
-  // Ensure the project directory does not already exist
-  if (fs.existsSync(projectDirectory)) {
-    return res.status(409).json({ error: "Project directory already exists." });
-  } else {
-    fs.mkdirSync(projectDirectory, { recursive: true });
-    const projectConfig = {
-      projectName: projectName,
-      language: language,
+    await fs.mkdir(projectDirectory, { recursive: true });
+    await fs.writeFile(
+      projectConfigPath,
+      JSON.stringify({ projectName, language }, null, 2),
+      "utf-8"
+    );
+
+    const folders = ["bin", "include", "src", "data"];
+    for (const folder of folders) {
+      await fs.mkdir(path.join(projectDirectory, folder), { recursive: true });
+    }
+
+    const mainFilePath = path.join(
+      projectDirectory,
+      "src",
+      extensions[language] ? `main.${extensions[language]}` : ""
+    );
+
+    const templates = {
+      c: `#include <stdio.h>\n#include <kipr/wombat.h>\n\nint main()\n{\n  printf("Hello, World!\\n");\n  return 0;\n}\n`,
+      cpp: `#include <iostream>\n#include <kipr/wombat.hpp>\n\nint main()\n{\n  std::cout << "Hello, World!" << std::endl;\n  return 0;\n}\n`,
+      python: `#!/usr/bin/python3\nimport os, sys\nsys.path.append("/usr/lib")\nfrom kipr import *\n\nprint('Hello, World!')`,
+      graphical: `<xml xmlns="http://www.w3.org/1999/xhtml">
+                <variables></variables>
+                <block type="control_run" id="Tr7;}P}KM[{|.$;Wo9_1" x="176" y="129">
+                  <next>
+                    <block type="control_printf" id="*wt6^HnMX#w},]R6)*w}">
+                      <value name="STRING">
+                        <shadow type="text" id="2R).HZf7nqV:od^Se=3+">
+                          <field name="TEXT">Hello, World!</field>
+                        </shadow>
+                      </value>
+                    </block>
+                  </next>
+                </block>
+              </xml>`,
     };
 
     try {
-      fs.writeFileSync(
-        projectConfigPath,
-        JSON.stringify(projectConfig, null, 2),
-        "utf-8"
-      );
-    } catch (error) {
-      console.error("Error writing project config:", error);
-      return res.status(500).json({ error: "Error writing project config." });
-    }
-  }
-  // Validate input
-  if (!userName || !projectName || !language) {
-    return res.status(400).json({ error: "Missing required fields." });
-  }
-
-  try {
-    // Create default folders and files
-    const folders = ["bin", "include", "src", "data"];
-    folders.forEach((folder) => {
-      const folderPath = path.join(projectDirectory, folder);
-      fs.mkdirSync(folderPath, { recursive: true });
-    });
-
-    //Ensure the main.[language] file isn't already created
-    switch (language) {
-      case "c":
-        if (!fs.existsSync(path.join(projectDirectory, "src", `main.c`))) {
-          fs.writeFileSync(
-            path.join(projectDirectory, "src", `main.c`),
-            `#include <stdio.h>\n#include <kipr/wombat.h>\n\nint main()\n{\n  printf("Hello, World!\\n");\n  return 0;\n}\n`
-          );
-        }
-        break;
-      case "cpp":
-        if (!fs.existsSync(path.join(projectDirectory, "src", `main.cpp`))) {
-          fs.writeFileSync(
-            path.join(projectDirectory, "src", `main.cpp`),
-            `#include <iostream>\n#include <kipr/wombat.hpp>\n\nint main()\n{\n  std::cout << "Hello, World!" << std::endl;\n  return 0;\n}\n`
-          );
-        }
-
-        break;
-      case "python":
-        if (!fs.existsSync(path.join(projectDirectory, "src", `main.py`))) {
-          fs.writeFileSync(
-            path.join(projectDirectory, "src", `main.py`),
-            `#!/usr/bin/python3\nimport os, sys\nsys.path.append("/usr/lib")\nfrom kipr import *\n\nprint(\'Hello, World!\')`
-          );
-        }
-        break;
-      case "scratch":
-        if (
-          !fs.existsSync(path.join(projectDirectory, "src", `main.scratch`))
-        ) {
-          fs.writeFileSync(
-            path.join(projectDirectory, "src", `main.scratch`),
-            ``
-          );
-        }
-        break;
+      await fs.access(mainFilePath);
+      console.log(`File ${mainFilePath} already exists.`);
+    } catch {
+      await fs.writeFile(mainFilePath, templates[language] ?? "", "utf-8");
     }
 
     console.log("Initial files and folder structure committed.");
-
-    // Send success response
-    res.status(200).send("User Project folder created successfully");
+    return res.status(200).send("User Project folder created successfully");
   } catch (error) {
-    console.error("Error creating project folder:", error);
-    res.status(500).send("Error creating project folder");
+    console.error("Error initializing project:", error);
+    return res.status(500).send("Error initializing project.");
   }
 });
 
@@ -1591,6 +1686,7 @@ app.post("/delete-file", async (req, res) => {
     case "c":
     case "cpp":
     case "py":
+    case "graphical":
       userProjectDirectory = `/home/kipr/Documents/KISS/${userName}/${projectName}/src`;
       break;
     case "txt":
@@ -1604,11 +1700,11 @@ app.post("/delete-file", async (req, res) => {
 
   try {
     // Check if the file exists
-    await fs.promises.access(filePath);
+    await fs.access(filePath);
     console.log("File exists and is accessible.");
 
     //Delete file
-    await fs.promises.rm(filePath);
+    await fs.rm(filePath);
     console.log(`Deleted file path: ${filePath}`);
 
     return res.status(200).send("File deleted successfully.");
@@ -1638,14 +1734,10 @@ app.post("/delete-project", async (req, res) => {
 
   try {
     // Check if the project directory exists
-    if (!fs.existsSync(projectDirectory)) {
-      return res
-        .status(404)
-        .json({ error: "Project directory does not exist." });
-    }
+    await fs.access(projectDirectory);
 
     // Recursively delete the entire project directory
-    fs.rmSync(projectDirectory, { recursive: true, force: true });
+    await fs.rm(projectDirectory, { recursive: true, force: true });
 
     console.log(`Deleted project directory: ${projectDirectory}`);
 
@@ -1667,11 +1759,9 @@ app.post("/delete-user", async (req, res) => {
   const userDirectory = `/home/kipr/Documents/KISS/${userName}`;
 
   try {
-    if (!fs.existsSync(jsonPath)) {
-      return res.status(404).json({ error: "users.json not found." });
-    }
+    await fs.access(jsonPath);
 
-    const existingData = JSON.parse(fs.readFileSync(jsonPath, "utf8"));
+    const existingData = JSON.parse(await fs.readFile(jsonPath, "utf8"));
 
     if (!existingData[userName]) {
       return res.status(404).json({ error: "User not found in users.json." });
@@ -1679,7 +1769,7 @@ app.post("/delete-user", async (req, res) => {
 
     delete existingData[userName];
 
-    fs.writeFileSync(jsonPath, JSON.stringify(existingData, null, 2));
+    await fs.writeFile(jsonPath, JSON.stringify(existingData, null, 2));
   } catch (error) {
     console.error("Error deleting from users.json:", error);
     return res.status(500).json({ error: "Error deleting from users.json." });
@@ -1687,14 +1777,10 @@ app.post("/delete-user", async (req, res) => {
 
   try {
     // Check if the project directory exists
-    if (!fs.existsSync(userDirectory)) {
-      return res
-        .status(404)
-        .json({ error: "userDirectory directory does not exist." });
-    }
+    await fs.access(userDirectory);
 
     // Recursively delete the entire userDirectory directory
-    fs.rmSync(userDirectory, { recursive: true, force: true });
+    await fs.rm(userDirectory, { recursive: true, force: true });
 
     console.log(`Deleted userDirectory directory: ${userDirectory}`);
 
@@ -1715,11 +1801,10 @@ app.post("/download-zip", async (req, res) => {
 
   const userDirectory = `/home/kipr/Documents/KISS/${userName}`;
   // Check if the directory exists
-  if (!fs.existsSync(userDirectory)) {
-    return res.status(404).json({ error: "User directory not found" });
-  }
 
   try {
+    await fs.access(userDirectory);
+
     if (fileName) {
       const [name, extension] = fileName.split(".");
       //Single file download
@@ -1741,11 +1826,9 @@ app.post("/download-zip", async (req, res) => {
           break;
       }
 
-      if (!fs.existsSync(filePath)) {
-        return res.status(404).json({ error: "File not found" });
-      }
+      await fs.access(filePath);
 
-      const fileContents = fs.readFileSync(filePath, "utf-8");
+      const fileContents = await fs.readFile(filePath, "utf-8");
 
       const extname = path.extname(fileName).toLowerCase();
       let contentType = "text/plain"; // Default to plain text
@@ -1767,9 +1850,7 @@ app.post("/download-zip", async (req, res) => {
     } else if (projectName) {
       const projectDirectory = path.join(userDirectory, projectName);
       // Check if the project directory exists
-      if (!fs.existsSync(projectDirectory)) {
-        return res.status(404).json({ error: "Project directory not found" });
-      }
+      await fs.access(projectDirectory);
       const zip = new JSZip();
       const projectFolder = zip.folder(projectName);
       await getAllUserFiles(projectDirectory, projectFolder);
@@ -1813,37 +1894,20 @@ app.get("/get-all-file-names", async (req, res) => {
     // Directories to check
     const allowedDirs = ["src", "include", "data"];
 
-    const getAllFileNames = (dir) => {
+    const getAllFileNames = async (dir) => {
       let fileNames = [];
 
       // Read the contents of the directory
-      const files = fs.readdirSync(dir);
+      const files = await fs.readdir(dir);
+      console.log("/get-all-file-names - Reading directory:", dir);
+      console.log("Files found:", files);
 
-      // Loop through the contents
-      files.forEach((file) => {
-        // Skip hidden files or directories (those starting with a dot)
-        if (file.startsWith(".")) {
-          return;
-        }
-
-        const filePath = path.join(dir, file);
-        const stats = fs.statSync(filePath);
-
-        // If it's a directory, check if it's in the allowedDirs list
-        if (stats.isDirectory()) {
-          if (allowedDirs.includes(file)) {
-            fileNames = fileNames.concat(getAllFileNames(filePath));
-          }
-        } else {
-          // If it's a file, add it to the fileNames array
-          fileNames.push(filePath);
-        }
-      });
-
-      return fileNames;
+      console.log("getAllFileNames: ", files);
+      return files;
     };
 
-    const allFileNames = getAllFileNames(dirPath);
+    const allFileNames = await getAllFileNames(dirPath);
+    console.log("All file names found:", allFileNames);
 
     // Send the list of file names as the response
     res.status(200).json({
@@ -1861,11 +1925,9 @@ app.get("/get-project-language", async (req, res) => {
     const gitConfigPath = path.join(req.query.filePath, ".git/config");
 
     //check if .git/config exists
-    if (!fs.existsSync(gitConfigPath)) {
-      return res.status(400).json({ error: ".git/config not found" });
-    }
+    await fs.access(gitConfigPath);
 
-    const language = parseConfig(fs.readFileSync(gitConfigPath, "utf8"));
+    const language = parseConfig(await fs.readFile(gitConfigPath, "utf8"));
 
     //send the language as the response
     res.status(200).json({
@@ -1880,37 +1942,35 @@ app.get("/get-project-language", async (req, res) => {
 // User getters
 app.get("/load-user-data", async (req, res) => {
   try {
-    const allEntries = fs.readdirSync("/home/kipr/Documents/KISS");
+    const allEntries = await fs.readdir("/home/kipr/Documents/KISS");
 
     //Filter out users.json
-    const userDirectories = allEntries.filter((file) => {
+    const userDirectories = [];
+    for (const file of allEntries) {
       const filePath = path.join("/home/kipr/Documents/KISS", file);
-      return (
+      if (
         file !== "users.json" &&
-        fs.statSync(filePath).isDirectory() &&
-        !file.startsWith(".")
-      );
-    });
+        !file.startsWith(".") &&
+        (await fs.stat(filePath)).isDirectory()
+      ) {
+        userDirectories.push(file);
+      }
+    }
     console.log("User directories: ", userDirectories);
 
-    const users = userDirectories.map((user) => {
-      // Get the interface mode for the user
-      const userInterfaceMode = getUserInterfaceMode(user);
+    const users = await Promise.all(
+      userDirectories.map(async (user) => {
+        const userInterfaceMode = await getUserInterfaceMode(user);
+        const userDirectory = `/home/kipr/Documents/KISS/${user}`;
+        const projects = getAllProjectDirectories(userDirectory);
 
-      const userDirectory = `/home/kipr/Documents/KISS/${user}`;
-      const projects = getAllProjectDirectories(userDirectory);
-      console.log("Projects: ", projects);
-
-      if (userInterfaceMode === null) {
-        console.log(`User interface mode not found for ${user}`);
-      }
-
-      return {
-        userName: user,
-        interfaceMode: userInterfaceMode || "simple", // Default to 'simple' if not found
-        projects: projects,
-      };
-    });
+        return {
+          userName: user,
+          interfaceMode: userInterfaceMode || "Simple",
+          projects: projects,
+        };
+      })
+    );
 
     // Send the list of users as the response
     res.status(200).json({
@@ -1933,16 +1993,20 @@ app.get("/get-project-data", async (req, res) => {
   try {
     const projectDirectory = req.query.filePath;
     const projectConfigPath = path.join(projectDirectory, ".config.json");
-    const language = parseConfig(fs.readFileSync(projectConfigPath, "utf8"));
+    const language = parseConfig(await fs.readFile(projectConfigPath, "utf8"));
 
-    const includeData = getAllFiles(path.join(projectDirectory, "include"));
-    const srcData = getAllFiles(path.join(projectDirectory, "src"));
-    const userFileData = getAllFiles(path.join(projectDirectory, "data"));
+    const includeData = await getAllFiles(
+      path.join(projectDirectory, "include")
+    );
+    const srcData = await getAllFiles(path.join(projectDirectory, "src"));
+    const userFileData = await getAllFiles(path.join(projectDirectory, "data"));
 
     const filteredIncludeData = includeData.filter(
       (file) => !file.startsWith(".")
     );
-    const filteredSrcData = srcData.filter((file) => !file.startsWith("."));
+    const filteredSrcData = srcData.filter(
+      (file) => !file.startsWith(".") && !file.startsWith("xmlToC.c")
+    );
     const filteredUserFileData = userFileData.filter(
       (file) => !file.startsWith(".")
     );
@@ -1991,6 +2055,8 @@ app.post("/change-interface-mode", (req, res) => {
 //Rename user, project, or file
 app.post("/rename", async (req, res) => {
   const defaultDirectory = `/home/kipr/Documents/KISS`;
+  const usersJsonPath = path.join(defaultDirectory, "users.json");
+  console.log("usersJsonPath:", usersJsonPath);
 
   if (req.body.renameType === "User") {
     try {
@@ -2003,16 +2069,41 @@ app.post("/rename", async (req, res) => {
         req.body.newUserName
       );
       // Check if the new desired user directory already exists
-      if (fs.existsSync(desiredUserDirectory)) {
-        return res.status(409).json({ error: "User directory already exists" });
-      }
 
+      try {
+        await fs.access(desiredUserDirectory);
+        // If no error, the path exists
+        return res
+          .status(409)
+          .json({ error: "Project directory already exists" });
+      } catch (err) {
+        // Path does NOT exist — continue
+      }
       // Rename the user directory asynchronously
-      await fs.promises.rename(oldUserDirectory, desiredUserDirectory);
+      await fs.rename(oldUserDirectory, desiredUserDirectory);
 
       console.log(
         `Renamed user directory: ${oldUserDirectory} to ${desiredUserDirectory}`
       );
+
+      const data = await fs.readFile(usersJsonPath, "utf8");
+      let usersData = JSON.parse(data);
+      console.log("Current users data:", usersData);
+      // Update the user entry
+      if (usersData[req.body.oldUserName]) {
+        usersData[req.body.newUserName] = usersData[req.body.oldUserName];
+        delete usersData[req.body.oldUserName];
+        console.log("Preparing to write to users.json...");
+        console.log("Path:", usersJsonPath);
+        console.log("Data:", JSON.stringify(usersData, null, 2));
+        await fs.writeFile(
+          usersJsonPath,
+          JSON.stringify(usersData, null, 2),
+          "utf8"
+        );
+      } else {
+        console.warn(`User ${req.body.oldUserName} not found in users.json.`);
+      }
 
       res.status(200).json({
         message: "User renamed successfully",
@@ -2036,17 +2127,18 @@ app.post("/rename", async (req, res) => {
         req.body.newProjectName
       );
       // Check if the project directory exists
-      if (!fs.existsSync(oldProjectDirectory)) {
-        return res.status(404).json({ error: "Project directory not found" });
-      }
+      await fs.access(oldProjectDirectory);
 
-      if (fs.existsSync(newProjectDirectory)) {
+      try {
+        await fs.access(newProjectDirectory);
+        // If no error, the path exists
         return res
           .status(409)
           .json({ error: "Project directory already exists" });
+      } catch (err) {
+        //continue
       }
-
-      await fs.promises.rename(oldProjectDirectory, newProjectDirectory);
+      await fs.rename(oldProjectDirectory, newProjectDirectory);
 
       console.log(
         `Renamed project directory: ${oldProjectDirectory} to ${newProjectDirectory}`
@@ -2105,16 +2197,19 @@ app.post("/rename", async (req, res) => {
           break;
       }
 
-      if (!fs.existsSync(oldFilePath)) {
-        return res.status(404).json({ error: "Old file not found" });
+      await fs.access(oldFilePath);
+
+      try {
+        await fs.access(newFilePath);
+        // If no error, the path exists
+        return res
+          .status(409)
+          .json({ error: "Project directory already exists" });
+      } catch (err) {
+        //continue
       }
 
-      // Check if the new desired file exists already
-      if (fs.existsSync(newFilePath)) {
-        return res.status(409).json({ error: "File already exists" });
-      }
-
-      await fs.promises.rename(oldFilePath, newFilePath);
+      await fs.rename(oldFilePath, newFilePath);
 
       console.log(`Renamed file: ${oldFilePath} to ${newFilePath}`);
 
@@ -2149,7 +2244,7 @@ app.get("/run-code", (req, res) => {
   switch (activeLanguage) {
     case "c":
     case "cpp":
-    case "scratch":
+    case "graphical":
       runCommand = `"${bin_directory}/botball_user_program"`;
 
       break;
@@ -2209,11 +2304,11 @@ app.get("/run-code", (req, res) => {
 // Stop code
 app.post("/stop-code", (req, res) => {
   if (currentChild) {
-    console.log("Stopping process group:", -currentChild.pid);
+    if (!motorAddon) motorAddon = require("./build/Release/motor_addon.node");
     try {
       process.kill(-currentChild.pid, "SIGKILL"); // Use negative PID to kill the group
       try {
-        motorAddon.alloff(); // or motorAddon.off(0), etc.
+        motorAddon.allOff(); // or motorAddon.off(0), etc.
         console.log("Motors stopped via addon.");
       } catch (motorErr) {
         console.error("Failed to stop motors:", motorErr);
@@ -2344,32 +2439,38 @@ if (config.server.dependencies.libkipr_python) {
   );
 }
 
-app.use(
-  "/dist",
-  express.static(`${__dirname}/dist`, {
-    setHeaders: setCrossOriginIsolationHeaders,
-  })
-);
+// app.use(
+//   "/dist",
+//   express.static(`${__dirname}/dist`, {
+//     setHeaders: setCrossOriginIsolationHeaders,
+//   })
+// );
 
-app.use(
-  express.static(sourceDir, {
-    maxAge: config.caching.staticMaxAge,
-    setHeaders: setCrossOriginIsolationHeaders,
-  })
-);
+// app.use(
+//   express.static(sourceDir, {
+//     maxAge: config.caching.staticMaxAge,
+//     setHeaders: setCrossOriginIsolationHeaders,
+//   })
+// );
 
 app.use((req, res) => {
   setCrossOriginIsolationHeaders(res);
   res.sendFile(`${__dirname}/${sourceDir}/index.html`);
 });
-
+app.use(
+  "/",
+  expressStaticGzip(path.join(__dirname, "dist"), {
+    enableBrotli: true, // serve .br files if available
+    orderPreference: ["br", "gz"],
+    setHeaders: (res, filePath) => {
+      res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+      res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+    },
+  })
+);
 server.listen(config.server.port, "0.0.0.0", () => {
   console.log(
     `Express and WebSocket server started: http://localhost:${config.server.port}`
   );
   console.log(`Serving content from /${sourceDir}/`);
 });
-
-// app.listen(3001, () => {
-//   console.log("SSE server listening on http://localhost:3001");
-// });

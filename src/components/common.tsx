@@ -8,7 +8,7 @@ export const Spacer = styled('div', {
 
 export const leftBarSpacer= styled('div', {
   //marginLeft: '250px'
-  flex: '8 1',
+  flex: '4 1',
   minWidth: 0
 });
 
@@ -21,7 +21,14 @@ export const middleBarSpacer = styled('div', {
 
 export const rightBarSpacer = styled('div', {
   // marginRight: '210px'
-  flex: '9 1',
+  flex: '5 1',
   minWidth: 0
 });
 
+export const InfoContainer = styled('div', {
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundColor: 'green'
+});

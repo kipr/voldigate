@@ -63,6 +63,8 @@ const Container = styled('div', (props: ThemeProps) => ({
   flexDirection: 'row',
   color: props.theme.color,
   backgroundColor: props.theme.backgroundColor,
+
+  maxWidth: '100%',
   minHeight: '300px',
 }));
 
@@ -87,6 +89,10 @@ const SectionsColumn = styled('div', (props: ThemeProps) => ({
   flexDirection: 'column',
   flex: '0 0 150px',
   borderRight: `1px solid ${props.theme.borderColor}`,
+
+  overflow: 'hidden',
+
+  maxWidth: '12em',
 }));
 
 const SectionName = styled('span', (props: ThemeProps & SectionProps) => ({
@@ -98,11 +104,17 @@ const SectionName = styled('span', (props: ThemeProps & SectionProps) => ({
   transition: 'background-color 0.2s, opacity 0.2s',
   padding: `${props.theme.itemPadding * 2}px`,
   fontWeight: props.selected ? 400 : undefined,
+  wordBreak: 'break-word',
+  overflowWrap: 'anywhere',
   userSelect: 'none',
 }));
-
+//
 const SettingsColumn = styled(ScrollArea, {
-  flex: '1 1',
+  flex: '1 2',
+  display: 'flex',
+  flexDirection: 'column',
+  backgroundColor: '',
+  minWidth: '30em'
 });
 
 const ProjectTitle = styled('h2', {
@@ -110,20 +122,36 @@ const ProjectTitle = styled('h2', {
   marginBottom: '10px',
   fontSize: '1.2em',
   textAlign: 'center',
+  maxWidth: '24em',
+
+  wordBreak: 'break-word',
+  overflowWrap: 'anywhere',
 });
+
+
+const StyledScrollArea = styled(ScrollArea, ({ theme }: ThemeProps) => ({
+  flex: 1,
+  maxWidth: '12em',
+  //backgroundColor: 'pink'
+}));
 
 const ProjectItem = styled('li', (props: ThemeProps & { selected: boolean }) => ({
   cursor: 'pointer',
-  backgroundColor: props.selected ? `rgba(255, 255, 255, 0.1)` : undefined, 
-  padding: '5px',
+  backgroundColor: props.selected ? props.theme.selectedUserBackground : props.theme.unselectedBackground,
+  padding: '10px 20px',
   margin: '5px 0',
+  maxWidth: '30em',
+  wordBreak: 'break-word',
+  overflowWrap: 'anywhere',
   borderRadius: '5px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
   ':hover': {
-    cursor: 'pointer',
-    backgroundColor: props.theme.hoverOptionBackground
+    backgroundColor: props.theme.hoverOptionBackground,
   },
+  boxShadow: props.theme.themeName === "DARK" ? ' 0px 7px 8px -4px rgba(0, 0, 0, 0.2), 0px 12px 17px 2px rgba(0, 0, 0, 0.14), 0px 5px 22px 4px rgba(0, 0, 0, 0.12)' : '2px 2px 4px rgba(0,0,0,0.9)',
 }));
-
 const BottomButtonContainer = styled('div', {
   display: 'flex',
   justifyContent: 'center',
@@ -174,7 +202,7 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
       activeLanguage: 'c'
 
     };
-  };
+  };//
 
   private setSelectedUser = (selectedUser: User) => {
     this.setState({
@@ -191,10 +219,14 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
   };
 
   private handleProjectClick = async (project: Project) => {
+    console.log("handleprojectclick state before:", this.state);
+    console.log("handleProjectClick called with project:", project);
     this.setState({
       selectedProject: project,
       projectName: project.projectName,
       activeLanguage: this.state.projects!.find(project => project.projectName === project.projectName)!.projectLanguage
+    }, () => {
+      console.log("Updated state after project click:", this.state);
     });
   };
 
@@ -298,9 +330,13 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
         onClose={onClose}
       >
         <Container theme={theme} style={style} className={className}>
-          <SectionsColumn theme={theme}>
-            {userSections}
-          </SectionsColumn>
+           <StyledScrollArea theme={theme} >
+            <SectionsColumn theme={theme}>
+
+              {userSections}
+
+            </SectionsColumn>
+          </StyledScrollArea>
           <SettingsColumn theme={theme}>
             <SettingContainer theme={theme}>
               <SettingInfoContainer>

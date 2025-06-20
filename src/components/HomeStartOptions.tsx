@@ -1,7 +1,7 @@
 import CreateUserDialog from './CreateUserDialog';
 import tr from '@i18n';
 import KIPR_LOGO_WHITE from '../assets/KIPR-Logo-White-Text-Clear-Large.png';
-import IDE_Logo from '../assets/IDE_Logo.png';
+import IDELogo from '../assets/IDE_Logo.webp';
 import React from 'react';
 import LocalizedString from '../util/LocalizedString';
 import SettingsDialog from './SettingsDialog';
@@ -45,18 +45,20 @@ type State = HomeStartOptionsState;
 
 const Container = styled('div', (props: ThemeProps) => ({
     color: props.theme.color,
-    width: '50%',
+    width: '100%',
     height: '80%',
     paddingTop: '2%',
-    //marginTop: '1%',
-    marginLeft: '19%',
+    marginTop: '1%',
+    // marginLeft: '10%',
     lineHeight: '28px',
     display: 'flex',
     alignItems: 'center',
     position: 'relative',
     flexDirection: 'column',
-    gap: '3em',
+    gap: '0.81em',
     zIndex: 1,
+    fontSize: '1em',
+
 
 }));
 
@@ -65,8 +67,8 @@ const HomeStartContainer = styled('div', (props: ThemeProps) => ({
     backgroundColor: props.theme.homeStartContainerBackground,
     border: `2px solid ${props.theme.borderColor}`,
     color: props.theme.color,
-    width: '150vw', // Use viewport width for better scaling
-    maxWidth: '500px', // Prevents it from getting too big
+    width: '60%', // Use viewport width for better scaling
+    maxWidth: '30em', // Prevents it from getting too big
     height: 'auto',
     minHeight: '40vh',
     display: 'flex',
@@ -85,12 +87,13 @@ const StartContainer = styled('div', (props: ThemeProps) => ({
     backgroundColor: props.theme.startContainerBackground,
     color: props.theme.color,
     width: '100%', // Ensure it takes full width of HomeStartContainer
-    maxWidth: '400px', // Prevents it from stretching too much
-    height: 'auto', // Let it expand based on content
-    minHeight: '20vh', // Ensures a minimum height
-    padding: '10px',
+    maxWidth: '30em', // Prevents it from getting too big
+    height: '100%', // Let it expand based on content
+    minHeight: '10vh', // Ensures a minimum height
+    maxHeight: '35vh', // Prevents it from getting too tall
+    padding: '1em',
     display: 'flex',
-    justifyContent: 'center',
+    //justifyContent: 'center',
     alignContent: 'center',
     alignItems: 'flex-start',
     flexDirection: 'column',
@@ -109,10 +112,10 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    fontSize: '2.074em',
-    padding: '30px 10px 30px 20px',
-    marginBottom: '16px',
-    height: '45px',
+    fontSize: 'clamp(1.2rem, 3vw, 2rem)',
+    padding: '0.3em 0.1em 0.3em 0.2em',
+    marginBottom: '0.1em',
+    height: '2.5em',
     userSelect: 'none',
     transition: 'background-color 0.2s, opacity 0.2s',
     cursor: 'grab',
@@ -126,11 +129,10 @@ const Title = styled('div', (props: ThemeProps & ClickProps) => ({
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'row',
-    paddingRight: '20px',
     width: '100%',
-    marginBottom: '12px',
-    marginTop: '10px',
-    height: '45px',
+    marginBottom: '0.3em',
+    marginTop: '0.3em',
+    fontSize: 'clamp(1.2rem, 8vw, 3rem)',
     userSelect: 'none',
     transition: 'background-color 0.2s, opacity 0.2s'
 }));
@@ -138,10 +140,10 @@ const Title = styled('div', (props: ThemeProps & ClickProps) => ({
 const ItemIcon = styled(Fa, {
     display: 'flex',
     justifyContent: 'center',
-    paddingRight: '12px',
+    paddingRight: '0.2em',
     alignItems: 'center',
 
-    height: '35px'
+    height: '1em'
 });
 
 const LogoContainer = styled('div', (props: ThemeProps) => ({
@@ -152,8 +154,8 @@ const LogoContainer = styled('div', (props: ThemeProps) => ({
     justifyContent: 'center',
 
     flexDirection: 'row',
-    width: '100%',
-    height: '60%',
+    width: '15em',
+    height: '15em',
     zIndex: 0,
 
 }));
@@ -162,9 +164,11 @@ const Logo = styled('img', (props: ThemeProps) => ({
     position: 'relative',
     backgroundColor: '#373737',
     // alignItems: 'flex-end',
-    width: '16em',
-    height: '16em',
-   // marginLeft: '15%',
+    width: '60%',
+    height: '60%',
+    maxWidth: '20em',
+    maxHeight: '20em',
+    // marginLeft: '15%',
     userSelect: 'none',
     transition: 'background-color 0.2s, opacity 0.2s'
 }));
@@ -227,15 +231,12 @@ export class HomeStartOptions extends React.Component<Props, State> {
         } = this.state;
 
         return (
-            <div style={{ height: '80%', maxHeight: '80%' }}>
+            <div style={{ height: '80%', maxHeight: '80%', }}>
                 <Container className={className} style={style} theme={theme}>
-                    <LogoContainer theme={theme}>
-                        <Logo src={IDE_Logo as string} theme={theme} />
-                        {/* <IDEName style={{ fontSize: '4em' }} theme={theme}>KISS IDE</IDEName> */}
-                    </LogoContainer>
+                    <Logo src={IDELogo as string} theme={theme} />
                     <HomeStartContainer theme={theme}>
                         <StartContainer theme={theme}>
-                            <Title theme={theme} style={{ fontSize: '2.488em' }}>Start</Title>
+                            <Title theme={theme} >Start</Title>
                             <Item onClick={this.onModalClick_(Modal.CREATEUSER)} theme={theme}><ItemIcon icon={faUserPlus}></ItemIcon>{LocalizedString.lookup(tr('New User...'), locale)}</Item>
                             <Item onClick={this.onModalClick_(Modal.OPENFILE)} theme={theme}><ItemIcon icon={faFilePen}></ItemIcon>{LocalizedString.lookup(tr('Open File...'), locale)}</Item>
                             <Item onClick={this.onModalClick_(Modal.OPENUSERS)} theme={theme}><ItemIcon icon={faBookReader}></ItemIcon>{LocalizedString.lookup(tr('Open User...'), locale)}</Item>

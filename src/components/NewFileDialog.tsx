@@ -146,10 +146,8 @@ export class NewFileDialog extends React.PureComponent<Props, State> {
       console.log("File Path: ", filePath);
       let trimmedFilePath = filePath.trim();
 
-
-
-      
-      if (projectData.data.fileNames.some(name => name.trim() === trimmedFilePath)) {
+      if(projectData.data.fileNames.includes(newFileName)) {
+        console.log("File name already exists in the project.");
         this.setState({ errorMessage: 'File name already exists. Please choose a different name.' });
         return;
       }
