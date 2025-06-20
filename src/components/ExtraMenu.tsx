@@ -20,7 +20,7 @@ interface ExtraMenuPrivateProps {
 }
 
 interface ExtraMenuState {
-  
+
 }
 
 type Props = ExtraMenuPublicProps & ExtraMenuPrivateProps;
@@ -50,20 +50,22 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
   flexDirection: 'row',
   padding: '10px',
   fontSize: '1em',
-  borderBottom: `1px solid ${props.theme.borderColor}`,
+  //borderBottom: `1px solid ${props.theme.borderColor}`,
+    borderBottomLeftRadius: `${props.theme.borderRadius}px`,
+  borderBottomRightRadius: `${props.theme.borderRadius}px`,
   opacity: props.disabled ? '0.5' : '1.0',
   fontWeight: 400,
   ':hover': !props.disabled && props.onClick ? {
     cursor: 'pointer',
-    backgroundColor: props.theme.hoverOptionBackground  
+    backgroundColor: props.theme.hoverOptionBackground,
+    borderBottomLeftRadius: `${props.theme.borderRadius}px`,
+    borderBottomRightRadius: `${props.theme.borderRadius}px`,
   } : {
     cursor: 'auto',
   },
   userSelect: 'none',
   transition: 'background-color 0.2s, opacity 0.2s',
-  
-  boxShadow: '0px 10px 13px -6px rgba(255, 105, 180, 0.1), 0px 1px 31px 0px rgba(135, 206, 250, 0.08), 0px 8px 38px 7px rgba(144, 238, 144, 0.1)',
-
+  boxShadow: props.theme.boxShadow,
 }));
 
 
@@ -97,8 +99,8 @@ class ExtraMenu extends React.PureComponent<Props, State> {
     return (
       <Container theme={theme} style={style} className={className}>
         <Item theme={theme} onClick={onDocumentationClick}><ItemIcon icon={faBook} /> {LocalizedString.lookup(tr('Documentation'), locale)}</Item>
-         <Item theme={theme} onClick={onAboutClick}><ItemIcon icon={faQuestion} /> {LocalizedString.lookup(tr('About'), locale)}</Item>
-       
+        <Item theme={theme} onClick={onAboutClick}><ItemIcon icon={faQuestion} /> {LocalizedString.lookup(tr('About'), locale)}</Item>
+
       </Container>
     );
   }
