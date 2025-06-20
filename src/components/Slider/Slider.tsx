@@ -32,6 +32,7 @@ const SliderContainer = styled('div', (props: CanBeVertical & CanBeSelected) => 
   width: '100%',
   height: '100%',
   flexDirection: (props.$vertical) ? 'row' : 'column',
+ 
   cursor: props.selected ? (props.$vertical ? 'col-resize' : 'row-resize') : null,
 }));
 const SliderItem = styled('div', (props: SliderItemProps) => ({
@@ -39,7 +40,8 @@ const SliderItem = styled('div', (props: SliderItemProps) => ({
   overflow: 'auto',
   flexGrow: props.$flexGrow,
   flexBasis: '0',
-  width: '100%'
+  width: '100%',
+ 
 }));
 
 export const Slider = function (props: SliderProps) {
@@ -58,7 +60,7 @@ export const Slider = function (props: SliderProps) {
 
   React.useEffect(() => {
     dispatch({ actionType: Actions.SetSizes, sizes });
-  }, [sizes]);
+  }, []);
   
 
   const [selected, setSelected] = React.useState(false);
