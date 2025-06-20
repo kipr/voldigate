@@ -82,6 +82,7 @@ export interface Theme {
   whiteText: string;
  textColor: string;
  cursorColor: string;
+ verticalLineColor: string;
   titleBarBackground: string;
   fileContainerBackground: string;
   leftBarContainerBackground: string;
@@ -138,6 +139,7 @@ export const COMMON: Theme = {
   color: undefined,
    textColor: undefined,
    cursorColor: undefined,
+   verticalLineColor: undefined,
   titleBarBackground: undefined,
   startContainerBackground: undefined,
   homeStartContainerBackground: undefined,
@@ -204,6 +206,7 @@ export const LIGHT: Theme = {
   borderColor: '#ede0e0',
   iconColor: '#f5ebeb',
   foreground: 'white',
+  verticalLineColor: 'black',
   backgroundColor: '#ffffff',
   titleBarBackground: '#f4ecec',
   startContainerBackground: '#ebdbdc',
@@ -268,6 +271,7 @@ export const DARK: Theme = {
   borderColor: '#323232',
   foreground: 'black',
   backgroundColor: '#212121',
+  verticalLineColor: 'white',
   titleBarBackground: '#212121',
   cursorColor: '#ffffff',
   dialogBoxTitleBackground: '#212121',
