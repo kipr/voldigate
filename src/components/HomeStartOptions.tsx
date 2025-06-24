@@ -233,7 +233,7 @@ export class HomeStartOptions extends React.Component<Props, State> {
         return (
             <div style={{ height: '80%', maxHeight: '80%', }}>
                 <Container className={className} style={style} theme={theme}>
-                    <Logo src={IDELogo as string} theme={theme} />
+                    <Logo src={IDELogo as string} loading={'eager'} decoding={'async'} theme={theme} />
                     <HomeStartContainer theme={theme}>
                         <StartContainer theme={theme}>
                             <Title theme={theme} >Start</Title>
