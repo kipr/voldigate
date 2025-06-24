@@ -2465,6 +2465,12 @@ app.use(
     setHeaders: (res, filePath) => {
       res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
       res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+
+      if (/\.[0-9a-f]{8,}\.min\.(js|css|br|gz)$/.test(filePath)) {
+        res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+      } else if (filePath.endsWith("index.html")) {
+        res.setHeader("Cache-Control", "no-store");
+      }
     },
   })
 );
