@@ -19,13 +19,13 @@ import { Slider } from './Slider';
 import { BLANK_PROJECT, Project, UploadedProject } from '../types/projectTypes';
 import { User } from '../types/userTypes';
 import { InterfaceMode } from '../types/interfaceModes';
-import { JSX } from 'react';
+import { JSX, Suspense } from 'react';
 import { Motors, ServoType, Servos, DEFAULT_SENSORS, DEFAULT_MOTORS, DEFAULT_SERVOS, SensorValues, SensorSelectionKey, SensorSelection, MotorVelocities, MotorPositions, GraphSelectionKey, ServoPositions } from '../types/motorServoSensorTypes';
 import { IvygateFileExplorer, MotorServoSensorDisplay } from 'ivygate';
 import { useProgramRun } from '../ProgramRunContext';
 import { FileInfo } from 'types/fileInfo';
 import axios from 'axios';
-import TerminalView from './TerminalView';
+const TerminalView = React.lazy(() => import('./TerminalView'));
 import { urlToHttpOptions } from 'url';
 
 
@@ -1709,11 +1709,13 @@ class LeftBar extends React.Component<Props, State> {
     terminalDisplay = (
       console.log("LeftBar render() terminalDisplay state: ", this.state),
       <DisplayContainer theme={storedTheme}>
-        <TerminalView
+        <Suspense fallback={<div>Loading Terminal...</div>}>
+          <TerminalView
           theme={storedTheme}
           locale="en-US"
           className="terminal-view"
         />
+        </Suspense>
       </DisplayContainer>
     )
 
