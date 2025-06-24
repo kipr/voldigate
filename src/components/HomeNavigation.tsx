@@ -151,7 +151,7 @@ class HomeNavigation extends React.PureComponent<Props, State> {
     return (
       <HomeNavigationContainer theme={theme}>
 
-        <MainMenu theme={theme} locale={locale}/>
+        <MainMenu theme={theme}  />
         <LeftBarContainer theme={theme}>
           {/* <LeftBar theme={theme}
             onThemeChange={this.onThemeChange_}
