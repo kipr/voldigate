@@ -7,6 +7,14 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <link
+      rel="preload"
+      as="image"
+      href="/assets/IDE_Logo.webp"
+      type="image/webp"
+    />
+    <link rel="preload" as="script" href="/js/vendors~react.[hash].min.js" />
+    <link rel="preload" as="script" href="/js/app.[hash].min.js" />
+    <link
       rel="apple-touch-icon"
       sizes="180x180"
       href="/static/apple-touch-icon.png"
@@ -170,7 +178,6 @@
         font-family: verdana;
         font-size: 14px;
       }
- 
 
       #swap {
         visibility: hidden;
@@ -178,6 +185,7 @@
     </style>
   </head>
   <body>
+    
     <div id="swap"></div>
     <div id="reactRoot"></div>
     <div id="documentation-root"></div>
