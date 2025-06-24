@@ -42,11 +42,6 @@ interface ReduxProps {
   pushCommon: (location: DocumentationLocation) => void;
 }
 
-interface ComponentState {
-  modal: Modal;
-  documentationType: 'default' | 'common';
-}
-
 const mapStateToProps = (state: ReduxState) => ({
   documentationCommon: state.documentationCommon,
   documentationDefault: state.documentationDefault,
@@ -136,16 +131,8 @@ class MainMenu extends React.Component<Props, MenuState> {
   };
 
   render() {
-    const { theme, locale } = this.props;
+    const { theme } = this.props;
     const { modal, documentationType } = this.state;
-
-    const isCommon = documentationType === 'common';
-    const docState = isCommon ? this.props.documentationCommon : this.props.documentationDefault;
-    const onSizeChange = isCommon ? this.props.setSizeCommon : this.props.setSizeDefault;
-    const onPop = isCommon ? this.props.popCommon : this.props.popDefault;
-    const onPush = isCommon ? this.props.pushCommon : this.props.pushDefault;
-    console.log("documentationType:", documentationType);
-    console.log("docState (passed to DocumentationWindow):", docState);
 
     return (
       <Container theme={theme}>
@@ -174,7 +161,6 @@ class MainMenu extends React.Component<Props, MenuState> {
             <DocumentationWindow
               theme={theme}
               documentationType={'default'}
-              
             />
           )}
 
@@ -182,8 +168,6 @@ class MainMenu extends React.Component<Props, MenuState> {
             <DocumentationWindow
               theme={theme}
               documentationType={'common'}
-         
- 
             />
           )}
         </>

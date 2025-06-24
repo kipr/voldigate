@@ -3,20 +3,8 @@ import { styled } from 'styletron-react';
 import { StyleProps } from '../style';
 import { Dialog } from './Dialog';
 import { ThemeProps, LIGHTMODE_YES,LIGHTMODE_NO,LIGHT } from './theme';
-import { Fa } from './Fa';
-import { JSX } from 'react';
-import { faCopyright } from '@fortawesome/free-solid-svg-icons';
-
-import KIPR_LOGO_BLACK from '../assets/KIPR-Logo-Black-Text-Clear-Large.png';
-import KIPR_LOGO_WHITE from '../assets/KIPR-Logo-White-Text-Clear-Large.png';
-
 import tr from '@i18n';
-
-import { connect } from 'react-redux';
-import { State as ReduxState } from '../state';
 import LocalizedString from '../util/LocalizedString';
-import { sprintf } from 'sprintf-js';
-import Dict from '../Dict';
 
 export interface DeleteUserProjectFileDialogPublicProps extends ThemeProps, StyleProps {
   onClose: () => void;
@@ -30,9 +18,7 @@ interface DeleteUserProjectFileDialogPrivateProps {
   locale: LocalizedString.Language;
 }
 
-
 type Props = DeleteUserProjectFileDialogPublicProps & DeleteUserProjectFileDialogPrivateProps;
-
 
 namespace Modal {
   export enum Type {
@@ -79,10 +65,6 @@ const Logo = styled('img', {
   height: 'auto',
 });
 
-const LogoContainer = styled('div', {
-  flex: '1 1'
-});
-
 const Container = styled('div', (props: ThemeProps) => ({
   color: props.theme.color,
   padding: `${props.theme.itemPadding * 2}px`,
@@ -93,44 +75,27 @@ const Bold = styled('span', {
   fontWeight: 400
 });
 
-const Link = styled('a', (props: ThemeProps) => ({
-  color: props.theme.color,
-}));
-
-const LogoRow = styled('div', {
-  display: 'flex',
-  flexDirection: 'row',
-  marginBottom: '10px',
-  alignItems: 'center',
-});
-
-const CopyrightContainer = styled('div', {
-  flex: '1 1'
-});
-
 const CenteredContainer = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  textAlign: 'center', // Ensures that text within the Bold component is centered
-  width: '100%', // Ensures the container takes up the full width of its parent
-  height: '100%', // Ensures the container takes up the full height of its parent (if required)
+  textAlign: 'center', 
+  width: '100%', 
+  height: '100%',
 });
 const BottomButtonContainer = styled('div', {
   display: 'flex',
   justifyContent: 'center',
-  marginTop: '20px', // Add some space above the button
-  
-});
+  marginTop: '20px',
+  });
 
 const Button = styled('button', {
-  margin: '0 10px', // Add some space to the left and right of the button
-  padding: '10px 20px', // Add some padding to the button
-  border: 'none', // Remove the border
-  borderRadius: '5px', // Add some border radius
-  cursor: 'pointer', // Change the cursor to a pointer when hovering over the button
+  margin: '0 10px', 
+  padding: '10px 20px', 
+  border: 'none', 
+  borderRadius: '5px',
+  cursor: 'pointer', 
 });
-
 
 // Styled component button for the "Yes" button
 const YesItem = styled(Button, (props: ThemeProps & {onClick?: () => void; disabled?: boolean}) => ({
@@ -147,8 +112,8 @@ const YesItem = styled(Button, (props: ThemeProps & {onClick?: () => void; disab
   boxShadow: '2px 2px 4px rgba(0,0,0,0.9)',
   ':active': props.onClick && !props.disabled
     ? {
-      boxShadow: '1px 1px 2px rgba(0,0,0,0.7)', // Fixed incorrect commas
-      transform: 'translateY(1px, 1px)', // Adds a press-down effect
+      boxShadow: '1px 1px 2px rgba(0,0,0,0.7)', 
+      transform: 'translateY(1px, 1px)', 
     }
     : {},
 }));
@@ -168,8 +133,8 @@ const NoItem = styled(Button, (props: ThemeProps & {onClick?: () => void; disabl
   boxShadow: '2px 2px 4px rgba(0,0,0,0.9)',
   ':active': props.onClick && !props.disabled
     ? {
-        boxShadow: '1px 1px 2px rgba(0,0,0,0.7)', // Fixed incorrect commas
-        transform: 'translateY(1px, 1px)', // Adds a press-down effect
+        boxShadow: '1px 1px 2px rgba(0,0,0,0.7)', 
+        transform: 'translateY(1px, 1px)', 
       }
     : {},
 }));
@@ -183,26 +148,9 @@ class DeleteUserProjectFileDialog extends React.PureComponent<Props> {
       }
   }
 
-  componentDidMount(): void {
-    console.log("DeleteUserProjectFileDialog.tsx: componentDidMount with props:", this.props);  
-  }
   render() {
-    const { props, state } = this;
+    const { props } = this;
     const { theme, onClose, locale } = props;
-
-
-    let logo: JSX.Element;
-
-    switch (theme.foreground) {
-      case 'black': {
-        logo = <Logo src={KIPR_LOGO_WHITE as string} />;
-        break;
-      }
-      case 'white': {
-        logo = <Logo src={KIPR_LOGO_BLACK as string} />;
-        break;
-      }
-    }
 
     return (
       <Dialog theme={theme} name={LocalizedString.lookup(tr('Are You Sure?'), locale)} onClose={onClose}>

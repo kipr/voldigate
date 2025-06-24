@@ -1,10 +1,8 @@
 import CreateUserDialog from './CreateUserDialog';
 import tr from '@i18n';
-import KIPR_LOGO_WHITE from '../assets/KIPR-Logo-White-Text-Clear-Large.png';
 import IDELogo from '../assets/IDE_Logo.webp';
 import React from 'react';
 import LocalizedString from '../util/LocalizedString';
-import SettingsDialog from './SettingsDialog';
 import OpenUsersDialog from './OpenUsersDialog';
 import ProgrammingLanguage from 'ProgrammingLanguage';
 import OpenFileDialog from './OpenFileDialog';
@@ -18,6 +16,7 @@ import { Modal } from '../pages/Modal';
 import { Project } from '../types/projectTypes';
 import { User } from '../types/userTypes';
 import { InterfaceMode } from 'types/interfaceModes';
+
 export interface HomeStartOptionsPublicProps extends StyleProps, ThemeProps {
     activeLanguage: ProgrammingLanguage;
     onEditorPageOpen: () => void;
@@ -49,7 +48,6 @@ const Container = styled('div', (props: ThemeProps) => ({
     height: '80%',
     paddingTop: '2%',
     marginTop: '1%',
-    // marginLeft: '10%',
     lineHeight: '28px',
     display: 'flex',
     alignItems: 'center',
@@ -67,8 +65,8 @@ const HomeStartContainer = styled('div', (props: ThemeProps) => ({
     backgroundColor: props.theme.homeStartContainerBackground,
     border: `2px solid ${props.theme.borderColor}`,
     color: props.theme.color,
-    width: '60%', // Use viewport width for better scaling
-    maxWidth: '30em', // Prevents it from getting too big
+    width: '60%',
+    maxWidth: '30em', 
     height: 'auto',
     minHeight: '40vh',
     display: 'flex',
@@ -86,14 +84,13 @@ const HomeStartContainer = styled('div', (props: ThemeProps) => ({
 const StartContainer = styled('div', (props: ThemeProps) => ({
     backgroundColor: props.theme.startContainerBackground,
     color: props.theme.color,
-    width: '100%', // Ensure it takes full width of HomeStartContainer
-    maxWidth: '30em', // Prevents it from getting too big
-    height: '100%', // Let it expand based on content
-    minHeight: '10vh', // Ensures a minimum height
-    maxHeight: '35vh', // Prevents it from getting too tall
+    width: '100%', 
+    maxWidth: '30em',
+    height: '100%', 
+    minHeight: '10vh', 
+    maxHeight: '35vh', 
     padding: '1em',
     display: 'flex',
-    //justifyContent: 'center',
     alignContent: 'center',
     alignItems: 'flex-start',
     flexDirection: 'column',
@@ -146,45 +143,16 @@ const ItemIcon = styled(Fa, {
     height: '1em'
 });
 
-const LogoContainer = styled('div', (props: ThemeProps) => ({
-    position: 'relative',
-    display: 'flex',
-
-    alignContent: 'center',
-    justifyContent: 'center',
-
-    flexDirection: 'row',
-    width: '15em',
-    height: '15em',
-    zIndex: 0,
-
-}));
 
 const Logo = styled('img', (props: ThemeProps) => ({
     position: 'relative',
     backgroundColor: '#373737',
-    // alignItems: 'flex-end',
     width: '60%',
     height: '60%',
     maxWidth: '20em',
     maxHeight: '20em',
-    // marginLeft: '15%',
     userSelect: 'none',
     transition: 'background-color 0.2s, opacity 0.2s'
-}));
-
-const IDEName = styled('div', (props: ThemeProps) => ({
-    position: 'relative',
-    display: 'flex',
-    marginLeft: '5%',
-    marginTop: '17%',
-    flexDirection: 'row',
-    fontFamily: "bebas-neue-pro-semiexpanded, sans-serif",
-    fontStyle: 'normal',
-    fontWeight: 600,
-    width: '500px',
-    height: '50%',
-    zIndex: 0,
 }));
 
 export class HomeStartOptions extends React.Component<Props, State> {

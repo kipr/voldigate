@@ -9,12 +9,9 @@ import { StyleProps } from '../style';
 import { Fa } from './Fa';
 import { DARK, ThemeProps, LIGHT, Theme } from './theme';
 import { faCog, faFolderTree, faWaveSquare, faTerminal } from '@fortawesome/free-solid-svg-icons';
-import { connect } from 'react-redux';
 import { DEFAULT_SETTINGS, Settings } from '../Settings';
-import { State as ReduxState } from '../state';
 import { Modal } from '../pages/Modal';
 import { Size } from './Widget';
-import { FileExplorer } from './FileExplorer';
 import { Slider } from './Slider';
 import { BLANK_PROJECT, Project, UploadedProject } from '../types/projectTypes';
 import { User } from '../types/userTypes';
@@ -26,17 +23,13 @@ import { useProgramRun } from '../ProgramRunContext';
 import { FileInfo } from 'types/fileInfo';
 import axios from 'axios';
 const TerminalView = React.lazy(() => import('./TerminalView'));
-import { urlToHttpOptions } from 'url';
-
 
 export interface LeftBarPublicProps extends StyleProps, ThemeProps {
-
   onThemeChange: (theme: Theme) => void;
   isRunning: boolean;
   propedMotorVelocities?: MotorVelocities;
   propedMotorPositions?: MotorPositions;
   propedServoPositions?: ServoType[];
-
   setShouldStreamMotorVelocities?: (shouldStreamMotorVelocities: boolean) => void;
   setGraphSelection?: (graphSelection: GraphSelectionKey[]) => void;
   repollServos?: (repollServoFlag: boolean) => void;
@@ -140,16 +133,14 @@ const LeftBarWrapper = (props: Props) => {
   const [motorVelocities, setMotorVelocities] = React.useState<MotorVelocities>({});
   const [motorPositions, setMotorPositions] = React.useState<MotorPositions>({});
   const [servoPositions, setServoPositions] = React.useState<ServoType[]>([]);
-  const [shouldStreamMotorVelocities, setShouldStreamMotorVelocities] = React.useState(false); // <-- controlled by LeftBar
-  const [graphSelection, setGraphSelection] = React.useState<GraphSelectionKey[]>([]); // <-- controlled by LeftBar
-  const [repollServos, setRepollServos] = React.useState(false); // <-- controlled by LeftBar
-  const motorToClearRef = React.useRef<Motors | null>(null);
+  const [shouldStreamMotorVelocities, setShouldStreamMotorVelocities] = React.useState(false);
+  const [graphSelection, setGraphSelection] = React.useState<GraphSelectionKey[]>([]);
+  const [repollServos, setRepollServos] = React.useState(false);
+
 
   const clearMotorPosition = async (motor: Motors) => {
-    console.log("Request to clear motor position:", motor);
     const num = parseInt(motor.split(" ")[1]);
-    const clearPositionReponse = await axios.post('/clear-motor-position', { motor: num });
-    console.log("Clear position response: ", clearPositionReponse);
+    await axios.post('/clear-motor-position', { motor: num });
     const tempPositions: MotorPositions = {};
     tempPositions[num] = 0; // Clear it
     setMotorPositions(prevPositions => ({
@@ -158,21 +149,12 @@ const LeftBarWrapper = (props: Props) => {
     }));
   };
 
-
-
-
   const repollServosHandler = (flag: boolean) => {
     setRepollServos(flag);
-    console.log("LeftBarWrapper repollServos: ", repollServos);
   };
 
-  //let motorVelocities: MotorVelocities = {};
-  console.log("LeftBarWrapper graphSelection: ", graphSelection);
-
-
-
   React.useEffect(() => {
-    console.log("Render triggered velocities: isRunning =", isRunning, "graphSelection =", graphSelection);
+
     if (!isRunning || !graphSelection.includes('MotorVelocities')) return;
 
     const motorEventVelocitySource = new EventSource('/stream-motor-velocities');
@@ -189,7 +171,6 @@ const LeftBarWrapper = (props: Props) => {
       }
 
       setMotorVelocities(tempVelocities);
-      console.log("Motor event data (velocities): ", tempVelocities);
     };
 
     motorEventVelocitySource.onerror = (error) => {
@@ -210,13 +191,9 @@ const LeftBarWrapper = (props: Props) => {
 
   // Effect for motor positions
   React.useEffect(() => {
-    console.log("Render triggered positions: isRunning =", isRunning, "graphSelection =", graphSelection);
     if (!graphSelection.includes('MotorPositions')) return;
 
     const motorEventPositionSource = new EventSource('/stream-motor-positions');
-    motorEventPositionSource.onopen = () => {
-      console.log("SSE connection opened");
-    };
 
     motorEventPositionSource.onmessage = async (event) => {
       const data = JSON.parse(event.data);
@@ -232,14 +209,13 @@ const LeftBarWrapper = (props: Props) => {
       }
 
       setMotorPositions(tempPositions);
-      console.log("Motor event data (positions): ", tempPositions);
     };
 
     motorEventPositionSource.onerror = (error) => {
       console.error("Error in motor positions event source: ", error);
       motorEventPositionSource.close();
     };
-    //
+
     return () => {
       motorEventPositionSource.close();
 
@@ -249,19 +225,14 @@ const LeftBarWrapper = (props: Props) => {
 
   // Effect for servo positions
   React.useEffect(() => {
-    console.log("Render triggered positions: isRunning =", isRunning, "graphSelection =", graphSelection);
     if (!graphSelection.includes('ServoGraphs')) return;
-    console.log("LeftBarWrapper graphSelection includes ServoGraphs, setting up event source");
     const servoEventPositionSource = new EventSource('/stream-servo-positions');
 
     servoEventPositionSource.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      //const tempPositions: ServoPositions = {};
-      console.log("data: ", data);
       const tempServos: ServoType[] = [];
       for (let i = 0; i < 4; ++i) {
         if (data[i] !== undefined) {
-          //tempServos[`Servo ${i}`] = data[`servo${i}`];
           tempServos[i] = {
             name: Servos[`SERVO${i}` as keyof typeof Servos],
             value: data[i].value,
@@ -271,7 +242,7 @@ const LeftBarWrapper = (props: Props) => {
       }
 
       setServoPositions(tempServos);
-      console.log("Servo event tempServos: ", tempServos);
+
     };
 
     servoEventPositionSource.onerror = (error) => {
@@ -281,24 +252,21 @@ const LeftBarWrapper = (props: Props) => {
 
     return () => {
       servoEventPositionSource.close();
-      //setServoPositions(DEFAULT_SERVOS);
+
     };
   }, [isRunning, graphSelection]);
 
 
   React.useEffect(() => {
     if (repollServos) {
-      console.log("REPOLLING SERVOS");
       const servoEventPositionSource = new EventSource('/stream-servo-positions');
 
       servoEventPositionSource.onmessage = (event) => {
         const data = JSON.parse(event.data);
-        //const tempPositions: ServoPositions = {};
-        console.log("data: ", data);
+
         const tempServos: ServoType[] = [];
         for (let i = 0; i < 4; ++i) {
           if (data[i] !== undefined) {
-            //tempServos[`Servo ${i}`] = data[`servo${i}`];
             tempServos[i] = {
               name: Servos[`SERVO${i}` as keyof typeof Servos],
               value: data[i].value,
@@ -308,10 +276,8 @@ const LeftBarWrapper = (props: Props) => {
         }
 
         setServoPositions(tempServos);
-        console.log("Servo event tempServos: ", tempServos);
-
         setRepollServos(false);
-        servoEventPositionSource.close(); // Close the stream after handling one message
+        servoEventPositionSource.close();
       };
 
       servoEventPositionSource.onerror = (error) => {
@@ -322,8 +288,6 @@ const LeftBarWrapper = (props: Props) => {
 
       return () => {
         servoEventPositionSource.close();
-
-        //setServoPositions(DEFAULT_SERVOS);
       };
     }
   }, [repollServos]);
@@ -342,13 +306,8 @@ const LeftBarWrapper = (props: Props) => {
   />;
 };
 
-
-
-
-
 const Container = styled('div', (props: ThemeProps) => ({
   color: props.theme.color,
-
   height: '100vh',
   maxHeight: '100vh',
   overflow: 'auto',
@@ -398,14 +357,11 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
 }));
 
 const ItemIcon = styled(Fa, {
-  // alignItems: 'center',
-  // height: '2em'
   height: '1.8em',
   width: '1.8em',
-
   fontSize: '1em',
-
 });
+
 const LeftBarContainer = styled('div', (props: ThemeProps & ClickProps) => ({
   display: 'flex',
   flexDirection: 'column',
@@ -419,7 +375,6 @@ const LeftBarContainer = styled('div', (props: ThemeProps & ClickProps) => ({
   backgroundColor: props.theme.leftBarContainerBackground,
   border: `1px solid ${props.theme.borderColor}`,
   gap: '10px',
-  //boxShadow: `5px 0 3px ${props.theme.borderColor}`,
 }));
 
 const TopButtons = styled('div', (props: ThemeProps & ClickProps) => ({
@@ -433,28 +388,6 @@ const BottomButtons = styled('div', (props: ThemeProps & ClickProps) => ({
   flexDirection: 'column',
   gap: '10px',
 
-}));
-const FileExplorerContainer = styled('div', (props: ThemeProps & ClickProps) => ({
-  flex: '1 1 0',
-  display: 'flex',
-  flexDirection: 'column',
-  overflow: 'hidden',
-  height: '100%',
-  backgroundColor: props.theme.fileContainerBackground,
-  borderRight: `2px solid ${props.theme.borderColor}`,
-}));
-
-const MotorServoSensorDisplayContainer = styled('div', (props: ThemeProps & ClickProps) => ({
-  flex: '1 1 0',
-  display: 'flex',
-  flexWrap: 'wrap',
-  flexDirection: 'column',
-  overflow: 'auto',
-  height: '100%',
-
-  backgroundColor: props.theme.fileContainerBackground,
-  borderRight: `2px solid ${props.theme.borderColor}`,
-  //paddingBottom: '35px'
 }));
 
 const DisplayContainer = styled('div', (props: ThemeProps & ClickProps) => ({
@@ -473,8 +406,6 @@ class LeftBar extends React.Component<Props, State> {
   private selectedFileRef: React.MutableRefObject<string>;
   private isClickedFileRef: React.MutableRefObject<boolean>;
   private clickTimeout: any;
-  private clickInProgress: boolean = false;
-  //isMobile: boolean = false;
   isMobile: boolean = window.innerWidth < 850;
   constructor(props: Props) {
     super(props);
@@ -517,31 +448,16 @@ class LeftBar extends React.Component<Props, State> {
 
     this.isClickedFileRef.current = false;
     this.clickTimeout = null;
-
-    this.clickInProgress = false;
-
   }
-
 
   async componentDidMount() {
     window.addEventListener('resize', this.handleResize);
   }
 
   async componentDidUpdate(prevProps: Props, prevState: State) {
-    console.log("LeftBar compDidUPdate state: ", this.state);
-    console.log("LeftBar compDidUPdate prevstate: ", prevState);
-    console.log("LeftBar compDidUPdate prevProps: ", prevProps);
-    console.log("LeftBar compDidUPdate props: ", this.props);
 
 
-
-    if (prevState.panelSelection !== this.state.panelSelection) {
-
-      console.log("LeftBar compDidUPdate panelSelection changed from ", prevState.panelSelection, " to ", this.state.panelSelection);
-
-    }
     if (prevState.sliderSizes !== this.state.sliderSizes) {
-      console.log("LeftBar compDidUPdate sliderSizes changed from ", prevState.sliderSizes, " to ", this.state.sliderSizes);
       this.forceUpdate();
     }
     if (this.state.settings !== prevState.settings) {
@@ -556,14 +472,13 @@ class LeftBar extends React.Component<Props, State> {
     }
 
     if (prevState.user !== this.state.user && (prevState.user !== undefined)) {
-      console.log("LeftBar compDidUPdate user changed from ", prevState.user, " to ", this.state.user);
+
       this.setState({
         isLoadUserFiles: false
       })
     }
 
     if (prevState.isAddNewFile !== this.state.isAddNewFile) {
-      console.log("LeftBar compDidUPdate isAddNewFile changed from ", prevState.isAddNewFile, " to ", this.state.isAddNewFile);
       this.setState({
         isReloadFiles: true
       })
@@ -597,7 +512,6 @@ class LeftBar extends React.Component<Props, State> {
 
 
   private selectPanel = (panel: string) => {
-    console.log("LeftBar selectPanel panel:", panel);
 
     const { isPanelVisible, panelSelection, motorPositions, servoPositions, sliderSizes, graphSelection } = this.state;
     const { setShouldStreamMotorVelocities, setGraphSelection } = this.props;
@@ -628,19 +542,12 @@ class LeftBar extends React.Component<Props, State> {
         });
       } else if (panel === "motor_sensor_servo") {
         // Same panel reselected: check motor + servo state
-        console.log("motor_sensor_servo panel selected and visible");
-        console.log("motorPositions:", motorPositions);
-        console.log("DEFAULT_MOTORS:", DEFAULT_MOTORS);
-
         if (isMotorDefault) {
           setShouldStreamMotorVelocities(false);
           this.setState({ isPanelVisible: false });
         } else {
           this.onModalClick_(Modal.KEEPMOTORSRUNNING)();
         }
-
-        console.log("servoPositions:", servoPositions);
-        console.log("Has enabled servos:", hasEnabledServos);
 
         this.setState({
           isPanelVisible: hasEnabledServos
@@ -690,8 +597,6 @@ class LeftBar extends React.Component<Props, State> {
   };
 
   private onKeepRunning_ = (keepRunningResponse: string) => {
-    console.log("LeftBar onKeepRunning_ keepRunningResponse: ", keepRunningResponse);
-    console.log("LeftBar onKeepRunning_ motorPositions: ", this.state.motorPositions);
     if (keepRunningResponse === "yes") {
       this.setState({
         isPanelVisible: false
@@ -707,13 +612,11 @@ class LeftBar extends React.Component<Props, State> {
     this.onModalClose_();
   };
   private setSelectedFileRef_ = (fileName: string) => {
-    console.log("LeftBar setSelectedFileRef_ fileName: ", fileName);
     this.selectedFileRef.current = fileName;
   };
 
 
   private setRootInfo_ = (user: User, project: Project, fileName: string, activeLanguage: ProgrammingLanguage) => {
-    console.log("LeftBar setRootInfo_ user: ", user, " project: ", project, " fileName: ", fileName, " activeLanguage: ", activeLanguage);
     this.selectedFileRef.current = fileName;
     this.setState({
       userShown: user,
@@ -724,7 +627,6 @@ class LeftBar extends React.Component<Props, State> {
   };
 
   private onUserUpdate_ = (users: User[]) => {
-    console.log("LeftBar onUserUpdate_ users: ", users);
     if (JSON.stringify(this.state.users) !== JSON.stringify(users)) {
       this.setState({ users });
     }
@@ -734,7 +636,6 @@ class LeftBar extends React.Component<Props, State> {
   };
 
   private onUserSelected_ = (user: User, loadUserData: boolean) => {
-    console.log("LeftBar onUserSelected_ user: ", user, " loadUserData: ", loadUserData);
     try {
       if (this.state.user !== user) {
         this.setState({ isLoadUserFiles: false });
@@ -760,21 +661,14 @@ class LeftBar extends React.Component<Props, State> {
    * @param userData - The list of projects
    */
   private onLoadUserData_ = (userData: Project[], loadedUser: User, renamedUser?: boolean, oldUserName?: string) => {
-    console.log("LeftBar onLoadUserData_ userData: ", userData);
-    console.log("LeftBar onLoadUserData_ loadedUser: ", loadedUser);
-    console.log("LeftBar onLoadUserData_ state: ", this.state);
-
-
     if (loadedUser) {
 
       let userIndex: number;
       if (renamedUser) {
-        console.log("LeftBar onLoadUserData_ renamedUser: ", renamedUser, "with oldUserName: ", oldUserName);
         userIndex = this.state.users.findIndex(user => user.userName === oldUserName);
-        console.log("LeftBar onLoadUserData_ userIndex: ", userIndex);
+
         if (userIndex !== -1) { // Check if the user exists in the list
           this.setState(prevState => (
-            console.log("LeftBar onLoadUserData_ prevState: ", prevState),
             {
               user: loadedUser,
               loadedUserData: userData,
@@ -786,9 +680,7 @@ class LeftBar extends React.Component<Props, State> {
                   : user // Keep the other users unchanged
               ),
               userShown: loadedUser
-            }), () => {
-              console.log("LeftBar onLoadUserData_ AFTER state: ", this.state);
-            });
+            }));
         }
 
 
@@ -798,7 +690,6 @@ class LeftBar extends React.Component<Props, State> {
 
         if (userIndex !== -1) { // Check if the user exists in the list
           this.setState(prevState => (
-            console.log("LeftBar onLoadUserData_ prevState: ", prevState),
             {
               user: loadedUser,
               loadedUserData: userData,
@@ -809,15 +700,12 @@ class LeftBar extends React.Component<Props, State> {
                   ? { ...user, projects: userData } // Update the user's projects
                   : user // Keep the other users unchanged
               )
-            }), () => {
-              console.log("LeftBar onLoadUserData_ AFTER state: ", this.state);
-            });
+            }));
         }
       }
 
       if (this.state.userShown) {
         if (this.state.userShown.userName === loadedUser.userName) {
-          console.log("LeftBar onLoadUserData_ userShown: ", this.state.userShown);
           this.setState({
             userShown: {
               ...this.state.userShown,
@@ -901,9 +789,6 @@ class LeftBar extends React.Component<Props, State> {
   };
 
   private reloadRootUserProjects_ = async () => {
-    console.log("LeftBar reloadUserProjects_ loadedUserData: ", this.state.loadedUserData);
-    console.log("LeftBar reloadUserProjects isloadUserFiles: ", this.state.isLoadUserFiles);
-
     this.setState({
       isReloadRootUserFiles: true
     })
@@ -912,7 +797,6 @@ class LeftBar extends React.Component<Props, State> {
 
   private onSetRenameUserFlag_ = (renameUserFlag: boolean, renamedUser: User) => {
     if (renamedUser) {
-      console.log("LeftBar onSetRenameUserFlag_ renamedUser: ", renamedUser);
       this.setState({
         user: renamedUser
       })
@@ -978,7 +862,6 @@ class LeftBar extends React.Component<Props, State> {
    * @param user - The User object
    */
   private onAddNewProject_ = (user: User) => {
-    console.log("LeftBar onAddNewProject_ user: ", user);
     this.setState({
       isAddNewProject: true,
       user: user
@@ -993,8 +876,6 @@ class LeftBar extends React.Component<Props, State> {
    */
   private setAddNewProject_ = (isAddNewProject: boolean, newProj?: Project) => {
     if (newProj) {
-      console.log("LeftBar setAddNewProject_ state: ", this.state);
-      console.log("LeftBar setAddNewProject_ newProj: ", newProj);
       this.selectedFileRef.current = newProj.srcFolderFiles[0];
       this.setState({
         rehighlightProject: newProj,
@@ -1018,9 +899,6 @@ class LeftBar extends React.Component<Props, State> {
    */
   private onProjectSelected_ = (user: User, project: Project, fileName: string, activeLanguage: ProgrammingLanguage) => {
 
-    console.log("LeftBar onProjectSelected_ user: ", user, " project: ", project, " fileName: ", fileName, " activeLanguage: ", activeLanguage);
-    console.log("LeftBar state: ", this.state);
-
     if (this.state.userShown && this.state.userShown.interfaceMode === InterfaceMode.SIMPLE) {
       this.setState({
         simpleProjectLoadFlag: true,
@@ -1029,10 +907,7 @@ class LeftBar extends React.Component<Props, State> {
         userShown: user,
         project: project,
         fileName: fileName,
-      }, () => {
-        console.log("LeftBar onProjectSelected_ simpleProjectLoadFlag set to true, state: ", this.state);
-        //this.props.onSetSimpleProjectLoadFlag(true);
-      })
+      });
     }
     else {
       this.setState({
@@ -1048,9 +923,6 @@ class LeftBar extends React.Component<Props, State> {
   };
 
   private onUploadProject_ = (user: User, project: UploadedProject) => {
-    console.log("LeftBar onUploadProject_ user: ", user, " project: ", project);
-    console.log("LeftBar onUploadProject_ state: ", this.state);
-
     this.setState({
       toUploadProjectFlag: true,
       toUploadUser: user,
@@ -1060,32 +932,22 @@ class LeftBar extends React.Component<Props, State> {
   };
 
   private onSetUploadProjectFlag_ = (toUploadProjectFlag: boolean) => {
-    console.log("LeftBar onSetUploadProjectFlag_ toUploadProjectFlag: ", toUploadProjectFlag);
-    console.log("LeftBar onSetUploadProjectFlag_ this.state: ", this.state);
+    this.setState({
+      toUploadProjectFlag: toUploadProjectFlag
+    });
 
     this.setState({
       toUploadProjectFlag: toUploadProjectFlag,
       toUploadProject: undefined,
       toUploadUser: undefined,
 
-    }, () => {
-      console.log("LeftBar onSetUploadProjectFlag_ state: ", this.state);
-    });
-  };
-
-  private onSetSimpleProjectLoadFlag_ = (simpleProjectLoadFlag: boolean) => {
-    console.log("LeftBar onSetSimpleProjectLoadFlag_ simpleProjectLoadFlag: ", simpleProjectLoadFlag);
-    this.setState({
-      simpleProjectLoadFlag: simpleProjectLoadFlag
-    }, () => {
-      console.log("LeftBar onSetSimpleProjectLoadFlag_ state: ", this.state);
     });
   };
 
   /**
-   * Sets Root's deleteProjectFlag to given boolean value
-   * @param deleteProjectFlag - A boolean value to set the state rootDeleteProjectFlag
-   */
+  * Sets Root's deleteProjectFlag to given boolean value
+  * @param deleteProjectFlag - A boolean value to set the state rootDeleteProjectFlag
+  */
   private onSetProjectDeleteFlag_ = (deleteProjectFlag: boolean) => {
     this.setState({
       deleteProjectFlag: deleteProjectFlag,
@@ -1107,7 +969,6 @@ class LeftBar extends React.Component<Props, State> {
 
   private onSetRenameProjectFlag_ = (renameProjectFlag: boolean, renamedProject: Project) => {
     if (renamedProject) {
-      console.log("LeftBar onSetRenameProjectFlag_ renamedProject: ", renamedProject);
       this.setState({
         project: renamedProject
       })
@@ -1117,9 +978,7 @@ class LeftBar extends React.Component<Props, State> {
     })
   };
 
-
   private onSetSelectedProject_ = (project: Project, file: string) => {
-    console.log("LeftBar onSetSelectedProject_ project: ", project, " file: ", file);
     this.setState({
       rehighlightProject: project,
       rehighlightFile: file,
@@ -1129,7 +988,6 @@ class LeftBar extends React.Component<Props, State> {
   };
 
   private onResetHighlightFlag_ = () => {
-    console.log("onResetHighlightFlag_ prevProps.rehighlightProject: ", this.state.rehighlightProject, " prevProps.rehighlightFile: ", this.state.rehighlightFile);
     this.setState((prevProps) => {
       return {
         rehighlightProject: BLANK_PROJECT,
@@ -1173,7 +1031,6 @@ class LeftBar extends React.Component<Props, State> {
 
 
   private onDeleteFile_ = (user: User, project: Project, fileName: string, deleteFileFlag: boolean) => {
-    console.log("LeftBar onDeleteFile_ user: ", user, " project: ", project, " fileName: ", fileName, " deleteFileFlag: ", deleteFileFlag);
     this.setState({
       user: user,
       project: project,
@@ -1183,7 +1040,6 @@ class LeftBar extends React.Component<Props, State> {
   };
 
   private onDownloadFile_ = (user: User, project: Project, fileName: string) => {
-    console.log("LeftBar onDownloadFile_ user: ", user, " project: ", project, " fileName: ", fileName);
     this.setState({
       user: user,
       project: project,
@@ -1206,7 +1062,6 @@ class LeftBar extends React.Component<Props, State> {
 
   private onSetRenameFileFlag = (renameFileFlag: boolean, renameFile: string) => {
     if (renameFile) {
-      console.log("LeftBar onSetRenameUserFlag_ renameFile: ", renameFile);
       this.selectedFileRef.current = renameFile;
       this.setState({
         fileName: renameFile
@@ -1240,8 +1095,6 @@ class LeftBar extends React.Component<Props, State> {
   }
 
   private onFileSelected_ = async (user: User, project: Project, fileName: string, language: ProgrammingLanguage, fileType: string) => {
-    console.log("LeftBar onFileSelected_ user: ", user, " project: ", project, " fileName: ", fileName, " language: ", language, " fileType: ", fileType);
-    console.log("LeftBar before state: ", this.state);
     this.isClickedFileRef.current = true;
     this.setState({
       user: user,
@@ -1251,11 +1104,7 @@ class LeftBar extends React.Component<Props, State> {
       fileType: fileType,
       isClickFile: true,
       userShown: user
-    }, () => {
-
-      console.log("LeftBar onFileSelected_ state: ", this.state);
-
-    })
+    });
   };
 
   /**
@@ -1263,8 +1112,6 @@ class LeftBar extends React.Component<Props, State> {
    * @param isClickFile - A boolean value to set the state isClickFile
    */
   private setClickFile_ = (isClickFile: boolean) => {
-    console.log("LeftBar setClickFile_ isClickFile: ", isClickFile);
-    //this.isClickedFileRef.current = isClickFile;
     this.setState({
       isClickFile: isClickFile
     });
@@ -1272,8 +1119,6 @@ class LeftBar extends React.Component<Props, State> {
   };
 
   private onUploadFiles_ = (user: User, project: Project, files: FileInfo[]) => {
-    console.log("LeftBar onUploadFile_ user: ", user, " project: ", project, " files: ", files);
-
     this.setState({
       toUploadUser: user,
       toUploadProject: project,
@@ -1283,7 +1128,6 @@ class LeftBar extends React.Component<Props, State> {
   };
 
   private onSetUploadFilesFlag_ = (toUploadFilesFlag: boolean) => {
-    console.log("LeftBar onSetToUploadFilesFlag_ toUploadFilesFlag: ", toUploadFilesFlag);
     this.setState({
       toUploadFilesFlag: toUploadFilesFlag,
       toUploadUser: undefined,
@@ -1292,9 +1136,7 @@ class LeftBar extends React.Component<Props, State> {
     })
   };
 
-
   private storeMotorPositions_ = (view: 'Power' | 'Velocity', motorPositions: { [key: string]: number }) => {
-    console.log("LeftBar storeMotorPositions_ motorPositions: ", motorPositions, " with view: ", view);
     this.setState({
       motorView: view,
       motorPositions: motorPositions
@@ -1302,80 +1144,56 @@ class LeftBar extends React.Component<Props, State> {
   };
 
   private stopMotor_ = (motor: Motors) => {
-    console.log("LeftBar stopMotor_ motor: ", motor);
     let motorNumber: number = parseInt(motor.split(' ')[1]);
-    console.log("LeftBar stopMotor_ motorNumber: ", motorNumber);
     this.setState({ stoppedMotor: motorNumber, stoppedMotorFlag: true });
 
   };
 
   private stopAllMotors_ = () => {
-    console.log("LeftBar stopAllMotors_");
     this.setState({ stoppedAllMotorsFlag: true });
   }
   private onSetStoppedMotorFlag_ = (stoppedMotorFlag: boolean) => {
-    console.log("LeftBar onSetStoppedMotorFlag_ stoppedMotorFlag: ", stoppedMotorFlag);
     this.setState({
       stoppedMotorFlag: stoppedMotorFlag
     })
   };
 
   private onSetStoppedAllMotorsFlag_ = (stoppedAllMotorsFlag: boolean) => {
-    console.log("LeftBar onSetStoppedAllMotorsFlag_ stoppedAllMotorsFlag: ", stoppedAllMotorsFlag);
     this.setState({
       stoppedAllMotorsFlag: stoppedAllMotorsFlag
     })
   }
 
   private clearMotorPosition_ = (motor: Motors) => {
-    console.log("LeftBar clearMotorPosition_ motor: ", motor);
-
     this.props.clearMotorPosition(motor);
 
   }
 
   private storeServoPositions_ = (servoPositions: ServoType[]) => {
-    console.log("LeftBar storeServoPositions_ servoPositions: ", servoPositions);
-
-    this.setState(prevState => {
-      console.log("LeftBar storeServoPositions_ prevState: ", prevState);
-
-
-      //this.props.repollServos(true);
-      return {
-        servoPositions: servoPositions,
-
-      }
-
-    })
     this.setState({
       servoPositions: servoPositions
     });
   }
 
   private onSetEnabledServoFlag_ = (enabledServoFlag: boolean) => {
-    console.log("LeftBar onSetEnabledServoFlag_ enabledServoFlag: ", enabledServoFlag);
     this.setState({
       enabledServoFlag: enabledServoFlag
     })
   }
 
   private onSetDisabledServoFlag_ = (disabledServoFlag: boolean) => {
-    console.log("LeftBar onSetEnabledServoFlag_ disabledServoFlag: ", disabledServoFlag);
     this.setState({
       disabledServoFlag: disabledServoFlag
     })
   }
 
   private onSetSensorDisplayShown_ = (sensorDisplayShown: boolean) => {
-    console.log("LeftBar onSetSensorDisplayShown_ sensorDisplayShown: ", sensorDisplayShown);
     this.setState({
       sensorDisplayShown: sensorDisplayShown
     })
   };
 
   private onSensorSelection_ = (selectedSensors: SensorSelectionKey[]) => {
-    console.log("LeftBar onSensorSelection_ selectedSensors: ", selectedSensors);
     this.setState({
       sensorSelection: selectedSensors
     })
@@ -1383,7 +1201,6 @@ class LeftBar extends React.Component<Props, State> {
   };
 
   private onGraphSelection_ = (selectedGraphs: GraphSelectionKey[]) => {
-    console.log("LeftBar onGraphSelection_ selectedGraphs: ", selectedGraphs);
     this.setState({
       graphSelection: selectedGraphs
     }, () => {
@@ -1392,22 +1209,7 @@ class LeftBar extends React.Component<Props, State> {
 
   };
 
-  private onSetSensorValues_ = (sensorType: string, sensorValue: number) => {
-    console.log("LeftBar onSetSensorValues sensorType: ", sensorType, " sensorValue: ", sensorValue);
-    console.log("LeftBar onSetSensorValues state.sensorValues: ", this.state.sensorValues);
-    this.setState({
-      sensorValues: {
-        ...this.state.sensorValues,
-        [sensorType]: sensorValue
-      }
-    }, () => {
-      console.log("LeftBar onSetSensorValues state: ", this.state);
-    })
-  };
-
-
   private onSetAnalogValues_ = (analogValues: number) => {
-    console.log("LeftBar setAnalogValues_ analogValues: ", analogValues);
     this.setState({
       analogValues: analogValues
     })
@@ -1415,7 +1217,6 @@ class LeftBar extends React.Component<Props, State> {
 
   private onSetDigitalValues_ = (digitalValues: number) => {
 
-    console.log("LeftBar onSetDigitalValues digitalValues: ", digitalValues);
     this.setState({
       digitalValues: digitalValues
     })
@@ -1423,7 +1224,6 @@ class LeftBar extends React.Component<Props, State> {
 
 
   private onSetAccelValues_ = (accelValues: number) => {
-    console.log("LeftBar onSetAccelValues accelValues: ", accelValues);
     this.setState({
       accelValues: accelValues
     })
@@ -1431,29 +1231,24 @@ class LeftBar extends React.Component<Props, State> {
 
 
   private onSetGyroValues_ = (gyroValues: number) => {
-    console.log("LeftBar onSetGyroValues gyroValues: ", gyroValues);
     this.setState({
       gyroValues: gyroValues
     })
   };
 
   private onSetMagnetoValues_ = (magnetoValues: number) => {
-    console.log("LeftBar onSetMagnetoValues magnetoValues: ", magnetoValues);
     this.setState({
       magnetoValues: magnetoValues
     })
   };
 
   private onSetButtonValues_ = (buttonValues: number) => {
-    console.log("LeftBar onSetButtonValues buttonValues: ", buttonValues);
     this.setState({
       buttonValues: buttonValues
     })
   };
 
   private fileExplorerOnCreation_ = (createdUser: User, createdProject: Project) => {
-    console.log("LeftBar fileExplorerOnCreation_ createdUser: ", createdUser, " createdProject: ", createdProject);
-    console.log("LeftBar fileExplorerOnCreation_ state: ", this.state);
     this.setState({
       panelSelection: "fileExplorer",
       isPanelVisible: true,
@@ -1484,7 +1279,6 @@ class LeftBar extends React.Component<Props, State> {
       isClickFile,
       isAddNewFile,
       isAddNewProject,
-      isLeftBarOpen,
       isReloadFiles,
       fileType,
       reloadUser,
@@ -1500,12 +1294,10 @@ class LeftBar extends React.Component<Props, State> {
       downloadUserFlag,
       downloadProjectFlag,
       addProjectFlag,
-      addFileFlag,
 
       contextMenuFile,
       contextMenuProject,
       contextMenuUser,
-      panelSelection
 
     } = this.state;
 
@@ -1616,8 +1408,6 @@ class LeftBar extends React.Component<Props, State> {
     let fileExplorerContent: JSX.Element;
 
     fileExplorerContent = (
-      console.log("LeftBar render() fileExplorerContent state: ", this.state),
-      console.log("LeftBar render selectedFileRef: ", this.selectedFileRef.current),
       <DisplayContainer theme={storedTheme}>
 
         <IvygateFileExplorer
@@ -1662,17 +1452,12 @@ class LeftBar extends React.Component<Props, State> {
 
             zIndex: 1,
           }}
-
-
         />
-
-
       </DisplayContainer>
     );
 
     let motorServoSensorDisplay: JSX.Element;
     motorServoSensorDisplay = (
-      console.log("LeftBar render() motorServoSensorDisplay state: ", this.state),
       <DisplayContainer theme={storedTheme}>
         <MotorServoSensorDisplay
           theme={storedTheme}
@@ -1707,14 +1492,13 @@ class LeftBar extends React.Component<Props, State> {
 
     let terminalDisplay: JSX.Element;
     terminalDisplay = (
-      console.log("LeftBar render() terminalDisplay state: ", this.state),
       <DisplayContainer theme={storedTheme}>
         <Suspense fallback={<div>Loading Terminal...</div>}>
           <TerminalView
-          theme={storedTheme}
-          locale="en-US"
-          className="terminal-view"
-        />
+            theme={storedTheme}
+            locale="en-US"
+            className="terminal-view"
+          />
         </Suspense>
       </DisplayContainer>
     )
@@ -1733,7 +1517,6 @@ class LeftBar extends React.Component<Props, State> {
     };
 
     return (
-      console.log("LeftBar render() state: ", this.state),
       <Container className={className} theme={storedTheme}>
 
         <LeftBarContainer theme={storedTheme} >
@@ -1760,21 +1543,15 @@ class LeftBar extends React.Component<Props, State> {
 
         </LeftBarContainer>
         <Slider
-          // key={this.state.sliderSizes.join('-')}
           isVertical={true}
           theme={storedTheme}
           minSizes={[0, 0]}
           sizes={this.state.sliderSizes}
           visible={[isPanelVisible, true]}
-
-
         >
           {contentDisplay}
-
           {rootContent}
         </Slider>
-
-
 
         {modal.type === Modal.Type.Settings && (
           <SettingsDialog
@@ -1792,10 +1569,8 @@ class LeftBar extends React.Component<Props, State> {
             theme={storedTheme}
             onClose={this.onModalClose_}
             onKeepRunning={this.onKeepRunning_}
-
           />
         )}
-
 
       </Container >
 

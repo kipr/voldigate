@@ -29,7 +29,6 @@ export interface CreateProjectDialogPublicProps extends ThemeProps, StyleProps {
 
 interface CreateProjectDialogPrivateProps {
   locale: LocalizedString.Language;
-
 }
 
 interface CreateProjectDialogState {
@@ -139,27 +138,17 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
     }
   }
 
-  componentDidMount(): void {
-    console.log("CreateProjectDialog state: ", this.state);
-    console.log("CreateProjectDialog props: ", this.props);
-  }
-
   private onSelectLanguage_ = (languageIndex: number, option: ComboBox.Option) => {
     this.onLanguageChange(option.data as ProgrammingLanguage);
   };
 
- 
-
-
-  private onLanguageChange = (language: ProgrammingLanguage) => {
+   private onLanguageChange = (language: ProgrammingLanguage) => {
     this.setState({
       language: language
     });
   };
 
   onFinalize_ = async (values: { [id: string]: string }) => {
-
-    console.log("CreateProjectDialog onFinalize_ state: ", this.state);
 
     const projectName = values.projectName;
 
@@ -183,13 +172,10 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
     try {
 
       const response = await axios.post('/initialize-project', { userName: this.props.userName, projectName: values.projectName, language: this.state.language as ProgrammingLanguage, interfaceMode: this.state.interfaceMode });
-      console.log("initialize-project Response: ", response);
-
       if (response.status === 200) {
         this.props.closeProjectDialog(values.projectName, this.state.language as ProgrammingLanguage, this.state.interfaceMode);
       }
       
-
     }
     catch (error) {
       console.error('Error adding user to database:', error);
@@ -213,8 +199,7 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
     ];
 
     const languageIndex = LANGUAGE_OPTIONS.findIndex(option => option.data === this.state.language);
-    
-    
+        
     return (
       <div>
         <Dialog
@@ -233,18 +218,15 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
               />
             </ComboBoxContainer>
 
-            {/* Show error message if it exists */}
             {errorMessage && (
               <ErrorMessageContainer theme={theme}>
                 <ItemIcon icon={faExclamationTriangle} />
                 <div style={{ fontWeight: 450 }}>
                   {state.errorMessage}
                 </div>
-
               </ErrorMessageContainer>
             )}
-
-  
+ 
 
             <Container theme={theme} style={style} className={className}>
               <StyledForm

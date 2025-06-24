@@ -206,11 +206,6 @@ class Widget extends React.PureComponent<Props, State> {
     onSizeChange(index);
   };
   
-
-  componentDidMount() {
-    console.log("Widget mounted props:", this.props);
-  }
-
   render() {
     const { props } = this;
     const {

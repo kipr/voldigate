@@ -5,8 +5,6 @@ import LocalizedString from 'util/LocalizedString';
 import 'xterm/css/xterm.css';
 import { Terminal } from 'xterm';
 import { styled } from 'styletron-react';
-import ScrollArea from './ScrollArea';
-
 
 export interface TerminalViewPublicProps extends StyleProps, ThemeProps {
   theme: Theme;
@@ -16,16 +14,11 @@ interface TerminalPrivateProps {
   locale: LocalizedString.Language;
 }
 
-interface TerminalState {
-
-}
+interface TerminalState { }
 
 type Props = TerminalViewPublicProps & TerminalPrivateProps;
 type State = TerminalState;
 
-const StyledScrollArea = styled(ScrollArea, ({ theme }: ThemeProps) => ({
-  flex: 1,
-}));
 
 const TerminalViewContainer = styled('div', (props: ThemeProps) => ({
   display: 'flex',
@@ -41,13 +34,11 @@ const TerminalWrapper = styled('div', {
 });
 
 
-
-
 export function XTerminal({ theme }: { theme: Theme }) {
   const terminalRef = React.useRef<HTMLDivElement>(null);
   const term = React.useRef<Terminal | null>(null);
   const socketRef = React.useRef<WebSocket | null>(null);
-  //console.log("Rendering XTerminal theme: ", this.props.theme),
+
   React.useEffect(() => {
     const existing = document.getElementById('xterm-scrollbar-styles');
     if (existing) existing.remove();
@@ -76,7 +67,7 @@ export function XTerminal({ theme }: { theme: Theme }) {
       background-color: ${theme.backgroundColor};
       border-radius: 0 !important;
     }
-  `;//
+  `;
 
     document.head.appendChild(styleElement);
 
@@ -90,10 +81,10 @@ export function XTerminal({ theme }: { theme: Theme }) {
       term.current = new Terminal({
         cursorBlink: true,
         fontSize: 14,
-        theme: { 
+        theme: {
           background: theme.backgroundColor,
-           foreground: theme.color,
-       },
+          foreground: theme.color,
+        },
       });
 
       const resizeTerminal = () => {
@@ -109,10 +100,10 @@ export function XTerminal({ theme }: { theme: Theme }) {
           term.current.resize(cols, rows);
         }
       };
-      term.current.options.theme={
+      term.current.options.theme = {
         background: theme.backgroundColor,
         foreground: theme.color,
-   
+
       }
       term.current.open(terminalRef.current);
       resizeTerminal();
@@ -120,8 +111,8 @@ export function XTerminal({ theme }: { theme: Theme }) {
 
       window.addEventListener('resize', resizeTerminal);
       // Create WebSocket connection
-       const socket = new WebSocket('ws://192.168.125.1:8888/ws/terminal');
-     //const socket = new WebSocket('ws://localhost:8888/ws/terminal');
+      const socket = new WebSocket('ws://192.168.125.1:8888/ws/terminal');
+      //const socket = new WebSocket('ws://localhost:8888/ws/terminal');
       socketRef.current = socket;
 
       // Terminal -> Server
@@ -135,7 +126,6 @@ export function XTerminal({ theme }: { theme: Theme }) {
       };
 
       socket.onopen = () => {
-        console.log('Terminal WebSocket connection opened');
         term.current?.writeln('\x1b[32mConnected to Wombat Terminal\x1b[0m\n');
       };
 
@@ -149,28 +139,23 @@ export function XTerminal({ theme }: { theme: Theme }) {
     }
 
     return () => {
-      //window.removeEventListener('resize', resizeTerminal);
       term.current?.dispose();
       socketRef.current?.close();
     };
   }, []);
-React.useEffect(() => {
-  if (term.current) {
+  React.useEffect(() => {
+    if (term.current) {
+      term.current.options.theme = {
+        background: theme.backgroundColor,
+        foreground: theme.color,
+        cursor: theme.cursorColor,
 
-    term.current.options.theme={
-      background: theme.backgroundColor,
-      foreground: theme.color,
-      cursor: theme.cursorColor,
+      }
 
     }
-
-
-  }
-}, [theme]);
+  }, [theme]);
 
   return (
-
-
     <TerminalWrapper ref={terminalRef} />
   );
 }
@@ -181,10 +166,8 @@ class TerminalView extends React.Component<Props, State> {
     super(props);
     this.state = {};
   }
-
-
   render() {
-    const { locale, theme } = this.props;
+    const { theme } = this.props;
     return (
       <div style={{ height: '900px', display: 'flex', flexDirection: 'column' }}>
         <TerminalViewContainer theme={theme} className="terminal-view">

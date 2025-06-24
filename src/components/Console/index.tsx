@@ -1,16 +1,13 @@
 import * as React from 'react';
-
 import { styled } from 'styletron-react';
 import { StyleProps } from '../../style';
 import { StyledText } from '../../util';
 import ScrollArea from '../ScrollArea';
 import { Text } from '../Text';
 import { Theme, ThemeProps } from '../theme';
-
 import { Fa } from '../Fa';
 import { Button } from '../Button';
 import { BarComponent } from '../Widget';
-
 import { faFile } from '@fortawesome/free-solid-svg-icons';
 import LocalizedString from '../../util/LocalizedString';
 import tr from '@i18n';
@@ -40,9 +37,7 @@ export interface ConsoleProps extends StyleProps, ThemeProps {
   text: StyledText;
 }
 
-interface ConsoleState {
-  
-}
+interface ConsoleState {}
 
 type Props = ConsoleProps;
 type State = ConsoleState;
@@ -53,7 +48,6 @@ const ConsoleText = styled(Text, (props: ThemeProps) => ({
   padding: `${props.theme.itemPadding * 2}px`,
   wordWrap: 'break-word',
   display: 'block',
- // color: props.theme.color,
 }));
 
 export class Console extends React.PureComponent<Props, State> {
@@ -61,10 +55,6 @@ export class Console extends React.PureComponent<Props, State> {
     super(props);
   }
 
-  componentDidUpdate(prevProps: Readonly<ConsoleProps>, prevState: Readonly<ConsoleState>, snapshot?: any): void {
-    console.log("Console compDidUPdate prevProps: ", prevProps);
-    console.log("Console compDidUpdate props: ", this.props);
-  }
   render() {
     const { style, className, theme, text } = this.props;
     return (

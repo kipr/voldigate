@@ -20,9 +20,7 @@ interface ExtraMenuPrivateProps {
   locale: LocalizedString.Language;
 }
 
-interface ExtraMenuState {
-
-}
+interface ExtraMenuState { }
 
 type Props = ExtraMenuPublicProps & ExtraMenuPrivateProps;
 type State = ExtraMenuState;
@@ -51,8 +49,7 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
   flexDirection: 'row',
   padding: '10px',
   fontSize: '1em',
-  //borderBottom: `1px solid ${props.theme.borderColor}`,
-    borderBottomLeftRadius: `${props.theme.borderRadius}px`,
+  borderBottomLeftRadius: `${props.theme.borderRadius}px`,
   borderBottomRightRadius: `${props.theme.borderRadius}px`,
   opacity: props.disabled ? '0.5' : '1.0',
   fontWeight: 400,
@@ -83,7 +80,6 @@ class ExtraMenu extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
   }
-//
 
   render() {
     const { props } = this;
@@ -94,7 +90,6 @@ class ExtraMenu extends React.PureComponent<Props, State> {
       onAboutClick,
       onCommonDocumentationClick,
       onDocumentationClick,
-
       locale,
     } = props;
 

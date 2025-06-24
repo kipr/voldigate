@@ -98,7 +98,6 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
 }));
 
 const RunItem = withStyleDeep(Item, (props: ClickProps & ThemeProps) => ({
-
   backgroundColor: props.disabled ? (props.theme.themeName === 'DARK' ? props.theme.runButtonColor.disabled : props.theme.runButtonColor.disabled) : (props.theme.themeName === 'DARK' ? props.theme.runButtonColor.standard : props.theme.runButtonColor.standard),
   ':hover':
     props.onClick && !props.disabled
@@ -154,7 +153,6 @@ export type EditorBarTarget = EditorBarTarget.Robot;
 
 export const createNavigationNamesBar = (
 ) => {
-  // eslint-disable-next-line @typescript-eslint/ban-types
   const consoleBar: BarComponent<object>[] = [];
 
   consoleBar.push(BarComponent.create(Text, {
@@ -173,11 +171,7 @@ export const createEditorBarComponents = ({
   target: EditorBarTarget,
   locale: LocalizedString.Language,
 }) => {
-
-  // eslint-disable-next-line @typescript-eslint/ban-types
   const editorBar: BarComponent<object>[] = [];
-  let wn = `${window.location.pathname}`;
-  let windowName = wn.split("/", 3);
 
   switch (target.type) {
     case EditorBarTarget.Type.Robot: {
@@ -391,12 +385,9 @@ class Editor extends React.PureComponent<Props, State> {
 
   async componentDidMount() {
     this.monaco = await import('monaco-editor');
-    // Now you can use this.monaco.* in your methods.
-    // For example, setup code editor actions here if editor instance is ready.
   }
   setupCodeEditor_ = (editor: any) => {
     if (!this.monaco) {
-      // Monaco not loaded yet — maybe queue or skip
       return;
     }
     const monaco = this.monaco;
@@ -415,13 +406,8 @@ class Editor extends React.PureComponent<Props, State> {
   
   async componentDidUpdate(prevProps: Props) {
 
-    console.log("Editor compDidUpdate prevProps: ", prevProps);
-    console.log("Editor compDidUpdate this.props: ", this.props);
-    console.log("Editor compDidUpdate this.prevProps.code: ", prevProps.code);
-    console.log("Editor compDidUpdate this.props.code: ", this.props.code);
-
     if (prevProps.code !== this.props.code) {
-      console.log("Editor compDidUpdate code changed from:\n ", prevProps.code, " to:\n ", this.props.code);
+     
       const editorValue = this.ivygate_?.editor?.getValue();
 
       if (editorValue !== this.props.code) {
@@ -433,7 +419,6 @@ class Editor extends React.PureComponent<Props, State> {
             this.ivygate_.editor.setPosition({ lineNumber: 1, column: 1 });
 
           }
-
 
         });
       }
@@ -452,7 +437,6 @@ class Editor extends React.PureComponent<Props, State> {
   };
 
   private openDocumentationAction_?: monaco.IDisposable;
-
 
   private disposeCodeEditor_ = (editor: monaco.editor.IStandaloneCodeEditor) => {
     if (this.openDocumentationAction_) this.openDocumentationAction_.dispose();
@@ -476,8 +460,6 @@ class Editor extends React.PureComponent<Props, State> {
   }
 
   render() {
-    console.log("Editor render props", this.props);
-    console.log("Editor render state", this.state);
     const {
       style,
       className,
@@ -505,7 +487,6 @@ class Editor extends React.PureComponent<Props, State> {
       );
     }
     else {
-      console.log("Editor render Ivygate props: ", this.props);
       component = (
         <Suspense fallback={<div>Loading Ivygate...</div>}>
           <Ivygate
@@ -522,8 +503,6 @@ class Editor extends React.PureComponent<Props, State> {
       );
     }
 
-    console.log("Editor render component", component);
-    console.log("Editor state", this.state);
     return (
       <Container theme={theme} style={style} className={className} >
         {component}

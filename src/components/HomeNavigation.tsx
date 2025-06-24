@@ -1,18 +1,14 @@
 import * as React from 'react';
 import MainMenu from '../components/MainMenu';
-
 import LocalizedString from '../util/LocalizedString';
 import ProgrammingLanguage from '../ProgrammingLanguage';
 import { DARK, ThemeProps, LIGHT, Theme } from '../components/theme';
 import { StyleProps } from '../style';
 import { styled } from 'styletron-react';
-
 import { connect } from 'react-redux';
-
 import { State as ReduxState } from '../state';
 import { Project } from '../types/projectTypes';
 import { User } from '../types/userTypes';
-import { InterfaceMode } from '../types/interfaceModes';
 import LeftBarWrapper from '../components/LeftBar';
 
 export interface HomeNavigationPublicProps extends ThemeProps, StyleProps {
@@ -90,8 +86,6 @@ const LeftBarContainer = styled('div', (props: ThemeProps) => ({
   color: props.theme.color,
 }));
 
-
-
 class HomeNavigation extends React.PureComponent<Props, State> {
 
   constructor(props: Props) {
@@ -113,10 +107,6 @@ class HomeNavigation extends React.PureComponent<Props, State> {
       user: null,
     };
 
-  }
-
-  componentDidMount(): void {
-    console.log("HomeNav compDidMount state: ", this.state);
   }
 
   componentDidUpdate = async (prevProps: Props, prevState: State) => {
@@ -153,10 +143,6 @@ class HomeNavigation extends React.PureComponent<Props, State> {
 
         <MainMenu theme={theme}  />
         <LeftBarContainer theme={theme}>
-          {/* <LeftBar theme={theme}
-            onThemeChange={this.onThemeChange_}
-          /> */}
-
           <LeftBarWrapper
            onThemeChange={this.onThemeChange_ } 
            isRunning={false} 

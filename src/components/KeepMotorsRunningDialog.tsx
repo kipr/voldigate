@@ -10,12 +10,11 @@ import { ThemeProps } from './theme';
 import { connect } from 'react-redux';
 import { State as ReduxState } from '../state';
 import { JSX } from 'react';
-export interface KeepMotorsRunningDialogDialogPublicProps extends ThemeProps, StyleProps {
 
+export interface KeepMotorsRunningDialogDialogPublicProps extends ThemeProps, StyleProps {
   onClose: () => void;
   onKeepRunning(response: string): void;
- 
-}
+ }
 
 interface KeepMotorsRunningDialogDialogPrivateProps {
   locale: LocalizedString.Language;
@@ -135,25 +134,10 @@ class KeepMotorsRunningDialogDialog extends React.PureComponent<Props> {
     super(props);
   }
 
-  componentDidMount(): void {
-    console.log("KeepMotorsRunningDialogDialog props: ", this.props);
-  }
   render() {
     const { props } = this;
     const { onClose, locale, theme } = props;
 
-    let logo: JSX.Element;
-
-    switch (theme.foreground) {
-      case 'black': {
-        logo = <Logo src={KIPR_LOGO_WHITE as string} />;
-        break;
-      }
-      case 'white': {
-        logo = <Logo src={KIPR_LOGO_BLACK as string} />;
-        break;
-      }
-    }
 
     return (
       <Dialog theme={theme} name={LocalizedString.lookup(tr('Close Motor, Servo, Sensor Tab?'), locale)} onClose={onClose}>
@@ -171,7 +155,7 @@ class KeepMotorsRunningDialogDialog extends React.PureComponent<Props> {
                 Yes
               </YesItem>
               <NoContinueItem onClick={() => this.props.onKeepRunning("no")} theme={theme}>
-                No, don't keep motors on and continue
+                No, don't keep motors/servos on and continue
               </NoContinueItem>
               <NoCancelItem onClick={() => this.props.onClose()} theme={theme}>
                 No, cancel

@@ -15,6 +15,7 @@ import { Settings } from '../Settings';
 import { Project } from '../types/projectTypes';
 import { User } from '../types/userTypes';
 import { JSX } from 'react';
+
 export interface OpenUsersDialogPublicProps extends ThemeProps, StyleProps {
   projectLanguage: ProgrammingLanguage;
   settings: Settings;
@@ -108,7 +109,7 @@ const SectionName = styled('span', (props: ThemeProps & SectionProps) => ({
   overflowWrap: 'anywhere',
   userSelect: 'none',
 }));
-//
+
 const SettingsColumn = styled(ScrollArea, {
   flex: '1 2',
   display: 'flex',
@@ -132,7 +133,6 @@ const ProjectTitle = styled('h2', {
 const StyledScrollArea = styled(ScrollArea, ({ theme }: ThemeProps) => ({
   flex: 1,
   maxWidth: '12em',
-  //backgroundColor: 'pink'
 }));
 
 const ProjectItem = styled('li', (props: ThemeProps & { selected: boolean }) => ({
@@ -219,14 +219,10 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
   };
 
   private handleProjectClick = async (project: Project) => {
-    console.log("handleprojectclick state before:", this.state);
-    console.log("handleProjectClick called with project:", project);
     this.setState({
       selectedProject: project,
       projectName: project.projectName,
       activeLanguage: this.state.projects!.find(project => project.projectName === project.projectName)!.projectLanguage
-    }, () => {
-      console.log("Updated state after project click:", this.state);
     });
   };
 
@@ -298,18 +294,6 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
     const { style, className, theme, onClose, locale } = props;
     const { selectedUser, users } = state;
 
-    let logo: JSX.Element;
-
-    switch (theme.foreground) {
-      case 'black': {
-        logo = <Logo src={KIPR_LOGO_WHITE as string} />;
-        break;
-      }
-      case 'white': {
-        logo = <Logo src={KIPR_LOGO_BLACK as string} />;
-        break;
-      }
-    }
 
     const userSections = users.map((user) => (
       <SectionName

@@ -4,8 +4,7 @@ import Dict from '../Dict';
 import tr from '@i18n';
 import LocalizedString from '../util/LocalizedString';
 import ProgrammingLanguage from '../ProgrammingLanguage';
-import Widget, { BarComponent, Mode, Size } from './Widget';
-import { connect } from 'react-redux';
+import Widget, { Mode, Size } from './Widget';
 import { styled, withStyleDeep } from 'styletron-react';
 import { Console, createConsoleBarComponents } from './Console';
 import { Editor, createEditorBarComponents, EditorBarTarget } from './Editor';
@@ -16,9 +15,9 @@ import { StyledText } from '../util';
 import { ThemeProps, Theme, GREEN, RED, LIGHTMODE_GREEN, } from './theme';
 import { Modal } from '../pages/Modal';
 import { JSX } from 'react';
-import { faFileDownload, faFloppyDisk, faIndent, faLink, faPlay, faStop } from '@fortawesome/free-solid-svg-icons';
+import { faFloppyDisk, faLink, faPlay, faStop } from '@fortawesome/free-solid-svg-icons';
 import { Fa } from './Fa';
-import { Text } from './Text';
+
 
 export interface EditorPageProps extends LayoutProps, ThemeProps {
 
@@ -77,8 +76,6 @@ const SidePanelContainer = styled('div', {
   display: 'flex',
   flex: '1 1',
   flexDirection: 'row',
-
-
 });
 
 const Item = styled('div', (props: ThemeProps & ClickProps) => ({
@@ -132,7 +129,6 @@ const StopItem = withStyleDeep(Item, (props: ClickProps) => ({
 }));
 
 const WidgetContainer = styled('div', (props: ThemeProps) => ({
-
   display: 'flex',
   flex: '1 0 0',
   height: '100%',
@@ -140,20 +136,17 @@ const WidgetContainer = styled('div', (props: ThemeProps) => ({
   minHeight: 0,
   minWidth: 0,
   overflow: 'hidden',
- backGroundColor: props.theme.editorConsoleBackground,
- 
+  backGroundColor: props.theme.editorConsoleBackground,
 }));
 
 const EPWidget = styled(Widget, (props: ThemeProps) => ({
   display: 'flex',
   flex: '1 1 auto',
-  //margin: '10px 0px 0px 0px',
   height: '100%',
   width: '500px',
-    border: `1px solid ${props.theme.borderColor}`,
+  border: `1px solid ${props.theme.borderColor}`,
   fontSize: '22px',
   backgroundColor: props.theme.editorConsoleBackground,
- 
 }));
 
 const MobileEPWidget = styled('div', (props: ThemeProps) => ({
@@ -171,40 +164,31 @@ const MobileEditorBar = styled('div', (props: ThemeProps) => ({
   flexDirection: 'column',
   alignItems: 'stretch',
   margin: '10px 0px 0px 0px',
-  //height: '1em',
   width: '100%',
   fontSize: '22px',
   borderBottom: `1px solid ${props.theme.borderColor}`,
   backgroundColor: props.theme.mobileEditorBarBackground,
-
-  //backgroundColor: '#e6ddde'
 }));
 
 const MobileEditorBarContainer = styled('div', (props: ThemeProps) => ({
   display: 'flex',
   flexDirection: 'row',
   flexWrap: 'wrap',
-  //justifyContent: 'space-between',
   alignItems: 'center',
   justifyContent: 'center',
   gap: '10px',
   margin: '10px 0px 0px 0px',
   width: '100%',
   fontSize: '22px',
-  //backgroundColor: props.theme.editorConsoleBackground,
-  //backgroundColor: 'lightblue'
 }));
 
 const InfoLabel = styled('span', (props: ThemeProps) => ({
-
   fontWeight: '500',
   fontSize: '0.9em',
   marginRight: '5px',
 }));
 
-
 const InformationText = styled('div', (props: ThemeProps) => ({
-
   color: props.theme.color,
   fontSize: '0.9em',
   marginLeft: '10px',
@@ -217,23 +201,15 @@ const FlexConsole = styled(Console, {
 });
 
 const Button = styled('button', (props: ThemeProps) => ({
-  //backgroundColor: props.theme.buttonBackground,
-  //color: props.theme.buttonColor,
   border: `1px solid ${props.theme.borderColor}`,
   borderRadius: `${props.theme.borderRadius}px`,
   padding: `${props.theme.itemPadding}px ${props.theme.itemPadding * 2}px`,
   cursor: 'pointer',
   fontSize: '1em',
-  // ':hover': {
-  //   backgroundColor: props.theme.buttonHoverBackground,
-  //   color: props.theme.buttonHoverColor,
-  // }
 }));
 
-
 export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps, State> {
-  private editorRef: React.MutableRefObject<Editor>;
-
+ 
   constructor(props: Props & ReduxEditorPageProps) {
     super(props);
 
@@ -260,10 +236,6 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
 
 
   async componentDidUpdate(prevProps: Props, prevState: State) {
-    console.log("EditorPage componentDidUpdate prevState: ", prevState);
-    console.log("EditorPage componentDidUpdate prevProps: ", prevProps);
-    console.log("EditorPage componentDidUpdate state: ", this.state);
-    console.log("EditorPage componentDidUpdate props: ", this.props);
 
     if (this.props.fileName !== prevProps.fileName || this.props.code !== prevProps.code) {
 
@@ -274,9 +246,6 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
           ...this.state.code,
           [this.props.language]: this.props.code[this.props.language]
         },
-
-      }, () => {
-
       });
     }
 
@@ -291,20 +260,16 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
       });
 
     }
-    //
   }
+
   async componentDidMount() {
     window.addEventListener('resize', this.handleResize);
 
     try {
-
       const { userName, projectName } = this.props;
-      console.log("EditorPage compDidMount");
-      if (this.props.fileName.includes(".h")) {
+        if (this.props.fileName.includes(".h")) {
         const includeContent = await axios.get("/get-file-contents", { params: { filePath: `/home/kipr/Documents/KISS/${userName}/${projectName}/include/${this.props.fileName}` } });
-        // Ensure includeContent.data is a string
         const fileContent = typeof includeContent.data === 'string' ? includeContent.data : JSON.stringify(includeContent.data);
-
 
         this.setState((prevState) => ({
           code: {
@@ -315,9 +280,7 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
       }
       else if (this.props.fileName.includes(".txt")) {
         const userFileContent = await axios.get("/get-file-contents", { params: { filePath: `/home/kipr/Documents/KISS/${userName}/${projectName}/data/${this.props.fileName}` } });
-        // Ensure userFileContent.data is a string
         const fileContent = typeof userFileContent.data === 'string' ? userFileContent.data : JSON.stringify(userFileContent.data);
-
         this.setState((prevState) => ({
           code: {
             ...prevState.code,
@@ -326,11 +289,8 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
         }));
       }
       else {
-
         const srcContent = await axios.get("/get-file-contents", { params: { filePath: `/home/kipr/Documents/KISS/${userName}/${projectName}/src/${this.props.fileName}` } });
-        // Ensure srcContent.data is a string
         const fileContent = typeof srcContent.data === 'string' ? srcContent.data : JSON.stringify(srcContent.data);
-        console.log("EditorPage componentDidMount srcContent: ", fileContent);
         this.setState((prevState) => ({
           code: {
             ...prevState.code,
@@ -370,8 +330,6 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
   };
 
   private onIndentCode_ = () => {
-    console.log("EditorPage onIndentCode_ state: ", this.state);
-    console.log("EditorPage onIndentCode_ props: ", this.props);
     if (this.props.editorRef) this.props.editorRef.current.ivygate.formatCode();
   };
 
@@ -395,9 +353,6 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
       theme,
       messages,
       settings,
-      onClearConsole,
-      onIndentCode,
-      onDownloadCode,
       onSaveCode,
       editorRef,
       onDocumentationGoToFuzzy,
@@ -433,11 +388,7 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
       fileName: this.props.fileName,
     };
     editor = (
-      console.log("EditorPage render isleftbaropen: ", isleftbaropen),
-      console.log("EditorPage state: ", this.state),
-      console.log("EditorPage props: ", this.props),
       <Editor
-
         theme={theme}
         isleftbaropen={isleftbaropen}
         isRunning={this.props.isRunning}
@@ -451,20 +402,15 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
         onDocumentationGoToFuzzy={onDocumentationGoToFuzzy}
       />
     );
-
-    const isMobile = this.state.screenWidth < 1050; // Example breakpoint for mobile devices
-
-
+    const isMobile = this.state.screenWidth < 1050; 
     const editorBar = createEditorBarComponents({
       theme,
       target: editorBarTarget,
       locale,
     });
 
-
     const editorConsoleBar = createConsoleBarComponents(theme, this.props.onClearConsole, locale);
 
-    console.log("EditorPage render isMobile: ", isMobile);
     let content: JSX.Element;
     let mobileEditorBarContent: JSX.Element;
     mobileEditorBarContent = (
@@ -532,11 +478,8 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
         minSizes={[100, 100]}
         sizes={[3, 2]}
         visible={[true, true]}
-      
       >
         <WidgetContainer theme={theme}  >
-
-
           {isMobile ? (
             <MobileEPWidget
               theme={theme}>
@@ -546,14 +489,12 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
               {editor}
             </MobileEPWidget>
           ) : (
-
             <EPWidget
               theme={theme}
               name={LocalizedString.lookup(tr('Editor'), locale)}
               mode={Mode.Sidebar}
               barComponents={editorBar}
               fontSize={'1em'}
-
             >
               {editor}
             </EPWidget>
@@ -575,8 +516,6 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
       </Slider>
 
     );
-
-
 
     return <Container style={style} className={className}>
       <SidePanelContainer>

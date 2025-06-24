@@ -1,16 +1,14 @@
 import * as React from 'react';
 import tr from '@i18n';
 import LocalizedString from '../util/LocalizedString';
-import ComboBox from './ComboBox';
 import Form from './Form';
 import axios from 'axios';
-import ProgrammingLanguage from '../ProgrammingLanguage';
 import { InterfaceMode } from '../types/interfaceModes';
 import { ThemeProps } from './theme';
 import { StyleProps } from '../style';
 import { styled } from 'styletron-react';
 import { Dialog } from './Dialog';
-import { BLANK_PROJECT, Project } from '../types/projectTypes';
+import { Project } from '../types/projectTypes';
 import { User } from '../types/userTypes';
 import { Modal } from '../pages/Modal';
 import { Fa } from './Fa';
@@ -24,12 +22,10 @@ export interface RenameUserProjectFileDialogPublicProps extends ThemeProps, Styl
   toRenameType: string;
   onClose: () => void;
   onCloseRenameUserProjectFileDialog: (renamedType: string, user: User, renamedData: {}) => void;
-
 }
 
 interface RenameUserProjectFileDialogPrivateProps {
   locale: LocalizedString.Language;
-
 }
 
 interface RenameUserProjectFileDialogState {
@@ -111,16 +107,7 @@ export class RenameUserProjectFileDialog extends React.PureComponent<Props, Stat
     }
   }
 
-  componentDidMount(): void {
-    console.log("RenameUserProjectFileDialog state: ", this.state);
-    console.log("RenameUserProjectFileDialog props: ", this.props);
-  }
-
-
   onFinalize_ = async (values: { [id: string]: string }) => {
-    console.log("RenameUserProjectFileDialog onFinalize_ state: ", this.state);
-    console.log("RenameUserProjectFileDialog values: ", values);
-
     let changedName: string;
     if (this.props.toRenameType === "User") {
       changedName = values.userName;
@@ -156,8 +143,6 @@ export class RenameUserProjectFileDialog extends React.PureComponent<Props, Stat
       try {
         const renameUserResponse = await axios.post('/rename', { renameType: 'User', oldUserName: this.props.toRenameName, newUserName: values.userName });
 
-        console.log("Rename User Response: ", renameUserResponse.data);
-
         if(renameUserResponse.request.status === 200) { //success
           this.props.onCloseRenameUserProjectFileDialog("User",this.props.user, renameUserResponse.data);
         }
@@ -165,7 +150,6 @@ export class RenameUserProjectFileDialog extends React.PureComponent<Props, Stat
       }
       catch (error) {
         if (error.response && error.response.status === 409) {
-          console.log("INSIDE ERROR");
           this.setState({ errorMessage: 'User name already exists. Please choose a different name.' });
           return;
         }
@@ -175,7 +159,6 @@ export class RenameUserProjectFileDialog extends React.PureComponent<Props, Stat
     else if (this.props.toRenameType === "Project") {
       try {
         const renameProjectResponse = await axios.post('/rename', { renameType: 'Project', userName: this.props.user.userName, oldProjectName: this.props.toRenameName, newProjectName: values.projectName });
-        console.log("Rename Project Response: ", renameProjectResponse.data);
         if(renameProjectResponse.request.status === 200) { //success
           this.props.onCloseRenameUserProjectFileDialog("Project",this.props.user, renameProjectResponse.data);
         }
@@ -188,7 +171,6 @@ export class RenameUserProjectFileDialog extends React.PureComponent<Props, Stat
       try {
         const [file, extension] = this.props.toRenameName.split('.');
         const renameFileResponse = await axios.post('/rename', { renameType: 'File', userName: this.props.user.userName, projectName: this.props.project.projectName, oldFileName: this.props.toRenameName, newFileName: `${values.fileName}.${extension}` });
-        console.log("Rename File Response: ", renameFileResponse.data);
         if(renameFileResponse.request.status === 200) { //success
           this.props.onCloseRenameUserProjectFileDialog("File",this.props.user, renameFileResponse.data);
         }
@@ -268,7 +250,7 @@ export class RenameUserProjectFileDialog extends React.PureComponent<Props, Stat
             <Bold>{LocalizedString.lookup(tr(`Rename Project ${this.props.toRenameName} to: `), locale)}</Bold>
 
           </CenteredContainer>
-          {/* Show error message if it exists */}
+
           {errorMessage && (
             <ErrorMessageContainer theme={theme}>
               <ItemIcon icon={faExclamationTriangle} />
@@ -278,9 +260,6 @@ export class RenameUserProjectFileDialog extends React.PureComponent<Props, Stat
 
             </ErrorMessageContainer>
           )}
-
-
-
           <Container theme={theme} style={style} className={className}>
             <StyledForm
               theme={theme}
@@ -308,7 +287,6 @@ export class RenameUserProjectFileDialog extends React.PureComponent<Props, Stat
             <Bold>{LocalizedString.lookup(tr(`Rename File ${this.props.toRenameName} to: `), locale)}</Bold>
 
           </CenteredContainer>
-          {/* Show error message if it exists */}
           {errorMessage && (
             <ErrorMessageContainer theme={theme}>
               <ItemIcon icon={faExclamationTriangle} />
@@ -318,8 +296,6 @@ export class RenameUserProjectFileDialog extends React.PureComponent<Props, Stat
 
             </ErrorMessageContainer>
           )}
-
-
 
           <Container theme={theme} style={style} className={className}>
             <StyledForm

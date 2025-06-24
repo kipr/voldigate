@@ -90,7 +90,6 @@ const SettingInfoContainer = styled('div', {
 const StyledScrollArea = styled(ScrollArea, ({ theme }: ThemeProps) => ({
   flex: 1,
   maxWidth: '12em',
-  //backgroundColor: 'pink'
 }));
 
 
@@ -101,11 +100,8 @@ interface SectionProps {
 const SectionsColumn = styled('div', (props: ThemeProps) => ({
   display: 'flex',
   flexDirection: 'column',
-  //flex: '0 0 150px',
   overflow: 'hidden',
-  //overflowY: 'scroll',
   width: '100%',
-  //maxWidth: '5em',
   borderRight: `1px solid ${props.theme.borderColor}`,
 }));
 
@@ -190,7 +186,6 @@ const ProjectFileItem = styled('li', (props: ThemeProps) => ({
   maxWidth: '30em',
   wordBreak: 'break-word',
   overflowWrap: 'anywhere',
-  //dpaddingLeft: '50px',
   paddingBottom: '5px',
   paddingTop: '5px',
   borderRadius: '5px',
@@ -266,19 +261,12 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
   };
 
   private handleProjectClick = async (project: Project) => {
-    console.log("OpenFileDialog handleProjectClick project: ", project);
-    console.log("OpenFileDialog handleProjectClick state: ", this.state);
-
-    this.setState((prevState) => (
-      console.log("OpenFileDialog handleProjectClick prevState: ", prevState), {
-        selectedProject: project,
-        projectName: project.projectName,
-        activeLanguage: this.state.projects!.find(project => project.projectName === project.projectName)!.projectLanguage,
-        selectedProjectFiles: project,
-      }), () => {
-        console.log("OpenFileDialog handleProjectClick updated state: ", this.state);
-
-      });
+    this.setState((prevState) => ({
+      selectedProject: project,
+      projectName: project.projectName,
+      activeLanguage: this.state.projects!.find(project => project.projectName === project.projectName)!.projectLanguage,
+      selectedProjectFiles: project,
+    }));
   };
 
   private handleFileClick = async (fileId: string) => {
@@ -293,7 +281,6 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
   }
 
   private getProjects = async () => {
-    console.log("OpenFileDialog getProjects state: ", this.state);
     this.setState({
       projects: await this.props.onLoadUserData(true, false, this.state.selectedUser),
       loading: false,
@@ -314,7 +301,6 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
   }
 
   renderProjects() {
-    console.log("OpenFileDialog renderProjects state: ", this.state);
     const { projects, loading, error, selectedProject } = this.state;
     const { theme } = this.props;
 
@@ -335,9 +321,7 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
         <ProjectTitle>Projects for {this.state.selectedUser.userName}</ProjectTitle>
         <ul>
           {projects.map((project) => (
-            // console.log("OpenFileDialog renderProjects project: ", project),
-            // console.log("OpenFileDialog renderProjects selectedProject: ", selectedProject),
-            <div key={project.projectName}>
+               <div key={project.projectName}>
               <ProjectItem
                 selected={selectedProject.projectName === project.projectName}
                 onClick={() => this.handleProjectClick(project)}
@@ -355,7 +339,6 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
 
 
   renderFiles() {
-    console.log("OpenFileDialog renderFiles state: ", this.state);
     return (
       <div>
         <ProjectFileTitle>Files for {this.state.selectedProject.projectName}</ProjectFileTitle>
@@ -454,7 +437,7 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
   render() {
     const { props, state } = this;
     const { style, className, theme, onClose, locale } = props;
-    const { selectedUser, users, showUserProjectFiles } = state;
+    const { selectedUser, users } = state;
 
     let logo: JSX.Element;
 
@@ -470,7 +453,6 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
     }
 
     const userSections = users.map((user) => (
-      console.log("userSections selectedUser: ", selectedUser),
       <SectionName
         key={user.userName}
         theme={theme}

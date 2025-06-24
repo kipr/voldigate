@@ -12,7 +12,6 @@ import { State as ReduxState } from '../state';
 import { I18nAction } from '../state/reducer';
 import { connect } from 'react-redux';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-
 import { Fa } from './Fa';
 import { User } from '../types/userTypes';
 import ComboBox from './ComboBox';
@@ -122,17 +121,14 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
     private onInterfaceChange = (interfaceMode: InterfaceMode) => {
         this.setState({
             interfaceMode: interfaceMode
-        }, () => {
-            console.log("Interface Mode: ", this.state.interfaceMode);
         });
     };
     private onSelectInterface_ = (interfaceIndex: number, option: ComboBox.Option) => {
         this.onInterfaceChange(option.data as InterfaceMode);
     };
+
     onFinalize_ = async (values: { [id: string]: string }) => {
-
         const userName = values.userName;
-
         const specialCharRegex = /[^a-zA-Z0-9 _-]/;
         const isOnlySpaces = !userName.trim(); // Check if the name is empty or only spaces
 
