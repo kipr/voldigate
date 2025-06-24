@@ -12,6 +12,7 @@ import LocalizedString from '../util/LocalizedString';
 export interface ExtraMenuPublicProps extends StyleProps, ThemeProps {
 
   onDocumentationClick: (event: React.MouseEvent) => void;
+  onCommonDocumentationClick: (event: React.MouseEvent) => void;
   onAboutClick: (event: React.MouseEvent) => void;
 }
 
@@ -82,7 +83,7 @@ class ExtraMenu extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
   }
-
+//
 
   render() {
     const { props } = this;
@@ -91,6 +92,7 @@ class ExtraMenu extends React.PureComponent<Props, State> {
       style,
       theme,
       onAboutClick,
+      onCommonDocumentationClick,
       onDocumentationClick,
 
       locale,
@@ -98,6 +100,7 @@ class ExtraMenu extends React.PureComponent<Props, State> {
 
     return (
       <Container theme={theme} style={style} className={className}>
+        <Item theme={theme} onClick={onCommonDocumentationClick}><ItemIcon icon={faBook} /> {LocalizedString.lookup(tr('Common Functions'), locale)}</Item>
         <Item theme={theme} onClick={onDocumentationClick}><ItemIcon icon={faBook} /> {LocalizedString.lookup(tr('Documentation'), locale)}</Item>
         <Item theme={theme} onClick={onAboutClick}><ItemIcon icon={faQuestion} /> {LocalizedString.lookup(tr('About'), locale)}</Item>
 
