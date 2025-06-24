@@ -28,9 +28,9 @@ import { Modal } from '../pages/Modal';
 import { Project, UploadedProject } from '../types/projectTypes';
 import { InterfaceMode } from '../types/interfaceModes';
 import { User } from '../types/userTypes';
-import {SensorSelectionKey, ServoType } from 'types/motorServoSensorTypes';
+import { SensorSelectionKey, ServoType } from 'types/motorServoSensorTypes';
 import { programRunContextHelper } from '../ProgramRunContext';
-import parseMessages, {sort, toStyledText } from '../util/parse-messages';
+import parseMessages, { sort, toStyledText } from '../util/parse-messages';
 import { FileInfo } from 'types/fileInfo';
 
 interface RootParams {
@@ -876,7 +876,8 @@ class Root extends React.Component<Props, State> {
     console.log("Before websocket create");
     //this.socket = new WebSocket('ws://localhost:8888'); // DEVELOPMENT ONLY
     //this.socket = new WebSocket('ws://192.168.86.30:8888'); // WOMBAT
-    this.socket = new WebSocket('ws://192.168.125.1:8888'); //USE THIS FOR PRODUCTION
+    this.socket = new WebSocket('ws://192.168.125.1:8888/ws/sensors');
+    //USE THIS FOR PRODUCTION
     console.log("After websocket create");
     this.socket.onopen = () => {
       console.log('WebSocket connection opened');
@@ -900,40 +901,6 @@ class Root extends React.Component<Props, State> {
       this.socket = undefined;
     }
   };
-
-  private terminalSocket?: WebSocket;
-
-  private startTerminalWebSocket = () => {
-    console.log("Before terminal websocket create");
-    //this.terminalSocket = new WebSocket('ws://192.168.125.1:8888/ws/terminal'); //USE THIS FOR PRODUCTION
-    this.terminalSocket = new WebSocket('ws://localhost:8888/ws/terminal'); // DEVELOPMENT ONLY
-    console.log("After terminal websocket create");
-    this.terminalSocket.onopen = () => {
-      console.log('Terminal WebSocket connection opened');
-
-    }
-
-    this.terminalSocket.onmessage = (event) => {
-      const output = event.data;
-      console.log("Root terminalSocket onmessage output: ", output);
-    };
-
-    this.terminalSocket.onclose = () => {
-      console.log("Terminal WebSocket closed");
-    };
-    this.terminalSocket.onerror = (err) => {
-      console.error("Terminal WebSocket error:", err);
-    }
-
-  }
-
-  private stopTerminalWebSocket = () => {
-    if (this.terminalSocket) {
-      this.terminalSocket.close();
-      this.terminalSocket = undefined;
-    }
-  }
-
 
 
   private enableServo = async (servo: ServoType) => {
