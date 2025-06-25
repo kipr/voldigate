@@ -10,9 +10,8 @@ import { Text } from "./Text";
 import { ThemeProps } from "./theme";
 import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 
-const Container = styled('div', (props: ThemeProps & { $focus?: boolean; $minimal?: boolean; $width?: number; $height?: number }) => ({
+const Container = styled('div', (props: ThemeProps & { $focus?: boolean; $minimal?: boolean; $width?: string; $height?: string }) => ({
   width: props.$width ? `${props.$width}px` : '100%',
- 
   height: props.$height ? `${props.$height}px` : undefined,
   padding: `${props.theme.itemPadding * 2}px`,
   borderTopLeftRadius: !props.$minimal ? `${props.theme.borderRadius}px` : undefined,
@@ -61,7 +60,7 @@ const CurrentOptionContainer = styled('div', (props: ThemeProps & { $focus?: boo
   alignItems: 'center'
 }));
 
-const OptionContainer = styled('div', (props: ThemeProps & { $selected?: boolean; $height?: number}) => ({
+const OptionContainer = styled('div', (props: ThemeProps & { $selected?: boolean; $height?: string}) => ({
   padding: `${props.theme.itemPadding * 2}px`,
   userSelect: 'none',
   display: 'flex',
@@ -148,7 +147,7 @@ class ResizeableComboBox extends React.PureComponent<ResizeableComboBox.Props, R
 
     const { options, index, style, className, theme, minimal, widthTweak, mainFontSize,mainWidth} = props;
     const { focus } = state;
-
+    console.log("ResizeableComboBox render options", options, "index", index, "focus", focus);
 
 
     let dropDownStyle: React.CSSProperties;
@@ -216,9 +215,9 @@ namespace ResizeableComboBox {
 
     index: number;
     onSelect: (index: number, option: Option) => void;
-    mainWidth?: number;
-    mainHeight?: number;
-    mainFontSize?: number;
+    mainWidth?: string;
+    mainHeight?: string;
+    mainFontSize?: string;
   }
 
   export interface State {
