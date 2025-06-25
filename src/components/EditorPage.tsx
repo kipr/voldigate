@@ -136,7 +136,9 @@ const WidgetContainer = styled('div', (props: ThemeProps) => ({
   minHeight: 0,
   minWidth: 0,
   overflow: 'hidden',
-  backGroundColor: props.theme.editorConsoleBackground,
+  backgroundColor: props.theme.editorConsoleBackground,
+  overflowY: 'auto',
+  maxHeight: '100vh',
 }));
 
 const EPWidget = styled(Widget, (props: ThemeProps) => ({
@@ -153,21 +155,25 @@ const MobileEPWidget = styled('div', (props: ThemeProps) => ({
   display: 'flex',
   flexDirection: 'column',
   flex: '1 1 auto',
-  margin: '10px 0px 0px 0px',
+
   height: '100%',
   width: '100%',
   fontSize: '22px',
+  //overflowY: 'auto',
+  maxHeight: '100vh',
 }));
 
 const MobileEditorBar = styled('div', (props: ThemeProps) => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'stretch',
-  margin: '10px 0px 0px 0px',
   width: '100%',
   fontSize: '22px',
   borderBottom: `1px solid ${props.theme.borderColor}`,
   backgroundColor: props.theme.mobileEditorBarBackground,
+  overflowY: 'auto',
+  maxHeight: '100vh',
+
 }));
 
 const MobileEditorBarContainer = styled('div', (props: ThemeProps) => ({
@@ -209,7 +215,7 @@ const Button = styled('button', (props: ThemeProps) => ({
 }));
 
 export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps, State> {
- 
+
   constructor(props: Props & ReduxEditorPageProps) {
     super(props);
 
@@ -236,6 +242,8 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
 
 
   async componentDidUpdate(prevProps: Props, prevState: State) {
+    console.log("EditorPage compDidUpdate props:", this.props, "prevProps:", prevProps);
+    console.log("EditorPage compDidUpdate state:", this.state, "prevState:", prevState);
 
     if (this.props.fileName !== prevProps.fileName || this.props.code !== prevProps.code) {
 
@@ -267,7 +275,7 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
 
     try {
       const { userName, projectName } = this.props;
-        if (this.props.fileName.includes(".h")) {
+      if (this.props.fileName.includes(".h")) {
         const includeContent = await axios.get("/get-file-contents", { params: { filePath: `/home/kipr/Documents/KISS/${userName}/${projectName}/include/${this.props.fileName}` } });
         const fileContent = typeof includeContent.data === 'string' ? includeContent.data : JSON.stringify(includeContent.data);
 
@@ -402,7 +410,7 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
         onDocumentationGoToFuzzy={onDocumentationGoToFuzzy}
       />
     );
-    const isMobile = this.state.screenWidth < 1050; 
+    const isMobile = this.state.screenWidth < 1050;
     const editorBar = createEditorBarComponents({
       theme,
       target: editorBarTarget,
@@ -473,10 +481,11 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
     );
     content = (
       <Slider
-        isVertical={false}
+        key={settings.consoleLayout}
+        isVertical={settings.consoleLayout === 'vertical'}
         theme={theme}
         minSizes={[100, 100]}
-        sizes={[3, 2]}
+        sizes={isMobile ? [1.5, 2] : [3, 2]}
         visible={[true, true]}
       >
         <WidgetContainer theme={theme}  >

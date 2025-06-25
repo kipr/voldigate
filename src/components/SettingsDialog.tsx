@@ -34,7 +34,7 @@ interface SettingsDialogState {
   selectedSection: SettingsSection;
   storedTheme: Theme;
   interfaceMode: InterfaceMode.SIMPLE | InterfaceMode.ADVANCED;
-
+  consoleLayout: 'horizontal' | 'vertical';
   userOptions: ComboBox.Option[];
   selectedUserName?: string;
   confirmMessage: React.ReactNode;
@@ -204,13 +204,20 @@ class SettingsDialog extends React.PureComponent<Props, State> {
       selectedUserName: this.props.users.length > 0 ? this.props.users[0].userName : initialUser.userName,
       confirmMessage: '',
       currentStateUser: initialUser,
-      successMessage: ''
+      successMessage: '',
+      consoleLayout: localStorage.getItem('consoleLayout') as 'horizontal' | 'vertical' || 'horizontal',
 
     };
   }
 
   componentDidMount(): void {
+    console.log("SettingsDialog mounted state:", this.state);
     const storedTheme = localStorage.getItem('ideEditorDarkMode');
+    const consoleLayout = localStorage.getItem('consoleLayout');
+    console.log("Console Layout from localStorage:", consoleLayout);
+    if (consoleLayout) {
+      this.props.onSettingsChange({ consoleLayout: consoleLayout as 'horizontal' | 'vertical' });
+    }
     if (storedTheme) {
       this.props.onSettingsChange({ ideEditorDarkMode: storedTheme === 'true' });
     }
@@ -218,12 +225,17 @@ class SettingsDialog extends React.PureComponent<Props, State> {
       userOptions: this.props.users.map(user => ({
         data: user.userName,
         text: user.userName, // or any other field you need for ComboBox
-      }))
+      })),
+      consoleLayout: consoleLayout as 'horizontal' | 'vertical',
+
     });
 
   }
 
   componentDidUpdate = async (prevProps: Props, prevState: State) => {
+
+    console.log("SettingsDialog updated state:", this.state);
+    console.log("SettingsDialog updated props:", this.props);
 
     if (prevProps.settings.ideEditorDarkMode !== this.props.settings.ideEditorDarkMode) {
       if (this.props.settings.ideEditorDarkMode) {
@@ -232,6 +244,11 @@ class SettingsDialog extends React.PureComponent<Props, State> {
       else {
         this.setState({ storedTheme: LIGHT });
       }
+    }
+    if (prevProps.settings.consoleLayout !== this.props.settings.consoleLayout) {
+      this.setState({
+        consoleLayout: this.props.settings.consoleLayout
+      });
     }
 
     if (prevProps.users !== this.props.users) {
@@ -305,6 +322,9 @@ class SettingsDialog extends React.PureComponent<Props, State> {
             const updatedSettings = getUpdatedSettings(value);
             if (updatedSettings.hasOwnProperty('ideEditorDarkMode')) {
               localStorage.setItem('ideEditorDarkMode', updatedSettings.ideEditorDarkMode ? 'true' : 'false');
+            }
+            if (updatedSettings.hasOwnProperty('consoleLayout')) {
+              localStorage.setItem('consoleLayout', updatedSettings.consoleLayout);
             }
             onSettingsChange(getUpdatedSettings(value));
 
@@ -480,6 +500,14 @@ class SettingsDialog extends React.PureComponent<Props, State> {
                   LocalizedString.lookup(tr('Controls autocompletion of code, brackets, and quotes'), locale),
                   (settings: Settings) => settings.editorAutoComplete,
                   (newValue: boolean) => ({ editorAutoComplete: newValue })
+                )}
+                {this.createBooleanSetting(
+                  LocalizedString.lookup(tr('Console Layout'), locale),
+                  LocalizedString.lookup(tr('Toggle for vertical console view'), locale),
+                  (settings: Settings) => settings.consoleLayout === "vertical",
+                  (isVertical: boolean) => ({
+                    consoleLayout: isVertical ? 'vertical' : 'horizontal',
+                  })
                 )}
               </>
             )}

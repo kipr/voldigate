@@ -61,6 +61,7 @@ export interface RootPublicProps {
   propActiveLanguage: ProgrammingLanguage;
   propContextMenuProject?: Project;
   propedTheme: Theme;
+  propSettings: Settings;
   propedMotorPositions?: { [key: string]: number };
   stoppedMotor?: number;
   propedStoppedMotorFlag?: boolean;
@@ -2199,6 +2200,7 @@ class Root extends React.Component<Props, State> {
       locale,
       propContextMenuUser,
       propContextMenuProject,
+      propSettings
     } = props;
 
     const {
@@ -2275,7 +2277,7 @@ class Root extends React.Component<Props, State> {
             messages={messages}
             code={this.toSaveCodeRef.current}
             language={activeLanguage}
-            settings={DEFAULT_SETTINGS}
+            settings={propSettings}
             onClearConsole={this.onClearConsole_}
             onCodeChange={this.onCodeChange_}
             onSaveCode={this.onSaveClick_}

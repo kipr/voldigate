@@ -24,12 +24,14 @@ import { FileInfo } from 'types/fileInfo';
 import axios from 'axios';
 const TerminalView = React.lazy(() => import('./TerminalView'));
 
+
 export interface LeftBarPublicProps extends StyleProps, ThemeProps {
   onThemeChange: (theme: Theme) => void;
   isRunning: boolean;
   propedMotorVelocities?: MotorVelocities;
   propedMotorPositions?: MotorPositions;
   propedServoPositions?: ServoType[];
+
   setShouldStreamMotorVelocities?: (shouldStreamMotorVelocities: boolean) => void;
   setGraphSelection?: (graphSelection: GraphSelectionKey[]) => void;
   repollServos?: (repollServoFlag: boolean) => void;
@@ -48,6 +50,7 @@ interface LeftBarState {
   sliderSizes: [number, number];
   isPanelVisible: boolean;
   storedTheme: Theme;
+  consoleLayout: 'horizontal' | 'vertical';
   users: User[];
   user?: User;
   isLoadUserFiles?: boolean;
@@ -136,6 +139,7 @@ const LeftBarWrapper = (props: Props) => {
   const [shouldStreamMotorVelocities, setShouldStreamMotorVelocities] = React.useState(false);
   const [graphSelection, setGraphSelection] = React.useState<GraphSelectionKey[]>([]);
   const [repollServos, setRepollServos] = React.useState(false);
+
 
 
   const clearMotorPosition = async (motor: Motors) => {
@@ -303,14 +307,14 @@ const LeftBarWrapper = (props: Props) => {
     setGraphSelection={setGraphSelection}
     repollServos={repollServosHandler}
     clearMotorPosition={clearMotorPosition}
+
   />;
 };
 
 const Container = styled('div', (props: ThemeProps) => ({
   color: props.theme.color,
   height: '100vh',
-  maxHeight: '100vh',
-  overflow: 'auto',
+
   lineHeight: '28px',
   display: 'flex',
   flexDirection: 'row',
@@ -365,16 +369,33 @@ const ItemIcon = styled(Fa, {
 const LeftBarContainer = styled('div', (props: ThemeProps & ClickProps) => ({
   display: 'flex',
   flexDirection: 'column',
-  paddingTop: '10px',
-  paddingBottom: '2.7em',
-  fontSize: '1.5vw',
-  width: '4.5vw',
+  paddingTop: '1rem',
+  paddingBottom: '2rem',
+  fontSize: '1rem',
+  width: '60px',
   height: '100vh',
   flexShrink: 0,
   alignItems: 'center',
   backgroundColor: props.theme.leftBarContainerBackground,
   border: `1px solid ${props.theme.borderColor}`,
   gap: '10px',
+
+  // ✅ Most important part
+  overflow: 'hidden', // This ensures no scrollbars and no visual overflow
+  boxSizing: 'border-box',
+
+  // Responsive behavior
+  '@media (max-height: 1400px)': {
+    fontSize: '0.8rem',
+    paddingTop: '0.5rem',
+    paddingBottom: '6rem',
+    gap: '8px',
+  },
+  '@media (max-height: 500px)': {
+    fontSize: '0.7rem',
+    gap: '6px',
+    width: '50px',
+  },
 }));
 
 const TopButtons = styled('div', (props: ThemeProps & ClickProps) => ({
@@ -418,6 +439,7 @@ class LeftBar extends React.Component<Props, State> {
       isPanelVisible: false,
       isClickFile: false,
       storedTheme: localStorage.getItem('ideEditorDarkMode') === 'true' ? DARK : LIGHT,
+      consoleLayout: localStorage.getItem('consoleLayout') === 'vertical' ? 'vertical' : 'horizontal',
       users: [],
       user: {
         userName: '',
@@ -452,10 +474,20 @@ class LeftBar extends React.Component<Props, State> {
 
   async componentDidMount() {
     window.addEventListener('resize', this.handleResize);
+    const settingsFromStorage: Settings = {
+      ...DEFAULT_SETTINGS,
+      ideEditorDarkMode: localStorage.getItem('ideEditorDarkMode') === 'true' ? true : false,
+      consoleLayout: localStorage.getItem('consoleLayout') === 'vertical' ? 'vertical' : 'horizontal',
+
+    };
+
+    this.setState({
+      settings: settingsFromStorage,
+    })
   }
 
   async componentDidUpdate(prevProps: Props, prevState: State) {
-
+    console.log("LeftBar compDidUpdate props:", this.props);
 
     if (prevState.sliderSizes !== this.state.sliderSizes) {
       this.forceUpdate();
@@ -499,12 +531,15 @@ class LeftBar extends React.Component<Props, State> {
    * @param changedSettings - Partial<Settings> - The settings that have been changed
    */
   private onSettingsChange_ = (changedSettings: Partial<Settings>) => {
+
     const nextSettings: Settings = {
       ...this.state.settings,
       ...changedSettings
     }
     this.props.onThemeChange(nextSettings.ideEditorDarkMode ? DARK : LIGHT);
-    this.setState({ settings: nextSettings });
+    this.setState({ settings: nextSettings }, () => {
+      console.log("LeftBar settings changed:", this.state.settings);
+    });
   };
 
   private onModalClick_ = (modal: Modal) => () => this.setState({ modal });
@@ -1308,7 +1343,7 @@ class LeftBar extends React.Component<Props, State> {
 
         <Root
           isLeftBarOpen={isPanelVisible}
-
+          propSettings={settings}
           propedTheme={storedTheme}
           propFileName={fileName}
           propProject={project}
@@ -1529,7 +1564,7 @@ class LeftBar extends React.Component<Props, State> {
               <ItemIcon icon={faWaveSquare} />
             </Item>
           </TopButtons>
-          <div style={{ flexGrow: 1 }} />
+          <div style={{ flexGrow: 1, minHeight: 0 }} />
 
           <BottomButtons theme={storedTheme}>
             <Item theme={storedTheme} onClick={() => this.selectPanel('terminal')}>

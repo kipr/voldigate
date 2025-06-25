@@ -3,6 +3,7 @@ export interface Settings {
   simulationRealisticSensors: boolean;
   editorAutoComplete: boolean;
   ideEditorDarkMode: boolean;
+  consoleLayout: "horizontal" | "vertical";
 }
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -10,4 +11,5 @@ export const DEFAULT_SETTINGS: Settings = {
   simulationRealisticSensors: false,
   editorAutoComplete: false,
   ideEditorDarkMode: false,
+  consoleLayout: "horizontal",
 };
