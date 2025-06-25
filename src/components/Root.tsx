@@ -32,6 +32,7 @@ import { SensorSelectionKey, ServoType } from 'types/motorServoSensorTypes';
 import { programRunContextHelper } from '../ProgramRunContext';
 import parseMessages, { sort, toStyledText } from '../util/parse-messages';
 import { FileInfo } from 'types/fileInfo';
+import MoveProjectDialog from './MoveProjectDialog';
 
 
 export interface RootPublicProps {
@@ -50,6 +51,7 @@ export interface RootPublicProps {
   downloadUserFlag?: boolean;
   renameUserFlag?: boolean;
   renameProjectFlag?: boolean;
+  moveProjectFlag?: boolean;
   isLeftBarOpen: boolean;
   deleteProjectFlag?: boolean;
   downloadProjectFlag?: boolean;
@@ -108,6 +110,7 @@ export interface RootPublicProps {
   resetStoppedAllMotorsFlag: (stoppedAllMotorsFlag: boolean) => void;
   resetEnabledServoFlag: (enabledServoFlag: boolean) => void;
   resetDisabledServoFlag: (disabledServoFlag: boolean) => void;
+  resetMoveProjectFlag: (moveProjectFlag: boolean) => void;
   setAnalogValues: (analogValue: number) => void;
   setDigitalValues: (digitalValue: number) => void;
   setAccelValues: (accelValue: number) => void;
@@ -144,6 +147,7 @@ interface RootState {
   toSaveCode_?: string;
   toRenameName_?: string;
   toRenameType_?: string;
+  toMoveProject_?: Project;
   otherFileType?: string;
   tempNewFile?: string;
   projectName: string;
@@ -156,6 +160,7 @@ interface RootState {
   isCreateProjectDialogVisible: boolean;
   isCreateNewUserDialogVisible: boolean;
   isOpenUserProject: boolean;
+  isMoveProjectDialogVisible: boolean;
   isSaveCodePromptVisible: boolean;
   isRenameUserProjectFileDialogVisible: boolean;
   addNewProject: boolean;
@@ -266,6 +271,7 @@ class Root extends React.Component<Props, State> {
       isCreateProjectDialogVisible: false,
       isCreateNewUserDialogVisible: false,
       isOpenUserProject: false,
+      isMoveProjectDialogVisible: false,
       isSaveCodePromptVisible: false,
       isRenameUserProjectFileDialogVisible: false,
       clickFileState: false,
@@ -333,9 +339,19 @@ class Root extends React.Component<Props, State> {
 
   componentDidUpdate = async (prevProps: Props, prevState: State) => {
 
+    console.log("Root componentDidUpdate called with props: ", this.props);
+    console.log("Root componentDidUpdate prevProps: ", prevProps);
+    console.log("Root componentDidUpdate state: ", this.state);
+    console.log("Root componentDidUpdate prevState: ", prevState);
     const displayNowVisible = this.props.propedSensorDisplayFlag && !prevProps.propedSensorDisplayFlag;
     const displayNowHidden = !this.props.propedSensorDisplayFlag && prevProps.propedSensorDisplayFlag;
 
+
+    if(prevProps.moveProjectFlag !== this.props.moveProjectFlag && this.props.moveProjectFlag) {
+      console.log("Root compDidUpdate moveProjectFlag: ", this.props.moveProjectFlag);
+      this.moveProject_();
+      
+    }
     if (prevProps.propedUploadedProjectFlag !== this.props.propedUploadedProjectFlag && this.props.propedUploadedProjectFlag) {
 
       const uploadProjectResponse = await axios.post('/upload-project', {
@@ -1102,6 +1118,15 @@ class Root extends React.Component<Props, State> {
     })
   }
 
+  private moveProject_ = () => {
+    this.setState({
+      modal: Modal.MOVEPROJECT,
+      isMoveProjectDialogVisible: true,
+      toMoveProject_: this.props.propContextMenuProject,
+
+    });
+  }
+
   private saveFile_(tempNewFile_: string): void {
 
     this.props.setFileName_('');
@@ -1279,6 +1304,10 @@ class Root extends React.Component<Props, State> {
       this.props.resetRenameFileFlag(false, renamedData['newFileName']);
     }
   }
+
+  private onCloseMoveProjectDialog_ = async (newProjName: string, newProjLanguage: ProgrammingLanguage, newInterfaceMode: InterfaceMode) => {
+
+  };
 
   private onCloseProjectDialog_ = async (newProjName: string, newProjLanguage: ProgrammingLanguage, newInterfaceMode: InterfaceMode) => {
     const { rootUser } = this.state;
@@ -2166,6 +2195,9 @@ class Root extends React.Component<Props, State> {
     if (this.props.renameFileFlag) {
       this.props.resetRenameFileFlag(false);
     }
+    if(this.props.moveProjectFlag){
+      this.props.resetMoveProjectFlag(false);
+    }
   }
 
   private onClearConsole_ = () => {
@@ -2209,6 +2241,7 @@ class Root extends React.Component<Props, State> {
       editorConsole,
       windowInnerHeight,
       isHomeStartOptionsVisible,
+      isMoveProjectDialogVisible,
       projectName,
       fileName,
       userName,
@@ -2224,9 +2257,10 @@ class Root extends React.Component<Props, State> {
       toSaveType_,
       toRenameName_,
       toRenameType_,
+      toMoveProject_,
       theme,
-      messages
-
+      messages,
+      users
     } = state;
 
     return (
@@ -2360,6 +2394,20 @@ class Root extends React.Component<Props, State> {
             toRenameType={toRenameType_}
           />
 
+        )}
+
+        {this.state.isMoveProjectDialogVisible && modal.type === Modal.Type.MoveProject && (
+          <MoveProjectDialog
+            onClose={this.onModalClose_}
+            //onCloseMoveProjectDialog={this.onCloseMoveProjectDialog_}
+            theme={theme}
+            locale={'en-US'}
+            user={propContextMenuUser}
+            users={users}
+            project={toMoveProject_}
+            toRenameName={toRenameName_}
+            toRenameType={toRenameType_}
+          />
         )}
       </RootContainer>
     );

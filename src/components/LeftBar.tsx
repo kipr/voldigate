@@ -76,6 +76,7 @@ interface LeftBarState {
   downloadProjectFlag?: boolean;
   downloadFileFlag?: boolean;
   renameProjectFlag?: boolean;
+  moveProjectFlag?: boolean;
   addProjectFlag?: boolean;
   simpleProjectLoadFlag?: boolean;
   toUploadProjectFlag?: boolean;
@@ -892,6 +893,17 @@ class LeftBar extends React.Component<Props, State> {
     })
 
   }
+
+  private onMoveProject_ = (user: User, project: Project) => {
+    console.log("Moving project:", project, "for user:", user);
+    this.setState({
+      contextMenuUser: user,
+      contextMenuProject: project,
+      moveProjectFlag: true
+    })
+  }
+
+
   /**
    * Sets the state userName based on the user selected and sets isAddNewProject flag to true
    * @param user - The User object
@@ -976,6 +988,14 @@ class LeftBar extends React.Component<Props, State> {
       toUploadProject: undefined,
       toUploadUser: undefined,
 
+    });
+  };
+
+  private onSetMoveProjectFlag_ = (moveProjectFlag: boolean) => {
+    this.setState({
+      moveProjectFlag: moveProjectFlag,
+      contextMenuProject: undefined,
+      contextMenuUser: undefined
     });
   };
 
@@ -1329,6 +1349,7 @@ class LeftBar extends React.Component<Props, State> {
       downloadUserFlag,
       downloadProjectFlag,
       addProjectFlag,
+      moveProjectFlag,
 
       contextMenuFile,
       contextMenuProject,
@@ -1379,6 +1400,7 @@ class LeftBar extends React.Component<Props, State> {
           downloadUserFlag={downloadUserFlag}
           downloadProjectFlag={downloadProjectFlag}
           downloadFileFlag={downloadFileFlag}
+          moveProjectFlag={moveProjectFlag}
 
           renameUserFlag={renameUserFlag}
           renameProjectFlag={renameProjectFlag}
@@ -1399,6 +1421,7 @@ class LeftBar extends React.Component<Props, State> {
           resetRenameFileFlag={this.onSetRenameFileFlag}
           resetUploadFilesFlag={this.onSetUploadFilesFlag_}
           resetUploadProjectFlag={this.onSetUploadProjectFlag_}
+          resetMoveProjectFlag={this.onSetMoveProjectFlag_}
 
           propedMotorPositions={this.state.motorPositions}
           stoppedMotor={this.state.stoppedMotor}
@@ -1461,6 +1484,7 @@ class LeftBar extends React.Component<Props, State> {
           onRenameUser={this.onRenameUser_}
           onDownloadProject={this.onDownloadProject_}
           onRenameProject={this.onRenameProject_}
+          onMoveProject={this.onMoveProject_}
           onDownloadFile={this.onDownloadFile_}
           onResetHighlightFlag={this.onResetHighlightFlag_}
           onReloadProjects={this.reloadRootUserProjects_}
