@@ -111,7 +111,8 @@ export function XTerminal({ theme }: { theme: Theme }) {
 
       window.addEventListener('resize', resizeTerminal);
       // Create WebSocket connection
-      const socket = new WebSocket('ws://192.168.125.1:8888/ws/terminal');
+      const wsUrl = `${window.location.protocol === 'https:' ? 'wss' : 'ws'}://${window.location.host}/ws/terminal`;
+      const socket = new WebSocket(wsUrl);
       //const socket = new WebSocket('ws://localhost:8888/ws/terminal');
       socketRef.current = socket;
 
