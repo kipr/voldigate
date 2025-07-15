@@ -55,6 +55,15 @@ export class Console extends React.PureComponent<Props, State> {
     super(props);
   }
 
+  componentDidUpdate(prevProps: Props) {
+    console.log("Console compDidUpdate prevProps:", prevProps);
+    console.log("Console compDidUpdate this.props:", this.props);
+    if(prevProps.theme !== this.props.theme){
+      this.setState({
+               theme: this.props.theme,
+      })
+    }
+  }
   render() {
     const { style, className, theme, text } = this.props;
     return (
