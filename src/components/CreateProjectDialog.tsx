@@ -142,7 +142,7 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
     this.onLanguageChange(option.data as ProgrammingLanguage);
   };
 
-   private onLanguageChange = (language: ProgrammingLanguage) => {
+  private onLanguageChange = (language: ProgrammingLanguage) => {
     this.setState({
       language: language
     });
@@ -154,7 +154,7 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
 
     const specialCharRegex = /[^a-zA-Z0-9 _-]/;
     const isOnlySpaces = !projectName.trim(); // Check if the name is empty or only spaces
-
+    const hasSpaces = /\s/.test(projectName);
     // Check if project name exceeds 50 characters
     if (projectName.length > 50) {
       this.setState({ errorMessage: 'Project name cannot exceed 50 characters.' });
@@ -162,6 +162,10 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
     }
     if (specialCharRegex.test(projectName)) {
       this.setState({ errorMessage: 'Project name contains special characters. Please use only letters, numbers, underscores, and hyphens.' });
+      return;
+    }
+    if (hasSpaces) {
+      this.setState({ errorMessage: 'Project name cannot contain spaces.' });
       return;
     }
     if (isOnlySpaces) {
@@ -175,11 +179,11 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
       if (response.status === 200) {
         this.props.closeProjectDialog(values.projectName, this.state.language as ProgrammingLanguage, this.state.interfaceMode);
       }
-      
+
     }
     catch (error) {
       console.error('Error adding user to database:', error);
-      if(error.response.status === 409) {
+      if (error.response.status === 409) {
         this.setState({ errorMessage: 'Project name already exists. Please choose a different name.' });
       }
     }
@@ -199,7 +203,7 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
     ];
 
     const languageIndex = LANGUAGE_OPTIONS.findIndex(option => option.data === this.state.language);
-        
+
     return (
       <div>
         <Dialog
@@ -226,7 +230,7 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
                 </div>
               </ErrorMessageContainer>
             )}
- 
+
 
             <Container theme={theme} style={style} className={className}>
               <StyledForm

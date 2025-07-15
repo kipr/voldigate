@@ -45,7 +45,7 @@ const Container = styled('div', (props: ThemeProps) => ({
     flexDirection: 'column',
     backgroundColor: props.theme.backgroundColor,
     color: props.theme.color,
-    minHeight: '200px',
+    minHeight: '15em',
     height: '9em'
 }));
 
@@ -126,43 +126,46 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
     private onSelectInterface_ = (interfaceIndex: number, option: ComboBox.Option) => {
         this.onInterfaceChange(option.data as InterfaceMode);
     };
+onFinalize_ = async (values: { [id: string]: string }) => {
+  const userName = values.userName;
 
-    onFinalize_ = async (values: { [id: string]: string }) => {
-        const userName = values.userName;
-        const specialCharRegex = /[^a-zA-Z0-9 _-]/;
-        const isOnlySpaces = !userName.trim(); // Check if the name is empty or only spaces
+  const specialCharRegex = /[^a-zA-Z0-9_-]/; // Removed space from allowed chars
+  const hasSpaces = /\s/.test(userName); // Check if there are any spaces
 
-        // Check if user name exceeds 50 characters
-        if (userName.length > 50) {
-            this.setState({ errorMessage: 'User name cannot exceed 50 characters.' });
-            return;
-        }
-        if (specialCharRegex.test(userName)) {
-            this.setState({ errorMessage: 'User name contains special characters. Please use only letters, numbers, spaces, underscores, and hyphens.' });
-            return;
-        }
-        if (isOnlySpaces) {
-            this.setState({ errorMessage: "User name cannot be empty or just spaces!" });
-            return;
-        }
-        this.setState({ errorMessage: "" }); // Clear error message if input is valid
+  // Check if user name exceeds 50 characters
+  if (userName.length > 50) {
+    this.setState({ errorMessage: 'User name cannot exceed 50 characters.' });
+    return;
+  }
+  if (hasSpaces) {
+    this.setState({ errorMessage: 'User name cannot contain spaces.' });
+    return;
+  }
+  if (specialCharRegex.test(userName)) {
+    this.setState({ errorMessage: 'User name contains special characters. Please use only letters, numbers, underscores, and hyphens.' });
+    return;
+  }
+  if (userName.trim() === '') {
+    this.setState({ errorMessage: 'User name cannot be empty!' });
+    return;
+  }
 
-        try {
+  this.setState({ errorMessage: '' }); // Clear error message if input is valid
 
-            const response = await axios.get('/get-users', { params: { filePath: "/home/kipr/Documents/KISS" } });
+  try {
+    const response = await axios.get('/get-users', { params: { filePath: '/home/kipr/Documents/KISS' } });
 
-            if (response.data.directories.includes(values.userName)) {
-                this.setState({ showRepeatUserDialog: true });
-            }
-            else {
-                this.props.onClose();
-                this.props.onCreateProjectDialog(values.userName as User['userName'], this.state.interfaceMode);
-            }
-        }
-        catch (error) {
-            console.error('Error adding user to database:', error);
-        }
-    };
+    if (response.data.directories.includes(userName)) {
+      this.setState({ showRepeatUserDialog: true });
+    } else {
+      this.props.onClose();
+      this.props.onCreateProjectDialog(userName as User['userName'], this.state.interfaceMode);
+    }
+  } catch (error) {
+    console.error('Error adding user to database:', error);
+  }
+};
+
 
     public myComponent(props: CreateUserDialogPublicProps) {
         return (props.userName)
