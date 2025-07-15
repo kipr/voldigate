@@ -27,6 +27,8 @@ interface MenuPrivateProps {
 interface MenuState {
   modal: Modal;
   documentationType: 'common' | 'default';
+  screenWidth: number;
+  isMobile: boolean;
 }
 
 interface ReduxProps {
@@ -58,13 +60,15 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 type Props = MenuPublicProps & MenuPrivateProps & ReturnType<typeof mapDispatchToProps>;
+type State = MenuState;
 
 const Container = styled('div', (props: ThemeProps) => ({
-  backgroundColor: props.theme.titleBarBackground,
+ backgroundColor: props.theme.titleBarBackground,
+
   color: props.theme.color,
   justifyContent: 'space-between',
   width: '100%',
-  height: '7vh',
+  //height: '7vh',
   lineHeight: '28px',
   display: 'flex',
   alignItems: 'center',
@@ -96,13 +100,14 @@ const ExtraMenuContainer = styled('div', (props: ThemeProps) => ({
   color: props.theme.color,
   top: '20px',
   width: '20%',
-  height: '48px',
+  //height: '7vh',
   lineHeight: '28px',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-end',
   flexDirection: 'row',
   zIndex: 1,
+
 }));
 
 class MainMenu extends React.Component<Props, MenuState> {
@@ -111,9 +116,32 @@ class MainMenu extends React.Component<Props, MenuState> {
     this.state = {
       modal: Modal.NONE,
       documentationType: 'default',
+      isMobile: window.innerWidth < 1030,
+      screenWidth: window.innerWidth,
     };
   }
 
+  componentDidMount() {
+    window.addEventListener('resize', this.handleResize);
+    console.log("Main Menu componentDidMount state:", this.state);
+  }
+
+  componentWillUnmount(): void {
+    window.removeEventListener('resize', this.handleResize);
+  }
+
+  private handleResize = () => {
+    console.log("MainMenu handleResize called, window.innerWidth:", window.innerWidth);
+    console.log("MainMenu handleResize state before update:", this.state);
+    const isMobileNow = window.innerWidth < 1030;
+    if (this.state.isMobile !== isMobileNow) {
+      this.setState({
+        isMobile: isMobileNow,
+        //  sliderSizes: isMobileNow ? [10, 0] : [4, 8.3],
+      });
+    }
+  };
+ 
   private onDocumentationClick_ = () => {
     this.setState({ documentationType: 'default' });
     this.props.setSizeDefault(Size.PARTIAL);

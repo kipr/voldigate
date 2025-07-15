@@ -6,7 +6,7 @@ import LocalizedString from '../util/LocalizedString';
 import OpenUsersDialog from './OpenUsersDialog';
 import ProgrammingLanguage from 'ProgrammingLanguage';
 import OpenFileDialog from './OpenFileDialog';
-import { styled } from 'styletron-react';
+import { styled, withStyle, withWrapper  } from 'styletron-react';
 import { StyleProps } from '../style';
 import { Fa } from './Fa';
 import { ThemeProps } from './theme';
@@ -37,45 +37,36 @@ interface HomeStartOptionsState {
     modal: Modal;
     language: ProgrammingLanguage;
     settings: Settings;
+    stackVertically: boolean;
 }
 
 type Props = HomeStartOptionsPublicProps & HomeStartOptionsPrivateProps;
 type State = HomeStartOptionsState;
 
-const Container = styled('div', (props: ThemeProps) => ({
-    color: props.theme.color,
-    width: '100%',
-    height: '80%',
-    paddingTop: '2%',
-    marginTop: '1%',
-    lineHeight: '28px',
-    display: 'flex',
-    alignItems: 'center',
-    position: 'relative',
-    flexDirection: 'column',
-    gap: '0.81em',
-    zIndex: 1,
-    fontSize: '1em',
 
-
+const Container = styled('div', (props: ThemeProps & { $stacked: boolean }) => ({
+  display: 'flex',
+  flexDirection: props.$stacked ? 'column' : 'row',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: '100%',
+  height: '100%',
+  gap: '2em',
+  paddingTop: '2em',
 }));
-
-
-const HomeStartContainer = styled('div', (props: ThemeProps) => ({
+const HomeStartContainer = styled('div', (props: ThemeProps ) => ({
     backgroundColor: props.theme.homeStartContainerBackground,
     border: `2px solid ${props.theme.borderColor}`,
     color: props.theme.color,
-    width: '60%',
-    maxWidth: '30em', 
-    height: 'auto',
-    minHeight: '40vh',
+    minWidth: '30%',
+    maxWidth: '30em',
     display: 'flex',
     justifyContent: 'center',
     gap: '20px',
     alignItems: 'center',
     flexDirection: 'column',
     zIndex: 1,
-    padding: '20px',
+    padding: '1em',
     boxShadow: '0px 10px 13px -6px rgba(0, 0, 0, 0.2), 0px 20px 31px 3px rgba(0, 0, 0, 0.14), 0px 8px 38px 7px rgba(0, 0, 0, 0.12)',
 }));
 
@@ -84,11 +75,9 @@ const HomeStartContainer = styled('div', (props: ThemeProps) => ({
 const StartContainer = styled('div', (props: ThemeProps) => ({
     backgroundColor: props.theme.startContainerBackground,
     color: props.theme.color,
-    width: '100%', 
+    width: '100%',
     maxWidth: '30em',
-    height: '100%', 
-    minHeight: '10vh', 
-    maxHeight: '35vh', 
+    minHeight: '10vh',
     padding: '1em',
     display: 'flex',
     alignContent: 'center',
@@ -106,10 +95,10 @@ interface ClickProps {
 
 const Item = styled('div', (props: ThemeProps & ClickProps) => ({
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     flexDirection: 'row',
-    fontSize: 'clamp(1.2rem, 3vw, 2rem)',
+    fontSize: 'clamp(0.9rem, 3vw, 2rem)',
     padding: '0.3em 0.1em 0.3em 0.2em',
     marginBottom: '0.1em',
     height: '2.5em',
@@ -120,6 +109,7 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
         cursor: 'pointer',
         backgroundColor: props.theme.hoverOptionBackground
     } : {},
+    width: '100%'
 }));
 
 const Title = styled('div', (props: ThemeProps & ClickProps) => ({
@@ -129,7 +119,7 @@ const Title = styled('div', (props: ThemeProps & ClickProps) => ({
     width: '100%',
     marginBottom: '0.3em',
     marginTop: '0.3em',
-    fontSize: 'clamp(1.2rem, 8vw, 3rem)',
+    fontSize: 'clamp(1.2rem, 5vw, 3rem)',
     userSelect: 'none',
     transition: 'background-color 0.2s, opacity 0.2s'
 }));
@@ -147,10 +137,10 @@ const ItemIcon = styled(Fa, {
 const Logo = styled('img', (props: ThemeProps) => ({
     position: 'relative',
     backgroundColor: '#373737',
-    width: '60%',
+
     height: '60%',
-    maxWidth: '20em',
-    maxHeight: '20em',
+    //maxWidth: '20em',
+    maxHeight: '15em',
     userSelect: 'none',
     transition: 'background-color 0.2s, opacity 0.2s'
 }));
@@ -163,13 +153,30 @@ export class HomeStartOptions extends React.Component<Props, State> {
         this.state = {
             modal: Modal.NONE,
             settings: DEFAULT_SETTINGS,
-            language: props.activeLanguage
+            language: props.activeLanguage,
+            stackVertically: true
 
         }
     }
 
     handleNewFileClick = () => {
         this.props.onEditorPageOpen();
+    };
+
+    componentDidMount() {
+        this.checkLayout();
+        window.addEventListener('resize', this.checkLayout);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.checkLayout);
+    }
+
+    checkLayout = () => {
+        const availableHeight = window.innerHeight;
+        // Example threshold: if there's at least 600px, stack
+        const stack = availableHeight > 600;
+        this.setState({ stackVertically: stack });
     };
 
     private onSettingsChange_ = (changedSettings: Partial<Settings>) => {
@@ -199,10 +206,10 @@ export class HomeStartOptions extends React.Component<Props, State> {
         } = this.state;
 
         return (
-            <div style={{ height: '80%', maxHeight: '80%', }}>
-                <Container className={className} style={style} theme={theme}>
+            <div>
+                <Container className={className} style={style} theme={theme} $stacked={this.state.stackVertically}>
                     <Logo src={IDELogo as string} loading={'eager'} decoding={'async'} theme={theme} />
-                    <HomeStartContainer theme={theme}>
+                    <HomeStartContainer theme={theme} >
                         <StartContainer theme={theme}>
                             <Title theme={theme} >Start</Title>
                             <Item onClick={this.onModalClick_(Modal.CREATEUSER)} theme={theme}><ItemIcon icon={faUserPlus}></ItemIcon>{LocalizedString.lookup(tr('New User...'), locale)}</Item>

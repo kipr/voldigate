@@ -204,6 +204,7 @@ const InformationText = styled('div', (props: ThemeProps) => ({
 const FlexConsole = styled(Console, {
   flex: '1 1',
   color: 'black',
+  marginBottom: '2.5em'
 });
 
 const Button = styled('button', (props: ThemeProps) => ({
@@ -274,47 +275,52 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
     window.addEventListener('resize', this.handleResize);
 
     try {
-      const { userName, projectName } = this.props;
-      if (this.props.fileName.includes(".h")) {
-        const includeContent = await axios.get("/get-file-contents", { params: { filePath: `/home/kipr/Documents/KISS/${userName}/${projectName}/include/${this.props.fileName}` } });
-        const fileContent = typeof includeContent.data === 'string' ? includeContent.data : JSON.stringify(includeContent.data);
+      const { userName, projectName, fileName, code } = this.props;
+      let fileContent = '';
 
-        this.setState((prevState) => ({
-          code: {
-            ...prevState.code,
-            [prevState.language]: fileContent,
-          }
-        }));
-      }
-      else if (this.props.fileName.includes(".txt")) {
-        const userFileContent = await axios.get("/get-file-contents", { params: { filePath: `/home/kipr/Documents/KISS/${userName}/${projectName}/data/${this.props.fileName}` } });
-        const fileContent = typeof userFileContent.data === 'string' ? userFileContent.data : JSON.stringify(userFileContent.data);
-        this.setState((prevState) => ({
-          code: {
-            ...prevState.code,
-            [prevState.language]: fileContent,
-          }
-        }));
-      }
-      else {
-        const srcContent = await axios.get("/get-file-contents", { params: { filePath: `/home/kipr/Documents/KISS/${userName}/${projectName}/src/${this.props.fileName}` } });
-        const fileContent = typeof srcContent.data === 'string' ? srcContent.data : JSON.stringify(srcContent.data);
-        this.setState((prevState) => ({
-          code: {
-            ...prevState.code,
-            [prevState.language]: fileContent,
-          }
-        }));
+      if (fileName.includes('.h')) {
+        const includeContent = await axios.get('/get-file-contents', {
+          params: {
+            filePath: `/home/kipr/Documents/KISS/${userName}/${projectName}/include/${fileName}`,
+          },
+        });
+        fileContent = typeof includeContent.data === 'string' ? includeContent.data : JSON.stringify(includeContent.data);
+      } else if (fileName.includes('.txt')) {
+        const userFileContent = await axios.get('/get-file-contents', {
+          params: {
+            filePath: `/home/kipr/Documents/KISS/${userName}/${projectName}/data/${fileName}`,
+          },
+        });
+        fileContent = typeof userFileContent.data === 'string' ? userFileContent.data : JSON.stringify(userFileContent.data);
+      } else {
+        const srcContent = await axios.get('/get-file-contents', {
+          params: {
+            filePath: `/home/kipr/Documents/KISS/${userName}/${projectName}/src/${fileName}`,
+          },
+        });
+        fileContent = typeof srcContent.data === 'string' ? srcContent.data : JSON.stringify(srcContent.data);
       }
 
-      this.props.onFileNameChange(this.state.fileName);
-      this.props.code[this.state.language] = this.state.code[this.state.language];
+      this.setState((prevState) => {
+        const updatedCode = {
+          ...prevState.code,
+          [prevState.language]: fileContent,
+        };
+
+        code[prevState.language] = fileContent;
+
+        return {
+          code: updatedCode,
+        };
+      });
+
+
+      this.props.onFileNameChange(fileName);
+    } catch (error) {
+      console.error('Error getting content from file:', error);
     }
-    catch (error) {
-      console.error('Error getting content from src file:', error);
-    }
-
   }
+
   componentWillUnmount(): void {
     window.removeEventListener('resize', this.handleResize);
   }
