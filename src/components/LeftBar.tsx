@@ -48,6 +48,8 @@ interface LeftBarState {
   activePanel: number;
   sidePanelSize: Size.Type;
   sliderSizes: [number, number];
+  isMobile: boolean;
+  isDesktop: boolean;
   isPanelVisible: boolean;
   storedTheme: Theme;
   consoleLayout: 'horizontal' | 'vertical';
@@ -331,7 +333,9 @@ const RootContainer = styled('div', (props: ThemeProps) => ({
   display: 'flex',
   maxWidth: '99%',
   flexDirection: 'column',
-  overflow: 'visible'
+  overflow: 'visible',
+
+  
 }));
 
 interface ClickProps {
@@ -418,6 +422,7 @@ const DisplayContainer = styled('div', (props: ThemeProps & ClickProps) => ({
   flexDirection: 'column',
   overflow: 'hidden',
   height: '100%',
+  minWidth: '2.6em',
   backgroundColor: props.theme.fileContainerBackground,
   borderRight: `2px solid ${props.theme.borderColor}`,
 }));
@@ -428,15 +433,18 @@ class LeftBar extends React.Component<Props, State> {
   private selectedFileRef: React.MutableRefObject<string>;
   private isClickedFileRef: React.MutableRefObject<boolean>;
   private clickTimeout: any;
-  isMobile: boolean = window.innerWidth < 850;
+  isMobile: boolean = window.innerWidth < 1030;
+  isDesktop: boolean = window.innerWidth >= 1450;
   constructor(props: Props) {
     super(props);
     this.state = {
       modal: Modal.NONE,
       settings: DEFAULT_SETTINGS,
       activePanel: 0,
+      isMobile: window.innerWidth < 1030,
+      isDesktop: window.innerWidth >= 1450,
       sidePanelSize: Size.Type.Minimized,
-      sliderSizes: this.isMobile ? [10, 0] : [4, 9],
+      sliderSizes: this.isMobile ? [10, 0]: this.isDesktop ? [3.7,10] : [5, 10],
       isPanelVisible: false,
       isClickFile: false,
       storedTheme: localStorage.getItem('ideEditorDarkMode') === 'true' ? DARK : LIGHT,
@@ -475,6 +483,7 @@ class LeftBar extends React.Component<Props, State> {
 
   async componentDidMount() {
     window.addEventListener('resize', this.handleResize);
+    this.handleResize();
     const settingsFromStorage: Settings = {
       ...DEFAULT_SETTINGS,
       ideEditorDarkMode: localStorage.getItem('ideEditorDarkMode') === 'true' ? true : false,
@@ -487,11 +496,24 @@ class LeftBar extends React.Component<Props, State> {
     })
   }
 
+
   async componentDidUpdate(prevProps: Props, prevState: State) {
     console.log("LeftBar compDidUpdate props:", this.props);
+    console.log("LeftBar compDidUpdate state:", this.state);
+    this.isMobile = window.innerWidth < 1030;
+
+    if (prevState.isMobile !== this.isMobile) {
+      console.log("LeftBar isMobile changed from: ", prevState.isMobile, " to: ", this.isMobile);
+      this.setState({
+        isMobile: this.isMobile,
+        sliderSizes: this.isMobile ? [10, 0] : [4, 8.3],
+      })
+      this.forceUpdate();
+    }
+
 
     if (prevState.sliderSizes !== this.state.sliderSizes) {
-      this.forceUpdate();
+      console.log("LeftBar sliderSizes changed from: ", prevState.sliderSizes, " to: ", this.state.sliderSizes);
     }
     if (this.state.settings !== prevState.settings) {
       if (this.state.settings.ideEditorDarkMode) {
@@ -523,9 +545,37 @@ class LeftBar extends React.Component<Props, State> {
     if (this.clickTimeout) {
       clearTimeout(this.clickTimeout);
     }
+      window.removeEventListener('resize', this.handleResize);
   }
+
+  private getSliderSizes(): [number, number] {
+  const { isMobile, isDesktop, isPanelVisible, panelSelection } = this.state;
+  console.log("getSliderSizes state:", this.state);
+
+  if (panelSelection === 'motor_sensor_servo') {
+    console.log("motorServoSensor isMobile:", isMobile, "isDesktop:", isDesktop, "isPanelVisible:", isPanelVisible);
+    return isMobile ? [10, 0] : isDesktop ? [5,10] : [5.5, 9];
+  }
+  if (panelSelection === 'fileExplorer') {
+    console.log("isMobile:", isMobile, "isDesktop:", isDesktop, "isPanelVisible:", isPanelVisible);
+    return isMobile ? [10, 0] : isDesktop ? [3.7,10] : [5.5, 9];
+  }
+  if (!isPanelVisible) {
+    return isMobile ? [10, 0] : [4, 8.3];
+  }
+  return isMobile ? [10, 0] : [4, 8.3];
+}
+
+
   private handleResize = () => {
-    this.setState({ screenWidth: window.innerWidth });
+    console.log("LeftBar handleResize called, window.innerWidth:", window.innerWidth);
+    const isMobileNow = window.innerWidth < 1030;
+    if (this.state.isMobile !== isMobileNow) {
+      this.setState({
+        isMobile: isMobileNow,
+      //  sliderSizes: isMobileNow ? [10, 0] : [4, 8.3],
+      });
+    }
   };
   /**
    * Settings change handler
@@ -546,38 +596,33 @@ class LeftBar extends React.Component<Props, State> {
   private onModalClick_ = (modal: Modal) => () => this.setState({ modal });
   private onModalClose_ = () => this.setState({ modal: Modal.NONE });
 
-
   private selectPanel = (panel: string) => {
+    const {
+      isPanelVisible,
+      panelSelection,
+      motorPositions,
+      servoPositions,
+      graphSelection,
+    } = this.state;
 
-    const { isPanelVisible, panelSelection, motorPositions, servoPositions, sliderSizes, graphSelection } = this.state;
     const { setShouldStreamMotorVelocities, setGraphSelection } = this.props;
+
+    const isMobileNow = window.innerWidth < 1030;
 
     const isMotorDefault = JSON.stringify(motorPositions) === JSON.stringify(DEFAULT_MOTORS);
     const hasEnabledServos = servoPositions.some(servo => servo.enable);
-
     const isSamePanel = panel === panelSelection;
 
-    const getNewSizes = (): [number, number] => {
-      if (panel === "motor_sensor_servo") return isPanelVisible ? [5, 9] : [5, 8];
-      if (panel === "fileExplorer") {
-        if (!isPanelVisible && this.isMobile) return [2, 4];
-        return [4, 9];
-      }
-      return sliderSizes;
-    };
+    console.log("window.innerWidth:", window.innerWidth, "→ isMobile:", isMobileNow);
 
-    // Handle when panel is already visible
     if (isPanelVisible) {
       if (!isSamePanel) {
-        // Switching to a different panel
-        const newSizes = getNewSizes();
-        setShouldStreamMotorVelocities(panel === "motor_sensor_servo");
+          setShouldStreamMotorVelocities(panel === "motor_sensor_servo");
         this.setState({
           panelSelection: panel,
-          sliderSizes: [...newSizes]
+         // sliderSizes: newSizes,
         });
       } else if (panel === "motor_sensor_servo") {
-        // Same panel reselected: check motor + servo state
         if (isMotorDefault) {
           setShouldStreamMotorVelocities(false);
           this.setState({ isPanelVisible: false });
@@ -586,51 +631,44 @@ class LeftBar extends React.Component<Props, State> {
         }
 
         this.setState({
-          isPanelVisible: hasEnabledServos
+          isPanelVisible: hasEnabledServos,
         }, () => {
           if (hasEnabledServos) {
             this.onModalClick_(Modal.KEEPMOTORSRUNNING)();
           }
         });
       } else {
-        // Same panel reselected and not motor_sensor_servo
         if (panel === "terminal") {
-          this.setState({
-            terminalDisplayShown: false,
-          });
+          this.setState({ terminalDisplayShown: false });
         }
         this.setState({
           isPanelVisible: false,
-          panelSelection: ''
+          panelSelection: '',
         });
       }
 
-      // Clean up graph selections
       if (graphSelection) {
         const filtered = graphSelection.filter(g => g !== 'MotorPositions' && g !== 'ServoGraphs');
         if (filtered.length !== graphSelection.length) {
           setGraphSelection(filtered);
         }
       }
-
     } else {
-      // Panel is not visible, show it and configure size
-      const newSizes = getNewSizes();
+     
       setShouldStreamMotorVelocities(panel === "motor_sensor_servo");
 
       if (panel === "terminal") {
-        this.setState({
-          terminalDisplayShown: true,
-        })
+        this.setState({ terminalDisplayShown: true });
       }
 
       this.setState({
-        sliderSizes: [...newSizes],
+       // sliderSizes: newSizes,
         panelSelection: panel,
-        isPanelVisible: true
+        isPanelVisible: true,
       });
     }
   };
+
 
   private onKeepRunning_ = (keepRunningResponse: string) => {
     if (keepRunningResponse === "yes") {
@@ -653,6 +691,7 @@ class LeftBar extends React.Component<Props, State> {
 
 
   private setRootInfo_ = (user: User, project: Project, fileName: string, activeLanguage: ProgrammingLanguage) => {
+    console.log("LeftBar setRootInfo user:", user, "project:", project, "fileName:", fileName, "activeLanguage:", activeLanguage);
     this.selectedFileRef.current = fileName;
     this.setState({
       userShown: user,
@@ -672,10 +711,13 @@ class LeftBar extends React.Component<Props, State> {
   };
 
   private onUserSelected_ = (user: User, loadUserData: boolean) => {
+    console.log("LeftBar onUserSelected user:", user, "loadUserData:", loadUserData);
+    console.log("LeftBar onUserSelected state:", this.state);
     try {
       if (this.state.user !== user) {
         this.setState({ isLoadUserFiles: false });
       }
+    
     }
     catch (error) {
       console.error('Error selecting user:', error);
@@ -697,6 +739,7 @@ class LeftBar extends React.Component<Props, State> {
    * @param userData - The list of projects
    */
   private onLoadUserData_ = (userData: Project[], loadedUser: User, renamedUser?: boolean, oldUserName?: string) => {
+    console.log("LeftBar onLoadUserData userData:", userData);
     if (loadedUser) {
 
       let userIndex: number;
@@ -954,6 +997,7 @@ class LeftBar extends React.Component<Props, State> {
         userShown: user,
         project: project,
         fileName: fileName,
+        activeLanguage: activeLanguage,
       });
     }
     else {
@@ -1150,6 +1194,7 @@ class LeftBar extends React.Component<Props, State> {
   }
 
   private onFileSelected_ = async (user: User, project: Project, fileName: string, language: ProgrammingLanguage, fileType: string) => {
+    console.log("LeftBar onFileSelected user:", user, "project:", project, "fileName:", fileName, "language:", language, "fileType:", fileType);
     this.isClickedFileRef.current = true;
     this.setState({
       user: user,
@@ -1575,6 +1620,7 @@ class LeftBar extends React.Component<Props, State> {
         break;
     };
 
+    console.log("LeftBarWrapper render: ", this.state);
     return (
       <Container className={className} theme={storedTheme}>
 
@@ -1601,11 +1647,12 @@ class LeftBar extends React.Component<Props, State> {
 
 
         </LeftBarContainer>
+
         <Slider
           isVertical={true}
           theme={storedTheme}
-          minSizes={[0, 0]}
-          sizes={this.state.sliderSizes}
+          minSizes={[500, 0]}
+          sizes={this.getSliderSizes()}
           visible={[isPanelVisible, true]}
         >
           {contentDisplay}

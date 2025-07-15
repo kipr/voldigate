@@ -23,7 +23,7 @@ export interface MoveProjectDialogPublicProps extends ThemeProps, StyleProps {
   toRenameName: string;
   toRenameType: string;
   onClose: () => void;
-  // onCloseMoveProjectDialog: (renamedType: string, user: User, renamedData: {}) => void;
+  onCloseMoveProjectDialog: (newUser: User) => void;
 }
 
 interface MoveProjectDialogPrivateProps {
@@ -62,6 +62,7 @@ const MoveProjectContainer = styled('div', (props: ThemeProps) => ({
   paddingLeft: `${props.theme.itemPadding * 2}px`,
   paddingRight: `${props.theme.itemPadding * 2}px`,
   paddingTop: `${props.theme.itemPadding * 2}px`,
+  
 }));
 
 const StyledForm = styled(Form, (props: ThemeProps) => ({
@@ -78,6 +79,9 @@ const CenteredContainer = styled('div', {
   textAlign: 'center',
   width: '100%',
   height: '100%',
+  gap: '10px',
+  marginBottom: '1.5em',
+  marginTop: '1em',
 });
 
 const Bold = styled('span', {
@@ -164,78 +168,24 @@ export class MoveProjectDialog extends React.PureComponent<Props, State> {
 
     });
   }
-  onFinalize_ = async (values: { [id: string]: string }) => {
-    let changedName: string;
-    if (this.props.toRenameType === "User") {
-      changedName = values.userName;
-    }
-    else if (this.props.toRenameType === "Project") {
-      changedName = values.projectName;
-    }
-    else if (this.props.toRenameType === "File") {
-      changedName = values.fileName;
-    }
+  onFinalize_ = async () => {
 
-    const specialCharRegex = /[^a-zA-Z0-9 _-]/;
-    const isOnlySpaces = !changedName.trim(); // Check if the name is empty or only spaces
+    console.log("MoveProjectDialog onFinalize_ props", this.props);
+    console.log("MoveProjectDialog onFinalize_ state", this.state);
 
-    // Check if project name exceeds 50 characters
-    if (changedName.length > 50) {
-      this.setState({ errorMessage: `${this.props.toRenameType} name cannot exceed 50 characters.` });
-      return;
+    const { user, project } = this.props;
+    const { selectedUser } = this.state;
+
+    const moveProjectResponse = await axios.post('/move-project', { user, project, newUser: selectedUser });
+    console.log("MoveProjectDialog onFinalize_ moveProjectResponse", moveProjectResponse);
+    if (moveProjectResponse.status === 200) {
+      console.log("MoveProjectDialog onFinalize_ project moved successfully");
+      this.props.onCloseMoveProjectDialog(selectedUser);
+    } else {
+      console.error("MoveProjectDialog onFinalize_ error moving project", moveProjectResponse);
+      this.setState({ errorMessage: "Error moving project. Please try again." });
     }
-    if (specialCharRegex.test(changedName)) {
-      this.setState({ errorMessage: `${this.props.toRenameType} name contains special characters. Please use only letters, numbers, underscores, and hyphens.` });
-      return;
-    }
-    if (isOnlySpaces) {
-      this.setState({ errorMessage: `${this.props.toRenameType} name cannot be empty or just spaces!` });
-      return;
-    }
-    this.setState({ errorMessage: "" }); // Clear error message if input is valid
-
-
-    if (this.props.toRenameType === "User") {
-
-      try {
-        const renameUserResponse = await axios.post('/rename', { renameType: 'User', oldUserName: this.props.toRenameName, newUserName: values.userName });
-
-        if (renameUserResponse.request.status === 200) { //success
-          //this.props.onCloseMoveProjectDialog("User",this.props.user, renameUserResponse.data);
-        }
-
-      }
-      catch (error) {
-        if (error.response && error.response.status === 409) {
-          this.setState({ errorMessage: 'User name already exists. Please choose a different name.' });
-          return;
-        }
-
-      }
-    }
-    else if (this.props.toRenameType === "Project") {
-      try {
-        const renameProjectResponse = await axios.post('/rename', { renameType: 'Project', userName: this.props.user.userName, oldProjectName: this.props.toRenameName, newProjectName: values.projectName });
-        if (renameProjectResponse.request.status === 200) { //success
-          //this.props.onCloseMoveProjectDialog("Project",this.props.user, renameProjectResponse.data);
-        }
-      }
-      catch (error) {
-        console.error("Error renaming project: ", error);
-      }
-    }
-    else if (this.props.toRenameType === "File") {
-      try {
-        const [file, extension] = this.props.toRenameName.split('.');
-        const renameFileResponse = await axios.post('/rename', { renameType: 'File', userName: this.props.user.userName, projectName: this.props.project.projectName, oldFileName: this.props.toRenameName, newFileName: `${values.fileName}.${extension}` });
-        if (renameFileResponse.request.status === 200) { //success
-          // this.props.onCloseMoveProjectDialog("File",this.props.user, renameFileResponse.data);
-        }
-      }
-      catch (error) {
-        console.error("Error renaming file: ", error);
-      }
-    }
+  
   };
   USER_OPTIONS: ComboBox.Option[] = (() => {
     const ret: ComboBox.Option[] = [];
@@ -281,7 +231,7 @@ export class MoveProjectDialog extends React.PureComponent<Props, State> {
       >
         <MoveProjectContainer theme={theme} style={style} className={className}>
           <CenteredContainer>
-            <Bold>{LocalizedString.lookup(tr(`Move Project ${this.props.project.projectName} to: `), locale)}</Bold>
+            <Bold>{LocalizedString.lookup(tr(`Move project ${this.props.project.projectName} to: `), locale)}</Bold>
             <StyledResizeableComboBox
               options={this.USER_OPTIONS}
               index={userIndex}
@@ -305,8 +255,8 @@ export class MoveProjectDialog extends React.PureComponent<Props, State> {
 
             </ErrorMessageContainer>
           )}
-          <YesItem theme={theme}>
-            {LocalizedString.lookup(tr(`Move Project ${this.props.project.projectName} to ${this.state.selectedUser.userName}  `), locale)}
+          <YesItem theme={theme} onClick={() => this.onFinalize_()}>
+            {LocalizedString.lookup(tr(`Move project ${this.props.project.projectName} to ${this.state.selectedUser.userName}  `), locale)}
           </YesItem>
 
 
