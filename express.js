@@ -187,6 +187,36 @@ app.post("/upload-project", express.json(), async (req, res) => {
   }
 });
 
+app.post("/move-project", express.json(), async (req, res) => {
+  const { user, project, newUser } = req.body;
+  console.log("Received project move request:", { user, project, newUser });
+  if (!user || !project || !newUser) {
+    return res.status(400).json({ error: "Invalid request data" });
+  }
+
+  const oldPath = `${defaultPath}/${user.userName}/${project.projectName}`;
+  const newPath = `${defaultPath}/${newUser.userName}/${project.projectName}`;
+
+  try {
+    // Create new user directory if it doesn't exist
+    await fs.mkdir(`${defaultPath}/${newUser.userName}`, { recursive: true });
+
+    // Move the project directory
+    await fs.rename(oldPath, newPath);
+    console.log(`Project moved from ${oldPath} to ${newPath}`);
+
+    return res.status(200).json({
+      message: "Project moved successfully",
+      projectName: project.projectName,
+      newUser: newUser.userName,
+    });
+  } catch (error) {
+    console.error("Error moving project:", error);
+    return res.status(500).json({ error: "Failed to move project" });
+  }
+
+});
+
 app.post("/upload-file", express.json(), async (req, res) => {
   const { user, project, files } = req.body;
   console.log("Received file upload request:", { user, project, files });
@@ -687,18 +717,11 @@ app.get("/stream-motor-positions", (req, res) => {
   if (!motorAddon) motorAddon = require("./build/Release/motor_addon.node");
 
   const interval = setInterval(() => {
-    // const data = {
-    //   motor0: motorAddon.get_motor_position_counter(0),
-    //   motor1: motorAddon.get_motor_position_counter(1),
-    //   motor2: motorAddon.get_motor_position_counter(2),
-    //   motor3: motorAddon.get_motor_position_counter(3),
-    // };
-
     const data = {
-      motor0: Math.floor(Math.random() * 1000), // Random number from 0 to 999
-      motor1: Math.floor(Math.random() * 1000),
-      motor2: Math.floor(Math.random() * 1000),
-      motor3: Math.floor(Math.random() * 1000),
+      motor0: motorAddon.get_motor_position_counter(0),
+      motor1: motorAddon.get_motor_position_counter(1),
+      motor2: motorAddon.get_motor_position_counter(2),
+      motor3: motorAddon.get_motor_position_counter(3),
     };
 
     res.write(`data: ${JSON.stringify(data)}\n\n`);
@@ -1537,6 +1560,8 @@ app.post("/compile-code", async (req, res) => {
     ACTIVE_LANGUAGE: activeLanguage,
   };
 
+  console.log("compile-code request received with body:", req.body);
+
   execFile("node", ["compiler.js"], { env }, (error, stdout, stderr) => {
     if (error) {
       console.error(`Error during execution: ${error.message}`);
@@ -1697,6 +1722,7 @@ app.post("/delete-file", async (req, res) => {
   }
 
   const filePath = path.join(userProjectDirectory, fileName);
+  console.log("File path to delete:", filePath);
 
   try {
     // Check if the file exists
@@ -1962,7 +1988,7 @@ app.get("/load-user-data", async (req, res) => {
       userDirectories.map(async (user) => {
         const userInterfaceMode = await getUserInterfaceMode(user);
         const userDirectory = `/home/kipr/Documents/KISS/${user}`;
-        const projects = getAllProjectDirectories(userDirectory);
+        const projects = await getAllProjectDirectories(userDirectory);
 
         return {
           userName: user,
