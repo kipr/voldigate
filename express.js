@@ -26,6 +26,7 @@ const {
   parseXml,
 } = require("./dist/utils/convertToC.js");
 const { error } = require("console");
+const { read } = require("fs");
 
 const extensions = {
   c: "c",
@@ -85,6 +86,134 @@ app.use(
     }
   )
 );
+
+app.post("/create-classroom", express.json(), async (req, res) => {
+  const { classroomName } = req.body;
+  console.log("Received classroom creation request:", { classroomName });
+  if (!classroomName) {
+    return res.status(400).json({ error: "Classroom name is required" });
+  }
+  const jsonDirectory = "/home/kipr/Documents/KISS/classrooms/classrooms.json";
+  const classroomDirectory = "/home/kipr/Documents/KISS/classrooms";
+  const classroomPath = `${defaultPath}/classrooms/${classroomName}`;
+  let data = {};
+  try {
+    // Check if the classroom directory already exists
+
+    await fs.mkdir(classroomDirectory, { recursive: true });
+    try {
+      data = JSON.parse(await fs.readFile(jsonDirectory, "utf-8"));
+    } catch (error) {
+      console.log("Classrooms JSON file does not exist, creating new one.");
+      data = { classrooms: [] };
+      await fs.writeFile(jsonDirectory, JSON.stringify(data, null, 2), "utf-8");
+    }
+  } catch (error) {
+    console.error("Failed to ensure classroom directory or JSON file:", error);
+  }
+  console.log("Classroom directory exists or created:", classroomDirectory);
+  try {
+    const existingClassrooms = await fs.readdir(classroomDirectory);
+    if (existingClassrooms.includes(classroomName)) {
+      console.log("Classroom already exists:", classroomName);
+      return res.status(400).json({
+        error: "Classroom already exists",
+        classroomList: existingClassrooms,
+      });
+    }
+    try {
+      await fs.mkdir(classroomPath, { recursive: true });
+      data.classrooms.push({ name: classroomName, users: [] });
+
+      console.log("data:", data);
+      await fs.writeFile(jsonDirectory, JSON.stringify(data, null, 2), "utf-8");
+      console.log("Classroom directory created:", classroomPath);
+      return res.status(200).json({
+        message: "Classroom created successfully",
+        classroomList: await fs.readdir(classroomDirectory),
+      });
+    } catch (error) {
+      console.error("Error creating classroom directory:", error);
+      return res
+        .status(500)
+        .json({ error: "Failed to create classroom directory" });
+    }
+  } catch (error) {
+    console.error("Error creating classroom directory:", error);
+    return res
+      .status(500)
+      .json({ error: "Failed to create classroom directory" });
+  }
+});
+
+async function addUserToClassroom(classroom, createdUser) {
+  console.log("Received request to add user to classroom:", {
+    createdUser,
+    classroom,
+  });
+  if (!createdUser || !classroom) {
+    return res
+      .status(400)
+      .json({ error: "User name and classroom name are required" });
+  }
+
+  const jsonDirectory = "/home/kipr/Documents/KISS/classrooms/classrooms.json";
+  const classroomDirectory = "/home/kipr/Documents/KISS/classrooms";
+  const classroomPath = `${classroomDirectory}/${classroom}`;
+
+  try {
+    // Ensure the classroom directory exists
+    await fs.mkdir(classroomDirectory, { recursive: true });
+    console.log("Classroom directory exists or created:", classroomDirectory);
+
+    // Read the existing classrooms data
+    let data = {};
+    try {
+      data = JSON.parse(await fs.readFile(jsonDirectory, "utf-8"));
+      console.log("Classrooms JSON file read successfully:", data);
+    } catch (error) {
+      console.log("Classrooms JSON file does not exist, creating new one.");
+      data = { classrooms: [] };
+      await fs.writeFile(jsonDirectory, JSON.stringify(data, null, 2), "utf-8");
+    }
+
+    // Check if the classroom exists
+    const classroomEntry = data.classrooms.find(
+      (c) => c.name === classroom.name
+    );
+    if (!classroomEntry) {
+      return { message: "Classroom not found" };
+    } else {
+      console.log("Classroom found:", classroomEntry);
+      console.log("Classroom users:", classroomEntry.users);
+    }
+
+    // Check if the user already exists in the classroom
+    if (classroomEntry.users.some((u) => u.userName === createdUser.userName)) {
+      return { message: "User already exists in this classroom" };
+    }
+
+    // Add the user to the classroom
+    classroomEntry.users.push(createdUser);
+    await fs.writeFile(jsonDirectory, JSON.stringify(data, null, 2), "utf-8");
+
+    console.log(
+      `User ${createdUser.userName} added to classroom ${classroom.name}`
+    );
+    console.log("classroomEntry: ", classroomEntry);
+    return {
+      status: 200,
+      message: `User ${createdUser.userName} added to classroom ${classroom.name}`,
+      updatedClassroom: classroomEntry,
+    };
+  } catch (error) {
+    console.error(
+      "addUserToClassroom - Error adding user to classroom:",
+      error
+    );
+    return { error: "Failed to add user to classroom" };
+  }
+}
 
 app.post("/upload-project", express.json(), async (req, res) => {
   const { user, project, srcFiles, includeFiles, dataFiles } = req.body;
@@ -214,7 +343,6 @@ app.post("/move-project", express.json(), async (req, res) => {
     console.error("Error moving project:", error);
     return res.status(500).json({ error: "Failed to move project" });
   }
-
 });
 
 app.post("/upload-file", express.json(), async (req, res) => {
@@ -1336,6 +1464,39 @@ async function getAllFiles(dirPath) {
   }
 }
 
+async function getUsersJson() {
+  const usersJsonPath = `/home/kipr/Documents/KISS/users.json`;
+
+  try {
+    await fs.access(usersJsonPath); // throws if file doesn't exist
+
+    const configRaw = await fs.readFile(usersJsonPath, "utf-8");
+    const configData = JSON.parse(configRaw);
+
+    return configData;
+  } catch (error) {
+    if (error.code === "ENOENT") {
+    }
+  }
+  try {
+    await fs.access(usersJsonPath); // throws if file doesn't exist
+
+    const configRaw = await fs.readFile(usersJsonPath, "utf-8");
+    const configData = JSON.parse(configRaw);
+
+    return configData;
+  } catch (error) {
+    if (error.code === "ENOENT") {
+      console.error(
+        `getUserConfig: Config file not found for user ${username}`
+      );
+    } else {
+      console.error("Error reading user config:", error);
+    }
+    return null;
+  }
+}
+
 async function getUserInterfaceMode(userName) {
   const userConfigPath = path.join(
     "/home/kipr/Documents/KISS",
@@ -1389,35 +1550,32 @@ async function setUserInterfaceMode(userName, newMode) {
 // Helper function to handle folder-based APIs
 function createFolderHandler() {
   return async (req, res) => {
-    const folderPath = req.query.filePath;
+    const user = req.query.user;
+    console.log("createFolderHandler called with user:", user);
 
-    if (!folderPath) {
-      return res
-        .status(400)
-        .json({ error: "Missing filePath query parameter" });
-    }
+    const userJson = `/home/kipr/Documents/KISS/users.json`;
 
+    let data = {};
     try {
-      const stats = await fs.stat(folderPath);
-      if (!stats.isDirectory()) {
-        return res
-          .status(400)
-          .json({ error: "Provided path is not a directory" });
+      const userData = await fs.readFile(userJson, "utf-8");
+      data = JSON.parse(userData);
+      console.log("User data:", data);
+
+      const foundUser = data[user.userName];
+      console.log("Found user:", foundUser);
+      if (!foundUser) {
+        return res.status(404).json({ error: "User not found" });
+      } else {
+        console.log("Found user:", foundUser);
+        console.log("User's projects:", foundUser.projects);
+        if (foundUser.projects) {
+          return res.status(200).json({
+            projects: foundUser.projects,
+          });
+        }
       }
     } catch (error) {
-      console.error("Error in createFolderHandler:", error);
-      return res.status(500).json({ error: "Internal server error" });
-    }
-
-    try {
-      const directories = await getAllDirectories(folderPath);
-
-      res.status(200).json({
-        folderPath: folderPath,
-        directories,
-      });
-    } catch (error) {
-      console.error("Error in createFolderHandler:", error);
+      console.error("Error reading user JSON:", error);
       return res.status(500).json({ error: "Internal server error" });
     }
   };
@@ -1476,6 +1634,13 @@ function getFileContents() {
 function saveFileContents() {
   return async (req, res) => {
     const { filePath, fileContents } = req.body;
+    console.log("saveFileContents called with filePath:", filePath);
+
+    const defaultPath = "/home/kipr/Documents/KISS/";
+    const relative = path.relative(defaultPath, filePath);
+    const parts = relative.split(path.sep);
+    const [user, project, fileType, fileName] = relative.split(path.sep);
+    console.log({ user, project, fileType, fileName });
 
     if (!filePath) {
       return res
@@ -1490,15 +1655,82 @@ function saveFileContents() {
     }
 
     try {
+      let isNewFile = false;
+
+      try {
+        await fs.access(filePath); // throws if file doesn't exist
+      } catch {
+        isNewFile = true;
+      }
       await fs.writeFile(filePath, fileContents);
 
-      res.status(200).send("File saved successfully");
+      if (isNewFile) {
+        await editJson({ user, project, fileType, fileName });
+        return res.status(200).send("File saved successfully");
+      }
     } catch (error) {
       console.error("Error in saveFileContents:", error);
       return res.status(500).json({ error: "Internal server error" });
     }
   };
 }
+
+async function editJson(data) {
+  console.log("Editing JSON to add data:", data);
+  console.log("Data user: ", data.user);
+
+  const userJsonPath = "/home/kipr/Documents/KISS/users.json";
+  const existingDataStr = await fs.readFile(userJsonPath, "utf8");
+  const existingData = JSON.parse(existingDataStr);
+
+  // Check if existingData is array or object
+  let userObj;
+  if (Array.isArray(existingData)) {
+    console.log("Existing data is an array");
+    userObj = existingData.find((u) => u.userName === data.user);
+  } else {
+    // assume object with numeric keys
+    const dataArray = Object.values(existingData);
+    userObj = dataArray.find((u) => u.userName === data.user);
+  }
+
+  console.log("User Object: ", userObj);
+
+  // Proceed to update userObj and then write back...
+  const userProjects = userObj.projects || [];
+  console.log("User Projects: ", userProjects);
+
+  const foundProject = userProjects.find(
+    (project) => project.projectName === data.project
+  );
+  console.log("Found Project: ", foundProject);
+  if (foundProject) {
+    console.log("Project already exists, updating file details");
+
+    switch (data.fileType) {
+      case "include":
+        foundProject.includeFolderFiles.push(data.fileName);
+        break;
+      case "src":
+        foundProject.srcFolderFiles.push(data.fileName);
+        break;
+      case "data":
+        foundProject.dataFolderFiles.push(data.fileName);
+        break;
+      default:
+        console.error("Unknown file type:", data.fileType);
+        return;
+    }
+    console.log("Updated Project: ", foundProject);
+
+    await fs.writeFile(
+      userJsonPath,
+      JSON.stringify(existingData, null, 2),
+      "utf8"
+    );
+  }
+}
+
 function createAndSaveFile(filePath, fileContents) {
   return new Promise((resolve, reject) => {
     fs.writeFile(filePath, fileContents, (err) => {
@@ -1512,6 +1744,17 @@ function createAndSaveFile(filePath, fileContents) {
     });
   });
 }
+
+async function readJsonFile(filePath) {
+  try {
+    const data = await fs.readFile(filePath, "utf8");
+    return JSON.parse(data);
+  } catch (error) {
+    console.error("Error reading or parsing JSON file:", error);
+    throw error;
+  }
+}
+
 //Parse the config JSON
 function parseConfig(configContent) {
   try {
@@ -1600,36 +1843,213 @@ app.post("/compile-code", async (req, res) => {
   });
 });
 
-app.post("/initialize-project", async (req, res) => {
-  const { userName, projectName, language, interfaceMode } = req.body;
+app.post("/remove-user-from-classroom", async (req, res) => {
+  const { user, classroom } = req.body;
   console.log("Received request body:", req.body);
 
-  // Validate input early
-  if (!userName || !projectName || !language) {
-    return res.status(400).json({ error: "Missing required fields." });
+  try {
+    const jsonPath = "/home/kipr/Documents/KISS/classrooms/classrooms.json";
+    const jsonData = await readJsonFile(jsonPath);
+    console.log("classrooms.json: ", jsonData);
+
+    const foundClassroom = jsonData.classrooms.find(
+      (c) => c.name === classroom.name
+    );
+
+    if (foundClassroom) {
+      const beforeCount = foundClassroom.users.length;
+
+      foundClassroom.users = foundClassroom.users.filter(
+        (u) => u.userName !== user.userName
+      );
+
+      const afterCount = foundClassroom.users.length;
+
+      console.log("Updated classroom users:", foundClassroom.users);
+
+      // Save back to file
+      await fs.writeFile(jsonPath, JSON.stringify(jsonData, null, 2));
+
+      //remove classroomName from user in users.json
+      const usersJsonPath = "/home/kipr/Documents/KISS/users.json";
+      const usersData = await readJsonFile(usersJsonPath);
+
+      if (usersData[user.userName]) {
+        usersData[user.userName].classroomName = "";
+        await fs.writeFile(usersJsonPath, JSON.stringify(usersData, null, 2));
+      }
+
+      // Send success response
+      res.status(200).json({
+        message: `Removed ${user.userName} from classroom ${classroom.name}`,
+        removed: beforeCount !== afterCount,
+      });
+    } else {
+      res.status(404).json({ error: "Classroom not found" });
+    }
+  } catch (err) {
+    console.error("Error updating classroom JSON:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.post("/add-user-project-to-classroom", async (req, res) => {
+  const { user } = req.body;
+  console.log("Received request body:", req.body);
+  console.log("User Projects: ", user.projects);
+
+  const jsonDirectory = "/home/kipr/Documents/KISS/classrooms/classrooms.json";
+
+  let data = { classrooms: [] };
+  try {
+    const fileContent = await fs.readFile(jsonDirectory, "utf8");
+    data = JSON.parse(fileContent);
+  } catch (error) {
+    console.log("Classrooms JSON not found, starting fresh.");
   }
 
-  const jsonDirectory = "/home/kipr/Documents/KISS/users.json";
-  const userDirectory = `/home/kipr/Documents/KISS/${userName}`;
-  const userConfigPath = path.join(userDirectory, ".config.json");
-  const projectDirectory = path.join(userDirectory, projectName);
-  const projectConfigPath = path.join(projectDirectory, ".config.json");
+  console.log("Current classrooms data:", data);
 
-  try {
-    let data = {};
-    try {
-      const fileContent = await fs.readFile(jsonDirectory, "utf8");
-      data = JSON.parse(fileContent);
-    } catch (error) {
-      data = {};
+  // Find classroom by name
+  let foundClassroom = data.classrooms.find(
+    (c) => c.name === user.classroomName
+  );
+
+  if (foundClassroom) {
+    // Check if user already exists in the classroom
+    const userExists = foundClassroom.users.some(
+      (u) => u.userName === user.userName
+    );
+    if (userExists) {
+      return res
+        .status(400)
+        .json({ error: "User already exists in classroom." });
     }
-    data[userName] = interfaceMode;
+
+    // Add user object with full details
+    foundClassroom.users.push({
+      userName: user.userName,
+      interfaceMode: user.interfaceMode,
+    });
+
+    console.log("Updated classroom users:", foundClassroom.users);
+
+    // Save back to file
     await fs.writeFile(jsonDirectory, JSON.stringify(data, null, 2), "utf8");
 
+    return res
+      .status(200)
+      .json({ message: "User added to classroom with projects." });
+  }
+});
+
+app.post("/move-user-to-classroom", async (req, res) => {
+  const { user, newClassroom } = req.body;
+  console.log("Moving user:", user, "to classroom:", newClassroom);
+
+  try {
+    // Load user data
+    let userData = await readJsonFile("/home/kipr/Documents/KISS/users.json");
+    const foundUser = userData[user.userName];
+
+    if (!foundUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const oldClassroomName = foundUser.classroomName; // save old classroom name
+    foundUser.classroomName = newClassroom.name;
+
+    await fs.writeFile("/home/kipr/Documents/KISS/users.json", JSON.stringify(userData, null, 2));
+
+    // Load classroom data
+    let classData = await readJsonFile("/home/kipr/Documents/KISS/classrooms/classrooms.json");
+
+    // Remove from old classroom (if it exists)
+    const oldClassroom = classData.classrooms.find(c => c.name === oldClassroomName);
+    if (oldClassroom) {
+      oldClassroom.users = oldClassroom.users.filter(u => u.userName !== user.userName);
+    }
+
+    // Add to new classroom
+    const foundClassroom = classData.classrooms.find(c => c.name === newClassroom.name);
+    if (foundClassroom) {
+      // Avoid duplicate user entries
+      if (!foundClassroom.users.some(u => u.userName === user.userName)) {
+        foundClassroom.users.push({ userName: user.userName, interfaceMode: user.interfaceMode });
+      }
+    }
+
+    await fs.writeFile("/home/kipr/Documents/KISS/classrooms/classrooms.json", JSON.stringify(classData, null, 2));
+
+    return res.status(200).json({ message: "User moved to new classroom." });
+  } catch (error) {
+    console.error("Error moving user to classroom:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
+app.post("/initialize-project", async (req, res) => {
+  const { user, project, classroomName } = req.body;
+  console.log("/initialize-project Received request body:", req.body);
+  console.log("User projects: ", user.projects);
+
+  // Validate input early
+  if (!user || !project) {
+    return res.status(400).json({ error: "Missing required fields." });
+  }
+  const usersJsonPath = "/home/kipr/Documents/KISS/users.json";
+  const userDirectory = `/home/kipr/Documents/KISS/${user.userName}`;
+  const userConfigPath = path.join(userDirectory, ".config.json");
+  const projectDirectory = path.join(userDirectory, project.projectName);
+  const projectConfigPath = path.join(projectDirectory, ".config.json");
+
+  let usersData = {};
+  try {
+    const fileContent = await fs.readFile(usersJsonPath, "utf8");
+    usersData = JSON.parse(fileContent);
+    console.log("Current users data:", usersData);
+  } catch (error) {
+    console.error("Error reading users.json:", error);
+  }
+
+  const foundUser = usersData[user.userName];
+  console.log("Found user:", foundUser);
+  try {
+    if (!foundUser) {
+      console.log("User not found in users.json, adding user.");
+      usersData[user.userName] = {
+        userName: user.userName,
+        interfaceMode: user.interfaceMode,
+        projects: user.projects || [],
+        classroomName: classroomName || null,
+      };
+    } else {
+      console.log("User found in users.json, updating user.");
+      foundUser.interfaceMode = user.interfaceMode;
+      foundUser.projects = user.projects || [];
+    }
+
+    // Save changes back to file
+    await fs.writeFile(
+      usersJsonPath,
+      JSON.stringify(usersData, null, 2),
+      "utf-8"
+    );
+    console.log("Updated users.json successfully");
+  } catch (error) {
+    console.error("Error updating users.json:", error);
+  }
+
+  try {
     await fs.mkdir(userDirectory, { recursive: true });
     await fs.writeFile(
       userConfigPath,
-      JSON.stringify({ userName, interfaceMode }, null, 2),
+      JSON.stringify(
+        { name: user.userName, interfaceMode: user.interfaceMode },
+        null,
+        2
+      ),
       "utf-8"
     );
 
@@ -1645,7 +2065,11 @@ app.post("/initialize-project", async (req, res) => {
     await fs.mkdir(projectDirectory, { recursive: true });
     await fs.writeFile(
       projectConfigPath,
-      JSON.stringify({ projectName, language }, null, 2),
+      JSON.stringify(
+        { name: project.projectName, language: project.projectLanguage },
+        null,
+        2
+      ),
       "utf-8"
     );
 
@@ -1657,7 +2081,9 @@ app.post("/initialize-project", async (req, res) => {
     const mainFilePath = path.join(
       projectDirectory,
       "src",
-      extensions[language] ? `main.${extensions[language]}` : ""
+      extensions[project.projectLanguage]
+        ? `main.${extensions[project.projectLanguage]}`
+        : ""
     );
 
     const templates = {
@@ -1684,11 +2110,17 @@ app.post("/initialize-project", async (req, res) => {
       await fs.access(mainFilePath);
       console.log(`File ${mainFilePath} already exists.`);
     } catch {
-      await fs.writeFile(mainFilePath, templates[language] ?? "", "utf-8");
+      await fs.writeFile(
+        mainFilePath,
+        templates[project.projectLanguage] ?? "",
+        "utf-8"
+      );
     }
 
     console.log("Initial files and folder structure committed.");
-    return res.status(200).send("User Project folder created successfully");
+    return res.status(200).json({
+      message: "User Project folder created successfully",
+    });
   } catch (error) {
     console.error("Error initializing project:", error);
     return res.status(500).send("Error initializing project.");
@@ -1783,6 +2215,7 @@ app.post("/delete-user", async (req, res) => {
   }
   const jsonPath = "/home/kipr/Documents/KISS/users.json";
   const userDirectory = `/home/kipr/Documents/KISS/${userName}`;
+  const classJsonPath = `/home/kipr/Documents/KISS/classrooms/classrooms.json`;
 
   try {
     await fs.access(jsonPath);
@@ -1801,6 +2234,28 @@ app.post("/delete-user", async (req, res) => {
     return res.status(500).json({ error: "Error deleting from users.json." });
   }
 
+  try {
+    // Check if the user exists in classrooms.json
+    await fs.access(classJsonPath);
+    const classData = JSON.parse(await fs.readFile(classJsonPath, "utf8"));
+    let userFoundInClassroom = false;
+    for (const classroomName in classData) {
+      const classroom = classData[classroomName];
+      if (classroom.users && classroom.users[userName]) {
+        delete classroom.users[userName];
+        userFoundInClassroom = true;
+      }
+    }
+    if (userFoundInClassroom) {
+      await fs.writeFile(
+        classJsonPath,
+        JSON.stringify(classData, null, 2),
+        "utf8"
+      );
+    }
+  } catch (error) {
+    console.error("Error updating classrooms.json:", error);
+  }
   try {
     // Check if the project directory exists
     await fs.access(userDirectory);
@@ -1965,88 +2420,171 @@ app.get("/get-project-language", async (req, res) => {
   }
 });
 
+// // User getters
+// app.get("/load-users", async (req, res) => {
+//   try {
+//     const allEntries = await fs.readdir("/home/kipr/Documents/KISS");
+
+//     //Filter out users.json
+//     const userDirectories = [];
+//     for (const file of allEntries) {
+//       const filePath = path.join("/home/kipr/Documents/KISS", file);
+//       if (
+//         file !== "users.json" &&
+//         !file.startsWith(".") &&
+//         file !== "classrooms" &&
+//         (await fs.stat(filePath)).isDirectory()
+//       ) {
+//         userDirectories.push(file);
+//       }
+//     }
+//     console.log("User directories: ", userDirectories);
+
+//     const users = await Promise.all(
+//       userDirectories.map(async (user) => {
+//         const usersJson = await getUsersJson();
+//         let classroomName = "";
+//         if (usersJson) {
+//           console.log("usersJson: ", usersJson);
+//           Object.entries(usersJson).forEach(([userName, data]) => {
+//             console.log(`${userName} is in classroom: ${data.classroomName}`);
+//             if (userName === user) {
+//               classroomName = data.classroomName;
+//             }
+//           });
+//         }
+//         const userInterfaceMode = await getUserInterfaceMode(user);
+//         const userDirectory = `/home/kipr/Documents/KISS/${user}`;
+//         const projects = await getAllProjectDirectories(userDirectory);
+
+//         return {
+//           userName: user,
+//           interfaceMode: userInterfaceMode || "Simple",
+//           projects: projects,
+//           classroomName: classroomName,
+//         };
+//       })
+//     );
+
+//     // Send the list of users as the response
+//     res.status(200).json({
+//       users,
+//     });
+//   } catch (error) {
+//     console.error("Error getting users:", error);
+//     res.status(500).send("Error getting users");
+//   }
+// });
+
 // User getters
-app.get("/load-user-data", async (req, res) => {
+app.get("/load-users", async (req, res) => {
   try {
-    const allEntries = await fs.readdir("/home/kipr/Documents/KISS");
-
-    //Filter out users.json
-    const userDirectories = [];
-    for (const file of allEntries) {
-      const filePath = path.join("/home/kipr/Documents/KISS", file);
-      if (
-        file !== "users.json" &&
-        !file.startsWith(".") &&
-        (await fs.stat(filePath)).isDirectory()
-      ) {
-        userDirectories.push(file);
-      }
+    const usersJson = `/home/kipr/Documents/KISS/users.json`;
+    let data = {};
+    try {
+      const fileContent = await fs.readFile(usersJson, "utf8");
+      data = JSON.parse(fileContent);
+    } catch (error) {
+      console.log("users.json not found, starting fresh.");
+      data = {};
     }
-    console.log("User directories: ", userDirectories);
-
-    const users = await Promise.all(
-      userDirectories.map(async (user) => {
-        const userInterfaceMode = await getUserInterfaceMode(user);
-        const userDirectory = `/home/kipr/Documents/KISS/${user}`;
-        const projects = await getAllProjectDirectories(userDirectory);
-
-        return {
-          userName: user,
-          interfaceMode: userInterfaceMode || "Simple",
-          projects: projects,
-        };
-      })
-    );
+    console.log("Current users data:", data);
 
     // Send the list of users as the response
     res.status(200).json({
-      users,
+      users: data,
     });
   } catch (error) {
     console.error("Error getting users:", error);
     res.status(500).send("Error getting users");
   }
 });
+app.get("/load-classrooms", async (req, res) => {
+  let classroomData = {};
+  try {
+    const classroomsPath = path.join("/home/kipr/Documents/KISS", "classrooms");
+    classroomData = JSON.parse(
+      await fs.readFile(path.join(classroomsPath, "classrooms.json"), "utf8")
+    );
+
+    // Send the list of classrooms as the response
+    res.status(200).json({
+      classrooms: classroomData.classrooms || [],
+    });
+  } catch (error) {
+    console.error("Error getting classrooms:", error);
+    res.status(500).send("Error getting classrooms");
+  }
+});
 
 // Get all users
-app.get("/get-users", createFolderHandler());
+app.get("/get-users", async (req, res) => {
+  const usersJsonPath = `/home/kipr/Documents/KISS/users.json`;
+  let data = {};
+  try {
+    const fileContent = await fs.readFile(usersJsonPath, "utf8");
+    data = JSON.parse(fileContent);
+    console.log("Current users data:", data);
+
+    return res.status(200).json({
+      users: Object.keys(data).map((userName) => ({
+        userName: userName,
+        interfaceMode: data[userName].interfaceMode || "Simple",
+      })),
+    });
+  } catch (error) {
+    console.error("Error reading users.json:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 // Project getterss
 app.get("/get-projects", createFolderHandler());
 app.get("/get-project-folders", createFolderHandler());
 
+// app.get("/get-project-data", async (req, res) => {
+//   try {
+//     const user = req.query.user;
+//     const projectDirectory = req.query.filePath;
+//     const projectConfigPath = path.join(projectDirectory, ".config.json");
+//     const language = parseConfig(await fs.readFile(projectConfigPath, "utf8"));
+
+//     const includeData = await getAllFiles(
+//       path.join(projectDirectory, "include")
+//     );
+//     const srcData = await getAllFiles(path.join(projectDirectory, "src"));
+//     const userFileData = await getAllFiles(path.join(projectDirectory, "data"));
+
+//     const filteredIncludeData = includeData.filter(
+//       (file) => !file.startsWith(".")
+//     );
+//     const filteredSrcData = srcData.filter(
+//       (file) => !file.startsWith(".") && !file.startsWith("xmlToC.c")
+//     );
+//     const filteredUserFileData = userFileData.filter(
+//       (file) => !file.startsWith(".")
+//     );
+
+//     const projectData = {
+//       projectLanguage: language,
+//       includeData: filteredIncludeData,
+//       srcData: filteredSrcData,
+//       userFileData: filteredUserFileData,
+//     };
+
+//     console.log("Project data:", projectData);
+
+//     res.status(200).json(projectData);
+//   } catch (error) {
+//     console.error("Error getting project data:", error);
+//     res.status(500).send("Error getting project data");
+//   }
+// });
+
 app.get("/get-project-data", async (req, res) => {
   try {
-    const projectDirectory = req.query.filePath;
-    const projectConfigPath = path.join(projectDirectory, ".config.json");
-    const language = parseConfig(await fs.readFile(projectConfigPath, "utf8"));
-
-    const includeData = await getAllFiles(
-      path.join(projectDirectory, "include")
-    );
-    const srcData = await getAllFiles(path.join(projectDirectory, "src"));
-    const userFileData = await getAllFiles(path.join(projectDirectory, "data"));
-
-    const filteredIncludeData = includeData.filter(
-      (file) => !file.startsWith(".")
-    );
-    const filteredSrcData = srcData.filter(
-      (file) => !file.startsWith(".") && !file.startsWith("xmlToC.c")
-    );
-    const filteredUserFileData = userFileData.filter(
-      (file) => !file.startsWith(".")
-    );
-
-    const projectData = {
-      projectLanguage: language,
-      includeData: filteredIncludeData,
-      srcData: filteredSrcData,
-      userFileData: filteredUserFileData,
-    };
-
-    console.log("Project data:", projectData);
-
-    res.status(200).json(projectData);
+    const user = req.query.user;
+    console.log("req.query:", req.query);
   } catch (error) {
     console.error("Error getting project data:", error);
     res.status(500).send("Error getting project data");
@@ -2058,6 +2596,24 @@ app.get("/get-file-contents", getFileContents());
 
 //File content setters
 app.post("/save-file-content", saveFileContents());
+
+app.post("/add-user-to-classroom", express.json(), async (req, res) => {
+  const { classroom, userName } = req.body;
+  try {
+    const result = await addUserToClassroom(userName, classroom);
+    console.log("addUserToClassroom result: ", result);
+    if (result) {
+      res
+        .status(200)
+        .json({ message: "User added to classroom successfully." });
+    } else {
+      res.status(400).json({ message: "Failed to add user to classroom." });
+    }
+  } catch (error) {
+    console.error("Error adding user to classroom:", error);
+    res.status(500).send("Error adding user to classroom");
+  }
+});
 
 //Change interface mode
 app.post("/change-interface-mode", (req, res) => {
