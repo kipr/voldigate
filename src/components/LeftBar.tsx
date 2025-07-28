@@ -22,6 +22,7 @@ import { IvygateFileExplorer, MotorServoSensorDisplay } from 'ivygate';
 import { useProgramRun } from '../ProgramRunContext';
 import { FileInfo } from 'types/fileInfo';
 import axios from 'axios';
+import Classroom from 'types/classroomTypes';
 const TerminalView = React.lazy(() => import('./TerminalView'));
 
 
@@ -43,6 +44,7 @@ interface LeftBarPrivateProps {
 }
 
 interface LeftBarState {
+  classrooms?: Classroom[];
   modal: Modal;
   settings: Settings;
   activePanel: number;
@@ -53,6 +55,7 @@ interface LeftBarState {
   isPanelVisible: boolean;
   storedTheme: Theme;
   consoleLayout: 'horizontal' | 'vertical';
+  classroom?: Classroom;
   users: User[];
   user?: User;
   isLoadUserFiles?: boolean;
@@ -63,6 +66,7 @@ interface LeftBarState {
   project?: Project;
   rehighlightProject?: Project;
   rehighlightFile?: string;
+  contextMenuClassroom?: Classroom;
   contextMenuUser?: User;
   contextMenuProject?: Project;
   contextMenuFile?: string;
@@ -70,6 +74,8 @@ interface LeftBarState {
   toUploadProject?: Project | UploadedProject;
   toUploadFiles?: FileInfo[];
 
+  moveUserFlag?: boolean;
+  removeUserFlag?: boolean;
   deleteUserFlag?: boolean;
   deleteProjectFlag?: boolean;
   deleteFileFlag?: boolean;
@@ -86,6 +92,7 @@ interface LeftBarState {
 
   addFileFlag?: boolean;
   fileName?: string;
+  isAddNewUser?: boolean;
   isClickFile: boolean;
   isAddNewProject?: boolean;
   isLeftBarOpen?: boolean;
@@ -335,7 +342,7 @@ const RootContainer = styled('div', (props: ThemeProps) => ({
   flexDirection: 'column',
   overflow: 'visible',
 
-  
+
 }));
 
 interface ClickProps {
@@ -444,7 +451,7 @@ class LeftBar extends React.Component<Props, State> {
       isMobile: window.innerWidth < 1030,
       isDesktop: window.innerWidth >= 1450,
       sidePanelSize: Size.Type.Minimized,
-      sliderSizes: this.isMobile ? [10, 0]: this.isDesktop ? [3.7,10] : [5, 10],
+      sliderSizes: this.isMobile ? [10, 0] : this.isDesktop ? [3.7, 10] : [5, 10],
       isPanelVisible: false,
       isClickFile: false,
       storedTheme: localStorage.getItem('ideEditorDarkMode') === 'true' ? DARK : LIGHT,
@@ -488,7 +495,7 @@ class LeftBar extends React.Component<Props, State> {
       ...DEFAULT_SETTINGS,
       ideEditorDarkMode: localStorage.getItem('ideEditorDarkMode') === 'true' ? true : false,
       consoleLayout: localStorage.getItem('consoleLayout') === 'vertical' ? 'vertical' : 'horizontal',
-
+      classroomView: localStorage.getItem('classroomView') === 'true' ? true : false,
     };
 
     this.setState({
@@ -516,6 +523,7 @@ class LeftBar extends React.Component<Props, State> {
       console.log("LeftBar sliderSizes changed from: ", prevState.sliderSizes, " to: ", this.state.sliderSizes);
     }
     if (this.state.settings !== prevState.settings) {
+      console.log("LeftBar settings changed from: ", prevState.settings, " to: ", this.state.settings);
       if (this.state.settings.ideEditorDarkMode) {
         this.setState({ storedTheme: DARK });
         this.props.onThemeChange(DARK);
@@ -524,6 +532,7 @@ class LeftBar extends React.Component<Props, State> {
         this.setState({ storedTheme: LIGHT });
         this.props.onThemeChange(LIGHT);
       }
+
     }
 
     if (prevState.user !== this.state.user && (prevState.user !== undefined)) {
@@ -545,26 +554,26 @@ class LeftBar extends React.Component<Props, State> {
     if (this.clickTimeout) {
       clearTimeout(this.clickTimeout);
     }
-      window.removeEventListener('resize', this.handleResize);
+    window.removeEventListener('resize', this.handleResize);
   }
 
   private getSliderSizes(): [number, number] {
-  const { isMobile, isDesktop, isPanelVisible, panelSelection } = this.state;
-  console.log("getSliderSizes state:", this.state);
+    const { isMobile, isDesktop, isPanelVisible, panelSelection } = this.state;
+    console.log("getSliderSizes state:", this.state);
 
-  if (panelSelection === 'motor_sensor_servo') {
-    console.log("motorServoSensor isMobile:", isMobile, "isDesktop:", isDesktop, "isPanelVisible:", isPanelVisible);
-    return isMobile ? [10, 0] : isDesktop ? [5,10] : [5.5, 9];
-  }
-  if (panelSelection === 'fileExplorer') {
-    console.log("isMobile:", isMobile, "isDesktop:", isDesktop, "isPanelVisible:", isPanelVisible);
-    return isMobile ? [10, 0] : isDesktop ? [3.7,10] : [5.5, 9];
-  }
-  if (!isPanelVisible) {
+    if (panelSelection === 'motor_sensor_servo') {
+      console.log("motorServoSensor isMobile:", isMobile, "isDesktop:", isDesktop, "isPanelVisible:", isPanelVisible);
+      return isMobile ? [10, 0] : isDesktop ? [5, 10] : [5.5, 9];
+    }
+    if (panelSelection === 'fileExplorer') {
+      console.log("isMobile:", isMobile, "isDesktop:", isDesktop, "isPanelVisible:", isPanelVisible);
+      return isMobile ? [10, 0] : isDesktop ? [3.7, 10] : [5.5, 9];
+    }
+    if (!isPanelVisible) {
+      return isMobile ? [10, 0] : [4, 8.3];
+    }
     return isMobile ? [10, 0] : [4, 8.3];
   }
-  return isMobile ? [10, 0] : [4, 8.3];
-}
 
 
   private handleResize = () => {
@@ -573,7 +582,7 @@ class LeftBar extends React.Component<Props, State> {
     if (this.state.isMobile !== isMobileNow) {
       this.setState({
         isMobile: isMobileNow,
-      //  sliderSizes: isMobileNow ? [10, 0] : [4, 8.3],
+        //  sliderSizes: isMobileNow ? [10, 0] : [4, 8.3],
       });
     }
   };
@@ -617,10 +626,10 @@ class LeftBar extends React.Component<Props, State> {
 
     if (isPanelVisible) {
       if (!isSamePanel) {
-          setShouldStreamMotorVelocities(panel === "motor_sensor_servo");
+        setShouldStreamMotorVelocities(panel === "motor_sensor_servo");
         this.setState({
           panelSelection: panel,
-         // sliderSizes: newSizes,
+          // sliderSizes: newSizes,
         });
       } else if (panel === "motor_sensor_servo") {
         if (isMotorDefault) {
@@ -654,7 +663,7 @@ class LeftBar extends React.Component<Props, State> {
         }
       }
     } else {
-     
+
       setShouldStreamMotorVelocities(panel === "motor_sensor_servo");
 
       if (panel === "terminal") {
@@ -662,7 +671,7 @@ class LeftBar extends React.Component<Props, State> {
       }
 
       this.setState({
-       // sliderSizes: newSizes,
+        // sliderSizes: newSizes,
         panelSelection: panel,
         isPanelVisible: true,
       });
@@ -702,6 +711,7 @@ class LeftBar extends React.Component<Props, State> {
   };
 
   private onUserUpdate_ = (users: User[]) => {
+    console.log("LeftBar onUserUpdate users:", users);
     if (JSON.stringify(this.state.users) !== JSON.stringify(users)) {
       this.setState({ users });
     }
@@ -717,7 +727,7 @@ class LeftBar extends React.Component<Props, State> {
       if (this.state.user !== user) {
         this.setState({ isLoadUserFiles: false });
       }
-    
+
     }
     catch (error) {
       console.error('Error selecting user:', error);
@@ -739,48 +749,38 @@ class LeftBar extends React.Component<Props, State> {
    * @param userData - The list of projects
    */
   private onLoadUserData_ = (userData: Project[], loadedUser: User, renamedUser?: boolean, oldUserName?: string) => {
-    console.log("LeftBar onLoadUserData userData:", userData);
+    console.log("LeftBar onLoadUserData userData:", userData, "loadedUser:", loadedUser, "renamedUser:", renamedUser, "oldUserName:", oldUserName);
+    console.log("LeftBar onLoadUserData state:", this.state);
+    console.log("LeftBar onLoadUserData users:", this.state.users);
+    const usersArray = Array.isArray(this.state.users)
+      ? this.state.users
+      : (Object.values(this.state.users) as User[]);
+
+
+    console.log("LeftBar onLoadUserData usersArray:", usersArray);
+
+    let userIndex = usersArray.findIndex(user => user.userName === (renamedUser ? oldUserName : loadedUser.userName));
+    console.log("LeftBar onLoadUserData userIndex:", userIndex);
+
+
     if (loadedUser) {
 
-      let userIndex: number;
-      if (renamedUser) {
-        userIndex = this.state.users.findIndex(user => user.userName === oldUserName);
+      if (userIndex !== -1) { // Check if the user exists in the list
+        this.setState(prevState => (
+          console.log("LeftBar onLoadUserData prevState:", prevState),
 
-        if (userIndex !== -1) { // Check if the user exists in the list
-          this.setState(prevState => (
-            {
-              user: loadedUser,
-              loadedUserData: userData,
-              isReloadRootUserFiles: false,
-
-              users: prevState.users.map((user, index) =>
-                index === userIndex
-                  ? loadedUser // Update the user's projects
-                  : user // Keep the other users unchanged
-              ),
-              userShown: loadedUser
-            }));
-        }
-
-
-      }
-      else {
-        userIndex = this.state.users.findIndex(user => user.userName === loadedUser.userName);
-
-        if (userIndex !== -1) { // Check if the user exists in the list
-          this.setState(prevState => (
-            {
-              user: loadedUser,
-              loadedUserData: userData,
-              isReloadRootUserFiles: false,
-
-              users: prevState.users.map((user, index) =>
-                index === userIndex
-                  ? { ...user, projects: userData } // Update the user's projects
-                  : user // Keep the other users unchanged
-              )
-            }));
-        }
+          {
+            user: loadedUser,
+            loadedUserData: userData,
+            isReloadRootUserFiles: false,
+            project: userData.length === 1 ? userData[0] : userData[userIndex],
+            users: usersArray.map((user, index) =>
+              index === userIndex
+                ? { ...loadedUser, projects: userData }
+                : user
+            ),
+            userShown: loadedUser
+          }));
       }
 
       if (this.state.userShown) {
@@ -805,6 +805,14 @@ class LeftBar extends React.Component<Props, State> {
       });
     }
 
+  };
+
+
+  private onLoadClassroomData_ = (classrooms: Classroom[], user: User) => {
+    this.setState({
+      classrooms: classrooms,
+      user: user
+    });
   };
 
   /**
@@ -885,6 +893,17 @@ class LeftBar extends React.Component<Props, State> {
     })
   };
 
+  private onRemoveUserFromClassroom_ = (user: User, classroom: Classroom) => {
+    console.log("Removing user:", user, "from classroom:", classroom);
+
+    this.setState({
+      contextMenuClassroom: classroom,
+      contextMenuUser: user,
+      removeUserFlag: true
+
+    })
+  };
+
 
   /**
    * Sets the state based on the project name
@@ -946,15 +965,32 @@ class LeftBar extends React.Component<Props, State> {
     })
   }
 
+  private onMoveUserToClassroom_ = (user: User) => {
+    console.log("Moving user:", user);
+    this.setState({
+      contextMenuUser: user,
+      moveUserFlag: true
+    });
+  }
+
+  private onAddNewUser_ = (classroom: Classroom) => {
+    console.log("Adding new user for classroom:", classroom);
+    this.setState({
+      classroom: classroom,
+      isAddNewUser: true,
+    })
+  }
 
   /**
    * Sets the state userName based on the user selected and sets isAddNewProject flag to true
    * @param user - The User object
    */
-  private onAddNewProject_ = (user: User) => {
+  private onAddNewProject_ = (user: User, classroom?: Classroom) => {
+    console.log("LeftBar onAddNewProject user:", user, "classroom:", classroom);
     this.setState({
       isAddNewProject: true,
-      user: user
+      user: user,
+      classroom: classroom ? classroom : undefined,
     });
 
   };
@@ -988,7 +1024,7 @@ class LeftBar extends React.Component<Props, State> {
    * @param fileType - The type of file (header, source, data)
    */
   private onProjectSelected_ = (user: User, project: Project, fileName: string, activeLanguage: ProgrammingLanguage) => {
-
+    console.log("LeftBar onProjectSelected user:", user, "project:", project, "fileName:", fileName, "activeLanguage:", activeLanguage);
     if (this.state.userShown && this.state.userShown.interfaceMode === InterfaceMode.SIMPLE) {
       this.setState({
         simpleProjectLoadFlag: true,
@@ -998,6 +1034,8 @@ class LeftBar extends React.Component<Props, State> {
         project: project,
         fileName: fileName,
         activeLanguage: activeLanguage,
+        user: user
+
       });
     }
     else {
@@ -1193,10 +1231,11 @@ class LeftBar extends React.Component<Props, State> {
     })
   }
 
-  private onFileSelected_ = async (user: User, project: Project, fileName: string, language: ProgrammingLanguage, fileType: string) => {
-    console.log("LeftBar onFileSelected user:", user, "project:", project, "fileName:", fileName, "language:", language, "fileType:", fileType);
+  private onFileSelected_ = async (classroom: Classroom, user: User, project: Project, fileName: string, language: ProgrammingLanguage, fileType: string) => {
+    console.log("LeftBar onFileSelected classroom:", classroom, "user:", user, "project:", project, "fileName:", fileName, "language:", language, "fileType:", fileType);
     this.isClickedFileRef.current = true;
     this.setState({
+      classroom: classroom,
       user: user,
       project: project,
       fileName: fileName,
@@ -1356,11 +1395,19 @@ class LeftBar extends React.Component<Props, State> {
     });
   };
 
+  private onClassroomUpdate_ = (classrooms: Classroom[]) => {
+    this.setState({
+      classrooms: classrooms
+    })
+  };
+
   render() {
     const { className, theme } = this.props;
 
     const {
       settings,
+      classrooms,
+      classroom,
       modal,
       sliderSizes,
       isPanelVisible,
@@ -1377,6 +1424,7 @@ class LeftBar extends React.Component<Props, State> {
       isReloadRootUserFiles,
       isLoadUserFiles,
       isClickFile,
+      isAddNewUser,
       isAddNewFile,
       isAddNewProject,
       isReloadFiles,
@@ -1386,22 +1434,25 @@ class LeftBar extends React.Component<Props, State> {
       renameProjectFlag,
       renameUserFlag,
       renameFileFlag,
-
+      removeUserFlag,
       downloadFileFlag,
       deleteFileFlag,
       deleteUserFlag,
       deleteProjectFlag,
+      moveUserFlag,
       downloadUserFlag,
       downloadProjectFlag,
       addProjectFlag,
       moveProjectFlag,
 
+      contextMenuClassroom,
       contextMenuFile,
       contextMenuProject,
       contextMenuUser,
 
     } = this.state;
 
+    console.log("LeftBar render state:", this.state);
 
     let rootContent: JSX.Element;
     rootContent = (
@@ -1411,17 +1462,19 @@ class LeftBar extends React.Component<Props, State> {
           isLeftBarOpen={isPanelVisible}
           propSettings={settings}
           propedTheme={storedTheme}
+          propClassroom={classroom}
           propFileName={fileName}
           propProject={project}
           propActiveLanguage={activeLanguage}
           propUser={user}
+          propContextMenuClassroom={contextMenuClassroom}
           propContextMenuUser={contextMenuUser}
           propContextMenuProject={contextMenuProject}
           propContextMenuFile={contextMenuFile}
           reloadUserFlag={reloadUser}
           reloadRootUserFlag={isReloadRootUserFiles}
           simpleProjectLoadFlag={simpleProjectLoadFlag}
-
+          addNewUserFlag={isAddNewUser}
           addNewProject={isAddNewProject}
           addNewFile={isAddNewFile}
           clickFile={isClickFile}
@@ -1432,12 +1485,14 @@ class LeftBar extends React.Component<Props, State> {
           setClickFile={this.setClickFile_}
           setFileName_={this.onSetFileName_}
           changeProjectName={this.onChangeProjectName_}
+          onClassroomUpdate={this.onClassroomUpdate_}
           onUserUpdate={this.onUserUpdate_}
           loadUserDataFlag={isLoadUserFiles}
           onLoadUserData={this.onLoadUserData_}
+          onLoadClassroomData={this.onLoadClassroomData_}
 
-
-
+          moveUserFlag={moveUserFlag}
+          removeUserFlag={removeUserFlag}
           deleteUserFlag={deleteUserFlag}
           deleteProjectFlag={deleteProjectFlag}
           deleteFileFlag={deleteFileFlag}
@@ -1450,7 +1505,7 @@ class LeftBar extends React.Component<Props, State> {
           renameUserFlag={renameUserFlag}
           renameProjectFlag={renameProjectFlag}
           renameFileFlag={renameFileFlag}
-
+          resetAddNewUserFlag={() => this.setState({ isAddNewUser: false })}
           resetDeleteUserFlag={this.onSetUserDeleteFlag_}
           resetDeleteProjectFlag={this.onSetProjectDeleteFlag_}
           resetDeleteFileFlag={this.onSetFileDeleteFlag_}
@@ -1467,6 +1522,7 @@ class LeftBar extends React.Component<Props, State> {
           resetUploadFilesFlag={this.onSetUploadFilesFlag_}
           resetUploadProjectFlag={this.onSetUploadProjectFlag_}
           resetMoveProjectFlag={this.onSetMoveProjectFlag_}
+          resetMoveUserFlag={() => this.setState({ moveUserFlag: false })}
 
           propedMotorPositions={this.state.motorPositions}
           stoppedMotor={this.state.stoppedMotor}
@@ -1520,6 +1576,7 @@ class LeftBar extends React.Component<Props, State> {
           onProjectSelected={this.onProjectSelected_}
           onFileSelected={this.onFileSelected_}
           onUserSelected={this.onUserSelected_}
+          onAddNewUser={this.onAddNewUser_}
           onAddNewProject={this.onAddNewProject_}
           onAddNewFile={this.onAddNewFile_}
           onDeleteUser={this.onDeleteUser_}
@@ -1527,9 +1584,11 @@ class LeftBar extends React.Component<Props, State> {
           onDeleteFile={this.onDeleteFile_}
           onDownloadUser={this.onDownloadUser_}
           onRenameUser={this.onRenameUser_}
+          onRemoveUserFromClassroom={this.onRemoveUserFromClassroom_}
           onDownloadProject={this.onDownloadProject_}
           onRenameProject={this.onRenameProject_}
           onMoveProject={this.onMoveProject_}
+          onMoveUserToClassroom={this.onMoveUserToClassroom_}
           onDownloadFile={this.onDownloadFile_}
           onResetHighlightFlag={this.onResetHighlightFlag_}
           onReloadProjects={this.reloadRootUserProjects_}
@@ -1541,6 +1600,7 @@ class LeftBar extends React.Component<Props, State> {
           userDeleteFlag={deleteUserFlag}
           renameUserFlag={renameUserFlag}
           reloadFilesFlag={isReloadFiles}
+          propProjectShown={project}
           propUserShown={userShown}
           propUsers={users}
           propUserData={loadedUserData}
@@ -1548,6 +1608,8 @@ class LeftBar extends React.Component<Props, State> {
           reloadUser={reloadUser}
           reHighlightProject={rehighlightProject}
           reHighlightFile={rehighlightFile}
+          propSettings={settings}
+          propClassrooms={classrooms}
 
           style={{
             flex: 1,
