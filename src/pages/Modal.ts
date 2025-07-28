@@ -18,8 +18,10 @@ export namespace Modal {
     CreateFile,
     CreateUser,
     CreateProject,
+    CreateClassroom,
     DeleteUserProjectFile,
     DownloadUserProjectFile,
+    RemoveUserFromClassroom,
     OpenUsers,
     OpenFile,
     SaveFile,
@@ -27,7 +29,8 @@ export namespace Modal {
     RenameUserProjectFile,
     RenameProject,
     RenameFile,
-    MoveProject
+    MoveProject,
+    MoveUserToClassroom
   }
 
   export interface Settings {
@@ -88,6 +91,12 @@ export namespace Modal {
 
   export const CREATEUSER: CreateUser = { type: Type.CreateUser };
 
+  export interface CreateClassroom {
+    type: Type.CreateClassroom;
+  }
+
+  export const CREATECLASSROOM: CreateClassroom = { type: Type.CreateClassroom };
+
   export interface OpenUsers {
     type: Type.OpenUsers;
   }
@@ -139,6 +148,18 @@ export namespace Modal {
 
   export const MOVEPROJECT: MoveProject = { type: Type.MoveProject };
 
+  export interface RemoveUserFromClassroom {
+    type: Type.RemoveUserFromClassroom;
+  }
+
+  export const REMOVEUSERFROMCLASSROOM: RemoveUserFromClassroom = { type: Type.RemoveUserFromClassroom };
+
+  export interface MoveUserToClassroom {
+    type: Type.MoveUserToClassroom;
+  }
+
+  export const MOVEUSERTOCLASSROOM: MoveUserToClassroom = { type: Type.MoveUserToClassroom };
+
 }
 
 export type Modal = (
@@ -152,6 +173,7 @@ export type Modal = (
   Modal.CreateProject |
   Modal.CreateFile |
   Modal.CreateUser |
+  Modal.CreateClassroom |
   Modal.OpenUsers |
   Modal.DeleteUserProjectFile |
   Modal.DownloadUserProjectFile |
@@ -159,6 +181,7 @@ export type Modal = (
   Modal.OpenFile |
   Modal.KeepMotorsRunning |
   Modal.RenameUserProjectFile |
-  Modal.MoveProject
-
+  Modal.MoveProject |
+  Modal.RemoveUserFromClassroom |
+  Modal.MoveUserToClassroom
 );
