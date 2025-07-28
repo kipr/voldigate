@@ -33,20 +33,29 @@ import { programRunContextHelper } from '../ProgramRunContext';
 import parseMessages, { sort, toStyledText } from '../util/parse-messages';
 import { FileInfo } from 'types/fileInfo';
 import MoveProjectDialog from './MoveProjectDialog';
+import Classroom from '../types/classroomTypes';
+import CreateUserDialog from './CreateUserDialog';
+import RemoveUserFromClassroomDialog from './RemoveUserFromClassroomDialog';
+import MoveUserToClassroomDialog from './MoveUserToClassroomDialog';
 
 
 export interface RootPublicProps {
+  propClassroom?: Classroom | null;
   propFileName: string;
   propProject: Project;
   otherFileType?: string;
   propUser: User;
+  propContextMenuClassroom?: Classroom;
   propContextMenuUser?: User;
   propContextMenuFile?: string;
   loadUserDataFlag: boolean;
+  addNewUserFlag?: boolean;
   addNewProject: boolean;
   addNewFile: boolean;
   simpleProjectLoadFlag?: boolean;
   clickFile: boolean;
+  moveUserFlag?: boolean;
+  removeUserFlag?: boolean;
   deleteUserFlag?: boolean;
   downloadUserFlag?: boolean;
   renameUserFlag?: boolean;
@@ -91,8 +100,11 @@ export interface RootPublicProps {
   setClickFile: (clickFile: boolean) => void;
   setRootInfo: (user: User, project: Project, fileName: string, activeLanguage: ProgrammingLanguage) => void;
   setFileName_: (fileName: string) => void;
+  onClassroomUpdate: (classrooms: Classroom[]) => void;
   onUserUpdate: (users: User[]) => void;
   onLoadUserData: (userData: Project[], loadedUser?: User, renamedUser?: boolean, oldUserName?: string) => void;
+  onLoadClassroomData: (classroomData: Classroom[], user: User) => void;
+  resetAddNewUserFlag: (addNewUserFlag: boolean) => void;
   resetDeleteUserFlag: (deleteUserFlag: boolean) => void;
   resetDeleteProjectFlag: (deleteProjectFlag: boolean) => void;
   resetDeleteFileFlag: (deleteFileFlag: boolean) => void;
@@ -111,6 +123,7 @@ export interface RootPublicProps {
   resetEnabledServoFlag: (enabledServoFlag: boolean) => void;
   resetDisabledServoFlag: (disabledServoFlag: boolean) => void;
   resetMoveProjectFlag: (moveProjectFlag: boolean) => void;
+  resetMoveUserFlag: (moveUserFlag: boolean) => void;
   setAnalogValues: (analogValue: number) => void;
   setDigitalValues: (digitalValue: number) => void;
   setAccelValues: (accelValue: number) => void;
@@ -135,6 +148,7 @@ interface RootPrivateProps {
 
 interface RootState {
 
+  rootClassroom?: Classroom | null;
   rootUser: User;
   rootProject: Project,
   rootInterfaceMode?: InterfaceMode,
@@ -148,6 +162,9 @@ interface RootState {
   toRenameName_?: string;
   toRenameType_?: string;
   toMoveProject_?: Project;
+  toMoveUser_?: User;
+  toRemoveUser_?: User;
+  toRemoveClassroom_?: Classroom;
   otherFileType?: string;
   tempNewFile?: string;
   projectName: string;
@@ -163,6 +180,8 @@ interface RootState {
   isMoveProjectDialogVisible: boolean;
   isSaveCodePromptVisible: boolean;
   isRenameUserProjectFileDialogVisible: boolean;
+  isRemoveUserFromClassroomDialogVisible: boolean;
+  isMoveUserToClassroomDialogVisible: boolean;
   addNewProject: boolean;
   addNewFile: boolean;
   isRunning: boolean;
@@ -189,6 +208,7 @@ interface RootState {
   projects: Project[] | null;
   users: User[];
   messages: Message[];
+  classrooms?: Classroom[];
 
   rootMotorPositions: { [key: string]: number };
   rootwidth: number;
@@ -243,7 +263,8 @@ class Root extends React.Component<Props, State> {
       rootUser: {
         userName: '',
         interfaceMode: InterfaceMode.SIMPLE,
-        projects: []
+        projects: [],
+        classroomName: ''
       },
       rootProject: {
         projectName: '',
@@ -276,6 +297,8 @@ class Root extends React.Component<Props, State> {
       isMoveProjectDialogVisible: false,
       isSaveCodePromptVisible: false,
       isRenameUserProjectFileDialogVisible: false,
+      isRemoveUserFromClassroomDialogVisible: false,
+      isMoveUserToClassroomDialogVisible: false,
       clickFileState: false,
       projectName: '',
       fileName: '',
@@ -303,9 +326,16 @@ class Root extends React.Component<Props, State> {
 
     window.addEventListener('resize', this.onWindowResize_);
     await this.loadUsers();
+    await this.loadClassrooms();
     this.setState({
       isHomeStartOptionsVisible: true
     })
+
+    if (this.props.propSettings.classroomView) {
+
+
+
+    }
     if (this.props.propUser.userName !== '' && this.props.propProject.projectName !== '' && this.props.propFileName !== '') {
       this.setState({
         rootUser: this.props.propUser,
@@ -353,6 +383,17 @@ class Root extends React.Component<Props, State> {
     const displayNowHidden = !this.props.propedSensorDisplayFlag && prevProps.propedSensorDisplayFlag;
 
 
+
+    if (prevProps.moveUserFlag !== this.props.moveUserFlag && this.props.moveUserFlag) {
+      const moveUser = Object.values(this.state.users).find(user => user.userName === this.props.propContextMenuUser?.userName);
+      this.moveUserToClassroom_(moveUser);
+    }
+    if (prevProps.removeUserFlag !== this.props.removeUserFlag && this.props.removeUserFlag) {
+      this.removeUserFromClassroom_(this.props.propContextMenuUser, this.props.propContextMenuClassroom);
+    }
+    if (prevProps.addNewUserFlag !== this.props.addNewUserFlag && this.props.addNewUserFlag) {
+      this.addNewUser_();
+    }
     if (prevProps.moveProjectFlag !== this.props.moveProjectFlag && this.props.moveProjectFlag) {
       console.log("Root compDidUpdate moveProjectFlag: ", this.props.moveProjectFlag);
       this.moveProject_();
@@ -495,6 +536,7 @@ class Root extends React.Component<Props, State> {
     }
 
     if (prevProps.reloadRootUserFlag !== this.props.reloadRootUserFlag && this.props.reloadRootUserFlag) {
+      console.log("Root compDidUpdate reloadRootUserFlag: ", this.props.reloadRootUserFlag);
       const userProj = await this.loadUserProjects(false, false, this.props.propUser);
       console.log("Root compDidUpdate usrProj: ", userProj);
       console.log("Root compDidUpdate reloadRootUserFlag: ", this.props.reloadRootUserFlag);
@@ -671,7 +713,7 @@ class Root extends React.Component<Props, State> {
     }
 
     else if ((this.props.clickFile && this.state.saveCodePromptFlag == false)) {
-      const { propUser, propProject, propActiveLanguage, propFileName, otherFileType } = this.props;
+      const { propUser, propProject, propActiveLanguage, propFileName, otherFileType, propClassroom } = this.props;
 
       this.props.resetFileExplorerFileSelection(this.props.propFileName);
       switch (otherFileType) {
@@ -955,28 +997,61 @@ class Root extends React.Component<Props, State> {
     }
   }
 
+  private loadClassrooms = async (): Promise<Classroom[]> => {
+    try {
+      const getClassroomResponse = await axios.get('/load-classrooms', { params: { filePath: "/home/kipr/Documents/KISS" } });
+      console.log("Root loadClassrooms response: ", getClassroomResponse.data);
+      if (getClassroomResponse.data.classrooms.length == 0) {
+        this.props.onClassroomUpdate([]);
+        return [];
+      }
+      else {
+        const classroomDirectories: Classroom[] = getClassroomResponse.data.classrooms.map((classroomData: any) => ({
+          name: classroomData.name,
+          users: classroomData.users,
+
+        }));
+        console.log("Root loadClassrooms classroomDirectories: ", classroomDirectories);
+        this.setState({
+          classrooms: classroomDirectories,
+        }, () => {
+          this.props.onClassroomUpdate(getClassroomResponse.data.classrooms);
+          console.log("Root state: ", this.state);
+        })
+        return classroomDirectories;
+
+      }
+    }
+    catch (error) {
+      console.error("Root loadClassrooms caught error: ", error);
+      return [];
+    }
+  };
   private loadUsers = async (): Promise<User[]> => {
     try {
-      const getUserResponse = await axios.get('/load-user-data', { params: { filePath: "/home/kipr/Documents/KISS" } });
+      const getUserResponse = await axios.get('/load-users', { params: { filePath: "/home/kipr/Documents/KISS" } });
+      console.log("Root loadUsers response: ", getUserResponse.data);
       if (getUserResponse.data.users.length == 0) {
         this.props.onUserUpdate([]);
         return [];
       }
       else {
-        const userDirectories: User[] = getUserResponse.data.users.map((userData: any) => ({
-          userName: userData.userName,
-          interfaceMode: userData.interfaceMode,
-          projects: userData.projects
+        // const userDirectories: User[] = getUserResponse.data.users.map((userData: any) => ({
+        //   userName: userData.userName,
+        //   interfaceMode: userData.interfaceMode,
+        //   projects: userData.projects,
+        //   classroomName: userData.classroomName
 
-        }));
+        // }));
+        // console.log("Root loadUsers userDirectories: ", userDirectories);
 
         this.setState({
-          users: userDirectories,
+          users: getUserResponse.data.users,
         }, () => {
           this.props.onUserUpdate(this.state.users);
         });
 
-        return userDirectories;
+        return getUserResponse.data.users;
 
       }
 
@@ -989,7 +1064,7 @@ class Root extends React.Component<Props, State> {
 
 
   private loadUserProjects = async (openedUserDialog?: boolean, createdUserDialog?: boolean, desiredUser?: User): Promise<Project[]> => {
-
+    console.log("Root loadUserProjects called with openedUserDialog: ", openedUserDialog, " createdUserDialog: ", createdUserDialog, " desiredUser: ", desiredUser);
     let chosenUser: User;
     if ((openedUserDialog || createdUserDialog) && desiredUser) {
       chosenUser = desiredUser;
@@ -1000,31 +1075,19 @@ class Root extends React.Component<Props, State> {
     else {
       chosenUser = this.props.propUser;
     }
+    console.log("Root loadUserProjects chosenUser: ", chosenUser);
     try {
-      const response = await axios.get('/get-projects', { params: { filePath: `/home/kipr/Documents/KISS/${chosenUser.userName}` } });
 
+      const response = await axios.get('/get-projects', { params: { user: chosenUser } });
+      console.log("Root loadUserProjects response: ", response.data);
       const userDirectories = response.data.directories;
+      const userProjects = response.data.projects;
+      console.log("Root loadUserProjects userProjects: ", userProjects);
 
-      //each project into a Project object
-      const projects: Project[] = await Promise.all(
-        userDirectories.map(async (projectName) => {
+      const projects: Project[] = userProjects;
 
-          const projectDataResponse = await axios.get('/get-project-data', {
-            params: { filePath: `/home/kipr/Documents/KISS/${chosenUser.userName}/${projectName}` }
-          });
 
-          const projectData = projectDataResponse.data;
-
-          // Construct the Project object
-          return {
-            projectName,
-            includeFolderFiles: projectData.includeData || [],
-            srcFolderFiles: projectData.srcData || [],
-            dataFolderFiles: projectData.userFileData || [],
-            projectLanguage: projectData.projectLanguage || '' as ProgrammingLanguage
-          } as Project;
-        })
-      );
+      console.log("Root loadUserProjects after mapping projects: ", projects);
 
       return projects;
     }
@@ -1034,6 +1097,14 @@ class Root extends React.Component<Props, State> {
     }
   }
 
+  private addNewUser_ = () => {
+    this.setState({
+      modal: Modal.CREATEUSER,
+
+    }, () => {
+      this.props.resetAddNewUserFlag(false);
+    })
+  }
   private deleteUser_ = () => {
     this.setState({
       modal: Modal.DELETEUSERPROJECTFILE,
@@ -1139,6 +1210,7 @@ class Root extends React.Component<Props, State> {
     });
   }
 
+
   private saveFile_(tempNewFile_: string): void {
 
     this.props.setFileName_('');
@@ -1150,6 +1222,26 @@ class Root extends React.Component<Props, State> {
       tempNewFile: tempNewFile_,
       toSaveType_: 'file',
     })
+  }
+
+  private removeUserFromClassroom_ = (user: User, classroom: Classroom) => {
+    console.log("Root removeUserFromClassroom called with user: ", user, " classroom: ", classroom);
+    this.setState({
+      modal: Modal.REMOVEUSERFROMCLASSROOM,
+      isRemoveUserFromClassroomDialogVisible: true,
+      toRemoveUser_: user,
+      toRemoveClassroom_: classroom,
+
+    })
+  };
+
+  private moveUserToClassroom_ = (user: User) => {
+    console.log("Root moveUserToClassroom_ called with user: ", user);
+    this.setState({
+      modal: Modal.MOVEUSERTOCLASSROOM,
+      isMoveUserToClassroomDialogVisible: true,
+      toMoveUser_: user
+    });
   }
 
   private onWindowResize_ = () => {
@@ -1320,7 +1412,7 @@ class Root extends React.Component<Props, State> {
   private onCloseMoveProjectDialog_ = async (newUser: User) => {
     console.log("Root onCloseMoveProjectDialog_ called");
     console.log("Root onCloseMoveProjectDialog_ newUser: ", newUser);
-    
+
     let loadedUsers = await this.loadUsers();
     console.log("Root onCloseMoveProjectDialog_ loadedUsers: ", loadedUsers);
 
@@ -1341,12 +1433,12 @@ class Root extends React.Component<Props, State> {
           fileName: `main.${ProgrammingLanguage.FILE_EXTENSION[this.state.activeLanguage]}`,
           rootUser: newlyModifiedUser,
         }, async () => {
-             this.props.onLoadUserData(await this.loadUserProjects(false,false, newlyModifiedUser), newlyModifiedUser);
-           this.props.setRootInfo(this.state.rootUser, this.state.rootProject, this.state.fileName, this.state.activeLanguage);
-          
+          this.props.onLoadUserData(await this.loadUserProjects(false, false, newlyModifiedUser), newlyModifiedUser);
+          this.props.setRootInfo(this.state.rootUser, this.state.rootProject, this.state.fileName, this.state.activeLanguage);
+
 
         });
-       
+
       }
 
 
@@ -1354,12 +1446,13 @@ class Root extends React.Component<Props, State> {
   };
 
   private onCloseProjectDialog_ = async (newProjName: string, newProjLanguage: ProgrammingLanguage, newInterfaceMode: InterfaceMode) => {
-    const { rootUser } = this.state;
+    const { rootUser, rootProject } = this.state;
+    console.log("Root onCloseProjectDialog_ state: ", this.state);
 
     try {
 
       this.setState((prevState) => {
-        const prevStateUsers = [...prevState.users];
+        const prevStateUsers = Array.isArray(prevState.users) ? prevState.users : (Object.values(prevState.users) as User[]);
         const userNames = prevStateUsers.map(user => user.userName);
 
         if (!userNames.includes(rootUser.userName)) {
@@ -1379,11 +1472,21 @@ class Root extends React.Component<Props, State> {
 
     this.toSaveCodeRef.current[newProjLanguage] = ProgrammingLanguage.DEFAULT_CODE[newProjLanguage];
 
+
+    //update classroom specific user data
+
+    let rootClassroomName = this.state.rootUser.classroomName;
+    console.log("Root onCloseProjectDialog_ rootClassroom: ", rootClassroomName);
+
+
+    console.log("Root onCloseProjectDialog_ state before setState: ", this.state);
+
+
     this.setState({
       modal: Modal.NONE,
       rootUser: {
         ...this.state.rootUser,
-        interfaceMode: newInterfaceMode,
+        interfaceMode: newInterfaceMode ? newInterfaceMode : this.state.rootUser.interfaceMode,
         projects: [
           ...this.state.rootUser.projects,
           {
@@ -1403,15 +1506,47 @@ class Root extends React.Component<Props, State> {
         srcFolderFiles: [`main.${ProgrammingLanguage.FILE_EXTENSION[newProjLanguage]}`],
         dataFolderFiles: []
       },
+
       userName: this.state.userName,
       projectName: newProjName,
       activeLanguage: newProjLanguage,
       fileName: `main.${ProgrammingLanguage.FILE_EXTENSION[newProjLanguage]}`,
     }, async () => {
 
+      console.log("Root onCloseProjectDialog_ after setState: ", this.state);
       this.toSaveCodeRef.current[newProjLanguage] = ProgrammingLanguage.DEFAULT_CODE[newProjLanguage];
 
       console.log("Root onCloseProjectDialog_ toSaveCodeRef: ", this.toSaveCodeRef.current);
+
+
+
+      try {
+        const response = await axios.post('/initialize-project', { user: this.state.rootUser, project: this.state.rootProject, classroomName: rootClassroomName, interfaceMode: this.state.rootUser.interfaceMode });
+        console.log("CreateProjectDialog response: ", response);
+      }
+      catch (error) {
+
+        console.error("Root onCloseProjectDialog_ intializing project error: ", error);
+      }
+
+      if (this.props.propSettings.classroomView) {
+        try {
+          const classroomExists = this.state.classrooms.find(c => c.name === rootClassroomName);
+          const userInClassroom = classroomExists?.users.find(u => u.userName === this.state.rootUser.userName);
+          if (classroomExists && !userInClassroom) {
+            console.log("Root onCloseProjectDialog_ rootClassroom exists: ", rootClassroomName);
+            const addUserProjectToClassroomResponse = await axios.post('/add-user-project-to-classroom', {
+              user: this.state.rootUser,
+
+            });
+            console.log("Root onCloseProjectDialog_ addUserProjectToClassroomResponse: ", addUserProjectToClassroomResponse);
+          }
+        }
+        catch (error) {
+          console.error("Root onCloseProjectDialog_ adding user to classroom error: ", error);
+        }
+      }
+
       if (this.state.isHomeStartOptionsVisible == true) {
         this.setState({
           isHomeStartOptionsVisible: false
@@ -1425,9 +1560,24 @@ class Root extends React.Component<Props, State> {
         });
       }
 
+
+
+      console.log("Root onCloseProjectDialog_ rootUser: ", this.state.rootUser);
       const userProjects = await this.loadUserProjects(false, true, this.state.rootUser);
       console.log("Root onCloseProjectDialog_ userProjects: ", userProjects);
+      console.log("Root onCloseProjectDialog_ rootUser: ", this.state.rootUser);
       this.props.onLoadUserData(await this.loadUserProjects(false, true, this.state.rootUser), this.state.rootUser);
+      if (this.props.propSettings.classroomView) {
+        const updatedClassrooms = await this.loadClassrooms();
+        console.log("Root onCloseProjectDialog_ updatedClassrooms: ", updatedClassrooms);
+
+        this.props.onLoadClassroomData(updatedClassrooms, this.state.rootUser);
+
+
+      }
+      else {
+        this.props.onLoadUserData(await this.loadUserProjects(false, true, this.state.rootUser), this.state.rootUser);
+      }
       if (this.props.addNewProject) {
 
         this.setState({
@@ -1444,6 +1594,7 @@ class Root extends React.Component<Props, State> {
     const prePath = `/home/kipr/Documents/KISS`;
     let filePath = '';
     const { userName, activeLanguage, projectName } = this.state;
+    console.log("Root onCloseNewFileDialog_ called with: ", { newFileName, fileType, userName, activeLanguage, projectName });
     switch (fileType) {
       case 'h':
         this.toSaveCodeRef.current[activeLanguage] = ProgrammingLanguage.DEFAULT_HEADER_CODE;
@@ -1472,6 +1623,8 @@ class Root extends React.Component<Props, State> {
           filePath = `${prePath}/${userName}/${projectName}/src/${newFileName}.${fileType}`;
           const fileContents = this.toSaveCodeRef.current[activeLanguage];
           const addNewFileContentResponse = await axios.post('/save-file-content', { filePath, fileContents });
+
+
         });
 
         break;
@@ -1489,6 +1642,7 @@ class Root extends React.Component<Props, State> {
         });
         break;
     }
+    const newLoadedProjects = await this.loadUserProjects();
 
     this.props.resetFileExplorerFileSelection(`${newFileName}.${fileType}`);
 
@@ -1498,7 +1652,7 @@ class Root extends React.Component<Props, State> {
       fileName: `${newFileName}.${fileType}`,
       projectName: this.props.propProject.projectName,
     }, async () => {
-      this.props.onLoadUserData(await this.loadUserProjects())
+      this.props.onLoadUserData(await this.loadUserProjects(), this.props.propUser)
 
       if (this.state.isHomeStartOptionsVisible == true) {
         this.setState({
@@ -1517,14 +1671,14 @@ class Root extends React.Component<Props, State> {
     });
   }
 
-  private onCreateProjectDialogOpen_ = (name: string, interfaceMode: InterfaceMode) => {
+  private onCreateProjectDialogOpen_ = (name: string, interfaceMode: InterfaceMode, classroom?: Classroom | null) => {
+    console.log("CreateProjectDialog opened with:", { name, interfaceMode, classroom });
+    console.log("Root onCreateProjectDialogOpen_ state before setState: ", this.state);
 
+    let newRootUser = this.state.rootUser.userName !== name ?
+      { userName: name, interfaceMode: interfaceMode, projects: [], classroomName: classroom ? classroom.name : this.state.rootUser.classroomName } : this.state.rootUser;
     this.setState({
-      rootUser: {
-        ...this.state.rootUser,
-        userName: name,
-        interfaceMode: interfaceMode,
-      },
+      rootUser: newRootUser,
       rootInterfaceMode: interfaceMode,
       userName: name,
       isCreateNewUserDialogVisible: false,
@@ -2255,6 +2409,48 @@ class Root extends React.Component<Props, State> {
     }
   }
 
+  private onCloseRemoveUserFromClassroomDialog_ = () => {
+    this.setState({
+      modal: Modal.NONE,
+
+    }, async () => {
+
+      const removeUserResponse = await axios.post('/remove-user-from-classroom', {
+        user: this.state.toRemoveUser_,
+        classroom: this.state.toRemoveClassroom_
+      });
+
+      console.log("Remove user response: ", removeUserResponse.data);
+      if (removeUserResponse.status === 200) {
+        this.props.onClassroomUpdate(await this.loadClassrooms());
+      }
+
+      this.setState({
+        toRemoveUser_: undefined,
+        toRemoveClassroom_: undefined
+      })
+    });
+  };
+
+  private onCloseMoveUserToClassroomDialog_ = (user: User, newClassroom: Classroom) => {
+    console.log("Closing move user dialog for:", user, "to classroom:", newClassroom);
+
+
+    this.setState({
+      modal: Modal.NONE,
+    }, async () => {
+      this.props.resetMoveUserFlag(false);
+      const moveUserResponse = await axios.post('/move-user-to-classroom', {
+        user: user,
+        newClassroom: newClassroom
+      });
+      console.log("Move user response: ", moveUserResponse);
+
+      if (moveUserResponse.status === 200) {
+        this.props.onClassroomUpdate(await this.loadClassrooms());
+      }
+    });
+  };
   private onClearConsole_ = () => {
 
     this.setState({
@@ -2278,6 +2474,14 @@ class Root extends React.Component<Props, State> {
     window.location.href = '/';
   };
 
+  private onCloseClassroomDialog_ = (classroomName: string) => {
+    console.log("Closing classroom dialog for:", classroomName);
+    this.setState({
+      modal: Modal.NONE,
+    }, async () => {
+      this.props.onClassroomUpdate(await this.loadClassrooms());
+    })
+  };
   render() {
     const { props, state } = this;
 
@@ -2287,7 +2491,8 @@ class Root extends React.Component<Props, State> {
       locale,
       propContextMenuUser,
       propContextMenuProject,
-      propSettings
+      propSettings,
+      propClassroom,
     } = props;
 
     const {
@@ -2297,6 +2502,7 @@ class Root extends React.Component<Props, State> {
       windowInnerHeight,
       isHomeStartOptionsVisible,
       isMoveProjectDialogVisible,
+      isRemoveUserFromClassroomDialogVisible,
       projectName,
       fileName,
       userName,
@@ -2313,11 +2519,14 @@ class Root extends React.Component<Props, State> {
       toRenameName_,
       toRenameType_,
       toMoveProject_,
+      toMoveUser_,
       theme,
       messages,
-      users
+      users,
+      classrooms
     } = state;
 
+    console.log("Rendering RootContainer with state: ", this.state);
     return (
       <RootContainer $windowInnerHeight={windowInnerHeight} rootwidth={this.state.rootwidth}>
 
@@ -2329,6 +2538,7 @@ class Root extends React.Component<Props, State> {
         )}
         {isHomeStartOptionsVisible && (
           <HomeStartOptions
+            classrooms={classrooms}
             theme={theme}
             locale={locale}
             onClearConsole={this.onClearConsole_}
@@ -2336,10 +2546,12 @@ class Root extends React.Component<Props, State> {
             onEditorPageOpen={this.onEditorPageOpen_}
             onChangeProjectName={this.onChangeProjectName}
             onCreateProjectDialog={this.onCreateProjectDialogOpen_}
+            onCloseClassroomDialog={this.onCloseClassroomDialog_}
             onOpenUserProject={this.onOpenUserProject_}
             onLoadUsers={this.loadUsers}
             onLoadUserData={this.loadUserProjects}
             onOpenFile={this.onOpenUserProject_}
+            settings={this.props.propSettings}
           />
         )
         }
@@ -2390,8 +2602,12 @@ class Root extends React.Component<Props, State> {
 
         {modal.type === Modal.Type.CreateProject && (
           <CreateProjectDialog
+            propedClassroom={propClassroom}
+            settings={propSettings}
             onClose={this.onModalClose_}
-            showRepeatUserDialog={false} projectName={projectName} theme={theme}
+            showRepeatUserDialog={false}
+            projectName={projectName}
+            theme={theme}
             closeProjectDialog={this.onCloseProjectDialog_}
             onDocumentationSetLanguage={this.onActiveLanguageChange_}
             onChangeProjectName={this.onChangeProjectName}
@@ -2400,6 +2616,18 @@ class Root extends React.Component<Props, State> {
             onLanguageChange={this.onLanguageChange_}
             locale={'en-US'}
             interfaceMode={rootInterfaceMode}
+          />
+        )}
+        {modal.type === Modal.Type.CreateUser && (
+
+          <CreateUserDialog
+            classrooms={this.state.classrooms}
+            propClassroom={propClassroom}
+            settings={propSettings}
+            showRepeatUserDialog={false}
+            onClose={this.onModalClose_}
+            onCreateProjectDialog={this.onCreateProjectDialogOpen_}
+            theme={theme}
           />
         )}
 
@@ -2462,6 +2690,27 @@ class Root extends React.Component<Props, State> {
             project={toMoveProject_}
             toRenameName={toRenameName_}
             toRenameType={toRenameType_}
+          />
+        )}
+
+        {this.state.isRemoveUserFromClassroomDialogVisible && modal.type === Modal.Type.RemoveUserFromClassroom && (
+          <RemoveUserFromClassroomDialog
+            onClose={this.onModalClose_}
+            onCloseRemoveUserFromClassroomDialog={this.onCloseRemoveUserFromClassroomDialog_}
+            theme={theme}
+            toRemoveUser={this.state.toRemoveUser_}
+            classroom={this.state.toRemoveClassroom_}
+            locale={locale}
+          />
+        )}
+        {this.state.isMoveUserToClassroomDialogVisible && modal.type === Modal.Type.MoveUserToClassroom && (
+          <MoveUserToClassroomDialog
+            onClose={this.onModalClose_}
+            onCloseMoveUserToClassroomDialog={this.onCloseMoveUserToClassroomDialog_}
+            theme={theme}
+            toMoveUser={this.state.toMoveUser_}
+            locale={locale}
+            classrooms={classrooms}
           />
         )}
       </RootContainer>
