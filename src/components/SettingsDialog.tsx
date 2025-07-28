@@ -35,6 +35,7 @@ interface SettingsDialogState {
   storedTheme: Theme;
   interfaceMode: InterfaceMode.SIMPLE | InterfaceMode.ADVANCED;
   consoleLayout: 'horizontal' | 'vertical';
+  classroomView: boolean;
   userOptions: ComboBox.Option[];
   selectedUserName?: string;
   confirmMessage: React.ReactNode;
@@ -206,7 +207,7 @@ class SettingsDialog extends React.PureComponent<Props, State> {
       currentStateUser: initialUser,
       successMessage: '',
       consoleLayout: localStorage.getItem('consoleLayout') as 'horizontal' | 'vertical' || 'horizontal',
-
+      classroomView: localStorage.getItem('classroomView') === 'true',
     };
   }
 
@@ -214,6 +215,7 @@ class SettingsDialog extends React.PureComponent<Props, State> {
     console.log("SettingsDialog mounted state:", this.state);
     const storedTheme = localStorage.getItem('ideEditorDarkMode');
     const consoleLayout = localStorage.getItem('consoleLayout');
+    const classroomView = localStorage.getItem('classroomView');
     console.log("Console Layout from localStorage:", consoleLayout);
     if (consoleLayout) {
       this.props.onSettingsChange({ consoleLayout: consoleLayout as 'horizontal' | 'vertical' });
@@ -221,8 +223,18 @@ class SettingsDialog extends React.PureComponent<Props, State> {
     if (storedTheme) {
       this.props.onSettingsChange({ ideEditorDarkMode: storedTheme === 'true' });
     }
+    if (classroomView) {
+      this.props.onSettingsChange({ classroomView: classroomView === 'true' });
+    }
+    const usersArray = Object.values(this.props.users);
+    console.log("SettingsDialog componentDidMount usersArray:", usersArray);
+    console.log("SettingsDialog componentDidMount userOptions:", usersArray.map(user => ({
+      data: user.userName,
+      text: user.userName, // or any other field you need for ComboBox
+    })));
     this.setState({
-      userOptions: this.props.users.map(user => ({
+
+      userOptions: usersArray.map(user => ({
         data: user.userName,
         text: user.userName, // or any other field you need for ComboBox
       })),
@@ -250,6 +262,11 @@ class SettingsDialog extends React.PureComponent<Props, State> {
         consoleLayout: this.props.settings.consoleLayout
       });
     }
+    if( prevProps.settings.classroomView !== this.props.settings.classroomView) {
+      this.setState({
+        classroomView: this.props.settings.classroomView
+      });
+    }
 
     if (prevProps.users !== this.props.users) {
       this.updateUserOptions();
@@ -264,7 +281,8 @@ class SettingsDialog extends React.PureComponent<Props, State> {
       }
     }
 
-    const currentUser = this.props.users.find(user => user.userName === this.state.selectedUserName);
+const currentUser = this.props.users[this.state.selectedUserName] || null;
+
     if (currentUser && currentUser.interfaceMode !== this.state.interfaceMode) {
       this.setState({
         interfaceMode: currentUser.interfaceMode
@@ -293,7 +311,9 @@ class SettingsDialog extends React.PureComponent<Props, State> {
 
   USER_OPTIONS: ComboBox.Option[] = (() => {
     const ret: ComboBox.Option[] = [];
-    for (const user of this.props.users) {
+    console.log("SettingsDialog USER_OPTIONS props.users:", this.props.users);
+    const usersArray = Object.values(this.props.users);
+    for (const user of usersArray) {
       const userName = LocalizedString.lookup(tr(`${user.userName}`), this.props.locale);
       if (userName) {
         ret.push({
@@ -325,6 +345,9 @@ class SettingsDialog extends React.PureComponent<Props, State> {
             }
             if (updatedSettings.hasOwnProperty('consoleLayout')) {
               localStorage.setItem('consoleLayout', updatedSettings.consoleLayout);
+            }
+            if(updatedSettings.hasOwnProperty('classroomView')) {
+              localStorage.setItem('classroomView', updatedSettings.classroomView ? 'true' : 'false');
             }
             onSettingsChange(getUpdatedSettings(value));
 
@@ -444,6 +467,12 @@ class SettingsDialog extends React.PureComponent<Props, State> {
                   LocalizedString.lookup(tr('Toggle IDE theme to dark mode'), locale),
                   (settings: Settings) => settings.ideEditorDarkMode,
                   (newValue: boolean) => ({ ideEditorDarkMode: newValue })
+                )}
+                {this.createBooleanSetting(
+                  LocalizedString.lookup(tr('Classroom View'), locale),
+                  LocalizedString.lookup(tr('Toggle to arrange users into classrooms'), locale),
+                  (settings: Settings) => settings.classroomView,
+                  (newValue: boolean) => ({ classroomView: newValue })
                 )}
                 {userOptions.length > 0 && (
                   <SettingContainer theme={storedTheme} style={{ flexDirection: 'column' }}>
