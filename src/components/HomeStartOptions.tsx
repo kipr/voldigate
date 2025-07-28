@@ -6,22 +6,27 @@ import LocalizedString from '../util/LocalizedString';
 import OpenUsersDialog from './OpenUsersDialog';
 import ProgrammingLanguage from 'ProgrammingLanguage';
 import OpenFileDialog from './OpenFileDialog';
-import { styled, withStyle, withWrapper  } from 'styletron-react';
+import { styled, withStyle, withWrapper } from 'styletron-react';
 import { StyleProps } from '../style';
 import { Fa } from './Fa';
 import { ThemeProps } from './theme';
-import { faBookReader, faFilePen, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { faBookReader, faFilePen, faUserPlus, faUsersRectangle } from '@fortawesome/free-solid-svg-icons';
 import { DEFAULT_SETTINGS, Settings } from '../Settings';
 import { Modal } from '../pages/Modal';
 import { Project } from '../types/projectTypes';
 import { User } from '../types/userTypes';
 import { InterfaceMode } from 'types/interfaceModes';
+import CreateClassroomDialog from './CreateClassroomDialog';
+import  Classroom  from 'types/classroomTypes';
 
 export interface HomeStartOptionsPublicProps extends StyleProps, ThemeProps {
     activeLanguage: ProgrammingLanguage;
+    settings: Settings;
+    classrooms?: Classroom[] | null;
     onEditorPageOpen: () => void;
     onChangeProjectName: (projectName: string) => void;
     onCreateProjectDialog: (name: string, interfaceMode: InterfaceMode) => void;
+    onCloseClassroomDialog: (classroomName: string) => void;
     onOpenUserProject: (name: User, project: Project, fileName: string, projectLanguage: string) => void;
     onLoadUsers: () => Promise<User[]>;
     onLoadUserData: (openedUserDialog: boolean, createdUserDialog?: boolean, desiredUser?: User) => Promise<Project[]>;
@@ -45,16 +50,16 @@ type State = HomeStartOptionsState;
 
 
 const Container = styled('div', (props: ThemeProps & { $stacked: boolean }) => ({
-  display: 'flex',
-  flexDirection: props.$stacked ? 'column' : 'row',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '100%',
-  height: '100%',
-  gap: '2em',
-  paddingTop: '2em',
+    display: 'flex',
+    flexDirection: props.$stacked ? 'column' : 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    height: '100%',
+    gap: '2em',
+    paddingTop: '2em',
 }));
-const HomeStartContainer = styled('div', (props: ThemeProps ) => ({
+const HomeStartContainer = styled('div', (props: ThemeProps) => ({
     backgroundColor: props.theme.homeStartContainerBackground,
     border: `2px solid ${props.theme.borderColor}`,
     color: props.theme.color,
@@ -167,6 +172,11 @@ export class HomeStartOptions extends React.Component<Props, State> {
         this.checkLayout();
         window.addEventListener('resize', this.checkLayout);
     }
+    componentDidUpdate = async (prevProps: Props, prevState: State) => {
+        console.log("HomeStartOptions componentDidUpdate state:", this.state);
+        console.log("HomeStartOptions componentDidUpdate props:", this.props);
+
+    }
 
     componentWillUnmount() {
         window.removeEventListener('resize', this.checkLayout);
@@ -190,17 +200,22 @@ export class HomeStartOptions extends React.Component<Props, State> {
     private onModalClick_ = (modal: Modal) => () => this.setState({ modal });
     private onModalClose_ = () => this.setState({ modal: Modal.NONE });
 
+    private onCloseClassroomDialog_ = (classroomName: string) => {
+        this.props.onCloseClassroomDialog(classroomName);
+        this.setState({ modal: Modal.NONE });
+    };
 
     render() {
         const {
             className,
             style,
             locale,
-            theme
+            theme,
+            settings,
+            classrooms
         } = this.props;
 
         const {
-            settings,
             modal,
 
         } = this.state;
@@ -213,6 +228,9 @@ export class HomeStartOptions extends React.Component<Props, State> {
                         <StartContainer theme={theme}>
                             <Title theme={theme} >Start</Title>
                             <Item onClick={this.onModalClick_(Modal.CREATEUSER)} theme={theme}><ItemIcon icon={faUserPlus}></ItemIcon>{LocalizedString.lookup(tr('New User...'), locale)}</Item>
+                            {this.props.settings.classroomView && (
+                                <Item onClick={this.onModalClick_(Modal.CREATECLASSROOM)} theme={theme}><ItemIcon icon={faUsersRectangle}></ItemIcon>{LocalizedString.lookup(tr('New Classroom...'), locale)}</Item>
+                            )}
                             <Item onClick={this.onModalClick_(Modal.OPENFILE)} theme={theme}><ItemIcon icon={faFilePen}></ItemIcon>{LocalizedString.lookup(tr('Open File...'), locale)}</Item>
                             <Item onClick={this.onModalClick_(Modal.OPENUSERS)} theme={theme}><ItemIcon icon={faBookReader}></ItemIcon>{LocalizedString.lookup(tr('Open User...'), locale)}</Item>
                         </StartContainer>
@@ -224,10 +242,20 @@ export class HomeStartOptions extends React.Component<Props, State> {
                     <CreateUserDialog
                         theme={theme}
                         onClose={this.onModalClose_}
-                        userName={''}
+                        classrooms={classrooms || null}
+                        settings={settings || null}
                         showRepeatUserDialog={false}
                         onCreateProjectDialog={this.props.onCreateProjectDialog} />
 
+                )}
+                {modal.type === Modal.Type.CreateClassroom && (
+                    <CreateClassroomDialog
+                        theme={theme}
+                        onClose={this.onModalClose_}
+                        userName={''}
+                        showRepeatUserDialog={false}
+                        onCloseClassroomDialog={this.onCloseClassroomDialog_}
+                    />
                 )}
                 {modal.type === Modal.Type.OpenUsers && (
                     <OpenUsersDialog
