@@ -191,7 +191,7 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
                 this.setState({ showRepeatUserDialog: true });
             } else {
                 this.props.onClose();
-                this.props.onCreateProjectDialog(userName as User['userName'], this.state.interfaceMode, this.state.classroom);
+                this.props.onCreateProjectDialog(userName as User['userName'], this.state.interfaceMode, this.state.classroom.name === 'No Classroom' ? {name: "", users: []} : this.state.classroom);
             }
         } catch (error) {
             console.error('Error adding user to database:', error);
@@ -216,6 +216,10 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
         }
 
         console.log("CreateUserDialog CLASSROOM_OPTIONS ret: ", ret);
+        ret.push({
+            data: [],
+            text: LocalizedString.lookup(tr('No Classroom'), this.props.locale)
+        })
         return ret;
     })();
 
