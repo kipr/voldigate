@@ -37,7 +37,7 @@ interface SettingsDialogState {
   consoleLayout: 'horizontal' | 'vertical';
   classroomView: boolean;
   userOptions: ComboBox.Option[];
-  selectedUserName?: string;
+  selectedUser?: User;
   confirmMessage: React.ReactNode;
   successMessage: React.ReactNode;
 
@@ -197,12 +197,13 @@ class SettingsDialog extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     const initialUser = this.props.users.length > 0 ? this.props.users[0] : BLANK_USER;
+    console.log("SettingsDialog constructor props:", props);
     this.state = {
       selectedSection: 'user-interface',
       storedTheme: localStorage.getItem('ideEditorDarkMode') === 'true' ? DARK : LIGHT,
       interfaceMode: initialUser.interfaceMode,
-      userOptions: [],
-      selectedUserName: this.props.users.length > 0 ? this.props.users[0].userName : initialUser.userName,
+      userOptions: this.USER_OPTIONS,
+      selectedUser: Object.values(this.props.users)[0],
       confirmMessage: '',
       currentStateUser: initialUser,
       successMessage: '',
@@ -262,7 +263,7 @@ class SettingsDialog extends React.PureComponent<Props, State> {
         consoleLayout: this.props.settings.consoleLayout
       });
     }
-    if( prevProps.settings.classroomView !== this.props.settings.classroomView) {
+    if (prevProps.settings.classroomView !== this.props.settings.classroomView) {
       this.setState({
         classroomView: this.props.settings.classroomView
       });
@@ -273,15 +274,16 @@ class SettingsDialog extends React.PureComponent<Props, State> {
     }
 
     if (this.state.userOptions !== prevState.userOptions && this.state.userOptions.length > 0) {
-      if (!this.state.selectedUserName) {
+      if (!this.state.selectedUser) {
         // Default to the first user if no user is selected
         this.setState({
-          selectedUserName: this.state.userOptions[0].data as string
+          selectedUser: this.state.userOptions[0].data as User
         });
       }
     }
 
-const currentUser = this.props.users[this.state.selectedUserName] || null;
+    const userIndex = this.state.userOptions.findIndex(option => option.data === this.state.selectedUser);
+    const currentUser = this.props.users[userIndex] || null;
 
     if (currentUser && currentUser.interfaceMode !== this.state.interfaceMode) {
       this.setState({
@@ -346,7 +348,7 @@ const currentUser = this.props.users[this.state.selectedUserName] || null;
             if (updatedSettings.hasOwnProperty('consoleLayout')) {
               localStorage.setItem('consoleLayout', updatedSettings.consoleLayout);
             }
-            if(updatedSettings.hasOwnProperty('classroomView')) {
+            if (updatedSettings.hasOwnProperty('classroomView')) {
               localStorage.setItem('classroomView', updatedSettings.classroomView ? 'true' : 'false');
             }
             onSettingsChange(getUpdatedSettings(value));
@@ -373,7 +375,7 @@ const currentUser = this.props.users[this.state.selectedUserName] || null;
       this.setState({
         currentStateUser: selectedUser,
         interfaceMode: selectedUser.interfaceMode,
-        selectedUserName: selectedUser.userName
+        selectedUser: selectedUser
       });
     }
   };
@@ -400,7 +402,7 @@ const currentUser = this.props.users[this.state.selectedUserName] || null;
 
   private onConfirmClick_ = async () => {
     const changeInterfaceResponse = await axios.post('/change-interface-mode', {
-      userName: this.state.selectedUserName, newMode: this.newInterfaceModeRef.current
+      userName: this.state.selectedUser, newMode: this.newInterfaceModeRef.current
     });
 
     if (changeInterfaceResponse.request.status === 200) {
@@ -419,9 +421,11 @@ const currentUser = this.props.users[this.state.selectedUserName] || null;
   render() {
     const { props, state } = this;
     const { style, className, theme, onClose, locale } = props;
-    const { selectedSection, storedTheme, userOptions, selectedUserName, successMessage, currentStateUser, interfaceMode, confirmMessage } = state;
+    const { selectedSection, storedTheme, userOptions, selectedUser, successMessage, currentStateUser, interfaceMode, confirmMessage } = state;
 
-    const userIndex = userOptions.findIndex(option => option.data === selectedUserName);
+    const userIndex = userOptions.findIndex(option => option.text === selectedUser.userName);
+    console.log("SettingsDialog render userIndex:", userIndex);
+    console.log("SettingsDialog render state:", state);
 
     return (
       <Dialog
