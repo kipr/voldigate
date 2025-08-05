@@ -14,10 +14,12 @@ import { Modal } from '../pages/Modal';
 import { Fa } from './Fa';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { JSX } from 'react';
+import Classroom from 'types/classroomTypes';
 
 export interface RenameUserProjectFileDialogPublicProps extends ThemeProps, StyleProps {
   user: User;
   project: Project;
+  toRenameObject: Classroom | User | Project | string;
   toRenameName: string;
   toRenameType: string;
   onClose: () => void;
@@ -107,9 +109,13 @@ export class RenameUserProjectFileDialog extends React.PureComponent<Props, Stat
     }
   }
 
+
   onFinalize_ = async (values: { [id: string]: string }) => {
     let changedName: string;
-    if (this.props.toRenameType === "User") {
+    if (this.props.toRenameType === "Classroom") {
+      changedName = values.classroomName;
+    }
+    else if (this.props.toRenameType === "User") {
       changedName = values.userName;
     }
     else if (this.props.toRenameType === "Project") {
@@ -137,14 +143,26 @@ export class RenameUserProjectFileDialog extends React.PureComponent<Props, Stat
     }
     this.setState({ errorMessage: "" }); // Clear error message if input is valid
 
+    if (this.props.toRenameType === "Classroom") {
+      try {
+        const renameClassroomResponse = await axios.post('/rename', { renameType: 'Classroom', oldClassroomName: this.props.toRenameName, newClassroomName: changedName });
 
-    if (this.props.toRenameType === "User") {
+        if (renameClassroomResponse.request.status === 200) { //success
+          this.props.onCloseRenameUserProjectFileDialog("Classroom", this.props.user, renameClassroomResponse.data);
+        }
+      }
+      catch (error) {
+        console.error("Error renaming classroom: ", error);
+      }
+
+    }
+    else if (this.props.toRenameType === "User") {
 
       try {
         const renameUserResponse = await axios.post('/rename', { renameType: 'User', oldUserName: this.props.toRenameName, newUserName: values.userName });
 
-        if(renameUserResponse.request.status === 200) { //success
-          this.props.onCloseRenameUserProjectFileDialog("User",this.props.user, renameUserResponse.data);
+        if (renameUserResponse.request.status === 200) { //success
+          this.props.onCloseRenameUserProjectFileDialog("User", this.props.user, renameUserResponse.data);
         }
 
       }
@@ -159,8 +177,8 @@ export class RenameUserProjectFileDialog extends React.PureComponent<Props, Stat
     else if (this.props.toRenameType === "Project") {
       try {
         const renameProjectResponse = await axios.post('/rename', { renameType: 'Project', userName: this.props.user.userName, oldProjectName: this.props.toRenameName, newProjectName: values.projectName });
-        if(renameProjectResponse.request.status === 200) { //success
-          this.props.onCloseRenameUserProjectFileDialog("Project",this.props.user, renameProjectResponse.data);
+        if (renameProjectResponse.request.status === 200) { //success
+          this.props.onCloseRenameUserProjectFileDialog("Project", this.props.user, renameProjectResponse.data);
         }
       }
       catch (error) {
@@ -171,8 +189,8 @@ export class RenameUserProjectFileDialog extends React.PureComponent<Props, Stat
       try {
         const [file, extension] = this.props.toRenameName.split('.');
         const renameFileResponse = await axios.post('/rename', { renameType: 'File', userName: this.props.user.userName, projectName: this.props.project.projectName, oldFileName: this.props.toRenameName, newFileName: `${values.fileName}.${extension}` });
-        if(renameFileResponse.request.status === 200) { //success
-          this.props.onCloseRenameUserProjectFileDialog("File",this.props.user, renameFileResponse.data);
+        if (renameFileResponse.request.status === 200) { //success
+          this.props.onCloseRenameUserProjectFileDialog("File", this.props.user, renameFileResponse.data);
         }
       }
       catch (error) {
@@ -186,6 +204,9 @@ export class RenameUserProjectFileDialog extends React.PureComponent<Props, Stat
     const { props, state } = this;
     const { style, className, theme, onClose, locale } = props;
     const { errorMessage } = state;
+    const RENAMECLASSROOM_FOR_ITEMS: Form.Item[] = [
+      Form.username('classroomName', 'Classroom Name')
+    ];
     const RENAMEUSER_FORM_ITEMS: Form.Item[] = [
       Form.username('userName', 'User Name')
     ];
@@ -197,7 +218,49 @@ export class RenameUserProjectFileDialog extends React.PureComponent<Props, Stat
     ];
 
 
+    let renameClassroomContent: JSX.Element;
+    console.log("RenameUserProjectFileDialog props: ", props);
+
+    renameClassroomContent = (
+      <Dialog
+        theme={theme}
+        name={LocalizedString.lookup(tr('Rename Classroom'), locale)}
+        onClose={onClose}
+      >
+        <RenameContainer theme={theme} style={style} className={className}>
+          <CenteredContainer>
+            <Bold>{LocalizedString.lookup(tr(`Rename Classroom ${this.props.toRenameName} to: `), locale)}</Bold>
+
+          </CenteredContainer>
+          {/* Show error message if it exists */}
+          {errorMessage && (
+            <ErrorMessageContainer theme={theme}>
+              <ItemIcon icon={faExclamationTriangle} />
+              <div style={{ fontWeight: 450 }}>
+                {state.errorMessage}
+              </div>
+
+            </ErrorMessageContainer>
+          )}
+
+
+
+          <Container theme={theme} style={style} className={className}>
+            <StyledForm
+              theme={theme}
+              onFinalize={this.onFinalize_}
+              items={RENAMECLASSROOM_FOR_ITEMS}
+              finalizeText="Create"
+            />
+          </Container>
+
+        </RenameContainer>
+
+      </Dialog>
+    );
+
     let renameUserContent: JSX.Element;
+    console.log("RenameUserProjectFileDialog props: ", props);
 
     renameUserContent = (
       <Dialog
@@ -313,6 +376,7 @@ export class RenameUserProjectFileDialog extends React.PureComponent<Props, Stat
 
 
     const panelContents = {
+      Classroom: renameClassroomContent,
       User: renameUserContent,
       Project: renameProjectContent,
       File: renameFileContent
