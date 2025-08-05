@@ -5,11 +5,15 @@ import { Dialog } from './Dialog';
 import { ThemeProps, LIGHTMODE_YES,LIGHTMODE_NO,LIGHT } from './theme';
 import tr from '@i18n';
 import LocalizedString from '../util/LocalizedString';
+import { User } from 'types/userTypes';
+import { Project } from 'types/projectTypes';
+import { FileInfo } from 'types/fileInfo';
 
 export interface DeleteUserProjectFileDialogPublicProps extends ThemeProps, StyleProps {
   onClose: () => void;
-  onConfirm: (confirmDeleteName: string, confirmDeleteType: string, action: string) => void;
+  onConfirm: (confirmDeleteName: string, confirmDeleteType: string, action: string, object?: User | Project | string) => void;
   onDeny: () => void;
+  toDeleteObject: User | Project | string;
   toDeleteName: string;
   toDeleteType: string;
 }
@@ -151,6 +155,7 @@ class DeleteUserProjectFileDialog extends React.PureComponent<Props> {
   render() {
     const { props } = this;
     const { theme, onClose, locale } = props;
+    console.log('DeleteUserProjectFileDialog render props: ', props);
 
     return (
       <Dialog theme={theme} name={LocalizedString.lookup(tr('Are You Sure?'), locale)} onClose={onClose}>
@@ -163,7 +168,7 @@ class DeleteUserProjectFileDialog extends React.PureComponent<Props> {
           <CenteredContainer>
             
             <BottomButtonContainer>
-              <YesItem onClick={() => this.props.onConfirm(this.props.toDeleteName, this.props.toDeleteType, 'delete')} theme={theme}>
+              <YesItem onClick={() => this.props.onConfirm(this.props.toDeleteName, this.props.toDeleteType, 'delete', this.props.toDeleteObject)} theme={theme}>
                 Yes
               </YesItem>
               <NoItem onClick={this.props.onDeny} theme={theme}>
