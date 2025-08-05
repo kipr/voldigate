@@ -36,6 +36,9 @@ const extensions = {
 };
 
 const defaultPath = "/home/kipr/Documents/KISS";
+const usersJsonPath = `${defaultPath}/users.json`;
+const classroomsJsonPath = `${defaultPath}/classrooms/classrooms.json`;
+
 let config;
 try {
   config = getConfig();
@@ -228,6 +231,7 @@ app.post("/upload-project", express.json(), async (req, res) => {
     return res.status(400).json({ error: "Invalid request data" });
   }
 
+  const usersData = JSON.parse(await fs.readFile(usersJsonPath, "utf-8"));  
   const userPath = `${defaultPath}/${user.userName}`;
   const projectPath = `${userPath}/${project.projectName}`;
   const projectName = project.projectName;
@@ -273,6 +277,8 @@ app.post("/upload-project", express.json(), async (req, res) => {
     } else {
       createAndSaveFile(configPath, configContent);
     }
+
+    // Update users.json to add the project
 
     // Save source files
     for (const file of srcFiles) {
@@ -353,7 +359,7 @@ app.post("/upload-file", express.json(), async (req, res) => {
   }
   const defaultPath = "/home/kipr/Documents/KISS";
   let filePath;
-  files.map((file) => {
+  files.map(async (file) => {
     if (file.uploadType === "include") {
       if (file.name.endsWith(".h")) {
         filePath = `${defaultPath}/${user.userName}/${project.projectName}/include/${file.name}`;
@@ -378,6 +384,35 @@ app.post("/upload-file", express.json(), async (req, res) => {
     console.log("Saving file:", filePath);
     try {
       createAndSaveFile(filePath, file.content);
+      //update users.json to add file to project
+      try{
+        const usersData = JSON.parse(await fs.readFile(usersJsonPath, "utf8"));
+        const userProjects = usersData[user.userName].projects || [];
+        const foundProject = userProjects.find(
+          (project) => project.projectName === project.projectName
+        );
+        console.log("/upload-file foundProject:", foundProject);
+        if (foundProject) {
+          if (file.uploadType === "include") {
+            foundProject.includeFolderFiles.push(file.name);
+          } else if (file.uploadType === "src") {
+            foundProject.srcFolderFiles.push(file.name);
+          } else if (file.uploadType === "data") {
+            foundProject.dataFolderFiles.push(file.name);
+          }
+          await fs.writeFile(
+            usersJsonPath,
+            JSON.stringify(usersData, null, 2),
+            "utf8"
+          );
+        }
+        
+
+      }
+      catch (error) {
+          console.error("Error updating users.json:", error);
+          return res.status(500).json({ error: "Failed to update users.json" });
+        }
       return res.status(200).json({ message: "File saved successfully" });
     } catch (error) {
       console.error("Error saving file:", error);
@@ -1666,8 +1701,8 @@ function saveFileContents() {
 
       if (isNewFile) {
         await editJson({ user, project, fileType, fileName });
-        return res.status(200).send("File saved successfully");
       }
+      return res.status(200).send("File saved successfully");
     } catch (error) {
       console.error("Error in saveFileContents:", error);
       return res.status(500).json({ error: "Internal server error" });
@@ -1959,27 +1994,44 @@ app.post("/move-user-to-classroom", async (req, res) => {
     const oldClassroomName = foundUser.classroomName; // save old classroom name
     foundUser.classroomName = newClassroom.name;
 
-    await fs.writeFile("/home/kipr/Documents/KISS/users.json", JSON.stringify(userData, null, 2));
+    await fs.writeFile(
+      "/home/kipr/Documents/KISS/users.json",
+      JSON.stringify(userData, null, 2)
+    );
 
     // Load classroom data
-    let classData = await readJsonFile("/home/kipr/Documents/KISS/classrooms/classrooms.json");
+    let classData = await readJsonFile(
+      "/home/kipr/Documents/KISS/classrooms/classrooms.json"
+    );
 
     // Remove from old classroom (if it exists)
-    const oldClassroom = classData.classrooms.find(c => c.name === oldClassroomName);
+    const oldClassroom = classData.classrooms.find(
+      (c) => c.name === oldClassroomName
+    );
     if (oldClassroom) {
-      oldClassroom.users = oldClassroom.users.filter(u => u.userName !== user.userName);
+      oldClassroom.users = oldClassroom.users.filter(
+        (u) => u.userName !== user.userName
+      );
     }
 
     // Add to new classroom
-    const foundClassroom = classData.classrooms.find(c => c.name === newClassroom.name);
+    const foundClassroom = classData.classrooms.find(
+      (c) => c.name === newClassroom.name
+    );
     if (foundClassroom) {
       // Avoid duplicate user entries
-      if (!foundClassroom.users.some(u => u.userName === user.userName)) {
-        foundClassroom.users.push({ userName: user.userName, interfaceMode: user.interfaceMode });
+      if (!foundClassroom.users.some((u) => u.userName === user.userName)) {
+        foundClassroom.users.push({
+          userName: user.userName,
+          interfaceMode: user.interfaceMode,
+        });
       }
     }
 
-    await fs.writeFile("/home/kipr/Documents/KISS/classrooms/classrooms.json", JSON.stringify(classData, null, 2));
+    await fs.writeFile(
+      "/home/kipr/Documents/KISS/classrooms/classrooms.json",
+      JSON.stringify(classData, null, 2)
+    );
 
     return res.status(200).json({ message: "User moved to new classroom." });
   } catch (error) {
@@ -1988,6 +2040,179 @@ app.post("/move-user-to-classroom", async (req, res) => {
   }
 });
 
+//Paste file to project
+async function pasteFiletoProject(pasteData, usersData) {
+  let pasteToFinalPath = "/home/kipr/Documents/KISS/";
+  let pasteFromPath = `/home/kipr/Documents/KISS/${pasteData.pasteFromData.toPasteObject.copyObjectUser.userName}/${pasteData.pasteFromData.toPasteObject.copyObjectProject.projectName}/`;
+
+  fileObject = pasteData.pasteFromData.toPasteObject.copyObjectFile;
+  const [fileName, fileType] = fileObject.split(".");
+
+  if (usersData[pasteData.pasteToData.pasteWhereUser.userName]) {
+    const userProjects =
+      usersData[pasteData.pasteToData.pasteWhereUser.userName].projects;
+    const foundProject = userProjects.find(
+      (project) =>
+        project.projectName === pasteData.pasteToData.toPasteWhere.projectName
+    );
+ 
+    pasteToFinalPath +=
+      pasteData.pasteToData.pasteWhereUser.userName +
+      "/" +
+      foundProject.projectName +
+      "/";
+
+    if (foundProject) {
+      switch (fileType) {
+        case "h":
+          projectIncludeFiles = foundProject.includeFolderFiles || [];
+          if (!projectIncludeFiles.includes(pasteData.toPasteObject)) {
+            projectIncludeFiles.push(pasteData.toPasteObject);
+          }
+          foundProject.includeFolderFiles = projectIncludeFiles;
+          pasteToFinalPath += "include/" + fileObject;
+          pasteFromPath += "include/" + fileObject;
+          break;
+        case "c":
+        case "cpp":
+        case "py":
+          projectSrcFiles = foundProject.srcFolderFiles || [];
+          if (
+            !projectSrcFiles.includes(
+              pasteData.pasteFromData.toPasteObject.copyObjectFile
+            )
+          ) {
+            projectSrcFiles.push(
+              pasteData.pasteFromData.toPasteObject.copyObjectFile
+            );
+          }
+          foundProject.srcFolderFiles = projectSrcFiles;
+          pasteToFinalPath += "src/" + fileObject;
+          pasteFromPath += "src/" + fileObject;
+          break;
+        case "txt":
+          projectUserDataFiles = foundProject.dataFolderFiles || [];
+          if (!projectUserDataFiles.includes(pasteData.toPasteObject)) {
+            projectUserDataFiles.push(pasteData.toPasteObject);
+          }
+          foundProject.dataFolderFiles = projectUserDataFiles;
+          pasteToFinalPath += "data/" + fileObject;
+          pasteFromPath += "data/" + fileObject;
+          break;
+      }
+
+      try {
+        await fs.writeFile(
+          usersJsonPath,
+          JSON.stringify(usersData, null, 2),
+          "utf-8"
+        );
+
+        //Create file at pasteToFinalPath with contents from pasteFromPath
+        try {
+          //get contents from pasteFromPath
+          const fileContents = await fs.readFile(pasteFromPath, "utf-8");
+          await fs.writeFile(pasteToFinalPath, fileContents, "utf-8");
+
+          return [pasteToFinalPath, pasteFromPath];
+        } catch (error) {
+          console.error("Error pasting file:", error);
+        }
+      } catch (error) {
+        console.error("Error updating users.json:", error);
+      }
+    }
+  }
+}
+
+//Paste project to user
+async function pasteProjectToUser(pasteData, usersData) {
+  let pasteToFinalPath = "/home/kipr/Documents/KISS/";
+  let pasteFromPath = `/home/kipr/Documents/KISS/${pasteData.pasteFromData.toPasteObject.copyObjectUser.userName}/${pasteData.pasteFromData.toPasteObject.copyObjectProject.projectName}/`;
+
+  const projectObject = pasteData.pasteFromData.toPasteObject.copyObjectProject;
+
+  if (usersData[pasteData.pasteToData.pasteWhereUser.userName]) {
+    pasteToFinalPath +=
+      pasteData.pasteToData.pasteWhereUser.userName +
+      "/" +
+      projectObject.projectName;
+
+    const userProjects =
+      usersData[pasteData.pasteToData.pasteWhereUser.userName].projects || [];
+
+    const foundProject = userProjects.find(
+      (project) => project.projectName === projectObject.projectName
+    );
+    if (!foundProject) {
+      try {
+        userProjects.push(projectObject);
+        //Try creating project directory with all its folders
+        try {
+          await fs.cp(pasteFromPath, pasteToFinalPath, { recursive: true });
+          //Update usersData with new project
+          usersData[pasteData.pasteToData.pasteWhereUser.userName].projects =
+            userProjects;
+          try {
+            await fs.writeFile(
+              usersJsonPath,
+              JSON.stringify(usersData, null, 2),
+              "utf-8"
+            );
+
+            return [pasteToFinalPath, pasteFromPath];
+          } catch (error) {
+            console.error("Error updating users.json:", error);
+          }
+        } catch (error) {
+          console.error("Error creating project directory:", error);
+          return;
+        }
+      } catch (error) {
+        console.error("Error updating user projects:", error);
+      }
+    }
+  }
+}
+
+app.post("/paste-object", async (req, res) => {
+  console.log("Received request body:", req.body);
+  const { pasteData } = req.body;
+  const usersData = JSON.parse(await fs.readFile(usersJsonPath, "utf8"));
+
+  let pasteToFinalPath = "";
+  let pasteFromPath = "";
+
+  //Pasted object is a file to a project
+  if (
+    pasteData.pasteFromData.toPasteObject.copyObjectFile &&
+    typeof pasteData.pasteFromData.toPasteObject.copyObjectFile === "string"
+  ) {
+    console.log("Pasting file to project");
+    [pasteToFinalPath, pasteFromPath] = await pasteFiletoProject(
+      pasteData,
+      usersData
+    );
+  }
+  //Pasted object is a project to a user
+  else if (
+    pasteData.pasteFromData.toPasteObject.copyObjectProject &&
+    pasteData.pasteFromData.toPasteObject.copyObjectProject.projectName
+  ) {
+    console.log("Pasting project to user");
+    [pasteToFinalPath, pasteFromPath] = await pasteProjectToUser(
+      pasteData,
+      usersData
+    );
+  }
+
+  console.log("Final paste path:", pasteToFinalPath);
+  console.log("Final paste from path:", pasteFromPath);
+
+  return res.status(200).json({
+    message: "Object pasted successfully",
+  });
+});
 
 app.post("/initialize-project", async (req, res) => {
   const { user, project, classroomName } = req.body;
@@ -2000,9 +2225,9 @@ app.post("/initialize-project", async (req, res) => {
   }
   const usersJsonPath = "/home/kipr/Documents/KISS/users.json";
   const userDirectory = `/home/kipr/Documents/KISS/${user.userName}`;
-  const userConfigPath = path.join(userDirectory, ".config.json");
+  const userConfigPath = path.join(userDirectory, ".user.config.json");
   const projectDirectory = path.join(userDirectory, project.projectName);
-  const projectConfigPath = path.join(projectDirectory, ".config.json");
+  const projectConfigPath = path.join(projectDirectory, ".project.config.json");
 
   let usersData = {};
   try {
@@ -2046,7 +2271,10 @@ app.post("/initialize-project", async (req, res) => {
     await fs.writeFile(
       userConfigPath,
       JSON.stringify(
-        { name: user.userName, interfaceMode: user.interfaceMode },
+        {userName: user.userName,
+        interfaceMode: user.interfaceMode,
+        projects: user.projects || [],
+        classroomName: classroomName || null, },
         null,
         2
       ),
@@ -2066,7 +2294,12 @@ app.post("/initialize-project", async (req, res) => {
     await fs.writeFile(
       projectConfigPath,
       JSON.stringify(
-        { name: project.projectName, language: project.projectLanguage },
+        { projectName: project.projectName,
+        projectLanguage: project.projectLanguage,
+        includeFolderFiles: project.includeFolderFiles || [],
+        srcFolderFiles: project.srcFolderFiles || [],
+        dataFolderFiles: project.dataFolderFiles || [],
+        },
         null,
         2
       ),
@@ -2135,19 +2368,23 @@ app.post("/delete-file", async (req, res) => {
     return res.status(400).json({ error: "Missing required fields." });
   }
 
+  let fileTypeDirectory = "";
   let userProjectDirectory = "";
   switch (fileType) {
     case "h":
       userProjectDirectory = `/home/kipr/Documents/KISS/${userName}/${projectName}/include`;
+      fileTypeDirectory = "includeFolderFiles";
       break;
     case "c":
     case "cpp":
     case "py":
     case "graphical":
       userProjectDirectory = `/home/kipr/Documents/KISS/${userName}/${projectName}/src`;
+      fileTypeDirectory = "srcFolderFiles";
       break;
     case "txt":
       userProjectDirectory = `/home/kipr/Documents/KISS/${userName}/${projectName}/data`;
+      fileTypeDirectory = "dataFolderFiles";
       break;
     default:
       return res.status(400).json({ error: "Invalid file type." });
@@ -2164,6 +2401,30 @@ app.post("/delete-file", async (req, res) => {
     //Delete file
     await fs.rm(filePath);
     console.log(`Deleted file path: ${filePath}`);
+
+    //Update users.json to remove file from project
+    const usersData = JSON.parse(await fs.readFile(usersJsonPath, "utf8"));
+    const userProjects = usersData[userName].projects || [];
+    const foundProject = userProjects.find(
+      (project) => project.projectName === projectName
+    );
+    if(foundProject){
+      try{
+        foundProject[fileTypeDirectory] = foundProject[fileTypeDirectory].filter(
+        (file) => file !== fileName
+      );
+      await fs.writeFile(
+        usersJsonPath,
+        JSON.stringify(usersData, null, 2),
+        "utf8"
+      );
+      }
+      catch (error) {
+        console.error("Error updating users.json:", error);
+        return res.status(500).json({ error: "Error updating users.json." });
+      }
+      
+    }
 
     return res.status(200).send("File deleted successfully.");
   } catch (error) {
@@ -2189,6 +2450,20 @@ app.post("/delete-project", async (req, res) => {
 
   const userDirectory = `/home/kipr/Documents/KISS/${userName}`;
   const projectDirectory = path.join(userDirectory, projectName);
+  const usersData = JSON.parse(await fs.readFile(usersJsonPath, "utf-8"));
+  const userProjects = usersData[userName].projects || [];
+  const foundProject = userProjects.find((project) => project.projectName === projectName);
+  if(foundProject) {
+    try{
+      userProjects.splice(userProjects.indexOf(foundProject), 1);
+      await fs.writeFile(usersJsonPath, JSON.stringify(usersData, null, 2));
+
+    }
+    catch (error) {
+      console.error("Error updating users.json:", error);
+      return res.status(500).json({ error: "Failed to update users.json" });
+    }
+  }
 
   try {
     // Check if the project directory exists
@@ -2208,13 +2483,14 @@ app.post("/delete-project", async (req, res) => {
 
 //Delete user
 app.post("/delete-user", async (req, res) => {
-  const { userName } = req.body;
+  const { user } = req.body;
+  console.log("Received request body:", req.body);
 
-  if (!userName) {
+  if (!user) {
     return res.status(400).json({ error: "Missing required fields." });
   }
   const jsonPath = "/home/kipr/Documents/KISS/users.json";
-  const userDirectory = `/home/kipr/Documents/KISS/${userName}`;
+  const userDirectory = `/home/kipr/Documents/KISS/${user.userName}`;
   const classJsonPath = `/home/kipr/Documents/KISS/classrooms/classrooms.json`;
 
   try {
@@ -2222,11 +2498,11 @@ app.post("/delete-user", async (req, res) => {
 
     const existingData = JSON.parse(await fs.readFile(jsonPath, "utf8"));
 
-    if (!existingData[userName]) {
+    if (!existingData[user.userName]) {
       return res.status(404).json({ error: "User not found in users.json." });
     }
 
-    delete existingData[userName];
+    delete existingData[user.userName];
 
     await fs.writeFile(jsonPath, JSON.stringify(existingData, null, 2));
   } catch (error) {
@@ -2236,22 +2512,41 @@ app.post("/delete-user", async (req, res) => {
 
   try {
     // Check if the user exists in classrooms.json
-    await fs.access(classJsonPath);
+    console.log("Checking classrooms.json for user:", user);
     const classData = JSON.parse(await fs.readFile(classJsonPath, "utf8"));
-    let userFoundInClassroom = false;
-    for (const classroomName in classData) {
-      const classroom = classData[classroomName];
-      if (classroom.users && classroom.users[userName]) {
-        delete classroom.users[userName];
-        userFoundInClassroom = true;
-      }
-    }
-    if (userFoundInClassroom) {
-      await fs.writeFile(
-        classJsonPath,
-        JSON.stringify(classData, null, 2),
-        "utf8"
+    console.log("/delete classData: ", classData);
+    const classroom = classData.classrooms.find(
+      (c) => c.name === user.classroomName
+    );
+
+    console.log("Found classroom: ", classroom);
+    const classroomUsers = classData.classrooms;
+    console.log("classroomUsers: ", classroomUsers);
+
+    if (classroom) {
+      console.log(`User ${user.userName} found in classroom ${classroom.name}`);
+      const foundUser = classroom.users.find(
+        (u) => u.userName === user.userName
       );
+      if (foundUser) {
+        console.log(
+          `Removing user ${user.userName} from classroom ${classroom.name}`
+        );
+        const userIndex = classroom.users.findIndex(
+          (u) => u.userName === user.userName
+        );
+        if (userIndex !== -1) {
+          classroom.users.splice(userIndex, 1);
+          await fs.writeFile(
+            classJsonPath,
+            JSON.stringify(classData, null, 2),
+            "utf8"
+          );
+          console.log(
+            `User ${user.userName} removed from classroom ${classroom.name}`
+          );
+        }
+      }
     }
   } catch (error) {
     console.error("Error updating classrooms.json:", error);
@@ -2636,20 +2931,61 @@ app.post("/change-interface-mode", (req, res) => {
 
 //Rename user, project, or file
 app.post("/rename", async (req, res) => {
-  const defaultDirectory = `/home/kipr/Documents/KISS`;
-  const usersJsonPath = path.join(defaultDirectory, "users.json");
   console.log("usersJsonPath:", usersJsonPath);
 
-  if (req.body.renameType === "User") {
+  console.log("Received request body:", req.body);
+  const usersData = JSON.parse(await fs.readFile(usersJsonPath, "utf8"));
+  const classroomsData = JSON.parse(
+    await fs.readFile(classroomsJsonPath, "utf8")
+  );
+
+  if (req.body.renameType === "Classroom") {
+    //Rename classroom name in users.json
     try {
-      const oldUserDirectory = path.join(
-        defaultDirectory,
-        req.body.oldUserName
+      Object.entries(usersData).forEach(([userName, userData]) => {
+        console.log(`${userName} is in classroom: ${userData.classroomName}`);
+        if (userData.classroomName === req.body.oldClassroomName) {
+          userData.classroomName = req.body.newClassroomName;
+        }
+      });
+      await fs.writeFile(
+        usersJsonPath,
+        JSON.stringify(usersData, null, 2),
+        "utf8"
       );
-      const desiredUserDirectory = path.join(
-        defaultDirectory,
-        req.body.newUserName
+    } catch (error) {
+      console.error("Error renaming classroom in users.json: ", error);
+    }
+
+    //Now rename classroom name in classrooms.json
+    try {
+      Object.entries(classroomsData.classrooms).forEach(
+        ([index, classroom]) => {
+          console.log(`Classroom ${index}: ${classroom.name}`);
+          if (classroom.name === req.body.oldClassroomName) {
+            console.log("Renaming classroom:", classroom.name);
+            classroom.name = req.body.newClassroomName;
+          }
+        }
       );
+      await fs.writeFile(
+        classroomsJsonPath,
+        JSON.stringify(classroomsData, null, 2),
+        "utf8"
+      );
+    } catch (error) {
+      console.error("Error renaming classroom in classrooms.json: ", error);
+    }
+
+    res.status(200).json({
+      message: "Classroom renamed successfully",
+      oldClassroomName: req.body.oldClassroomName,
+      newClassroomName: req.body.newClassroomName,
+    });
+  } else if (req.body.renameType === "User") {
+    try {
+      const oldUserDirectory = path.join(defaultPath, req.body.oldUserName);
+      const desiredUserDirectory = path.join(defaultPath, req.body.newUserName);
       // Check if the new desired user directory already exists
 
       try {
@@ -2673,7 +3009,10 @@ app.post("/rename", async (req, res) => {
       console.log("Current users data:", usersData);
       // Update the user entry
       if (usersData[req.body.oldUserName]) {
-        usersData[req.body.newUserName] = usersData[req.body.oldUserName];
+        usersData[req.body.newUserName] = {
+          ...usersData[req.body.oldUserName],
+          userName: req.body.newUserName,
+        };
         delete usersData[req.body.oldUserName];
         console.log("Preparing to write to users.json...");
         console.log("Path:", usersJsonPath);
@@ -2683,6 +3022,53 @@ app.post("/rename", async (req, res) => {
           JSON.stringify(usersData, null, 2),
           "utf8"
         );
+
+        if (usersData[req.body.newUserName].classroomName) {
+          console.log(
+            "usersData[req.body.newUserName].classroomName: ",
+            usersData[req.body.newUserName].classroomName
+          );
+          // Update classroom name in classrooms.json
+          const classJsonPath = path.join(
+            defaultPath,
+            "classrooms",
+            "classrooms.json"
+          );
+          const classData = JSON.parse(
+            await fs.readFile(classJsonPath, "utf8")
+          );
+          console.log("classData: ", classData);
+
+          const classroom = classData.classrooms.find(
+            (c) => c.name === usersData[req.body.newUserName].classroomName
+          );
+
+          if (classroom) {
+            console.log("Renaming user in classroom:", classroom.name);
+            console.log("Classroom.users: ", classroom.users);
+            console.log(
+              "userObj: ",
+              classroom.users.find(
+                (user) => user.userName === req.body.oldUserName
+              )
+            );
+            const foundUser = classroom.users.find(
+              (user) => user.userName === req.body.oldUserName
+            );
+            if (foundUser) {
+              console.log("Found user in classroom:", foundUser);
+              foundUser.userName = req.body.newUserName;
+            }
+          }
+
+          await fs.writeFile(
+            classJsonPath,
+            JSON.stringify(classData, null, 2),
+            "utf8"
+          );
+
+          console.log("Update classData: ", classData);
+        }
       } else {
         console.warn(`User ${req.body.oldUserName} not found in users.json.`);
       }
@@ -2699,7 +3085,7 @@ app.post("/rename", async (req, res) => {
     }
   } else if (req.body.renameType === "Project") {
     try {
-      const userDirectory = path.join(defaultDirectory, req.body.userName);
+      const userDirectory = path.join(defaultPath, req.body.userName);
       const oldProjectDirectory = path.join(
         userDirectory,
         req.body.oldProjectName
@@ -2721,10 +3107,26 @@ app.post("/rename", async (req, res) => {
         //continue
       }
       await fs.rename(oldProjectDirectory, newProjectDirectory);
+      try {
+        // const usersData = JSON.parse(await fs.readFile(usersJsonPath, "utf8"));
+        console.log("Current users data:", usersData);
+        if (usersData[req.body.userName]) {
+          // Update the project name in users.json
+          const userProjects = usersData[req.body.userName].projects || [];
+          const projectIndex = userProjects.findIndex(
+            (p) => p.projectName === req.body.oldProjectName
+          );
+          if (projectIndex !== -1) {
+            userProjects[projectIndex].projectName = req.body.newProjectName;
 
-      console.log(
-        `Renamed project directory: ${oldProjectDirectory} to ${newProjectDirectory}`
-      );
+            await fs.writeFile(
+              usersJsonPath,
+              JSON.stringify(usersData, null, 2),
+              "utf8"
+            );
+          }
+        }
+      } catch (error) {}
 
       res.status(200).json({
         message: "Project renamed successfully.",
@@ -2740,10 +3142,11 @@ app.post("/rename", async (req, res) => {
   } else if (req.body.renameType === "File") {
     try {
       const [file, extension] = req.body.oldFileName.split(".");
-      const userDirectory = path.join(defaultDirectory, req.body.userName);
+      const userDirectory = path.join(defaultPath, req.body.userName);
       const projectDirectory = path.join(userDirectory, req.body.projectName);
       let oldFilePath = "";
       let newFilePath = "";
+      let fileDirectoryType = "";
       switch (extension) {
         case "h":
           oldFilePath = path.join(
@@ -2754,6 +3157,7 @@ app.post("/rename", async (req, res) => {
             projectDirectory,
             `include/${req.body.newFileName}`
           );
+          fileDirectoryType = "includeFolderFiles";
           break;
         case "c":
         case "cpp":
@@ -2766,6 +3170,7 @@ app.post("/rename", async (req, res) => {
             projectDirectory,
             `src/${req.body.newFileName}`
           );
+          fileDirectoryType = "srcFolderFiles";
           break;
         case "txt":
           oldFilePath = path.join(
@@ -2776,6 +3181,7 @@ app.post("/rename", async (req, res) => {
             projectDirectory,
             `data/${req.body.newFileName}`
           );
+          fileDirectoryType = "dataFolderFiles";
           break;
       }
 
@@ -2794,6 +3200,34 @@ app.post("/rename", async (req, res) => {
       await fs.rename(oldFilePath, newFilePath);
 
       console.log(`Renamed file: ${oldFilePath} to ${newFilePath}`);
+
+      try {
+        if (usersData[req.body.userName]) {
+          // Update the file name in users.json
+          const userProjects = usersData[req.body.userName].projects || [];
+          const projectIndex = userProjects.findIndex(
+            (p) => p.projectName === req.body.projectName
+          );
+          if (projectIndex !== -1) {
+            const projectFiles = userProjects[projectIndex] || [];
+            console.log("projectFiles: ", projectFiles);
+            const fileIndex = projectFiles[fileDirectoryType]?.findIndex(
+              (f) => f === req.body.oldFileName
+            );
+            if (fileIndex !== -1) {
+              console.log("File: ", projectFiles[fileDirectoryType][fileIndex]);
+              projectFiles[fileDirectoryType][fileIndex] = req.body.newFileName;
+              await fs.writeFile(
+                usersJsonPath,
+                JSON.stringify(usersData, null, 2),
+                "utf8"
+              );
+            }
+          }
+        }
+      } catch (error) {
+        console.error("Error updating users.json:", error);
+      }
 
       res.status(200).json({
         message: "File renamed successfully",

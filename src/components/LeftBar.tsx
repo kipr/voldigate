@@ -74,6 +74,8 @@ interface LeftBarState {
   toUploadProject?: Project | UploadedProject;
   toUploadFiles?: FileInfo[];
 
+  renameClassroomFlag?: boolean;
+
   moveUserFlag?: boolean;
   removeUserFlag?: boolean;
   deleteUserFlag?: boolean;
@@ -134,6 +136,8 @@ interface LeftBarState {
   screenWidth: number;
 
   terminalDisplayShown?: boolean;
+
+  toPasteData?: {};
 }
 
 
@@ -759,11 +763,11 @@ class LeftBar extends React.Component<Props, State> {
 
     console.log("LeftBar onLoadUserData usersArray:", usersArray);
 
-    let userIndex = usersArray.findIndex(user => user.userName === (renamedUser ? oldUserName : loadedUser.userName));
-    console.log("LeftBar onLoadUserData userIndex:", userIndex);
-
 
     if (loadedUser) {
+      let userIndex = usersArray.findIndex(user => user.userName === (renamedUser ? oldUserName : loadedUser.userName));
+      console.log("LeftBar onLoadUserData userIndex:", userIndex);
+
 
       if (userIndex !== -1) { // Check if the user exists in the list
         this.setState(prevState => (
@@ -786,10 +790,7 @@ class LeftBar extends React.Component<Props, State> {
       if (this.state.userShown) {
         if (this.state.userShown.userName === loadedUser.userName) {
           this.setState({
-            userShown: {
-              ...this.state.userShown,
-              projects: userData
-            }
+           userShown: loadedUser
           })
         }
       }
@@ -814,6 +815,46 @@ class LeftBar extends React.Component<Props, State> {
       user: user
     });
   };
+
+  private onRenameClassroom_ = (classroom: Classroom) => {
+    console.log("Renaming classroom:", classroom);
+    this.setState({
+      contextMenuClassroom: classroom,
+      renameClassroomFlag: true
+    });
+  }
+
+  private onSetRenameFlag_ = (renameFlag: boolean, renameType: 'Classroom' | 'User' | 'Project' | 'File') => {
+    if(renameType === 'Classroom') {
+      this.setState({
+        renameClassroomFlag: renameFlag,
+        contextMenuClassroom: undefined
+      });
+    }
+    else if (renameType === 'User') {
+      this.setState({
+        renameUserFlag: renameFlag,
+        contextMenuUser: undefined
+      });
+    }
+    else if (renameType === 'Project') {
+      this.setState({
+        renameProjectFlag: renameFlag,
+        contextMenuProject: undefined,
+        contextMenuUser: undefined
+      });
+    }
+    else if (renameType === 'File') {
+      this.setState({
+        renameFileFlag: renameFlag,
+        contextMenuFile: undefined,
+        contextMenuProject: undefined,
+        contextMenuUser: undefined
+      });
+    }
+  }
+
+
 
   /**
  * Sets the Root state's deleteUserFlag to given boolean value
@@ -844,8 +885,9 @@ class LeftBar extends React.Component<Props, State> {
  * @param deleteUserFlag - A boolean value to set the state deleteUserFlag
  */
   private onDeleteUser_ = (user: User, deleteUserFlag: boolean) => {
+    const fullUser = Object.values(this.state.users).find(u => u.userName === user.userName);
     this.setState({
-      contextMenuUser: user,
+      contextMenuUser: fullUser,
       deleteUserFlag: deleteUserFlag
     });
   };
@@ -862,8 +904,9 @@ class LeftBar extends React.Component<Props, State> {
   };
 
   private onRenameUser_ = (user: User) => {
+    const fullUser = Object.values(this.state.users).find(u => u.userName === user.userName);
     this.setState({
-      contextMenuUser: user,
+      contextMenuUser: fullUser,
       renameUserFlag: true
     });
   }
@@ -1030,7 +1073,7 @@ class LeftBar extends React.Component<Props, State> {
         simpleProjectLoadFlag: true,
         fileType: fileName.split('.').pop() || '',
         isClickFile: true,
-        userShown: user,
+        userShown: Object.values(this.state.users).find(u => u.userName === user.userName),
         project: project,
         fileName: fileName,
         activeLanguage: activeLanguage,
@@ -1077,6 +1120,13 @@ class LeftBar extends React.Component<Props, State> {
     this.setState({
       moveProjectFlag: moveProjectFlag,
       contextMenuProject: undefined,
+      contextMenuUser: undefined
+    });
+  };
+
+  private onSetMoveUserFlag_ = (moveUserFlag: boolean) => {
+    this.setState({
+      moveUserFlag: moveUserFlag,
       contextMenuUser: undefined
     });
   };
@@ -1137,7 +1187,7 @@ class LeftBar extends React.Component<Props, State> {
   private onAddNewFile_ = (user: User, project: Project, activeLanguage: ProgrammingLanguage, fileType: string) => {
     this.setState({
       isAddNewFile: true,
-      user: user,
+      user: Object.values(this.state.users).find(u => u.userName === user.userName) || user,
       activeLanguage: activeLanguage,
       fileType: fileType,
       project: project
@@ -1236,13 +1286,13 @@ class LeftBar extends React.Component<Props, State> {
     this.isClickedFileRef.current = true;
     this.setState({
       classroom: classroom,
-      user: user,
+      user: Object.values(this.state.users).find(u => u.userName === user.userName) || user,
       project: project,
       fileName: fileName,
       activeLanguage: language,
       fileType: fileType,
       isClickFile: true,
-      userShown: user
+      userShown: Object.values(this.state.users).find(u => u.userName === user.userName) || user,
     });
   };
 
@@ -1396,8 +1446,38 @@ class LeftBar extends React.Component<Props, State> {
   };
 
   private onClassroomUpdate_ = (classrooms: Classroom[]) => {
+    console.log("LeftBar onClassroomUpdate state:", this.state);
+    console.log("LeftBar onClassroomUpdate props:", this.props);
+    // this.setState({
+    //   classrooms: classrooms
+    // })
+
+    this.setState(prevState => (
+      console.log("LeftBar onClassroomUpdate prevState:", prevState),
+      {
+        classrooms: classrooms
+      }
+    ));
+  };
+
+  private onCopyObject_ = (object: any) => {
+    console.log("LeftBar onCopyObject object:", object);
+    console.log("LeftBar onCopyObject state:", this.state);
+    console.log("LeftBar onCopyObject props:", this.props);
+
+
+
+  };
+
+
+  private onPasteObject_ = (toPasteData: {}) => {
+    console.log("LeftBar onPasteObject toPasteObject:", toPasteData);
+    console.log("LeftBar onPasteObject state:", this.state);
+    console.log("LeftBar onPasteObject props:", this.props);
     this.setState({
-      classrooms: classrooms
+      toPasteData: toPasteData
+    }, () => {
+      console.log("LeftBar onPasteObject state after setState:", this.state);
     })
   };
 
@@ -1431,6 +1511,7 @@ class LeftBar extends React.Component<Props, State> {
       fileType,
       reloadUser,
       userShown,
+      renameClassroomFlag,
       renameProjectFlag,
       renameUserFlag,
       renameFileFlag,
@@ -1502,6 +1583,7 @@ class LeftBar extends React.Component<Props, State> {
           downloadFileFlag={downloadFileFlag}
           moveProjectFlag={moveProjectFlag}
 
+          renameClassroomFlag={renameClassroomFlag}
           renameUserFlag={renameUserFlag}
           renameProjectFlag={renameProjectFlag}
           renameFileFlag={renameFileFlag}
@@ -1516,13 +1598,14 @@ class LeftBar extends React.Component<Props, State> {
 
           resetFileExplorerFileSelection={this.setSelectedFileRef_}
           resetFileExplorerProjectSelection={this.onSetSelectedProject_}
+          resetRenameFlag = {this.onSetRenameFlag_}
           resetRenameUserFlag={this.onSetRenameUserFlag_}
           resetRenameProjectFlag={this.onSetRenameProjectFlag_}
           resetRenameFileFlag={this.onSetRenameFileFlag}
           resetUploadFilesFlag={this.onSetUploadFilesFlag_}
           resetUploadProjectFlag={this.onSetUploadProjectFlag_}
           resetMoveProjectFlag={this.onSetMoveProjectFlag_}
-          resetMoveUserFlag={() => this.setState({ moveUserFlag: false })}
+          resetMoveUserFlag={this.onSetMoveUserFlag_}
 
           propedMotorPositions={this.state.motorPositions}
           stoppedMotor={this.state.stoppedMotor}
@@ -1558,6 +1641,7 @@ class LeftBar extends React.Component<Props, State> {
           propedUploadProject={this.state.toUploadProject}
           propedUploadedProjectFlag={this.state.toUploadProjectFlag}
           propedUploadFiles={this.state.toUploadFiles}
+          propedPasteData={this.state.toPasteData}
 
 
         />
@@ -1573,6 +1657,9 @@ class LeftBar extends React.Component<Props, State> {
           theme={storedTheme}
           locale="en-US"
           propsSelectedProjectName={project.projectName}
+          onCopyObject={this.onCopyObject_}
+          onPasteObject={this.onPasteObject_}
+          onRenameClassroom={this.onRenameClassroom_}
           onProjectSelected={this.onProjectSelected_}
           onFileSelected={this.onFileSelected_}
           onUserSelected={this.onUserSelected_}

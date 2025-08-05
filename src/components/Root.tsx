@@ -58,6 +58,7 @@ export interface RootPublicProps {
   removeUserFlag?: boolean;
   deleteUserFlag?: boolean;
   downloadUserFlag?: boolean;
+  renameClassroomFlag?: boolean;
   renameUserFlag?: boolean;
   renameProjectFlag?: boolean;
   moveProjectFlag?: boolean;
@@ -93,7 +94,7 @@ export interface RootPublicProps {
   propedUploadFiles: FileInfo[];
   propedUploadFilesFlag: boolean;
   propedUploadedProjectFlag: boolean;
-
+  propedPasteData?: {};
   changeProjectName: (projectName: string) => void;
   setAddNewProject: (addNewProject: boolean, newProj?: Project) => void;
   setAddNewFile: (addNewFile: boolean) => void;
@@ -115,6 +116,7 @@ export interface RootPublicProps {
   resetUploadProjectFlag: (uploadProjectFlag: boolean) => void;
   resetFileExplorerFileSelection: (resetSelectionToFile: string) => void;
   resetFileExplorerProjectSelection: (resetSelectionToProject: Project, resetSelectionToFile: string) => void;
+  resetRenameFlag: (renameFlag: boolean, renameType?: string) => void;
   resetRenameUserFlag: (renameUserFlag: boolean, renamedUser?: User) => void;
   resetRenameProjectFlag: (renameProjectFlag: boolean, renamedProject?: Project) => void;
   resetRenameFileFlag: (renameFileFlag: boolean, renamedFile?: string) => void;
@@ -337,6 +339,7 @@ class Root extends React.Component<Props, State> {
 
     }
     if (this.props.propUser.userName !== '' && this.props.propProject.projectName !== '' && this.props.propFileName !== '') {
+      console.log("ROOT COMPDIDMOUNT ENDED with props: ", this.props);
       this.setState({
         rootUser: this.props.propUser,
         rootProject: this.props.propProject,
@@ -384,7 +387,17 @@ class Root extends React.Component<Props, State> {
 
 
 
+    if (prevProps.propedPasteData !== this.props.propedPasteData && this.props.propedPasteData) {
+      console.log("Root compDidUpdate toPasteData: ", this.props.propedPasteData);
+      this.pasteObject(this.props.propedPasteData);
+    }
+    if (prevProps.renameClassroomFlag !== this.props.renameClassroomFlag && this.props.renameClassroomFlag) {
+      console.log("Root compDidUpdate renameClassroomFlag: ", this.props.renameClassroomFlag);
+      this.renameClassroom_();
+
+    }
     if (prevProps.moveUserFlag !== this.props.moveUserFlag && this.props.moveUserFlag) {
+      await this.loadUsers();
       const moveUser = Object.values(this.state.users).find(user => user.userName === this.props.propContextMenuUser?.userName);
       this.moveUserToClassroom_(moveUser);
     }
@@ -714,7 +727,7 @@ class Root extends React.Component<Props, State> {
 
     else if ((this.props.clickFile && this.state.saveCodePromptFlag == false)) {
       const { propUser, propProject, propActiveLanguage, propFileName, otherFileType, propClassroom } = this.props;
-
+      console.log("Root compDidUpdate clickFile props: ", this.props);
       this.props.resetFileExplorerFileSelection(this.props.propFileName);
       switch (otherFileType) {
         case 'h':
@@ -760,7 +773,7 @@ class Root extends React.Component<Props, State> {
       }
 
       this.setState({
-        rootUser: this.props.propUser,
+        rootUser: Object.values(this.state.users).find(user => user.userName === propUser.userName) || this.state.rootUser,
         rootProject: this.props.propProject,
         userName: this.props.propUser.userName,
         projectName: this.props.propProject.projectName,
@@ -1047,8 +1060,10 @@ class Root extends React.Component<Props, State> {
 
         this.setState({
           users: getUserResponse.data.users,
+
         }, () => {
           this.props.onUserUpdate(this.state.users);
+
         });
 
         return getUserResponse.data.users;
@@ -1095,6 +1110,18 @@ class Root extends React.Component<Props, State> {
       console.error("Root loadUserProjects error: ", error);
       return [];
     }
+  }
+
+
+  private pasteObject = async (toPasteData: {}) => {
+    console.log("Root pasteObject called with toPasteData: ", toPasteData);
+    const pasteResponse = await axios.post('/paste-object', { pasteData: toPasteData });
+    console.log("Root pasteObject pasteResponse: ", pasteResponse);
+    if (pasteResponse.status === 200) {
+      console.log("Root pasteObject successful paste: ", pasteResponse.data);
+      await this.loadUsers();
+    }
+
   }
 
   private addNewUser_ = () => {
@@ -1172,6 +1199,16 @@ class Root extends React.Component<Props, State> {
       toDownloadName_: this.props.propContextMenuFile,
       toDownloadType_: 'file'
     });
+  }
+
+  private renameClassroom_ = () => {
+    this.setState({
+      modal: Modal.RENAMEUSERPROJECTFILE,
+      isRenameUserProjectFileDialogVisible: true,
+      toRenameName_: this.props.propContextMenuClassroom.name,
+      toRenameType_: 'Classroom'
+    })
+
   }
 
   private renameUser_ = () => {
@@ -1257,7 +1294,25 @@ class Root extends React.Component<Props, State> {
   };
 
   private onCloseRenameUserProjectFileDialog_ = async (renamedType: string, user: User, renamedData: {}) => {
-    if (renamedType === 'User') {
+    console.log("Root onCloseRenameUserProjectFileDialog_ renamedData: ", renamedData);
+    if (renamedType === 'Classroom') {
+      const updatedClassrooms = await this.loadClassrooms();
+      console.log("Root onCloseRenameUserProjectFileDialog_ after loadClassrooms: ", updatedClassrooms);
+
+      this.setState({
+        classrooms: updatedClassrooms,
+      });
+
+      this.props.onClassroomUpdate(updatedClassrooms);
+      this.props.resetRenameFlag(false, "Classroom");
+
+      this.setState({
+        modal: Modal.NONE,
+        isRenameUserProjectFileDialogVisible: false,
+      });
+
+    }
+    else if (renamedType === 'User') {
 
       user = {
         ...user,
@@ -1266,7 +1321,8 @@ class Root extends React.Component<Props, State> {
       let loadUserProject = await this.loadUserProjects(false, false, user);
       this.props.onLoadUserData(loadUserProject, user, true, renamedData['oldUserName']);
 
-      this.props.resetRenameUserFlag(false, user);
+      //this.props.resetRenameUserFlag(false, user);
+      this.props.resetRenameFlag(false, "User");
 
       if (this.state.isEditorPageVisible) {
         this.setState({
@@ -1306,106 +1362,29 @@ class Root extends React.Component<Props, State> {
         modal: Modal.NONE,
         isRenameUserProjectFileDialogVisible: false,
       });
-      this.props.resetRenameProjectFlag(false, newRenamedProject);
+      this.props.resetRenameFlag(false, "Project");
     }
     else if (renamedType === 'File') {
+      console.log("Root onCloseRenameUserProjectFileDialog_ renamedData: ", renamedData);
+      const updatedUsers = await this.loadUsers();
+      console.log("Root onCloseRenameUserProjectFileDialog_ after loadUsers: ", updatedUsers);
 
-      let loadUserProject = await this.loadUserProjects(false, false, user);
-      this.props.onLoadUserData(loadUserProject, user);
-      if (this.state.isEditorPageVisible) { // User Project file already open
-        const [file, extension] = renamedData['oldFileName'].split(".");
+      this.setState({
+        rootUser: Object.values(updatedUsers).find(user => user.userName === this.state.rootUser.userName) || this.state.rootUser,
+        rootProject: Object.values(updatedUsers).find(user => user.userName === this.state.rootUser.userName)?.projects.find(project => project.projectName === this.state.rootProject.projectName) || this.state.rootProject,
+        fileName: renamedData['newFileName'],
+      })
 
-        switch (extension) {
-          case 'h':
-            this.setState(prevState => ({
-              rootUser: {
-                ...prevState.rootUser,
-                projects: prevState.rootUser.projects.map(project =>
-                  project.projectName === this.state.rootProject.projectName
-                    ? {
-                      ...project, includeFolderFiles: project.includeFolderFiles.map(file =>
-                        file === renamedData['oldFileName']
-                          ? renamedData['newFileName']
-                          : file
-                      )
-                    }
-                    : project
-                )
-              },
-              rootProject: {
-                ...prevState.rootProject,
-                includeFolderFiles: prevState.rootProject.includeFolderFiles.map(file =>
-                  file === renamedData['oldFileName']
-                    ? renamedData['newFileName']
-                    : file
-                )
-              },
-              fileName: renamedData['newFileName']
-            }));
-            break;
-          case 'c':
-          case 'cpp':
-          case 'py':
-            this.setState(prevState => ({
-              rootUser: {
-                ...prevState.rootUser,
-                projects: prevState.rootUser.projects.map(project =>
-                  project.projectName === this.state.rootProject.projectName
-                    ? {
-                      ...project, srcFolderFiles: project.srcFolderFiles.map(file =>
-                        file === renamedData['oldFileName']
-                          ? renamedData['newFileName']
-                          : file
-                      )
-                    }
-                    : project
-                )
-              },
-              rootProject: {
-                ...prevState.rootProject,
-                srcFolderFiles: prevState.rootProject.srcFolderFiles.map(file =>
-                  file === renamedData['oldFileName']
-                    ? renamedData['newFileName']
-                    : file
-                )
-              },
-              fileName: renamedData['newFileName']
-            }));
-            break;
-          case 'txt':
-            this.setState(prevState => ({
-              rootUser: {
-                ...prevState.rootUser,
-                projects: prevState.rootUser.projects.map(project =>
-                  project.projectName === this.state.rootProject.projectName
-                    ? {
-                      ...project, dataFolderFiles: project.dataFolderFiles.map(file =>
-                        file === renamedData['oldFileName']
-                          ? renamedData['newFileName']
-                          : file
-                      )
-                    }
-                    : project
-                )
-              },
-              rootProject: {
-                ...prevState.rootProject,
-                dataFolderFiles: prevState.rootProject.dataFolderFiles.map(file =>
-                  file === renamedData['oldFileName']
-                    ? renamedData['newFileName']
-                    : file
-                )
-              },
-              fileName: renamedData['newFileName']
-            }));
-        }
-
-      }
       this.setState({
         modal: Modal.NONE,
         isRenameUserProjectFileDialogVisible: false,
       });
-      this.props.resetRenameFileFlag(false, renamedData['newFileName']);
+      this.props.resetRenameFlag(false, "File");
+    }
+    await this.loadUsers();
+
+    if (this.props.propSettings.classroomView) {
+      await this.loadClassrooms();
     }
   }
 
@@ -1465,6 +1444,8 @@ class Root extends React.Component<Props, State> {
 
         this.props.onUserUpdate(this.state.users);
       });
+
+
     }
     catch (error) {
       console.error("Root onCloseProjectDialog_ error: ", error);
@@ -2109,24 +2090,57 @@ class Root extends React.Component<Props, State> {
    * @param confirmedType - type of the item to be confirmed (user, project, file)
    * @param action - action to be taken (delete, download, save)
    */
-  private onConfirm_ = async (confirmedName: string, confirmedType: string, action: string) => {
+  private onConfirm_ = async (confirmedName: string, confirmedType: string, action: string, object?: User | Project | string) => {
+    console.log("Root onConfirm_ state: ", this.state);
+    console.log("Root onConfirm_ props: ", this.props);
+    console.log("Root onConfirm_ object: ", object);
     try {
       switch (action) {
         case 'delete':
           this.onModalClose_();
           switch (confirmedType) {
             case 'user':
-              const deleteUserResponse = await axios.post('/delete-user', { userName: confirmedName });
+              const deleteUserResponse = await axios.post('/delete-user', { user: object });
               this.loadUsers();
+              if (this.state.isEditorPageVisible && this.state.rootUser.userName === (object as User).userName) {
+                this.setState({
+                  isEditorPageVisible: false,
+                  isHomeStartOptionsVisible: true
+                });
+              }
+              if (this.props.propSettings.classroomView) {
+                this.props.onClassroomUpdate(await this.loadClassrooms());
+              }
               break;
             case 'project':
               const deleteProjectResponse = await axios.post('/delete-project', { userName: this.state.userName, projectName: confirmedName });
-              this.props.onLoadUserData(await this.loadUserProjects());
+              //this.props.onLoadUserData(await this.loadUserProjects());
+               this.loadUsers();
+               if (this.state.isEditorPageVisible && this.state.rootProject.projectName === confirmedName) {
+                this.setState({
+                  isEditorPageVisible: false,
+                  isHomeStartOptionsVisible: true
+                });
+              }
+              if (this.props.propSettings.classroomView) {
+                this.props.onClassroomUpdate(await this.loadClassrooms());
+              }
               break;
             case 'file':
               const [name, extension] = confirmedName.split('.');
               const deleteFileResponse = await axios.post('/delete-file', { userName: this.state.userName, projectName: this.state.projectName, fileName: confirmedName, fileType: extension });
-              this.props.onLoadUserData(await this.loadUserProjects());
+              this.loadUsers();
+
+              //this.props.onLoadUserData(await this.loadUserProjects());
+              if (this.state.isEditorPageVisible && this.state.fileName === confirmedName) {
+                this.setState({
+                  isEditorPageVisible: false,
+                  isHomeStartOptionsVisible: true
+                });
+              }
+              if (this.props.propSettings.classroomView) {
+                this.props.onClassroomUpdate(await this.loadClassrooms());
+              }
               break;
           }
           break;
@@ -2395,14 +2409,17 @@ class Root extends React.Component<Props, State> {
         }
       }
     }
+    if (this.props.renameClassroomFlag) {
+      this.props.resetRenameFlag(false, "Classroom");
+    }
     if (this.props.renameUserFlag) {
-      this.props.resetRenameUserFlag(false);
+      this.props.resetRenameFlag(false, "User");
     }
     if (this.props.renameProjectFlag) {
-      this.props.resetRenameProjectFlag(false);
+      this.props.resetRenameFlag(false, "Project");
     }
     if (this.props.renameFileFlag) {
-      this.props.resetRenameFileFlag(false);
+      this.props.resetRenameFlag(false, "File");
     }
     if (this.props.moveProjectFlag) {
       this.props.resetMoveProjectFlag(false);
@@ -2422,6 +2439,7 @@ class Root extends React.Component<Props, State> {
 
       console.log("Remove user response: ", removeUserResponse.data);
       if (removeUserResponse.status === 200) {
+        this.loadUsers();
         this.props.onClassroomUpdate(await this.loadClassrooms());
       }
 
@@ -2447,7 +2465,20 @@ class Root extends React.Component<Props, State> {
       console.log("Move user response: ", moveUserResponse);
 
       if (moveUserResponse.status === 200) {
-        this.props.onClassroomUpdate(await this.loadClassrooms());
+
+        this.setState({
+          rootUser: {
+            ...this.state.rootUser,
+            classroomName: newClassroom.name
+          }
+        }, async () => {
+          await this.loadUsers();
+          console.log("Updated rootUser after moving user to classroom: ", this.state.rootUser);
+          this.props.onLoadUserData(await this.loadUserProjects(), this.state.rootUser?.userName !== '' ? this.state.rootUser : undefined);
+          this.props.onClassroomUpdate(await this.loadClassrooms());
+        })
+
+
       }
     });
   };
@@ -2491,6 +2522,8 @@ class Root extends React.Component<Props, State> {
       locale,
       propContextMenuUser,
       propContextMenuProject,
+      propContextMenuFile,
+      propContextMenuClassroom,
       propSettings,
       propClassroom,
     } = props;
@@ -2635,6 +2668,7 @@ class Root extends React.Component<Props, State> {
           <DeleteUserProjectFileDialog
             onClose={this.onModalClose_}
             theme={theme}
+            toDeleteObject={toDeleteType_ === 'user' ? propContextMenuUser : toDeleteType_ === 'project' ? propContextMenuProject : toDeleteType_ === 'file' ? propContextMenuFile : undefined}
             toDeleteName={toDeleteName_}
             toDeleteType={toDeleteType_}
             onConfirm={this.onConfirm_}
@@ -2673,6 +2707,7 @@ class Root extends React.Component<Props, State> {
             locale={'en-US'}
             user={propContextMenuUser}
             project={propContextMenuProject}
+            toRenameObject={toRenameType_ === 'classroom' ? propContextMenuClassroom : toRenameType_ === 'user' ? propContextMenuUser : toRenameType_ === 'project' ? propContextMenuProject : undefined}
             toRenameName={toRenameName_}
             toRenameType={toRenameType_}
           />
