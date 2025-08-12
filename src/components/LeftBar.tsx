@@ -23,6 +23,7 @@ import { useProgramRun } from '../ProgramRunContext';
 import { FileInfo } from 'types/fileInfo';
 import axios from 'axios';
 import Classroom from 'types/classroomTypes';
+import { UploadedUser } from 'ivygate/dist/types/user';
 const TerminalView = React.lazy(() => import('./TerminalView'));
 
 
@@ -70,7 +71,7 @@ interface LeftBarState {
   contextMenuUser?: User;
   contextMenuProject?: Project;
   contextMenuFile?: string;
-  toUploadUser?: User;
+  toUploadUser?: User | UploadedUser;
   toUploadProject?: Project | UploadedProject;
   toUploadFiles?: FileInfo[];
 
@@ -89,6 +90,7 @@ interface LeftBarState {
   moveProjectFlag?: boolean;
   addProjectFlag?: boolean;
   simpleProjectLoadFlag?: boolean;
+  toUploadUserFlag?: boolean;
   toUploadProjectFlag?: boolean;
   toUploadFilesFlag?: boolean;
 
@@ -947,6 +949,20 @@ class LeftBar extends React.Component<Props, State> {
     })
   };
 
+  private onUploadUser_ = (uploadedUser: UploadedUser) => {
+    console.log("Uploading user:", uploadedUser);
+    this.setState({
+      toUploadUser: uploadedUser,
+      toUploadUserFlag: true,
+    });
+  };
+
+  private onSetUploadUserFlag_ = (toUploadUserFlag: boolean) => {
+    this.setState({
+      toUploadUserFlag: toUploadUserFlag,
+      toUploadUser: undefined,
+    });
+  };
 
   /**
    * Sets the state based on the project name
@@ -1602,6 +1618,7 @@ class LeftBar extends React.Component<Props, State> {
           resetRenameUserFlag={this.onSetRenameUserFlag_}
           resetRenameProjectFlag={this.onSetRenameProjectFlag_}
           resetRenameFileFlag={this.onSetRenameFileFlag}
+          resetUploadUserFlag={this.onSetUploadUserFlag_}
           resetUploadFilesFlag={this.onSetUploadFilesFlag_}
           resetUploadProjectFlag={this.onSetUploadProjectFlag_}
           resetMoveProjectFlag={this.onSetMoveProjectFlag_}
@@ -1638,6 +1655,7 @@ class LeftBar extends React.Component<Props, State> {
 
           propedUploadFilesFlag={this.state.toUploadFilesFlag}
           propedUploadUser={this.state.toUploadUser}
+          propedUploadUserFlag={this.state.toUploadUserFlag}
           propedUploadProject={this.state.toUploadProject}
           propedUploadedProjectFlag={this.state.toUploadProjectFlag}
           propedUploadFiles={this.state.toUploadFiles}
@@ -1681,6 +1699,7 @@ class LeftBar extends React.Component<Props, State> {
           onReloadProjects={this.reloadRootUserProjects_}
           onUploadFiles={this.onUploadFiles_}
           onUploadProject={this.onUploadProject_}
+          onUploadUser={this.onUploadUser_}
           addProjectFlag={addProjectFlag}
           addFileFlag={isAddNewFile}
           onRenameFile={this.onRenameFile_}
