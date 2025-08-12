@@ -231,7 +231,7 @@ app.post("/upload-project", express.json(), async (req, res) => {
     return res.status(400).json({ error: "Invalid request data" });
   }
 
-  const usersData = JSON.parse(await fs.readFile(usersJsonPath, "utf-8"));  
+  const usersData = JSON.parse(await fs.readFile(usersJsonPath, "utf-8"));
   const userPath = `${defaultPath}/${user.userName}`;
   const projectPath = `${userPath}/${project.projectName}`;
   const projectName = project.projectName;
@@ -385,7 +385,7 @@ app.post("/upload-file", express.json(), async (req, res) => {
     try {
       createAndSaveFile(filePath, file.content);
       //update users.json to add file to project
-      try{
+      try {
         const usersData = JSON.parse(await fs.readFile(usersJsonPath, "utf8"));
         const userProjects = usersData[user.userName].projects || [];
         const foundProject = userProjects.find(
@@ -406,13 +406,10 @@ app.post("/upload-file", express.json(), async (req, res) => {
             "utf8"
           );
         }
-        
-
+      } catch (error) {
+        console.error("Error updating users.json:", error);
+        return res.status(500).json({ error: "Failed to update users.json" });
       }
-      catch (error) {
-          console.error("Error updating users.json:", error);
-          return res.status(500).json({ error: "Failed to update users.json" });
-        }
       return res.status(200).json({ message: "File saved successfully" });
     } catch (error) {
       console.error("Error saving file:", error);
@@ -1700,7 +1697,10 @@ function saveFileContents() {
       await fs.writeFile(filePath, fileContents);
 
       if (isNewFile) {
-        await editJson({ user, project, fileType, fileName });
+        console.log("New file created, updating users.json and project config");
+        await editUsersJson({ user, project, fileType, fileName });
+        await editSpecificUserJson({ user, project, fileType, fileName });
+        await editProjectJson({ user, project, fileType, fileName });
       }
       return res.status(200).send("File saved successfully");
     } catch (error) {
@@ -1710,7 +1710,7 @@ function saveFileContents() {
   };
 }
 
-async function editJson(data) {
+async function editUsersJson(data) {
   console.log("Editing JSON to add data:", data);
   console.log("Data user: ", data.user);
 
@@ -1757,10 +1757,94 @@ async function editJson(data) {
         return;
     }
     console.log("Updated Project: ", foundProject);
+    console.log("Updated users.json: ", existingData);
 
     await fs.writeFile(
       userJsonPath,
       JSON.stringify(existingData, null, 2),
+      "utf8"
+    );
+  }
+}
+
+async function editSpecificUserJson(data) {
+  console.log("EDIT SPECIFIC USER JSON");
+  console.log("Editing JSON to add data:", data);
+  console.log("Data user: ", data.user);
+
+  const userJsonPath = `/home/kipr/Documents/KISS/${data.user}/.user.config.json`;
+  const existingDataStr = await fs.readFile(userJsonPath, "utf8");
+  const existingData = JSON.parse(existingDataStr);
+
+  console.log("Existing Data: ", existingData);
+
+  // Proceed to update userObj and then write back...
+  const userProjects = existingData.projects || [];
+  console.log("User Projects: ", userProjects);
+
+  const foundProject = userProjects.find(
+    (project) => project.projectName === data.project
+  );
+  console.log("Found Project: ", foundProject);
+  if (foundProject) {
+    console.log("Project already exists, updating file details");
+
+    switch (data.fileType) {
+      case "include":
+        foundProject.includeFolderFiles.push(data.fileName);
+        break;
+      case "src":
+        foundProject.srcFolderFiles.push(data.fileName);
+        break;
+      case "data":
+        foundProject.dataFolderFiles.push(data.fileName);
+        break;
+      default:
+        console.error("Unknown file type:", data.fileType);
+        return;
+    }
+    console.log("Updated Project: ", foundProject);
+    console.log("Updated users.json: ", existingData);
+
+    await fs.writeFile(
+      userJsonPath,
+      JSON.stringify(existingData, null, 2),
+      "utf8"
+    );
+  }
+}
+
+async function editProjectJson(data) {
+  console.log("EDIT PROJECT JSON");
+  console.log("Editing JSON to add data:", data);
+  console.log("Data user: ", data.user);
+
+  const projectJsonPath = `/home/kipr/Documents/KISS/${data.user}/${data.project}/.project.config.json`;
+  const projectConfigStr = await fs.readFile(projectJsonPath, "utf8");
+  const projectConfig = JSON.parse(projectConfigStr);
+
+  console.log("Project Config: ", projectConfig);
+
+  if (projectConfig) {
+    switch (data.fileType) {
+      case "include":
+        projectConfig.includeFolderFiles.push(data.fileName);
+        break;
+      case "src":
+        projectConfig.srcFolderFiles.push(data.fileName);
+        break;
+      case "data":
+        projectConfig.dataFolderFiles.push(data.fileName);
+        break;
+      default:
+        console.error("Unknown file type:", data.fileType);
+        return;
+    }
+    console.log("Updated Project Config: ", projectConfig);
+
+    await fs.writeFile(
+      projectJsonPath,
+      JSON.stringify(projectConfig, null, 2),
       "utf8"
     );
   }
@@ -2055,7 +2139,7 @@ async function pasteFiletoProject(pasteData, usersData) {
       (project) =>
         project.projectName === pasteData.pasteToData.toPasteWhere.projectName
     );
- 
+
     pasteToFinalPath +=
       pasteData.pasteToData.pasteWhereUser.userName +
       "/" +
@@ -2214,6 +2298,201 @@ app.post("/paste-object", async (req, res) => {
   });
 });
 
+app.post("/upload-user", async (req, res) => {
+  const { user, configFile } = req.body;
+  console.log("/upload-user received request body:", req.body);
+
+  let usersData = {};
+
+  const userConfigContent = JSON.parse(configFile.content);
+  console.log("User config content:", userConfigContent);
+  try {
+    const userData = await fs.readFile(usersJsonPath, "utf-8");
+    usersData = JSON.parse(userData);
+    console.log("Current users data:", usersData);
+    const foundUser = userData[user.userName];
+
+    if (!foundUser) {
+      usersData[user.userName] = userConfigContent;
+
+      console.log("usersData after adding new user:", usersData);
+      await fs.writeFile(
+        usersJsonPath,
+        JSON.stringify(usersData, null, 2),
+        "utf-8"
+      );
+      console.log("Updated users.json successfully");
+    }
+  } catch (error) {
+    console.error("Error reading users.json:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+
+  //create user directory
+  const userDirectory = path.join("/home/kipr/Documents/KISS", user.userName);
+  try {
+    await fs.mkdir(userDirectory, { recursive: true });
+    console.log("User directory created:", userDirectory);
+
+    // Write user config file
+    const userConfigPath = path.join(userDirectory, ".user.config.json");
+    await fs.writeFile(
+      userConfigPath,
+      JSON.stringify({ userConfigContent }, null, 2),
+      "utf-8"
+    );
+    console.log("User config file created:", userConfigPath);
+    const projects = user.projects || [];
+    for (const project of projects) {
+      const projectDirectory = path.join(userDirectory, project.projectName);
+      const projectConfigPath = path.join(
+        projectDirectory,
+        ".project.config.json"
+      );
+
+      // Check if project directory already exists
+      try {
+        await fs.access(projectDirectory);
+        console.log(`Project directory already exists: ${projectDirectory}`);
+      } catch {
+        // Create project directory if it doesn't exist
+        await fs.mkdir(projectDirectory, { recursive: true });
+        console.log("Project directory created:", projectDirectory);
+
+        // Write project config file
+        await fs.writeFile(
+          projectConfigPath,
+          JSON.stringify(
+            userConfigContent.projects.find(
+              (p) => p.projectName === project.projectName),
+            null,
+            2
+          ),
+          "utf-8"
+        );
+        console.log("Project config file created:", projectConfigPath);
+
+        // Create project folders
+        const folders = ["bin", "include", "src", "data"];
+        for (const folder of folders) {
+          const folderPath = path.join(projectDirectory, folder);
+          try {
+            await fs.mkdir(folderPath, { recursive: true });
+            console.log(`Folder created: ${folderPath}`);
+          } catch (error) {
+            console.error(`Error creating folder ${folderPath}:`, error);
+          }
+
+          switch (folder) {
+            case "include":
+              if (
+                project.includeFolderFiles &&
+                project.includeFolderFiles.length > 0
+              ) {
+                console.log("Creating include files:", project.includeFolderFiles);
+                for (const file of project.includeFolderFiles) {
+                  const filePath = path.join(folderPath, file.name);
+                  try {
+                    await fs.writeFile(filePath, file.content, "utf-8");
+                    console.log(`File created: ${filePath}`);
+                  } catch (error) {
+                    console.error(`Error creating file ${filePath}:`, error);
+                  }
+                }
+              }
+              break;
+            case "src":
+              if (project.srcFolderFiles && project.srcFolderFiles.length > 0) {
+                for (const file of project.srcFolderFiles) {
+                  const filePath = path.join(folderPath, file.name);
+                  try {
+                    await fs.writeFile(filePath, file.content, "utf-8");
+                    console.log(`File created: ${filePath}`);
+                  } catch (error) {
+                    console.error(`Error creating file ${filePath}:`, error);
+                  }
+                }
+              }
+              break;
+            case "data":
+              if (
+                project.dataFolderFiles &&
+                project.dataFolderFiles.length > 0
+              ) {
+                for (const file of project.dataFolderFiles) {
+                  const filePath = path.join(folderPath, file.name);
+                  try {
+                    await fs.writeFile(filePath, file.content, "utf-8");
+                    console.log(`File created: ${filePath}`);
+                  } catch (error) {
+                    console.error(`Error creating file ${filePath}:`, error);
+                  }
+                }
+              }
+              break;
+            default:
+              console.warn(`No specific files to create for folder: ${folder}`);
+              break;
+          }
+        }
+      }
+    }
+  } catch (error) {
+    console.error("Error creating user directory:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+
+  //Add user to classrooms if classroomName is provided
+  let classroomsData = {};
+
+  try{
+    if(userConfigContent.classroomName) {
+      const classroomsContent = await fs.readFile(classroomsJsonPath, "utf-8");
+      classroomsData = JSON.parse(classroomsContent);
+
+      const foundClassroom = classroomsData.classrooms.find(
+        (c) => c.name === userConfigContent.classroomName
+      );
+
+      if(foundClassroom) {
+        //Check if user already exists in the classroom
+        const userExists = foundClassroom.users.some(
+          (u) => u.userName === user.userName
+        );
+
+        if (userExists) { 
+          console.log("User already exists in classroom, skipping addition.");
+        }
+        else {
+          // Add user to classroom
+          foundClassroom.users.push({
+            userName: user.userName,
+            interfaceMode: userConfigContent.interfaceMode,
+          });
+          console.log("User added to classroom:", foundClassroom.users);
+
+          // Save back to file
+          await fs.writeFile(
+            classroomsJsonPath,
+            JSON.stringify(classroomsData, null, 2),
+            "utf-8"
+          );
+        }
+      }
+    }
+
+  }
+  catch (error) {
+    console.error("Error adding user to classrooms:", error);
+    return res.status(500).json({ error: "Internal server error" });
+
+  }
+
+  return res.status(200).json({
+    message: "Object pasted successfully",
+  });
+});
+
 app.post("/initialize-project", async (req, res) => {
   const { user, project, classroomName } = req.body;
   console.log("/initialize-project Received request body:", req.body);
@@ -2271,10 +2550,12 @@ app.post("/initialize-project", async (req, res) => {
     await fs.writeFile(
       userConfigPath,
       JSON.stringify(
-        {userName: user.userName,
-        interfaceMode: user.interfaceMode,
-        projects: user.projects || [],
-        classroomName: classroomName || null, },
+        {
+          userName: user.userName,
+          interfaceMode: user.interfaceMode,
+          projects: user.projects || [],
+          classroomName: classroomName || null,
+        },
         null,
         2
       ),
@@ -2294,11 +2575,12 @@ app.post("/initialize-project", async (req, res) => {
     await fs.writeFile(
       projectConfigPath,
       JSON.stringify(
-        { projectName: project.projectName,
-        projectLanguage: project.projectLanguage,
-        includeFolderFiles: project.includeFolderFiles || [],
-        srcFolderFiles: project.srcFolderFiles || [],
-        dataFolderFiles: project.dataFolderFiles || [],
+        {
+          projectName: project.projectName,
+          projectLanguage: project.projectLanguage,
+          includeFolderFiles: project.includeFolderFiles || [],
+          srcFolderFiles: project.srcFolderFiles || [],
+          dataFolderFiles: project.dataFolderFiles || [],
         },
         null,
         2
@@ -2408,22 +2690,20 @@ app.post("/delete-file", async (req, res) => {
     const foundProject = userProjects.find(
       (project) => project.projectName === projectName
     );
-    if(foundProject){
-      try{
-        foundProject[fileTypeDirectory] = foundProject[fileTypeDirectory].filter(
-        (file) => file !== fileName
-      );
-      await fs.writeFile(
-        usersJsonPath,
-        JSON.stringify(usersData, null, 2),
-        "utf8"
-      );
-      }
-      catch (error) {
+    if (foundProject) {
+      try {
+        foundProject[fileTypeDirectory] = foundProject[
+          fileTypeDirectory
+        ].filter((file) => file !== fileName);
+        await fs.writeFile(
+          usersJsonPath,
+          JSON.stringify(usersData, null, 2),
+          "utf8"
+        );
+      } catch (error) {
         console.error("Error updating users.json:", error);
         return res.status(500).json({ error: "Error updating users.json." });
       }
-      
     }
 
     return res.status(200).send("File deleted successfully.");
@@ -2452,14 +2732,14 @@ app.post("/delete-project", async (req, res) => {
   const projectDirectory = path.join(userDirectory, projectName);
   const usersData = JSON.parse(await fs.readFile(usersJsonPath, "utf-8"));
   const userProjects = usersData[userName].projects || [];
-  const foundProject = userProjects.find((project) => project.projectName === projectName);
-  if(foundProject) {
-    try{
+  const foundProject = userProjects.find(
+    (project) => project.projectName === projectName
+  );
+  if (foundProject) {
+    try {
       userProjects.splice(userProjects.indexOf(foundProject), 1);
       await fs.writeFile(usersJsonPath, JSON.stringify(usersData, null, 2));
-
-    }
-    catch (error) {
+    } catch (error) {
       console.error("Error updating users.json:", error);
       return res.status(500).json({ error: "Failed to update users.json" });
     }
