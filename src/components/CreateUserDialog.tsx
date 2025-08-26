@@ -115,14 +115,13 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
 
     constructor(props: Props) {
         super(props);
-        const initialClassroom = this.props.classrooms.length > 0 ? this.props.classrooms[0] : Classroom.EMPTY_CLASSROOM;
+        const initialClassroom = this.props.classrooms?.length > 0 ? this.props.classrooms[0] : Classroom.EMPTY_CLASSROOM;
         this.state = {
             userName: '',
             showRepeatUserDialog: false,
             errorMessage: '',
             interfaceMode: InterfaceMode.SIMPLE,
-            classroom: this.props.propClassroom ? this.props.propClassroom : initialClassroom
-
+            classroom: this.props.propClassroom ? this.props.propClassroom : this.props.classrooms?.[0] || Classroom.NO_CLASSROOM
         }
     }
 
@@ -187,11 +186,11 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
         try {
             const response = await axios.get('/get-users', { params: { filePath: '/home/kipr/Documents/KISS' } });
             console.log("CreateUserDialog response: ", response.data);
-          if (response.data.users.some(user => user.userName === userName)) {
+            if (response.data.users.some(user => user.userName === userName)) {
                 this.setState({ showRepeatUserDialog: true });
             } else {
                 this.props.onClose();
-                this.props.onCreateProjectDialog(userName as User['userName'], this.state.interfaceMode, this.state.classroom.name === 'No Classroom' ? {name: "", users: []} : this.state.classroom);
+                this.props.onCreateProjectDialog(userName as User['userName'], this.state.interfaceMode, this.state.classroom ?  this.state.classroom.name === 'No Classroom' ? { name: "", users: [] } : this.state.classroom : null);
             }
         } catch (error) {
             console.error('Error adding user to database:', error);
@@ -203,7 +202,7 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
         for (const classroom of classrooms) {
 
             const classroomName = LocalizedString.lookup(tr(`${classroom.name}`), this.props.locale);
-            
+
 
             if (classroomName) {
                 ret.push({
@@ -268,7 +267,7 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
                                     index={interfaceIndex}
                                 />
                             </ComboBoxContainer>
-                            {settings && settings.classroomView && !propClassroom && (
+                            {settings && settings.classroomView && !propClassroom && classrooms && (
                                 <ComboBoxContainer theme={theme} style={style} className={className}>
                                     <ComboBoxLabel theme={theme}>Classroom:</ComboBoxLabel>
                                     <StyledComboBox
