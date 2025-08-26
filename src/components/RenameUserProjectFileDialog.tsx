@@ -152,7 +152,10 @@ export class RenameUserProjectFileDialog extends React.PureComponent<Props, Stat
         }
       }
       catch (error) {
-        console.error("Error renaming classroom: ", error);
+        if (error.response && error.response.status === 409) {
+          this.setState({ errorMessage: 'Classroom already exists. Please choose a different name.' });
+          return;
+        }
       }
 
     }
