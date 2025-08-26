@@ -60,6 +60,7 @@ interface LeftBarState {
   users: User[];
   user?: User;
   isLoadUserFiles?: boolean;
+  isAddNewClassroom? : boolean;
   isAddNewFile?: boolean;
   reloadUser?: boolean;
   activeLanguage?: ProgrammingLanguage;
@@ -79,6 +80,7 @@ interface LeftBarState {
 
   moveUserFlag?: boolean;
   removeUserFlag?: boolean;
+  deleteClassroomFlag?: boolean;
   deleteUserFlag?: boolean;
   deleteProjectFlag?: boolean;
   deleteFileFlag?: boolean;
@@ -856,6 +858,15 @@ class LeftBar extends React.Component<Props, State> {
     }
   }
 
+  private onDeleteClassroom_ = (classroom: Classroom) => {
+    console.log("Deleting classroom:", classroom);
+    this.setState({
+      contextMenuClassroom: classroom,
+      deleteClassroomFlag: true,
+    })
+
+  }
+
 
 
   /**
@@ -1029,6 +1040,14 @@ class LeftBar extends React.Component<Props, State> {
     this.setState({
       contextMenuUser: user,
       moveUserFlag: true
+    });
+  }
+  
+  private onAddNewClassroom_ = (classroom: Classroom) => {
+    console.log("Adding new classroom:", classroom);
+    this.setState({
+      classroom: classroom,
+      isAddNewClassroom: true,
     });
   }
 
@@ -1571,6 +1590,7 @@ class LeftBar extends React.Component<Props, State> {
           reloadUserFlag={reloadUser}
           reloadRootUserFlag={isReloadRootUserFiles}
           simpleProjectLoadFlag={simpleProjectLoadFlag}
+          addNewClassroomFlag={this.state.isAddNewClassroom}
           addNewUserFlag={isAddNewUser}
           addNewProject={isAddNewProject}
           addNewFile={isAddNewFile}
@@ -1590,6 +1610,7 @@ class LeftBar extends React.Component<Props, State> {
 
           moveUserFlag={moveUserFlag}
           removeUserFlag={removeUserFlag}
+          deleteClassroomFlag={this.state.deleteClassroomFlag}
           deleteUserFlag={deleteUserFlag}
           deleteProjectFlag={deleteProjectFlag}
           deleteFileFlag={deleteFileFlag}
@@ -1604,6 +1625,8 @@ class LeftBar extends React.Component<Props, State> {
           renameProjectFlag={renameProjectFlag}
           renameFileFlag={renameFileFlag}
           resetAddNewUserFlag={() => this.setState({ isAddNewUser: false })}
+          resetAddNewClassroomFlag={() => this.setState({ isAddNewClassroom: false })}
+          resetDeleteClassroomFlag={() => this.setState({ deleteClassroomFlag: false })}
           resetDeleteUserFlag={this.onSetUserDeleteFlag_}
           resetDeleteProjectFlag={this.onSetProjectDeleteFlag_}
           resetDeleteFileFlag={this.onSetFileDeleteFlag_}
@@ -1623,6 +1646,7 @@ class LeftBar extends React.Component<Props, State> {
           resetUploadProjectFlag={this.onSetUploadProjectFlag_}
           resetMoveProjectFlag={this.onSetMoveProjectFlag_}
           resetMoveUserFlag={this.onSetMoveUserFlag_}
+          resetRemoveUserFlag={() => this.setState({ removeUserFlag: false })}
 
           propedMotorPositions={this.state.motorPositions}
           stoppedMotor={this.state.stoppedMotor}
@@ -1681,9 +1705,11 @@ class LeftBar extends React.Component<Props, State> {
           onProjectSelected={this.onProjectSelected_}
           onFileSelected={this.onFileSelected_}
           onUserSelected={this.onUserSelected_}
+          onAddNewClassroom={this.onAddNewClassroom_}
           onAddNewUser={this.onAddNewUser_}
           onAddNewProject={this.onAddNewProject_}
           onAddNewFile={this.onAddNewFile_}
+          onDeleteClassroom={this.onDeleteClassroom_}
           onDeleteUser={this.onDeleteUser_}
           onDeleteProject={this.onDeleteProject_}
           onDeleteFile={this.onDeleteFile_}
