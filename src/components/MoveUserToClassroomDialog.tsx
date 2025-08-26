@@ -9,6 +9,7 @@ import LocalizedString from '../util/LocalizedString';
 import Classroom from 'types/classroomTypes';
 import { User } from 'types/userTypes';
 import ComboBox from './ComboBox';
+import ResizeableComboBox from './ResizeableComboBox';
 
 export interface MoveUserToClassroomDialogPublicProps extends ThemeProps, StyleProps {
   onClose: () => void;
@@ -148,8 +149,9 @@ const NoItem = styled(Button, (props: ThemeProps & { onClick?: () => void; disab
     : {},
 }));
 
-const StyledComboBox = styled(ComboBox, {
-  flex: '0 1',
+const StyledComboBox = styled(ResizeableComboBox, {
+
+ 
 });
 class MoveUserToClassroomDialog extends React.PureComponent<Props, State> {
 
@@ -215,6 +217,7 @@ class MoveUserToClassroomDialog extends React.PureComponent<Props, State> {
               index={classroomIndex}
               onSelect={this.onClassroomSelect_}
               theme={theme}
+              mainWidth='17.5em'
             />
           </CenteredContainer>
           <br />
