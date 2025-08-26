@@ -11,7 +11,7 @@ import { ThemeProps } from "./theme";
 import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 
 const Container = styled('div', (props: ThemeProps & { $focus?: boolean; $minimal?: boolean; $width?: string; $height?: string }) => ({
-  width: props.$width ? `${props.$width}px` : '100%',
+  width: props.$width ? `${props.$width}px` : 'fit-content',
   height: props.$height ? `${props.$height}px` : undefined,
   padding: `${props.theme.itemPadding * 2}px`,
   borderTopLeftRadius: !props.$minimal ? `${props.theme.borderRadius}px` : undefined,
@@ -54,11 +54,16 @@ const DropIcon = styled(Fa, {
   transform: 'translateY(-50%)',
 });
 
-const CurrentOptionContainer = styled('div', (props: ThemeProps & { $focus?: boolean; }) => ({
-  userSelect: 'none',
-  display: 'flex',
-  alignItems: 'center'
+
+
+const CurrentOptionContainer = styled('div', (props: ThemeProps & { $minimal?: boolean }) => ({
+  display: 'inline-block',
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  paddingRight: props.$minimal ? '1.5em' : '2em', // space for the arrow
 }));
+
 
 const OptionContainer = styled('div', (props: ThemeProps & { $selected?: boolean; $height?: string}) => ({
   padding: `${props.theme.itemPadding * 2}px`,
