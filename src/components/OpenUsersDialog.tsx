@@ -295,7 +295,7 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
     const { selectedUser, users } = state;
 
 
-    const userSections = users.map((user) => (
+    const userSections = Object.values(users).map((user) => (
       <SectionName
         key={user.userName}
         theme={theme}
