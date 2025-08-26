@@ -37,6 +37,7 @@ import Classroom from '../types/classroomTypes';
 import CreateUserDialog from './CreateUserDialog';
 import RemoveUserFromClassroomDialog from './RemoveUserFromClassroomDialog';
 import MoveUserToClassroomDialog from './MoveUserToClassroomDialog';
+import CreateClassroomDialog from './CreateClassroomDialog';
 
 
 export interface RootPublicProps {
@@ -49,11 +50,13 @@ export interface RootPublicProps {
   propContextMenuUser?: User;
   propContextMenuFile?: string;
   loadUserDataFlag: boolean;
+  addNewClassroomFlag?: boolean;
   addNewUserFlag?: boolean;
   addNewProject: boolean;
   addNewFile: boolean;
   simpleProjectLoadFlag?: boolean;
   clickFile: boolean;
+  deleteClassroomFlag?: boolean;
   moveUserFlag?: boolean;
   removeUserFlag?: boolean;
   deleteUserFlag?: boolean;
@@ -107,7 +110,10 @@ export interface RootPublicProps {
   onLoadUserData: (userData: Project[], loadedUser?: User, renamedUser?: boolean, oldUserName?: string) => void;
   onLoadClassroomData: (classroomData: Classroom[], user: User) => void;
   resetAddNewUserFlag: (addNewUserFlag: boolean) => void;
+  resetAddNewClassroomFlag: (addNewClassroomFlag: boolean) => void;
+  resetDeleteClassroomFlag: (deleteClassroomFlag: boolean) => void;
   resetDeleteUserFlag: (deleteUserFlag: boolean) => void;
+  resetRemoveUserFlag: (removeUserFlag: boolean) => void;
   resetDeleteProjectFlag: (deleteProjectFlag: boolean) => void;
   resetDeleteFileFlag: (deleteFileFlag: boolean) => void;
   resetDownloadUserFlag: (downloadUserFlag: boolean) => void;
@@ -190,6 +196,7 @@ interface RootState {
   addNewFile: boolean;
   isRunning: boolean;
   clickFileState: boolean;
+  deleteClassroomFlag_?: boolean;
   deleteUserFlag_?: boolean;
   deleteProjectFlag_?: boolean;
   deleteFileFlag_?: boolean;
@@ -335,11 +342,6 @@ class Root extends React.Component<Props, State> {
       isHomeStartOptionsVisible: true
     })
 
-    if (this.props.propSettings.classroomView) {
-
-
-
-    }
     if (this.props.propUser.userName !== '' && this.props.propProject.projectName !== '' && this.props.propFileName !== '') {
       console.log("ROOT COMPDIDMOUNT ENDED with props: ", this.props);
       this.setState({
@@ -388,7 +390,10 @@ class Root extends React.Component<Props, State> {
     const displayNowHidden = !this.props.propedSensorDisplayFlag && prevProps.propedSensorDisplayFlag;
 
 
+    if (prevProps.addNewClassroomFlag !== this.props.addNewClassroomFlag && this.props.addNewClassroomFlag) {
+      this.addNewClassroom_();
 
+    }
     if (prevProps.propedUploadUserFlag !== this.props.propedUploadUserFlag && this.props.propedUploadUserFlag) {
       console.log("Root compDidUpdate propedUploadUserFlag: ", this.props.propedUploadUserFlag);
       this.uploadUser_(this.props.propedUploadUser);
@@ -467,7 +472,15 @@ class Root extends React.Component<Props, State> {
         files: this.props.propedUploadFiles
       });
 
-      this.props.onLoadUserData(await this.loadUserProjects(false, false, this.props.propedUploadUser as User), this.props.propedUploadUser as User, false);
+      if (uploadFileResponse.status === 200) {
+        this.props.onLoadUserData(await this.loadUserProjects(false, false, this.props.propedUploadUser as User), this.props.propedUploadUser as User, false);
+        if (this.props.propSettings.classroomView) {
+          await this.loadUsers();
+          await this.loadClassrooms();
+
+        }
+      }
+
     }
 
     if (prevProps.propedSensorSelection !== this.props.propedSensorSelection) {
@@ -635,6 +648,9 @@ class Root extends React.Component<Props, State> {
 
     }
 
+    if (prevProps.deleteClassroomFlag !== this.props.deleteClassroomFlag && this.props.deleteClassroomFlag) {
+      this.deleteClassroom_();
+    }
     if (prevProps.deleteUserFlag !== this.props.deleteUserFlag && this.props.deleteUserFlag) {
       this.deleteUser_();
     }
@@ -1031,13 +1047,22 @@ class Root extends React.Component<Props, State> {
 
         }));
         console.log("Root loadClassrooms classroomDirectories: ", classroomDirectories);
+
+        const classroomArr: Classroom[] = classroomDirectories;
+
+        const sortedClassrooms = classroomArr.sort((a, b) =>
+          a.name.localeCompare(b.name)
+        );
+
+
+
         this.setState({
-          classrooms: classroomDirectories,
+          classrooms: sortedClassrooms,
         }, () => {
-          this.props.onClassroomUpdate(getClassroomResponse.data.classrooms);
+          this.props.onClassroomUpdate(sortedClassrooms);
           console.log("Root state: ", this.state);
         })
-        return classroomDirectories;
+        return sortedClassrooms;
 
       }
     }
@@ -1048,41 +1073,39 @@ class Root extends React.Component<Props, State> {
   };
   private loadUsers = async (): Promise<User[]> => {
     try {
-      const getUserResponse = await axios.get('/load-users', { params: { filePath: "/home/kipr/Documents/KISS" } });
+      const getUserResponse = await axios.get('/load-users', {
+        params: { filePath: "/home/kipr/Documents/KISS" }
+      });
+
       console.log("Root loadUsers response: ", getUserResponse.data);
-      if (getUserResponse.data.users.length == 0) {
+
+      let users = getUserResponse.data.users;
+
+      if (!users || Object.keys(users).length === 0) {
         this.props.onUserUpdate([]);
         return [];
       }
-      else {
-        // const userDirectories: User[] = getUserResponse.data.users.map((userData: any) => ({
-        //   userName: userData.userName,
-        //   interfaceMode: userData.interfaceMode,
-        //   projects: userData.projects,
-        //   classroomName: userData.classroomName
 
-        // }));
-        // console.log("Root loadUsers userDirectories: ", userDirectories);
+      const usersArr: User[] = Object.values(users);
 
-        console.log("Root loadUsers getUserResponse.data.users: ", getUserResponse.data.users);
-        this.setState({
-          users: getUserResponse.data.users,
+      const sortedUsers = usersArr.sort((a, b) =>
+        a.userName.localeCompare(b.userName)
+      );
 
-        }, () => {
-          this.props.onUserUpdate(this.state.users);
+      console.log("Root loadUsers sortedUsers: ", sortedUsers);
 
-        });
+      this.setState({ users: sortedUsers }, () => {
+        this.props.onUserUpdate(this.state.users);
+      });
 
-        return getUserResponse.data.users;
+      return sortedUsers;
 
-      }
-
-    }
-    catch (error) {
+    } catch (error) {
       console.error("Root loadUsers caught error: ", error);
       return [];
     }
-  }
+  };
+
 
 
   private loadUserProjects = async (openedUserDialog?: boolean, createdUserDialog?: boolean, desiredUser?: User): Promise<Project[]> => {
@@ -1100,7 +1123,7 @@ class Root extends React.Component<Props, State> {
     console.log("Root loadUserProjects chosenUser: ", chosenUser);
     try {
 
-      const response = await axios.get('/get-projects', { params: { user: chosenUser } });
+      const response = await axios.get('/get-projects', { params: { userName: chosenUser.userName } });
       console.log("Root loadUserProjects response: ", response.data);
       const userDirectories = response.data.directories;
       const userProjects = response.data.projects;
@@ -1167,6 +1190,13 @@ class Root extends React.Component<Props, State> {
 
   }
 
+  private addNewClassroom_ = () => {
+    this.setState({
+      modal: Modal.CREATECLASSROOM,
+
+    });
+  }
+
   private addNewUser_ = () => {
     this.setState({
       modal: Modal.CREATEUSER,
@@ -1175,6 +1205,19 @@ class Root extends React.Component<Props, State> {
       this.props.resetAddNewUserFlag(false);
     })
   }
+
+  private deleteClassroom_ = () => {
+    this.setState({
+      modal: Modal.DELETEUSERPROJECTFILE,
+      deleteClassroomFlag_: true,
+      rootUser: this.props.propUser,
+      userName: this.props.propUser.userName,
+      toDeleteName_: this.props.propContextMenuClassroom.name,
+      toDeleteType_: 'classroom'
+    });
+
+  }
+
   private deleteUser_ = () => {
     this.setState({
       modal: Modal.DELETEUSERPROJECTFILE,
@@ -1523,6 +1566,11 @@ class Root extends React.Component<Props, State> {
       try {
         const response = await axios.post('/initialize-project', { user: this.state.rootUser, project: this.state.rootProject, classroomName: rootClassroomName, interfaceMode: this.state.rootUser.interfaceMode });
         console.log("CreateProjectDialog response: ", response);
+
+        if (response.status === 200) {
+          await this.loadUsers();
+          await this.loadClassrooms();
+        }
       }
       catch (error) {
 
@@ -1554,7 +1602,7 @@ class Root extends React.Component<Props, State> {
         console.error("Root onCloseProjectDialog_ error: ", error);
       }
 
-      if (this.props.propSettings.classroomView) {
+      if (this.props.propSettings.classroomView && rootClassroomName && rootClassroomName !== '') {
         try {
           const classroomExists = this.state.classrooms.find(c => c.name === rootClassroomName);
           const userInClassroom = classroomExists?.users.find(u => u.userName === this.state.rootUser.userName);
@@ -2185,7 +2233,7 @@ class Root extends React.Component<Props, State> {
    * @param confirmedType - type of the item to be confirmed (user, project, file)
    * @param action - action to be taken (delete, download, save)
    */
-  private onConfirm_ = async (confirmedName: string, confirmedType: string, action: string, object?: User | Project | string) => {
+  private onConfirm_ = async (confirmedName: string, confirmedType: string, action: string, object?: Classroom | User | Project | string) => {
     console.log("Root onConfirm_ state: ", this.state);
     console.log("Root onConfirm_ props: ", this.props);
     console.log("Root onConfirm_ object: ", object);
@@ -2194,6 +2242,21 @@ class Root extends React.Component<Props, State> {
         case 'delete':
           this.onModalClose_();
           switch (confirmedType) {
+            case 'classroom':
+              const deleteClassroomResponse = await axios.post('/delete-classroom', { classroomName: confirmedName });
+              if (deleteClassroomResponse.status === 200) {
+                this.loadUsers();
+                if (this.props.propSettings.classroomView) {
+                  this.setState(prevState => ({
+                    classrooms: prevState.classrooms.filter(classroom => classroom.name !== confirmedName)
+                  }));
+                  this.props.onClassroomUpdate(await this.loadClassrooms());
+                  this.loadClassrooms();
+                }
+                this.props.resetDeleteClassroomFlag(false);
+              }
+
+              break;
             case 'user':
               const deleteUserResponse = await axios.post('/delete-user', { user: object });
               this.loadUsers();
@@ -2519,6 +2582,15 @@ class Root extends React.Component<Props, State> {
     if (this.props.moveProjectFlag) {
       this.props.resetMoveProjectFlag(false);
     }
+    if (this.props.addNewClassroomFlag) {
+      this.props.resetAddNewClassroomFlag(false);
+    }
+    if (this.props.moveUserFlag) {
+      this.props.resetMoveUserFlag(false);
+    }
+    if (this.props.removeUserFlag) {
+      this.props.resetRemoveUserFlag(false);
+    }
   }
 
   private onCloseRemoveUserFromClassroomDialog_ = () => {
@@ -2536,6 +2608,7 @@ class Root extends React.Component<Props, State> {
       if (removeUserResponse.status === 200) {
         this.loadUsers();
         this.props.onClassroomUpdate(await this.loadClassrooms());
+        this.props.resetRemoveUserFlag(false);
       }
 
       this.setState({
@@ -2548,7 +2621,7 @@ class Root extends React.Component<Props, State> {
   private onCloseMoveUserToClassroomDialog_ = (user: User, newClassroom: Classroom) => {
     console.log("Closing move user dialog for:", user, "to classroom:", newClassroom);
 
-
+    const { rootUser, users } = this.state;
     this.setState({
       modal: Modal.NONE,
     }, async () => {
@@ -2560,18 +2633,34 @@ class Root extends React.Component<Props, State> {
       console.log("Move user response: ", moveUserResponse);
 
       if (moveUserResponse.status === 200) {
+        if (rootUser.userName === user.userName) {
+          this.setState({
+            rootUser: {
+              ...this.state.rootUser,
+              classroomName: newClassroom.name
+            }
+          }, async () => {
+            await this.loadUsers();
+            console.log("Updated rootUser after moving user to classroom: ", this.state.rootUser);
+            this.props.onLoadUserData(await this.loadUserProjects(), this.state.rootUser?.userName !== '' ? this.state.rootUser : undefined);
+            this.props.onClassroomUpdate(await this.loadClassrooms());
+          });
+        }
+        else {
+          const foundUser = users.find(u => u.userName === user.userName);
+          console.log("move User - foundUser in state.users:", foundUser);
+          this.setState(
+            {
+              users: users.map(u => u.userName === user.userName ? { ...u, classroomName: newClassroom.name } : u)
+            }
+            , async () => {
+              await this.loadUsers();
+              console.log("Updated state.users after moving user to classroom: ", this.state.users);
+              //this.props.onLoadUserData(await this.loadUserProjects(), foundUser?.userName !== '' ? foundUser : undefined);
+              this.props.onClassroomUpdate(await this.loadClassrooms());
+            })
+        }
 
-        this.setState({
-          rootUser: {
-            ...this.state.rootUser,
-            classroomName: newClassroom.name
-          }
-        }, async () => {
-          await this.loadUsers();
-          console.log("Updated rootUser after moving user to classroom: ", this.state.rootUser);
-          this.props.onLoadUserData(await this.loadUserProjects(), this.state.rootUser?.userName !== '' ? this.state.rootUser : undefined);
-          this.props.onClassroomUpdate(await this.loadClassrooms());
-        })
 
 
       }
@@ -2606,8 +2695,10 @@ class Root extends React.Component<Props, State> {
       modal: Modal.NONE,
     }, async () => {
       this.props.onClassroomUpdate(await this.loadClassrooms());
+      this.props.resetAddNewClassroomFlag(false);
     })
   };
+
   render() {
     const { props, state } = this;
 
@@ -2759,11 +2850,11 @@ class Root extends React.Component<Props, State> {
           />
         )}
 
-        {(this.state.deleteUserFlag_ || this.state.deleteProjectFlag_ || this.state.deleteFileFlag_) && modal.type === Modal.Type.DeleteUserProjectFile && (
+        {(this.state.deleteClassroomFlag_ || this.state.deleteUserFlag_ || this.state.deleteProjectFlag_ || this.state.deleteFileFlag_) && modal.type === Modal.Type.DeleteUserProjectFile && (
           <DeleteUserProjectFileDialog
             onClose={this.onModalClose_}
             theme={theme}
-            toDeleteObject={toDeleteType_ === 'user' ? propContextMenuUser : toDeleteType_ === 'project' ? propContextMenuProject : toDeleteType_ === 'file' ? propContextMenuFile : undefined}
+            toDeleteObject={toDeleteType_ == 'classroom' ? propContextMenuClassroom : toDeleteType_ === 'user' ? propContextMenuUser : toDeleteType_ === 'project' ? propContextMenuProject : toDeleteType_ === 'file' ? propContextMenuFile : undefined}
             toDeleteName={toDeleteName_}
             toDeleteType={toDeleteType_}
             onConfirm={this.onConfirm_}
@@ -2841,6 +2932,15 @@ class Root extends React.Component<Props, State> {
             toMoveUser={this.state.toMoveUser_}
             locale={locale}
             classrooms={classrooms}
+          />
+        )}
+        {modal.type === Modal.Type.CreateClassroom && (
+          <CreateClassroomDialog
+            theme={theme}
+            onClose={this.onModalClose_}
+            userName={''}
+            showRepeatUserDialog={false}
+            onCloseClassroomDialog={this.onCloseClassroomDialog_}
           />
         )}
       </RootContainer>
