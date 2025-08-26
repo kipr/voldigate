@@ -17,6 +17,10 @@ namespace Classroom {
     users: []
   };
 
+  export const NO_CLASSROOM: Classroom = {
+    name: 'No Classroom',
+    users: []
+  }; 
 }
 
 export default Classroom;
