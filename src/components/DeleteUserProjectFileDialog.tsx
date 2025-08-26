@@ -8,12 +8,13 @@ import LocalizedString from '../util/LocalizedString';
 import { User } from 'types/userTypes';
 import { Project } from 'types/projectTypes';
 import { FileInfo } from 'types/fileInfo';
+import Classroom from 'types/classroomTypes';
 
 export interface DeleteUserProjectFileDialogPublicProps extends ThemeProps, StyleProps {
   onClose: () => void;
-  onConfirm: (confirmDeleteName: string, confirmDeleteType: string, action: string, object?: User | Project | string) => void;
+  onConfirm: (confirmDeleteName: string, confirmDeleteType: string, action: string, object?:Classroom |User | Project | string) => void;
   onDeny: () => void;
-  toDeleteObject: User | Project | string;
+  toDeleteObject: Classroom | User | Project | string;
   toDeleteName: string;
   toDeleteType: string;
 }
