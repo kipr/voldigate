@@ -102,21 +102,15 @@ app.post("/create-classroom", express.json(), async (req, res) => {
   let data = {};
   try {
     // Check if the classroom directory already exists
-
-    await fs.mkdir(classroomDirectory, { recursive: true });
-    try {
-      data = JSON.parse(await fs.readFile(jsonDirectory, "utf-8"));
-    } catch (error) {
-      console.log("Classrooms JSON file does not exist, creating new one.");
-      data = { classrooms: [] };
-      await fs.writeFile(jsonDirectory, JSON.stringify(data, null, 2), "utf-8");
-    }
+    data = JSON.parse(await fs.readFile(jsonDirectory, "utf-8"));
   } catch (error) {
-    console.error("Failed to ensure classroom directory or JSON file:", error);
+    console.log("Classrooms JSON file does not exist, creating new one.");
+    data = { classrooms: [] };
+    await fs.writeFile(jsonDirectory, JSON.stringify(data, null, 2), "utf-8");
   }
   console.log("Classroom directory exists or created:", classroomDirectory);
   try {
-    const existingClassrooms = await fs.readdir(classroomDirectory);
+    const existingClassrooms = data.classrooms.map((c) => c.name);
     if (existingClassrooms.includes(classroomName)) {
       console.log("Classroom already exists:", classroomName);
       return res.status(400).json({
@@ -125,7 +119,7 @@ app.post("/create-classroom", express.json(), async (req, res) => {
       });
     }
     try {
-      await fs.mkdir(classroomPath, { recursive: true });
+
       data.classrooms.push({ name: classroomName, users: [] });
 
       console.log("data:", data);
@@ -304,7 +298,35 @@ app.post("/upload-project", express.json(), async (req, res) => {
       console.log(`Data file saved: ${filePath}`);
     }
 
-    return res.status(200).json({
+   
+  } catch (error) {
+    console.error("Error creating project directories:", error);
+    return res
+      .status(500)
+      .json({ error: "Failed to create project directories" });
+  }
+
+  //Update users.json with new project
+  try {
+    const usersData = JSON.parse(await fs.readFile(usersJsonPath, "utf-8"));
+    usersData[user.userName].projects.push({
+      projectName: project.projectName,
+      projectLanguage: project.projectLanguage,
+      includeFolderFiles: includeNames,
+      srcFolderFiles: sourceNames,
+      dataFolderFiles: dataNames,
+    });
+
+    const sortedProjects = usersData[user.userName].projects.sort((a, b) =>
+      a.projectName.localeCompare(b.projectName)
+    );
+    usersData[user.userName].projects = sortedProjects;
+    await fs.writeFile(usersJsonPath, JSON.stringify(usersData, null, 2));
+  } catch (error) {
+    console.error("Error updating users.json:", error);
+    return res.status(500).json({ error: "Failed to update users.json" });
+  }
+   return res.status(200).json({
       message: "Project uploaded successfully",
       createdProject: {
         projectName: project.projectName,
@@ -314,12 +336,6 @@ app.post("/upload-project", express.json(), async (req, res) => {
         dataFolderFiles: dataNames,
       },
     });
-  } catch (error) {
-    console.error("Error creating project directories:", error);
-    return res
-      .status(500)
-      .json({ error: "Failed to create project directories" });
-  }
 });
 
 app.post("/move-project", express.json(), async (req, res) => {
@@ -339,16 +355,40 @@ app.post("/move-project", express.json(), async (req, res) => {
     // Move the project directory
     await fs.rename(oldPath, newPath);
     console.log(`Project moved from ${oldPath} to ${newPath}`);
-
-    return res.status(200).json({
-      message: "Project moved successfully",
-      projectName: project.projectName,
-      newUser: newUser.userName,
-    });
   } catch (error) {
     console.error("Error moving project:", error);
     return res.status(500).json({ error: "Failed to move project" });
   }
+  try {
+    const usersData = JSON.parse(await fs.readFile(usersJsonPath, "utf8"));
+    usersData[newUser.userName].projects.push(project);
+    const sortedProjects = usersData[newUser.userName].projects.sort((a, b) =>
+      a.projectName.localeCompare(b.projectName)
+    );
+    usersData[newUser.userName].projects = sortedProjects;
+    //remove project from original user
+    const originalUser = usersData[user.userName];
+    if (originalUser) {
+      originalUser.projects = originalUser.projects.filter(
+        (p) => p.projectName !== project.projectName
+      );
+    }
+    console.log("New usersData:", usersData);
+    await fs.writeFile(
+      usersJsonPath,
+      JSON.stringify(usersData, null, 2),
+      "utf8"
+    );
+
+  } catch (error) {
+    console.error("Error updating users.json:", error);
+    return res.status(500).json({ error: "Failed to update users.json" });
+  }
+  return res.status(200).json({
+    message: "Project moved successfully",
+    projectName: project.projectName,
+    newUser: newUser.userName,
+  });
 });
 
 app.post("/upload-file", express.json(), async (req, res) => {
@@ -1557,7 +1597,7 @@ async function getUserInterfaceMode(userName) {
 
 //Set the user interface mode
 async function setUserInterfaceMode(userName, newMode) {
-  const userConfigPath = `/home/kipr/Documents/KISS/${userName}/.config.json`;
+  const userConfigPath = `/home/kipr/Documents/KISS/${userName}/.user.config.json`;
   try {
     await fs.access(userConfigPath); // throws if file doesn't exist
 
@@ -1571,18 +1611,42 @@ async function setUserInterfaceMode(userName, newMode) {
       JSON.stringify(configData, null, 2),
       "utf-8"
     );
-
-    return true;
   } catch (error) {
     console.error("Error updating user config:", error);
     return false;
   }
+
+  try {
+    await fs.access(usersJsonPath);
+    const configRaw = await fs.readFile(usersJsonPath, "utf-8");
+    const configData = JSON.parse(configRaw);
+    console.log("User config data:", configData);
+    if (configData[userName]) {
+      configData[userName].interfaceMode = newMode;
+    } else {
+      console.error(`User ${userName} not found in users.json`);
+      return false;
+    }
+    await fs.writeFile(
+      usersJsonPath,
+      JSON.stringify(configData, null, 2),
+      "utf-8"
+    );
+    console.log(
+      "Updated users.json with new interface mode for user:",
+      userName
+    );
+  } catch (error) {
+    console.error("Error reading users.json:", error);
+  }
+
+  return true;
 }
 
 // Helper function to handle folder-based APIs
 function createFolderHandler() {
   return async (req, res) => {
-    const user = req.query.user;
+    const user = req.query.userName;
     console.log("createFolderHandler called with user:", user);
 
     const userJson = `/home/kipr/Documents/KISS/users.json`;
@@ -1593,7 +1657,7 @@ function createFolderHandler() {
       data = JSON.parse(userData);
       console.log("User data:", data);
 
-      const foundUser = data[user.userName];
+      const foundUser = data[user];
       console.log("Found user:", foundUser);
       if (!foundUser) {
         return res.status(404).json({ error: "User not found" });
@@ -2051,6 +2115,8 @@ app.post("/add-user-project-to-classroom", async (req, res) => {
       interfaceMode: user.interfaceMode,
     });
 
+    foundClassroom.users.sort((a, b) => a.userName.localeCompare(b.userName));
+
     console.log("Updated classroom users:", foundClassroom.users);
 
     // Save back to file
@@ -2109,6 +2175,9 @@ app.post("/move-user-to-classroom", async (req, res) => {
           userName: user.userName,
           interfaceMode: user.interfaceMode,
         });
+        foundClassroom.users.sort((a, b) =>
+          a.userName.localeCompare(b.userName)
+        );
       }
     }
 
@@ -2147,11 +2216,12 @@ async function pasteFiletoProject(pasteData, usersData) {
       "/";
 
     if (foundProject) {
+      console.log("pasteData.pasteFromData.toPasteObject:", pasteData.pasteFromData.toPasteObject);
       switch (fileType) {
         case "h":
           projectIncludeFiles = foundProject.includeFolderFiles || [];
-          if (!projectIncludeFiles.includes(pasteData.toPasteObject)) {
-            projectIncludeFiles.push(pasteData.toPasteObject);
+          if (!projectIncludeFiles.includes(pasteData.pasteFromData.toPasteObject.copyObjectFile)) {
+            projectIncludeFiles.push(pasteData.pasteFromData.toPasteObject.copyObjectFile);
           }
           foundProject.includeFolderFiles = projectIncludeFiles;
           pasteToFinalPath += "include/" + fileObject;
@@ -2313,7 +2383,7 @@ app.post("/upload-user", async (req, res) => {
     const foundUser = userData[user.userName];
 
     if (!foundUser) {
-      usersData[user.userName] = userConfigContent;
+      usersData[user.userName] = userConfigContent[user.userName];
 
       console.log("usersData after adding new user:", usersData);
       await fs.writeFile(
@@ -2338,7 +2408,7 @@ app.post("/upload-user", async (req, res) => {
     const userConfigPath = path.join(userDirectory, ".user.config.json");
     await fs.writeFile(
       userConfigPath,
-      JSON.stringify({ userConfigContent }, null, 2),
+      JSON.stringify( userConfigContent[user.userName], null, 2),
       "utf-8"
     );
     console.log("User config file created:", userConfigPath);
@@ -2363,8 +2433,9 @@ app.post("/upload-user", async (req, res) => {
         await fs.writeFile(
           projectConfigPath,
           JSON.stringify(
-            userConfigContent.projects.find(
-              (p) => p.projectName === project.projectName),
+            userConfigContent[user.userName].projects.find(
+              (p) => p.projectName === project.projectName
+            ),
             null,
             2
           ),
@@ -2389,7 +2460,10 @@ app.post("/upload-user", async (req, res) => {
                 project.includeFolderFiles &&
                 project.includeFolderFiles.length > 0
               ) {
-                console.log("Creating include files:", project.includeFolderFiles);
+                console.log(
+                  "Creating include files:",
+                  project.includeFolderFiles
+                );
                 for (const file of project.includeFolderFiles) {
                   const filePath = path.join(folderPath, file.name);
                   try {
@@ -2445,29 +2519,28 @@ app.post("/upload-user", async (req, res) => {
   //Add user to classrooms if classroomName is provided
   let classroomsData = {};
 
-  try{
-    if(userConfigContent.classroomName) {
+  try {
+    if (userConfigContent[user.userName].classroomName) {
       const classroomsContent = await fs.readFile(classroomsJsonPath, "utf-8");
       classroomsData = JSON.parse(classroomsContent);
 
       const foundClassroom = classroomsData.classrooms.find(
-        (c) => c.name === userConfigContent.classroomName
+        (c) => c.name === userConfigContent[user.userName].classroomName
       );
 
-      if(foundClassroom) {
+      if (foundClassroom) {
         //Check if user already exists in the classroom
         const userExists = foundClassroom.users.some(
           (u) => u.userName === user.userName
         );
 
-        if (userExists) { 
+        if (userExists) {
           console.log("User already exists in classroom, skipping addition.");
-        }
-        else {
+        } else {
           // Add user to classroom
           foundClassroom.users.push({
             userName: user.userName,
-            interfaceMode: userConfigContent.interfaceMode,
+            interfaceMode: userConfigContent[user.userName].interfaceMode,
           });
           console.log("User added to classroom:", foundClassroom.users);
 
@@ -2480,12 +2553,9 @@ app.post("/upload-user", async (req, res) => {
         }
       }
     }
-
-  }
-  catch (error) {
+  } catch (error) {
     console.error("Error adding user to classrooms:", error);
     return res.status(500).json({ error: "Internal server error" });
-
   }
 
   return res.status(200).json({
@@ -2533,11 +2603,17 @@ app.post("/initialize-project", async (req, res) => {
       foundUser.interfaceMode = user.interfaceMode;
       foundUser.projects = user.projects || [];
     }
+    const sortedUsersData = Object.keys(usersData)
+      .sort((a, b) => a.localeCompare(b)) // sort usernames alphabetically
+      .reduce((acc, key) => {
+        acc[key] = usersData[key];
+        return acc;
+      }, {});
 
     // Save changes back to file
     await fs.writeFile(
       usersJsonPath,
-      JSON.stringify(usersData, null, 2),
+      JSON.stringify(sortedUsersData, null, 2),
       "utf-8"
     );
     console.log("Updated users.json successfully");
@@ -2844,6 +2920,87 @@ app.post("/delete-user", async (req, res) => {
   } catch (error) {
     console.error("Error deleting repository:", error);
     res.status(500).send("Error deleting repository.");
+  }
+});
+
+app.post("/delete-classroom", async (req, res) => {
+  const { classroomName } = req.body;
+  console.log("/delete-classroom Received request body:", req.body);
+  try {
+    const classroomsData = JSON.parse(
+      await fs.readFile(classroomsJsonPath, "utf8")
+    );
+
+    // Find the classroom to delete
+    const classroomIndex = classroomsData.classrooms.findIndex(
+      (c) => c.name === classroomName
+    );
+
+    if (classroomIndex === -1) {
+      return res.status(404).json({ error: "Classroom not found." });
+    }
+
+    //Check if any users are in the classroom
+    if (classroomsData.classrooms[classroomIndex].users.length > 0) {
+      //Remove classroom from each user in users.json
+      const usersData = JSON.parse(await fs.readFile(usersJsonPath, "utf8"));
+      classroomsData.classrooms[classroomIndex].users.forEach((user) => {
+        if (usersData[user.userName]) {
+          // Remove classroom from user
+          usersData[user.userName].classroomName = null;
+        }
+      });
+      // Write the updated users data back to the file
+      await fs.writeFile(
+        usersJsonPath,
+        JSON.stringify(usersData, null, 2),
+        "utf8"
+      );
+      console.log("Removed classroom from users.");
+
+      //Remove classroom from each user's .user.config.json
+      for (const user of classroomsData.classrooms[classroomIndex].users) {
+        const userConfigPath = path.join(
+          "/home/kipr/Documents/KISS",
+          user.userName,
+          ".user.config.json"
+        );
+        try {
+          const userConfig = JSON.parse(
+            await fs.readFile(userConfigPath, "utf8")
+          );
+          if (userConfig.classroomName === classroomName) {
+            userConfig.classroomName = null; // Remove classroom name
+            await fs.writeFile(
+              userConfigPath,
+              JSON.stringify(userConfig, null, 2),
+              "utf8"
+            );
+            console.log(
+              `Updated ${user.userName}'s config to remove classroom.`
+            );
+          }
+        } catch (error) {
+          console.error(`Error updating ${user.userName}'s config:`, error);
+        }
+      }
+    }
+
+    // Remove the classroom from the array
+    classroomsData.classrooms.splice(classroomIndex, 1);
+
+    // Write the updated data back to the file
+    await fs.writeFile(
+      classroomsJsonPath,
+      JSON.stringify(classroomsData, null, 2),
+      "utf8"
+    );
+
+    console.log(`Deleted classroom: ${classroomName}`);
+    return res.status(200).json({ message: "Classroom deleted successfully." });
+  } catch (error) {
+    console.error("Error deleting classroom:", error);
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -3192,17 +3349,18 @@ app.post("/add-user-to-classroom", express.json(), async (req, res) => {
 
 //Change interface mode
 app.post("/change-interface-mode", (req, res) => {
-  const { userName, newMode } = req.body;
+  const { user, newMode } = req.body;
+  console.log("Received request body:", req.body);
 
-  if (!userName || !newMode) {
+  if (!user || !newMode) {
     return res.status(400).json({ error: "Missing userName or newMode" });
   }
 
-  const success = setUserInterfaceMode(userName, newMode);
+  const success = setUserInterfaceMode(user.userName, newMode);
 
   if (success) {
     res.json({
-      message: `Interface mode updated to ${newMode} for ${userName}`,
+      message: `Interface mode updated to ${newMode} for ${user.userName}`,
     });
   } else {
     res.status(500).json({ error: "Failed to update interface mode" });
@@ -3218,8 +3376,20 @@ app.post("/rename", async (req, res) => {
   const classroomsData = JSON.parse(
     await fs.readFile(classroomsJsonPath, "utf8")
   );
+  console.log("classroomsData:", classroomsData);
 
   if (req.body.renameType === "Classroom") {
+    //Check if classroom name already exists
+    try {
+      const classroomExists = classroomsData.classrooms.some(
+        (classroom) => classroom.name === req.body.newClassroomName
+      );
+      if (classroomExists) {
+        return res.status(409).json({ error: "Classroom name already exists" });
+      }
+    } catch (error) {
+      console.error("Error checking classroom name:", error);
+    }
     //Rename classroom name in users.json
     try {
       Object.entries(usersData).forEach(([userName, userData]) => {
