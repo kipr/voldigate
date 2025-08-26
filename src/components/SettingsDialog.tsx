@@ -196,7 +196,8 @@ class SettingsDialog extends React.PureComponent<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    const initialUser = this.props.users.length > 0 ? this.props.users[0] : BLANK_USER;
+    const initialUser = Object.keys(this.props.users).length > 0 ? Object.values(this.props.users)[0] : BLANK_USER;
+
     console.log("SettingsDialog constructor props:", props);
     this.state = {
       selectedSection: 'user-interface',
@@ -214,6 +215,7 @@ class SettingsDialog extends React.PureComponent<Props, State> {
 
   componentDidMount(): void {
     console.log("SettingsDialog mounted state:", this.state);
+
     const storedTheme = localStorage.getItem('ideEditorDarkMode');
     const consoleLayout = localStorage.getItem('consoleLayout');
     const classroomView = localStorage.getItem('classroomView');
@@ -294,7 +296,8 @@ class SettingsDialog extends React.PureComponent<Props, State> {
   };
 
   updateUserOptions = () => {
-    const userOptions: ComboBox.Option[] = this.props.users.map(user => {
+    console.log("SettingsDialog updateUserOptions props.users:", this.props.users);
+    const userOptions: ComboBox.Option[] = Object.values(this.props.users).map(user => {
       const userName = LocalizedString.lookup(tr(`${user.userName}`), this.props.locale);
       const option = {
         data: user.userName,
@@ -402,7 +405,7 @@ class SettingsDialog extends React.PureComponent<Props, State> {
 
   private onConfirmClick_ = async () => {
     const changeInterfaceResponse = await axios.post('/change-interface-mode', {
-      userName: this.state.selectedUser, newMode: this.newInterfaceModeRef.current
+      user: this.state.selectedUser, newMode: this.newInterfaceModeRef.current
     });
 
     if (changeInterfaceResponse.request.status === 200) {
