@@ -1,6 +1,6 @@
 #include <napi.h>
 #include <iostream>
-#include "analog_c.hpp"
+#include "analog_p.hpp"
 
 extern "C" 
 {

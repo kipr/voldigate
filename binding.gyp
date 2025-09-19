@@ -3,7 +3,7 @@
     {
       "target_name": "motor_addon",
       "sources": [
-	      "dependencies/libwallaby/module/motor/src/motor_addon.cpp",
+	      "addOns/motor_addon.cpp",
         "dependencies/libwallaby/module/motor/src/motor_c.cpp",
 	      "dependencies/libwallaby/module/motor/src/motor_p.cpp"
       ],
@@ -41,7 +41,7 @@
     {
       "target_name": "servo_addon",
       "sources": [
-	      "dependencies/libwallaby/module/servo/src/servo_addon.cpp",
+	     "addOns/servo_addon.cpp",
         "dependencies/libwallaby/module/servo/src/servo_c.cpp",
 	      "dependencies/libwallaby/module/servo/src/servo_p.cpp"
       ],
@@ -79,7 +79,7 @@
     {
       "target_name": "analog_addon",
       "sources": [
-	      "dependencies/libwallaby/module/analog/src/analog_addon.cpp",
+	      "addOns/analog_addon.cpp",
         "dependencies/libwallaby/module/analog/src/analog_c.cpp",
 	      "dependencies/libwallaby/module/analog/src/analog_p.cpp"
       ],
@@ -117,7 +117,7 @@
     {
       "target_name": "digital_addon",
       "sources": [
-	      "dependencies/libwallaby/module/digital/src/digital_addon.cpp",
+	      "addOns/digital_addon.cpp",
         "dependencies/libwallaby/module/digital/src/digital_c.cpp",
 	      "dependencies/libwallaby/module/digital/src/digital_p.cpp"
       ],
@@ -155,7 +155,7 @@
     {
       "target_name": "accel_addon",
       "sources": [
-	      "dependencies/libwallaby/module/accel/src/accel_addon.cpp",
+	      "addOns/accel_addon.cpp",
         "dependencies/libwallaby/module/accel/src/accel_c.cpp",
 	      "dependencies/libwallaby/module/accel/src/accel_p.cpp"
       ],
@@ -193,7 +193,7 @@
      {
       "target_name": "gyro_addon",
       "sources": [
-	      "dependencies/libwallaby/module/gyro/src/gyro_addon.cpp",
+	      "addOns/gyro_addon.cpp",
         "dependencies/libwallaby/module/gyro/src/gyro_c.cpp",
 	      "dependencies/libwallaby/module/gyro/src/gyro_p.cpp"
       ],
@@ -231,7 +231,7 @@
     {
       "target_name": "magneto_addon",
       "sources": [
-	      "dependencies/libwallaby/module/magneto/src/magneto_addon.cpp",
+	      "addOns/magneto_addon.cpp",
         "dependencies/libwallaby/module/magneto/src/magneto_c.cpp",
 	      "dependencies/libwallaby/module/magneto/src/magneto_p.cpp"
       ],
@@ -269,7 +269,7 @@
     {
       "target_name": "button_addon",
       "sources": [
-	      "dependencies/libwallaby/module/button/src/button_addon.cpp",
+	      "addOns/button_addon.cpp",
         "dependencies/libwallaby/module/button/src/button_c.cpp",
 	      "dependencies/libwallaby/module/button/src/button_p.cpp"
       ],

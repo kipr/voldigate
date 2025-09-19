@@ -1,6 +1,5 @@
 #include <napi.h>
 #include <iostream>
-#include "motor_c.hpp"
 #include "motor_p.hpp"
 
 extern "C"
@@ -10,6 +9,7 @@ extern "C"
     void off(int motor);
     void alloff();
     void motor(int motor, int percent);
+    void motor_power(int motor, int percent);
     int get_motor_goal_velocity(unsigned int motor);
     int get_motor_position_counter(int motor);
     void clear_motor_position_counter(int motor);

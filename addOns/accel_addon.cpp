@@ -1,6 +1,6 @@
 #include <napi.h>
 #include <iostream>
-#include "accel_c.hpp"
+#include "accel_p.hpp"
 
 extern "C"
 {
