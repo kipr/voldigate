@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
-    "module": "es2020",
+    "module": "ESNext",
     "allowJs": true,
     "outDir": "dist",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "resolveJsonModule": true,
     "typeRoots": ["node_modules/@types", "src/typings"],
     "types": ["node"],
-    "target": "es6",
+    "skipLibCheck": true,
+    "target": "ESNext",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
