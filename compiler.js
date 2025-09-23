@@ -8,7 +8,6 @@ const envProjectName = process.env.PROJECT_NAME;
 const envFileName = process.env.FILE_NAME;
 const envLanguage = process.env.ACTIVE_LANGUAGE;
 
-
 const userProjectDirectory = `/home/kipr/Documents/KISS/${envProjectUsername}/${envProjectName}`;
 console.error("userProjectDirectory: ", userProjectDirectory);
 const bin_directory = path.join(userProjectDirectory, "/bin");
@@ -34,7 +33,6 @@ try {
   throw e;
 }
 
-
 try {
   switch (envLanguage) {
     case "graphical":
@@ -48,18 +46,16 @@ try {
         .map((file) => path.join(src_directory, file));
 
       sourceFilePath = sourceFiles.join(" ");
-      compileCommand = `gcc -Wall -Wextra -fmax-errors=100 -o "${outputBinaryPath}" ${sourceFilePath} -I"${__dirname}/libkipr_voldigate/libkipr_install_c/include" -I"${include_directory}" -L"${__dirname}/libkipr_voldigate/libkipr_install_c/lib" -lkipr`;
+      compileCommand = `gcc -Wall -Wextra -fmax-errors=100 -o "${outputBinaryPath}" ${sourceFilePath}  -I"${include_directory}" -lkipr -lm -lpthreads`;
 
       try {
         exec(compileCommand, (error, stdout, stderr) => {
-         // const messages = parseCompilerErrors(stderr, userProjectDirectory);
+          // const messages = parseCompilerErrors(stderr, userProjectDirectory);
           if (error) {
-
             process.stdout.write(
               JSON.stringify({
                 success: false,
                 error: stderr,
-                
               }) + "\n"
             );
           } else {
@@ -74,14 +70,11 @@ try {
                 success: true,
                 output: stdout || "Compilation successful",
                 warnings: hasWarnings ? stderr : undefined,
-               
               }) + "\n"
             );
           }
         });
       } catch (err) {
-      
-
         process.stdout.write(
           JSON.stringify({
             success: false,
@@ -101,12 +94,11 @@ try {
         .map((file) => path.join(src_directory, file));
 
       sourceFilePath = sourceFiles.join(" ");
-      compileCommand = `clang++ -Wall -std=c++17 -o "${outputBinaryPath}" ${sourceFilePath} -I"${__dirname}/libkipr_voldigate/libkipr_install_c/include" -I"${include_directory}" -L"${__dirname}/libkipr_voldigate/libkipr_install_c/lib" -lkipr`;
+
+      compileCommand = `clang++ -Wall -std=c++17 -o "${outputBinaryPath}" ${sourceFilePath} -I"${include_directory}" -lkipr -lm -lpthreads`;
       console.error("compileCommand: ", compileCommand);
       try {
         exec(compileCommand, (error, stdout, stderr) => {
-         
-
           if (error) {
             console.error("Compilation failed:", error.message);
             process.stdout.write(
@@ -117,9 +109,8 @@ try {
             );
           } else {
             try {
-               fs.chmodSync(outputBinaryPath, "755");
-            }
-            catch (chmodErr) {
+              fs.chmodSync(outputBinaryPath, "755");
+            } catch (chmodErr) {
               console.warn("chmod failed:", chmodErr.message);
             }
             const hasWarnings = stderr && stderr.trim().length > 0;
@@ -163,13 +154,11 @@ try {
           })
         );
       } catch (err) {
-
         console.error("Python compile/link failed:", err.message);
         process.stdout.write(
           JSON.stringify({
             success: false,
             error: err.stderr,
-            
           }) + "\n"
         );
       }
