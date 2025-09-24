@@ -160,16 +160,12 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
     onFinalize_ = async (values: { [id: string]: string }) => {
         const userName = values.userName;
 
-        const specialCharRegex = /[^a-zA-Z0-9_-]/; // Removed space from allowed chars
-        const hasSpaces = /\s/.test(userName); // Check if there are any spaces
+        const specialCharRegex = /[^a-zA-Z0-9 _-]/; // Removed space from allowed chars
+
 
         // Check if user name exceeds 50 characters
         if (userName.length > 50) {
             this.setState({ errorMessage: 'User name cannot exceed 50 characters.' });
-            return;
-        }
-        if (hasSpaces) {
-            this.setState({ errorMessage: 'User name cannot contain spaces.' });
             return;
         }
         if (specialCharRegex.test(userName)) {
@@ -190,7 +186,7 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
                 this.setState({ showRepeatUserDialog: true });
             } else {
                 this.props.onClose();
-                this.props.onCreateProjectDialog(userName as User['userName'], this.state.interfaceMode, this.state.classroom ?  this.state.classroom.name === 'No Classroom' ? { name: "", users: [] } : this.state.classroom : null);
+                this.props.onCreateProjectDialog(userName as User['userName'], this.state.interfaceMode, this.state.classroom ? this.state.classroom.name === 'No Classroom' ? { name: "", users: [] } : this.state.classroom : null);
             }
         } catch (error) {
             console.error('Error adding user to database:', error);

@@ -168,8 +168,7 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
 
     const specialCharRegex = /[^a-zA-Z0-9 _-]/;
     const isOnlySpaces = !projectName.trim(); // Check if the name is empty or only spaces
-    const hasSpaces = /\s/.test(projectName);
-    // Check if project name exceeds 50 characters
+      // Check if project name exceeds 50 characters
     if (projectName.length > 50) {
       this.setState({ errorMessage: 'Project name cannot exceed 50 characters.' });
       return;
@@ -178,11 +177,7 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
       this.setState({ errorMessage: 'Project name contains special characters. Please use only letters, numbers, underscores, and hyphens.' });
       return;
     }
-    if (hasSpaces) {
-      this.setState({ errorMessage: 'Project name cannot contain spaces.' });
-      return;
-    }
-    if (isOnlySpaces) {
+     if (isOnlySpaces) {
       this.setState({ errorMessage: "Project name cannot be empty or just spaces!" });
       return;
     }

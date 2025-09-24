@@ -770,7 +770,7 @@ class LeftBar extends React.Component<Props, State> {
 
     if (loadedUser) {
       let userIndex = usersArray.findIndex(user => user.userName === (renamedUser ? oldUserName : loadedUser.userName));
-      let projectIndex = loadedUser.projects?.findIndex(project => project.projectName === (this.state.project ? this.state.project.projectName : ''));
+      let projectIndex = loadedUser.projects?.findIndex(project => project.projectName === (project.projectName === this.state.project?.projectName ? this.state.project?.projectName : this.state.toUploadProject?.projectName));
       console.log("LeftBar onLoadUserData userIndex:", userIndex);
       console.log("LeftBar onLoadUserData projectIndex:", projectIndex);  
 
@@ -1474,10 +1474,12 @@ class LeftBar extends React.Component<Props, State> {
   };
 
   private fileExplorerOnCreation_ = (createdUser: User, createdProject: Project) => {
+    console.log("LeftBar fileExplorerOnCreation createdUser:", createdUser, "createdProject:", createdProject);
     this.setState({
       panelSelection: "fileExplorer",
       isPanelVisible: true,
       userShown: createdUser,
+      project: createdProject,
     });
   };
 

@@ -130,16 +130,11 @@ export class CreateClassroomDialog extends React.PureComponent<Props, State> {
 onFinalize_ = async (values: { [id: string]: string }) => {
   const classroomName = values.classroomName;
 
-  const specialCharRegex = /[^a-zA-Z0-9_-]/; // Removed space from allowed chars
-  const hasSpaces = /\s/.test(classroomName); // Check if there are any spaces
+  const specialCharRegex = /[^a-zA-Z0-9 _-]/; // Removed space from allowed chars
 
   // Check if classroom name exceeds 50 characters
   if (classroomName.length > 50) {
     this.setState({ errorMessage: 'Classroom name cannot exceed 50 characters.' });
-    return;
-  }
-  if (hasSpaces) {
-    this.setState({ errorMessage: 'Classroom name cannot contain spaces.' });
     return;
   }
   if (specialCharRegex.test(classroomName)) {
