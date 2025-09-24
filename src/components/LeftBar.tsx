@@ -770,8 +770,9 @@ class LeftBar extends React.Component<Props, State> {
 
     if (loadedUser) {
       let userIndex = usersArray.findIndex(user => user.userName === (renamedUser ? oldUserName : loadedUser.userName));
+      let projectIndex = loadedUser.projects?.findIndex(project => project.projectName === (this.state.project ? this.state.project.projectName : ''));
       console.log("LeftBar onLoadUserData userIndex:", userIndex);
-
+      console.log("LeftBar onLoadUserData projectIndex:", projectIndex);  
 
       if (userIndex !== -1) { // Check if the user exists in the list
         this.setState(prevState => (
@@ -781,7 +782,7 @@ class LeftBar extends React.Component<Props, State> {
             user: loadedUser,
             loadedUserData: userData,
             isReloadRootUserFiles: false,
-            project: userData.length === 1 ? userData[0] : userData[userIndex],
+            project: userData.length === 1 ? userData[0] : userData[projectIndex],
             users: usersArray.map((user, index) =>
               index === userIndex
                 ? { ...loadedUser, projects: userData }

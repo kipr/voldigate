@@ -817,22 +817,9 @@ class Root extends React.Component<Props, State> {
 
       }, () => {
         console.log("UPDATE CODE CALLED CLICKFILE")
-        const currentUserInterface = this.props.propUser.interfaceMode;
-        this.updateCode(currentUserInterface === InterfaceMode.SIMPLE ? 'main.' + (ProgrammingLanguage.FILE_EXTENSION[this.props.propProject.projectLanguage]) : this.props.propFileName);
+        this.updateCode(this.props.propFileName);
         this.props.setClickFile(false);
       });
-
-      // if (this.state.isHomeStartOptionsVisible == true) {
-      //   this.setState({
-      //     isHomeStartOptionsVisible: false
-      //   });
-      // }
-
-      // if (this.state.isEditorPageVisible == false) {
-      //   this.setState({
-      //     isEditorPageVisible: true
-      //   });
-      // }
 
     }
 
@@ -2221,7 +2208,7 @@ class Root extends React.Component<Props, State> {
       saveCodePromptFlag: false
     }, async () => {
       const { userName, activeLanguage, projectName, fileName } = this.state;
-      const fileContents = this.toSaveCodeRef.current[activeLanguage];
+      const fileContents = this.toSaveCodeRef.current[activeLanguage] || this.state.code[activeLanguage];
       const prePath = `/home/kipr/Documents/KISS`;
       let filePath = '';
       switch (extension) {
