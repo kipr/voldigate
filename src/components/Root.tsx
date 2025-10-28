@@ -1133,7 +1133,8 @@ class Root extends React.Component<Props, State> {
       console.log("Root loadUserProjects response: ", response.data);
       const userDirectories = response.data.directories;
       const userProjects = response.data.projects;
-      console.log("Root loadUserProjects userProjects: ", userProjects);
+
+      console.log("Client sees includeFolderFiles:", userProjects[0].includeFolderFiles);
 
       const projects: Project[] = userProjects;
 
@@ -1709,7 +1710,8 @@ class Root extends React.Component<Props, State> {
         }), async () => {
           filePath = `${prePath}/${userName}/${projectName}/include/${newFileName}.h`;
           const fileContents = this.state.code[activeLanguage];
-          const addNewFileContentResponse = await axios.post('/save-file-content', { filePath, fileContents });
+          await axios.post('/save-file-content', { filePath, fileContents });
+          await this.loadUserProjects();
         }
         )
         break;
@@ -1741,8 +1743,8 @@ class Root extends React.Component<Props, State> {
         }), async () => {
           filePath = `${prePath}/${userName}/${projectName}/src/${newFileName}.${fileType}`;
           const fileContents = this.toSaveCodeRef.current[activeLanguage];
-          const addNewFileContentResponse = await axios.post('/save-file-content', { filePath, fileContents });
-
+          await axios.post('/save-file-content', { filePath, fileContents });
+          await this.loadUserProjects();
 
         });
 
@@ -1774,11 +1776,11 @@ class Root extends React.Component<Props, State> {
         }), async () => {
           filePath = `${prePath}/${userName}/${projectName}/data/${newFileName}.txt`;
           const fileContents = this.state.code[activeLanguage];
-          const addNewFileContentResponse = await axios.post('/save-file-content', { filePath, fileContents });
+          await axios.post('/save-file-content', { filePath, fileContents });
+          await this.loadUserProjects();
         });
         break;
     }
-    const newLoadedProjects = await this.loadUserProjects();
 
     this.props.resetFileExplorerFileSelection(`${newFileName}.${fileType}`);
 

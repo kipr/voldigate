@@ -1698,39 +1698,83 @@ async function setUserInterfaceMode(userName, newMode) {
 }
 
 // Helper function to handle folder-based APIs
+// function createFolderHandler() {
+//   return async (req, res) => {
+//     const user = req.query.userName;
+//     console.log("createFolderHandler called with user:", user);
+
+//     const userJson = `/home/kipr/Documents/KISS/users.json`;
+
+//     let data = {};
+//     try {
+//       const userData = await fs.readFile(userJson, "utf-8");
+//       data = JSON.parse(userData);
+//       console.log("User data:", data);
+
+//       const foundUser = data[user];
+//       console.log("Found user:", foundUser);
+//       if (!foundUser) {
+//         return res.status(404).json({ error: "User not found" });
+//       } else {
+//         console.log("Found user:", foundUser);
+//         console.log("User's projects:", foundUser.projects);
+//         if (foundUser.projects) {
+//           return res.status(200).json({
+//             projects: foundUser.projects,
+//           });
+//         }
+//       }
+//     } catch (error) {
+//       console.error("Error reading user JSON:", error);
+//       return res.status(500).json({ error: "Internal server error" });
+//     }
+//   };
+// }
+
 function createFolderHandler() {
   return async (req, res) => {
-    const user = req.query.userName;
-    console.log("createFolderHandler called with user:", user);
+    const userName = req.query.userName;
+    console.log("createFolderHandler called with user:", userName);
 
-    const userJson = `/home/kipr/Documents/KISS/users.json`;
+    const userJsonPath = "/home/kipr/Documents/KISS/users.json";
 
-    let data = {};
     try {
-      const userData = await fs.readFile(userJson, "utf-8");
-      data = JSON.parse(userData);
-      console.log("User data:", data);
+      // Read and parse the JSON file
+      const userDataRaw = await fs.readFile(userJsonPath, "utf-8");
+      const data = JSON.parse(userDataRaw);
 
-      const foundUser = data[user];
-      console.log("Found user:", foundUser);
+      // Find the requested user
+      const foundUser = data[userName];
       if (!foundUser) {
+        console.warn(`User "${userName}" not found`);
         return res.status(404).json({ error: "User not found" });
-      } else {
-        console.log("Found user:", foundUser);
-        console.log("User's projects:", foundUser.projects);
-        if (foundUser.projects) {
-          return res.status(200).json({
-            projects: foundUser.projects,
-          });
-        }
       }
+
+      console.log("Found user:", foundUser);
+
+      // Ensure all project arrays are plain arrays
+      const sanitizedProjects = (foundUser.projects || []).map(project => ({
+        ...project,
+        includeFolderFiles: Array.isArray(project.includeFolderFiles)
+          ? Array.from(project.includeFolderFiles)
+          : [],
+        srcFolderFiles: Array.isArray(project.srcFolderFiles)
+          ? Array.from(project.srcFolderFiles)
+          : [],
+        dataFolderFiles: Array.isArray(project.dataFolderFiles)
+          ? Array.from(project.dataFolderFiles)
+          : [],
+      }));
+
+      console.log("Sanitized projects to send:", JSON.stringify(sanitizedProjects, null, 2));
+      console.log("User's projects:", sanitizedProjects);
+      return res.status(200).json({ projects: sanitizedProjects });
     } catch (error) {
       console.error("Error reading user JSON:", error);
       return res.status(500).json({ error: "Internal server error" });
     }
   };
 }
-
 //Get all files in a directory and zip them
 async function getAllUserFiles(directory, zipFolder) {
   const files = await fs.readdir(directory, { withFileTypes: true });

@@ -60,7 +60,7 @@ interface LeftBarState {
   users: User[];
   user?: User;
   isLoadUserFiles?: boolean;
-  isAddNewClassroom? : boolean;
+  isAddNewClassroom?: boolean;
   isAddNewFile?: boolean;
   reloadUser?: boolean;
   activeLanguage?: ProgrammingLanguage;
@@ -772,30 +772,38 @@ class LeftBar extends React.Component<Props, State> {
       let userIndex = usersArray.findIndex(user => user.userName === (renamedUser ? oldUserName : loadedUser.userName));
       let projectIndex = loadedUser.projects?.findIndex(project => project.projectName === (project.projectName === this.state.project?.projectName ? this.state.project?.projectName : this.state.toUploadProject?.projectName));
       console.log("LeftBar onLoadUserData userIndex:", userIndex);
-      console.log("LeftBar onLoadUserData projectIndex:", projectIndex);  
+      console.log("LeftBar onLoadUserData projectIndex:", projectIndex);
 
-      if (userIndex !== -1) { // Check if the user exists in the list
-        this.setState(prevState => (
-          console.log("LeftBar onLoadUserData prevState:", prevState),
+      if (userIndex !== -1) {
+        this.setState(prevState => {
+          console.log("LeftBar onLoadUserData prevState:", prevState);
 
-          {
+          const updatedUsers = prevState.users.map((user, index) =>
+            index === userIndex
+              ? { ...loadedUser }
+              : user
+          );
+
+          console.log("LeftBar onLoadUserData updatedUsers:", updatedUsers);
+
+          return {
             user: loadedUser,
             loadedUserData: userData,
             isReloadRootUserFiles: false,
-            project: userData.length === 1 ? userData[0] : userData[projectIndex],
-            users: usersArray.map((user, index) =>
-              index === userIndex
-                ? { ...loadedUser, projects: userData }
-                : user
-            ),
+            project:
+              userData.length === 1
+                ? userData[0]
+                : userData[projectIndex],
+            users: updatedUsers,
             userShown: loadedUser
-          }));
+          };
+        });
       }
 
       if (this.state.userShown) {
         if (this.state.userShown.userName === loadedUser.userName) {
           this.setState({
-           userShown: loadedUser
+            userShown: loadedUser
           })
         }
       }
@@ -830,7 +838,7 @@ class LeftBar extends React.Component<Props, State> {
   }
 
   private onSetRenameFlag_ = (renameFlag: boolean, renameType: 'Classroom' | 'User' | 'Project' | 'File') => {
-    if(renameType === 'Classroom') {
+    if (renameType === 'Classroom') {
       this.setState({
         renameClassroomFlag: renameFlag,
         contextMenuClassroom: undefined
@@ -1043,7 +1051,7 @@ class LeftBar extends React.Component<Props, State> {
       moveUserFlag: true
     });
   }
-  
+
   private onAddNewClassroom_ = (classroom: Classroom) => {
     console.log("Adding new classroom:", classroom);
     this.setState({
@@ -1640,7 +1648,7 @@ class LeftBar extends React.Component<Props, State> {
 
           resetFileExplorerFileSelection={this.setSelectedFileRef_}
           resetFileExplorerProjectSelection={this.onSetSelectedProject_}
-          resetRenameFlag = {this.onSetRenameFlag_}
+          resetRenameFlag={this.onSetRenameFlag_}
           resetRenameUserFlag={this.onSetRenameUserFlag_}
           resetRenameProjectFlag={this.onSetRenameProjectFlag_}
           resetRenameFileFlag={this.onSetRenameFileFlag}
