@@ -75,9 +75,6 @@ const ErrorMessageContainer = styled('div', (props: ThemeProps) => ({
     alignItems: 'center',
     marginTop: '10px',
 }));
-const StyledComboBox = styled(ComboBox, {
-    flex: '1 0',
-});
 
 const ItemIcon = styled(Fa, {
     paddingLeft: '10px',
@@ -85,24 +82,7 @@ const ItemIcon = styled(Fa, {
     alignItems: 'center',
     height: '30px'
 });
-const ComboBoxLabel = styled('label', (theme: ThemeProps) => ({
-    display: 'block',
-    color: theme.theme.color,
-    fontSize: '1.1em',
-    fontWeight: 'normal',
-    marginTop: `${theme.theme.itemPadding * 2}px`,
-    marginBottom: `${theme.theme.itemPadding}px`,
-    marginRight: `${theme.theme.itemPadding}px`,
-    userSelect: 'none'
-}));
-const INTERFACE_OPTIONS: ComboBox.Option[] = [{
-    text: 'Simple',
-    data: 'Simple'
-}, {
-    text: 'Advanced',
-    data: 'Advanced'
 
-}];
 export class CreateClassroomDialog extends React.PureComponent<Props, State> {
 
     constructor(props: Props) {
@@ -124,9 +104,7 @@ export class CreateClassroomDialog extends React.PureComponent<Props, State> {
             interfaceMode: interfaceMode
         });
     };
-    private onSelectInterface_ = (interfaceIndex: number, option: ComboBox.Option) => {
-        this.onInterfaceChange(option.data as InterfaceMode);
-    };
+
 onFinalize_ = async (values: { [id: string]: string }) => {
   const classroomName = values.classroomName;
 
@@ -175,7 +153,7 @@ onFinalize_ = async (values: { [id: string]: string }) => {
 
         const { showRepeatUserDialog } = state;
         const CREATEUSER_FORM_ITEMS: Form.Item[] = [
-            Form.username('classroomName', 'Classroom Name')
+            Form.username('classroomName', LocalizedString.lookup(tr('Classroom Name'), locale))
         ];
         
         return (
@@ -202,7 +180,7 @@ onFinalize_ = async (values: { [id: string]: string }) => {
                                 theme={theme}
                                 onFinalize={this.onFinalize_}
                                 items={CREATEUSER_FORM_ITEMS}
-                                finalizeText="Create"
+                                finalizeText={LocalizedString.lookup(tr('Create'), locale)}
                                 finalizeDisabled={false}
                             />
                         </Container>

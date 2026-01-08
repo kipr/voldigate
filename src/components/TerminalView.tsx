@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { StyleProps } from '../style';
 import { ThemeProps, Theme } from './theme';
-import LocalizedString from 'util/LocalizedString';
+import LocalizedString from '../util/LocalizedString';
 import 'xterm/css/xterm.css';
 import { Terminal } from 'xterm';
 import { styled } from 'styletron-react';
-
+import tr from '@i18n';
 export interface TerminalViewPublicProps extends StyleProps, ThemeProps {
   theme: Theme;
 }
@@ -168,11 +168,11 @@ class TerminalView extends React.Component<Props, State> {
     this.state = {};
   }
   render() {
-    const { theme } = this.props;
+    const { theme, locale} = this.props;
     return (
       <div style={{ height: '900px', display: 'flex', flexDirection: 'column' }}>
         <TerminalViewContainer theme={theme} className="terminal-view">
-          <h2 style={{ marginLeft: '6px', fontSize: '1.728em' }}>Terminal</h2>
+          <h2 style={{ marginLeft: '6px', fontSize: '1.728em' }}>{LocalizedString.lookup(tr("Terminal"), locale)}</h2>
           <XTerminal theme={theme} />
         </TerminalViewContainer>
       </div>

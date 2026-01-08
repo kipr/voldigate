@@ -13,11 +13,11 @@ import { I18nAction } from '../state/reducer';
 import { connect } from 'react-redux';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { Fa } from './Fa';
-import { User } from '../types/userTypes';
+import { User } from 'ivygate/dist/types/user';
 import ComboBox from './ComboBox';
 import { InterfaceMode } from '../types/interfaceModes';
 import { Settings } from 'Settings';
-import Classroom from '../types/classroomTypes';
+import Classroom from 'ivygate/dist/types/classroomTypes';
 
 
 export interface CreateUserDialogPublicProps extends ThemeProps, StyleProps {
@@ -101,14 +101,18 @@ const ComboBoxLabel = styled('label', (theme: ThemeProps) => ({
     marginRight: `${theme.theme.itemPadding}px`,
     userSelect: 'none'
 }));
-const INTERFACE_OPTIONS: ComboBox.Option[] = [{
-    text: 'Simple',
-    data: 'Simple'
-}, {
-    text: 'Advanced',
-    data: 'Advanced'
+// const INTERFACE_OPTIONS: ComboBox.Option[] = [{
+//     text: 'Simple',
+//     data: LocalizedString.lookup(tr('Simple'), locale)
+// }, {
+//     text: 'Advanced',
+//     data: LocalizedString.lookup(tr('Advanced'), this.props.locale)
 
-}];
+// }];
+const getInterfaceOptions = (locale: LocalizedString.Language): ComboBox.Option[] => ([
+  { text: LocalizedString.lookup(tr('Simple'), locale),   data: LocalizedString.lookup(tr('Simple'), locale) },
+  { text: LocalizedString.lookup(tr('Advanced'), locale), data: LocalizedString.lookup(tr('Advanced'), locale) },
+]);
 
 
 export class CreateUserDialog extends React.PureComponent<Props, State> {
@@ -151,7 +155,8 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
         this.setState({
             classroom: {
                 name: option.text as Classroom['name'],
-                users: option.data as User[]
+                users: option.data as User[],
+                type: 'classroom'
             }
         }, () => {
             console.log("Updated classroom state: ", this.state);
@@ -186,7 +191,7 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
                 this.setState({ showRepeatUserDialog: true });
             } else {
                 this.props.onClose();
-                this.props.onCreateProjectDialog(userName as User['userName'], this.state.interfaceMode, this.state.classroom ? this.state.classroom.name === 'No Classroom' ? { name: "", users: [] } : this.state.classroom : null);
+                this.props.onCreateProjectDialog(userName as User['userName'], this.state.interfaceMode, this.state.classroom ? this.state.classroom.name === 'No Classroom' ? { name: "", users: [], type: 'classroom' } : this.state.classroom : null);
             }
         } catch (error) {
             console.error('Error adding user to database:', error);
@@ -227,9 +232,9 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
 
         const { showRepeatUserDialog } = state;
         const CREATEUSER_FORM_ITEMS: Form.Item[] = [
-            Form.username('userName', 'User Name')
+            Form.username('userName', LocalizedString.lookup(tr('User Name'), locale))
         ];
-        const interfaceIndex = INTERFACE_OPTIONS.findIndex(option => option.data === this.state.interfaceMode);
+        const interfaceIndex = getInterfaceOptions(locale).findIndex(option => option.data === this.state.interfaceMode);
         console.log("CreateUserDialog render interfaceIndex: ", interfaceIndex);
         console.log("CreateUserDialog render classroom: ", classroom);
         const classroomIndex = this.CLASSROOM_OPTIONS.findIndex(option => option.text === classroom?.name);
@@ -255,17 +260,17 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
                                 </ErrorMessageContainer>
                             )}
                             <ComboBoxContainer theme={theme} style={style} className={className}>
-                                <ComboBoxLabel theme={theme}>Interface Mode:</ComboBoxLabel>
+                                <ComboBoxLabel theme={theme}>{LocalizedString.lookup(tr('Interface Mode:'), locale)}</ComboBoxLabel>
                                 <StyledComboBox
                                     theme={theme}
                                     onSelect={this.onSelectInterface_}
-                                    options={INTERFACE_OPTIONS}
+                                    options={getInterfaceOptions(locale)}
                                     index={interfaceIndex}
                                 />
                             </ComboBoxContainer>
                             {settings && settings.classroomView && !propClassroom && classrooms && (
                                 <ComboBoxContainer theme={theme} style={style} className={className}>
-                                    <ComboBoxLabel theme={theme}>Classroom:</ComboBoxLabel>
+                                    <ComboBoxLabel theme={theme}>{LocalizedString.lookup(tr('Classroom:'), locale)}</ComboBoxLabel>
                                     <StyledComboBox
                                         theme={theme}
                                         onSelect={this.onSelectClassroom_}
@@ -278,7 +283,7 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
                                 theme={theme}
                                 onFinalize={this.onFinalize_}
                                 items={CREATEUSER_FORM_ITEMS}
-                                finalizeText="Create"
+                                finalizeText={LocalizedString.lookup(tr('Create'), locale)}
                                 finalizeDisabled={false}
                             />
                         </Container>

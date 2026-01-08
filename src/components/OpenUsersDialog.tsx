@@ -12,8 +12,8 @@ import { ThemeProps } from './theme';
 import { connect } from 'react-redux';
 import { State as ReduxState } from '../state';
 import { Settings } from '../Settings';
-import { Project } from '../types/projectTypes';
-import { User } from '../types/userTypes';
+import { Project } from 'ivygate/dist/types/project';
+import { User } from 'ivygate/dist/types/user';
 import { JSX } from 'react';
 
 export interface OpenUsersDialogPublicProps extends ThemeProps, StyleProps {
@@ -251,7 +251,7 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
     const { theme } = this.props;
 
     if (loading) {
-      return <div>Select User to see projects</div>;
+      return <div>{LocalizedString.lookup(tr('Select User to see projects'), this.props.locale)}</div>;
     }
 
     if (error) {
@@ -264,7 +264,7 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
 
     return (
       <div>
-        <ProjectTitle>Projects for {this.state.selectedUser.userName}</ProjectTitle>
+        <ProjectTitle>{LocalizedString.lookup(tr(`Projects for ${this.state.selectedUser.userName}`), this.props.locale)}</ProjectTitle>
         <ul>
           {projects.map((project) => (
             <ProjectItem

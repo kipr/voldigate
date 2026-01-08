@@ -8,13 +8,13 @@ import { ThemeProps } from './theme';
 import { StyleProps } from '../style';
 import { styled } from 'styletron-react';
 import { Dialog } from './Dialog';
-import { Project } from '../types/projectTypes';
-import { User } from '../types/userTypes';
+import { Project } from 'ivygate/dist/types/project';
+import { User } from 'ivygate/dist/types/user';
 import { Modal } from '../pages/Modal';
 import { Fa } from './Fa';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { JSX } from 'react';
-import Classroom from 'types/classroomTypes';
+import Classroom from 'ivygate/dist/types/classroomTypes';
 
 export interface RenameUserProjectFileDialogPublicProps extends ThemeProps, StyleProps {
   user: User;
@@ -130,15 +130,15 @@ export class RenameUserProjectFileDialog extends React.PureComponent<Props, Stat
 
     // Check if project name exceeds 50 characters
     if (changedName.length > 50) {
-      this.setState({ errorMessage: `${this.props.toRenameType} name cannot exceed 50 characters.` });
+      this.setState({ errorMessage: LocalizedString.lookup(tr('Name cannot exceed 50 characters.'), this.props.locale) });
       return;
     }
     if (specialCharRegex.test(changedName)) {
-      this.setState({ errorMessage: `${this.props.toRenameType} name contains special characters. Please use only letters, numbers, underscores, and hyphens.` });
+      this.setState({ errorMessage: LocalizedString.lookup(tr('Name contains special characters. Please use only letters, numbers, underscores, and hyphens.'), this.props.locale) });
       return;
     }
     if (isOnlySpaces) {
-      this.setState({ errorMessage: `${this.props.toRenameType} name cannot be empty or just spaces!` });
+      this.setState({ errorMessage: LocalizedString.lookup(tr('Name cannot be empty or just spaces!'), this.props.locale) });
       return;
     }
     this.setState({ errorMessage: "" }); // Clear error message if input is valid
@@ -153,7 +153,7 @@ export class RenameUserProjectFileDialog extends React.PureComponent<Props, Stat
       }
       catch (error) {
         if (error.response && error.response.status === 409) {
-          this.setState({ errorMessage: 'Classroom already exists. Please choose a different name.' });
+          this.setState({ errorMessage: LocalizedString.lookup(tr('Classroom already exists. Please choose a different name.'), this.props.locale) });
           return;
         }
       }
@@ -171,7 +171,7 @@ export class RenameUserProjectFileDialog extends React.PureComponent<Props, Stat
       }
       catch (error) {
         if (error.response && error.response.status === 409) {
-          this.setState({ errorMessage: 'User name already exists. Please choose a different name.' });
+          this.setState({ errorMessage: LocalizedString.lookup(tr('User name already exists. Please choose a different name.'), this.props.locale) });
           return;
         }
 
@@ -208,16 +208,16 @@ export class RenameUserProjectFileDialog extends React.PureComponent<Props, Stat
     const { style, className, theme, onClose, locale } = props;
     const { errorMessage } = state;
     const RENAMECLASSROOM_FOR_ITEMS: Form.Item[] = [
-      Form.username('classroomName', 'Classroom Name')
+      Form.username('classroomName', LocalizedString.lookup(tr('Classroom Name'), locale))
     ];
     const RENAMEUSER_FORM_ITEMS: Form.Item[] = [
-      Form.username('userName', 'User Name')
+      Form.username('userName', LocalizedString.lookup(tr('User Name'), locale))
     ];
     const RENAMEPROJECT_FORM_ITEMS: Form.Item[] = [
-      Form.projectName('projectName', 'Project Name')
+      Form.projectName('projectName', LocalizedString.lookup(tr('Project Name'), locale))
     ];
     const RENAMEFILE_FORM_ITEMS: Form.Item[] = [
-      Form.fileName('fileName', 'File Name')
+      Form.fileName('fileName', LocalizedString.lookup(tr('File Name'), locale))
     ];
 
 
@@ -232,7 +232,7 @@ export class RenameUserProjectFileDialog extends React.PureComponent<Props, Stat
       >
         <RenameContainer theme={theme} style={style} className={className}>
           <CenteredContainer>
-            <Bold>{LocalizedString.lookup(tr(`Rename Classroom ${this.props.toRenameName} to: `), locale)}</Bold>
+            <Bold>{LocalizedString.lookup(tr('Rename Classroom to: '), locale)}</Bold>
 
           </CenteredContainer>
           {/* Show error message if it exists */}
@@ -253,7 +253,7 @@ export class RenameUserProjectFileDialog extends React.PureComponent<Props, Stat
               theme={theme}
               onFinalize={this.onFinalize_}
               items={RENAMECLASSROOM_FOR_ITEMS}
-              finalizeText="Create"
+              finalizeText={LocalizedString.lookup(tr('Rename'), locale)}
             />
           </Container>
 
@@ -273,7 +273,7 @@ export class RenameUserProjectFileDialog extends React.PureComponent<Props, Stat
       >
         <RenameContainer theme={theme} style={style} className={className}>
           <CenteredContainer>
-            <Bold>{LocalizedString.lookup(tr(`Rename User ${this.props.toRenameName} to: `), locale)}</Bold>
+            <Bold>{LocalizedString.lookup(tr('Rename User to: '), locale)}</Bold>
 
           </CenteredContainer>
           {/* Show error message if it exists */}
@@ -294,7 +294,7 @@ export class RenameUserProjectFileDialog extends React.PureComponent<Props, Stat
               theme={theme}
               onFinalize={this.onFinalize_}
               items={RENAMEUSER_FORM_ITEMS}
-              finalizeText="Create"
+              finalizeText={LocalizedString.lookup(tr('Rename'), locale)}
             />
           </Container>
 
@@ -313,7 +313,7 @@ export class RenameUserProjectFileDialog extends React.PureComponent<Props, Stat
       >
         <RenameContainer theme={theme} style={style} className={className}>
           <CenteredContainer>
-            <Bold>{LocalizedString.lookup(tr(`Rename Project ${this.props.toRenameName} to: `), locale)}</Bold>
+            <Bold>{LocalizedString.lookup(tr('Rename Project to: '), locale)}</Bold>
 
           </CenteredContainer>
 
@@ -331,7 +331,7 @@ export class RenameUserProjectFileDialog extends React.PureComponent<Props, Stat
               theme={theme}
               onFinalize={this.onFinalize_}
               items={RENAMEPROJECT_FORM_ITEMS}
-              finalizeText="Create"
+              finalizeText={LocalizedString.lookup(tr('Rename'), locale)}
             />
           </Container>
 
@@ -350,7 +350,7 @@ export class RenameUserProjectFileDialog extends React.PureComponent<Props, Stat
       >
         <RenameContainer theme={theme} style={style} className={className}>
           <CenteredContainer>
-            <Bold>{LocalizedString.lookup(tr(`Rename File ${this.props.toRenameName} to: `), locale)}</Bold>
+            <Bold>{LocalizedString.lookup(tr('Rename File to: '), locale)}</Bold>
 
           </CenteredContainer>
           {errorMessage && (
@@ -368,7 +368,7 @@ export class RenameUserProjectFileDialog extends React.PureComponent<Props, Stat
               theme={theme}
               onFinalize={this.onFinalize_}
               items={RENAMEFILE_FORM_ITEMS}
-              finalizeText="Create"
+              finalizeText={LocalizedString.lookup(tr('Rename'), locale)}
             />
           </Container>
 

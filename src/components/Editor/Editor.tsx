@@ -37,6 +37,7 @@ export interface EditorPublicProps extends StyleProps, ThemeProps {
   autocomplete: boolean;
   isleftbaropen: boolean;
   isRunning: boolean;
+  compileStatus: 'idle' | 'compiling' | 'success' | 'warning' | 'error';
   messages?: Message[];
   onCodeChange: (code: string) => void;
   onSaveCode: () => void;
@@ -107,6 +108,10 @@ const RunItem = withStyleDeep(Item, (props: ClickProps & ThemeProps) => ({
       : {},
 }));
 
+const CompilingButton = withStyleDeep(Item, (props: ClickProps & ThemeProps) => ({
+  backgroundColor: RED.standard,
+}));
+
 const ItemIcon = styled(FontAwesome, {
   paddingRight: '10px',
 });
@@ -134,6 +139,7 @@ export namespace EditorBarTarget {
     language: ProgrammingLanguage;
     isleftbaropen_: boolean;
     isRunning: boolean;
+    compileStatus: 'idle' | 'compiling' | 'success' | 'warning' | 'error';
     projectName: string;
     fileName: string;
     userName: string;
@@ -210,10 +216,18 @@ export const createEditorBarComponents = ({
         onClick: target.onCompileClick,
         style: { fontSize: '0.9em' },
         children:
-          <>
+          target.compileStatus === 'compiling' ? (
+            <CompilingButton
+              theme={theme}
+              disabled={true}
+            >
+              <ItemIcon icon={faLink} />
+              {LocalizedString.lookup(tr('Compiling...'), locale)}
+            </CompilingButton>  
+          ): (<>
             <Fa icon={faLink} />
             {' '} {LocalizedString.lookup(tr('Compile'), locale)}
-          </>
+          </>)
       }));
       editorBar.push(BarComponent.create(Button, {
         theme,
@@ -231,7 +245,7 @@ export const createEditorBarComponents = ({
 
 
       editorBar.push(BarComponent.create(Text, {
-        text: 'User:',
+        text: LocalizedString.lookup(tr('User:'), locale),
         style: {
           fontWeight: '500',
           fontSize: '0.9em'
@@ -261,7 +275,7 @@ export const createEditorBarComponents = ({
 
 
       editorBar.push(BarComponent.create(Text, {
-        text: 'Project:',
+        text: LocalizedString.lookup(tr('Project:'), locale),
         style: {
           fontWeight: '500',
           fontSize: '0.9em'
@@ -286,7 +300,7 @@ export const createEditorBarComponents = ({
 
       }));
       editorBar.push(BarComponent.create(Text, {
-        text: 'File:',
+        text: LocalizedString.lookup(tr('File:'), locale),
         style: {
           fontWeight: '500',
           fontSize: '0.9em'
@@ -498,6 +512,7 @@ class Editor extends React.PureComponent<Props, State> {
           onCodeChange={onCodeChange}
           autocomplete={autocomplete}
           theme={theme.themeName}
+          editable={true}
         />
         </Suspense>
       );

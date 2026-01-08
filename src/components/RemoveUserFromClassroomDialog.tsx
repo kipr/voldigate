@@ -6,8 +6,8 @@ import { ThemeProps, LIGHTMODE_YES,LIGHTMODE_NO,LIGHT } from './theme';
 import tr from '@i18n';
 import LocalizedString from '../util/LocalizedString';
 
-import Classroom from 'types/classroomTypes';
-import { User } from 'types/userTypes';
+import Classroom from 'ivygate/dist/types/classroomTypes';
+import { User } from 'ivygate/dist/types/user';
 
 export interface RemoveUserFromClassroomDialogPublicProps extends ThemeProps, StyleProps {
    onClose: () => void;
@@ -168,10 +168,10 @@ class RemoveUserFromClassroomDialog extends React.PureComponent<Props> {
             
             <BottomButtonContainer>
               <YesItem onClick={() => this.props.onCloseRemoveUserFromClassroomDialog(true)} theme={theme}>
-                Yes
+                {LocalizedString.lookup(tr('Yes'), locale)}
               </YesItem>
               <NoItem onClick={() => this.props.onClose()} theme={theme}>
-                No
+                {LocalizedString.lookup(tr('No'), locale)}
               </NoItem>
             </BottomButtonContainer>
           </CenteredContainer>
