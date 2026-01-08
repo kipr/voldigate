@@ -9,5 +9,5 @@ export default styled('input', (props: ThemeProps) => ({
   color: 'inherit',
   fontSize: 'inherit',
   width: '100%',
-  backgroundColor: 'rgba(0, 0, 0, 0.1)',
+  backgroundColor: 'rgba(0, 0, 0, 0.25)',
 }));

@@ -22,7 +22,7 @@ const Container = styled('div', (props: ThemeProps & { $focus?: boolean; $minima
   borderRight: !props.$minimal ? `1px solid ${props.theme.borderColor}` : undefined,
   borderTop: !props.$minimal ? `1px solid ${props.theme.borderColor}` : undefined,
   borderBottom: !props.$minimal ? (props.$focus ? '1px solid transparent' : `1px solid ${props.theme.borderColor}`) : undefined,
-  backgroundColor: `rgba(0, 0, 0, 0.1)`,
+  backgroundColor: `rgba(0, 0, 0, 0.25)`,
   position: 'relative',
   overflow: props.$focus ? 'visible' : 'hidden',
   ':hover': {
@@ -54,6 +54,7 @@ const DropIcon = styled(Fa, {
 
 const CurrentOptionContainer = styled('div', (props: ThemeProps & { $focus?: boolean; }) => ({
   userSelect: 'none',
+
 }));
 
 const OptionContainer = styled('div', (props: ThemeProps & { $selected?: boolean; }) => ({
@@ -140,10 +141,10 @@ class ComboBox extends React.PureComponent<ComboBox.Props, ComboBox.State> {
     const { options, index, style, className, theme, minimal, widthTweak } = props;
     const { focus } = state;
 
-    
+
 
     let dropDownStyle: React.CSSProperties;
-    
+
     if (this.ref_ && focus) {
       const refStyle = window.getComputedStyle(this.ref_);
       const box = Rectangle.fromBoundingRect(this.ref_.getBoundingClientRect());
@@ -179,7 +180,7 @@ class ComboBox extends React.PureComponent<ComboBox.Props, ComboBox.State> {
             ))}
           </DropDown>
           : null
-        , COMBO_BOX_ROOT)}
+          , COMBO_BOX_ROOT)}
       </Container>
     );
   }
