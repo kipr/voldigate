@@ -1697,40 +1697,6 @@ async function setUserInterfaceMode(userName, newMode) {
   return true;
 }
 
-// Helper function to handle folder-based APIs
-// function createFolderHandler() {
-//   return async (req, res) => {
-//     const user = req.query.userName;
-//     console.log("createFolderHandler called with user:", user);
-
-//     const userJson = `/home/kipr/Documents/KISS/users.json`;
-
-//     let data = {};
-//     try {
-//       const userData = await fs.readFile(userJson, "utf-8");
-//       data = JSON.parse(userData);
-//       console.log("User data:", data);
-
-//       const foundUser = data[user];
-//       console.log("Found user:", foundUser);
-//       if (!foundUser) {
-//         return res.status(404).json({ error: "User not found" });
-//       } else {
-//         console.log("Found user:", foundUser);
-//         console.log("User's projects:", foundUser.projects);
-//         if (foundUser.projects) {
-//           return res.status(200).json({
-//             projects: foundUser.projects,
-//           });
-//         }
-//       }
-//     } catch (error) {
-//       console.error("Error reading user JSON:", error);
-//       return res.status(500).json({ error: "Internal server error" });
-//     }
-//   };
-// }
-
 function createFolderHandler() {
   return async (req, res) => {
     const userName = req.query.userName;
@@ -2813,7 +2779,7 @@ app.post("/initialize-project", async (req, res) => {
     const templates = {
       c: `#include <stdio.h>\n#include <kipr/wombat.h>\n\nint main()\n{\n  printf("Hello, World!\\n");\n  return 0;\n}\n`,
       cpp: `#include <iostream>\n#include <kipr/wombat.hpp>\n\nint main()\n{\n  std::cout << "Hello, World!" << std::endl;\n  return 0;\n}\n`,
-      python: `#!/usr/bin/python3\nimport os, sys\nsys.path.append("/usr/lib")\nfrom kipr import *\n\nprint('Hello, World!')`,
+      python: '#!/usr/bin/python3\nimport os, sys\nsys.path.append("/usr/lib")\nimport _kipr as k\n\ndef main():\n\tprint("Hello, World!")\n\nmain()',
       graphical: `<xml xmlns="http://www.w3.org/1999/xhtml">
                 <variables></variables>
                 <block type="control_run" id="Tr7;}P}KM[{|.$;Wo9_1" x="176" y="129">
@@ -3285,61 +3251,6 @@ app.get("/get-project-language", async (req, res) => {
   }
 });
 
-// // User getters
-// app.get("/load-users", async (req, res) => {
-//   try {
-//     const allEntries = await fs.readdir("/home/kipr/Documents/KISS");
-
-//     //Filter out users.json
-//     const userDirectories = [];
-//     for (const file of allEntries) {
-//       const filePath = path.join("/home/kipr/Documents/KISS", file);
-//       if (
-//         file !== "users.json" &&
-//         !file.startsWith(".") &&
-//         file !== "classrooms" &&
-//         (await fs.stat(filePath)).isDirectory()
-//       ) {
-//         userDirectories.push(file);
-//       }
-//     }
-//     console.log("User directories: ", userDirectories);
-
-//     const users = await Promise.all(
-//       userDirectories.map(async (user) => {
-//         const usersJson = await getUsersJson();
-//         let classroomName = "";
-//         if (usersJson) {
-//           console.log("usersJson: ", usersJson);
-//           Object.entries(usersJson).forEach(([userName, data]) => {
-//             console.log(`${userName} is in classroom: ${data.classroomName}`);
-//             if (userName === user) {
-//               classroomName = data.classroomName;
-//             }
-//           });
-//         }
-//         const userInterfaceMode = await getUserInterfaceMode(user);
-//         const userDirectory = `/home/kipr/Documents/KISS/${user}`;
-//         const projects = await getAllProjectDirectories(userDirectory);
-
-//         return {
-//           userName: user,
-//           interfaceMode: userInterfaceMode || "Simple",
-//           projects: projects,
-//           classroomName: classroomName,
-//         };
-//       })
-//     );
-
-//     // Send the list of users as the response
-//     res.status(200).json({
-//       users,
-//     });
-//   } catch (error) {
-//     console.error("Error getting users:", error);
-//     res.status(500).send("Error getting users");
-//   }
-// });
 
 // User getters
 app.get("/load-users", async (req, res) => {
@@ -3407,44 +3318,6 @@ app.get("/get-users", async (req, res) => {
 app.get("/get-projects", createFolderHandler());
 app.get("/get-project-folders", createFolderHandler());
 
-// app.get("/get-project-data", async (req, res) => {
-//   try {
-//     const user = req.query.user;
-//     const projectDirectory = req.query.filePath;
-//     const projectConfigPath = path.join(projectDirectory, ".config.json");
-//     const language = parseConfig(await fs.readFile(projectConfigPath, "utf8"));
-
-//     const includeData = await getAllFiles(
-//       path.join(projectDirectory, "include")
-//     );
-//     const srcData = await getAllFiles(path.join(projectDirectory, "src"));
-//     const userFileData = await getAllFiles(path.join(projectDirectory, "data"));
-
-//     const filteredIncludeData = includeData.filter(
-//       (file) => !file.startsWith(".")
-//     );
-//     const filteredSrcData = srcData.filter(
-//       (file) => !file.startsWith(".") && !file.startsWith("xmlToC.c")
-//     );
-//     const filteredUserFileData = userFileData.filter(
-//       (file) => !file.startsWith(".")
-//     );
-
-//     const projectData = {
-//       projectLanguage: language,
-//       includeData: filteredIncludeData,
-//       srcData: filteredSrcData,
-//       userFileData: filteredUserFileData,
-//     };
-
-//     console.log("Project data:", projectData);
-
-//     res.status(200).json(projectData);
-//   } catch (error) {
-//     console.error("Error getting project data:", error);
-//     res.status(500).send("Error getting project data");
-//   }
-// });
 
 app.get("/get-project-data", async (req, res) => {
   try {
