@@ -1,0 +1,143 @@
+Common Functions
+Documentation
+About
+Version %s (%s)
+Copyright
+This software is licensed under the terms of the
+Thank you to the following contributors and testers:
+Want to help improve the IDE and get your name listed here?
+GitHub repository
+ We're happy to help you get started!
+Settings
+User Interface
+Editor
+Locale
+Switch languages
+KISS IDE Theme
+Toggle IDE theme to dark mode
+Classroom View
+Toggle to arrange users into classrooms
+User Interface Mode
+User
+Mode
+Autocomplete
+Controls autocompletion of code, brackets, and quotes
+Console Layout
+Toggle for vertical console view
+File name already exists. Please choose a different name.
+File name cannot exceed 50 characters.
+File name contains special characters. Please use only letters, numbers, underscores, and hyphens.
+File name cannot be empty or just spaces!
+File Name
+Create New File
+Create
+Stop
+Run
+Compile
+Save
+User Name
+Project Name
+Console
+Create New Project
+Are You Sure?
+There are unsaved changes in your code. Save now?
+Yes
+No, don't save and continue
+No, cancel
+Name cannot exceed 50 characters.
+Name contains special characters. Please use only letters, numbers, underscores, and hyphens.
+Name cannot be empty or just spaces!
+Classroom already exists. Please choose a different name.
+User name already exists. Please choose a different name.
+Classroom Name
+Rename Classroom
+Rename Classroom to: 
+Rename
+Rename User
+Rename User to: 
+Rename Project
+Rename Project to: 
+Rename File
+Rename File to: 
+User Already Exists
+UH OH!
+This user already exists.
+Simple
+Advanced
+No Classroom
+Create New User
+Interface Mode:
+Classroom:
+Select User to see projects
+Open Users
+Open File
+Create New Classroom
+Start
+New User...
+New Classroom...
+Open File...
+Open User...
+Move Project
+No
+Move Classrooms
+Welcome to the KIPR IDE!\n
+Running...\n
+Compiling...\n
+Compilation Succeeded with Warnings!\n
+Compilation Succeeded!\n
+Compilation failed.\n
+Compilation Failed!\n
+No blocks found! Please add blocks to your graphical project.\n
+Nothing to compile! Please add blocks to your graphical project.\n
+Saving...\n
+File saved successfully!\n
+Close Motor, Servo, Sensor Tab?
+Terminal
+Clear
+Delete %s?
+Are you sure you want to delete %s?
+Delete
+Compiling...
+User:
+Project:
+File:
+Indent
+Download
+Error(s)
+Graphical Variables
+Warning(s)
+Give a helpful description of a problem you're facing, or a feature you'd like to request
+Feedback
+Thanks for using the KIPR Simulator! Find a bug? Have a feature request? Let us know!
+How has your experience using the KIPR Simulator been?
+Email (optional): 
+Include anonymous usage data to help KIPR developers
+Please try again,
+open an issue on our github page
+, or
+email KIPR.
+Submit
+Feedback Success
+Feedback successfully submitted!
+Thank you for helping improve the KIPR Simulator!
+Layouts
+Overlay
+Side
+Options
+Show All
+Hide All
+Error %d
+Closing this dialog will take you back to the last well-known state.
+If this error persists, please submit feedback.
+Quick Start
+Learn how to get started with the simulator
+Navigating in 3D
+Learn the controls for navigating in 3D in the simulator
+Robot Section
+How to use the robot section
+World Section
+Learn how to create and manipulate items and scene in the simulator
+and External Contributors
+Visit our
+Stop
+Run
