@@ -15,7 +15,7 @@ namespace ProgrammingLanguage {
 
     cpp: '#include <iostream>\n#include <kipr/wombat.hpp>\n\nint main()\n{\n\tstd::cout << "Hello, World!" << std::endl;\n\treturn 0;\n}\n',
 
-    python: '#!/usr/bin/python3\nimport os, sys\nsys.path.append("/usr/lib")\nfrom kipr import *\n\nprint("Hello, World!")\n',
+    python: '#!/usr/bin/python3\nimport os, sys\nsys.path.append("/usr/lib")\nimport _kipr as k\n\ndef main():\n\tprint("Hello, World!")\n\nmain()',
 
     plaintext: '*Your User Data Here*',
 
