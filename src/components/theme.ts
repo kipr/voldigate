@@ -80,9 +80,9 @@ export interface Theme {
   backgroundColor: string;
   iconColor: string;
   whiteText: string;
- textColor: string;
- cursorColor: string;
- verticalLineColor: string;
+  textColor: string;
+  cursorColor: string;
+  verticalLineColor: string;
   titleBarBackground: string;
   fileContainerBackground: string;
   leftBarContainerBackground: string;
@@ -100,6 +100,8 @@ export interface Theme {
   confirmMessageBackground: string;
   successMessageBackground: string;
   compileWarningColor: string;
+  compileSuccessColor: string;
+  compileFailedColor: string;
   dialogBoxTitleBackground: string;
   unselectedBackground: string;
   contextMenuBackground: string;
@@ -137,9 +139,9 @@ export const COMMON: Theme = {
   backgroundColor: undefined,
   transparentBackgroundColor: undefined,
   color: undefined,
-   textColor: undefined,
-   cursorColor: undefined,
-   verticalLineColor: undefined,
+  textColor: undefined,
+  cursorColor: undefined,
+  verticalLineColor: undefined,
   titleBarBackground: undefined,
   startContainerBackground: undefined,
   homeStartContainerBackground: undefined,
@@ -155,6 +157,8 @@ export const COMMON: Theme = {
   confirmMessageBackground: undefined,
   successMessageBackground: undefined,
   compileWarningColor: undefined,
+  compileSuccessColor: undefined,
+  compileFailedColor: undefined,
   editorBackground: undefined,
   yesButtonColor: undefined,
   noButtonColor: undefined,
@@ -188,7 +192,7 @@ export const COMMON: Theme = {
 };
 
 
-export const GRAPHICAL_LIGHT ={
+export const GRAPHICAL_LIGHT = {
   toolbox: '#fbfbfb',
   toolboxSelected: '#dadada',
   toolboxText: "#212121",
@@ -200,7 +204,7 @@ export const LIGHT: Theme = {
   ...COMMON,
   themeName: 'LIGHT',
   whiteText: 'white',
-   textColor: '#000000',
+  textColor: '#000000',
   color: '#403f53',
   cursorColor: '#000000',
   borderColor: '#ede0e0',
@@ -216,7 +220,7 @@ export const LIGHT: Theme = {
   mobileEditorBarBackground: '#e6ddde',
   editorBackground: '#fbfbfb',
   contextMenuBackground: '#ffffff',
-  boxShadow:'0px 10px 13px -6px rgba(255, 105, 180, 0.1), 0px 1px 31px 0px rgba(135, 206, 250, 0.08), 0px 8px 38px 7px rgba(144, 238, 144, 0.1)',
+  boxShadow: '0px 10px 13px -6px rgba(255, 105, 180, 0.1), 0px 1px 31px 0px rgba(135, 206, 250, 0.08), 0px 8px 38px 7px rgba(144, 238, 144, 0.1)',
 
   unselectedBackground: '#f4ebec',
   fileContainerBackground: '#f4ecec',
@@ -224,7 +228,11 @@ export const LIGHT: Theme = {
   homeStartContainerBackground: '#f4ebec',
   confirmMessageBackground: '#ff4d4d',
   successMessageBackground: '#5dd5cb',
-  compileWarningColor: '#c3c30f',
+  compileWarningColor: '#d8da64',
+  compileSuccessColor: '#4aad52',
+  compileFailedColor: '#df384b',
+
+
 
   selectedUserBackground: '#dadada',
   selectedProjectBackground: '#dadada',
@@ -259,8 +267,8 @@ export const GRAPHICAL_DARK = {
   toolbBoxHover: '#4C97FF',
   flyout: '#212121',
   workspace: '#212121',
-  
-  
+
+
 }
 
 export const DARK: Theme = {
@@ -288,8 +296,11 @@ export const DARK: Theme = {
   unselectedBackground: '#343436',
   confirmMessageBackground: '#ff1a1a',
   successMessageBackground: '#488b49',
-  compileWarningColor: '#fbfc6e',
-  boxShadow:'0px 10px 13px -6px rgba(100, 100, 120, 0.2), 0px 1px 31px 0px rgba(120, 120, 150, 0.12), 0px 8px 38px 1px rgba(160, 160, 180, 0.1)',
+  compileWarningColor: '#d8da64',
+  compileSuccessColor: '#4aad52',
+  compileFailedColor: '#df384b',
+
+  boxShadow: '0px 10px 13px -6px rgba(100, 100, 120, 0.2), 0px 1px 31px 0px rgba(120, 120, 150, 0.12), 0px 8px 38px 1px rgba(160, 160, 180, 0.1)',
   selectedUserBackground: '#3f3f3f',
   selectedProjectBackground: '#3f3f3f',
   selectedFileBackground: '#3f3f3f',
