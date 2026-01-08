@@ -25,6 +25,7 @@ export interface EditorPageProps extends LayoutProps, ThemeProps {
   fileName: string;
   userName: string;
   isRunning: boolean;
+  compileStatus: 'idle' | 'compiling' | 'success' | 'warning' | 'error';
   isleftbaropen: boolean;
   editorConsole: StyledText;
   language: ProgrammingLanguage;
@@ -386,7 +387,7 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
       type: EditorBarTarget.Type.Robot,
       messages,
       isleftbaropen_: isleftbaropen,
-
+      compileStatus: this.props.compileStatus,
       isRunning: this.props.isRunning,
       language: this.props.language,
       onRunClick: this.props.onRunClick,
@@ -406,6 +407,7 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
         theme={theme}
         isleftbaropen={isleftbaropen}
         isRunning={this.props.isRunning}
+        compileStatus={this.props.compileStatus}
         ref={editorRef}
         code={this.state.code[this.state.language]}
         language={this.props.language}
@@ -423,7 +425,7 @@ export class EditorPage extends React.PureComponent<Props & ReduxEditorPageProps
       locale,
     });
 
-    const editorConsoleBar = createConsoleBarComponents(theme, this.props.onClearConsole, locale);
+    const editorConsoleBar = createConsoleBarComponents(theme, this.props.onClearConsole, locale, this.props.compileStatus );
 
     let content: JSX.Element;
     let mobileEditorBarContent: JSX.Element;
