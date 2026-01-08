@@ -13,13 +13,17 @@ import { Dialog } from './Dialog';
 import { Modal } from '../pages/Modal';
 import { Fa } from './Fa';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { Settings } from 'Settings';
+import Classroom from 'ivygate/dist/types/classroomTypes';
 
 export interface CreateProjectDialogPublicProps extends ThemeProps, StyleProps {
+  settings?: Settings;
   showRepeatUserDialog: boolean;
   userName: string;
   language: string;
   projectName: string;
   interfaceMode: InterfaceMode;
+  propedClassroom?: Classroom | null;
   onClose: () => void;
   onChangeProjectName: (name: string) => void;
   onLanguageChange: (language: ProgrammingLanguage) => void;
@@ -29,7 +33,6 @@ export interface CreateProjectDialogPublicProps extends ThemeProps, StyleProps {
 
 interface CreateProjectDialogPrivateProps {
   locale: LocalizedString.Language;
-
 }
 
 interface CreateProjectDialogState {
@@ -139,17 +142,19 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
     }
   }
 
-  componentDidMount(): void {
-    console.log("CreateProjectDialog state: ", this.state);
-    console.log("CreateProjectDialog props: ", this.props);
+  componentDidMount = () => {
+    console.log("CreateProjectDialog componentDidMount props: ", this.props);
+    console.log("CreateProjectDialog componentDidMount state: ", this.state);
+  }
+
+  componentDidUpdate = (prevProps: Props, prevState: State) => {
+    console.log("CreateProjectDialog componentDidUpdate props: ", this.props);
+    console.log("CreateProjectDialog componentDidUpdate state: ", this.state);
   }
 
   private onSelectLanguage_ = (languageIndex: number, option: ComboBox.Option) => {
     this.onLanguageChange(option.data as ProgrammingLanguage);
   };
-
- 
-
 
   private onLanguageChange = (language: ProgrammingLanguage) => {
     this.setState({
@@ -159,14 +164,11 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
 
   onFinalize_ = async (values: { [id: string]: string }) => {
 
-    console.log("CreateProjectDialog onFinalize_ state: ", this.state);
-
     const projectName = values.projectName;
 
     const specialCharRegex = /[^a-zA-Z0-9 _-]/;
     const isOnlySpaces = !projectName.trim(); // Check if the name is empty or only spaces
-
-    // Check if project name exceeds 50 characters
+      // Check if project name exceeds 50 characters
     if (projectName.length > 50) {
       this.setState({ errorMessage: 'Project name cannot exceed 50 characters.' });
       return;
@@ -175,25 +177,21 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
       this.setState({ errorMessage: 'Project name contains special characters. Please use only letters, numbers, underscores, and hyphens.' });
       return;
     }
-    if (isOnlySpaces) {
+     if (isOnlySpaces) {
       this.setState({ errorMessage: "Project name cannot be empty or just spaces!" });
       return;
     }
     this.setState({ errorMessage: "" }); // Clear error message if input is valid
     try {
-
-      const response = await axios.post('/initialize-project', { userName: this.props.userName, projectName: values.projectName, language: this.state.language as ProgrammingLanguage, interfaceMode: this.state.interfaceMode });
-      console.log("initialize-project Response: ", response);
-
-      if (response.status === 200) {
-        this.props.closeProjectDialog(values.projectName, this.state.language as ProgrammingLanguage, this.state.interfaceMode);
-      }
-      
-
+      console.log("this.props.settings: ", this.props.settings);
+      console.log("CreateProjectDialog props: ", this.props);
+      this.props.closeProjectDialog(values.projectName, this.state.language as ProgrammingLanguage, this.state.interfaceMode);
+   
+   
     }
     catch (error) {
       console.error('Error adding user to database:', error);
-      if(error.response.status === 409) {
+      if (error.response.status === 409) {
         this.setState({ errorMessage: 'Project name already exists. Please choose a different name.' });
       }
     }
@@ -213,8 +211,7 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
     ];
 
     const languageIndex = LANGUAGE_OPTIONS.findIndex(option => option.data === this.state.language);
-    
-    
+
     return (
       <div>
         <Dialog
@@ -233,18 +230,15 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
               />
             </ComboBoxContainer>
 
-            {/* Show error message if it exists */}
             {errorMessage && (
               <ErrorMessageContainer theme={theme}>
                 <ItemIcon icon={faExclamationTriangle} />
                 <div style={{ fontWeight: 450 }}>
                   {state.errorMessage}
                 </div>
-
               </ErrorMessageContainer>
             )}
 
-  
 
             <Container theme={theme} style={style} className={className}>
               <StyledForm

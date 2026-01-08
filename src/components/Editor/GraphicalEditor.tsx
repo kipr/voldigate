@@ -2,9 +2,7 @@ import { ThemeProps, GRAPHICAL_DARK, GRAPHICAL_LIGHT, DARK, LIGHT } from '../the
 import { Vector2 } from '../../math';
 import * as React from 'react';
 import { styled } from 'styletron-react';
-
-
-import resizeListener, { ResizeListener } from '../ResizeListener';
+import resizeListener from '../ResizeListener';
 
 export interface GraphicalEditorProps extends ThemeProps {
   code: string;
@@ -93,11 +91,7 @@ class GraphicalEditor extends React.Component<Props, State> {
   componentDidUpdate(prevProps: Readonly<GraphicalEditorProps>, prevState: Readonly<GraphicalEditorState>) {
     const { props: nextProps, state: nextState } = this;
 
-    console.log("GraphicalEditor compDidUpdate workspace options: ", this.state.blocklyOptions);
-
     if (prevProps.theme !== nextProps.theme) {
-      console.log("GraphicalEditor compDidUpdate theme changed from: ", prevProps.theme, " to: ", nextProps.theme);
-
       if (nextProps.theme === DARK) {
         this.setState({
           blocklyOptions: {
@@ -169,14 +163,7 @@ class GraphicalEditor extends React.Component<Props, State> {
 
   }
 
-  componentDidMount(): void {
-    console.log("GRAPHICAL EDITOR MOUNTED");
-
-    console.log("GRAPHICAL EDITOR PROPS: ", this.props);
-    console.log("GRAPHICAL EDITOR STATE: ", this.state);
-  }
   componentWillUnmount() {
-    console.log("GRAPHICAL EDITOR UNMOUNTED");
     this.workspace_.removeChangeListener(this.onChange_);
     this.resizeListener_.disconnect();
   }
@@ -194,16 +181,11 @@ class GraphicalEditor extends React.Component<Props, State> {
 
   private containerRef_: HTMLDivElement | null = null;
 
-
-
   private bindContainerRef_ = (ref: HTMLDivElement) => {
     if (this.containerRef_) {
       // cleanup blockly
     }
-
     this.containerRef_ = ref;
-
-
 
     if (this.containerRef_) {
       this.injectBlockly_();
@@ -212,7 +194,6 @@ class GraphicalEditor extends React.Component<Props, State> {
 
   private workspace_: Blockly.Workspace;
   private injectBlockly_ = () => {
-
 
     this.workspace_ = Blockly.inject(this.containerRef_, this.state.blocklyOptions);
 
@@ -241,10 +222,7 @@ class GraphicalEditor extends React.Component<Props, State> {
     this.lastXML = xml;
     this.props.onCodeChange(xml);
     this.isApplyingCodeFromBlockly = false;
-
-  
-  
-    this.debounce_ = false;
+       this.debounce_ = false;
   };
 
   render() {

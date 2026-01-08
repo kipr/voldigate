@@ -82,12 +82,18 @@ export interface ModeProps {
 export interface BarComponent<P extends object> {
   component: React.ComponentType<P>;
   props: P;
+  chromeBackgroundColor?: string;
 }
 
 export namespace BarComponent {
-  export const create = <P,>(component: React.ComponentType<P>, props: P) => ({
+  export const create = <P extends object>(
+    component: React.ComponentType<P>,
+    props: P,
+    options?: { chromeBackgroundColor?: string }
+  ): BarComponent<P> => ({
     component,
-    props
+    props,
+    chromeBackgroundColor: options?.chromeBackgroundColor,
   });
 }
 
@@ -105,6 +111,7 @@ export interface WidgetProps extends StyleProps, ThemeProps, ModeProps {
 
   // eslint-disable-next-line @typescript-eslint/ban-types
   barComponents?: BarComponent<object>[];
+  chromeBackgroundColor?: string;
 
   onChromeMouseDown?: (event: React.MouseEvent<HTMLDivElement>) => void;
   onChromeMouseUp?: (event: React.MouseEvent<HTMLDivElement>) => void;
@@ -142,17 +149,25 @@ const Container = styled('div', (props: ThemeProps & ModeProps) => ({
   boxShadow: props.mode === Mode.Floating ? `rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px` : undefined,
 }));
 
-const Chrome = styled('div', (props: ThemeProps & ModeProps & { $onChromeMouseDown?: boolean; $onChromeMouseUp?: boolean; }) => ({
-  width: '100%',
-  display: 'flex',
-  flexDirection: 'row',
-  padding: `${props.theme.itemPadding * 2}px`,
-  alignItems: 'center',
-  backgroundColor: `rgba(0, 0, 0, 0.1)`,
-  color: props.theme.color,
-  borderBottom: `1px solid ${props.theme.borderColor}`,
-  cursor: props.$onChromeMouseDown || props.$onChromeMouseUp ? 'grab' : undefined,
-}));
+const Chrome = styled(
+  'div',
+  (props: ThemeProps & ModeProps & {
+    $onChromeMouseDown?: boolean;
+    $onChromeMouseUp?: boolean;
+    $backgroundColor?: string;
+  }) => ({
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    padding: `${props.theme.itemPadding * 2}px`,
+    alignItems: 'center',
+    backgroundColor: props.$backgroundColor ?? `rgba(0, 0, 0, 0.1)`,
+    color: props.theme.color,
+    borderBottom: `1px solid ${props.theme.borderColor}`,
+    cursor: props.$onChromeMouseDown || props.$onChromeMouseUp ? 'grab' : undefined,
+  })
+);
+
 
 const Title = styled('span', (props: ThemeProps & { $hasComponents: boolean, $fontSize: string}) => ({
   fontWeight: 400,
@@ -206,11 +221,6 @@ class Widget extends React.PureComponent<Props, State> {
     onSizeChange(index);
   };
   
-
-  componentDidMount() {
-    console.log("Widget mounted props:", this.props);
-  }
-
   render() {
     const { props } = this;
     const {
@@ -230,7 +240,9 @@ class Widget extends React.PureComponent<Props, State> {
       onChromeMouseUp
     } = props;
     
-    
+    const chromeBackgroundColor =
+  barComponents?.find(b => b.chromeBackgroundColor)?.chromeBackgroundColor;
+
     return (
       <Container style={style} className={className} theme={theme} mode={mode}>
         <Chrome
@@ -240,6 +252,7 @@ class Widget extends React.PureComponent<Props, State> {
           onMouseUp={onChromeMouseUp}
           $onChromeMouseDown={!!onChromeMouseDown}
           $onChromeMouseUp={!!onChromeMouseUp}
+          $backgroundColor={chromeBackgroundColor}
         >
           <Title theme={theme} $fontSize={fontSize} $hasComponents={barComponents && barComponents.length > 0}>{name}</Title>
           {barComponents ? barComponents.map((barComponent, i) => {

@@ -1,23 +1,25 @@
-import { applyMiddleware, combineReducers, compose, createStore,  } from 'redux';
-
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
+import { reduceDocumentation } from 'ivygate/dist/state/reducer/documentation';
 import * as reducer from './reducer';
-import { DocumentationState, I18n } from './State';
 
-import history from './history';
+const rootReducer = combineReducers({
+  documentation: reduceDocumentation,
+  i18n: reducer.reduceI18n,
+});
 
+export type State = ReturnType<typeof rootReducer>;
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
-const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers =
+  (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
+const store = createStore(
+  rootReducer,
+  composeEnhancers(applyMiddleware())
+);
 
-/* eslint-enable @typescript-eslint/no-unsafe-call */
-/* eslint-enable @typescript-eslint/no-unsafe-member-access */
+(store as any).__id = Math.random().toString(16).slice(2);
+console.log("CREATED STORE ID:", (store as any).__id);
 
-export interface State {
+(window as any).__APP_STORE__ = store;
 
-  documentation: DocumentationState;
-
-  i18n: I18n;
-}
+export default store;

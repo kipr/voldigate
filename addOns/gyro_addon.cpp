@@ -1,6 +1,6 @@
 #include <napi.h>
 #include <iostream>
-#include "gyro_c.hpp"
+#include "gyro_p.hpp"
 
 extern "C"
 {

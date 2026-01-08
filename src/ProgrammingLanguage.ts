@@ -11,10 +11,14 @@ namespace ProgrammingLanguage {
 
 
   export const DEFAULT_CODE: { [key in ProgrammingLanguage]: string } = {
-    c: '#include <stdio.h>\n#include <kipr/wombat.h>\n\nint main()\n{\n  printf("Hello, World!\\n");\n  return 0;\n}\n',
-    cpp: '#include <iostream>\n#include <kipr/wombat.hpp>\n\nint main()\n{\n  std::cout << "Hello, World!" << std::endl;\n  return 0;\n}\n',
-    python: '#!/usr/bin/python3\nimport os, sys\nsys.path.append("/usr/lib")\nfrom kipr import *\n\nprint(\'Hello, World!\')',
+    c: '#include <stdio.h>\n#include <kipr/wombat.h>\n\nint main()\n{\n\tprintf("Hello, World!\\n");\n\treturn 0;\n}\n',
+
+    cpp: '#include <iostream>\n#include <kipr/wombat.hpp>\n\nint main()\n{\n\tstd::cout << "Hello, World!" << std::endl;\n\treturn 0;\n}\n',
+
+    python: '#!/usr/bin/python3\nimport os, sys\nsys.path.append("/usr/lib")\nimport _kipr as k\n\ndef main():\n\tprint("Hello, World!")\n\nmain()',
+
     plaintext: '*Your User Data Here*',
+
     graphical: `<xml xmlns="http://www.w3.org/1999/xhtml">
                 <variables></variables>
                 <block type="control_run" id="Tr7;}P}KM[{|.$;Wo9_1" x="176" y="129">
@@ -30,6 +34,7 @@ namespace ProgrammingLanguage {
                 </block>
               </xml>`
   };
+
 
   export const BLANK_CODE: { [key in ProgrammingLanguage]: string } = {
     c: '#include <stdio.h>\n#include <kipr/wombat.h>\n',

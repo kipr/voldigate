@@ -157,20 +157,20 @@ class SaveFileDialog extends React.PureComponent<Props> {
         <Container theme={theme}>
           <br />
           <CenteredContainer>
-            <Bold>{LocalizedString.lookup(tr(`There are unsaved changes in your code. Save now?`), locale)}</Bold>
+            <Bold>{LocalizedString.lookup(tr('There are unsaved changes in your code. Save now?'), locale)}</Bold>
           </CenteredContainer>
           <br />
           <CenteredContainer>
 
             <BottomButtonContainer>
               <YesItem onClick={() => this.props.onConfirm(this.props.toSaveName, this.props.toSaveType, 'save')} theme={theme}>
-                Yes
+                {LocalizedString.lookup(tr('Yes'), locale)}
               </YesItem>
               <NoContinueItem onClick={() => this.props.onDenySave('continue')} theme={theme}>
-                No, don't save and continue
+                {LocalizedString.lookup(tr("No, don't save and continue"), locale)}
               </NoContinueItem>
               <NoCancelItem onClick={() => this.props.onDenySave('cancel')} theme={theme}>
-                No, cancel
+                {LocalizedString.lookup(tr('No, cancel'), locale)}
               </NoCancelItem>
             </BottomButtonContainer>
           </CenteredContainer>

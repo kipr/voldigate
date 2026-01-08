@@ -2,9 +2,6 @@ import * as React from 'react';
 import LocalizedString from '../util/LocalizedString';
 import HomeNavigation from '../components/HomeNavigation';
 import { StyleProps } from '../style';
-
-import { connect } from 'react-redux';
-import { State as ReduxState } from '../state';
 import { Theme, LIGHT, DARK, ThemeProps } from '../components/theme';
 export interface DashboardPublicProps extends  ThemeProps, StyleProps {
 
@@ -40,7 +37,7 @@ class Dashboard extends React.PureComponent<Props, State> {
   };
 
   render() {
-    const { props, state } = this;
+    const { state } = this;
     const { storedTheme } = state;
     return (
       <div style ={{ overflow: 'hidden', maxHeight: '100vh', maxWidth: '100vw'}}>

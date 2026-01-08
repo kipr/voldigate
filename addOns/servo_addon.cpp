@@ -1,6 +1,6 @@
 #include <napi.h>
 #include <iostream>
-#include "servo_c.hpp"
+#include "servo_p.hpp"
 
 extern "C"
 {

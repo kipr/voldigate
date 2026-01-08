@@ -9,7 +9,8 @@ import { Validators } from '../util/Validator';
 import { Fa } from './Fa';
 import Input from './Input';
 import { Text } from './Text';
-import { GREEN, RED, ThemeProps, LIGHTMODE_YES } from './theme';
+import { GREEN, RED, ThemeProps } from './theme';
+
 const Container = styled('div', (props: ThemeProps) => ({
   color: props.theme.color,
   width: '100%',
@@ -23,13 +24,6 @@ const Label = styled('label', (theme: ThemeProps) => ({
   marginTop: `${theme.theme.itemPadding * 2}px`,
   marginBottom: `${theme.theme.itemPadding}px`,
   userSelect: 'none'
-}));
-
-const ErrorIcon = styled(Fa, (theme: ThemeProps) => ({
-  userSelect: 'none',
-  paddingLeft: `${theme.theme.itemPadding}px`,
-  paddingRight: `${theme.theme.itemPadding}px`,
-  borderRight: `1px solid ${theme.theme.borderColor}`,
 }));
 
 const ButtonContainer = styled('div', (theme: ThemeProps) => ({
@@ -50,9 +44,6 @@ const Finalize = styled('div', (props: ThemeProps & { disabled?: boolean }) => (
   flex: '1 1',
   borderRadius: `${props.theme.itemPadding * 2}px`,
   padding: `${props.theme.itemPadding * 2}px`,
-  //backgroundColor: props.disabled ? GREEN.disabled : GREEN.standard,
-
-  //backgroundColor: props.disabled ? LIGHTMODE_YES.disabled : LIGHTMODE_YES.standard,
   backgroundColor: props.disabled ? props.theme.yesButtonColor.disabled : props.theme.yesButtonColor.standard,
   ':hover': props.disabled ? {} : {
     backgroundColor: props.theme.yesButtonColor.hover,
@@ -88,7 +79,6 @@ class Form extends React.PureComponent<Form.Props, Form.State> {
     const { props, state } = this;
     const { items } = props;
     const { values } = state;
-   // console.log('Inside onFinalizeClick_ in Form.tsx');
     const ret = {};
     for (const item of items) {
       ret[item.id] = item.finalizer(values[item.id].text);
@@ -108,7 +98,7 @@ class Form extends React.PureComponent<Form.Props, Form.State> {
 
   render() {
     const { props, state } = this;
-    const { items, verifiers, theme, className, style, finalizeDisabled } = props;
+    const { items, verifiers, theme, className, style, } = props;
     const { values } = state;
     
     const itemElements: React.ReactNode[] = items.map((item, index) => {

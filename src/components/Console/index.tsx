@@ -1,48 +1,49 @@
 import * as React from 'react';
-
 import { styled } from 'styletron-react';
 import { StyleProps } from '../../style';
 import { StyledText } from '../../util';
 import ScrollArea from '../ScrollArea';
 import { Text } from '../Text';
-import { Theme, ThemeProps } from '../theme';
-
+import { RED, Theme, ThemeProps } from '../theme';
 import { Fa } from '../Fa';
 import { Button } from '../Button';
 import { BarComponent } from '../Widget';
-
 import { faFile } from '@fortawesome/free-solid-svg-icons';
 import LocalizedString from '../../util/LocalizedString';
 import tr from '@i18n';
-
 export const createConsoleBarComponents = (
-  theme: Theme, 
+  theme: Theme,
   onClearConsole: () => void,
-  locale: LocalizedString.Language
+  locale: LocalizedString.Language,
+  compileStatus?: 'idle' | 'compiling' | 'success' | 'warning' | 'error',
 ) => {
-  // eslint-disable-next-line @typescript-eslint/ban-types
   const consoleBar: BarComponent<object>[] = [];
 
-  consoleBar.push(BarComponent.create(Button, {
-    theme,
-    onClick: onClearConsole,
-    children:
-      <>
-        <Fa icon={faFile} />
-        {' '} {LocalizedString.lookup(tr('Clear'), locale)}
-      </>,
-  }));
-
+  console.log("createConsoleBarComponents compileStatus:", compileStatus);
+  consoleBar.push(
+    BarComponent.create(
+      Button,
+      {
+        theme,
+        onClick: onClearConsole,
+        children: (
+          <>
+            <Fa icon={faFile} />{' '}
+            {LocalizedString.lookup(tr('Clear'), locale)}
+          </>
+        ),
+      },
+      { chromeBackgroundColor: compileStatus === 'idle' ? `rgba(0, 0, 0, 0.1)` : compileStatus === 'compiling' ?  `rgba(0, 0, 0, 0.1)`: compileStatus === 'success' ? theme.compileSuccessColor : compileStatus === 'warning' ? theme.compileWarningColor : theme.compileFailedColor } // Green for success, yellow for warning, red for error
+    )
+  );
+//
   return consoleBar;
 };
-
 export interface ConsoleProps extends StyleProps, ThemeProps {
   text: StyledText;
 }
 
-interface ConsoleState {
-  
-}
+interface ConsoleState {}
 
 type Props = ConsoleProps;
 type State = ConsoleState;
@@ -53,7 +54,6 @@ const ConsoleText = styled(Text, (props: ThemeProps) => ({
   padding: `${props.theme.itemPadding * 2}px`,
   wordWrap: 'break-word',
   display: 'block',
- // color: props.theme.color,
 }));
 
 export class Console extends React.PureComponent<Props, State> {
@@ -61,9 +61,14 @@ export class Console extends React.PureComponent<Props, State> {
     super(props);
   }
 
-  componentDidUpdate(prevProps: Readonly<ConsoleProps>, prevState: Readonly<ConsoleState>, snapshot?: any): void {
-    console.log("Console compDidUPdate prevProps: ", prevProps);
-    console.log("Console compDidUpdate props: ", this.props);
+  componentDidUpdate(prevProps: Props) {
+    console.log("Console compDidUpdate prevProps:", prevProps);
+    console.log("Console compDidUpdate this.props:", this.props);
+    if(prevProps.theme !== this.props.theme){
+      this.setState({
+               theme: this.props.theme,
+      })
+    }
   }
   render() {
     const { style, className, theme, text } = this.props;

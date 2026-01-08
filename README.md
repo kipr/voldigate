@@ -52,7 +52,7 @@ It is recommended to use [WSL2](https://docs.microsoft.com/en-us/windows/wsl/abo
 ### Clone this repository and its submodules:
 
 ```bash
-git clone --recurse-submodules https://github.com/kipr/Simulator
+git clone --recurse-submodules https://github.com/kipr/voldigate
 ```
 
 Or, if you've already cloned the repository without `--recurse-submodules`, you can initialize the submodules separately:
@@ -148,15 +148,4 @@ The format of the `i18n.json` is as follows:
   },
   "..."
 }
-```
-
-# Building image
-
-The repo includes a `Dockerfile` for building a Docker image of the simulator:
-
-```
-# If you don't have jq, you can just use export VERSION=latest
-export VERSION=$(jq -r .version simulator/package.json)
-docker build -t kipr/simulator:$VERSION .
-docker run -ti -p 3000:3000 kipr/simulator:$VERSION
 ```

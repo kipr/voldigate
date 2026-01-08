@@ -88,17 +88,9 @@ const NewFileContainer = styled('div', (props: ThemeProps) => ({
   paddingRight: `${props.theme.itemPadding * 2}px`,
 }));
 
-const OPTIONS: ComboBox.Option[] = [{
-  text: 'H',
-  data: 'h'
-}, {
-  text: 'Txt',
-  data: 'txt'
-}];
 
 export class NewFileDialog extends React.PureComponent<Props, State> {
 
-  private editorRef: React.MutableRefObject<Editor>;
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -115,13 +107,11 @@ export class NewFileDialog extends React.PureComponent<Props, State> {
   private onFinalize_ = async (values: { [id: string]: string }) => {
 
     const { fileName } = values;
-    const { projectName, userName } = this.props;
+    const { projectName, userName, locale } = this.props;
     const specialCharRegex = /[^a-zA-Z0-9 _-]/;
     const isOnlySpaces = !fileName.trim(); // Check if the name is empty or only spaces
 
-    console.log("File Name: ", fileName); 
     try {
-
       let finalDirectory = ''
       switch (this.props.otherFileType) {
         case 'h':
@@ -138,17 +128,13 @@ export class NewFileDialog extends React.PureComponent<Props, State> {
 
       }
       const projectData = await axios.get('/get-all-file-names', { params: { dirPath: `${finalDirectory}` } });
-      console.log("Project Data: ", projectData.data);
 
       let newFileName = `${fileName}.${this.props.otherFileType}`;
-      console.log("New File Name: ", newFileName);
       let filePath = `${finalDirectory}/${newFileName}`;
-      console.log("File Path: ", filePath);
       let trimmedFilePath = filePath.trim();
 
       if(projectData.data.fileNames.includes(newFileName)) {
-        console.log("File name already exists in the project.");
-        this.setState({ errorMessage: 'File name already exists. Please choose a different name.' });
+        this.setState({ errorMessage: LocalizedString.lookup(tr('File name already exists. Please choose a different name.'), locale) });
         return;
       }
 
@@ -159,15 +145,15 @@ export class NewFileDialog extends React.PureComponent<Props, State> {
 
     // Check if file name exceeds 50 characters
     if (fileName.length > 50) {
-      this.setState({ errorMessage: 'File name cannot exceed 50 characters.' });
+      this.setState({ errorMessage: LocalizedString.lookup(tr('File name cannot exceed 50 characters.'), locale) });
       return;
     }
     if (specialCharRegex.test(fileName)) {
-      this.setState({ errorMessage: 'File name contains special characters. Please use only letters, numbers, underscores, and hyphens.' });
+      this.setState({ errorMessage: LocalizedString.lookup(tr('File name contains special characters. Please use only letters, numbers, underscores, and hyphens.'), locale) });
       return;
     }
     if (isOnlySpaces) {
-      this.setState({ errorMessage: "File name cannot be empty or just spaces!" });
+      this.setState({ errorMessage: LocalizedString.lookup(tr('File name cannot be empty or just spaces!'), locale) });
       return;
     }
     this.setState({ errorMessage: "" }); // Clear error message if input is valid
@@ -194,7 +180,7 @@ export class NewFileDialog extends React.PureComponent<Props, State> {
 
     const { errorMessage } = state;
     const CREATE_NEW_FILE_FORM_ITEMS: Form.Item[] = [
-      Form.fileName('fileName', 'File Name')
+      Form.fileName('fileName', LocalizedString.lookup(tr('File Name'), locale))
     ];
 
     return (
@@ -219,7 +205,7 @@ export class NewFileDialog extends React.PureComponent<Props, State> {
                 theme={theme}
                 onFinalize={this.onFinalize_}
                 items={CREATE_NEW_FILE_FORM_ITEMS}
-                finalizeText="Create"
+                finalizeText={LocalizedString.lookup(tr('Create'), locale)}
               />
             </Container>
 

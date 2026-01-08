@@ -1,6 +1,6 @@
 #include <napi.h>
 #include <iostream>
-#include "digital_c.hpp"
+#include "digital_p.hpp"
 
 extern "C"
 {

@@ -1,23 +1,29 @@
 import * as React from 'react';
 import ProgrammingLanguage from '../../ProgrammingLanguage';
 import Dict from '../../Dict';
-import * as monaco from 'monaco-editor';
+import type * as monaco from 'monaco-editor';
 import tr from '@i18n';
 import LocalizedString from '../../util/LocalizedString';
 import { styled, withStyleDeep } from 'styletron-react';
 import { StyleProps } from '../../style';
 import { Theme } from '../theme';
-import { middleBarSpacer, leftBarSpacer, rightBarSpacer} from '../common';
+import { middleBarSpacer, leftBarSpacer, rightBarSpacer } from '../common';
 import { Fa } from '../Fa';
 import { Button } from '../Button';
 import { Text } from '../Text';
 import { BarComponent } from '../Widget';
 import { WarningCharm, ErrorCharm } from './';
 import { GREEN, LIGHTMODE_GREEN, RED, ThemeProps } from '../theme';
-import { Ivygate, Message } from 'ivygate';
+import {  Message } from 'ivygate';
+import type { Ivygate as IvygateType } from 'ivygate';
+
+const Ivygate = React.lazy(() =>
+  import('ivygate').then(module => ({ default: module.Ivygate }))
+);
 import { FontAwesome } from '../FontAwesome';
 import { faFileDownload, faFloppyDisk, faIndent, faLink, faPlay, faStop } from '@fortawesome/free-solid-svg-icons';
-import GraphicalEditor from './GraphicalEditor';
+import { Suspense } from 'react';
+const GraphicalEditor = React.lazy(() => import('./GraphicalEditor'));
 
 export enum EditorActionState {
   None,
@@ -31,6 +37,7 @@ export interface EditorPublicProps extends StyleProps, ThemeProps {
   autocomplete: boolean;
   isleftbaropen: boolean;
   isRunning: boolean;
+  compileStatus: 'idle' | 'compiling' | 'success' | 'warning' | 'error';
   messages?: Message[];
   onCodeChange: (code: string) => void;
   onSaveCode: () => void;
@@ -92,7 +99,6 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
 }));
 
 const RunItem = withStyleDeep(Item, (props: ClickProps & ThemeProps) => ({
-
   backgroundColor: props.disabled ? (props.theme.themeName === 'DARK' ? props.theme.runButtonColor.disabled : props.theme.runButtonColor.disabled) : (props.theme.themeName === 'DARK' ? props.theme.runButtonColor.standard : props.theme.runButtonColor.standard),
   ':hover':
     props.onClick && !props.disabled
@@ -100,6 +106,10 @@ const RunItem = withStyleDeep(Item, (props: ClickProps & ThemeProps) => ({
         backgroundColor: props.theme.themeName === 'DARK' ? GREEN.hover : LIGHTMODE_GREEN.hover,
       }
       : {},
+}));
+
+const CompilingButton = withStyleDeep(Item, (props: ClickProps & ThemeProps) => ({
+  backgroundColor: RED.standard,
 }));
 
 const ItemIcon = styled(FontAwesome, {
@@ -129,6 +139,7 @@ export namespace EditorBarTarget {
     language: ProgrammingLanguage;
     isleftbaropen_: boolean;
     isRunning: boolean;
+    compileStatus: 'idle' | 'compiling' | 'success' | 'warning' | 'error';
     projectName: string;
     fileName: string;
     userName: string;
@@ -148,7 +159,6 @@ export type EditorBarTarget = EditorBarTarget.Robot;
 
 export const createNavigationNamesBar = (
 ) => {
-  // eslint-disable-next-line @typescript-eslint/ban-types
   const consoleBar: BarComponent<object>[] = [];
 
   consoleBar.push(BarComponent.create(Text, {
@@ -167,11 +177,7 @@ export const createEditorBarComponents = ({
   target: EditorBarTarget,
   locale: LocalizedString.Language,
 }) => {
-
-  // eslint-disable-next-line @typescript-eslint/ban-types
   const editorBar: BarComponent<object>[] = [];
-  let wn = `${window.location.pathname}`;
-  let windowName = wn.split("/", 3);
 
   switch (target.type) {
     case EditorBarTarget.Type.Robot: {
@@ -201,7 +207,7 @@ export const createEditorBarComponents = ({
               <ItemIcon icon={faPlay} />
               {LocalizedString.lookup(tr('Run', 'Begin program execution'), locale)}
             </RunItem>
-            
+
           )
       }));
 
@@ -210,10 +216,18 @@ export const createEditorBarComponents = ({
         onClick: target.onCompileClick,
         style: { fontSize: '0.9em' },
         children:
-          <>
+          target.compileStatus === 'compiling' ? (
+            <CompilingButton
+              theme={theme}
+              disabled={true}
+            >
+              <ItemIcon icon={faLink} />
+              {LocalizedString.lookup(tr('Compiling...'), locale)}
+            </CompilingButton>  
+          ): (<>
             <Fa icon={faLink} />
             {' '} {LocalizedString.lookup(tr('Compile'), locale)}
-          </>
+          </>)
       }));
       editorBar.push(BarComponent.create(Button, {
         theme,
@@ -231,7 +245,7 @@ export const createEditorBarComponents = ({
 
 
       editorBar.push(BarComponent.create(Text, {
-        text: 'User:',
+        text: LocalizedString.lookup(tr('User:'), locale),
         style: {
           fontWeight: '500',
           fontSize: '0.9em'
@@ -244,7 +258,7 @@ export const createEditorBarComponents = ({
 
       editorBar.push(BarComponent.create(Text, {
         style: {
-          minWidth: '1.5em', 
+          minWidth: '1.5em',
           maxWidth: '15em',
           fontSize: '0.9em',
           overflow: 'hidden',
@@ -261,7 +275,7 @@ export const createEditorBarComponents = ({
 
 
       editorBar.push(BarComponent.create(Text, {
-        text: 'Project:',
+        text: LocalizedString.lookup(tr('Project:'), locale),
         style: {
           fontWeight: '500',
           fontSize: '0.9em'
@@ -273,7 +287,7 @@ export const createEditorBarComponents = ({
       }));
       editorBar.push(BarComponent.create(Text, {
         style: {
-          minWidth: '1.5em', 
+          minWidth: '1.5em',
           maxWidth: '15em',
           fontSize: '0.9em',
           overflow: 'hidden',
@@ -286,7 +300,7 @@ export const createEditorBarComponents = ({
 
       }));
       editorBar.push(BarComponent.create(Text, {
-        text: 'File:',
+        text: LocalizedString.lookup(tr('File:'), locale),
         style: {
           fontWeight: '500',
           fontSize: '0.9em'
@@ -298,7 +312,7 @@ export const createEditorBarComponents = ({
       }));
       editorBar.push(BarComponent.create(Text, {
         style: {
-          minWidth: '0.9em', 
+          minWidth: '0.9em',
           maxWidth: '15em',
           fontSize: '0.9em',
           overflow: 'hidden',
@@ -308,7 +322,7 @@ export const createEditorBarComponents = ({
         text: target.fileName
       }));
 
-  
+
 
       editorBar.push(BarComponent.create(rightBarSpacer, {
 
@@ -374,6 +388,7 @@ const DOCUMENTATION_LANGUAGE_MAPPING: { [key in ProgrammingLanguage]?: 'c' | 'py
 };
 
 class Editor extends React.PureComponent<Props, State> {
+  monaco: typeof import('monaco-editor') | null = null;
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -382,19 +397,31 @@ class Editor extends React.PureComponent<Props, State> {
     };
   }
 
-  componentDidMount(): void {
-    console.log("Editor compDidMount", this.props);
-
+  async componentDidMount() {
+    this.monaco = await import('monaco-editor');
   }
+  setupCodeEditor_ = (editor: any) => {
+    if (!this.monaco) {
+      return;
+    }
+    const monaco = this.monaco;
+    // use monaco here, e.g.
+    if (this.props.onDocumentationGoToFuzzy) {
+      this.openDocumentationAction_ = editor.addAction({
+        id: 'open-documentation',
+        label: 'Open Documentation',
+        contextMenuOrder: 0,
+        contextMenuGroupId: "operation",
+        keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter],
+        run: this.openDocumentation_,
+      });
+    }
+  };
+  
   async componentDidUpdate(prevProps: Props) {
 
-    console.log("Editor compDidUpdate prevProps: ", prevProps);
-    console.log("Editor compDidUpdate this.props: ", this.props);
-    console.log("Editor compDidUpdate this.prevProps.code: ", prevProps.code);
-    console.log("Editor compDidUpdate this.props.code: ", this.props.code);
-
     if (prevProps.code !== this.props.code) {
-      console.log("Editor compDidUpdate code changed from:\n ", prevProps.code, " to:\n ", this.props.code);
+     
       const editorValue = this.ivygate_?.editor?.getValue();
 
       if (editorValue !== this.props.code) {
@@ -404,9 +431,8 @@ class Editor extends React.PureComponent<Props, State> {
             this.ivygate_.editor.setScrollLeft(0);
             this.ivygate_.editor.setScrollTop(0);
             this.ivygate_.editor.setPosition({ lineNumber: 1, column: 1 });
-            
-          }
 
+          }
 
         });
       }
@@ -426,25 +452,13 @@ class Editor extends React.PureComponent<Props, State> {
 
   private openDocumentationAction_?: monaco.IDisposable;
 
-  private setupCodeEditor_ = (editor: monaco.editor.IStandaloneCodeEditor) => {
-    console.log("Editor setupCodeEditor_ editor: ", editor);
-    if (this.props.onDocumentationGoToFuzzy) this.openDocumentationAction_ = editor.addAction({
-      id: 'open-documentation',
-      label: 'Open Documentation',
-      contextMenuOrder: 0,
-      contextMenuGroupId: "operation",
-      keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter],
-      run: this.openDocumentation_,
-    });
-  };
-
   private disposeCodeEditor_ = (editor: monaco.editor.IStandaloneCodeEditor) => {
     if (this.openDocumentationAction_) this.openDocumentationAction_.dispose();
   };
 
-  private ivygate_: Ivygate;
+  private ivygate_: IvygateType | null = null;
 
-  private bindIvygate_ = (ivygate: Ivygate) => {
+  private bindIvygate_ = (ivygate: IvygateType) => {
     if (this.ivygate_ === ivygate) return;
     const old = this.ivygate_;
     this.ivygate_ = ivygate;
@@ -460,8 +474,6 @@ class Editor extends React.PureComponent<Props, State> {
   }
 
   render() {
-    console.log("Editor render props", this.props);
-    console.log("Editor render state", this.state);
     const {
       style,
       className,
@@ -478,18 +490,20 @@ class Editor extends React.PureComponent<Props, State> {
 
     if (language === 'graphical') {
       component = (
-        <GraphicalEditor
-          code={code}
-          onCodeChange={onCodeChange}
-          theme={theme}
-          toolboxHidden={mini}
-        />
+        <Suspense fallback={<div>Loading...</div>}>
+          <GraphicalEditor
+            code={code}
+            onCodeChange={onCodeChange}
+            theme={theme}
+            toolboxHidden={mini}
+          />
+        </Suspense>
       );
     }
     else {
-      console.log("Editor render Ivygate props: ", this.props);
       component = (
-        <Ivygate
+        <Suspense fallback={<div>Loading Ivygate...</div>}>
+          <Ivygate
           ref={this.bindIvygate_}
 
           code={this.props.code}
@@ -498,12 +512,12 @@ class Editor extends React.PureComponent<Props, State> {
           onCodeChange={onCodeChange}
           autocomplete={autocomplete}
           theme={theme.themeName}
+          editable={true}
         />
+        </Suspense>
       );
     }
 
-    console.log("Editor render component", component);
-    console.log("Editor state", this.state);
     return (
       <Container theme={theme} style={style} className={className} >
         {component}

@@ -32,7 +32,7 @@ const Logo = styled('img', {
 const Container = styled('div', (props: ThemeProps) => ({
   color: props.theme.color,
   backgroundColor: props.theme.backgroundColor,
-  padding: `${props.theme.itemPadding * 2}px`, 
+  padding: `${props.theme.itemPadding * 2}px`,
 }));
 
 const Bold = styled('span', {
@@ -54,7 +54,7 @@ class AboutDialog extends React.PureComponent<Props> {
   render() {
     const { props } = this;
     const { theme, onClose, locale } = props;
-    
+
     let logo: JSX.Element;
 
     switch (theme.foreground) {
@@ -67,7 +67,7 @@ class AboutDialog extends React.PureComponent<Props> {
         break;
       }
     }
-    
+
     return (
       <Dialog theme={theme} name={LocalizedString.lookup(tr('About'), locale)} onClose={onClose}>
         <Container theme={theme}>
@@ -84,9 +84,7 @@ class AboutDialog extends React.PureComponent<Props> {
           <ul>
             <li>Tim Corbly</li>
             <li>Erin Harrington</li>
-            
             <li>Braden McDorman</li>
-           
             <li>Thomas Wells</li>
             <li>Jack Williams</li>
             <li>Nafis Zaman</li>

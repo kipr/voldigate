@@ -1,6 +1,6 @@
 #include <napi.h>
 #include <iostream>
-#include "magneto_c.hpp"
+#include "magneto_p.hpp"
 
 extern "C"
 {

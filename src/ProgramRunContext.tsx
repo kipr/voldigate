@@ -18,9 +18,6 @@ export let programRunContextHelper: ProgramRunContextType = {
 export const ProgramRunProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isRunning, setIsRunning] = React.useState(false);
 
-  React.useEffect(() => {
-    console.log("isRunning changed to:", isRunning);
-  }, [isRunning]);
 
   programRunContextHelper = {
     isRunning,

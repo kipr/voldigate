@@ -5,25 +5,22 @@ import { Dialog } from './Dialog';
 import { ThemeProps, LIGHTMODE_YES,LIGHTMODE_NO,LIGHT } from './theme';
 import tr from '@i18n';
 import LocalizedString from '../util/LocalizedString';
-import { User } from 'ivygate/dist/types/user';
-import { Project } from 'ivygate/dist/types/project';
-import { FileInfo } from 'types/fileInfo';
-import Classroom from 'ivygate/dist/types/classroomTypes';
 
-export interface DeleteUserProjectFileDialogPublicProps extends ThemeProps, StyleProps {
-  onClose: () => void;
-  onConfirm: (confirmDeleteName: string, confirmDeleteType: string, action: string, object?:Classroom |User | Project | string) => void;
-  onDeny: () => void;
-  toDeleteObject: Classroom | User | Project | string;
-  toDeleteName: string;
-  toDeleteType: string;
+import Classroom from 'ivygate/dist/types/classroomTypes';
+import { User } from 'ivygate/dist/types/user';
+
+export interface RemoveUserFromClassroomDialogPublicProps extends ThemeProps, StyleProps {
+   onClose: () => void;
+  onCloseRemoveUserFromClassroomDialog: (removeAnswer: boolean) => void;
+  toRemoveUser: User;
+  classroom: Classroom;
 }
 
-interface DeleteUserProjectFileDialogPrivateProps {
+interface RemoveUserFromClassroomDialogPrivateProps {
   locale: LocalizedString.Language;
 }
 
-type Props = DeleteUserProjectFileDialogPublicProps & DeleteUserProjectFileDialogPrivateProps;
+type Props = RemoveUserFromClassroomDialogPublicProps & RemoveUserFromClassroomDialogPrivateProps;
 
 namespace Modal {
   export enum Type {
@@ -145,7 +142,7 @@ const NoItem = styled(Button, (props: ThemeProps & {onClick?: () => void; disabl
 }));
 
 
-class DeleteUserProjectFileDialog extends React.PureComponent<Props> {
+class RemoveUserFromClassroomDialog extends React.PureComponent<Props> {
 
   constructor(props: Props) {
     super(props);
@@ -153,27 +150,28 @@ class DeleteUserProjectFileDialog extends React.PureComponent<Props> {
       }
   }
 
+
+
   render() {
     const { props } = this;
     const { theme, onClose, locale } = props;
-    console.log('DeleteUserProjectFileDialog render props: ', props);
 
     return (
       <Dialog theme={theme} name={LocalizedString.lookup(tr('Are You Sure?'), locale)} onClose={onClose}>
         <Container theme={theme}>
           <br />
           <CenteredContainer>
-            <Bold>{LocalizedString.lookup(tr(`Are you sure you want to delete ${this.props.toDeleteName}?`), locale)}</Bold>
+            <Bold>{LocalizedString.lookup(tr(`Are you sure you want to remove ${this.props.toRemoveUser.userName} from ${this.props.classroom.name}?`), locale)}</Bold>
           </CenteredContainer>
           <br />
           <CenteredContainer>
             
             <BottomButtonContainer>
-              <YesItem onClick={() => this.props.onConfirm(this.props.toDeleteName, this.props.toDeleteType, 'delete', this.props.toDeleteObject)} theme={theme}>
-                Yes
+              <YesItem onClick={() => this.props.onCloseRemoveUserFromClassroomDialog(true)} theme={theme}>
+                {LocalizedString.lookup(tr('Yes'), locale)}
               </YesItem>
-              <NoItem onClick={this.props.onDeny} theme={theme}>
-                No
+              <NoItem onClick={() => this.props.onClose()} theme={theme}>
+                {LocalizedString.lookup(tr('No'), locale)}
               </NoItem>
             </BottomButtonContainer>
           </CenteredContainer>
@@ -185,4 +183,4 @@ class DeleteUserProjectFileDialog extends React.PureComponent<Props> {
   }
 }
 
-export default DeleteUserProjectFileDialog;
+export default RemoveUserFromClassroomDialog;

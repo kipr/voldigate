@@ -18,56 +18,60 @@ export namespace Modal {
     CreateFile,
     CreateUser,
     CreateProject,
+    CreateClassroom,
     DeleteUserProjectFile,
     DownloadUserProjectFile,
+    RemoveUserFromClassroom,
     OpenUsers,
     OpenFile,
     SaveFile,
     KeepMotorsRunning,
     RenameUserProjectFile,
     RenameProject,
-    RenameFile
+    RenameFile,
+    MoveProject,
+    MoveUserToClassroom
   }
-  
+
   export interface Settings {
     type: Type.Settings;
   }
-  
+
   export const SETTINGS: Settings = { type: Type.Settings };
-  
+
   export interface About {
     type: Type.About;
   }
-  
+
   export const ABOUT: About = { type: Type.About };
-  
+
   export interface Feedback {
     type: Type.Feedback;
   }
-  
+
   export const FEEDBACK: Feedback = { type: Type.Feedback };
-  
+
   export interface FeedbackSuccess {
     type: Type.FeedbackSuccess;
   }
-  
+
   export const FEEDBACKSUCCESS: FeedbackSuccess = { type: Type.FeedbackSuccess };
-  
+
   export interface Exception {
     type: Type.Exception;
     error: Error;
     info?: React.ErrorInfo;
   }
-  
+
   export const exception = (error: Error, info?: React.ErrorInfo): Exception => ({ type: Type.Exception, error, info });
 
-  
+
   export interface None {
     type: Type.None;
   }
-  
+
   export const NONE: None = { type: Type.None };
-  
+
   export interface CreateProject {
     type: Type.CreateProject;
   }
@@ -86,6 +90,12 @@ export namespace Modal {
   }
 
   export const CREATEUSER: CreateUser = { type: Type.CreateUser };
+
+  export interface CreateClassroom {
+    type: Type.CreateClassroom;
+  }
+
+  export const CREATECLASSROOM: CreateClassroom = { type: Type.CreateClassroom };
 
   export interface OpenUsers {
     type: Type.OpenUsers;
@@ -131,8 +141,27 @@ export namespace Modal {
 
   export const RENAMEUSERPROJECTFILE: RenameUserProjectFile = { type: Type.RenameUserProjectFile };
 
+
+  export interface MoveProject {
+    type: Type.MoveProject;
+  }
+
+  export const MOVEPROJECT: MoveProject = { type: Type.MoveProject };
+
+  export interface RemoveUserFromClassroom {
+    type: Type.RemoveUserFromClassroom;
+  }
+
+  export const REMOVEUSERFROMCLASSROOM: RemoveUserFromClassroom = { type: Type.RemoveUserFromClassroom };
+
+  export interface MoveUserToClassroom {
+    type: Type.MoveUserToClassroom;
+  }
+
+  export const MOVEUSERTOCLASSROOM: MoveUserToClassroom = { type: Type.MoveUserToClassroom };
+
 }
-  
+
 export type Modal = (
   Modal.Settings |
   Modal.About |
@@ -144,12 +173,15 @@ export type Modal = (
   Modal.CreateProject |
   Modal.CreateFile |
   Modal.CreateUser |
+  Modal.CreateClassroom |
   Modal.OpenUsers |
   Modal.DeleteUserProjectFile |
   Modal.DownloadUserProjectFile |
   Modal.SaveFile |
-  Modal.OpenFile  |
+  Modal.OpenFile |
   Modal.KeepMotorsRunning |
-  Modal.RenameUserProjectFile
-
+  Modal.RenameUserProjectFile |
+  Modal.MoveProject |
+  Modal.RemoveUserFromClassroom |
+  Modal.MoveUserToClassroom
 );

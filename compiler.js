@@ -8,7 +8,6 @@ const envProjectName = process.env.PROJECT_NAME;
 const envFileName = process.env.FILE_NAME;
 const envLanguage = process.env.ACTIVE_LANGUAGE;
 
-
 const userProjectDirectory = `/home/kipr/Documents/KISS/${envProjectUsername}/${envProjectName}`;
 console.error("userProjectDirectory: ", userProjectDirectory);
 const bin_directory = path.join(userProjectDirectory, "/bin");
@@ -34,32 +33,27 @@ try {
   throw e;
 }
 
-
 try {
   switch (envLanguage) {
     case "graphical":
     case "c":
       sourceFiles = fs
         .readdirSync(src_directory)
-        .filter((file) => {
-          // Only include .c
-          return file.endsWith(".c");
-        })
-        .map((file) => path.join(src_directory, file));
+        .filter((file) => file.endsWith(".c"))
+        .map((file) => `"${path.join(src_directory, file)}"`);
 
       sourceFilePath = sourceFiles.join(" ");
-      compileCommand = `gcc -Wall -Wextra -fmax-errors=100 -o "${outputBinaryPath}" ${sourceFilePath} -I"${__dirname}/libkipr_voldigate/libkipr_install_c/include" -I"${include_directory}" -L"${__dirname}/libkipr_voldigate/libkipr_install_c/lib" -lkipr`;
-
+      console.error("sourceFilePath: ", sourceFilePath);
+      compileCommand = `gcc -Wall -Wextra -fmax-errors=100 -o "${outputBinaryPath}" ${sourceFilePath}  -I"${include_directory}" -lkipr -lm -lpthread`;
+      console.error("compileCommand: ", compileCommand);
       try {
         exec(compileCommand, (error, stdout, stderr) => {
-         // const messages = parseCompilerErrors(stderr, userProjectDirectory);
+          // const messages = parseCompilerErrors(stderr, userProjectDirectory);
           if (error) {
-
             process.stdout.write(
               JSON.stringify({
                 success: false,
                 error: stderr,
-                
               }) + "\n"
             );
           } else {
@@ -74,14 +68,11 @@ try {
                 success: true,
                 output: stdout || "Compilation successful",
                 warnings: hasWarnings ? stderr : undefined,
-               
               }) + "\n"
             );
           }
         });
       } catch (err) {
-      
-
         process.stdout.write(
           JSON.stringify({
             success: false,
@@ -101,12 +92,11 @@ try {
         .map((file) => path.join(src_directory, file));
 
       sourceFilePath = sourceFiles.join(" ");
-      compileCommand = `clang++ -Wall -std=c++17 -o "${outputBinaryPath}" ${sourceFilePath} -I"${__dirname}/libkipr_voldigate/libkipr_install_c/include" -I"${include_directory}" -L"${__dirname}/libkipr_voldigate/libkipr_install_c/lib" -lkipr`;
+
+      compileCommand = `clang++ -Wall -std=c++17 -o "${outputBinaryPath}" ${sourceFilePath} -I"${include_directory}" -lkipr -lm -lpthread`;
       console.error("compileCommand: ", compileCommand);
       try {
         exec(compileCommand, (error, stdout, stderr) => {
-         
-
           if (error) {
             console.error("Compilation failed:", error.message);
             process.stdout.write(
@@ -117,9 +107,8 @@ try {
             );
           } else {
             try {
-               fs.chmodSync(outputBinaryPath, "755");
-            }
-            catch (chmodErr) {
+              fs.chmodSync(outputBinaryPath, "755");
+            } catch (chmodErr) {
               console.warn("chmod failed:", chmodErr.message);
             }
             const hasWarnings = stderr && stderr.trim().length > 0;
@@ -143,38 +132,43 @@ try {
       }
 
       break;
-    case "python":
-      sourceFilePath = path.join(userProjectDirectory, "/src/main.py");
-      // Unlink any existing binary or symbolic link before creating a new one
+    case "python": {
+      const { execFileSync } = require("child_process");
+
+      sourceFilePath = path.join(userProjectDirectory, "src", "main.py");
+
       try {
-        if (fs.existsSync(outputBinaryPath)) {
-          fs.unlinkSync(outputBinaryPath);
-        }
-        const output = execSync(
-          `/bin/bash -c 'export PYTHONPATH=/usr/local/lib && python3 -m py_compile ${sourceFilePath}'`,
-          { encoding: "utf8" }
+        if (fs.existsSync(outputBinaryPath)) fs.unlinkSync(outputBinaryPath);
+
+        const output = execFileSync(
+          "python3",
+          ["-m", "py_compile", sourceFilePath],
+          {
+            encoding: "utf8",
+            env: { ...process.env, PYTHONPATH: "/usr/local/lib" }, // replaces: export PYTHONPATH=...
+          }
         );
+
         fs.symlinkSync(sourceFilePath, outputBinaryPath);
-        console.error("Python failed output: ", output);
+
         process.stdout.write(
           JSON.stringify({
             success: true,
             output: output || "Python compilation successful",
-          })
+          }) + "\n"
         );
       } catch (err) {
-
         console.error("Python compile/link failed:", err.message);
         process.stdout.write(
           JSON.stringify({
             success: false,
-            error: err.stderr,
-            
+            error: (err.stderr && err.stderr.toString()) || err.message,
           }) + "\n"
         );
       }
 
       break;
+    }
   }
 } catch (err) {
   console.error("compiler.js Error:", err);

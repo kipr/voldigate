@@ -1,6 +1,6 @@
 #include <napi.h>
 #include <iostream>
-#include "button_c.hpp"
+#include "button_p.hpp"
 
 extern "C"
 {

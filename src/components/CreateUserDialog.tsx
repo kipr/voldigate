@@ -12,17 +12,22 @@ import { State as ReduxState } from '../state';
 import { I18nAction } from '../state/reducer';
 import { connect } from 'react-redux';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-
 import { Fa } from './Fa';
-import { User } from '../types/userTypes';
+import { User } from 'ivygate/dist/types/user';
 import ComboBox from './ComboBox';
 import { InterfaceMode } from '../types/interfaceModes';
+import { Settings } from 'Settings';
+import Classroom from 'ivygate/dist/types/classroomTypes';
+
 
 export interface CreateUserDialogPublicProps extends ThemeProps, StyleProps {
     showRepeatUserDialog: boolean;
-    userName: string;
+    settings?: Settings | null;
+    propClassroom?: Classroom | null;
+    classrooms: Classroom[] | null;
+
     onClose: () => void;
-    onCreateProjectDialog: (userName: string, interfaceMode: InterfaceMode) => void;
+    onCreateProjectDialog: (userName: string, interfaceMode: InterfaceMode, classroom?: Classroom | null) => void;
 }
 
 interface CreateUserDialogPrivateProps {
@@ -36,6 +41,7 @@ interface CreateUserDialogState {
     errorMessage: string;
     showRepeatUserDialog: boolean;
     interfaceMode: InterfaceMode;
+    classroom?: Classroom | null;
 }
 
 type Props = CreateUserDialogPublicProps & CreateUserDialogPrivateProps;
@@ -46,7 +52,7 @@ const Container = styled('div', (props: ThemeProps) => ({
     flexDirection: 'column',
     backgroundColor: props.theme.backgroundColor,
     color: props.theme.color,
-    minHeight: '200px',
+    minHeight: '15em',
     height: '9em'
 }));
 
@@ -95,26 +101,43 @@ const ComboBoxLabel = styled('label', (theme: ThemeProps) => ({
     marginRight: `${theme.theme.itemPadding}px`,
     userSelect: 'none'
 }));
-const INTERFACE_OPTIONS: ComboBox.Option[] = [{
-    text: 'Simple',
-    data: 'Simple'
-}, {
-    text: 'Advanced',
-    data: 'Advanced'
+// const INTERFACE_OPTIONS: ComboBox.Option[] = [{
+//     text: 'Simple',
+//     data: LocalizedString.lookup(tr('Simple'), locale)
+// }, {
+//     text: 'Advanced',
+//     data: LocalizedString.lookup(tr('Advanced'), this.props.locale)
 
-}];
+// }];
+const getInterfaceOptions = (locale: LocalizedString.Language): ComboBox.Option[] => ([
+  { text: LocalizedString.lookup(tr('Simple'), locale),   data: LocalizedString.lookup(tr('Simple'), locale) },
+  { text: LocalizedString.lookup(tr('Advanced'), locale), data: LocalizedString.lookup(tr('Advanced'), locale) },
+]);
+
+
 export class CreateUserDialog extends React.PureComponent<Props, State> {
 
     constructor(props: Props) {
         super(props);
+        const initialClassroom = this.props.classrooms?.length > 0 ? this.props.classrooms[0] : Classroom.EMPTY_CLASSROOM;
         this.state = {
             userName: '',
             showRepeatUserDialog: false,
             errorMessage: '',
-            interfaceMode: InterfaceMode.SIMPLE
+            interfaceMode: InterfaceMode.SIMPLE,
+            classroom: this.props.propClassroom ? this.props.propClassroom : this.props.classrooms?.[0] || Classroom.NO_CLASSROOM
         }
     }
 
+    componentDidMount() {
+        console.log("CreateUserDialog componentDidMount props: ", this.props);
+        console.log("CreateUserDialog componentDidMount state: ", this.state);
+    }
+
+    componentDidUpdate = (prevProps: Props, prevState: State) => {
+        console.log("CreateUserDialog componentDidUpdate props: ", this.props);
+        console.log("CreateUserDialog componentDidUpdate state: ", this.state);
+    }
     private closeRepeatUserDialog_ = () => {
 
         this.setState({ showRepeatUserDialog: false });
@@ -122,19 +145,28 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
     private onInterfaceChange = (interfaceMode: InterfaceMode) => {
         this.setState({
             interfaceMode: interfaceMode
-        }, () => {
-            console.log("Interface Mode: ", this.state.interfaceMode);
         });
     };
     private onSelectInterface_ = (interfaceIndex: number, option: ComboBox.Option) => {
         this.onInterfaceChange(option.data as InterfaceMode);
     };
+    private onSelectClassroom_ = (classroomIndex: number, option: ComboBox.Option) => {
+        console.log("Selected classroom: ", option);
+        this.setState({
+            classroom: {
+                name: option.text as Classroom['name'],
+                users: option.data as User[],
+                type: 'classroom'
+            }
+        }, () => {
+            console.log("Updated classroom state: ", this.state);
+        })
+    };
     onFinalize_ = async (values: { [id: string]: string }) => {
-
         const userName = values.userName;
 
-        const specialCharRegex = /[^a-zA-Z0-9 _-]/;
-        const isOnlySpaces = !userName.trim(); // Check if the name is empty or only spaces
+        const specialCharRegex = /[^a-zA-Z0-9 _-]/; // Removed space from allowed chars
+
 
         // Check if user name exceeds 50 characters
         if (userName.length > 50) {
@@ -142,46 +174,71 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
             return;
         }
         if (specialCharRegex.test(userName)) {
-            this.setState({ errorMessage: 'User name contains special characters. Please use only letters, numbers, spaces, underscores, and hyphens.' });
+            this.setState({ errorMessage: 'User name contains special characters. Please use only letters, numbers, underscores, and hyphens.' });
             return;
         }
-        if (isOnlySpaces) {
-            this.setState({ errorMessage: "User name cannot be empty or just spaces!" });
+        if (userName.trim() === '') {
+            this.setState({ errorMessage: 'User name cannot be empty!' });
             return;
         }
-        this.setState({ errorMessage: "" }); // Clear error message if input is valid
+
+        this.setState({ errorMessage: '' }); // Clear error message if input is valid
 
         try {
-
-            const response = await axios.get('/get-users', { params: { filePath: "/home/kipr/Documents/KISS" } });
-
-            if (response.data.directories.includes(values.userName)) {
+            const response = await axios.get('/get-users', { params: { filePath: '/home/kipr/Documents/KISS' } });
+            console.log("CreateUserDialog response: ", response.data);
+            if (response.data.users.some(user => user.userName === userName)) {
                 this.setState({ showRepeatUserDialog: true });
-            }
-            else {
+            } else {
                 this.props.onClose();
-                this.props.onCreateProjectDialog(values.userName as User['userName'], this.state.interfaceMode);
+                this.props.onCreateProjectDialog(userName as User['userName'], this.state.interfaceMode, this.state.classroom ? this.state.classroom.name === 'No Classroom' ? { name: "", users: [], type: 'classroom' } : this.state.classroom : null);
             }
-        }
-        catch (error) {
+        } catch (error) {
             console.error('Error adding user to database:', error);
         }
     };
+    CLASSROOM_OPTIONS: ComboBox.Option[] = (() => {
+        const ret: ComboBox.Option[] = [];
+        const classrooms = this.props.classrooms || [];
+        for (const classroom of classrooms) {
 
-    public myComponent(props: CreateUserDialogPublicProps) {
-        return (props.userName)
-    }
+            const classroomName = LocalizedString.lookup(tr(`${classroom.name}`), this.props.locale);
+
+
+            if (classroomName) {
+                ret.push({
+                    data: classroom.users,
+                    text: classroomName
+                });
+            } else {
+                console.error(`Classroom ${classroom.name} has an invalid localized name.`);
+            }
+        }
+
+        console.log("CreateUserDialog CLASSROOM_OPTIONS ret: ", ret);
+        ret.push({
+            data: [],
+            text: LocalizedString.lookup(tr('No Classroom'), this.props.locale)
+        })
+        return ret;
+    })();
 
     render() {
         const { props, state } = this;
-        const { style, className, theme, onClose, locale } = props;
-        const { errorMessage } = state;
+        const { style, className, theme, onClose, locale, settings, classrooms, propClassroom } = props;
+        const { errorMessage, interfaceMode, classroom } = state;
+        console.log("CreateUserDialog render props: ", props);
+        console.log("CreateUserDialog render state: ", state);
 
         const { showRepeatUserDialog } = state;
         const CREATEUSER_FORM_ITEMS: Form.Item[] = [
-            Form.username('userName', 'User Name')
+            Form.username('userName', LocalizedString.lookup(tr('User Name'), locale))
         ];
-        const interfaceIndex = INTERFACE_OPTIONS.findIndex(option => option.data === this.state.interfaceMode);
+        const interfaceIndex = getInterfaceOptions(locale).findIndex(option => option.data === this.state.interfaceMode);
+        console.log("CreateUserDialog render interfaceIndex: ", interfaceIndex);
+        console.log("CreateUserDialog render classroom: ", classroom);
+        const classroomIndex = this.CLASSROOM_OPTIONS.findIndex(option => option.text === classroom?.name);
+        console.log("CreateUserDialog render classroomIndex: ", classroomIndex);
 
         return (
             <div>
@@ -203,19 +260,30 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
                                 </ErrorMessageContainer>
                             )}
                             <ComboBoxContainer theme={theme} style={style} className={className}>
-                                <ComboBoxLabel theme={theme}>Interface Mode:</ComboBoxLabel>
+                                <ComboBoxLabel theme={theme}>{LocalizedString.lookup(tr('Interface Mode:'), locale)}</ComboBoxLabel>
                                 <StyledComboBox
                                     theme={theme}
                                     onSelect={this.onSelectInterface_}
-                                    options={INTERFACE_OPTIONS}
+                                    options={getInterfaceOptions(locale)}
                                     index={interfaceIndex}
                                 />
                             </ComboBoxContainer>
+                            {settings && settings.classroomView && !propClassroom && classrooms && (
+                                <ComboBoxContainer theme={theme} style={style} className={className}>
+                                    <ComboBoxLabel theme={theme}>{LocalizedString.lookup(tr('Classroom:'), locale)}</ComboBoxLabel>
+                                    <StyledComboBox
+                                        theme={theme}
+                                        onSelect={this.onSelectClassroom_}
+                                        options={this.CLASSROOM_OPTIONS}
+                                        index={classroomIndex}
+                                    />
+                                </ComboBoxContainer>
+                            )}
                             <StyledForm
                                 theme={theme}
                                 onFinalize={this.onFinalize_}
                                 items={CREATEUSER_FORM_ITEMS}
-                                finalizeText="Create"
+                                finalizeText={LocalizedString.lookup(tr('Create'), locale)}
                                 finalizeDisabled={false}
                             />
                         </Container>
@@ -237,7 +305,7 @@ export default connect((state: ReduxState) => ({
     locale: state.i18n.locale
 }), dispatch => ({
     onLocaleChange: (locale: LocalizedString.Language) => dispatch(I18nAction.setLocale({ locale })),
- 
+
 }))(CreateUserDialog) as React.ComponentType<CreateUserDialogPublicProps>;
 
 
