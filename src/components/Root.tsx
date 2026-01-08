@@ -25,15 +25,15 @@ import { Editor } from './Editor';
 import { connect } from 'react-redux';
 import { HomeStartOptions } from './HomeStartOptions';
 import { Modal } from '../pages/Modal';
-import { Project, UploadedProject } from '../types/projectTypes';
+import { Project, SimClassroomProject, UploadedProject } from 'ivygate/dist/types/project';
 import { InterfaceMode } from '../types/interfaceModes';
-import { UploadedUser, User } from '../types/userTypes';
+import { UploadedUser, User } from 'ivygate/dist/types/user';
 import { SensorSelectionKey, ServoType } from 'types/motorServoSensorTypes';
 import { programRunContextHelper } from '../ProgramRunContext';
 import parseMessages, { sort, toStyledText } from '../util/parse-messages';
 import { FileInfo } from 'types/fileInfo';
 import MoveProjectDialog from './MoveProjectDialog';
-import Classroom from '../types/classroomTypes';
+import Classroom from 'ivygate/dist/types/classroomTypes';
 import CreateUserDialog from './CreateUserDialog';
 import RemoveUserFromClassroomDialog from './RemoveUserFromClassroomDialog';
 import MoveUserToClassroomDialog from './MoveUserToClassroomDialog';
@@ -195,6 +195,7 @@ interface RootState {
   addNewProject: boolean;
   addNewFile: boolean;
   isRunning: boolean;
+  compileStatus: 'idle' | 'compiling' | 'success' | 'warning' | 'error';
   clickFileState: boolean;
   deleteClassroomFlag_?: boolean;
   deleteUserFlag_?: boolean;
@@ -275,7 +276,8 @@ class Root extends React.Component<Props, State> {
         userName: '',
         interfaceMode: InterfaceMode.SIMPLE,
         projects: [],
-        classroomName: ''
+        classroomName: '',
+        type: 'user'
       },
       rootProject: {
         projectName: '',
@@ -323,6 +325,7 @@ class Root extends React.Component<Props, State> {
       projects: [],
       saveCodePromptFlag: false,
       isRunning: false,
+      compileStatus: 'idle',
       theme: this.props.propedTheme,
       rootMotorPositions: {},
       rootwidth: 100
@@ -768,11 +771,9 @@ class Root extends React.Component<Props, State> {
           });
 
           break;
-        case 'c':
-        case 'cpp':
-        case 'py':
-        case 'graphical':
+        case 'src':
           let rootUpdateCode: AxiosResponse<string>;
+          console.log("compDidUPdate clickfile props: ", this.props);
           rootUpdateCode = this.state.tempNewFile ?
             await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUser.userName}/${propProject.projectName}/src/${this.state.tempNewFile}` } }) :
             await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUser.userName}/${propProject.projectName}/src/${propFileName}` } });
@@ -1166,6 +1167,7 @@ class Root extends React.Component<Props, State> {
       interfaceMode: toUploadUser.interfaceMode,
       projects: toUploadUser.projects as Project[] || [],
       classroomName: classroomName,
+      type: 'user'
     }
     const uploadResponse = await axios.post('/upload-user', { user: uploadedUser, configFile: configFile });
     console.log("Root uploadUser_ uploadResponse: ", uploadResponse);
@@ -1461,12 +1463,20 @@ class Root extends React.Component<Props, State> {
       console.log("Root onCloseRenameUserProjectFileDialog_ renamedData: ", renamedData);
       const updatedUsers = await this.loadUsers();
       console.log("Root onCloseRenameUserProjectFileDialog_ after loadUsers: ", updatedUsers);
+      const updatedUser =
+        Object.values(updatedUsers).find(u => u.userName === this.state.rootUser.userName);
+
+      const nextRootProject =
+        updatedUser?.projects
+          .filter(this.isProject)
+          .find(p => p.projectName === this.state.rootProject.projectName)
+        || this.state.rootProject;
 
       this.setState({
-        rootUser: Object.values(updatedUsers).find(user => user.userName === this.state.rootUser.userName) || this.state.rootUser,
-        rootProject: Object.values(updatedUsers).find(user => user.userName === this.state.rootUser.userName)?.projects.find(project => project.projectName === this.state.rootProject.projectName) || this.state.rootProject,
-        fileName: renamedData['newFileName'],
-      })
+        rootUser: updatedUser || this.state.rootUser,
+        rootProject: nextRootProject,
+        fileName: renamedData["newFileName"],
+      });
 
       this.setState({
         modal: Modal.NONE,
@@ -1533,6 +1543,7 @@ class Root extends React.Component<Props, State> {
 
 
     console.log("Root onCloseProjectDialog_ state before setState: ", this.state);
+    console.log("Root onCloseProjectDialog_ DEFAULT CODE: ", ProgrammingLanguage.DEFAULT_CODE[newProjLanguage]);
     this.setState(prevState => ({
       modal: Modal.NONE,
       rootUser: {
@@ -1677,6 +1688,11 @@ class Root extends React.Component<Props, State> {
 
   }
 
+  private isProject(p: Project | SimClassroomProject): p is Project {
+    return "includeFolderFiles" in p && "srcFolderFiles" in p && "dataFolderFiles" in p;
+  }
+
+
   private onCloseNewFileDialog_ = async (newFileName: string, fileType: string) => {
     const prePath = `/home/kipr/Documents/KISS`;
     console.log("UPDATE TOSAVECODEREF closenewfiledialog ");
@@ -1698,14 +1714,18 @@ class Root extends React.Component<Props, State> {
           },
           rootUser: {
             ...prevState.rootUser,
-            projects: prevState.rootUser.projects.map(project =>
-              project.projectName === prevState.rootProject.projectName
-                ? {
-                  ...project,
-                  includeFolderFiles: [...project.includeFolderFiles, `${newFileName}.h`]
-                }
-                : project
-            )
+            projects: prevState.rootUser.projects.map(p => {
+              if (
+                p.projectName === prevState.rootProject.projectName &&
+                this.isProject(p)
+              ) {
+                return {
+                  ...p,
+                  includeFolderFiles: [...p.includeFolderFiles, `${newFileName}.h`],
+                };
+              }
+              return p;
+            }),
           }
         }), async () => {
           filePath = `${prePath}/${userName}/${projectName}/include/${newFileName}.h`;
@@ -1728,18 +1748,23 @@ class Root extends React.Component<Props, State> {
           rootProject: {
             ...prevState.rootProject,
             srcFolderFiles: [...prevState.rootProject.srcFolderFiles, `${newFileName}.${fileType}`]
-          },
+          },      
           rootUser: {
             ...prevState.rootUser,
-            projects: prevState.rootUser.projects.map(project =>
-              project.projectName === prevState.rootProject.projectName
-                ? {
-                  ...project,
-                  srcFolderFiles: [...project.srcFolderFiles, `${newFileName}.${fileType}`]
-                }
-                : project
-            )
+            projects: prevState.rootUser.projects.map(p => {
+              if (
+                p.projectName === prevState.rootProject.projectName &&
+                this.isProject(p)
+              ) {
+                return {
+                  ...p,
+                  includeFolderFiles: [...p.srcFolderFiles,`${newFileName}.${fileType}`],
+                };
+              }
+              return p;
+            }),
           }
+           
         }), async () => {
           filePath = `${prePath}/${userName}/${projectName}/src/${newFileName}.${fileType}`;
           const fileContents = this.toSaveCodeRef.current[activeLanguage];
@@ -1764,15 +1789,20 @@ class Root extends React.Component<Props, State> {
           },
           rootUser: {
             ...prevState.rootUser,
-            projects: prevState.rootUser.projects.map(project =>
-              project.projectName === prevState.rootProject.projectName
-                ? {
-                  ...project,
-                  dataFolderFiles: [...project.dataFolderFiles, `${newFileName}.txt`]
-                }
-                : project
-            )
+            projects: prevState.rootUser.projects.map(p => {
+              if (
+                p.projectName === prevState.rootProject.projectName &&
+                this.isProject(p)
+              ) {
+                return {
+                  ...p,
+                  includeFolderFiles: [...p.dataFolderFiles, `${newFileName}.txt`],
+                };
+              }
+              return p;
+            }),
           }
+         
         }), async () => {
           filePath = `${prePath}/${userName}/${projectName}/data/${newFileName}.txt`;
           const fileContents = this.state.code[activeLanguage];
@@ -1814,7 +1844,7 @@ class Root extends React.Component<Props, State> {
     console.log("Root onCreateProjectDialogOpen_ state before setState: ", this.state);
 
     let newRootUser = this.state.rootUser.userName !== name ?
-      { userName: name, interfaceMode: interfaceMode, projects: [], classroomName: classroom ? classroom.name : this.state.rootUser.classroomName } : this.state.rootUser;
+      { userName: name, interfaceMode: interfaceMode, projects: [], classroomName: classroom ? classroom.name : this.state.rootUser.classroomName, type: 'user' as const } : this.state.rootUser;
     this.setState({
       rootUser: newRootUser,
       rootInterfaceMode: interfaceMode,
@@ -1947,7 +1977,7 @@ class Root extends React.Component<Props, State> {
     this.eventSource = new EventSource(`/run-code?userName=${userName}&projectName=${projectName}&fileName=${fileName}&activeLanguage=${activeLanguage}`);
 
     let nextConsole = StyledText.extend(editorConsole, StyledText.text({
-      text: "Running...\n",
+      text: LocalizedString.lookup(tr('Running...\n'), locale),
       style: STDOUT_STYLE(this.state.theme)
     }));
 
@@ -2020,7 +2050,8 @@ class Root extends React.Component<Props, State> {
         style: STDOUT_STYLE(this.state.theme)
       }));
       this.setState({
-        editorConsole: compilingConsole
+        editorConsole: compilingConsole,
+        compileStatus: 'idle'
       }, async () => {
 
         let response: AxiosResponse<any>;
@@ -2055,6 +2086,12 @@ class Root extends React.Component<Props, State> {
         }
         else {
           response = await axios.post('/compile-code', { userName, projectName, fileName, activeLanguage }); // This calls the backend route
+          if(response){
+            this.setState({ compileStatus: 'compiling'})
+            if(response.status === 200){
+              this.setState({ compileStatus: 'idle'})
+            }
+          }
         }
         let nextConsole: StyledText;
 
@@ -2063,7 +2100,10 @@ class Root extends React.Component<Props, State> {
           case 'cpp': {
 
             if (response.data.message === 'successful') {
+
+              
               if (response.data.warnings && response.data.warnings.length > 0) {
+                this.setState({ compileStatus: 'warning'})
                 messages = sort(parseMessages(response.data.warnings));
                 for (const message of messages) {
                   if (nextConsole === undefined) {
@@ -2086,11 +2126,13 @@ class Root extends React.Component<Props, State> {
                 }));
               }
               else {
+                this.setState({ compileStatus: 'success'})
                 nextConsole = StyledText.extend(compilingConsole, StyledText.text({
                   text: LocalizedString.lookup(tr('Compilation Succeeded!\n'), locale),
                   style: STDOUT_STYLE(this.state.theme)
                 }));
               }
+
 
             }
 
@@ -2098,7 +2140,7 @@ class Root extends React.Component<Props, State> {
               console.log("Compile click response: ", response);
 
               messages = sort(parseMessages(response.data.error));
-
+              this.setState({ compileStatus: 'error'});
 
 
               for (const message of messages) {
@@ -2134,6 +2176,9 @@ class Root extends React.Component<Props, State> {
                 text: LocalizedString.lookup(tr('Compilation Succeeded!\n'), locale),
                 style: STDOUT_STYLE(this.state.theme)
               }));
+              this.setState({
+                compileStatus: 'success'
+              });
             }
             else {
               let wombatDirectory = '/home/kipr/Documents/KISS/';
@@ -2145,6 +2190,9 @@ class Root extends React.Component<Props, State> {
                   style: STDERR_STYLE(this.state.theme),
                 })
               );
+              this.setState({
+                compileStatus: 'error'
+              });
             }
             this.setState({
               editorConsole: nextConsole
@@ -2699,6 +2747,7 @@ class Root extends React.Component<Props, State> {
   private onClearConsole_ = () => {
 
     this.setState({
+      compileStatus: 'idle',
       editorConsole: StyledText.text({ text: LocalizedString.lookup(tr(''), this.props.locale), style: STDOUT_STYLE(DARK) }),
     });
   };
@@ -2823,6 +2872,7 @@ class Root extends React.Component<Props, State> {
           <EditorPage
             isleftbaropen={isLeftBarOpen}
             isRunning={this.state.isRunning}
+            compileStatus={this.state.compileStatus}
             editorTarget={undefined}
             editorConsole={editorConsole}
             messages={messages}
@@ -2843,7 +2893,7 @@ class Root extends React.Component<Props, State> {
             projectName={rootProject.projectName}
             fileName={fileName}
             userName={rootUser.userName}
-            onFileNameChange={this.handleFileNameChange} locale={'en-US'}
+            onFileNameChange={this.handleFileNameChange} locale={locale}
           />
 
         )}
@@ -2864,7 +2914,7 @@ class Root extends React.Component<Props, State> {
             userName={rootUser.userName}
             language={activeLanguage}
             onLanguageChange={this.onLanguageChange_}
-            locale={'en-US'}
+            locale={locale}
             interfaceMode={rootInterfaceMode}
           />
         )}
@@ -2890,7 +2940,7 @@ class Root extends React.Component<Props, State> {
             toDeleteType={toDeleteType_}
             onConfirm={this.onConfirm_}
             onDeny={this.onModalClose_}
-            locale={'en-US'}
+            locale={locale}
           />
         )}
 
@@ -2921,7 +2971,7 @@ class Root extends React.Component<Props, State> {
             onClose={this.onModalClose_}
             onCloseRenameUserProjectFileDialog={this.onCloseRenameUserProjectFileDialog_}
             theme={theme}
-            locale={'en-US'}
+            locale={locale}
             user={propContextMenuUser}
             project={propContextMenuProject}
             toRenameObject={toRenameType_ === 'classroom' ? propContextMenuClassroom : toRenameType_ === 'user' ? propContextMenuUser : toRenameType_ === 'project' ? propContextMenuProject : undefined}
@@ -2936,7 +2986,7 @@ class Root extends React.Component<Props, State> {
             onClose={this.onModalClose_}
             onCloseMoveProjectDialog={this.onCloseMoveProjectDialog_}
             theme={theme}
-            locale={'en-US'}
+            locale={locale}
             user={propContextMenuUser}
             users={users}
             project={toMoveProject_}
