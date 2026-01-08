@@ -39,15 +39,13 @@ try {
     case "c":
       sourceFiles = fs
         .readdirSync(src_directory)
-        .filter((file) => {
-          // Only include .c
-          return file.endsWith(".c");
-        })
-        .map((file) => path.join(src_directory, file));
+        .filter((file) => file.endsWith(".c"))
+        .map((file) => `"${path.join(src_directory, file)}"`);
 
       sourceFilePath = sourceFiles.join(" ");
-      compileCommand = `gcc -Wall -Wextra -fmax-errors=100 -o "${outputBinaryPath}" ${sourceFilePath}  -I"${include_directory}" -lkipr -lm -lpthreads`;
-
+      console.error("sourceFilePath: ", sourceFilePath);
+      compileCommand = `gcc -Wall -Wextra -fmax-errors=100 -o "${outputBinaryPath}" ${sourceFilePath}  -I"${include_directory}" -lkipr -lm -lpthread`;
+      console.error("compileCommand: ", compileCommand);
       try {
         exec(compileCommand, (error, stdout, stderr) => {
           // const messages = parseCompilerErrors(stderr, userProjectDirectory);
@@ -95,7 +93,7 @@ try {
 
       sourceFilePath = sourceFiles.join(" ");
 
-      compileCommand = `clang++ -Wall -std=c++17 -o "${outputBinaryPath}" ${sourceFilePath} -I"${include_directory}" -lkipr -lm -lpthreads`;
+      compileCommand = `clang++ -Wall -std=c++17 -o "${outputBinaryPath}" ${sourceFilePath} -I"${include_directory}" -lkipr -lm -lpthread`;
       console.error("compileCommand: ", compileCommand);
       try {
         exec(compileCommand, (error, stdout, stderr) => {
@@ -134,36 +132,43 @@ try {
       }
 
       break;
-    case "python":
-      sourceFilePath = path.join(userProjectDirectory, "/src/main.py");
-      // Unlink any existing binary or symbolic link before creating a new one
+    case "python": {
+      const { execFileSync } = require("child_process");
+
+      sourceFilePath = path.join(userProjectDirectory, "src", "main.py");
+
       try {
-        if (fs.existsSync(outputBinaryPath)) {
-          fs.unlinkSync(outputBinaryPath);
-        }
-        const output = execSync(
-          `/bin/bash -c 'export PYTHONPATH=/usr/local/lib && python3 -m py_compile ${sourceFilePath}'`,
-          { encoding: "utf8" }
+        if (fs.existsSync(outputBinaryPath)) fs.unlinkSync(outputBinaryPath);
+
+        const output = execFileSync(
+          "python3",
+          ["-m", "py_compile", sourceFilePath],
+          {
+            encoding: "utf8",
+            env: { ...process.env, PYTHONPATH: "/usr/local/lib" }, // replaces: export PYTHONPATH=...
+          }
         );
+
         fs.symlinkSync(sourceFilePath, outputBinaryPath);
-        console.error("Python failed output: ", output);
+
         process.stdout.write(
           JSON.stringify({
             success: true,
             output: output || "Python compilation successful",
-          })
+          }) + "\n"
         );
       } catch (err) {
         console.error("Python compile/link failed:", err.message);
         process.stdout.write(
           JSON.stringify({
             success: false,
-            error: err.stderr,
+            error: (err.stderr && err.stderr.toString()) || err.message,
           }) + "\n"
         );
       }
 
       break;
+    }
   }
 } catch (err) {
   console.error("compiler.js Error:", err);
