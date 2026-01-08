@@ -12,8 +12,8 @@ import { ThemeProps } from './theme';
 import { connect } from 'react-redux';
 import { State as ReduxState } from '../state';
 import { Settings } from '../Settings';
-import { Project } from '../types/projectTypes';
-import { User } from '../types/userTypes';
+import { Project } from 'ivygate/dist/types/project';
+import { User } from 'ivygate/dist/types/user';
 import { InterfaceMode } from '../types/interfaceModes';
 import { JSX } from 'react';
 
