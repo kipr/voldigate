@@ -6,8 +6,8 @@ import { ThemeProps, LIGHTMODE_YES, LIGHTMODE_NO, LIGHT } from './theme';
 import tr from '@i18n';
 import LocalizedString from '../util/LocalizedString';
 
-import Classroom from 'types/classroomTypes';
-import { User } from 'types/userTypes';
+import Classroom from 'ivygate/dist/types/classroomTypes';
+import { User } from 'ivygate/dist/types/user';
 import ComboBox from './ComboBox';
 import ResizeableComboBox from './ResizeableComboBox';
 

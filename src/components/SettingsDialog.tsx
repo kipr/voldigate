@@ -13,7 +13,7 @@ import { ThemeProps, Theme, DARK, LIGHT } from './theme';
 import { State as ReduxState } from '../state';
 import { I18nAction } from '../state/reducer';
 import { connect } from 'react-redux';
-import { BLANK_USER, User } from '../types/userTypes';
+import { BLANK_USER, User } from 'ivygate/dist/types/user';
 import { InterfaceMode } from '../types/interfaceModes';
 type SettingsSection = 'user-interface' | 'simulation' | 'editor';
 
@@ -176,7 +176,18 @@ const InterfaceChangeMessageContainer = styled('div', (props: ThemeProps & { typ
 
 const LOCALE_OPTIONS: ComboBox.Option[] = (() => {
   const ret: ComboBox.Option[] = [];
-  for (const locale of [LocalizedString.EN_US]) {
+  const locales = [
+    LocalizedString.EN_US,
+    LocalizedString.ES_ES,
+    LocalizedString.ES_MX,
+    LocalizedString.PT_PT,
+    LocalizedString.PT_BR,
+    LocalizedString.DE_DE,
+    LocalizedString.ZH_CN,
+    LocalizedString.ZH_TW,
+    LocalizedString.JA_JP,
+  ];
+  for (const locale of locales) {
     ret.push(ComboBox.option(LocalizedString.NATIVE_LOCALE_NAMES[locale], locale));
   }
   return ret;
@@ -362,6 +373,8 @@ class SettingsDialog extends React.PureComponent<Props, State> {
   };
 
   private onLocaleSelect_ = (index: number, option: ComboBox.Option) => {
+    console.log("SettingsDialog onLocaleSelect_ option:", option);
+    localStorage.setItem('bblocale', option.data as string);
     this.props.onLocaleChange(option.data as LocalizedString.Language);
   };
 
@@ -425,7 +438,7 @@ class SettingsDialog extends React.PureComponent<Props, State> {
     const { props, state } = this;
     const { style, className, theme, onClose, locale } = props;
     const { selectedSection, storedTheme, userOptions, selectedUser, successMessage, currentStateUser, interfaceMode, confirmMessage } = state;
-
+    
     const userIndex = userOptions.findIndex(option => option.text === selectedUser.userName);
     console.log("SettingsDialog render userIndex:", userIndex);
     console.log("SettingsDialog render state:", state);

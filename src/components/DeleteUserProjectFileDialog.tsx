@@ -5,10 +5,10 @@ import { Dialog } from './Dialog';
 import { ThemeProps, LIGHTMODE_YES,LIGHTMODE_NO,LIGHT } from './theme';
 import tr from '@i18n';
 import LocalizedString from '../util/LocalizedString';
-import { User } from 'types/userTypes';
-import { Project } from 'types/projectTypes';
+import { User } from 'ivygate/dist/types/user';
+import { Project } from 'ivygate/dist/types/project';
 import { FileInfo } from 'types/fileInfo';
-import Classroom from 'types/classroomTypes';
+import Classroom from 'ivygate/dist/types/classroomTypes';
 
 export interface DeleteUserProjectFileDialogPublicProps extends ThemeProps, StyleProps {
   onClose: () => void;

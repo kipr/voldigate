@@ -13,11 +13,11 @@ import { ThemeProps } from './theme';
 import { faBookReader, faFilePen, faUserPlus, faUsersRectangle } from '@fortawesome/free-solid-svg-icons';
 import { DEFAULT_SETTINGS, Settings } from '../Settings';
 import { Modal } from '../pages/Modal';
-import { Project } from '../types/projectTypes';
-import { User } from '../types/userTypes';
+import { Project } from 'ivygate/dist/types/project';
+import { User } from 'ivygate/dist/types/user';
 import { InterfaceMode } from 'types/interfaceModes';
 import CreateClassroomDialog from './CreateClassroomDialog';
-import  Classroom  from 'types/classroomTypes';
+import  Classroom  from 'ivygate/dist/types/classroomTypes';
 
 export interface HomeStartOptionsPublicProps extends StyleProps, ThemeProps {
     activeLanguage: ProgrammingLanguage;
@@ -226,7 +226,7 @@ export class HomeStartOptions extends React.Component<Props, State> {
                     <Logo src={IDELogo as string} loading={'eager'} decoding={'async'} theme={theme} />
                     <HomeStartContainer theme={theme} >
                         <StartContainer theme={theme}>
-                            <Title theme={theme} >Start</Title>
+                            <Title theme={theme} >{LocalizedString.lookup(tr('Start'), locale)}</Title>
                             <Item onClick={this.onModalClick_(Modal.CREATEUSER)} theme={theme}><ItemIcon icon={faUserPlus}></ItemIcon>{LocalizedString.lookup(tr('New User...'), locale)}</Item>
                             {this.props.settings.classroomView && (
                                 <Item onClick={this.onModalClick_(Modal.CREATECLASSROOM)} theme={theme}><ItemIcon icon={faUsersRectangle}></ItemIcon>{LocalizedString.lookup(tr('New Classroom...'), locale)}</Item>

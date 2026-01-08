@@ -14,7 +14,7 @@ import { Modal } from '../pages/Modal';
 import { Fa } from './Fa';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { Settings } from 'Settings';
-import Classroom from 'types/classroomTypes';
+import Classroom from 'ivygate/dist/types/classroomTypes';
 
 export interface CreateProjectDialogPublicProps extends ThemeProps, StyleProps {
   settings?: Settings;

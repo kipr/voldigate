@@ -13,8 +13,8 @@ import { DEFAULT_SETTINGS, Settings } from '../Settings';
 import { Modal } from '../pages/Modal';
 import { Size } from './Widget';
 import { Slider } from './Slider';
-import { BLANK_PROJECT, Project, UploadedProject } from '../types/projectTypes';
-import { User } from '../types/userTypes';
+import { BLANK_PROJECT, Project, UploadedProject } from 'ivygate/dist/types/project';
+import { User } from 'ivygate/dist/types/user';
 import { InterfaceMode } from '../types/interfaceModes';
 import { JSX, Suspense } from 'react';
 import { Motors, ServoType, Servos, DEFAULT_SENSORS, DEFAULT_MOTORS, DEFAULT_SERVOS, SensorValues, SensorSelectionKey, SensorSelection, MotorVelocities, MotorPositions, GraphSelectionKey, ServoPositions } from '../types/motorServoSensorTypes';
@@ -22,8 +22,10 @@ import { IvygateFileExplorer, MotorServoSensorDisplay } from 'ivygate';
 import { useProgramRun } from '../ProgramRunContext';
 import { FileInfo } from 'types/fileInfo';
 import axios from 'axios';
-import Classroom from 'types/classroomTypes';
+import Classroom from 'ivygate/dist/types/classroomTypes';
 import { UploadedUser } from 'ivygate/dist/types/user';
+import config from '../../config.client';
+
 const TerminalView = React.lazy(() => import('./TerminalView'));
 
 
@@ -468,7 +470,8 @@ class LeftBar extends React.Component<Props, State> {
       user: {
         userName: '',
         interfaceMode: InterfaceMode.SIMPLE,
-        projects: []
+        projects: [],
+        type: 'user'
       },
       project: {
         projectName: '',
@@ -728,7 +731,7 @@ class LeftBar extends React.Component<Props, State> {
     }
   };
 
-  private onUserSelected_ = (user: User, loadUserData: boolean) => {
+  private onUserSelected_ = (user: User, loadUserData?: boolean) => {
     console.log("LeftBar onUserSelected user:", user, "loadUserData:", loadUserData);
     console.log("LeftBar onUserSelected state:", this.state);
     try {
@@ -1707,8 +1710,9 @@ class LeftBar extends React.Component<Props, State> {
       <DisplayContainer theme={storedTheme}>
 
         <IvygateFileExplorer
+          config = {config}
           theme={storedTheme}
-          locale="en-US"
+          locale={this.props.locale}
           propsSelectedProjectName={project.projectName}
           onCopyObject={this.onCopyObject_}
           onPasteObject={this.onPasteObject_}
@@ -1770,7 +1774,7 @@ class LeftBar extends React.Component<Props, State> {
       <DisplayContainer theme={storedTheme}>
         <MotorServoSensorDisplay
           theme={storedTheme}
-          locale="en-US"
+          locale={this.props.locale}
           stopMotor={this.stopMotor_}
           stopAllMotors={this.stopAllMotors_}
           storeMotorPositions={this.storeMotorPositions_}
@@ -1805,7 +1809,7 @@ class LeftBar extends React.Component<Props, State> {
         <Suspense fallback={<div>Loading Terminal...</div>}>
           <TerminalView
             theme={storedTheme}
-            locale="en-US"
+            locale={this.props.locale}
             className="terminal-view"
           />
         </Suspense>
