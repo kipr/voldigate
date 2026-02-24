@@ -16,3 +16,5 @@ obj
 *.suo
 *.tmp
 *.obj
+
+**/__pycache__
