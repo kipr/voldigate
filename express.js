@@ -2660,6 +2660,84 @@ app.post("/upload-user", async (req, res) => {
   });
 });
 
+app.post("/initialize-user", async (req, res) => {
+  const { user } = req.body;
+  console.log("/initialize-user Received request body:", req.body);
+
+  const usersJsonPath = "/home/kipr/Documents/KISS/users.json";
+  const userDirectory = `/home/kipr/Documents/KISS/${user.userName}`;
+  const userConfigPath = path.join(userDirectory, ".user.config.json");
+
+  let usersData = {};
+  try {
+    const fileContent = await fs.readFile(usersJsonPath, "utf8");
+    usersData = JSON.parse(fileContent);
+    console.log("Current users data:", usersData);
+  } catch (error) {
+    console.error("Error reading users.json:", error);
+  }
+
+  const foundUser = usersData[user.userName];
+  console.log("Found user:", foundUser);
+  try {
+    if (!foundUser) {
+      console.log("User not found in users.json, adding user.");
+      usersData[user.userName] = {
+        userName: user.userName,
+        interfaceMode: user.interfaceMode,
+        projects: user.projects || [],
+        classroomName: null,
+      };
+    } else {
+      console.log("User found in users.json, updating user.");
+      foundUser.interfaceMode = user.interfaceMode;
+      foundUser.projects = user.projects || [];
+    }
+    const sortedUsersData = Object.keys(usersData)
+      .sort((a, b) => a.localeCompare(b)) // sort usernames alphabetically
+      .reduce((acc, key) => {
+        acc[key] = usersData[key];
+        return acc;
+      }, {});
+
+    // Save changes back to file
+    await fs.writeFile(
+      usersJsonPath,
+      JSON.stringify(sortedUsersData, null, 2),
+      "utf-8"
+    );
+    console.log("Updated users.json successfully");
+  } catch (error) {
+    console.error("Error updating users.json:", error);
+  }
+
+  try {
+    await fs.mkdir(userDirectory, { recursive: true });
+    await fs.writeFile(
+      userConfigPath, 
+      JSON.stringify(
+        {
+          [user.userName]: {
+            userName: user.userName,
+            interfaceMode: user.interfaceMode,
+            projects: user.projects || [],
+            classroomName: null,
+          },
+        },
+        null,
+        2
+      ),
+      "utf-8"
+    );
+  } catch (error) {
+    console.error("Error writing user config file:", error);
+  }
+
+  return res.status(200).json({
+    message: "User initialized successfully",
+  });
+});
+
 app.post("/initialize-project", async (req, res) => {
   const { user, project, classroomName } = req.body;
   console.log("/initialize-project Received request body:", req.body);

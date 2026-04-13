@@ -13,11 +13,11 @@ import { ThemeProps } from './theme';
 import { faBookReader, faFilePen, faUserPlus, faUsersRectangle } from '@fortawesome/free-solid-svg-icons';
 import { DEFAULT_SETTINGS, Settings } from '../Settings';
 import { Modal } from '../pages/Modal';
-import { Project } from 'ivygate/dist/types/project';
-import { User } from 'ivygate/dist/types/user';
+import { Project } from 'ivygate/dist/src/types/project';
+import { User } from 'ivygate/dist/src/types/user';
 import { InterfaceMode } from 'types/interfaceModes';
 import CreateClassroomDialog from './CreateClassroomDialog';
-import  Classroom  from 'ivygate/dist/types/classroomTypes';
+import Classroom from 'ivygate/dist/src/types/classroomTypes';
 
 export interface HomeStartOptionsPublicProps extends StyleProps, ThemeProps {
     activeLanguage: ProgrammingLanguage;
@@ -26,6 +26,7 @@ export interface HomeStartOptionsPublicProps extends StyleProps, ThemeProps {
     onEditorPageOpen: () => void;
     onChangeProjectName: (projectName: string) => void;
     onCreateProjectDialog: (name: string, interfaceMode: InterfaceMode) => void;
+    onCreateUserDialog: (userName: string, interfaceMode: InterfaceMode, classroom?: Classroom | null) => void;
     onCloseClassroomDialog: (classroomName: string) => void;
     onOpenUserProject: (name: User, project: Project, fileName: string, projectLanguage: string) => void;
     onLoadUsers: () => Promise<User[]>;
@@ -245,7 +246,7 @@ export class HomeStartOptions extends React.Component<Props, State> {
                         classrooms={classrooms || null}
                         settings={settings || null}
                         showRepeatUserDialog={false}
-                        onCreateProjectDialog={this.props.onCreateProjectDialog} />
+                        onCreateUserDialog={this.props.onCreateUserDialog} />
 
                 )}
                 {modal.type === Modal.Type.CreateClassroom && (
