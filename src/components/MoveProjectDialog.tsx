@@ -8,8 +8,8 @@ import { ThemeProps } from './theme';
 import { StyleProps } from '../style';
 import { styled } from 'styletron-react';
 import { Dialog } from './Dialog';
-import { Project } from 'ivygate/dist/types/project';
-import { User } from 'ivygate/dist/types/user';
+import { Project } from 'ivygate/dist/src/types/project';
+import { User } from 'ivygate/dist/src/types/user';
 import { Modal } from '../pages/Modal';
 import { Fa } from './Fa';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
@@ -62,7 +62,7 @@ const MoveProjectContainer = styled('div', (props: ThemeProps) => ({
   paddingLeft: `${props.theme.itemPadding * 2}px`,
   paddingRight: `${props.theme.itemPadding * 2}px`,
   paddingTop: `${props.theme.itemPadding * 2}px`,
-  
+
 }));
 
 const StyledForm = styled(Form, (props: ThemeProps) => ({
@@ -185,7 +185,7 @@ export class MoveProjectDialog extends React.PureComponent<Props, State> {
       console.error("MoveProjectDialog onFinalize_ error moving project", moveProjectResponse);
       this.setState({ errorMessage: "Error moving project. Please try again." });
     }
-  
+
   };
   USER_OPTIONS: ComboBox.Option[] = (() => {
     const ret: ComboBox.Option[] = [];
@@ -208,7 +208,7 @@ export class MoveProjectDialog extends React.PureComponent<Props, State> {
 
     const selectedUser = option.data as User;
 
-    if(selectedUser) {
+    if (selectedUser) {
       this.setState({ selectedUser });
     }
   };

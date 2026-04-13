@@ -164,6 +164,15 @@ subprocess.run(
   check = True
 )
 
+print('Generating JSON documentation...')
+libkipr_c_documentation_json = f'{libkipr_build_c_dir}/documentation/json.json'
+libkipr_c_common_documentation = f'{libkipr_build_c_dir}/documentation/json_common.json'
+subprocess.run(
+  [ python, 'generate_doxygen_json.py', f'{libkipr_build_c_dir}/documentation/xml', libkipr_c_documentation_json, libkipr_c_common_documentation],
+  cwd = working_dir,
+  check = True
+)
+
 print('Building kipr-scratch...')
 kipr_scratch_path = working_dir / 'kipr-scratch'
 subprocess.run(
@@ -199,7 +208,8 @@ output = json.dumps({
   'libkipr_python': f'{libkipr_build_python_dir}',
   'scratch_rt': f'{scratch_runtime_path}.js',
   # 'cpython': f'{cpython_emscripten_build_dir}',
-  #"libkipr_c_documentation": libkipr_c_documentation_json,
+  "libkipr_c_documentation": libkipr_c_documentation_json,
+  "libkipr_c_common_documentation": libkipr_c_common_documentation,
 })
 
 with open(working_dir / 'dependencies.json', 'w') as f:

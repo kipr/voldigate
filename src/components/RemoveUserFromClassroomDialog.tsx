@@ -2,15 +2,15 @@ import * as React from 'react';
 import { styled } from 'styletron-react';
 import { StyleProps } from '../style';
 import { Dialog } from './Dialog';
-import { ThemeProps, LIGHTMODE_YES,LIGHTMODE_NO,LIGHT } from './theme';
+import { ThemeProps, LIGHTMODE_YES, LIGHTMODE_NO, LIGHT } from './theme';
 import tr from '@i18n';
 import LocalizedString from '../util/LocalizedString';
 
-import Classroom from 'ivygate/dist/types/classroomTypes';
-import { User } from 'ivygate/dist/types/user';
+import Classroom from 'ivygate/dist/src/types/classroomTypes';
+import { User } from 'ivygate/dist/src/types/user';
 
 export interface RemoveUserFromClassroomDialogPublicProps extends ThemeProps, StyleProps {
-   onClose: () => void;
+  onClose: () => void;
   onCloseRemoveUserFromClassroomDialog: (removeAnswer: boolean) => void;
   toRemoveUser: User;
   classroom: Classroom;
@@ -81,26 +81,26 @@ const CenteredContainer = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  textAlign: 'center', 
-  width: '100%', 
+  textAlign: 'center',
+  width: '100%',
   height: '100%',
 });
 const BottomButtonContainer = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   marginTop: '20px',
-  });
+});
 
 const Button = styled('button', {
-  margin: '0 10px', 
-  padding: '10px 20px', 
-  border: 'none', 
+  margin: '0 10px',
+  padding: '10px 20px',
+  border: 'none',
   borderRadius: '5px',
-  cursor: 'pointer', 
+  cursor: 'pointer',
 });
 
 // Styled component button for the "Yes" button
-const YesItem = styled(Button, (props: ThemeProps & {onClick?: () => void; disabled?: boolean}) => ({
+const YesItem = styled(Button, (props: ThemeProps & { onClick?: () => void; disabled?: boolean }) => ({
   backgroundColor: LIGHTMODE_YES.standard,
   border: `1px solid ${LIGHTMODE_YES.border}`,
   ':hover':
@@ -114,14 +114,14 @@ const YesItem = styled(Button, (props: ThemeProps & {onClick?: () => void; disab
   boxShadow: '2px 2px 4px rgba(0,0,0,0.9)',
   ':active': props.onClick && !props.disabled
     ? {
-      boxShadow: '1px 1px 2px rgba(0,0,0,0.7)', 
-      transform: 'translateY(1px, 1px)', 
+      boxShadow: '1px 1px 2px rgba(0,0,0,0.7)',
+      transform: 'translateY(1px, 1px)',
     }
     : {},
 }));
 
 // Styled component button for the "No, don't save and continue" button
-const NoItem = styled(Button, (props: ThemeProps & {onClick?: () => void; disabled?: boolean}) => ({
+const NoItem = styled(Button, (props: ThemeProps & { onClick?: () => void; disabled?: boolean }) => ({
   backgroundColor: LIGHTMODE_NO.standard,
   border: `1px solid ${LIGHTMODE_NO.border}`,
   ':hover':
@@ -135,9 +135,9 @@ const NoItem = styled(Button, (props: ThemeProps & {onClick?: () => void; disabl
   boxShadow: '2px 2px 4px rgba(0,0,0,0.9)',
   ':active': props.onClick && !props.disabled
     ? {
-        boxShadow: '1px 1px 2px rgba(0,0,0,0.7)', 
-        transform: 'translateY(1px, 1px)', 
-      }
+      boxShadow: '1px 1px 2px rgba(0,0,0,0.7)',
+      transform: 'translateY(1px, 1px)',
+    }
     : {},
 }));
 
@@ -147,7 +147,7 @@ class RemoveUserFromClassroomDialog extends React.PureComponent<Props> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      }
+    }
   }
 
 
@@ -165,7 +165,7 @@ class RemoveUserFromClassroomDialog extends React.PureComponent<Props> {
           </CenteredContainer>
           <br />
           <CenteredContainer>
-            
+
             <BottomButtonContainer>
               <YesItem onClick={() => this.props.onCloseRemoveUserFromClassroomDialog(true)} theme={theme}>
                 {LocalizedString.lookup(tr('Yes'), locale)}

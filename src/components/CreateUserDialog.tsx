@@ -13,11 +13,11 @@ import { I18nAction } from '../state/reducer';
 import { connect } from 'react-redux';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { Fa } from './Fa';
-import { User } from 'ivygate/dist/types/user';
+import { User } from 'ivygate/dist/src/types/user';
 import ComboBox from './ComboBox';
 import { InterfaceMode } from '../types/interfaceModes';
 import { Settings } from 'Settings';
-import Classroom from 'ivygate/dist/types/classroomTypes';
+import Classroom from 'ivygate/dist/src/types/classroomTypes';
 
 
 export interface CreateUserDialogPublicProps extends ThemeProps, StyleProps {
@@ -27,7 +27,7 @@ export interface CreateUserDialogPublicProps extends ThemeProps, StyleProps {
     classrooms: Classroom[] | null;
 
     onClose: () => void;
-    onCreateProjectDialog: (userName: string, interfaceMode: InterfaceMode, classroom?: Classroom | null) => void;
+    onCreateUserDialog: (userName: string, interfaceMode: InterfaceMode, classroom?: Classroom | null) => void;
 }
 
 interface CreateUserDialogPrivateProps {
@@ -110,8 +110,8 @@ const ComboBoxLabel = styled('label', (theme: ThemeProps) => ({
 
 // }];
 const getInterfaceOptions = (locale: LocalizedString.Language): ComboBox.Option[] => ([
-  { text: LocalizedString.lookup(tr('Simple'), locale),   data: LocalizedString.lookup(tr('Simple'), locale) },
-  { text: LocalizedString.lookup(tr('Advanced'), locale), data: LocalizedString.lookup(tr('Advanced'), locale) },
+    { text: LocalizedString.lookup(tr('Simple'), locale), data: LocalizedString.lookup(tr('Simple'), locale) },
+    { text: LocalizedString.lookup(tr('Advanced'), locale), data: LocalizedString.lookup(tr('Advanced'), locale) },
 ]);
 
 
@@ -191,7 +191,7 @@ export class CreateUserDialog extends React.PureComponent<Props, State> {
                 this.setState({ showRepeatUserDialog: true });
             } else {
                 this.props.onClose();
-                this.props.onCreateProjectDialog(userName as User['userName'], this.state.interfaceMode, this.state.classroom ? this.state.classroom.name === 'No Classroom' ? { name: "", users: [], type: 'classroom' } : this.state.classroom : null);
+                this.props.onCreateUserDialog(userName as User['userName'], this.state.interfaceMode, this.state.classroom ? this.state.classroom.name === 'No Classroom' ? { name: "", users: [], type: 'classroom' } : this.state.classroom : null);
             }
         } catch (error) {
             console.error('Error adding user to database:', error);

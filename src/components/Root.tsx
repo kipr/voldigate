@@ -25,15 +25,15 @@ import { Editor } from './Editor';
 import { connect } from 'react-redux';
 import { HomeStartOptions } from './HomeStartOptions';
 import { Modal } from '../pages/Modal';
-import { Project, SimClassroomProject, UploadedProject } from 'ivygate/dist/types/project';
+import { Project, SimClassroomProject, UploadedProject } from 'ivygate/dist/src/types/project';
 import { InterfaceMode } from '../types/interfaceModes';
-import { UploadedUser, User } from 'ivygate/dist/types/user';
+import { UploadedUser, User } from 'ivygate/dist/src/types/user';
 import { SensorSelectionKey, ServoType } from 'types/motorServoSensorTypes';
 import { programRunContextHelper } from '../ProgramRunContext';
 import parseMessages, { sort, toStyledText } from '../util/parse-messages';
 import { FileInfo } from 'types/fileInfo';
 import MoveProjectDialog from './MoveProjectDialog';
-import Classroom from 'ivygate/dist/types/classroomTypes';
+import Classroom from 'ivygate/dist/src/types/classroomTypes';
 import CreateUserDialog from './CreateUserDialog';
 import RemoveUserFromClassroomDialog from './RemoveUserFromClassroomDialog';
 import MoveUserToClassroomDialog from './MoveUserToClassroomDialog';
@@ -1527,6 +1527,43 @@ class Root extends React.Component<Props, State> {
     })
   };
 
+  private onCloseUserDialog_ = async (newUserName: string, newInterfaceMode: InterfaceMode, newClassroom?: Classroom) => {
+    console.log("Root onCloseUserDialog_ called with newUserName: ", newUserName, " newInterfaceMode: ", newInterfaceMode, " newClassroom: ", newClassroom);
+
+    let classroomName = '';
+    if (newClassroom) {
+      classroomName = newClassroom.name;
+    }
+    this.setState(prevState => ({
+      modal: Modal.NONE
+    }), async () => {
+      const newUser: User = {
+        userName: newUserName,
+        interfaceMode: newInterfaceMode,
+        projects: [],
+        classroomName: classroomName,
+        type: 'user'
+      }
+      try {
+        const response = await axios.post('/initialize-user', { user: newUser });
+        console.log("CreateUserDialog response: ", response);
+
+        if (response.status === 200) {
+          await this.loadUsers();
+          if (this.props.propSettings.classroomView) {
+            const updatedClassrooms = await this.loadClassrooms();
+            console.log("Root onCloseUserDialog_ updatedClassrooms: ", updatedClassrooms);
+            this.props.onLoadClassroomData(updatedClassrooms, newUser);
+          }
+        }
+      }
+      catch (error) {
+        console.error("Root onCloseUserDialog_ initializing user error: ", error);
+      }
+    });
+
+  };
+
   private onCloseProjectDialog_ = async (newProjName: string, newProjLanguage: ProgrammingLanguage, newInterfaceMode: InterfaceMode) => {
     const { rootUser, rootProject } = this.state;
     console.log("Root onCloseProjectDialog_ state: ", this.state);
@@ -1748,7 +1785,7 @@ class Root extends React.Component<Props, State> {
           rootProject: {
             ...prevState.rootProject,
             srcFolderFiles: [...prevState.rootProject.srcFolderFiles, `${newFileName}.${fileType}`]
-          },      
+          },
           rootUser: {
             ...prevState.rootUser,
             projects: prevState.rootUser.projects.map(p => {
@@ -1758,13 +1795,13 @@ class Root extends React.Component<Props, State> {
               ) {
                 return {
                   ...p,
-                  includeFolderFiles: [...p.srcFolderFiles,`${newFileName}.${fileType}`],
+                  includeFolderFiles: [...p.srcFolderFiles, `${newFileName}.${fileType}`],
                 };
               }
               return p;
             }),
           }
-           
+
         }), async () => {
           filePath = `${prePath}/${userName}/${projectName}/src/${newFileName}.${fileType}`;
           const fileContents = this.toSaveCodeRef.current[activeLanguage];
@@ -1802,7 +1839,7 @@ class Root extends React.Component<Props, State> {
               return p;
             }),
           }
-         
+
         }), async () => {
           filePath = `${prePath}/${userName}/${projectName}/data/${newFileName}.txt`;
           const fileContents = this.state.code[activeLanguage];
@@ -2086,10 +2123,10 @@ class Root extends React.Component<Props, State> {
         }
         else {
           response = await axios.post('/compile-code', { userName, projectName, fileName, activeLanguage }); // This calls the backend route
-          if(response){
-            this.setState({ compileStatus: 'compiling'})
-            if(response.status === 200){
-              this.setState({ compileStatus: 'idle'})
+          if (response) {
+            this.setState({ compileStatus: 'compiling' })
+            if (response.status === 200) {
+              this.setState({ compileStatus: 'idle' })
             }
           }
         }
@@ -2101,9 +2138,9 @@ class Root extends React.Component<Props, State> {
 
             if (response.data.message === 'successful') {
 
-              
+
               if (response.data.warnings && response.data.warnings.length > 0) {
-                this.setState({ compileStatus: 'warning'})
+                this.setState({ compileStatus: 'warning' })
                 messages = sort(parseMessages(response.data.warnings));
                 for (const message of messages) {
                   if (nextConsole === undefined) {
@@ -2126,7 +2163,7 @@ class Root extends React.Component<Props, State> {
                 }));
               }
               else {
-                this.setState({ compileStatus: 'success'})
+                this.setState({ compileStatus: 'success' })
                 nextConsole = StyledText.extend(compilingConsole, StyledText.text({
                   text: LocalizedString.lookup(tr('Compilation Succeeded!\n'), locale),
                   style: STDOUT_STYLE(this.state.theme)
@@ -2140,7 +2177,7 @@ class Root extends React.Component<Props, State> {
               console.log("Compile click response: ", response);
 
               messages = sort(parseMessages(response.data.error));
-              this.setState({ compileStatus: 'error'});
+              this.setState({ compileStatus: 'error' });
 
 
               for (const message of messages) {
@@ -2845,6 +2882,7 @@ class Root extends React.Component<Props, State> {
             onEditorPageOpen={this.onEditorPageOpen_}
             onChangeProjectName={this.onChangeProjectName}
             onCreateProjectDialog={this.onCreateProjectDialogOpen_}
+            onCreateUserDialog={this.onCloseUserDialog_}
             onCloseClassroomDialog={this.onCloseClassroomDialog_}
             onOpenUserProject={this.onOpenUserProject_}
             onLoadUsers={this.loadUsers}
@@ -2926,7 +2964,7 @@ class Root extends React.Component<Props, State> {
             settings={propSettings}
             showRepeatUserDialog={false}
             onClose={this.onModalClose_}
-            onCreateProjectDialog={this.onCreateProjectDialogOpen_}
+            onCreateUserDialog={this.onCloseUserDialog_}
             theme={theme}
           />
         )}

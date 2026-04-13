@@ -12,8 +12,8 @@ import { ThemeProps } from './theme';
 import { connect } from 'react-redux';
 import { State as ReduxState } from '../state';
 import { Settings } from '../Settings';
-import { Project } from 'ivygate/dist/types/project';
-import { User } from 'ivygate/dist/types/user';
+import { Project } from 'ivygate/dist/src/types/project';
+import { User } from 'ivygate/dist/src/types/user';
 import { InterfaceMode } from '../types/interfaceModes';
 import { JSX } from 'react';
 
@@ -321,7 +321,7 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
         <ProjectTitle>Projects for {this.state.selectedUser.userName}</ProjectTitle>
         <ul>
           {projects.map((project) => (
-               <div key={project.projectName}>
+            <div key={project.projectName}>
               <ProjectItem
                 selected={selectedProject.projectName === project.projectName}
                 onClick={() => this.handleProjectClick(project)}

@@ -5,7 +5,7 @@ import { ProgramRunProvider } from './ProgramRunContext';
 import { Provider as StyletronProvider, DebugEngine } from "styletron-react";
 import { Client as Styletron } from "styletron-engine-atomic";
 import { BrowserRouter } from 'react-router-dom';
-import store from 'ivygate/src/state';
+import store from 'ivygate/dist/src/state';
 import { createRoot } from 'react-dom/client';
 import SpinnerLoader from './components/SpinnerLoader';
 

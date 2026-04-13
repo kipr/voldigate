@@ -14,7 +14,7 @@ import { Modal } from '../pages/Modal';
 import { Fa } from './Fa';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { Settings } from 'Settings';
-import Classroom from 'ivygate/dist/types/classroomTypes';
+import Classroom from 'ivygate/dist/src/types/classroomTypes';
 
 export interface CreateProjectDialogPublicProps extends ThemeProps, StyleProps {
   settings?: Settings;
@@ -168,7 +168,7 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
 
     const specialCharRegex = /[^a-zA-Z0-9 _-]/;
     const isOnlySpaces = !projectName.trim(); // Check if the name is empty or only spaces
-      // Check if project name exceeds 50 characters
+    // Check if project name exceeds 50 characters
     if (projectName.length > 50) {
       this.setState({ errorMessage: 'Project name cannot exceed 50 characters.' });
       return;
@@ -177,7 +177,7 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
       this.setState({ errorMessage: 'Project name contains special characters. Please use only letters, numbers, underscores, and hyphens.' });
       return;
     }
-     if (isOnlySpaces) {
+    if (isOnlySpaces) {
       this.setState({ errorMessage: "Project name cannot be empty or just spaces!" });
       return;
     }
@@ -186,8 +186,8 @@ export class CreateProjectDialog extends React.PureComponent<Props, State> {
       console.log("this.props.settings: ", this.props.settings);
       console.log("CreateProjectDialog props: ", this.props);
       this.props.closeProjectDialog(values.projectName, this.state.language as ProgrammingLanguage, this.state.interfaceMode);
-   
-   
+
+
     }
     catch (error) {
       console.error('Error adding user to database:', error);

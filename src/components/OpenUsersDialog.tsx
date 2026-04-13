@@ -12,8 +12,8 @@ import { ThemeProps } from './theme';
 import { connect } from 'react-redux';
 import { State as ReduxState } from '../state';
 import { Settings } from '../Settings';
-import { Project } from 'ivygate/dist/types/project';
-import { User } from 'ivygate/dist/types/user';
+import { Project } from 'ivygate/dist/src/types/project';
+import { User } from 'ivygate/dist/src/types/user';
 import { JSX } from 'react';
 
 export interface OpenUsersDialogPublicProps extends ThemeProps, StyleProps {
@@ -155,15 +155,15 @@ const ProjectItem = styled('li', (props: ThemeProps & { selected: boolean }) => 
 const BottomButtonContainer = styled('div', {
   display: 'flex',
   justifyContent: 'center',
-  marginTop: '20px', 
+  marginTop: '20px',
 });
 
 const Button = styled('button', {
   margin: '0 10px',
   padding: '10px 20px',
-  border: 'none', 
-  borderRadius: '5px', 
-  cursor: 'pointer', 
+  border: 'none',
+  borderRadius: '5px',
+  cursor: 'pointer',
 });
 
 // Styled component button for the "Yes" button
@@ -206,15 +206,15 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
 
   private setSelectedUser = (selectedUser: User) => {
     this.setState({
-       selectedUser,
-       selectedProject: {
+      selectedUser,
+      selectedProject: {
         projectName: '',
         projectLanguage: 'c',
         includeFolderFiles: [],
         srcFolderFiles: [],
         dataFolderFiles: [],
-       }
-       }, this.getProjects);
+      }
+    }, this.getProjects);
 
   };
 
@@ -277,7 +277,7 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
           ))}
         </ul>
         {
-          (selectedProject.projectName != '')&& (
+          (selectedProject.projectName != '') && (
             <BottomButtonContainer>
               <OpenProjectButton onClick={() => this.props.onOpenUserProject(this.state.selectedUser, this.state.selectedProject, `main.${ProgrammingLanguage.FILE_EXTENSION[this.state.activeLanguage]}`, this.state.activeLanguage)} theme={theme}>
                 Open Project
@@ -314,7 +314,7 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
         onClose={onClose}
       >
         <Container theme={theme} style={style} className={className}>
-           <StyledScrollArea theme={theme} >
+          <StyledScrollArea theme={theme} >
             <SectionsColumn theme={theme}>
 
               {userSections}
