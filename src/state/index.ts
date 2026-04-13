@@ -1,5 +1,5 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
-import { reduceDocumentation } from 'ivygate/dist/state/reducer/documentation';
+import { reduceDocumentation } from 'ivygate/dist/src/state/reducer/documentation';
 import * as reducer from './reducer';
 
 const rootReducer = combineReducers({

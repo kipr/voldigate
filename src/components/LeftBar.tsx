@@ -13,8 +13,8 @@ import { DEFAULT_SETTINGS, Settings } from '../Settings';
 import { Modal } from '../pages/Modal';
 import { Size } from './Widget';
 import { Slider } from './Slider';
-import { BLANK_PROJECT, Project, UploadedProject } from 'ivygate/dist/types/project';
-import { User } from 'ivygate/dist/types/user';
+import { BLANK_PROJECT, Project, UploadedProject } from 'ivygate/dist/src/types/project';
+import { User } from 'ivygate/dist/src/types/user';
 import { InterfaceMode } from '../types/interfaceModes';
 import { JSX, Suspense } from 'react';
 import { Motors, ServoType, Servos, DEFAULT_SENSORS, DEFAULT_MOTORS, DEFAULT_SERVOS, SensorValues, SensorSelectionKey, SensorSelection, MotorVelocities, MotorPositions, GraphSelectionKey, ServoPositions } from '../types/motorServoSensorTypes';
@@ -22,9 +22,8 @@ import { IvygateFileExplorer, MotorServoSensorDisplay } from 'ivygate';
 import { useProgramRun } from '../ProgramRunContext';
 import { FileInfo } from 'types/fileInfo';
 import axios from 'axios';
-import Classroom from 'ivygate/dist/types/classroomTypes';
-import { UploadedUser } from 'ivygate/dist/types/user';
-import config from '../../config.client';
+import Classroom from 'ivygate/dist/src/types/classroomTypes';
+import { UploadedUser } from 'ivygate/dist/src/types/user';
 
 const TerminalView = React.lazy(() => import('./TerminalView'));
 
@@ -1710,7 +1709,7 @@ class LeftBar extends React.Component<Props, State> {
       <DisplayContainer theme={storedTheme}>
 
         <IvygateFileExplorer
-          config = {config}
+          config={{ appName: "Voldigate", component: "VoldigateFileExplorer" }}
           theme={storedTheme}
           locale={this.props.locale}
           propsSelectedProjectName={project.projectName}

@@ -8,13 +8,13 @@ import { ThemeProps } from './theme';
 import { StyleProps } from '../style';
 import { styled } from 'styletron-react';
 import { Dialog } from './Dialog';
-import { Project } from 'ivygate/dist/types/project';
-import { User } from 'ivygate/dist/types/user';
+import { Project } from 'ivygate/dist/src/types/project';
+import { User } from 'ivygate/dist/src/types/user';
 import { Modal } from '../pages/Modal';
 import { Fa } from './Fa';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { JSX } from 'react';
-import Classroom from 'ivygate/dist/types/classroomTypes';
+import Classroom from 'ivygate/dist/src/types/classroomTypes';
 
 export interface RenameUserProjectFileDialogPublicProps extends ThemeProps, StyleProps {
   user: User;

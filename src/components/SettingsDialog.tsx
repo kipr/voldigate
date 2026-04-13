@@ -13,7 +13,7 @@ import { ThemeProps, Theme, DARK, LIGHT } from './theme';
 import { State as ReduxState } from '../state';
 import { I18nAction } from '../state/reducer';
 import { connect } from 'react-redux';
-import { BLANK_USER, User } from 'ivygate/dist/types/user';
+import { BLANK_USER, User } from 'ivygate/dist/src/types/user';
 import { InterfaceMode } from '../types/interfaceModes';
 type SettingsSection = 'user-interface' | 'simulation' | 'editor';
 
@@ -438,7 +438,7 @@ class SettingsDialog extends React.PureComponent<Props, State> {
     const { props, state } = this;
     const { style, className, theme, onClose, locale } = props;
     const { selectedSection, storedTheme, userOptions, selectedUser, successMessage, currentStateUser, interfaceMode, confirmMessage } = state;
-    
+
     const userIndex = userOptions.findIndex(option => option.text === selectedUser.userName);
     console.log("SettingsDialog render userIndex:", userIndex);
     console.log("SettingsDialog render state:", state);

@@ -8,13 +8,13 @@ import { styled } from 'styletron-react';
 import { StyleProps } from '../style';
 import { ThemeProps } from './theme';
 import { connect } from 'react-redux';
-import { State as ReduxState } from 'ivygate/dist/state';
+import { State as ReduxState } from 'ivygate/dist/src/state';
 import { Modal } from '../pages/Modal';
 import { DocumentationWindow } from 'ivygate';
-import { DocumentationAction } from 'ivygate/dist/state/reducer';
-import DocumentationLocation from 'ivygate/dist/state/State/Documentation/DocumentationLocation';
-import { Size } from 'ivygate/dist/components/interface/Widget';
-import { DocumentationState } from 'ivygate/dist/state/State';
+import { DocumentationAction } from 'ivygate/dist/src/state/reducer';
+import DocumentationLocation from 'ivygate/dist/src/state/State/Documentation/DocumentationLocation';
+import { Size } from 'ivygate/dist/src/components/interface/Widget';
+import { DocumentationState } from 'ivygate/dist/src/state/State';
 
 export interface MenuPublicProps extends StyleProps, ThemeProps { }
 
@@ -63,7 +63,7 @@ type Props = MenuPublicProps & MenuPrivateProps & ReturnType<typeof mapDispatchT
 type State = MenuState;
 
 const Container = styled('div', (props: ThemeProps) => ({
- backgroundColor: props.theme.titleBarBackground,
+  backgroundColor: props.theme.titleBarBackground,
 
   color: props.theme.color,
   justifyContent: 'space-between',
@@ -141,7 +141,7 @@ class MainMenu extends React.Component<Props, MenuState> {
       });
     }
   };
- 
+
   private onDocumentationClick_ = () => {
     this.setState({ documentationType: 'default' });
     this.props.setSizeDefault(Size.PARTIAL);

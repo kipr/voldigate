@@ -6,8 +6,8 @@ import { ThemeProps, LIGHTMODE_YES, LIGHTMODE_NO, LIGHT } from './theme';
 import tr from '@i18n';
 import LocalizedString from '../util/LocalizedString';
 
-import Classroom from 'ivygate/dist/types/classroomTypes';
-import { User } from 'ivygate/dist/types/user';
+import Classroom from 'ivygate/dist/src/types/classroomTypes';
+import { User } from 'ivygate/dist/src/types/user';
 import ComboBox from './ComboBox';
 import ResizeableComboBox from './ResizeableComboBox';
 
@@ -151,7 +151,7 @@ const NoItem = styled(Button, (props: ThemeProps & { onClick?: () => void; disab
 
 const StyledComboBox = styled(ResizeableComboBox, {
 
- 
+
 });
 class MoveUserToClassroomDialog extends React.PureComponent<Props, State> {
 
@@ -209,8 +209,8 @@ class MoveUserToClassroomDialog extends React.PureComponent<Props, State> {
             <Bold>{LocalizedString.lookup(tr(`What classroom do you want to move ${this.props.toMoveUser.userName} to?`), locale)}</Bold>
 
           </CenteredContainer>
-          <CenteredContainer style ={{gap: '10px', marginTop: "0.8em"}}>
-             <Bold>{LocalizedString.lookup(tr(`New Classroom: `), locale)}</Bold>
+          <CenteredContainer style={{ gap: '10px', marginTop: "0.8em" }}>
+            <Bold>{LocalizedString.lookup(tr(`New Classroom: `), locale)}</Bold>
 
             <StyledComboBox
               options={this.CLASS_OPTIONS}
@@ -227,7 +227,7 @@ class MoveUserToClassroomDialog extends React.PureComponent<Props, State> {
               <YesItem onClick={() => this.props.onCloseMoveUserToClassroomDialog(this.props.toMoveUser, this.state.selectedClassroom)} theme={theme}>
                 Move User
               </YesItem>
-             
+
             </BottomButtonContainer>
           </CenteredContainer>
           <br />
