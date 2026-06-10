@@ -13,7 +13,7 @@ namespace ProgrammingLanguage {
   export const DEFAULT_CODE: { [key in ProgrammingLanguage]: string } = {
     c: '#include <stdio.h>\n#include <kipr/wombat.h>\n\nint main()\n{\n\tprintf("Hello, World!\\n");\n\treturn 0;\n}\n',
 
-    cpp: '#include <iostream>\n#include <kipr/wombat.hpp>\n\nint main()\n{\n\tstd::cout << "Hello, World!" << std::endl;\n\treturn 0;\n}\n',
+    cpp: '#include <iostream>\n#include <kipr/wombat.h>\n\nint main()\n{\n\tstd::cout << "Hello, World!" << std::endl;\n\treturn 0;\n}\n',
 
     python: '#!/usr/bin/python3\nimport os, sys\nsys.path.append("/usr/lib")\nimport _kipr as k\n\ndef main():\n\tprint("Hello, World!")\n\nmain()',
 
@@ -38,7 +38,7 @@ namespace ProgrammingLanguage {
 
   export const BLANK_CODE: { [key in ProgrammingLanguage]: string } = {
     c: '#include <stdio.h>\n#include <kipr/wombat.h>\n',
-    cpp: '#include <iostream>\n#include <kipr/wombat.hpp>\n',
+    cpp: '#include <iostream>\n#include <kipr/wombat.h>\n',
     python: '#!/usr/bin/python3\nimport os, sys\nsys.path.append("/usr/lib")\nfrom kipr import *\n',
     plaintext: '',
     graphical: ''

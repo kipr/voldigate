@@ -1,19 +1,23 @@
-const { exec } = require("child_process");
+const { execFile } = require("child_process");
 const fs = require("fs-extra");
 const path = require("path");
 const { get: getConfig } = require("./config.js");
-const { execSync } = require("child_process");
+const {
+  projectBinaryPath,
+  projectDirectory,
+  projectSubdirectory,
+} = require("./kissPaths.js");
 const envProjectUsername = process.env.PROJECT_USERNAME;
 const envProjectName = process.env.PROJECT_NAME;
 const envFileName = process.env.FILE_NAME;
 const envLanguage = process.env.ACTIVE_LANGUAGE;
 
-const userProjectDirectory = `/home/kipr/Documents/KISS/${envProjectUsername}/${envProjectName}`;
+const userProjectDirectory = projectDirectory(envProjectUsername, envProjectName);
 console.error("userProjectDirectory: ", userProjectDirectory);
-const bin_directory = path.join(userProjectDirectory, "/bin");
-const include_directory = path.join(userProjectDirectory, "/include");
-const src_directory = path.join(userProjectDirectory, "/src");
-const outputBinaryPath = path.join(bin_directory, "botball_user_program");
+const bin_directory = projectSubdirectory(envProjectUsername, envProjectName, "bin");
+const include_directory = projectSubdirectory(envProjectUsername, envProjectName, "include");
+const src_directory = projectSubdirectory(envProjectUsername, envProjectName, "src");
+const outputBinaryPath = projectBinaryPath(envProjectUsername, envProjectName);
 
 // Ensure bin folder doesn't already exist
 if (fs.existsSync(bin_directory)) {
@@ -26,6 +30,8 @@ if (fs.existsSync(bin_directory)) {
 let sourceFilePath;
 let sourceFiles;
 let config;
+let compileArgs;
+let compileCommand;
 try {
   config = getConfig();
 } catch (e) {
@@ -40,14 +46,26 @@ try {
       sourceFiles = fs
         .readdirSync(src_directory)
         .filter((file) => file.endsWith(".c"))
-        .map((file) => `"${path.join(src_directory, file)}"`);
+        .map((file) => path.join(src_directory, file));
 
       sourceFilePath = sourceFiles.join(" ");
       console.error("sourceFilePath: ", sourceFilePath);
-      compileCommand = `gcc -Wall -Wextra -fmax-errors=100 -o "${outputBinaryPath}" ${sourceFilePath}  -I"${include_directory}" -lkipr -lm -lpthread`;
+      compileArgs = [
+        "-Wall",
+        "-Wextra",
+        "-fmax-errors=100",
+        "-o",
+        outputBinaryPath,
+        ...sourceFiles,
+        `-I${include_directory}`,
+        "-lkipr",
+        "-lm",
+        "-lpthread",
+      ];
+      compileCommand = `gcc ${compileArgs.map((arg) => JSON.stringify(arg)).join(" ")}`;
       console.error("compileCommand: ", compileCommand);
       try {
-        exec(compileCommand, (error, stdout, stderr) => {
+        execFile("gcc", compileArgs, (error, stdout, stderr) => {
           // const messages = parseCompilerErrors(stderr, userProjectDirectory);
           if (error) {
             process.stdout.write(
@@ -86,17 +104,28 @@ try {
       sourceFiles = fs
         .readdirSync(src_directory)
         .filter((file) => {
-          // Only include .c
+          // Only include .cpp
           return file.endsWith(".cpp");
         })
         .map((file) => path.join(src_directory, file));
 
       sourceFilePath = sourceFiles.join(" ");
 
-      compileCommand = `clang++ -Wall -std=c++17 -o "${outputBinaryPath}" ${sourceFilePath} -I"${include_directory}" -lkipr -lm -lpthread`;
+      compileArgs = [
+        "-Wall",
+        "-std=c++17",
+        "-o",
+        outputBinaryPath,
+        ...sourceFiles,
+        `-I${include_directory}`,
+        "-lkipr",
+        "-lm",
+        "-lpthread",
+      ];
+      compileCommand = `clang++ ${compileArgs.map((arg) => JSON.stringify(arg)).join(" ")}`;
       console.error("compileCommand: ", compileCommand);
       try {
-        exec(compileCommand, (error, stdout, stderr) => {
+        execFile("clang++", compileArgs, (error, stdout, stderr) => {
           if (error) {
             console.error("Compilation failed:", error.message);
             process.stdout.write(

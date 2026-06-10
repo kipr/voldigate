@@ -1,43 +1,44 @@
 /* eslint-env node */
 //require("ts-node").register();
-const express = require("express");
-const bodyParser = require("body-parser");
-const morgan = require("morgan");
-const fs = require("fs").promises;
-const uuid = require("uuid");
-const { exec } = require("child_process");
+const express = require('express');
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
+const fs = require('fs').promises;
+const uuid = require('uuid');
+const { exec } = require('child_process');
 const app = express();
-const { execFile } = require("child_process");
-const sourceDir = "dist";
-const { get: getConfig } = require("./config");
-const path = require("path");
-const proxy = require("express-http-proxy");
-const http = require("http");
-const JSZip = require("jszip");
-const { spawn } = require("child_process");
-const WebSocket = require("ws");
-const compression = require("compression");
+const { execFile } = require('child_process');
+const sourceDir = 'dist';
+const { get: getConfig } = require('./config');
+const path = require('path');
+const kissPaths = require('./kissPaths');
+const proxy = require('express-http-proxy');
+const http = require('http');
+const JSZip = require('jszip');
+const { spawn } = require('child_process');
+const WebSocket = require('ws');
+const compression = require('compression');
 app.use(compression());
-const expressStaticGzip = require("express-static-gzip");
+const expressStaticGzip = require('express-static-gzip');
 
 const {
   parseBlockXml,
   convertToC,
   parseXml,
-} = require("./dist/utils/convertToC.js");
-const { error } = require("console");
-const { read } = require("fs");
+} = require('./dist/utils/convertToC.js');
+const { error } = require('console');
+const { read } = require('fs');
 
 const extensions = {
-  c: "c",
-  cpp: "cpp",
-  python: "py",
-  graphical: "graphical",
+  c: 'c',
+  cpp: 'cpp',
+  python: 'py',
+  graphical: 'graphical',
 };
 
-const defaultPath = "/home/kipr/Documents/KISS";
-const usersJsonPath = `${defaultPath}/users.json`;
-const classroomsJsonPath = `${defaultPath}/classrooms/classrooms.json`;
+const defaultPath = kissPaths.KISS_ROOT;
+const usersJsonPath = kissPaths.USERS_JSON_PATH;
+const classroomsJsonPath = kissPaths.CLASSROOMS_JSON_PATH;
 
 let config;
 try {
@@ -47,157 +48,162 @@ try {
   throw e;
 }
 app.use(
-  express.static(path.join(__dirname, "dist"), {
-    maxAge: "1d",
-  })
+  express.static(path.join(__dirname, 'dist'), {
+    maxAge: '1d',
+  }),
 );
 // Cross-origin isolation required for using features like SharedArrayBuffer
 function setCrossOriginIsolationHeaders(res) {
-  res.header("Cross-Origin-Opener-Policy", "same-origin");
-  res.header("Cross-Origin-Embedder-Policy", "require-corp");
+  res.header('Cross-Origin-Opener-Policy', 'same-origin');
+  res.header('Cross-Origin-Embedder-Policy', 'require-corp');
 }
 
 app.use((req, res, next) => {
-  res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
-  res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+  res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
   next();
 });
 
 if (config.server.dependencies.scratch_rt) {
-  console.log("Scratch Runtime is enabled.");
+  console.log('Scratch Runtime is enabled.');
   app.use(
-    "/scratch/rt.js",
+    '/scratch/rt.js',
     express.static(`${config.server.dependencies.scratch_rt}`, {
       maxAge: config.caching.staticMaxAge,
-    })
+    }),
   );
 }
 
 app.use(
-  "/scratch",
-  express.static(path.resolve(__dirname, "node_modules", "kipr-scratch"), {
+  '/scratch',
+  express.static(path.resolve(__dirname, 'node_modules', 'kipr-scratch'), {
     maxAge: config.caching.staticMaxAge,
-  })
+  }),
 );
 
 app.use(
-  "/media",
+  '/media',
   express.static(
-    path.resolve(__dirname, "node_modules", "kipr-scratch", "media"),
+    path.resolve(__dirname, 'node_modules', 'kipr-scratch', 'media'),
     {
       maxAge: config.caching.staticMaxAge,
-    }
-  )
+    },
+  ),
 );
 
-app.post("/create-classroom", express.json(), async (req, res) => {
+app.post('/create-classroom', express.json(), async (req, res) => {
   const { classroomName } = req.body;
-  console.log("Received classroom creation request:", { classroomName });
+  console.log('Received classroom creation request:', { classroomName });
   if (!classroomName) {
-    return res.status(400).json({ error: "Classroom name is required" });
+    return res.status(400).json({ error: 'Classroom name is required' });
   }
-  const jsonDirectory = "/home/kipr/Documents/KISS/classrooms/classrooms.json";
-  const classroomDirectory = "/home/kipr/Documents/KISS/classrooms";
-  const classroomPath = `${defaultPath}/classrooms/${classroomName}`;
+  let classroomPath;
+  try {
+    classroomPath = kissPaths.classroomDirectory(classroomName);
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
+  const jsonDirectory = classroomsJsonPath;
+  const classroomDirectory = kissPaths.CLASSROOMS_DIR;
   let data = {};
   try {
     // Check if the classroom directory already exists
-    data = JSON.parse(await fs.readFile(jsonDirectory, "utf-8"));
+    data = JSON.parse(await fs.readFile(jsonDirectory, 'utf-8'));
   } catch (error) {
-    console.log("Classrooms JSON file does not exist, creating new one.");
+    console.log('Classrooms JSON file does not exist, creating new one.');
     data = { classrooms: [] };
-    await fs.writeFile(jsonDirectory, JSON.stringify(data, null, 2), "utf-8");
+    await fs.writeFile(jsonDirectory, JSON.stringify(data, null, 2), 'utf-8');
   }
-  console.log("Classroom directory exists or created:", classroomDirectory);
-  console.log("create-classroom data:", data);
+  console.log('Classroom directory exists or created:', classroomDirectory);
+  console.log('create-classroom data:', data);
   try {
     const existingClassrooms = data.classrooms.map((c) => c.name);
     if (existingClassrooms.includes(classroomName)) {
-      console.log("Classroom already exists:", classroomName);
+      console.log('Classroom already exists:', classroomName);
       return res.status(400).json({
-        error: "Classroom already exists",
+        error: 'Classroom already exists',
         classroomList: existingClassrooms,
       });
     }
     try {
       data.classrooms.push({ name: classroomName, users: [] });
 
-      console.log("data:", data);
-      await fs.writeFile(jsonDirectory, JSON.stringify(data, null, 2), "utf-8");
-      console.log("Classroom directory created:", classroomPath);
+      console.log('data:', data);
+      await fs.writeFile(jsonDirectory, JSON.stringify(data, null, 2), 'utf-8');
+      console.log('Classroom directory created:', classroomPath);
       return res.status(200).json({
-        message: "Classroom created successfully",
+        message: 'Classroom created successfully',
         classroomList: await fs.readdir(classroomDirectory),
       });
     } catch (error) {
-      console.error("Error creating classroom directory:", error);
+      console.error('Error creating classroom directory:', error);
       return res
         .status(500)
-        .json({ error: "Failed to create classroom directory" });
+        .json({ error: 'Failed to create classroom directory' });
     }
   } catch (error) {
-    console.error("Error creating classroom directory:", error);
+    console.error('Error creating classroom directory:', error);
     return res
       .status(500)
-      .json({ error: "Failed to create classroom directory" });
+      .json({ error: 'Failed to create classroom directory' });
   }
 });
 
 async function addUserToClassroom(classroom, createdUser) {
-  console.log("Received request to add user to classroom:", {
+  console.log('Received request to add user to classroom:', {
     createdUser,
     classroom,
   });
   if (!createdUser || !classroom) {
     return res
       .status(400)
-      .json({ error: "User name and classroom name are required" });
+      .json({ error: 'User name and classroom name are required' });
   }
 
-  const jsonDirectory = "/home/kipr/Documents/KISS/classrooms/classrooms.json";
-  const classroomDirectory = "/home/kipr/Documents/KISS/classrooms";
+  const jsonDirectory = classroomsJsonPath;
+  const classroomDirectory = kissPaths.CLASSROOMS_DIR;
   const classroomPath = `${classroomDirectory}/${classroom}`;
 
   try {
     // Ensure the classroom directory exists
     await fs.mkdir(classroomDirectory, { recursive: true });
-    console.log("Classroom directory exists or created:", classroomDirectory);
+    console.log('Classroom directory exists or created:', classroomDirectory);
 
     // Read the existing classrooms data
     let data = {};
     try {
-      data = JSON.parse(await fs.readFile(jsonDirectory, "utf-8"));
-      console.log("Classrooms JSON file read successfully:", data);
+      data = JSON.parse(await fs.readFile(jsonDirectory, 'utf-8'));
+      console.log('Classrooms JSON file read successfully:', data);
     } catch (error) {
-      console.log("Classrooms JSON file does not exist, creating new one.");
+      console.log('Classrooms JSON file does not exist, creating new one.');
       data = { classrooms: [] };
-      await fs.writeFile(jsonDirectory, JSON.stringify(data, null, 2), "utf-8");
+      await fs.writeFile(jsonDirectory, JSON.stringify(data, null, 2), 'utf-8');
     }
 
     // Check if the classroom exists
     const classroomEntry = data.classrooms.find(
-      (c) => c.name === classroom.name
+      (c) => c.name === classroom.name,
     );
     if (!classroomEntry) {
-      return { message: "Classroom not found" };
+      return { message: 'Classroom not found' };
     } else {
-      console.log("Classroom found:", classroomEntry);
-      console.log("Classroom users:", classroomEntry.users);
+      console.log('Classroom found:', classroomEntry);
+      console.log('Classroom users:', classroomEntry.users);
     }
 
     // Check if the user already exists in the classroom
     if (classroomEntry.users.some((u) => u.userName === createdUser.userName)) {
-      return { message: "User already exists in this classroom" };
+      return { message: 'User already exists in this classroom' };
     }
 
     // Add the user to the classroom
     classroomEntry.users.push(createdUser);
-    await fs.writeFile(jsonDirectory, JSON.stringify(data, null, 2), "utf-8");
+    await fs.writeFile(jsonDirectory, JSON.stringify(data, null, 2), 'utf-8');
 
     console.log(
-      `User ${createdUser.userName} added to classroom ${classroom.name}`
+      `User ${createdUser.userName} added to classroom ${classroom.name}`,
     );
-    console.log("classroomEntry: ", classroomEntry);
+    console.log('classroomEntry: ', classroomEntry);
     return {
       status: 200,
       message: `User ${createdUser.userName} added to classroom ${classroom.name}`,
@@ -205,16 +211,16 @@ async function addUserToClassroom(classroom, createdUser) {
     };
   } catch (error) {
     console.error(
-      "addUserToClassroom - Error adding user to classroom:",
-      error
+      'addUserToClassroom - Error adding user to classroom:',
+      error,
     );
-    return { error: "Failed to add user to classroom" };
+    return { error: 'Failed to add user to classroom' };
   }
 }
 
-app.post("/upload-project", express.json(), async (req, res) => {
+app.post('/upload-project', express.json(), async (req, res) => {
   const { user, project, srcFiles, includeFiles, dataFiles } = req.body;
-  console.log("Received project upload request:", {
+  console.log('Received project upload request:', {
     user,
     project,
     srcFiles,
@@ -222,17 +228,42 @@ app.post("/upload-project", express.json(), async (req, res) => {
     dataFiles,
   });
   if (!user || !project || !srcFiles || !includeFiles || !dataFiles) {
-    return res.status(400).json({ error: "Invalid request data" });
+    return res.status(400).json({ error: 'Invalid request data' });
   }
 
-  const usersData = JSON.parse(await fs.readFile(usersJsonPath, "utf-8"));
-  const userPath = `${defaultPath}/${user.userName}`;
-  const projectPath = `${userPath}/${project.projectName}`;
   const projectName = project.projectName;
-  const includePath = `${projectPath}/include`;
-  const srcPath = `${projectPath}/src`;
-  const dataPath = `${projectPath}/data`;
-  const configPath = `${projectPath}/.config.json`;
+  let userPath;
+  let projectPath;
+  let includePath;
+  let srcPath;
+  let dataPath;
+  let configPath;
+  try {
+    userPath = kissPaths.userDirectory(user.userName);
+    projectPath = kissPaths.projectDirectory(user.userName, project.projectName);
+    includePath = kissPaths.projectSubdirectory(
+      user.userName,
+      project.projectName,
+      'include',
+    );
+    srcPath = kissPaths.projectSubdirectory(
+      user.userName,
+      project.projectName,
+      'src',
+    );
+    dataPath = kissPaths.projectSubdirectory(
+      user.userName,
+      project.projectName,
+      'data',
+    );
+    configPath = kissPaths.safeJoin(
+      user.userName,
+      project.projectName,
+      '.config.json',
+    );
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
   const configContent = project.configFile.content;
 
   let sourceNames = [];
@@ -258,7 +289,7 @@ app.post("/upload-project", express.json(), async (req, res) => {
       await fs.writeFile(
         configPath,
         JSON.stringify({ projectName, language }, null, 2),
-        "utf-8"
+        'utf-8',
       );
     } else {
       createAndSaveFile(configPath, configContent);
@@ -268,34 +299,49 @@ app.post("/upload-project", express.json(), async (req, res) => {
 
     // Save source files
     for (const file of srcFiles) {
-      const filePath = `${srcPath}/${file.name}`;
+      const filePath = kissPaths.projectFilePath(
+        user.userName,
+        project.projectName,
+        'src',
+        file.name,
+      );
       await fs.writeFile(filePath, file.content);
       sourceNames.push(file.name);
     }
 
     // Save include files
     for (const file of includeFiles) {
-      const filePath = `${includePath}/${file.name}`;
+      const filePath = kissPaths.projectFilePath(
+        user.userName,
+        project.projectName,
+        'include',
+        file.name,
+      );
       await fs.writeFile(filePath, file.content);
       includeNames.push(file.name);
     }
 
     // Save data files
     for (const file of dataFiles) {
-      const filePath = `${dataPath}/${file.name}`;
+      const filePath = kissPaths.projectFilePath(
+        user.userName,
+        project.projectName,
+        'data',
+        file.name,
+      );
       await fs.writeFile(filePath, file.content);
       dataNames.push(file.name);
     }
   } catch (error) {
-    console.error("Error creating project directories:", error);
+    console.error('Error creating project directories:', error);
     return res
       .status(500)
-      .json({ error: "Failed to create project directories" });
+      .json({ error: 'Failed to create project directories' });
   }
 
   //Update users.json with new project
   try {
-    const usersData = JSON.parse(await fs.readFile(usersJsonPath, "utf-8"));
+    const usersData = JSON.parse(await fs.readFile(usersJsonPath, 'utf-8'));
     usersData[user.userName].projects.push({
       projectName: project.projectName,
       projectLanguage: project.projectLanguage,
@@ -305,16 +351,16 @@ app.post("/upload-project", express.json(), async (req, res) => {
     });
 
     const sortedProjects = usersData[user.userName].projects.sort((a, b) =>
-      a.projectName.localeCompare(b.projectName)
+      a.projectName.localeCompare(b.projectName),
     );
     usersData[user.userName].projects = sortedProjects;
     await fs.writeFile(usersJsonPath, JSON.stringify(usersData, null, 2));
   } catch (error) {
-    console.error("Error updating users.json:", error);
-    return res.status(500).json({ error: "Failed to update users.json" });
+    console.error('Error updating users.json:', error);
+    return res.status(500).json({ error: 'Failed to update users.json' });
   }
   return res.status(200).json({
-    message: "Project uploaded successfully",
+    message: 'Project uploaded successfully',
     createdProject: {
       projectName: project.projectName,
       projectLanguage: project.projectLanguage,
@@ -325,84 +371,119 @@ app.post("/upload-project", express.json(), async (req, res) => {
   });
 });
 
-app.post("/move-project", express.json(), async (req, res) => {
+app.post('/move-project', express.json(), async (req, res) => {
   const { user, project, newUser } = req.body;
-  console.log("Received project move request:", { user, project, newUser });
+  console.log('Received project move request:', { user, project, newUser });
   if (!user || !project || !newUser) {
-    return res.status(400).json({ error: "Invalid request data" });
+    return res.status(400).json({ error: 'Invalid request data' });
   }
 
-  const oldPath = `${defaultPath}/${user.userName}/${project.projectName}`;
-  const newPath = `${defaultPath}/${newUser.userName}/${project.projectName}`;
+  let oldPath;
+  let newPath;
+  let newUserPath;
+  try {
+    oldPath = kissPaths.projectDirectory(user.userName, project.projectName);
+    newPath = kissPaths.projectDirectory(newUser.userName, project.projectName);
+    newUserPath = kissPaths.userDirectory(newUser.userName);
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
 
   try {
     // Create new user directory if it doesn't exist
-    await fs.mkdir(`${defaultPath}/${newUser.userName}`, { recursive: true });
+    await fs.mkdir(newUserPath, { recursive: true });
 
     // Move the project directory
     await fs.rename(oldPath, newPath);
   } catch (error) {
-    console.error("Error moving project:", error);
-    return res.status(500).json({ error: "Failed to move project" });
+    console.error('Error moving project:', error);
+    return res.status(500).json({ error: 'Failed to move project' });
   }
   try {
-    const usersData = JSON.parse(await fs.readFile(usersJsonPath, "utf8"));
+    const usersData = JSON.parse(await fs.readFile(usersJsonPath, 'utf8'));
     usersData[newUser.userName].projects.push(project);
     const sortedProjects = usersData[newUser.userName].projects.sort((a, b) =>
-      a.projectName.localeCompare(b.projectName)
+      a.projectName.localeCompare(b.projectName),
     );
     usersData[newUser.userName].projects = sortedProjects;
     //remove project from original user
     const originalUser = usersData[user.userName];
     if (originalUser) {
       originalUser.projects = originalUser.projects.filter(
-        (p) => p.projectName !== project.projectName
+        (p) => p.projectName !== project.projectName,
       );
     }
     await fs.writeFile(
       usersJsonPath,
       JSON.stringify(usersData, null, 2),
-      "utf8"
+      'utf8',
     );
   } catch (error) {
-    console.error("Error updating users.json:", error);
-    return res.status(500).json({ error: "Failed to update users.json" });
+    console.error('Error updating users.json:', error);
+    return res.status(500).json({ error: 'Failed to update users.json' });
   }
   return res.status(200).json({
-    message: "Project moved successfully",
+    message: 'Project moved successfully',
     projectName: project.projectName,
     newUser: newUser.userName,
   });
 });
 
-app.post("/upload-file", express.json(), async (req, res) => {
+app.post('/upload-file', express.json(), async (req, res) => {
   const { user, project, files } = req.body;
-  console.log("Received file upload request:", { user, project, files });
+  console.log('Received file upload request:', { user, project, files });
   if (!user || !project || !files) {
-    return res.status(400).json({ error: "Invalid request data" });
+    return res.status(400).json({ error: 'Invalid request data' });
   }
-  const defaultPath = "/home/kipr/Documents/KISS";
   let filePath;
   files.map(async (file) => {
-    if (file.uploadType === "include") {
-      if (file.name.endsWith(".h")) {
-        filePath = `${defaultPath}/${user.userName}/${project.projectName}/include/${file.name}`;
+    if (file.uploadType === 'include') {
+      if (file.name.endsWith('.h')) {
+        filePath = kissPaths.projectFilePath(
+          user.userName,
+          project.projectName,
+          'include',
+          file.name,
+        );
       } else {
-        filePath = `${defaultPath}/${user.userName}/${project.projectName}/include/${file.name}.h`;
+        filePath = kissPaths.projectFilePath(
+          user.userName,
+          project.projectName,
+          'include',
+          `${file.name}.h`,
+        );
       }
-    } else if (file.uploadType === "src") {
+    } else if (file.uploadType === 'src') {
       if (file.name.endsWith(extensions[file.language])) {
-        filePath = `${defaultPath}/${user.userName}/${project.projectName}/src/${file.name}`;
+        filePath = kissPaths.projectFilePath(
+          user.userName,
+          project.projectName,
+          'src',
+          file.name,
+        );
       } else {
-        filePath = `${defaultPath}/${user.userName}/${
-          project.projectName
-        }/src/${file.name}.${extensions[file.language]}`;
+        filePath = kissPaths.projectFilePath(
+          user.userName,
+          project.projectName,
+          'src',
+          `${file.name}.${extensions[file.language]}`,
+        );
       }
-    } else if (file.uploadType === "data") {
-      if (file.name.endsWith(".txt")) {
-        filePath = `${defaultPath}/${user.userName}/${project.projectName}/data/${file.name}`;
+    } else if (file.uploadType === 'data') {
+      if (file.name.endsWith('.txt')) {
+        filePath = kissPaths.projectFilePath(
+          user.userName,
+          project.projectName,
+          'data',
+          file.name,
+        );
       } else {
-        filePath = `${defaultPath}/${user.userName}/${project.projectName}/data/${file.name}.txt`;
+        filePath = kissPaths.projectFilePath(
+          user.userName,
+          project.projectName,
+          'data',
+          `${file.name}.txt`,
+        );
       }
     }
 
@@ -410,53 +491,53 @@ app.post("/upload-file", express.json(), async (req, res) => {
       createAndSaveFile(filePath, file.content);
       //update users.json to add file to project
       try {
-        const usersData = JSON.parse(await fs.readFile(usersJsonPath, "utf8"));
+        const usersData = JSON.parse(await fs.readFile(usersJsonPath, 'utf8'));
         const userProjects = usersData[user.userName].projects || [];
 
         const foundProject = userProjects.find(
-          (project) => project.projectName === req.body.project.projectName
+          (project) => project.projectName === req.body.project.projectName,
         );
 
         if (foundProject) {
           for (const file of files) {
-            if (file.uploadType === "include") {
+            if (file.uploadType === 'include') {
               foundProject.includeFolderFiles.push(file.name);
-            } else if (file.uploadType === "src") {
+            } else if (file.uploadType === 'src') {
               foundProject.srcFolderFiles.push(file.name);
-            } else if (file.uploadType === "data") {
+            } else if (file.uploadType === 'data') {
               foundProject.dataFolderFiles.push(file.name);
             }
             await fs.writeFile(
               usersJsonPath,
               JSON.stringify(usersData, null, 2),
-              "utf8"
+              'utf8',
             );
           }
         }
       } catch (error) {
-        console.error("Error updating users.json:", error);
-        return res.status(500).json({ error: "Failed to update users.json" });
+        console.error('Error updating users.json:', error);
+        return res.status(500).json({ error: 'Failed to update users.json' });
       }
 
       //Update selected user's .user.config.json
       try {
-        const userConfigPath = `${defaultPath}/${user.userName}/.user.config.json`;
+        const userConfigPath = kissPaths.userConfigPath(user.userName);
         const userConfig = JSON.parse(
-          await fs.readFile(userConfigPath, "utf8")
+          await fs.readFile(userConfigPath, 'utf8'),
         );
         const foundProject = userConfig.projects.find(
-          (project) => project.projectName === req.body.project.projectName
+          (project) => project.projectName === req.body.project.projectName,
         );
         if (foundProject) {
           for (const file of files) {
             switch (file.uploadType) {
-              case "include":
+              case 'include':
                 foundProject.includeFolderFiles.push(file.name);
                 break;
-              case "src":
+              case 'src':
                 foundProject.srcFolderFiles.push(file.name);
                 break;
-              case "data":
+              case 'data':
                 foundProject.dataFolderFiles.push(file.name);
                 break;
             }
@@ -464,31 +545,34 @@ app.post("/upload-file", express.json(), async (req, res) => {
           await fs.writeFile(
             userConfigPath,
             JSON.stringify(userConfig, null, 2),
-            "utf8"
+            'utf8',
           );
         }
       } catch (error) {
-        console.error("Error updating .user.config.json:", error);
+        console.error('Error updating .user.config.json:', error);
         return res
           .status(500)
-          .json({ error: "Failed to update .user.config.json" });
+          .json({ error: 'Failed to update .user.config.json' });
       }
 
       //Update selected user's project's .project.config.json
       try {
-        const projectConfigPath = `${defaultPath}/${user.userName}/${project.projectName}/.project.config.json`;
+        const projectConfigPath = kissPaths.projectConfigPath(
+          user.userName,
+          project.projectName,
+        );
         const projectConfig = JSON.parse(
-          await fs.readFile(projectConfigPath, "utf8")
+          await fs.readFile(projectConfigPath, 'utf8'),
         );
         for (const file of files) {
           switch (file.uploadType) {
-            case "include":
+            case 'include':
               projectConfig.includeFolderFiles.push(file.name);
               break;
-            case "src":
+            case 'src':
               projectConfig.srcFolderFiles.push(file.name);
               break;
-            case "data":
+            case 'data':
               projectConfig.dataFolderFiles.push(file.name);
               break;
           }
@@ -496,18 +580,18 @@ app.post("/upload-file", express.json(), async (req, res) => {
         await fs.writeFile(
           projectConfigPath,
           JSON.stringify(projectConfig, null, 2),
-          "utf8"
+          'utf8',
         );
       } catch (error) {
-        console.error("Error updating .project.config.json:", error);
+        console.error('Error updating .project.config.json:', error);
         return res
           .status(500)
-          .json({ error: "Failed to update .project.config.json" });
+          .json({ error: 'Failed to update .project.config.json' });
       }
-      return res.status(200).json({ message: "File saved successfully" });
+      return res.status(200).json({ message: 'File saved successfully' });
     } catch (error) {
-      console.error("Error saving file:", error);
-      return res.status(500).json({ error: "Failed to save file" });
+      console.error('Error saving file:', error);
+      return res.status(500).json({ error: 'Failed to save file' });
     }
   });
 });
@@ -525,11 +609,11 @@ let sensorValues = {
 
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
-console.log("WebSocket server initialized");
+console.log('WebSocket server initialized');
 
 function broadcastAnalogValue() {
   const message = JSON.stringify({
-    type: "analog",
+    type: 'analog',
     value: sensorValues.analog,
   });
 
@@ -542,7 +626,7 @@ function broadcastAnalogValue() {
 
 function broadcastDigitalValue() {
   const message = JSON.stringify({
-    type: "digital",
+    type: 'digital',
     value: sensorValues.digital,
   });
 
@@ -555,7 +639,7 @@ function broadcastDigitalValue() {
 
 function broadcastAccelerometerValue() {
   const message = JSON.stringify({
-    type: "accel",
+    type: 'accel',
     value: sensorValues.accelerometer,
   });
 
@@ -568,7 +652,7 @@ function broadcastAccelerometerValue() {
 
 function broadcastGyroValue() {
   const message = JSON.stringify({
-    type: "gyro",
+    type: 'gyro',
     value: sensorValues.gyro,
   });
 
@@ -581,7 +665,7 @@ function broadcastGyroValue() {
 
 function broadcastMagnetometerValue() {
   const message = JSON.stringify({
-    type: "magneto",
+    type: 'magneto',
     value: sensorValues.magnetometer,
   });
   wss.clients.forEach((client) => {
@@ -593,7 +677,7 @@ function broadcastMagnetometerValue() {
 
 function broadcastButtonValue() {
   const message = JSON.stringify({
-    type: "button",
+    type: 'button',
     value: sensorValues.button,
   });
 
@@ -622,7 +706,7 @@ let buttonAddon;
 function startAnalogPolling() {
   if (analogPolling) return;
   analogPolling = true;
-  if (!analogAddon) analogAddon = require("./build/Release/analog_addon.node");
+  if (!analogAddon) analogAddon = require('./build/Release/analog_addon.node');
   (function loop() {
     if (!analogPolling) return;
     sensorValues.analog.forEach((value, index) => {
@@ -637,7 +721,7 @@ function startDigitalPolling() {
   if (digitalPolling) return;
   digitalPolling = true;
   if (!digitalAddon)
-    digitalAddon = require("./build/Release/digital_addon.node");
+    digitalAddon = require('./build/Release/digital_addon.node');
   (function loop() {
     if (!digitalPolling) return;
     sensorValues.digital.forEach((value, index) => {
@@ -651,7 +735,7 @@ function startDigitalPolling() {
 function startAccelerometerPolling() {
   if (accelerometerPolling) return;
   accelerometerPolling = true;
-  if (!accelAddon) accelAddon = require("./build/Release/accel_addon.node");
+  if (!accelAddon) accelAddon = require('./build/Release/accel_addon.node');
   (function loop() {
     if (!accelerometerPolling) return;
 
@@ -666,7 +750,7 @@ function startAccelerometerPolling() {
 function startGyroPolling() {
   if (gyroPolling) return;
   gyroPolling = true;
-  if (!gyroAddon) gyroAddon = require("./build/Release/gyro_addon.node");
+  if (!gyroAddon) gyroAddon = require('./build/Release/gyro_addon.node');
   (function loop() {
     if (!gyroPolling) return;
     sensorValues.gyro[0] = gyroAddon.gyro_x();
@@ -681,7 +765,7 @@ function startMagnetometerPolling() {
   if (magnetometerPolling) return;
   magnetometerPolling = true;
   if (!magnetoAddon)
-    magnetoAddon = require("./build/Release/magneto_addon.node");
+    magnetoAddon = require('./build/Release/magneto_addon.node');
   (function loop() {
     if (!magnetometerPolling) return;
 
@@ -697,7 +781,7 @@ function startMagnetometerPolling() {
 function startButtonPolling() {
   if (buttonPolling) return;
   buttonPolling = true;
-  if (!buttonAddon) buttonAddon = require("./build/Release/button_addon.node");
+  if (!buttonAddon) buttonAddon = require('./build/Release/button_addon.node');
   (function loop() {
     if (!buttonPolling) return;
 
@@ -717,89 +801,89 @@ function stopPolling() {
 
 let pty;
 let os;
-wss.on("connection", (ws, req) => {
-  console.log("WebSocket connection established");
-  console.log("WebSocket request pathname:", req.url);
+wss.on('connection', (ws, req) => {
+  console.log('WebSocket connection established');
+  console.log('WebSocket request pathname:', req.url);
 
-  if (req.url === "/ws/sensors") {
-    console.log("WebSocket connection for sensors established");
+  if (req.url === '/ws/sensors') {
+    console.log('WebSocket connection for sensors established');
 
-    ws.on("message", (message) => {
+    ws.on('message', (message) => {
       try {
         const data = JSON.parse(message);
         switch (data.type) {
-          case "start-analog":
-            console.log("Received start-analog message");
+          case 'start-analog':
+            console.log('Received start-analog message');
             startAnalogPolling();
             break;
-          case "start-digital":
-            console.log("Received start-digital message");
+          case 'start-digital':
+            console.log('Received start-digital message');
             startDigitalPolling();
             break;
-          case "start-accelerometer":
-            console.log("Received start-accelerometer message");
+          case 'start-accelerometer':
+            console.log('Received start-accelerometer message');
             startAccelerometerPolling();
             break;
-          case "start-gyroscope":
-            console.log("Received start-gyro message");
+          case 'start-gyroscope':
+            console.log('Received start-gyro message');
             startGyroPolling();
             break;
-          case "start-magnetometer":
-            console.log("Received start-magnetometer message");
+          case 'start-magnetometer':
+            console.log('Received start-magnetometer message');
             startMagnetometerPolling();
             break;
-          case "start-button":
-            console.log("Received start-button message");
+          case 'start-button':
+            console.log('Received start-button message');
             startButtonPolling();
             break;
-          case "stop-all":
-            console.log("Received stop-all message");
+          case 'stop-all':
+            console.log('Received stop-all message');
             stopPolling();
             break;
         }
       } catch (error) {
-        console.error("Error handling message: ", error);
+        console.error('Error handling message: ', error);
       }
     });
 
     ws.send(JSON.stringify({ analog: latestAnalogValues }));
-  } else if (req.url === "/ws/terminal") {
-    console.log("WebSocket connection for terminal established");
+  } else if (req.url === '/ws/terminal') {
+    console.log('WebSocket connection for terminal established');
 
-    if (!pty) pty = require("node-pty");
-    if (!os) os = require("os");
-    const shell = os.platform() === "win32" ? "powershell.exe" : "bash";
+    if (!pty) pty = require('node-pty');
+    if (!os) os = require('os');
+    const shell = os.platform() === 'win32' ? 'powershell.exe' : 'bash';
     const ptyProcess = pty.spawn(shell, [], {
-      name: "xterm-color",
+      name: 'xterm-color',
       cols: 80,
       rows: 30,
       cwd: process.env.HOME,
       env: process.env,
     });
 
-    ptyProcess.on("data", (data) => {
+    ptyProcess.on('data', (data) => {
       ws.send(data);
     });
 
-    ws.on("message", (message) => {
-      console.log("Received message from terminal:", message);
+    ws.on('message', (message) => {
+      console.log('Received message from terminal:', message);
       ptyProcess.write(message);
     });
 
-    ws.on("close", () => {
-      console.log("WebSocket connection closed for terminal");
+    ws.on('close', () => {
+      console.log('WebSocket connection closed for terminal');
       ptyProcess.kill();
     });
   }
 });
 
-app.post("/enable-servo", express.json(), (req, res) => {
+app.post('/enable-servo', express.json(), (req, res) => {
   const { servo, value } = req.body;
 
-  if (typeof servo !== "number") {
-    return res.status(400).json({ error: "Servo type incorrect, need number" });
+  if (typeof servo !== 'number') {
+    return res.status(400).json({ error: 'Servo type incorrect, need number' });
   }
-  if (!servoAddon) servoAddon = require("./build/Release/servo_addon.node");
+  if (!servoAddon) servoAddon = require('./build/Release/servo_addon.node');
   try {
     servoAddon.enable_servo(servo);
     servoAddon.set_servo_position(servo, value);
@@ -808,28 +892,28 @@ app.post("/enable-servo", express.json(), (req, res) => {
       .status(200)
       .json({ message: `Servo ${servo} enabled and set to value ${value}` });
   } catch (error) {
-    console.error("Error enabling servo:", error);
-    res.status(500).json({ error: "Failed to enable servo" });
+    console.error('Error enabling servo:', error);
+    res.status(500).json({ error: 'Failed to enable servo' });
   }
 });
 
-app.post("/disable-all-servos", express.json(), (req, res) => {
-  if (!servoAddon) servoAddon = require("./build/Release/servo_addon.node");
+app.post('/disable-all-servos', express.json(), (req, res) => {
+  if (!servoAddon) servoAddon = require('./build/Release/servo_addon.node');
   try {
     servoAddon.disable_servos();
 
     res.status(200).json({ message: `Disabled all servos` });
   } catch (error) {
-    console.error("Error disabling all servos:", error);
-    res.status(500).json({ error: "Failed to disable all servos" });
+    console.error('Error disabling all servos:', error);
+    res.status(500).json({ error: 'Failed to disable all servos' });
   }
 });
 
-app.post("/disable-servo", express.json(), (req, res) => {
+app.post('/disable-servo', express.json(), (req, res) => {
   const { servo, value } = req.body;
-  if (!servoAddon) servoAddon = require("./build/Release/servo_addon.node");
-  if (typeof servo !== "number") {
-    return res.status(400).json({ error: "Servo type incorrect, need number" });
+  if (!servoAddon) servoAddon = require('./build/Release/servo_addon.node');
+  if (typeof servo !== 'number') {
+    return res.status(400).json({ error: 'Servo type incorrect, need number' });
   }
   try {
     console.log(`Disabling servo: ${servo}`);
@@ -837,55 +921,55 @@ app.post("/disable-servo", express.json(), (req, res) => {
 
     res.status(200).json({ message: `Servo ${servo} disable` });
   } catch (error) {
-    console.error("Error disabling servo:", error);
-    res.status(500).json({ error: "Failed to disable servo" });
+    console.error('Error disabling servo:', error);
+    res.status(500).json({ error: 'Failed to disable servo' });
   }
 });
-app.post("/move-servo", express.json(), (req, res) => {
+app.post('/move-servo', express.json(), (req, res) => {
   const { servo, value } = req.body;
-  if (!servoAddon) servoAddon = require("./build/Release/servo_addon.node");
-  if (typeof servo !== "number") {
-    return res.status(400).json({ error: "Servo type incorrect, need number" });
+  if (!servoAddon) servoAddon = require('./build/Release/servo_addon.node');
+  if (typeof servo !== 'number') {
+    return res.status(400).json({ error: 'Servo type incorrect, need number' });
   }
 
   try {
     servoAddon.set_servo_position(servo, value);
     res.status(200).json({ message: `Servo ${servo} moved to value ${value}` });
   } catch (error) {
-    console.error("Error moving servo:", error);
-    res.status(500).json({ error: "Failed to move servo" });
+    console.error('Error moving servo:', error);
+    res.status(500).json({ error: 'Failed to move servo' });
   }
 });
 
-app.post("/move-motor", express.json(), (req, res) => {
+app.post('/move-motor', express.json(), (req, res) => {
   const { view, motor, value } = req.body;
 
-  if (typeof motor !== "number" || typeof value !== "number") {
-    return res.status(400).json({ error: "Invalid input" });
+  if (typeof motor !== 'number' || typeof value !== 'number') {
+    return res.status(400).json({ error: 'Invalid input' });
   }
 
-  if (!motorAddon) motorAddon = require("./build/Release/motor_addon.node");
+  if (!motorAddon) motorAddon = require('./build/Release/motor_addon.node');
   try {
-    if (view === "Power") {
+    if (view === 'Power') {
       motorAddon.motor_power(motor, value);
-    } else if (view === "Velocity") {
+    } else if (view === 'Velocity') {
       motorAddon.mav(motor, value);
     }
 
     // Send back a success response
     res.status(200).json({ message: `Motor ${motor} moved to value ${value}` });
   } catch (error) {
-    console.error("Error moving motor:", error);
-    res.status(500).json({ error: "Failed to move motor" });
+    console.error('Error moving motor:', error);
+    res.status(500).json({ error: 'Failed to move motor' });
   }
 });
 
-app.post("/stop-motor", express.json(), (req, res) => {
+app.post('/stop-motor', express.json(), (req, res) => {
   const { motor } = req.body;
 
-  if (!motorAddon) motorAddon = require("./build/Release/motor_addon.node");
-  if (typeof motor !== "number") {
-    return res.status(400).json({ error: "Invalid input" });
+  if (!motorAddon) motorAddon = require('./build/Release/motor_addon.node');
+  if (typeof motor !== 'number') {
+    return res.status(400).json({ error: 'Invalid input' });
   }
   try {
     motorAddon.off(motor);
@@ -893,28 +977,28 @@ app.post("/stop-motor", express.json(), (req, res) => {
     // Send back a success response
     res.status(200).json({ message: `Motor ${motor} turned off` });
   } catch (error) {
-    console.error("Error turning off motor:", error);
-    res.status(500).json({ error: "Failed to turn off motor" });
+    console.error('Error turning off motor:', error);
+    res.status(500).json({ error: 'Failed to turn off motor' });
   }
 });
 
-app.post("/stop-all-motors", express.json(), (req, res) => {
-  if (!motorAddon) motorAddon = require("./build/Release/motor_addon.node");
+app.post('/stop-all-motors', express.json(), (req, res) => {
+  if (!motorAddon) motorAddon = require('./build/Release/motor_addon.node');
   try {
     motorAddon.allOff();
-    res.status(200).json({ message: "All motors turned off" });
+    res.status(200).json({ message: 'All motors turned off' });
   } catch (error) {
-    console.error("Error turning off all motors:", error);
-    res.status(500).json({ error: "Failed to turn off all motors" });
+    console.error('Error turning off all motors:', error);
+    res.status(500).json({ error: 'Failed to turn off all motors' });
   }
 });
 
-app.post("/clear-motor-position", express.json(), (req, res) => {
+app.post('/clear-motor-position', express.json(), (req, res) => {
   const { motor } = req.body;
-  console.log("Clearing motor position for motor:", motor);
-  if (!motorAddon) motorAddon = require("./build/Release/motor_addon.node");
-  if (typeof motor !== "number") {
-    return res.status(400).json({ error: "Invalid input" });
+  console.log('Clearing motor position for motor:', motor);
+  if (!motorAddon) motorAddon = require('./build/Release/motor_addon.node');
+  if (typeof motor !== 'number') {
+    return res.status(400).json({ error: 'Invalid input' });
   }
   try {
     motorAddon.clear_motor_position_counter(motor);
@@ -922,8 +1006,8 @@ app.post("/clear-motor-position", express.json(), (req, res) => {
       .status(200)
       .json({ message: `Motor ${motor} position counter cleared` });
   } catch (error) {
-    console.error("Error clearing motor position:", error);
-    res.status(500).json({ error: "Failed to clear motor position" });
+    console.error('Error clearing motor position:', error);
+    res.status(500).json({ error: 'Failed to clear motor position' });
   }
 });
 
@@ -931,12 +1015,12 @@ let motorVelPollingInterval = null;
 let motorPosPollingInterval = null;
 let servoPosPollingInterval = null;
 
-app.get("/stream-motor-velocities", (req, res) => {
-  res.setHeader("Content-Type", "text/event-stream");
-  res.setHeader("Cache-Control", "no-cache");
-  res.setHeader("Connection", "keep-alive");
+app.get('/stream-motor-velocities', (req, res) => {
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
 
-  if (!motorAddon) motorAddon = require("./build/Release/motor_addon.node");
+  if (!motorAddon) motorAddon = require('./build/Release/motor_addon.node');
 
   motorAddon.reset_all_motors();
   motorVelPollingInterval = setInterval(() => {
@@ -954,21 +1038,21 @@ app.get("/stream-motor-velocities", (req, res) => {
     }
   }, 500);
 
-  req.on("close", () => {
-    console.log("Closing motor velocity stream");
+  req.on('close', () => {
+    console.log('Closing motor velocity stream');
     clearInterval(motorVelPollingInterval);
 
     res.end();
   });
 });
 
-app.get("/stream-motor-positions", (req, res) => {
-  res.setHeader("Content-Type", "text/event-stream");
-  res.setHeader("Cache-Control", "no-cache");
-  res.setHeader("Connection", "keep-alive");
+app.get('/stream-motor-positions', (req, res) => {
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
   res.flushHeaders();
-  console.log("Starting motor position stream");
-  if (!motorAddon) motorAddon = require("./build/Release/motor_addon.node");
+  console.log('Starting motor position stream');
+  if (!motorAddon) motorAddon = require('./build/Release/motor_addon.node');
 
   const interval = setInterval(() => {
     const data = {
@@ -982,36 +1066,36 @@ app.get("/stream-motor-positions", (req, res) => {
     if (res.flush) res.flush();
   }, 500);
 
-  req.on("close", () => {
+  req.on('close', () => {
     clearInterval(interval);
   });
 });
 
-app.get("/stream-servo-positions", (req, res) => {
-  res.setHeader("Content-Type", "text/event-stream");
-  res.setHeader("Cache-Control", "no-cache");
-  res.setHeader("Connection", "keep-alive");
-  if (!servoAddon) servoAddon = require("./build/Release/servo_addon.node");
+app.get('/stream-servo-positions', (req, res) => {
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+  if (!servoAddon) servoAddon = require('./build/Release/servo_addon.node');
   servoPosPollingInterval = setInterval(() => {
     try {
       const data = {
         0: {
-          name: "Servo 0",
+          name: 'Servo 0',
           value: servoAddon.get_servo_position(0),
           enable: servoAddon.get_servo_enabled(0),
         },
         1: {
-          name: "Servo 1",
+          name: 'Servo 1',
           value: servoAddon.get_servo_position(1),
           enable: servoAddon.get_servo_enabled(1),
         },
         2: {
-          name: "Servo 2",
+          name: 'Servo 2',
           value: servoAddon.get_servo_position(2),
           enable: servoAddon.get_servo_enabled(2),
         },
         3: {
-          name: "Servo 3",
+          name: 'Servo 3',
           value: servoAddon.get_servo_position(3),
           enable: servoAddon.get_servo_enabled(3),
         },
@@ -1021,39 +1105,39 @@ app.get("/stream-servo-positions", (req, res) => {
 
       if (res.flush) res.flush();
     } catch (err) {
-      console.error("Servo polling error:", err);
+      console.error('Servo polling error:', err);
       res.write(`data: ERROR: ${err.toString()}\n\n`);
     }
   }, 500);
 
-  req.on("close", () => {
+  req.on('close', () => {
     clearInterval(servoPosPollingInterval);
   });
 });
 let declaredVariables;
-app.post("/convert-xml-to-c", express.json(), async (req, res) => {
+app.post('/convert-xml-to-c', express.json(), async (req, res) => {
   const { xml, filePath } = req.body;
 
-  console.log("/convert-xml-to-c received XML:", xml);
-  console.log("/convert-xml-to-c filePath:", filePath);
-  let finalCode = "";
+  console.log('/convert-xml-to-c received XML:', xml);
+  console.log('/convert-xml-to-c filePath:', filePath);
+  let finalCode = '';
 
   try {
     // Parse the XML string into a DOM
     const xmlDoc = parseXml(xml);
-    console.log("xml: ", xml);
+    console.log('xml: ', xml);
 
     // Parse the XML document into blocks
-    const blockDetected = xml.includes("block");
-    console.log("blockDetected: ", blockDetected);
-    const blockNodes = xmlDoc.getElementsByTagName("block");
+    const blockDetected = xml.includes('block');
+    console.log('blockDetected: ', blockDetected);
+    const blockNodes = xmlDoc.getElementsByTagName('block');
     if (blockNodes && blockDetected) {
       const topBlocks = Array.from(blockNodes).map(parseBlockXml);
 
       declaredVariables = new Map();
 
       finalCode = convertToCode(topBlocks[0]);
-      console.log("finalCode: ", finalCode);
+      console.log('finalCode: ', finalCode);
       createAndSaveFile(filePath, finalCode);
       return res.status(200).json({
         code: finalCode,
@@ -1061,31 +1145,31 @@ app.post("/convert-xml-to-c", express.json(), async (req, res) => {
       });
     } else {
       res.json({
-        message: "failed",
-        error: "No blocks found!",
+        message: 'failed',
+        error: 'No blocks found!',
       });
     }
   } catch (error) {
-    console.error("Error parsing XML:", error);
-    return res.status(500).json({ error: "Failed to parse XML" });
+    console.error('Error parsing XML:', error);
+    return res.status(500).json({ error: 'Failed to parse XML' });
   }
 });
 
 const modules = [
-  "wait_for",
-  "time",
-  "motor",
-  "servo",
-  "digital",
-  "analog",
-  "control",
-  "operator",
-  "data",
+  'wait_for',
+  'time',
+  'motor',
+  'servo',
+  'digital',
+  'analog',
+  'control',
+  'operator',
+  'data',
 ];
 
 const operatorMap = {
-  true: () => "1",
-  false: () => "0",
+  true: () => '1',
+  false: () => '0',
   add: (a, b) => `${a} + ${b}`,
   subtract: (a, b) => `${a} - ${b}`,
   multiply: (a, b) => `${a} * ${b}`,
@@ -1128,8 +1212,8 @@ const mathOpMap = {
   atan: (a) => `atan(${a})`,
   ln: (a) => `log(${a})`,
   log: (a) => `log10(${a})`,
-  "e ^": (a) => `exp(${a})`,
-  "10 ^": (a) => `pow(10, ${a})`,
+  'e ^': (a) => `exp(${a})`,
+  '10 ^': (a) => `pow(10, ${a})`,
 };
 
 function getValue(child) {
@@ -1140,18 +1224,18 @@ function getValue(child) {
   return convertToCode(child, 0, true).trim();
 }
 function extractCategoryAndFunction(type) {
-  console.log("Type received:", type);
+  console.log('Type received:', type);
 
   for (const module of modules) {
-    console.log("Checking module:", module);
-    if (type.startsWith(module + "_")) {
+    console.log('Checking module:', module);
+    if (type.startsWith(module + '_')) {
       const functionName = type.substring(module.length + 1);
-      console.log("Found function:", functionName);
+      console.log('Found function:', functionName);
       return { category: module, functionName };
     }
   }
 
-  console.log("No match found for type:", type); // Log if no match was found
+  console.log('No match found for type:', type); // Log if no match was found
   return null;
 }
 
@@ -1164,10 +1248,10 @@ function extractCategoryAndFunction(type) {
  * @returns {string} C code
  */
 function convertToCode(block, indentLevel = 1, asExpression = false) {
-  const indent = "\t".repeat(indentLevel);
-  let categoryName = "";
-  let functionName = "";
-  let cCode = "";
+  const indent = '\t'.repeat(indentLevel);
+  let categoryName = '';
+  let functionName = '';
+  let cCode = '';
 
   let result = extractCategoryAndFunction(block.type);
   if (result) {
@@ -1175,18 +1259,18 @@ function convertToCode(block, indentLevel = 1, asExpression = false) {
     functionName = result.functionName;
   }
 
-  if (categoryName === "control") {
+  if (categoryName === 'control') {
     switch (functionName) {
-      case "run":
+      case 'run':
         cCode +=
-          "#include <stdio.h>\n#include <kipr/wombat.h>\n\nint main()\n{\n";
+          '#include <stdio.h>\n#include <kipr/wombat.h>\n\nint main()\n{\n';
         const nextBlock = block.next;
         if (nextBlock) {
           cCode += convertToCode(nextBlock, indentLevel + 1);
         }
-        cCode += "\n\treturn 0;\n}\n";
+        cCode += '\n\treturn 0;\n}\n';
         return cCode;
-      case "printf":
+      case 'printf':
         const printText = block.children?.find((child) => child.fields?.TEXT);
         if (printText) {
           cCode += `${indent}printf("${printText.fields.TEXT}\\n");\n`;
@@ -1194,7 +1278,7 @@ function convertToCode(block, indentLevel = 1, asExpression = false) {
           cCode += `${indent}/* missing printf text */\n`;
         }
         break;
-      case "wait":
+      case 'wait':
         const waitTime = block.children?.find((child) => child.fields?.NUM);
         if (waitTime) {
           cCode += `${indent}msleep(${waitTime.fields.NUM});\n`;
@@ -1202,10 +1286,10 @@ function convertToCode(block, indentLevel = 1, asExpression = false) {
           cCode += `${indent}/* missing wait time */\n`;
         }
         break;
-      case "repeat":
+      case 'repeat':
         const repeatCount = block.children?.find((child) => child.fields?.NUM);
         const repeatSubstack = block.children?.find(
-          (child) => child.role === "substack"
+          (child) => child.role === 'substack',
         );
         if (repeatCount) {
           cCode += `${indent}for (int i = 0; i < ${repeatCount.fields.NUM}; i++) {\n`;
@@ -1219,9 +1303,9 @@ function convertToCode(block, indentLevel = 1, asExpression = false) {
           cCode += `${indent}/* missing repeat count */\n`;
         }
         break;
-      case "forever":
+      case 'forever':
         const foreverSubstack = block.children?.find(
-          (child) => child.role === "substack"
+          (child) => child.role === 'substack',
         );
         cCode += `${indent}while (1) {\n`;
         if (foreverSubstack) {
@@ -1231,16 +1315,16 @@ function convertToCode(block, indentLevel = 1, asExpression = false) {
         }
         cCode += `${indent}}\n`;
         break;
-      case "if":
-        const condition = block.children?.find((c) => c.role === "condition");
-        const substack = block.children?.find((c) => c.role === "substack");
+      case 'if':
+        const condition = block.children?.find((c) => c.role === 'condition');
+        const substack = block.children?.find((c) => c.role === 'substack');
 
         cCode += `${indent}if (`;
 
         if (condition) {
           cCode += convertToCode(condition, 0, true).trim();
         } else {
-          cCode += "/* missing condition */";
+          cCode += '/* missing condition */';
         }
 
         cCode += `) {\n`;
@@ -1253,13 +1337,13 @@ function convertToCode(block, indentLevel = 1, asExpression = false) {
 
         cCode += `${indent}}\n`;
         break;
-      case "if_else":
+      case 'if_else':
         const conditionElse = block.children?.find(
-          (c) => c.role === "condition"
+          (c) => c.role === 'condition',
         );
-        const substackElse = block.children?.find((c) => c.role === "substack");
+        const substackElse = block.children?.find((c) => c.role === 'substack');
         const elseSubstack = block.children?.find(
-          (c) => c.role === "substack2"
+          (c) => c.role === 'substack2',
         );
 
         cCode += `${indent}if (`;
@@ -1267,7 +1351,7 @@ function convertToCode(block, indentLevel = 1, asExpression = false) {
         if (conditionElse) {
           cCode += convertToCode(conditionElse, 0, true).trim();
         } else {
-          cCode += "/* missing condition */";
+          cCode += '/* missing condition */';
         }
 
         cCode += `) {\n`;
@@ -1288,9 +1372,9 @@ function convertToCode(block, indentLevel = 1, asExpression = false) {
 
         cCode += `${indent}}\n`;
         break;
-      case "wait_until":
+      case 'wait_until':
         const waitCondition = block.children?.find(
-          (c) => c.role === "condition"
+          (c) => c.role === 'condition',
         );
 
         cCode += `${indent}while (!(`;
@@ -1298,18 +1382,18 @@ function convertToCode(block, indentLevel = 1, asExpression = false) {
         if (waitCondition) {
           cCode += convertToCode(waitCondition, 0, true).trim();
         } else {
-          cCode += "/* missing condition */";
+          cCode += '/* missing condition */';
         }
 
         cCode += `);\n`;
 
         break;
-      case "repeat_until":
+      case 'repeat_until':
         const repeatUntilSubstack = block.children?.find(
-          (child) => child.role === "substack"
+          (child) => child.role === 'substack',
         );
         const repeatUntilCondition = block.children?.find(
-          (c) => c.role === "condition"
+          (c) => c.role === 'condition',
         );
         cCode += `${indent}do {\n`;
 
@@ -1317,7 +1401,7 @@ function convertToCode(block, indentLevel = 1, asExpression = false) {
           cCode += `${indent}${convertToCode(
             repeatUntilSubstack,
             indentLevel + 1,
-            true
+            true,
           ).trim()}`;
         } else {
           cCode += `${indent}\t/* missing substack */\n`;
@@ -1332,57 +1416,57 @@ function convertToCode(block, indentLevel = 1, asExpression = false) {
         }
         break;
     }
-  } else if (categoryName === "operator") {
+  } else if (categoryName === 'operator') {
     let op1Value = null;
     let op2Value = null;
 
-    const operand1 = block.children?.find((c) => c.role === "operand1");
-    const operand2 = block.children?.find((c) => c.role === "operand2");
+    const operand1 = block.children?.find((c) => c.role === 'operand1');
+    const operand2 = block.children?.find((c) => c.role === 'operand2');
     if (operand1 || operand2) {
       op1Value = getValue(operand1) ?? op1Value;
       op2Value = getValue(operand2) ?? op2Value;
     }
 
     if (!op1Value) {
-      const operand = block.children?.find((c) => c.role === "operand");
+      const operand = block.children?.find((c) => c.role === 'operand');
       op1Value = getValue(operand) ?? op1Value;
     }
 
-    const num1 = block.children?.find((c) => c.role === "num1");
-    const num2 = block.children?.find((c) => c.role === "num2");
+    const num1 = block.children?.find((c) => c.role === 'num1');
+    const num2 = block.children?.find((c) => c.role === 'num2');
     if (!op1Value) op1Value = getValue(num1);
     if (!op2Value) op2Value = getValue(num2);
 
     if (!op1Value) {
-      const num = block.children?.find((c) => c.role === "num");
+      const num = block.children?.find((c) => c.role === 'num');
       op1Value = getValue(num);
     }
 
-    const string1 = block.children?.find((c) => c.role === "string1");
-    const string2 = block.children?.find((c) => c.role === "string2");
+    const string1 = block.children?.find((c) => c.role === 'string1');
+    const string2 = block.children?.find((c) => c.role === 'string2');
     if (!op1Value) op1Value = getValue(string1);
     if (!op2Value) op2Value = getValue(string2);
 
     if (!op1Value) {
-      const string = block.children?.find((c) => c.role === "string");
+      const string = block.children?.find((c) => c.role === 'string');
       op1Value = getValue(string) ?? op1Value;
     }
 
-    if (!op1Value) op1Value = "/* missing operand1 */";
+    if (!op1Value) op1Value = '/* missing operand1 */';
     if (
       !op2Value &&
-      ["add", "subtract", "multiply", "divide", "mod"].includes(functionName)
+      ['add', 'subtract', 'multiply', 'divide', 'mod'].includes(functionName)
     ) {
-      op2Value = "/* missing operand2 */";
+      op2Value = '/* missing operand2 */';
     }
 
-    console.log("op1Value: ", op1Value);
-    console.log("op2Value: ", op2Value);
-    if (functionName === "random") {
-      const rand1 = block.children?.[0]?.fields?.NUM ?? "/* missing min */";
-      const rand2 = block.children?.[1]?.fields?.NUM ?? "/* missing max */";
+    console.log('op1Value: ', op1Value);
+    console.log('op2Value: ', op2Value);
+    if (functionName === 'random') {
+      const rand1 = block.children?.[0]?.fields?.NUM ?? '/* missing min */';
+      const rand2 = block.children?.[1]?.fields?.NUM ?? '/* missing max */';
       cCode += `${indent}${operatorMap.random(rand1, rand2)}`;
-    } else if (functionName === "mathop") {
+    } else if (functionName === 'mathop') {
       const operator = block.fields?.OPERATOR;
       cCode += `${indent}${operatorMap.mathop(operator, op1Value)}`;
     } else if (operatorMap[functionName]) {
@@ -1390,16 +1474,16 @@ function convertToCode(block, indentLevel = 1, asExpression = false) {
     } else {
       cCode += `${indent}/* unknown operator: ${functionName} */`;
     }
-  } else if (categoryName === "data") {
+  } else if (categoryName === 'data') {
     switch (functionName) {
-      case "setvariableto":
+      case 'setvariableto':
         const variableName = block.fields?.VARIABLE;
         let variableValue = getValue(block.children?.[0]);
 
         // Regular expressions to detect expressions and function calls
         const isExpression = /[\+\-\*\/\%\(\)]/.test(variableValue);
         const isFunctionCall = /^[a-zA-Z_][a-zA-Z0-9_]*\s*\(.*\)$/.test(
-          variableValue
+          variableValue,
         );
 
         if (variableName && variableValue !== undefined) {
@@ -1408,7 +1492,7 @@ function convertToCode(block, indentLevel = 1, asExpression = false) {
             variableValue = parseInt(variableValue);
             if (!declaredVariables.has(variableName)) {
               cCode += `${indent}int ${variableName} = ${variableValue};\n`;
-              declaredVariables.set(variableName, "int");
+              declaredVariables.set(variableName, 'int');
             } else {
               cCode += `${indent}${variableName} = ${variableValue};\n`;
             }
@@ -1417,7 +1501,7 @@ function convertToCode(block, indentLevel = 1, asExpression = false) {
           } else if (isExpression) {
             if (!declaredVariables.has(variableName)) {
               cCode += `${indent}int ${variableName} = ${variableValue};\n`;
-              declaredVariables.set(variableName, "int");
+              declaredVariables.set(variableName, 'int');
             } else {
               cCode += `${indent}${variableName} = ${variableValue};\n`;
             }
@@ -1425,7 +1509,7 @@ function convertToCode(block, indentLevel = 1, asExpression = false) {
             // Case for string assignment
             if (!declaredVariables.has(variableName)) {
               cCode += `${indent}char ${variableName}[100] = "${variableValue}";\n`;
-              declaredVariables.set(variableName, "char[100]");
+              declaredVariables.set(variableName, 'char[100]');
             } else {
               cCode += `${indent}${variableName} = "${variableValue}";\n`;
             }
@@ -1433,10 +1517,10 @@ function convertToCode(block, indentLevel = 1, asExpression = false) {
         } else {
           cCode += `${indent}/* missing variable name or value */\n`;
         }
-        console.log("declaredVariables: ", declaredVariables);
+        console.log('declaredVariables: ', declaredVariables);
         break;
 
-      case "changevariableby":
+      case 'changevariableby':
         const changeVariableName = block.fields?.VARIABLE;
         let changeVariableValue = block.children?.[0]?.fields?.NUM;
         if (changeVariableName && changeVariableValue) {
@@ -1450,12 +1534,12 @@ function convertToCode(block, indentLevel = 1, asExpression = false) {
           cCode += `${indent}/* missing variable name or value */\n`;
         }
         break;
-      case "showvariable":
+      case 'showvariable':
         const showVariableName = block.fields?.VARIABLE;
         if (showVariableName && declaredVariables.has(showVariableName)) {
-          if (declaredVariables.get(showVariableName) === "char[100]") {
+          if (declaredVariables.get(showVariableName) === 'char[100]') {
             cCode += `${indent}printf("%s: %s\\n", "${showVariableName}", ${showVariableName});\n`;
-          } else if (declaredVariables.get(showVariableName) === "int") {
+          } else if (declaredVariables.get(showVariableName) === 'int') {
             cCode += `${indent}printf("%s: %d\\n", "${showVariableName}", ${showVariableName});\n`;
           } else {
             cCode += `${indent}/* unknown variable type for: ${showVariableName} */\n`;
@@ -1470,13 +1554,13 @@ function convertToCode(block, indentLevel = 1, asExpression = false) {
   } else if (block.fields && Object.keys(block.fields).length > 0) {
     const args = (block.children || [])
       .map((child) => convertToCode(child, 0))
-      .join(", ");
+      .join(', ');
     cCode += `${indent}${functionName}(${args});\n`;
   } else {
     const args = (block.children || []).map((child) =>
-      convertToCode(child, 0, true).trim()
+      convertToCode(child, 0, true).trim(),
     );
-    const call = `${functionName}(${args.join(", ")})`;
+    const call = `${functionName}(${args.join(', ')})`;
     cCode += asExpression ? `${call}` : `${indent}${call};\n`;
   }
 
@@ -1501,7 +1585,7 @@ async function getAllDirectories(dirPath) {
     const results = await Promise.all(statPromises);
     return results.filter(({ isDir }) => isDir).map(({ file }) => file);
   } catch (error) {
-    console.error("Error reading directory:", error);
+    console.error('Error reading directory:', error);
     return [];
   }
 }
@@ -1524,11 +1608,11 @@ async function getAllProjectDirectories(dirPath) {
       directories.map(async (dirName) => {
         const projectPath = path.join(dirPath, dirName);
 
-        let projectLanguage = "unknown";
+        let projectLanguage = 'unknown';
         try {
           const configContent = await fs.readFile(
-            path.join(projectPath, ".config.json"),
-            "utf8"
+            path.join(projectPath, '.config.json'),
+            'utf8',
           );
           projectLanguage = parseConfig(configContent);
         } catch (err) {
@@ -1536,13 +1620,13 @@ async function getAllProjectDirectories(dirPath) {
         }
 
         const includeFolderFiles = await getFilesInFolder(
-          path.join(projectPath, "include")
+          path.join(projectPath, 'include'),
         );
         const srcFolderFiles = await getFilesInFolder(
-          path.join(projectPath, "src")
+          path.join(projectPath, 'src'),
         );
         const dataFolderFiles = await getFilesInFolder(
-          path.join(projectPath, "data")
+          path.join(projectPath, 'data'),
         );
 
         return {
@@ -1552,11 +1636,11 @@ async function getAllProjectDirectories(dirPath) {
           srcFolderFiles,
           dataFolderFiles,
         };
-      })
+      }),
     );
     return projects;
   } catch (error) {
-    console.error("Error reading directory:", error);
+    console.error('Error reading directory:', error);
     return [];
   }
 }
@@ -1566,9 +1650,9 @@ async function getFilesInFolder(folderPath) {
   try {
     const files = await fs.readdir(folderPath);
     // Filter out any files starting with a dot (.)
-    return files.filter((file) => !file.startsWith("."));
+    return files.filter((file) => !file.startsWith('.'));
   } catch (error) {
-    console.error("Error reading folder:", error);
+    console.error('Error reading folder:', error);
     return [];
   }
 }
@@ -1585,65 +1669,59 @@ async function getAllFiles(dirPath) {
     const results = await Promise.all(statPromises);
     return results.filter(({ isFile }) => isFile).map(({ file }) => file);
   } catch (error) {
-    console.error("Error reading directory:", error);
+    console.error('Error reading directory:', error);
     return [];
   }
 }
 
 async function getUsersJson() {
-  const usersJsonPath = `/home/kipr/Documents/KISS/users.json`;
-
   try {
     await fs.access(usersJsonPath); // throws if file doesn't exist
 
-    const configRaw = await fs.readFile(usersJsonPath, "utf-8");
+    const configRaw = await fs.readFile(usersJsonPath, 'utf-8');
     const configData = JSON.parse(configRaw);
 
     return configData;
   } catch (error) {
-    if (error.code === "ENOENT") {
+    if (error.code === 'ENOENT') {
     }
   }
   try {
     await fs.access(usersJsonPath); // throws if file doesn't exist
 
-    const configRaw = await fs.readFile(usersJsonPath, "utf-8");
+    const configRaw = await fs.readFile(usersJsonPath, 'utf-8');
     const configData = JSON.parse(configRaw);
 
     return configData;
   } catch (error) {
-    if (error.code === "ENOENT") {
+    if (error.code === 'ENOENT') {
       console.error(
-        `getUserConfig: Config file not found for user ${username}`
+        `getUserConfig: Config file not found for user ${username}`,
       );
     } else {
-      console.error("Error reading user config:", error);
+      console.error('Error reading user config:', error);
     }
     return null;
   }
 }
 
 async function getUserInterfaceMode(userName) {
-  const userConfigPath = path.join(
-    "/home/kipr/Documents/KISS",
-    userName,
-    ".config.json"
-  );
+  const userConfigPath = kissPaths.safeJoin(userName, '.config.json');
 
   try {
     await fs.access(userConfigPath); // throws if file doesn't exist
 
-    const configRaw = await fs.readFile(userConfigPath, "utf-8");
+    const configRaw = await fs.readFile(userConfigPath, 'utf-8');
     const configData = JSON.parse(configRaw);
 
     return configData.interfaceMode || null;
   } catch (error) {
-    if (error.code === "ENOENT") {
+    if (error.code === 'ENOENT') {
       console.error(
-        `getUserInterfaceMode: Config file not found for user ${userName}`
+        `getUserInterfaceMode: Config file not found for user ${userName}`,
       );
     } else {
-      console.error("Error reading user config:", error);
+      console.error('Error reading user config:', error);
     }
     return null;
   }
@@ -1651,11 +1729,11 @@ async function getUserInterfaceMode(userName) {
 
 //Set the user interface mode
 async function setUserInterfaceMode(userName, newMode) {
-  const userConfigPath = `/home/kipr/Documents/KISS/${userName}/.user.config.json`;
+  const userConfigPath = kissPaths.userConfigPath(userName);
   try {
     await fs.access(userConfigPath); // throws if file doesn't exist
 
-    const configRaw = await fs.readFile(userConfigPath, "utf-8");
+    const configRaw = await fs.readFile(userConfigPath, 'utf-8');
     const configData = JSON.parse(configRaw);
 
     configData.interfaceMode = newMode;
@@ -1663,18 +1741,18 @@ async function setUserInterfaceMode(userName, newMode) {
     await fs.writeFile(
       userConfigPath,
       JSON.stringify(configData, null, 2),
-      "utf-8"
+      'utf-8',
     );
   } catch (error) {
-    console.error("Error updating user config:", error);
+    console.error('Error updating user config:', error);
     return false;
   }
 
   try {
     await fs.access(usersJsonPath);
-    const configRaw = await fs.readFile(usersJsonPath, "utf-8");
+    const configRaw = await fs.readFile(usersJsonPath, 'utf-8');
     const configData = JSON.parse(configRaw);
-    console.log("User config data:", configData);
+    console.log('User config data:', configData);
     if (configData[userName]) {
       configData[userName].interfaceMode = newMode;
     } else {
@@ -1684,14 +1762,14 @@ async function setUserInterfaceMode(userName, newMode) {
     await fs.writeFile(
       usersJsonPath,
       JSON.stringify(configData, null, 2),
-      "utf-8"
+      'utf-8',
     );
     console.log(
-      "Updated users.json with new interface mode for user:",
-      userName
+      'Updated users.json with new interface mode for user:',
+      userName,
     );
   } catch (error) {
-    console.error("Error reading users.json:", error);
+    console.error('Error reading users.json:', error);
   }
 
   return true;
@@ -1700,26 +1778,26 @@ async function setUserInterfaceMode(userName, newMode) {
 function createFolderHandler() {
   return async (req, res) => {
     const userName = req.query.userName;
-    console.log("createFolderHandler called with user:", userName);
+    console.log('createFolderHandler called with user:', userName);
 
-    const userJsonPath = "/home/kipr/Documents/KISS/users.json";
+    const userJsonPath = usersJsonPath;
 
     try {
       // Read and parse the JSON file
-      const userDataRaw = await fs.readFile(userJsonPath, "utf-8");
+      const userDataRaw = await fs.readFile(userJsonPath, 'utf-8');
       const data = JSON.parse(userDataRaw);
 
       // Find the requested user
       const foundUser = data[userName];
       if (!foundUser) {
         console.warn(`User "${userName}" not found`);
-        return res.status(404).json({ error: "User not found" });
+        return res.status(404).json({ error: 'User not found' });
       }
 
-      console.log("Found user:", foundUser);
+      console.log('Found user:', foundUser);
 
       // Ensure all project arrays are plain arrays
-      const sanitizedProjects = (foundUser.projects || []).map(project => ({
+      const sanitizedProjects = (foundUser.projects || []).map((project) => ({
         ...project,
         includeFolderFiles: Array.isArray(project.includeFolderFiles)
           ? Array.from(project.includeFolderFiles)
@@ -1732,12 +1810,15 @@ function createFolderHandler() {
           : [],
       }));
 
-      console.log("Sanitized projects to send:", JSON.stringify(sanitizedProjects, null, 2));
+      console.log(
+        'Sanitized projects to send:',
+        JSON.stringify(sanitizedProjects, null, 2),
+      );
       console.log("User's projects:", sanitizedProjects);
       return res.status(200).json({ projects: sanitizedProjects });
     } catch (error) {
-      console.error("Error reading user JSON:", error);
-      return res.status(500).json({ error: "Internal server error" });
+      console.error('Error reading user JSON:', error);
+      return res.status(500).json({ error: 'Internal server error' });
     }
   };
 }
@@ -1761,31 +1842,33 @@ async function getAllUserFiles(directory, zipFolder) {
 function getFileContents() {
   return async (req, res) => {
     const filePath = req.query.filePath;
-    console.log("getFileContents called with filePath:", filePath);
+    console.log('getFileContents called with filePath:', filePath);
 
     if (!filePath) {
       return res
         .status(400)
-        .json({ error: "Missing filePath query parameter" });
+        .json({ error: 'Missing filePath query parameter' });
     }
 
+    let safeFilePath;
     try {
-      const stats = await fs.stat(filePath);
+      safeFilePath = kissPaths.resolveClientPath(filePath);
+      const stats = await fs.stat(safeFilePath);
       if (!stats.isFile()) {
-        return res.status(400).json({ error: "Provided path is not a file" });
+        return res.status(400).json({ error: 'Provided path is not a file' });
       }
     } catch (error) {
-      console.error("Error in getFileContents:", error);
-      return res.status(500).json({ error: "Internal server error" });
+      console.error('Error in getFileContents:', error);
+      return res.status(500).json({ error: 'Internal server error' });
     }
 
     try {
-      const fileContents = await fs.readFile(filePath, "utf-8");
+      const fileContents = await fs.readFile(safeFilePath, 'utf-8');
 
       res.status(200).send(fileContents);
     } catch (error) {
-      console.error("Error in getFileContents:", error);
-      return res.status(500).json({ error: "Internal server error" });
+      console.error('Error in getFileContents:', error);
+      return res.status(500).json({ error: 'Internal server error' });
     }
   };
 }
@@ -1794,62 +1877,59 @@ function getFileContents() {
 function saveFileContents() {
   return async (req, res) => {
     const { filePath, fileContents } = req.body;
-    console.log("saveFileContents called with filePath:", filePath);
-
-    const defaultPath = "/home/kipr/Documents/KISS/";
-    const relative = path.relative(defaultPath, filePath);
-    const parts = relative.split(path.sep);
-    const [user, project, fileType, fileName] = relative.split(path.sep);
-    console.log({ user, project, fileType, fileName });
+    console.log('saveFileContents called with filePath:', filePath);
 
     if (!filePath) {
       return res
         .status(400)
-        .json({ error: "Missing filePath in request body" });
+        .json({ error: 'Missing filePath in request body' });
     }
 
     if (!fileContents) {
       return res
         .status(400)
-        .json({ error: "Missing fileContents in request body" });
+        .json({ error: 'Missing fileContents in request body' });
     }
 
     try {
+      const { resolvedPath, user, project, fileType, fileName } =
+        kissPaths.parseProjectFilePath(filePath);
+      console.log({ user, project, fileType, fileName });
       let isNewFile = false;
 
       try {
-        await fs.access(filePath); // throws if file doesn't exist
+        await fs.access(resolvedPath); // throws if file doesn't exist
       } catch {
         isNewFile = true;
       }
-      await fs.writeFile(filePath, fileContents);
+      await fs.writeFile(resolvedPath, fileContents);
 
       if (isNewFile) {
-        console.log("New file created, updating users.json and project config");
+        console.log('New file created, updating users.json and project config');
         await editUsersJson({ user, project, fileType, fileName });
         await editSpecificUserJson({ user, project, fileType, fileName });
         await editProjectJson({ user, project, fileType, fileName });
       }
-      return res.status(200).send("File saved successfully");
+      return res.status(200).send('File saved successfully');
     } catch (error) {
-      console.error("Error in saveFileContents:", error);
-      return res.status(500).json({ error: "Internal server error" });
+      console.error('Error in saveFileContents:', error);
+      return res.status(500).json({ error: 'Internal server error' });
     }
   };
 }
 
 async function editUsersJson(data) {
-  console.log("Editing JSON to add data:", data);
-  console.log("Data user: ", data.user);
+  console.log('Editing JSON to add data:', data);
+  console.log('Data user: ', data.user);
 
-  const userJsonPath = "/home/kipr/Documents/KISS/users.json";
-  const existingDataStr = await fs.readFile(userJsonPath, "utf8");
+  const userJsonPath = usersJsonPath;
+  const existingDataStr = await fs.readFile(userJsonPath, 'utf8');
   const existingData = JSON.parse(existingDataStr);
 
   // Check if existingData is array or object
   let userObj;
   if (Array.isArray(existingData)) {
-    console.log("Existing data is an array");
+    console.log('Existing data is an array');
     userObj = existingData.find((u) => u.userName === data.user);
   } else {
     // assume object with numeric keys
@@ -1857,123 +1937,123 @@ async function editUsersJson(data) {
     userObj = dataArray.find((u) => u.userName === data.user);
   }
 
-  console.log("User Object: ", userObj);
+  console.log('User Object: ', userObj);
 
   // Proceed to update userObj and then write back...
   const userProjects = userObj.projects || [];
-  console.log("User Projects: ", userProjects);
+  console.log('User Projects: ', userProjects);
 
   const foundProject = userProjects.find(
-    (project) => project.projectName === data.project
+    (project) => project.projectName === data.project,
   );
-  console.log("Found Project: ", foundProject);
+  console.log('Found Project: ', foundProject);
   if (foundProject) {
-    console.log("Project already exists, updating file details");
+    console.log('Project already exists, updating file details');
 
     switch (data.fileType) {
-      case "include":
+      case 'include':
         foundProject.includeFolderFiles.push(data.fileName);
         break;
-      case "src":
+      case 'src':
         foundProject.srcFolderFiles.push(data.fileName);
         break;
-      case "data":
+      case 'data':
         foundProject.dataFolderFiles.push(data.fileName);
         break;
       default:
-        console.error("Unknown file type:", data.fileType);
+        console.error('Unknown file type:', data.fileType);
         return;
     }
-    console.log("Updated Project: ", foundProject);
-    console.log("Updated users.json: ", existingData);
+    console.log('Updated Project: ', foundProject);
+    console.log('Updated users.json: ', existingData);
 
     await fs.writeFile(
       userJsonPath,
       JSON.stringify(existingData, null, 2),
-      "utf8"
+      'utf8',
     );
   }
 }
 
 async function editSpecificUserJson(data) {
-  console.log("EDIT SPECIFIC USER JSON");
-  console.log("Editing JSON to add data:", data);
-  console.log("Data user: ", data.user);
+  console.log('EDIT SPECIFIC USER JSON');
+  console.log('Editing JSON to add data:', data);
+  console.log('Data user: ', data.user);
 
-  const userJsonPath = `/home/kipr/Documents/KISS/${data.user}/.user.config.json`;
-  const existingDataStr = await fs.readFile(userJsonPath, "utf8");
+  const userJsonPath = kissPaths.userConfigPath(data.user);
+  const existingDataStr = await fs.readFile(userJsonPath, 'utf8');
   const existingData = JSON.parse(existingDataStr);
 
-  console.log("Existing Data: ", existingData);
+  console.log('Existing Data: ', existingData);
 
   // Proceed to update userObj and then write back...
   const userProjects = existingData.projects || [];
-  console.log("User Projects: ", userProjects);
+  console.log('User Projects: ', userProjects);
 
   const foundProject = userProjects.find(
-    (project) => project.projectName === data.project
+    (project) => project.projectName === data.project,
   );
-  console.log("Found Project: ", foundProject);
+  console.log('Found Project: ', foundProject);
   if (foundProject) {
-    console.log("Project already exists, updating file details");
+    console.log('Project already exists, updating file details');
 
     switch (data.fileType) {
-      case "include":
+      case 'include':
         foundProject.includeFolderFiles.push(data.fileName);
         break;
-      case "src":
+      case 'src':
         foundProject.srcFolderFiles.push(data.fileName);
         break;
-      case "data":
+      case 'data':
         foundProject.dataFolderFiles.push(data.fileName);
         break;
       default:
-        console.error("Unknown file type:", data.fileType);
+        console.error('Unknown file type:', data.fileType);
         return;
     }
-    console.log("Updated Project: ", foundProject);
-    console.log("Updated users.json: ", existingData);
+    console.log('Updated Project: ', foundProject);
+    console.log('Updated users.json: ', existingData);
 
     await fs.writeFile(
       userJsonPath,
       JSON.stringify(existingData, null, 2),
-      "utf8"
+      'utf8',
     );
   }
 }
 
 async function editProjectJson(data) {
-  console.log("EDIT PROJECT JSON");
-  console.log("Editing JSON to add data:", data);
-  console.log("Data user: ", data.user);
+  console.log('EDIT PROJECT JSON');
+  console.log('Editing JSON to add data:', data);
+  console.log('Data user: ', data.user);
 
-  const projectJsonPath = `/home/kipr/Documents/KISS/${data.user}/${data.project}/.project.config.json`;
-  const projectConfigStr = await fs.readFile(projectJsonPath, "utf8");
+  const projectJsonPath = kissPaths.projectConfigPath(data.user, data.project);
+  const projectConfigStr = await fs.readFile(projectJsonPath, 'utf8');
   const projectConfig = JSON.parse(projectConfigStr);
 
-  console.log("Project Config: ", projectConfig);
+  console.log('Project Config: ', projectConfig);
 
   if (projectConfig) {
     switch (data.fileType) {
-      case "include":
+      case 'include':
         projectConfig.includeFolderFiles.push(data.fileName);
         break;
-      case "src":
+      case 'src':
         projectConfig.srcFolderFiles.push(data.fileName);
         break;
-      case "data":
+      case 'data':
         projectConfig.dataFolderFiles.push(data.fileName);
         break;
       default:
-        console.error("Unknown file type:", data.fileType);
+        console.error('Unknown file type:', data.fileType);
         return;
     }
-    console.log("Updated Project Config: ", projectConfig);
+    console.log('Updated Project Config: ', projectConfig);
 
     await fs.writeFile(
       projectJsonPath,
       JSON.stringify(projectConfig, null, 2),
-      "utf8"
+      'utf8',
     );
   }
 }
@@ -1982,10 +2062,10 @@ function createAndSaveFile(filePath, fileContents) {
   return new Promise((resolve, reject) => {
     fs.writeFile(filePath, fileContents, (err) => {
       if (err) {
-        console.error("Error writing file:", err);
+        console.error('Error writing file:', err);
         reject(err);
       } else {
-        console.log("File saved successfully");
+        console.log('File saved successfully');
         resolve();
       }
     });
@@ -1994,10 +2074,10 @@ function createAndSaveFile(filePath, fileContents) {
 
 async function readJsonFile(filePath) {
   try {
-    const data = await fs.readFile(filePath, "utf8");
+    const data = await fs.readFile(filePath, 'utf8');
     return JSON.parse(data);
   } catch (error) {
-    console.error("Error reading or parsing JSON file:", error);
+    console.error('Error reading or parsing JSON file:', error);
     throw error;
   }
 }
@@ -2008,38 +2088,38 @@ function parseConfig(configContent) {
     const config = JSON.parse(configContent);
     return (language = config.language || null);
   } catch (error) {
-    console.error("Failed to parse config JSON:", error.message);
+    console.error('Failed to parse config JSON:', error.message);
     return null;
   }
 }
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header('Access-Control-Allow-Origin', '*');
   res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept',
   );
   next();
 });
 
 app.use(bodyParser.json());
-app.use(morgan("combined"));
+app.use(morgan('combined'));
 
-app.use("/api", proxy(config.dbUrl));
+app.use('/api', proxy(config.dbUrl));
 
 // If we have libkipr (C) artifacts and emsdk, we can compile.
 if (
   config.server.dependencies.libkipr_c &&
   config.server.dependencies.emsdk_env
 ) {
-  console.log("Compiling C programs is enabled.");
+  console.log('Compiling C programs is enabled.');
 }
 
 //Compile code
-app.post("/compile-code", async (req, res) => {
+app.post('/compile-code', async (req, res) => {
   const { userName, projectName, fileName, activeLanguage } = req.body;
   if (!userName || !projectName || !fileName || !activeLanguage) {
-    return res.status(400).json({ error: "Missing required fields" });
+    return res.status(400).json({ error: 'Missing required fields' });
   }
   const env = {
     ...process.env,
@@ -2050,13 +2130,13 @@ app.post("/compile-code", async (req, res) => {
     ACTIVE_LANGUAGE: activeLanguage,
   };
 
-  console.log("compile-code request received with body:", req.body);
+  console.log('compile-code request received with body:', req.body);
 
-  execFile("node", ["compiler.js"], { env }, (error, stdout, stderr) => {
+  execFile('node', ['compiler.js'], { env }, (error, stdout, stderr) => {
     if (error) {
       console.error(`Error during execution: ${error.message}`);
       return res.status(500).json({
-        error: "Compilation execution failed",
+        error: 'Compilation execution failed',
         details: error.message,
       });
     }
@@ -2068,57 +2148,56 @@ app.post("/compile-code", async (req, res) => {
     // stdout should contain JSON string from compiler.js
     try {
       const result = JSON.parse(stdout);
-      console.log("Compiler result:", result);
+      console.log('Compiler result:', result);
       if (result.success) {
         return res.json({
-          message: "successful",
+          message: 'successful',
           error: result.error ? result.error : null,
           warnings: result.warnings || [],
           messages: result.messages || [],
         });
       } else {
         res.json({
-          message: "failed",
+          message: 'failed',
           error: result.error,
           messages: result.messages || [],
         });
       }
     } catch (parseErr) {
-      console.error("Failed to parse compiler output:", parseErr.message);
-      return res.status(500).json({ error: "Failed to parse compiler output" });
+      console.error('Failed to parse compiler output:', parseErr.message);
+      return res.status(500).json({ error: 'Failed to parse compiler output' });
     }
   });
 });
 
-app.post("/remove-user-from-classroom", async (req, res) => {
+app.post('/remove-user-from-classroom', async (req, res) => {
   const { user, classroom } = req.body;
-  console.log("Received request body:", req.body);
+  console.log('Received request body:', req.body);
 
   try {
-    const jsonPath = "/home/kipr/Documents/KISS/classrooms/classrooms.json";
+    const jsonPath = classroomsJsonPath;
     const jsonData = await readJsonFile(jsonPath);
-    console.log("classrooms.json: ", jsonData);
+    console.log('classrooms.json: ', jsonData);
 
     const foundClassroom = jsonData.classrooms.find(
-      (c) => c.name === classroom.name
+      (c) => c.name === classroom.name,
     );
 
     if (foundClassroom) {
       const beforeCount = foundClassroom.users.length;
 
       foundClassroom.users = foundClassroom.users.filter(
-        (u) => u.userName !== user.userName
+        (u) => u.userName !== user.userName,
       );
 
       const afterCount = foundClassroom.users.length;
 
-      console.log("Updated classroom users:", foundClassroom.users);
+      console.log('Updated classroom users:', foundClassroom.users);
 
       // Save back to file
       await fs.writeFile(jsonPath, JSON.stringify(jsonData, null, 2));
 
       //remove classroomName from user in users.json
-      const usersJsonPath = "/home/kipr/Documents/KISS/users.json";
       const usersData = await readJsonFile(usersJsonPath);
 
       if (usersData[user.userName]) {
@@ -2132,45 +2211,45 @@ app.post("/remove-user-from-classroom", async (req, res) => {
         removed: beforeCount !== afterCount,
       });
     } else {
-      res.status(404).json({ error: "Classroom not found" });
+      res.status(404).json({ error: 'Classroom not found' });
     }
   } catch (err) {
-    console.error("Error updating classroom JSON:", err);
-    res.status(500).json({ error: "Internal server error" });
+    console.error('Error updating classroom JSON:', err);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
-app.post("/add-user-project-to-classroom", async (req, res) => {
+app.post('/add-user-project-to-classroom', async (req, res) => {
   const { user } = req.body;
-  console.log("Received request body:", req.body);
-  console.log("User Projects: ", user.projects);
+  console.log('Received request body:', req.body);
+  console.log('User Projects: ', user.projects);
 
-  const jsonDirectory = "/home/kipr/Documents/KISS/classrooms/classrooms.json";
+  const jsonDirectory = classroomsJsonPath;
 
   let data = { classrooms: [] };
   try {
-    const fileContent = await fs.readFile(jsonDirectory, "utf8");
+    const fileContent = await fs.readFile(jsonDirectory, 'utf8');
     data = JSON.parse(fileContent);
   } catch (error) {
-    console.log("Classrooms JSON not found, starting fresh.");
+    console.log('Classrooms JSON not found, starting fresh.');
   }
 
-  console.log("Current classrooms data:", data);
+  console.log('Current classrooms data:', data);
 
   // Find classroom by name
   let foundClassroom = data.classrooms.find(
-    (c) => c.name === user.classroomName
+    (c) => c.name === user.classroomName,
   );
 
   if (foundClassroom) {
     // Check if user already exists in the classroom
     const userExists = foundClassroom.users.some(
-      (u) => u.userName === user.userName
+      (u) => u.userName === user.userName,
     );
     if (userExists) {
       return res
         .status(400)
-        .json({ error: "User already exists in classroom." });
+        .json({ error: 'User already exists in classroom.' });
     }
 
     // Add user object with full details
@@ -2181,29 +2260,29 @@ app.post("/add-user-project-to-classroom", async (req, res) => {
 
     foundClassroom.users.sort((a, b) => a.userName.localeCompare(b.userName));
 
-    console.log("Updated classroom users:", foundClassroom.users);
+    console.log('Updated classroom users:', foundClassroom.users);
 
     // Save back to file
-    await fs.writeFile(jsonDirectory, JSON.stringify(data, null, 2), "utf8");
+    await fs.writeFile(jsonDirectory, JSON.stringify(data, null, 2), 'utf8');
 
     return res
       .status(200)
-      .json({ message: "User added to classroom with projects." });
+      .json({ message: 'User added to classroom with projects.' });
   }
 });
 
-app.post("/move-user-to-classroom", async (req, res) => {
+app.post('/move-user-to-classroom', async (req, res) => {
   const { user, newClassroom } = req.body;
-  console.log("Moving user:", user, "to classroom:", newClassroom);
+  console.log('Moving user:', user, 'to classroom:', newClassroom);
 
   try {
     // Load user data
-    let userData = await readJsonFile("/home/kipr/Documents/KISS/users.json");
+    let userData = await readJsonFile(usersJsonPath);
     const foundUser = userData[user.userName];
-    console.log("move-user-to-classroom userData:", userData);
+    console.log('move-user-to-classroom userData:', userData);
 
     if (!foundUser) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ error: 'User not found' });
     }
 
     const oldClassroomName = foundUser.classroomName; // save old classroom name
@@ -2211,15 +2290,15 @@ app.post("/move-user-to-classroom", async (req, res) => {
 
     //Update users.json with new classroom for selected User
     await fs.writeFile(
-      "/home/kipr/Documents/KISS/users.json",
-      JSON.stringify(userData, null, 2)
+      usersJsonPath,
+      JSON.stringify(userData, null, 2),
     );
     //------------------------------------------
 
     //update selected user's .user.config.json with new classroom
-    const userConfigPath = `/home/kipr/Documents/KISS/${user.userName}/.user.config.json`;
+    const userConfigPath = kissPaths.userConfigPath(user.userName);
     try {
-      const configRaw = await fs.readFile(userConfigPath, "utf-8");
+      const configRaw = await fs.readFile(userConfigPath, 'utf-8');
       const configData = JSON.parse(configRaw);
 
       configData.classroomName = newClassroom.name;
@@ -2227,33 +2306,31 @@ app.post("/move-user-to-classroom", async (req, res) => {
       await fs.writeFile(
         userConfigPath,
         JSON.stringify(configData, null, 2),
-        "utf-8"
+        'utf-8',
       );
     } catch (error) {
-      console.error("Error updating user config:", error);
+      console.error('Error updating user config:', error);
     }
-    const updatedUserConfig = await fs.readFile(userConfigPath, "utf-8");
-    console.log("Updated .user.config.json: ", updatedUserConfig);
+    const updatedUserConfig = await fs.readFile(userConfigPath, 'utf-8');
+    console.log('Updated .user.config.json: ', updatedUserConfig);
 
     //------------------------------------------
     // Load classroom data
-    let classData = await readJsonFile(
-      "/home/kipr/Documents/KISS/classrooms/classrooms.json"
-    );
+    let classData = await readJsonFile(classroomsJsonPath);
 
     // Remove from old classroom (if it exists)
     const oldClassroom = classData.classrooms.find(
-      (c) => c.name === oldClassroomName
+      (c) => c.name === oldClassroomName,
     );
     if (oldClassroom) {
       oldClassroom.users = oldClassroom.users.filter(
-        (u) => u.userName !== user.userName
+        (u) => u.userName !== user.userName,
       );
     }
 
     // Add to new classroom
     const foundClassroom = classData.classrooms.find(
-      (c) => c.name === newClassroom.name
+      (c) => c.name === newClassroom.name,
     );
     if (foundClassroom) {
       // Avoid duplicate user entries
@@ -2263,115 +2340,119 @@ app.post("/move-user-to-classroom", async (req, res) => {
           interfaceMode: user.interfaceMode,
         });
         foundClassroom.users.sort((a, b) =>
-          a.userName.localeCompare(b.userName)
+          a.userName.localeCompare(b.userName),
         );
       }
     }
 
     //Update classrooms.json with new user list
     await fs.writeFile(
-      "/home/kipr/Documents/KISS/classrooms/classrooms.json",
-      JSON.stringify(classData, null, 2)
+      classroomsJsonPath,
+      JSON.stringify(classData, null, 2),
     );
     //------------------------------------------
 
-    return res.status(200).json({ message: "User moved to new classroom." });
+    return res.status(200).json({ message: 'User moved to new classroom.' });
   } catch (error) {
-    console.error("Error moving user to classroom:", error);
-    return res.status(500).json({ error: "Internal server error" });
+    console.error('Error moving user to classroom:', error);
+    return res.status(500).json({ error: 'Internal server error' });
   }
 });
 
 //Paste file to project
 async function pasteFiletoProject(pasteData, usersData) {
-  let pasteToFinalPath = "/home/kipr/Documents/KISS/";
-  let pasteFromPath = `/home/kipr/Documents/KISS/${pasteData.pasteFromData.toPasteObject.copyObjectUser.userName}/${pasteData.pasteFromData.toPasteObject.copyObjectProject.projectName}/`;
-
-  fileObject = pasteData.pasteFromData.toPasteObject.copyObjectFile;
-  const [fileName, fileType] = fileObject.split(".");
+  let pasteToFinalPath = '';
+  let pasteFromPath = '';
+  const fileObject = pasteData.pasteFromData.toPasteObject.copyObjectFile;
+  const [fileName, fileType] = fileObject.split('.');
 
   if (usersData[pasteData.pasteToData.pasteWhereUser.userName]) {
     const userProjects =
       usersData[pasteData.pasteToData.pasteWhereUser.userName].projects;
     const foundProject = userProjects.find(
       (project) =>
-        project.projectName === pasteData.pasteToData.toPasteWhere.projectName
+        project.projectName === pasteData.pasteToData.toPasteWhere.projectName,
     );
-
-    pasteToFinalPath +=
-      pasteData.pasteToData.pasteWhereUser.userName +
-      "/" +
-      foundProject.projectName +
-      "/";
 
     if (foundProject) {
       console.log(
-        "pasteData.pasteFromData.toPasteObject:",
-        pasteData.pasteFromData.toPasteObject
+        'pasteData.pasteFromData.toPasteObject:',
+        pasteData.pasteFromData.toPasteObject,
       );
+      let folder;
       switch (fileType) {
-        case "h":
-          projectIncludeFiles = foundProject.includeFolderFiles || [];
+        case 'h':
+          const projectIncludeFiles = foundProject.includeFolderFiles || [];
           if (
             !projectIncludeFiles.includes(
-              pasteData.pasteFromData.toPasteObject.copyObjectFile
+              pasteData.pasteFromData.toPasteObject.copyObjectFile,
             )
           ) {
             projectIncludeFiles.push(
-              pasteData.pasteFromData.toPasteObject.copyObjectFile
+              pasteData.pasteFromData.toPasteObject.copyObjectFile,
             );
           }
           foundProject.includeFolderFiles = projectIncludeFiles;
-          pasteToFinalPath += "include/" + fileObject;
-          pasteFromPath += "include/" + fileObject;
+          folder = 'include';
           break;
-        case "c":
-        case "cpp":
-        case "py":
-          projectSrcFiles = foundProject.srcFolderFiles || [];
+        case 'c':
+        case 'cpp':
+        case 'py':
+          const projectSrcFiles = foundProject.srcFolderFiles || [];
           if (
             !projectSrcFiles.includes(
-              pasteData.pasteFromData.toPasteObject.copyObjectFile
+              pasteData.pasteFromData.toPasteObject.copyObjectFile,
             )
           ) {
             projectSrcFiles.push(
-              pasteData.pasteFromData.toPasteObject.copyObjectFile
+              pasteData.pasteFromData.toPasteObject.copyObjectFile,
             );
           }
           foundProject.srcFolderFiles = projectSrcFiles;
-          pasteToFinalPath += "src/" + fileObject;
-          pasteFromPath += "src/" + fileObject;
+          folder = 'src';
           break;
-        case "txt":
-          projectUserDataFiles = foundProject.dataFolderFiles || [];
+        case 'txt':
+          const projectUserDataFiles = foundProject.dataFolderFiles || [];
           if (!projectUserDataFiles.includes(pasteData.toPasteObject)) {
             projectUserDataFiles.push(pasteData.toPasteObject);
           }
           foundProject.dataFolderFiles = projectUserDataFiles;
-          pasteToFinalPath += "data/" + fileObject;
-          pasteFromPath += "data/" + fileObject;
+          folder = 'data';
           break;
       }
+
+      pasteToFinalPath = kissPaths.projectFilePath(
+        pasteData.pasteToData.pasteWhereUser.userName,
+        foundProject.projectName,
+        folder,
+        fileObject,
+      );
+      pasteFromPath = kissPaths.projectFilePath(
+        pasteData.pasteFromData.toPasteObject.copyObjectUser.userName,
+        pasteData.pasteFromData.toPasteObject.copyObjectProject.projectName,
+        folder,
+        fileObject,
+      );
 
       try {
         await fs.writeFile(
           usersJsonPath,
           JSON.stringify(usersData, null, 2),
-          "utf-8"
+          'utf-8',
         );
 
         //Create file at pasteToFinalPath with contents from pasteFromPath
         try {
           //get contents from pasteFromPath
-          const fileContents = await fs.readFile(pasteFromPath, "utf-8");
-          await fs.writeFile(pasteToFinalPath, fileContents, "utf-8");
+          const fileContents = await fs.readFile(pasteFromPath, 'utf-8');
+          await fs.writeFile(pasteToFinalPath, fileContents, 'utf-8');
 
           return [pasteToFinalPath, pasteFromPath];
         } catch (error) {
-          console.error("Error pasting file:", error);
+          console.error('Error pasting file:', error);
         }
       } catch (error) {
-        console.error("Error updating users.json:", error);
+        console.error('Error updating users.json:', error);
       }
     }
   }
@@ -2379,22 +2460,26 @@ async function pasteFiletoProject(pasteData, usersData) {
 
 //Paste project to user
 async function pasteProjectToUser(pasteData, usersData) {
-  let pasteToFinalPath = "/home/kipr/Documents/KISS/";
-  let pasteFromPath = `/home/kipr/Documents/KISS/${pasteData.pasteFromData.toPasteObject.copyObjectUser.userName}/${pasteData.pasteFromData.toPasteObject.copyObjectProject.projectName}/`;
+  let pasteToFinalPath = '';
+  let pasteFromPath = '';
 
   const projectObject = pasteData.pasteFromData.toPasteObject.copyObjectProject;
 
   if (usersData[pasteData.pasteToData.pasteWhereUser.userName]) {
-    pasteToFinalPath +=
-      pasteData.pasteToData.pasteWhereUser.userName +
-      "/" +
-      projectObject.projectName;
+    pasteToFinalPath = kissPaths.projectDirectory(
+      pasteData.pasteToData.pasteWhereUser.userName,
+      projectObject.projectName,
+    );
+    pasteFromPath = kissPaths.projectDirectory(
+      pasteData.pasteFromData.toPasteObject.copyObjectUser.userName,
+      pasteData.pasteFromData.toPasteObject.copyObjectProject.projectName,
+    );
 
     const userProjects =
       usersData[pasteData.pasteToData.pasteWhereUser.userName].projects || [];
 
     const foundProject = userProjects.find(
-      (project) => project.projectName === projectObject.projectName
+      (project) => project.projectName === projectObject.projectName,
     );
     if (!foundProject) {
       try {
@@ -2409,41 +2494,41 @@ async function pasteProjectToUser(pasteData, usersData) {
             await fs.writeFile(
               usersJsonPath,
               JSON.stringify(usersData, null, 2),
-              "utf-8"
+              'utf-8',
             );
 
             return [pasteToFinalPath, pasteFromPath];
           } catch (error) {
-            console.error("Error updating users.json:", error);
+            console.error('Error updating users.json:', error);
           }
         } catch (error) {
-          console.error("Error creating project directory:", error);
+          console.error('Error creating project directory:', error);
           return;
         }
       } catch (error) {
-        console.error("Error updating user projects:", error);
+        console.error('Error updating user projects:', error);
       }
     }
   }
 }
 
-app.post("/paste-object", async (req, res) => {
-  console.log("Received request body:", req.body);
+app.post('/paste-object', async (req, res) => {
+  console.log('Received request body:', req.body);
   const { pasteData } = req.body;
-  const usersData = JSON.parse(await fs.readFile(usersJsonPath, "utf8"));
+  const usersData = JSON.parse(await fs.readFile(usersJsonPath, 'utf8'));
 
-  let pasteToFinalPath = "";
-  let pasteFromPath = "";
+  let pasteToFinalPath = '';
+  let pasteFromPath = '';
 
   //Pasted object is a file to a project
   if (
     pasteData.pasteFromData.toPasteObject.copyObjectFile &&
-    typeof pasteData.pasteFromData.toPasteObject.copyObjectFile === "string"
+    typeof pasteData.pasteFromData.toPasteObject.copyObjectFile === 'string'
   ) {
-    console.log("Pasting file to project");
+    console.log('Pasting file to project');
     [pasteToFinalPath, pasteFromPath] = await pasteFiletoProject(
       pasteData,
-      usersData
+      usersData,
     );
   }
   //Pasted object is a project to a user
@@ -2451,31 +2536,31 @@ app.post("/paste-object", async (req, res) => {
     pasteData.pasteFromData.toPasteObject.copyObjectProject &&
     pasteData.pasteFromData.toPasteObject.copyObjectProject.projectName
   ) {
-    console.log("Pasting project to user");
+    console.log('Pasting project to user');
     [pasteToFinalPath, pasteFromPath] = await pasteProjectToUser(
       pasteData,
-      usersData
+      usersData,
     );
   }
 
-  console.log("Final paste path:", pasteToFinalPath);
-  console.log("Final paste from path:", pasteFromPath);
+  console.log('Final paste path:', pasteToFinalPath);
+  console.log('Final paste from path:', pasteFromPath);
 
   return res.status(200).json({
-    message: "Object pasted successfully",
+    message: 'Object pasted successfully',
   });
 });
 
-app.post("/upload-user", async (req, res) => {
+app.post('/upload-user', async (req, res) => {
   const { user, configFile } = req.body;
-  console.log("/upload-user received request body:", req.body);
+  console.log('/upload-user received request body:', req.body);
 
   let usersData = {};
 
   const userConfigContent = JSON.parse(configFile.content);
 
   try {
-    const userData = await fs.readFile(usersJsonPath, "utf-8");
+    const userData = await fs.readFile(usersJsonPath, 'utf-8');
     usersData = JSON.parse(userData);
 
     const foundUser = userData[user.userName];
@@ -2486,35 +2571,44 @@ app.post("/upload-user", async (req, res) => {
       await fs.writeFile(
         usersJsonPath,
         JSON.stringify(usersData, null, 2),
-        "utf-8"
+        'utf-8',
       );
-      console.log("Updated users.json successfully");
+      console.log('Updated users.json successfully');
     }
   } catch (error) {
-    console.error("Error reading users.json:", error);
-    return res.status(500).json({ error: "Internal server error" });
+    console.error('Error reading users.json:', error);
+    return res.status(500).json({ error: 'Internal server error' });
   }
 
   //create user directory
-  const userDirectory = path.join("/home/kipr/Documents/KISS", user.userName);
+  let userDirectory;
+  let userConfigPath;
+  try {
+    userDirectory = kissPaths.userDirectory(user.userName);
+    userConfigPath = kissPaths.userConfigPath(user.userName);
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
   try {
     await fs.mkdir(userDirectory, { recursive: true });
-    console.log("User directory created:", userDirectory);
+    console.log('User directory created:', userDirectory);
 
     // Write user config file
-    const userConfigPath = path.join(userDirectory, ".user.config.json");
     await fs.writeFile(
       userConfigPath,
       JSON.stringify(userConfigContent[user.userName], null, 2),
-      "utf-8"
+      'utf-8',
     );
-    console.log("User config file created:", userConfigPath);
+    console.log('User config file created:', userConfigPath);
     const projects = user.projects || [];
     for (const project of projects) {
-      const projectDirectory = path.join(userDirectory, project.projectName);
-      const projectConfigPath = path.join(
-        projectDirectory,
-        ".project.config.json"
+      const projectDirectory = kissPaths.projectDirectory(
+        user.userName,
+        project.projectName,
+      );
+      const projectConfigPath = kissPaths.projectConfigPath(
+        user.userName,
+        project.projectName,
       );
 
       // Check if project directory already exists
@@ -2524,26 +2618,30 @@ app.post("/upload-user", async (req, res) => {
       } catch {
         // Create project directory if it doesn't exist
         await fs.mkdir(projectDirectory, { recursive: true });
-        console.log("Project directory created:", projectDirectory);
+        console.log('Project directory created:', projectDirectory);
 
         // Write project config file
         await fs.writeFile(
           projectConfigPath,
           JSON.stringify(
             userConfigContent[user.userName].projects.find(
-              (p) => p.projectName === project.projectName
+              (p) => p.projectName === project.projectName,
             ),
             null,
-            2
+            2,
           ),
-          "utf-8"
+          'utf-8',
         );
-        console.log("Project config file created:", projectConfigPath);
+        console.log('Project config file created:', projectConfigPath);
 
         // Create project folders
-        const folders = ["bin", "include", "src", "data"];
+        const folders = ['bin', 'include', 'src', 'data'];
         for (const folder of folders) {
-          const folderPath = path.join(projectDirectory, folder);
+          const folderPath = kissPaths.projectSubdirectory(
+            user.userName,
+            project.projectName,
+            folder,
+          );
           try {
             await fs.mkdir(folderPath, { recursive: true });
             console.log(`Folder created: ${folderPath}`);
@@ -2552,19 +2650,24 @@ app.post("/upload-user", async (req, res) => {
           }
 
           switch (folder) {
-            case "include":
+            case 'include':
               if (
                 project.includeFolderFiles &&
                 project.includeFolderFiles.length > 0
               ) {
                 console.log(
-                  "Creating include files:",
-                  project.includeFolderFiles
+                  'Creating include files:',
+                  project.includeFolderFiles,
                 );
                 for (const file of project.includeFolderFiles) {
-                  const filePath = path.join(folderPath, file.name);
+                  const filePath = kissPaths.projectFilePath(
+                    user.userName,
+                    project.projectName,
+                    folder,
+                    file.name,
+                  );
                   try {
-                    await fs.writeFile(filePath, file.content, "utf-8");
+                    await fs.writeFile(filePath, file.content, 'utf-8');
                     console.log(`File created: ${filePath}`);
                   } catch (error) {
                     console.error(`Error creating file ${filePath}:`, error);
@@ -2572,12 +2675,17 @@ app.post("/upload-user", async (req, res) => {
                 }
               }
               break;
-            case "src":
+            case 'src':
               if (project.srcFolderFiles && project.srcFolderFiles.length > 0) {
                 for (const file of project.srcFolderFiles) {
-                  const filePath = path.join(folderPath, file.name);
+                  const filePath = kissPaths.projectFilePath(
+                    user.userName,
+                    project.projectName,
+                    folder,
+                    file.name,
+                  );
                   try {
-                    await fs.writeFile(filePath, file.content, "utf-8");
+                    await fs.writeFile(filePath, file.content, 'utf-8');
                     console.log(`File created: ${filePath}`);
                   } catch (error) {
                     console.error(`Error creating file ${filePath}:`, error);
@@ -2585,15 +2693,20 @@ app.post("/upload-user", async (req, res) => {
                 }
               }
               break;
-            case "data":
+            case 'data':
               if (
                 project.dataFolderFiles &&
                 project.dataFolderFiles.length > 0
               ) {
                 for (const file of project.dataFolderFiles) {
-                  const filePath = path.join(folderPath, file.name);
+                  const filePath = kissPaths.projectFilePath(
+                    user.userName,
+                    project.projectName,
+                    folder,
+                    file.name,
+                  );
                   try {
-                    await fs.writeFile(filePath, file.content, "utf-8");
+                    await fs.writeFile(filePath, file.content, 'utf-8');
                     console.log(`File created: ${filePath}`);
                   } catch (error) {
                     console.error(`Error creating file ${filePath}:`, error);
@@ -2609,8 +2722,8 @@ app.post("/upload-user", async (req, res) => {
       }
     }
   } catch (error) {
-    console.error("Error creating user directory:", error);
-    return res.status(500).json({ error: "Internal server error" });
+    console.error('Error creating user directory:', error);
+    return res.status(500).json({ error: 'Internal server error' });
   }
 
   //Add user to classrooms if classroomName is provided
@@ -2618,70 +2731,75 @@ app.post("/upload-user", async (req, res) => {
 
   try {
     if (userConfigContent[user.userName].classroomName) {
-      const classroomsContent = await fs.readFile(classroomsJsonPath, "utf-8");
+      const classroomsContent = await fs.readFile(classroomsJsonPath, 'utf-8');
       classroomsData = JSON.parse(classroomsContent);
 
       const foundClassroom = classroomsData.classrooms.find(
-        (c) => c.name === userConfigContent[user.userName].classroomName
+        (c) => c.name === userConfigContent[user.userName].classroomName,
       );
 
       if (foundClassroom) {
         //Check if user already exists in the classroom
         const userExists = foundClassroom.users.some(
-          (u) => u.userName === user.userName
+          (u) => u.userName === user.userName,
         );
 
         if (userExists) {
-          console.log("User already exists in classroom, skipping addition.");
+          console.log('User already exists in classroom, skipping addition.');
         } else {
           // Add user to classroom
           foundClassroom.users.push({
             userName: user.userName,
             interfaceMode: userConfigContent[user.userName].interfaceMode,
           });
-          console.log("User added to classroom:", foundClassroom.users);
+          console.log('User added to classroom:', foundClassroom.users);
 
           // Save back to file
           await fs.writeFile(
             classroomsJsonPath,
             JSON.stringify(classroomsData, null, 2),
-            "utf-8"
+            'utf-8',
           );
         }
       }
     }
   } catch (error) {
-    console.error("Error adding user to classrooms:", error);
-    return res.status(500).json({ error: "Internal server error" });
+    console.error('Error adding user to classrooms:', error);
+    return res.status(500).json({ error: 'Internal server error' });
   }
 
   return res.status(200).json({
-    message: "Object pasted successfully",
+    message: 'Object pasted successfully',
   });
 });
 
-app.post("/initialize-user", async (req, res) => {
+app.post('/initialize-user', async (req, res) => {
   const { user } = req.body;
-  console.log("/initialize-user Received request body:", req.body);
+  console.log('/initialize-user Received request body:', req.body);
 
-  const usersJsonPath = "/home/kipr/Documents/KISS/users.json";
-  const userDirectory = `/home/kipr/Documents/KISS/${user.userName}`;
-  const userConfigPath = path.join(userDirectory, ".user.config.json");
+  let userDirectory;
+  let userConfigPath;
+  try {
+    userDirectory = kissPaths.userDirectory(user.userName);
+    userConfigPath = kissPaths.userConfigPath(user.userName);
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
 
   let usersData = {};
   try {
-    const fileContent = await fs.readFile(usersJsonPath, "utf8");
+    const fileContent = await fs.readFile(usersJsonPath, 'utf8');
     usersData = JSON.parse(fileContent);
-    console.log("Current users data:", usersData);
+    console.log('Current users data:', usersData);
   } catch (error) {
-    console.error("Error reading users.json:", error);
+    console.error('Error reading users.json:', error);
   }
 
   const foundUser = usersData[user.userName];
-  console.log("Found user:", foundUser);
+  console.log('Found user:', foundUser);
   try {
     if (!foundUser) {
-      console.log("User not found in users.json, adding user.");
+      console.log('User not found in users.json, adding user.');
       usersData[user.userName] = {
         userName: user.userName,
         interfaceMode: user.interfaceMode,
@@ -2689,7 +2807,7 @@ app.post("/initialize-user", async (req, res) => {
         classroomName: null,
       };
     } else {
-      console.log("User found in users.json, updating user.");
+      console.log('User found in users.json, updating user.');
       foundUser.interfaceMode = user.interfaceMode;
       foundUser.projects = user.projects || [];
     }
@@ -2704,17 +2822,17 @@ app.post("/initialize-user", async (req, res) => {
     await fs.writeFile(
       usersJsonPath,
       JSON.stringify(sortedUsersData, null, 2),
-      "utf-8"
+      'utf-8',
     );
-    console.log("Updated users.json successfully");
+    console.log('Updated users.json successfully');
   } catch (error) {
-    console.error("Error updating users.json:", error);
+    console.error('Error updating users.json:', error);
   }
 
   try {
     await fs.mkdir(userDirectory, { recursive: true });
     await fs.writeFile(
-      userConfigPath, 
+      userConfigPath,
       JSON.stringify(
         {
           [user.userName]: {
@@ -2725,48 +2843,61 @@ app.post("/initialize-user", async (req, res) => {
           },
         },
         null,
-        2
+        2,
       ),
-      "utf-8"
+      'utf-8',
     );
   } catch (error) {
-    console.error("Error writing user config file:", error);
+    console.error('Error writing user config file:', error);
   }
 
   return res.status(200).json({
-    message: "User initialized successfully",
+    message: 'User initialized successfully',
   });
 });
 
-app.post("/initialize-project", async (req, res) => {
+app.post('/initialize-project', async (req, res) => {
   const { user, project, classroomName } = req.body;
-  console.log("/initialize-project Received request body:", req.body);
-  console.log("User projects: ", user.projects);
+  console.log('/initialize-project Received request body:', req.body);
+  console.log('User projects: ', user.projects);
 
   // Validate input early
   if (!user || !project) {
-    return res.status(400).json({ error: "Missing required fields." });
+    return res.status(400).json({ error: 'Missing required fields.' });
   }
-  const usersJsonPath = "/home/kipr/Documents/KISS/users.json";
-  const userDirectory = `/home/kipr/Documents/KISS/${user.userName}`;
-  const userConfigPath = path.join(userDirectory, ".user.config.json");
-  const projectDirectory = path.join(userDirectory, project.projectName);
-  const projectConfigPath = path.join(projectDirectory, ".project.config.json");
+  let userDirectory;
+  let userConfigPath;
+  let projectDirectory;
+  let projectConfigPath;
+  try {
+    userDirectory = kissPaths.userDirectory(user.userName);
+    userConfigPath = kissPaths.userConfigPath(user.userName);
+    projectDirectory = kissPaths.projectDirectory(
+      user.userName,
+      project.projectName,
+    );
+    projectConfigPath = kissPaths.projectConfigPath(
+      user.userName,
+      project.projectName,
+    );
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
 
   let usersData = {};
   try {
-    const fileContent = await fs.readFile(usersJsonPath, "utf8");
+    const fileContent = await fs.readFile(usersJsonPath, 'utf8');
     usersData = JSON.parse(fileContent);
-    console.log("Current users data:", usersData);
+    console.log('Current users data:', usersData);
   } catch (error) {
-    console.error("Error reading users.json:", error);
+    console.error('Error reading users.json:', error);
   }
 
   const foundUser = usersData[user.userName];
-  console.log("Found user:", foundUser);
+  console.log('Found user:', foundUser);
   try {
     if (!foundUser) {
-      console.log("User not found in users.json, adding user.");
+      console.log('User not found in users.json, adding user.');
       usersData[user.userName] = {
         userName: user.userName,
         interfaceMode: user.interfaceMode,
@@ -2774,7 +2905,7 @@ app.post("/initialize-project", async (req, res) => {
         classroomName: classroomName || null,
       };
     } else {
-      console.log("User found in users.json, updating user.");
+      console.log('User found in users.json, updating user.');
       foundUser.interfaceMode = user.interfaceMode;
       foundUser.projects = user.projects || [];
     }
@@ -2789,11 +2920,11 @@ app.post("/initialize-project", async (req, res) => {
     await fs.writeFile(
       usersJsonPath,
       JSON.stringify(sortedUsersData, null, 2),
-      "utf-8"
+      'utf-8',
     );
-    console.log("Updated users.json successfully");
+    console.log('Updated users.json successfully');
   } catch (error) {
-    console.error("Error updating users.json:", error);
+    console.error('Error updating users.json:', error);
   }
 
   try {
@@ -2810,16 +2941,16 @@ app.post("/initialize-project", async (req, res) => {
           },
         },
         null,
-        2
+        2,
       ),
-      "utf-8"
+      'utf-8',
     );
 
     try {
       await fs.access(projectDirectory);
       return res
         .status(409)
-        .json({ error: "Project directory already exists." });
+        .json({ error: 'Project directory already exists.' });
     } catch {
       // Continue to create project
     }
@@ -2836,28 +2967,34 @@ app.post("/initialize-project", async (req, res) => {
           dataFolderFiles: project.dataFolderFiles || [],
         },
         null,
-        2
+        2,
       ),
-      "utf-8"
+      'utf-8',
     );
 
-    const folders = ["bin", "include", "src", "data"];
+    const folders = ['bin', 'include', 'src', 'data'];
     for (const folder of folders) {
-      await fs.mkdir(path.join(projectDirectory, folder), { recursive: true });
+      await fs.mkdir(
+        kissPaths.projectSubdirectory(user.userName, project.projectName, folder),
+        { recursive: true },
+      );
     }
 
-    const mainFilePath = path.join(
-      projectDirectory,
-      "src",
-      extensions[project.projectLanguage]
-        ? `main.${extensions[project.projectLanguage]}`
-        : ""
+    const mainFileName = extensions[project.projectLanguage]
+      ? `main.${extensions[project.projectLanguage]}`
+      : '';
+    const mainFilePath = kissPaths.projectFilePath(
+      user.userName,
+      project.projectName,
+      'src',
+      mainFileName,
     );
 
     const templates = {
       c: `#include <stdio.h>\n#include <kipr/wombat.h>\n\nint main()\n{\n  printf("Hello, World!\\n");\n  return 0;\n}\n`,
-      cpp: `#include <iostream>\n#include <kipr/wombat.hpp>\n\nint main()\n{\n  std::cout << "Hello, World!" << std::endl;\n  return 0;\n}\n`,
-      python: '#!/usr/bin/python3\nimport os, sys\nsys.path.append("/usr/lib")\nimport _kipr as k\n\ndef main():\n\tprint("Hello, World!")\n\nmain()',
+      cpp: `#include <iostream>\n#include <kipr/wombat.h>\n\nint main()\n{\n  std::cout << "Hello, World!" << std::endl;\n  return 0;\n}\n`,
+      python:
+        '#!/usr/bin/python3\nimport os, sys\nsys.path.append("/usr/lib")\nimport _kipr as k\n\ndef main():\n\tprint("Hello, World!")\n\nmain()',
       graphical: `<xml xmlns="http://www.w3.org/1999/xhtml">
                 <variables></variables>
                 <block type="control_run" id="Tr7;}P}KM[{|.$;Wo9_1" x="176" y="129">
@@ -2880,68 +3017,73 @@ app.post("/initialize-project", async (req, res) => {
     } catch {
       await fs.writeFile(
         mainFilePath,
-        templates[project.projectLanguage] ?? "",
-        "utf-8"
+        templates[project.projectLanguage] ?? '',
+        'utf-8',
       );
     }
 
-    console.log("Initial files and folder structure committed.");
+    console.log('Initial files and folder structure committed.');
     return res.status(200).json({
-      message: "User Project folder created successfully",
+      message: 'User Project folder created successfully',
     });
   } catch (error) {
-    console.error("Error initializing project:", error);
-    return res.status(500).send("Error initializing project.");
+    console.error('Error initializing project:', error);
+    return res.status(500).send('Error initializing project.');
   }
 });
 
 //Delete file
-app.post("/delete-file", async (req, res) => {
+app.post('/delete-file', async (req, res) => {
   const { userName, projectName, fileName, fileType } = req.body;
 
   if (!userName || !projectName || !fileName || !fileType) {
-    return res.status(400).json({ error: "Missing required fields." });
+    return res.status(400).json({ error: 'Missing required fields.' });
   }
 
-  let fileTypeDirectory = "";
-  let userProjectDirectory = "";
+  let fileTypeDirectory = '';
+  let folder = '';
   switch (fileType) {
-    case "h":
-      userProjectDirectory = `/home/kipr/Documents/KISS/${userName}/${projectName}/include`;
-      fileTypeDirectory = "includeFolderFiles";
+    case 'h':
+      folder = 'include';
+      fileTypeDirectory = 'includeFolderFiles';
       break;
-    case "c":
-    case "cpp":
-    case "py":
-    case "graphical":
-      userProjectDirectory = `/home/kipr/Documents/KISS/${userName}/${projectName}/src`;
-      fileTypeDirectory = "srcFolderFiles";
+    case 'c':
+    case 'cpp':
+    case 'py':
+    case 'graphical':
+      folder = 'src';
+      fileTypeDirectory = 'srcFolderFiles';
       break;
-    case "txt":
-      userProjectDirectory = `/home/kipr/Documents/KISS/${userName}/${projectName}/data`;
-      fileTypeDirectory = "dataFolderFiles";
+    case 'txt':
+      folder = 'data';
+      fileTypeDirectory = 'dataFolderFiles';
       break;
     default:
-      return res.status(400).json({ error: "Invalid file type." });
+      return res.status(400).json({ error: 'Invalid file type.' });
   }
 
-  const filePath = path.join(userProjectDirectory, fileName);
-  console.log("File path to delete:", filePath);
+  let filePath;
+  try {
+    filePath = kissPaths.projectFilePath(userName, projectName, folder, fileName);
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
+  console.log('File path to delete:', filePath);
 
   try {
     // Check if the file exists
     await fs.access(filePath);
-    console.log("File exists and is accessible.");
+    console.log('File exists and is accessible.');
 
     //Delete file
     await fs.rm(filePath);
     console.log(`Deleted file path: ${filePath}`);
 
     //Update users.json to remove file from project
-    const usersData = JSON.parse(await fs.readFile(usersJsonPath, "utf8"));
+    const usersData = JSON.parse(await fs.readFile(usersJsonPath, 'utf8'));
     const userProjects = usersData[userName].projects || [];
     const foundProject = userProjects.find(
-      (project) => project.projectName === projectName
+      (project) => project.projectName === projectName,
     );
     if (foundProject) {
       try {
@@ -2951,19 +3093,19 @@ app.post("/delete-file", async (req, res) => {
         await fs.writeFile(
           usersJsonPath,
           JSON.stringify(usersData, null, 2),
-          "utf8"
+          'utf8',
         );
       } catch (error) {
-        console.error("Error updating users.json:", error);
-        return res.status(500).json({ error: "Error updating users.json." });
+        console.error('Error updating users.json:', error);
+        return res.status(500).json({ error: 'Error updating users.json.' });
       }
     }
 
-    return res.status(200).send("File deleted successfully.");
+    return res.status(200).send('File deleted successfully.');
   } catch (error) {
-    if (error.code === "ENOENT") {
+    if (error.code === 'ENOENT') {
       // File not found
-      return res.status(404).json({ error: "File does not exist." });
+      return res.status(404).json({ error: 'File does not exist.' });
     }
 
     // Internal server error
@@ -2974,27 +3116,31 @@ app.post("/delete-file", async (req, res) => {
 });
 
 //Delete project
-app.post("/delete-project", async (req, res) => {
+app.post('/delete-project', async (req, res) => {
   const { userName, projectName } = req.body;
 
   if (!userName || !projectName) {
-    return res.status(400).json({ error: "Missing required fields." });
+    return res.status(400).json({ error: 'Missing required fields.' });
   }
 
-  const userDirectory = `/home/kipr/Documents/KISS/${userName}`;
-  const projectDirectory = path.join(userDirectory, projectName);
-  const usersData = JSON.parse(await fs.readFile(usersJsonPath, "utf-8"));
+  let projectDirectory;
+  try {
+    projectDirectory = kissPaths.projectDirectory(userName, projectName);
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
+  const usersData = JSON.parse(await fs.readFile(usersJsonPath, 'utf-8'));
   const userProjects = usersData[userName].projects || [];
   const foundProject = userProjects.find(
-    (project) => project.projectName === projectName
+    (project) => project.projectName === projectName,
   );
   if (foundProject) {
     try {
       userProjects.splice(userProjects.indexOf(foundProject), 1);
       await fs.writeFile(usersJsonPath, JSON.stringify(usersData, null, 2));
     } catch (error) {
-      console.error("Error updating users.json:", error);
-      return res.status(500).json({ error: "Failed to update users.json" });
+      console.error('Error updating users.json:', error);
+      return res.status(500).json({ error: 'Failed to update users.json' });
     }
   }
 
@@ -3007,82 +3153,87 @@ app.post("/delete-project", async (req, res) => {
 
     console.log(`Deleted project directory: ${projectDirectory}`);
 
-    res.status(200).send("Repository deleted successfully.");
+    res.status(200).send('Repository deleted successfully.');
   } catch (error) {
-    console.error("Error deleting repository:", error);
-    res.status(500).send("Error deleting repository.");
+    console.error('Error deleting repository:', error);
+    res.status(500).send('Error deleting repository.');
   }
 });
 
 //Delete user
-app.post("/delete-user", async (req, res) => {
+app.post('/delete-user', async (req, res) => {
   const { user } = req.body;
-  console.log("Received request body:", req.body);
+  console.log('Received request body:', req.body);
 
   if (!user) {
-    return res.status(400).json({ error: "Missing required fields." });
+    return res.status(400).json({ error: 'Missing required fields.' });
   }
-  const jsonPath = "/home/kipr/Documents/KISS/users.json";
-  const userDirectory = `/home/kipr/Documents/KISS/${user.userName}`;
-  const classJsonPath = `/home/kipr/Documents/KISS/classrooms/classrooms.json`;
+  const jsonPath = usersJsonPath;
+  const classJsonPath = classroomsJsonPath;
+  let userDirectory;
+  try {
+    userDirectory = kissPaths.userDirectory(user.userName);
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
 
   try {
     await fs.access(jsonPath);
 
-    const existingData = JSON.parse(await fs.readFile(jsonPath, "utf8"));
+    const existingData = JSON.parse(await fs.readFile(jsonPath, 'utf8'));
 
     if (!existingData[user.userName]) {
-      return res.status(404).json({ error: "User not found in users.json." });
+      return res.status(404).json({ error: 'User not found in users.json.' });
     }
 
     delete existingData[user.userName];
 
     await fs.writeFile(jsonPath, JSON.stringify(existingData, null, 2));
   } catch (error) {
-    console.error("Error deleting from users.json:", error);
-    return res.status(500).json({ error: "Error deleting from users.json." });
+    console.error('Error deleting from users.json:', error);
+    return res.status(500).json({ error: 'Error deleting from users.json.' });
   }
 
   try {
     // Check if the user exists in classrooms.json
-    console.log("Checking classrooms.json for user:", user);
-    const classData = JSON.parse(await fs.readFile(classJsonPath, "utf8"));
-    console.log("/delete classData: ", classData);
+    console.log('Checking classrooms.json for user:', user);
+    const classData = JSON.parse(await fs.readFile(classJsonPath, 'utf8'));
+    console.log('/delete classData: ', classData);
     const classroom = classData.classrooms.find(
-      (c) => c.name === user.classroomName
+      (c) => c.name === user.classroomName,
     );
 
-    console.log("Found classroom: ", classroom);
+    console.log('Found classroom: ', classroom);
     const classroomUsers = classData.classrooms;
-    console.log("classroomUsers: ", classroomUsers);
+    console.log('classroomUsers: ', classroomUsers);
 
     if (classroom) {
       console.log(`User ${user.userName} found in classroom ${classroom.name}`);
       const foundUser = classroom.users.find(
-        (u) => u.userName === user.userName
+        (u) => u.userName === user.userName,
       );
       if (foundUser) {
         console.log(
-          `Removing user ${user.userName} from classroom ${classroom.name}`
+          `Removing user ${user.userName} from classroom ${classroom.name}`,
         );
         const userIndex = classroom.users.findIndex(
-          (u) => u.userName === user.userName
+          (u) => u.userName === user.userName,
         );
         if (userIndex !== -1) {
           classroom.users.splice(userIndex, 1);
           await fs.writeFile(
             classJsonPath,
             JSON.stringify(classData, null, 2),
-            "utf8"
+            'utf8',
           );
           console.log(
-            `User ${user.userName} removed from classroom ${classroom.name}`
+            `User ${user.userName} removed from classroom ${classroom.name}`,
           );
         }
       }
     }
   } catch (error) {
-    console.error("Error updating classrooms.json:", error);
+    console.error('Error updating classrooms.json:', error);
   }
   try {
     // Check if the project directory exists
@@ -3093,34 +3244,34 @@ app.post("/delete-user", async (req, res) => {
 
     console.log(`Deleted userDirectory directory: ${userDirectory}`);
 
-    res.status(200).send("Repository deleted successfully.");
+    res.status(200).send('Repository deleted successfully.');
   } catch (error) {
-    console.error("Error deleting repository:", error);
-    res.status(500).send("Error deleting repository.");
+    console.error('Error deleting repository:', error);
+    res.status(500).send('Error deleting repository.');
   }
 });
 
-app.post("/delete-classroom", async (req, res) => {
+app.post('/delete-classroom', async (req, res) => {
   const { classroomName } = req.body;
-  console.log("/delete-classroom Received request body:", req.body);
+  console.log('/delete-classroom Received request body:', req.body);
   try {
     const classroomsData = JSON.parse(
-      await fs.readFile(classroomsJsonPath, "utf8")
+      await fs.readFile(classroomsJsonPath, 'utf8'),
     );
 
     // Find the classroom to delete
     const classroomIndex = classroomsData.classrooms.findIndex(
-      (c) => c.name === classroomName
+      (c) => c.name === classroomName,
     );
 
     if (classroomIndex === -1) {
-      return res.status(404).json({ error: "Classroom not found." });
+      return res.status(404).json({ error: 'Classroom not found.' });
     }
 
     //Check if any users are in the classroom
     if (classroomsData.classrooms[classroomIndex].users.length > 0) {
       //Remove classroom from each user in users.json
-      const usersData = JSON.parse(await fs.readFile(usersJsonPath, "utf8"));
+      const usersData = JSON.parse(await fs.readFile(usersJsonPath, 'utf8'));
       classroomsData.classrooms[classroomIndex].users.forEach((user) => {
         if (usersData[user.userName]) {
           // Remove classroom from user
@@ -3131,30 +3282,26 @@ app.post("/delete-classroom", async (req, res) => {
       await fs.writeFile(
         usersJsonPath,
         JSON.stringify(usersData, null, 2),
-        "utf8"
+        'utf8',
       );
-      console.log("Removed classroom from users.");
+      console.log('Removed classroom from users.');
 
       //Remove classroom from each user's .user.config.json
       for (const user of classroomsData.classrooms[classroomIndex].users) {
-        const userConfigPath = path.join(
-          "/home/kipr/Documents/KISS",
-          user.userName,
-          ".user.config.json"
-        );
+        const userConfigPath = kissPaths.userConfigPath(user.userName);
         try {
           const userConfig = JSON.parse(
-            await fs.readFile(userConfigPath, "utf8")
+            await fs.readFile(userConfigPath, 'utf8'),
           );
           if (userConfig.classroomName === classroomName) {
             userConfig.classroomName = null; // Remove classroom name
             await fs.writeFile(
               userConfigPath,
               JSON.stringify(userConfig, null, 2),
-              "utf8"
+              'utf8',
             );
             console.log(
-              `Updated ${user.userName}'s config to remove classroom.`
+              `Updated ${user.userName}'s config to remove classroom.`,
             );
           }
         } catch (error) {
@@ -3170,86 +3317,106 @@ app.post("/delete-classroom", async (req, res) => {
     await fs.writeFile(
       classroomsJsonPath,
       JSON.stringify(classroomsData, null, 2),
-      "utf8"
+      'utf8',
     );
 
     console.log(`Deleted classroom: ${classroomName}`);
-    return res.status(200).json({ message: "Classroom deleted successfully." });
+    return res.status(200).json({ message: 'Classroom deleted successfully.' });
   } catch (error) {
-    console.error("Error deleting classroom:", error);
-    return res.status(500).json({ error: "Internal server error" });
+    console.error('Error deleting classroom:', error);
+    return res.status(500).json({ error: 'Internal server error' });
   }
 });
 
 //Download zip
-app.post("/download-zip", async (req, res) => {
+app.post('/download-zip', async (req, res) => {
   const { userName, projectName, fileName } = req.body;
 
   if (!userName) {
-    return res.status(400).json({ error: "UserName is required" });
+    return res.status(400).json({ error: 'UserName is required' });
   }
 
-  const userDirectory = `/home/kipr/Documents/KISS/${userName}`;
+  let userDirectory;
+  try {
+    userDirectory = kissPaths.userDirectory(userName);
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
   // Check if the directory exists
 
   try {
     await fs.access(userDirectory);
 
     if (fileName) {
-      const [name, extension] = fileName.split(".");
+      const [name, extension] = fileName.split('.');
       //Single file download
       if (!projectName) {
-        return res.status(400).json({ error: "ProjectName is required" });
+        return res.status(400).json({ error: 'ProjectName is required' });
       }
-      let filePath = "";
+      let filePath = '';
       switch (extension) {
-        case "h":
-          filePath = path.join(userDirectory, projectName, "include", fileName);
+        case 'h':
+          filePath = kissPaths.projectFilePath(
+            userName,
+            projectName,
+            'include',
+            fileName,
+          );
           break;
-        case "c":
-        case "cpp":
-        case "py":
-          filePath = path.join(userDirectory, projectName, "src", fileName);
+        case 'c':
+        case 'cpp':
+        case 'py':
+          filePath = kissPaths.projectFilePath(
+            userName,
+            projectName,
+            'src',
+            fileName,
+          );
           break;
-        case "txt":
-          filePath = path.join(userDirectory, projectName, "data", fileName);
+        case 'txt':
+          filePath = kissPaths.projectFilePath(
+            userName,
+            projectName,
+            'data',
+            fileName,
+          );
           break;
       }
 
       await fs.access(filePath);
 
-      const fileContents = await fs.readFile(filePath, "utf-8");
+      const fileContents = await fs.readFile(filePath, 'utf-8');
 
       const extname = path.extname(fileName).toLowerCase();
-      let contentType = "text/plain"; // Default to plain text
-      if (extname === ".json") {
-        contentType = "application/json"; // If it's a JSON file
-      } else if (extname === ".html") {
-        contentType = "text/html"; // If it's an HTML file
+      let contentType = 'text/plain'; // Default to plain text
+      if (extname === '.json') {
+        contentType = 'application/json'; // If it's a JSON file
+      } else if (extname === '.html') {
+        contentType = 'text/html'; // If it's an HTML file
       }
 
-      res.setHeader("Content-Type", contentType);
+      res.setHeader('Content-Type', contentType);
       res.setHeader(
-        "Content-Disposition",
-        `attachment; filename="${fileName}"`
+        'Content-Disposition',
+        `attachment; filename="${fileName}"`,
       );
 
       res.status(200).send(fileContents);
 
       return;
     } else if (projectName) {
-      const projectDirectory = path.join(userDirectory, projectName);
+      const projectDirectory = kissPaths.projectDirectory(userName, projectName);
       // Check if the project directory exists
       await fs.access(projectDirectory);
       const zip = new JSZip();
       const projectFolder = zip.folder(projectName);
       await getAllUserFiles(projectDirectory, projectFolder);
 
-      const zipContent = await zip.generateAsync({ type: "nodebuffer" });
-      res.setHeader("Content-Type", "application/zip");
+      const zipContent = await zip.generateAsync({ type: 'nodebuffer' });
+      res.setHeader('Content-Type', 'application/zip');
       res.setHeader(
-        "Content-Disposition",
-        `attachment; filename=${projectName}.zip`
+        'Content-Disposition',
+        `attachment; filename=${projectName}.zip`,
       );
       res.send(zipContent);
       return;
@@ -3259,106 +3426,109 @@ app.post("/download-zip", async (req, res) => {
     const rootFolder = zip.folder(userName);
     await getAllUserFiles(userDirectory, rootFolder);
 
-    const zipContent = await zip.generateAsync({ type: "nodebuffer" });
-    res.setHeader("Content-Type", "application/zip");
+    const zipContent = await zip.generateAsync({ type: 'nodebuffer' });
+    res.setHeader('Content-Type', 'application/zip');
     res.setHeader(
-      "Content-Disposition",
-      `attachment; filename=${userName}.zip`
+      'Content-Disposition',
+      `attachment; filename=${userName}.zip`,
     );
     res.send(zipContent);
   } catch (error) {
-    console.error("Error while creating ZIP:", error);
-    res.status(500).json({ error: "Failed to create ZIP file" });
+    console.error('Error while creating ZIP:', error);
+    res.status(500).json({ error: 'Failed to create ZIP file' });
   }
 });
 
 //Get all file names in a directory
-app.get("/get-all-file-names", async (req, res) => {
+app.get('/get-all-file-names', async (req, res) => {
   try {
     const dirPath = req.query.dirPath;
 
     if (!dirPath) {
-      return res.status(400).json({ error: "Directory path is required" });
+      return res.status(400).json({ error: 'Directory path is required' });
     }
 
     // Directories to check
-    const allowedDirs = ["src", "include", "data"];
+    const allowedDirs = ['src', 'include', 'data'];
 
     const getAllFileNames = async (dir) => {
       let fileNames = [];
 
       // Read the contents of the directory
       const files = await fs.readdir(dir);
-      console.log("/get-all-file-names - Reading directory:", dir);
-      console.log("Files found:", files);
+      console.log('/get-all-file-names - Reading directory:', dir);
+      console.log('Files found:', files);
 
-      console.log("getAllFileNames: ", files);
+      console.log('getAllFileNames: ', files);
       return files;
     };
 
-    const allFileNames = await getAllFileNames(dirPath);
-    console.log("All file names found:", allFileNames);
+    const safeDirPath = kissPaths.resolveClientPath(dirPath);
+    const allFileNames = await getAllFileNames(safeDirPath);
+    console.log('All file names found:', allFileNames);
 
     // Send the list of file names as the response
     res.status(200).json({
       fileNames: allFileNames,
     });
   } catch (error) {
-    console.error("Error getting file names:", error);
-    res.status(500).send("Error getting file names");
+    console.error('Error getting file names:', error);
+    res.status(500).send('Error getting file names');
   }
 });
 
 //Get project language
-app.get("/get-project-language", async (req, res) => {
+app.get('/get-project-language', async (req, res) => {
   try {
-    const gitConfigPath = path.join(req.query.filePath, ".git/config");
+    const gitConfigPath = path.join(
+      kissPaths.resolveClientPath(req.query.filePath),
+      '.git/config',
+    );
 
     //check if .git/config exists
     await fs.access(gitConfigPath);
 
-    const language = parseConfig(await fs.readFile(gitConfigPath, "utf8"));
+    const language = parseConfig(await fs.readFile(gitConfigPath, 'utf8'));
 
     //send the language as the response
     res.status(200).json({
       language,
     });
   } catch (error) {
-    console.error("Error getting project language:", error);
-    res.status(500).send("Error getting project language");
+    console.error('Error getting project language:', error);
+    res.status(500).send('Error getting project language');
   }
 });
 
-
 // User getters
-app.get("/load-users", async (req, res) => {
+app.get('/load-users', async (req, res) => {
   try {
-    const usersJson = `/home/kipr/Documents/KISS/users.json`;
+    const usersJson = usersJsonPath;
     let data = {};
     try {
-      const fileContent = await fs.readFile(usersJson, "utf8");
+      const fileContent = await fs.readFile(usersJson, 'utf8');
       data = JSON.parse(fileContent);
     } catch (error) {
-      console.log("users.json not found, starting fresh.");
+      console.log('users.json not found, starting fresh.');
       data = {};
     }
-    console.log("Current users data:", data);
+    console.log('Current users data:', data);
 
     // Send the list of users as the response
     res.status(200).json({
       users: data,
     });
   } catch (error) {
-    console.error("Error getting users:", error);
-    res.status(500).send("Error getting users");
+    console.error('Error getting users:', error);
+    res.status(500).send('Error getting users');
   }
 });
-app.get("/load-classrooms", async (req, res) => {
+app.get('/load-classrooms', async (req, res) => {
   let classroomData = {};
   try {
-    const classroomsPath = path.join("/home/kipr/Documents/KISS", "classrooms");
+    const classroomsPath = kissPaths.CLASSROOMS_DIR;
     classroomData = JSON.parse(
-      await fs.readFile(path.join(classroomsPath, "classrooms.json"), "utf8")
+      await fs.readFile(path.join(classroomsPath, 'classrooms.json'), 'utf8'),
     );
 
     // Send the list of classrooms as the response
@@ -3366,78 +3536,76 @@ app.get("/load-classrooms", async (req, res) => {
       classrooms: classroomData.classrooms || [],
     });
   } catch (error) {
-    console.error("Error getting classrooms:", error);
-    res.status(500).send("Error getting classrooms");
+    console.error('Error getting classrooms:', error);
+    res.status(500).send('Error getting classrooms');
   }
 });
 
 // Get all users
-app.get("/get-users", async (req, res) => {
-  const usersJsonPath = `/home/kipr/Documents/KISS/users.json`;
+app.get('/get-users', async (req, res) => {
   let data = {};
   try {
-    const fileContent = await fs.readFile(usersJsonPath, "utf8");
+    const fileContent = await fs.readFile(usersJsonPath, 'utf8');
     data = JSON.parse(fileContent);
-    console.log("Current users data:", data);
+    console.log('Current users data:', data);
 
     return res.status(200).json({
       users: Object.keys(data).map((userName) => ({
         userName: userName,
-        interfaceMode: data[userName].interfaceMode || "Simple",
+        interfaceMode: data[userName].interfaceMode || 'Simple',
       })),
     });
   } catch (error) {
-    console.error("Error reading users.json:", error);
-    return res.status(500).json({ error: "Internal server error" });
+    console.error('Error reading users.json:', error);
+    return res.status(500).json({ error: 'Internal server error' });
   }
 });
 
 // Project getterss
-app.get("/get-projects", createFolderHandler());
-app.get("/get-project-folders", createFolderHandler());
+app.get('/get-projects', createFolderHandler());
+app.get('/get-project-folders', createFolderHandler());
 
-
-app.get("/get-project-data", async (req, res) => {
+app.get('/get-project-data', async (req, res) => {
   try {
     const user = req.query.user;
-    console.log("req.query:", req.query);
+    console.log('req.query:', req.query);
   } catch (error) {
-    console.error("Error getting project data:", error);
-    res.status(500).send("Error getting project data");
+    console.error('Error getting project data:', error);
+    res.status(500).send('Error getting project data');
   }
 });
 
 // File content getters
-app.get("/get-file-contents", getFileContents());
+app.get('/get-file-contents', getFileContents());
 
 //File content setters
-app.post("/save-file-content", saveFileContents());
+app.post('/save-file-content', saveFileContents());
 
-app.post("/add-user-to-classroom", express.json(), async (req, res) => {
+app.post('/add-user-to-classroom', express.json(), async (req, res) => {
   const { classroom, userName } = req.body;
   try {
     const result = await addUserToClassroom(userName, classroom);
-    console.log("addUserToClassroom result: ", result);
+    console.log('addUserToClassroom result: ', result);
     if (result) {
       res
         .status(200)
-        .json({ message: "User added to classroom successfully." });
+        .json({ message: 'User added to classroom successfully.' });
     } else {
-      res.status(400).json({ message: "Failed to add user to classroom." });
+      res.status(400).json({ message: 'Failed to add user to classroom.' });
     }
   } catch (error) {
-    console.error("Error adding user to classroom:", error);
-    res.status(500).send("Error adding user to classroom");
+    console.error('Error adding user to classroom:', error);
+    res.status(500).send('Error adding user to classroom');
   }
 });
 
 //Change interface mode
-app.post("/change-interface-mode", (req, res) => {
+app.post('/change-interface-mode', (req, res) => {
   const { user, newMode } = req.body;
-  console.log("Received request body:", req.body);
+  console.log('Received request body:', req.body);
 
   if (!user || !newMode) {
-    return res.status(400).json({ error: "Missing userName or newMode" });
+    return res.status(400).json({ error: 'Missing userName or newMode' });
   }
 
   const success = setUserInterfaceMode(user.userName, newMode);
@@ -3447,32 +3615,32 @@ app.post("/change-interface-mode", (req, res) => {
       message: `Interface mode updated to ${newMode} for ${user.userName}`,
     });
   } else {
-    res.status(500).json({ error: "Failed to update interface mode" });
+    res.status(500).json({ error: 'Failed to update interface mode' });
   }
 });
 
 //Rename user, project, or file
-app.post("/rename", async (req, res) => {
-  console.log("usersJsonPath:", usersJsonPath);
+app.post('/rename', async (req, res) => {
+  console.log('usersJsonPath:', usersJsonPath);
 
-  console.log("Received request body:", req.body);
-  const usersData = JSON.parse(await fs.readFile(usersJsonPath, "utf8"));
+  console.log('Received request body:', req.body);
+  const usersData = JSON.parse(await fs.readFile(usersJsonPath, 'utf8'));
   const classroomsData = JSON.parse(
-    await fs.readFile(classroomsJsonPath, "utf8")
+    await fs.readFile(classroomsJsonPath, 'utf8'),
   );
-  console.log("classroomsData:", classroomsData);
+  console.log('classroomsData:', classroomsData);
 
-  if (req.body.renameType === "Classroom") {
+  if (req.body.renameType === 'Classroom') {
     //Check if classroom name already exists
     try {
       const classroomExists = classroomsData.classrooms.some(
-        (classroom) => classroom.name === req.body.newClassroomName
+        (classroom) => classroom.name === req.body.newClassroomName,
       );
       if (classroomExists) {
-        return res.status(409).json({ error: "Classroom name already exists" });
+        return res.status(409).json({ error: 'Classroom name already exists' });
       }
     } catch (error) {
-      console.error("Error checking classroom name:", error);
+      console.error('Error checking classroom name:', error);
     }
     //Rename classroom name in users.json
     try {
@@ -3485,10 +3653,10 @@ app.post("/rename", async (req, res) => {
       await fs.writeFile(
         usersJsonPath,
         JSON.stringify(usersData, null, 2),
-        "utf8"
+        'utf8',
       );
     } catch (error) {
-      console.error("Error renaming classroom in users.json: ", error);
+      console.error('Error renaming classroom in users.json: ', error);
     }
 
     //Now rename classroom name in classrooms.json
@@ -3497,29 +3665,29 @@ app.post("/rename", async (req, res) => {
         ([index, classroom]) => {
           console.log(`Classroom ${index}: ${classroom.name}`);
           if (classroom.name === req.body.oldClassroomName) {
-            console.log("Renaming classroom:", classroom.name);
+            console.log('Renaming classroom:', classroom.name);
             classroom.name = req.body.newClassroomName;
           }
-        }
+        },
       );
       await fs.writeFile(
         classroomsJsonPath,
         JSON.stringify(classroomsData, null, 2),
-        "utf8"
+        'utf8',
       );
     } catch (error) {
-      console.error("Error renaming classroom in classrooms.json: ", error);
+      console.error('Error renaming classroom in classrooms.json: ', error);
     }
 
     res.status(200).json({
-      message: "Classroom renamed successfully",
+      message: 'Classroom renamed successfully',
       oldClassroomName: req.body.oldClassroomName,
       newClassroomName: req.body.newClassroomName,
     });
-  } else if (req.body.renameType === "User") {
+  } else if (req.body.renameType === 'User') {
     try {
-      const oldUserDirectory = path.join(defaultPath, req.body.oldUserName);
-      const desiredUserDirectory = path.join(defaultPath, req.body.newUserName);
+      const oldUserDirectory = kissPaths.userDirectory(req.body.oldUserName);
+      const desiredUserDirectory = kissPaths.userDirectory(req.body.newUserName);
       // Check if the new desired user directory already exists
 
       try {
@@ -3527,7 +3695,7 @@ app.post("/rename", async (req, res) => {
         // If no error, the path exists
         return res
           .status(409)
-          .json({ error: "Project directory already exists" });
+          .json({ error: 'Project directory already exists' });
       } catch (err) {
         // Path does NOT exist — continue
       }
@@ -3535,12 +3703,12 @@ app.post("/rename", async (req, res) => {
       await fs.rename(oldUserDirectory, desiredUserDirectory);
 
       console.log(
-        `Renamed user directory: ${oldUserDirectory} to ${desiredUserDirectory}`
+        `Renamed user directory: ${oldUserDirectory} to ${desiredUserDirectory}`,
       );
 
-      const data = await fs.readFile(usersJsonPath, "utf8");
+      const data = await fs.readFile(usersJsonPath, 'utf8');
       let usersData = JSON.parse(data);
-      console.log("Current users data:", usersData);
+      console.log('Current users data:', usersData);
       // Update the user entry
       if (usersData[req.body.oldUserName]) {
         usersData[req.body.newUserName] = {
@@ -3548,49 +3716,45 @@ app.post("/rename", async (req, res) => {
           userName: req.body.newUserName,
         };
         delete usersData[req.body.oldUserName];
-        console.log("Preparing to write to users.json...");
-        console.log("Path:", usersJsonPath);
-        console.log("Data:", JSON.stringify(usersData, null, 2));
+        console.log('Preparing to write to users.json...');
+        console.log('Path:', usersJsonPath);
+        console.log('Data:', JSON.stringify(usersData, null, 2));
         await fs.writeFile(
           usersJsonPath,
           JSON.stringify(usersData, null, 2),
-          "utf8"
+          'utf8',
         );
 
         if (usersData[req.body.newUserName].classroomName) {
           console.log(
-            "usersData[req.body.newUserName].classroomName: ",
-            usersData[req.body.newUserName].classroomName
+            'usersData[req.body.newUserName].classroomName: ',
+            usersData[req.body.newUserName].classroomName,
           );
           // Update classroom name in classrooms.json
-          const classJsonPath = path.join(
-            defaultPath,
-            "classrooms",
-            "classrooms.json"
-          );
+          const classJsonPath = classroomsJsonPath;
           const classData = JSON.parse(
-            await fs.readFile(classJsonPath, "utf8")
+            await fs.readFile(classJsonPath, 'utf8'),
           );
-          console.log("classData: ", classData);
+          console.log('classData: ', classData);
 
           const classroom = classData.classrooms.find(
-            (c) => c.name === usersData[req.body.newUserName].classroomName
+            (c) => c.name === usersData[req.body.newUserName].classroomName,
           );
 
           if (classroom) {
-            console.log("Renaming user in classroom:", classroom.name);
-            console.log("Classroom.users: ", classroom.users);
+            console.log('Renaming user in classroom:', classroom.name);
+            console.log('Classroom.users: ', classroom.users);
             console.log(
-              "userObj: ",
+              'userObj: ',
               classroom.users.find(
-                (user) => user.userName === req.body.oldUserName
-              )
+                (user) => user.userName === req.body.oldUserName,
+              ),
             );
             const foundUser = classroom.users.find(
-              (user) => user.userName === req.body.oldUserName
+              (user) => user.userName === req.body.oldUserName,
             );
             if (foundUser) {
-              console.log("Found user in classroom:", foundUser);
+              console.log('Found user in classroom:', foundUser);
               foundUser.userName = req.body.newUserName;
             }
           }
@@ -3598,35 +3762,34 @@ app.post("/rename", async (req, res) => {
           await fs.writeFile(
             classJsonPath,
             JSON.stringify(classData, null, 2),
-            "utf8"
+            'utf8',
           );
 
-          console.log("Update classData: ", classData);
+          console.log('Update classData: ', classData);
         }
       } else {
         console.warn(`User ${req.body.oldUserName} not found in users.json.`);
       }
 
       res.status(200).json({
-        message: "User renamed successfully",
+        message: 'User renamed successfully',
         oldUserName: req.body.oldUserName,
         newUserName: req.body.newUserName,
         path: desiredUserDirectory,
       });
     } catch (error) {
-      console.error("Error renaming user:", error);
-      res.status(500).send("Error renaming user.");
+      console.error('Error renaming user:', error);
+      res.status(500).send('Error renaming user.');
     }
-  } else if (req.body.renameType === "Project") {
+  } else if (req.body.renameType === 'Project') {
     try {
-      const userDirectory = path.join(defaultPath, req.body.userName);
-      const oldProjectDirectory = path.join(
-        userDirectory,
-        req.body.oldProjectName
+      const oldProjectDirectory = kissPaths.projectDirectory(
+        req.body.userName,
+        req.body.oldProjectName,
       );
-      const newProjectDirectory = path.join(
-        userDirectory,
-        req.body.newProjectName
+      const newProjectDirectory = kissPaths.projectDirectory(
+        req.body.userName,
+        req.body.newProjectName,
       );
       // Check if the project directory exists
       await fs.access(oldProjectDirectory);
@@ -3636,19 +3799,19 @@ app.post("/rename", async (req, res) => {
         // If no error, the path exists
         return res
           .status(409)
-          .json({ error: "Project directory already exists" });
+          .json({ error: 'Project directory already exists' });
       } catch (err) {
         //continue
       }
       await fs.rename(oldProjectDirectory, newProjectDirectory);
       try {
         // const usersData = JSON.parse(await fs.readFile(usersJsonPath, "utf8"));
-        console.log("Current users data:", usersData);
+        console.log('Current users data:', usersData);
         if (usersData[req.body.userName]) {
           // Update the project name in users.json
           const userProjects = usersData[req.body.userName].projects || [];
           const projectIndex = userProjects.findIndex(
-            (p) => p.projectName === req.body.oldProjectName
+            (p) => p.projectName === req.body.oldProjectName,
           );
           if (projectIndex !== -1) {
             userProjects[projectIndex].projectName = req.body.newProjectName;
@@ -3656,67 +3819,79 @@ app.post("/rename", async (req, res) => {
             await fs.writeFile(
               usersJsonPath,
               JSON.stringify(usersData, null, 2),
-              "utf8"
+              'utf8',
             );
           }
         }
       } catch (error) {}
 
       res.status(200).json({
-        message: "Project renamed successfully.",
+        message: 'Project renamed successfully.',
         oldProjectName: req.body.oldProjectName,
         newProjectName: req.body.newProjectName,
         userName: req.body.userName,
         path: newProjectDirectory,
       });
     } catch (error) {
-      console.error("Error renaming project:", error);
-      res.status(500).send("Error renaming project.");
+      console.error('Error renaming project:', error);
+      res.status(500).send('Error renaming project.');
     }
-  } else if (req.body.renameType === "File") {
+  } else if (req.body.renameType === 'File') {
     try {
-      const [file, extension] = req.body.oldFileName.split(".");
-      const userDirectory = path.join(defaultPath, req.body.userName);
-      const projectDirectory = path.join(userDirectory, req.body.projectName);
-      let oldFilePath = "";
-      let newFilePath = "";
-      let fileDirectoryType = "";
+      const extension = path.extname(req.body.oldFileName).slice(1);
+      let oldFilePath = '';
+      let newFilePath = '';
+      let fileDirectoryType = '';
       switch (extension) {
-        case "h":
-          oldFilePath = path.join(
-            projectDirectory,
-            `include/${req.body.oldFileName}`
+        case 'h':
+          oldFilePath = kissPaths.projectFilePath(
+            req.body.userName,
+            req.body.projectName,
+            'include',
+            req.body.oldFileName,
           );
-          newFilePath = path.join(
-            projectDirectory,
-            `include/${req.body.newFileName}`
+          newFilePath = kissPaths.projectFilePath(
+            req.body.userName,
+            req.body.projectName,
+            'include',
+            req.body.newFileName,
           );
-          fileDirectoryType = "includeFolderFiles";
+          fileDirectoryType = 'includeFolderFiles';
           break;
-        case "c":
-        case "cpp":
-        case "py":
-          oldFilePath = path.join(
-            projectDirectory,
-            `src/${req.body.oldFileName}`
+        case 'c':
+        case 'cpp':
+        case 'py':
+          oldFilePath = kissPaths.projectFilePath(
+            req.body.userName,
+            req.body.projectName,
+            'src',
+            req.body.oldFileName,
           );
-          newFilePath = path.join(
-            projectDirectory,
-            `src/${req.body.newFileName}`
+          newFilePath = kissPaths.projectFilePath(
+            req.body.userName,
+            req.body.projectName,
+            'src',
+            req.body.newFileName,
           );
-          fileDirectoryType = "srcFolderFiles";
+          fileDirectoryType = 'srcFolderFiles';
           break;
-        case "txt":
-          oldFilePath = path.join(
-            projectDirectory,
-            `data/${req.body.oldFileName}`
+        case 'txt':
+          oldFilePath = kissPaths.projectFilePath(
+            req.body.userName,
+            req.body.projectName,
+            'data',
+            req.body.oldFileName,
           );
-          newFilePath = path.join(
-            projectDirectory,
-            `data/${req.body.newFileName}`
+          newFilePath = kissPaths.projectFilePath(
+            req.body.userName,
+            req.body.projectName,
+            'data',
+            req.body.newFileName,
           );
-          fileDirectoryType = "dataFolderFiles";
+          fileDirectoryType = 'dataFolderFiles';
           break;
+        default:
+          return res.status(400).json({ error: 'Invalid file type.' });
       }
 
       await fs.access(oldFilePath);
@@ -3726,7 +3901,7 @@ app.post("/rename", async (req, res) => {
         // If no error, the path exists
         return res
           .status(409)
-          .json({ error: "Project directory already exists" });
+          .json({ error: 'Project directory already exists' });
       } catch (err) {
         //continue
       }
@@ -3740,31 +3915,31 @@ app.post("/rename", async (req, res) => {
           // Update the file name in users.json
           const userProjects = usersData[req.body.userName].projects || [];
           const projectIndex = userProjects.findIndex(
-            (p) => p.projectName === req.body.projectName
+            (p) => p.projectName === req.body.projectName,
           );
           if (projectIndex !== -1) {
             const projectFiles = userProjects[projectIndex] || [];
-            console.log("projectFiles: ", projectFiles);
+            console.log('projectFiles: ', projectFiles);
             const fileIndex = projectFiles[fileDirectoryType]?.findIndex(
-              (f) => f === req.body.oldFileName
+              (f) => f === req.body.oldFileName,
             );
             if (fileIndex !== -1) {
-              console.log("File: ", projectFiles[fileDirectoryType][fileIndex]);
+              console.log('File: ', projectFiles[fileDirectoryType][fileIndex]);
               projectFiles[fileDirectoryType][fileIndex] = req.body.newFileName;
               await fs.writeFile(
                 usersJsonPath,
                 JSON.stringify(usersData, null, 2),
-                "utf8"
+                'utf8',
               );
             }
           }
         }
       } catch (error) {
-        console.error("Error updating users.json:", error);
+        console.error('Error updating users.json:', error);
       }
 
       res.status(200).json({
-        message: "File renamed successfully",
+        message: 'File renamed successfully',
         oldFileName: req.body.oldFileName,
         newFileName: req.body.newFileName,
         projectName: req.body.projectName,
@@ -3772,7 +3947,7 @@ app.post("/rename", async (req, res) => {
         path: newFilePath,
       });
     } catch (error) {
-      console.error("Error renaming file:", error);
+      console.error('Error renaming file:', error);
     }
   }
 });
@@ -3780,60 +3955,68 @@ app.post("/rename", async (req, res) => {
 let currentChild = null;
 
 // Run code
-app.get("/run-code", (req, res) => {
+app.get('/run-code', (req, res) => {
   const { userName, projectName, activeLanguage } = req.query;
   if (!userName || !projectName || !activeLanguage) {
-    return res.status(400).send("Missing parameters");
+    return res.status(400).send('Missing parameters');
   }
 
-  const userDirectory = `/home/kipr/Documents/KISS/${userName}`;
-  const projectDirectory = path.join(userDirectory, projectName);
-  const bin_directory = path.join(projectDirectory, "/bin");
+  let binaryPath;
+  try {
+    binaryPath = kissPaths.projectBinaryPath(userName, projectName);
+  } catch (error) {
+    return res.status(400).send(error.message);
+  }
 
   let runCommand;
+  let runArgs;
+  const childEnv = { ...process.env };
   switch (activeLanguage) {
-    case "c":
-    case "cpp":
-    case "graphical":
-      runCommand = `"${bin_directory}/botball_user_program"`;
-
+    case 'c':
+    case 'cpp':
+    case 'graphical':
+      runCommand = 'stdbuf';
+      runArgs = ['-oL', binaryPath];
       break;
-    case "python":
-      runCommand = `/bin/bash -c 'export PYTHONPATH=/usr/local/lib && python3 "${bin_directory}/botball_user_program"'`;
+    case 'python':
+      runCommand = 'stdbuf';
+      runArgs = ['-oL', 'python3', binaryPath];
+      childEnv.PYTHONPATH = '/usr/local/lib';
       break;
+    default:
+      return res.status(400).send('Invalid language');
   }
 
-  res.setHeader("Content-Type", "text/event-stream");
-  res.setHeader("Cache-Control", "no-cache");
-  res.setHeader("Connection", "keep-alive");
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
 
-  console.log("Executing:", runCommand);
+  console.log('Executing:', runCommand, runArgs);
 
-  // const child = spawn(runCommand, [], { shell: true, env: { ...process.env, PYTHONPATH: "/usr/local/lib" } });
-  const child = spawn("stdbuf", ["-oL", runCommand], {
-    shell: true,
+  const child = spawn(runCommand, runArgs, {
     detached: true,
+    env: childEnv,
   });
   currentChild = child;
-  child.stdout.on("data", (data) => {
+  child.stdout.on('data', (data) => {
     const output = data.toString();
 
-    console.log("stdout:", output);
-    output.split("\n").forEach((line) => {
-      if (line.trim() !== "") {
+    console.log('stdout:', output);
+    output.split('\n').forEach((line) => {
+      if (line.trim() !== '') {
         res.write(`data: ${line}\n\n`);
         res.flush?.();
       }
     });
   });
 
-  child.stderr.on("data", (data) => {
-    console.error("stderr:", data.toString());
+  child.stderr.on('data', (data) => {
+    console.error('stderr:', data.toString());
     res.write(`data: ERROR: ${data.toString()}\n\n`);
     res.flush?.();
   });
 
-  child.on("close", (code) => {
+  child.on('close', (code) => {
     currentChild = null;
     if (motorPosPollingInterval) {
       clearInterval(motorPosPollingInterval);
@@ -3845,42 +4028,42 @@ app.get("/run-code", (req, res) => {
     }
     console.log(`Process exited with code ${code}`);
     res.write(`data: Process exited with code ${code}\n\n`);
-    res.write("event: end\ndata: END\n\n");
+    res.write('event: end\ndata: END\n\n');
     res.flush?.();
     res.end();
   });
 });
 
 // Stop code
-app.post("/stop-code", (req, res) => {
+app.post('/stop-code', (req, res) => {
   if (currentChild) {
-    if (!motorAddon) motorAddon = require("./build/Release/motor_addon.node");
+    if (!motorAddon) motorAddon = require('./build/Release/motor_addon.node');
     try {
-      process.kill(-currentChild.pid, "SIGKILL"); // Use negative PID to kill the group
+      process.kill(-currentChild.pid, 'SIGKILL'); // Use negative PID to kill the group
       try {
         motorAddon.allOff(); // or motorAddon.off(0), etc.
-        console.log("Motors stopped via addon.");
+        console.log('Motors stopped via addon.');
       } catch (motorErr) {
-        console.error("Failed to stop motors:", motorErr);
+        console.error('Failed to stop motors:', motorErr);
       }
 
-      res.send("Execution stopped");
+      res.send('Execution stopped');
     } catch (err) {
-      console.error("Failed to stop process:", err);
-      res.status(500).send("Failed to stop execution");
+      console.error('Failed to stop process:', err);
+      res.status(500).send('Failed to stop execution');
     }
     currentChild = null;
   } else {
-    res.status(400).send("No process running");
+    res.status(400).send('No process running');
   }
 });
 
-app.post("/feedback", (req, res) => {
+app.post('/feedback', (req, res) => {
   const hookURL = config.server.feedbackWebhookURL;
   if (!hookURL) {
     res.status(500).json({
       message:
-        "The feedback URL is not set on the server. If this is a developoment environment, make sure the feedback URL environment variable is set.",
+        'The feedback URL is not set on the server. If this is a developoment environment, make sure the feedback URL environment variable is set.',
     });
     return;
   }
@@ -3892,21 +4075,21 @@ app.post("/feedback", (req, res) => {
   content += `Sentiment: `;
   switch (body.sentiment) {
     case 0:
-      content += "No sentiment! This is probably a bug";
+      content += 'No sentiment! This is probably a bug';
       break;
     case 1:
-      content += ":frowning2:";
+      content += ':frowning2:';
       break;
     case 2:
-      content += ":expressionless:";
+      content += ':expressionless:';
       break;
     case 3:
-      content += ":smile:";
+      content += ':smile:';
       break;
   }
-  content += "\n";
+  content += '\n';
 
-  if (body.email !== null && body.email !== "") {
+  if (body.email !== null && body.email !== '') {
     content += `User Email: ${body.email}\n`;
   }
 
@@ -3917,7 +4100,7 @@ app.post("/feedback", (req, res) => {
     files = [
       {
         attachment: Buffer.from(JSON.stringify(body.state, undefined, 2)),
-        name: "userdata.json",
+        name: 'userdata.json',
       },
     ];
   }
@@ -3929,7 +4112,7 @@ app.post("/feedback", (req, res) => {
     console.log(error);
     res.status(500).json({
       message:
-        "An error occured on the server. If you are a developer, your webhook url is likely wrong.",
+        'An error occured on the server. If you are a developer, your webhook url is likely wrong.',
     });
     // TODO: write the feedback to a file if an error occurs?
     return;
@@ -3938,54 +4121,54 @@ app.post("/feedback", (req, res) => {
   webhook
     .send({
       content: content,
-      username: "KIPR Simulator Feedback",
+      username: 'KIPR Simulator Feedback',
       avatarURL:
-        "https://www.kipr.org/wp-content/uploads/2018/08/botguy-copy.jpg",
+        'https://www.kipr.org/wp-content/uploads/2018/08/botguy-copy.jpg',
       files: files,
     })
     .then(() => {
       res.status(200).json({
-        message: "Feedback submitted! Thank you!",
+        message: 'Feedback submitted! Thank you!',
       });
     })
     .catch(() => {
       res.status(500).json({
-        message: "An error occured on the server while sending feedback.",
+        message: 'An error occured on the server while sending feedback.',
       });
       // TODO: write the feedback to a file if an error occurs?
     });
 });
 
 app.use(
-  "/static",
+  '/static',
   express.static(`${__dirname}/static`, {
     maxAge: config.caching.staticMaxAge,
-  })
+  }),
 );
 
 // Expose cpython artifacts
 if (config.server.dependencies.cpython) {
-  console.log("CPython artifacts are enabled.");
+  console.log('CPython artifacts are enabled.');
   app.use(
-    "/cpython",
+    '/cpython',
     express.static(`${config.server.dependencies.cpython}`, {
       maxAge: config.caching.staticMaxAge,
-    })
+    }),
   );
 }
 
 // Expose libkipr (Python) artifacts
 if (config.server.dependencies.libkipr_python) {
-  console.log("libkipr (Python) artifacts are enabled.");
+  console.log('libkipr (Python) artifacts are enabled.');
   console.log(
-    "libkipr (Python) artifacts path: ",
-    config.server.dependencies.libkipr_python
+    'libkipr (Python) artifacts path: ',
+    config.server.dependencies.libkipr_python,
   );
   app.use(
-    "/libkipr/python",
+    '/libkipr/python',
     express.static(`${config.server.dependencies.libkipr_python}`, {
       maxAge: config.caching.staticMaxAge,
-    })
+    }),
   );
 }
 
@@ -4008,25 +4191,25 @@ app.use((req, res) => {
   res.sendFile(`${__dirname}/${sourceDir}/index.html`);
 });
 app.use(
-  "/",
-  expressStaticGzip(path.join(__dirname, "dist"), {
+  '/',
+  expressStaticGzip(path.join(__dirname, 'dist'), {
     enableBrotli: true, // serve .br files if available
-    orderPreference: ["br", "gz"],
+    orderPreference: ['br', 'gz'],
     setHeaders: (res, filePath) => {
-      res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
-      res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+      res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+      res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
 
       if (/\.[0-9a-f]{8,}\.min\.(js|css|br|gz)$/.test(filePath)) {
-        res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
-      } else if (filePath.endsWith("index.html")) {
-        res.setHeader("Cache-Control", "no-store");
+        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+      } else if (filePath.endsWith('index.html')) {
+        res.setHeader('Cache-Control', 'no-store');
       }
     },
-  })
+  }),
 );
-server.listen(config.server.port, "0.0.0.0", () => {
+server.listen(config.server.port, '0.0.0.0', () => {
   console.log(
-    `Express and WebSocket server started: http://localhost:${config.server.port}`
+    `Express and WebSocket server started: http://localhost:${config.server.port}`,
   );
   console.log(`Serving content from /${sourceDir}/`);
 });
