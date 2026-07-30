@@ -111,6 +111,8 @@ export interface Theme {
   yesButtonColor: ButtonColor;
   noButtonColor: ButtonColor;
 
+  toolTipBackground: string;
+
   borderColor: string;
   borderRadius: number;
   widget: {
@@ -171,6 +173,7 @@ export const COMMON: Theme = {
   contextMenuBackground: undefined,
   boxShadow: undefined,
   borderRadius: 10,
+  toolTipBackground: undefined,
   widget: {
     padding: 10
   },
@@ -245,6 +248,8 @@ export const LIGHT: Theme = {
   noButtonColor: LIGHTMODE_NO,
   runButtonColor: LIGHTMODE_GREEN,
 
+  toolTipBackground: '#ffffff',
+
   transparentBackgroundColor: (a) => `rgba(255, 255, 255, ${a})`,
   switch: {
     on: {
@@ -313,6 +318,7 @@ export const DARK: Theme = {
   noButtonColor: DARKMODE_NO,
   runButtonColor: GREEN,
 
+  toolTipBackground: '#404040',
   transparentBackgroundColor: (a) => `rgba(${0x21}, ${0x21}, ${0x21}, ${a})`,
   switch: {
     on: {
