@@ -5,6 +5,7 @@ export interface Settings {
   ideEditorDarkMode: boolean;
   classroomView: boolean;
   consoleLayout: "horizontal" | "vertical";
+  terminalAccess: boolean;
 }
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -14,4 +15,5 @@ export const DEFAULT_SETTINGS: Settings = {
   ideEditorDarkMode: false,
   classroomView: false,
   consoleLayout: "horizontal",
+  terminalAccess: false,
 };

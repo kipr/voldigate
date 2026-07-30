@@ -40,7 +40,7 @@ interface SettingsDialogState {
   selectedUser?: User;
   confirmMessage: React.ReactNode;
   successMessage: React.ReactNode;
-
+  terminalAccess: boolean;
   currentStateUser: User;
 }
 interface ClickProps {
@@ -210,6 +210,7 @@ class SettingsDialog extends React.PureComponent<Props, State> {
     const initialUser = Object.keys(this.props.users).length > 0 ? Object.values(this.props.users)[0] : BLANK_USER;
 
     console.log("SettingsDialog constructor props:", props);
+    console.log("terminalAccess:", localStorage.getItem('terminalAccess'));
     this.state = {
       selectedSection: 'user-interface',
       storedTheme: localStorage.getItem('ideEditorDarkMode') === 'true' ? DARK : LIGHT,
@@ -221,6 +222,7 @@ class SettingsDialog extends React.PureComponent<Props, State> {
       successMessage: '',
       consoleLayout: localStorage.getItem('consoleLayout') as 'horizontal' | 'vertical' || 'horizontal',
       classroomView: localStorage.getItem('classroomView') === 'true',
+      terminalAccess: localStorage.getItem('terminalAccess') === 'true' || false
     };
   }
 
@@ -230,6 +232,7 @@ class SettingsDialog extends React.PureComponent<Props, State> {
     const storedTheme = localStorage.getItem('ideEditorDarkMode');
     const consoleLayout = localStorage.getItem('consoleLayout');
     const classroomView = localStorage.getItem('classroomView');
+    const terminalAccess = localStorage.getItem('terminalAccess');
     console.log("Console Layout from localStorage:", consoleLayout);
     if (consoleLayout) {
       this.props.onSettingsChange({ consoleLayout: consoleLayout as 'horizontal' | 'vertical' });
@@ -239,6 +242,9 @@ class SettingsDialog extends React.PureComponent<Props, State> {
     }
     if (classroomView) {
       this.props.onSettingsChange({ classroomView: classroomView === 'true' });
+    }
+    if (terminalAccess) {
+      this.props.onSettingsChange({ terminalAccess: terminalAccess === 'true' });
     }
     const usersArray = Object.values(this.props.users);
     console.log("SettingsDialog componentDidMount usersArray:", usersArray);
@@ -253,7 +259,7 @@ class SettingsDialog extends React.PureComponent<Props, State> {
         text: user.userName, // or any other field you need for ComboBox
       })),
       consoleLayout: consoleLayout as 'horizontal' | 'vertical',
-
+      terminalAccess: terminalAccess === 'true' || false
     });
 
   }
@@ -279,6 +285,11 @@ class SettingsDialog extends React.PureComponent<Props, State> {
     if (prevProps.settings.classroomView !== this.props.settings.classroomView) {
       this.setState({
         classroomView: this.props.settings.classroomView
+      });
+    }
+    if (prevProps.settings.terminalAccess !== this.props.settings.terminalAccess) {
+      this.setState({
+        terminalAccess: this.props.settings.terminalAccess
       });
     }
 
@@ -364,6 +375,9 @@ class SettingsDialog extends React.PureComponent<Props, State> {
             }
             if (updatedSettings.hasOwnProperty('classroomView')) {
               localStorage.setItem('classroomView', updatedSettings.classroomView ? 'true' : 'false');
+            }
+            if (updatedSettings.hasOwnProperty('terminalAccess')) {
+              localStorage.setItem('terminalAccess', updatedSettings.terminalAccess ? 'true' : 'false');
             }
             onSettingsChange(getUpdatedSettings(value));
 
@@ -493,6 +507,12 @@ class SettingsDialog extends React.PureComponent<Props, State> {
                   LocalizedString.lookup(tr('Toggle to arrange users into classrooms'), locale),
                   (settings: Settings) => settings.classroomView,
                   (newValue: boolean) => ({ classroomView: newValue })
+                )}
+                {this.createBooleanSetting(
+                  LocalizedString.lookup(tr('Terminal Access'), locale),
+                  LocalizedString.lookup(tr('Toggle to allow access to the terminal'), locale),
+                  (settings: Settings) => settings.terminalAccess,
+                  (newValue: boolean) => ({ terminalAccess: newValue })
                 )}
                 {userOptions.length > 0 && (
                   <SettingContainer theme={storedTheme} style={{ flexDirection: 'column' }}>
