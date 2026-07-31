@@ -758,9 +758,10 @@ class Root extends React.Component<Props, State> {
       console.log("Root compDidUpdate clickFile props: ", this.props);
       this.props.resetFileExplorerFileSelection(this.props.propFileName);
       switch (otherFileType) {
-        case 'h':
+        case 'include':
           const rootUpdateHeader = await axios.get('/get-file-contents', { params: { filePath: `/home/kipr/Documents/KISS/${propUser.userName}/${propProject.projectName}/include/${propFileName}` } });
           console.log("UPDATE TOSAVECODEREF CLICKFILE HEADER");
+          console.log("rootUpdateHeader.data: ", rootUpdateHeader.data);
           this.toSaveCodeRef.current[propActiveLanguage] = rootUpdateHeader.data;
           this.setState({
             code: {
@@ -1795,7 +1796,7 @@ class Root extends React.Component<Props, State> {
               ) {
                 return {
                   ...p,
-                  includeFolderFiles: [...p.srcFolderFiles, `${newFileName}.${fileType}`],
+                  srcFolderFiles: [...p.srcFolderFiles, `${newFileName}.${fileType}`],
                 };
               }
               return p;
@@ -1803,6 +1804,7 @@ class Root extends React.Component<Props, State> {
           }
 
         }), async () => {
+          console.log("onCloseNewFileDialog_ after setState: ", this.state);
           filePath = `${prePath}/${userName}/${projectName}/src/${newFileName}.${fileType}`;
           const fileContents = this.toSaveCodeRef.current[activeLanguage];
           await axios.post('/save-file-content', { filePath, fileContents });
@@ -1833,7 +1835,7 @@ class Root extends React.Component<Props, State> {
               ) {
                 return {
                   ...p,
-                  includeFolderFiles: [...p.dataFolderFiles, `${newFileName}.txt`],
+                  dataFolderFiles: [...p.dataFolderFiles, `${newFileName}.txt`],
                 };
               }
               return p;
