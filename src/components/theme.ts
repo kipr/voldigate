@@ -281,7 +281,7 @@ export const DARK: Theme = {
   themeName: 'DARK',
   color: '#ffffff',
   textColor: '#ffffff',
-  borderColor: '#323232',
+  borderColor: '#222222',
   foreground: 'black',
   backgroundColor: '#212121',
   verticalLineColor: 'white',

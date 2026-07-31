@@ -9,6 +9,7 @@ import { Fa } from "./Fa";
 import { Text } from "./Text";
 import { ThemeProps } from "./theme";
 import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
+import ScrollArea from "./ScrollArea";
 
 const Container = styled('div', (props: ThemeProps & { $focus?: boolean; $minimal?: boolean; }) => ({
   width: !props.$minimal ? '100%' : undefined,
@@ -31,6 +32,12 @@ const Container = styled('div', (props: ThemeProps & { $focus?: boolean; $minima
   cursor: 'pointer'
 }));
 
+
+const ScrollContainer = styled(ScrollArea, {
+  flex: '1 1',
+
+  height: '100%',
+});
 const DropDown = styled('div', (props: ThemeProps) => ({
   position: 'absolute',
   top: '100%',
@@ -42,7 +49,9 @@ const DropDown = styled('div', (props: ThemeProps) => ({
   borderRight: `1px solid ${props.theme.borderColor}`,
   borderBottom: `1px solid ${props.theme.borderColor}`,
   backgroundColor: Color.toCss(Color.Rgb.darken(Color.Rgb.fromHex(props.theme.backgroundColor), 0.1)),
-  zIndex: -111
+  zIndex: -111,
+  minHeight: '4em',
+  height: '20%',
 }));
 
 const DropIcon = styled(Fa, {
@@ -168,16 +177,18 @@ class ComboBox extends React.PureComponent<ComboBox.Props, ComboBox.State> {
         <DropIcon icon={focus ? faCaretUp : faCaretDown} />
         {ReactDom.createPortal((focus && this.ref_)
           ? <DropDown theme={theme} style={dropDownStyle}>
-            {options.map((option, i) => (
-              <OptionContainer
-                $selected={i === index}
-                theme={theme}
-                key={i}
-                onClick={this.onOptionClick_(i)}
-              >
-                <Text text={option.text} />
-              </OptionContainer>
-            ))}
+            <ScrollContainer theme={theme}>
+              {options.map((option, i) => (
+                <OptionContainer
+                  $selected={i === index}
+                  theme={theme}
+                  key={i}
+                  onClick={this.onOptionClick_(i)}
+                >
+                  <Text text={option.text} />
+                </OptionContainer>
+              ))}
+            </ScrollContainer>
           </DropDown>
           : null
           , COMBO_BOX_ROOT)}
