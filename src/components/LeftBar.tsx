@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import SettingsDialog from './SettingsDialog';
 import LocalizedString from '../util/LocalizedString';
 import ProgrammingLanguage from 'ProgrammingLanguage';
@@ -9,6 +10,7 @@ import { StyleProps } from '../style';
 import { Fa } from './Fa';
 import { DARK, ThemeProps, LIGHT, Theme } from './theme';
 import { faCog, faFolderTree, faWaveSquare, faTerminal } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { DEFAULT_SETTINGS, Settings } from '../Settings';
 import { Modal } from '../pages/Modal';
 import { Size } from './Widget';
@@ -26,7 +28,6 @@ import Classroom from 'ivygate/dist/src/types/classroomTypes';
 import { UploadedUser } from 'ivygate/dist/src/types/user';
 
 const TerminalView = React.lazy(() => import('./TerminalView'));
-
 
 export interface LeftBarPublicProps extends StyleProps, ThemeProps {
   onThemeChange: (theme: Theme) => void;
@@ -57,6 +58,7 @@ interface LeftBarState {
   isPanelVisible: boolean;
   storedTheme: Theme;
   consoleLayout: 'horizontal' | 'vertical';
+  terminalAccess: boolean;
   classroom?: Classroom;
   users: User[];
   user?: User;
@@ -143,13 +145,13 @@ interface LeftBarState {
   terminalDisplayShown?: boolean;
 
   toPasteData?: {};
+
+  toolTipPosition?: { x: number, y: number } | null;
 }
 
 
 type Props = LeftBarPublicProps & LeftBarPrivateProps;
 type State = LeftBarState;
-
-
 const LeftBarWrapper = (props: Props) => {
   const { isRunning } = useProgramRun();
   const [motorVelocities, setMotorVelocities] = React.useState<MotorVelocities>({});
@@ -381,10 +383,65 @@ const Item = styled('div', (props: ThemeProps & ClickProps) => ({
 
 }));
 
+// const ItemIcon = styled(Fa, {
+//   height: '1.8em',
+//   width: '1.8em',
+//   fontSize: '1em',
+//   ':hover': {
+//     cursor: 'pointer',
+
+//   }
+// });
+
+const IconContainer = styled('div', (props: ThemeProps & ClickProps) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexDirection: 'row',
+  paddingLeft: '0.5em',
+  paddingRight: '0.5em',
+  height: '2.7em',
+  width: '100%',
+  opacity: props.disabled ? '0.5' : '1.0',
+  ':last-child': {
+    borderRight: 'none'
+  },
+  fontWeight: 400,
+  ':hover': props.onClick && !props.disabled ? {
+    cursor: 'pointer',
+    backgroundColor: props.theme.hoverOptionBackground
+  } : {},
+  userSelect: 'none',
+}));
+
+const Tooltip = styled('div', (props: ThemeProps & { x: number; y: number }) => ({
+  position: 'absolute',
+  top: `${props.y}px`,
+  left: `${props.x}px`,
+  transform: 'translateX(-50%)',
+  //backgroundColor: '#333',
+  backgroundColor: props.theme.toolTipBackground,
+  color: props.theme.color,
+  border: `1px solid ${props.theme.borderColor}`,
+  padding: '4px 8px',
+  borderRadius: '4px',
+  fontSize: '0.75rem',
+  whiteSpace: 'nowrap',
+  opacity: 1,
+  visibility: 'visible',
+  transition: 'opacity 0.15s ease',
+  pointerEvents: 'none',
+  zIndex: 999,
+}));
+
 const ItemIcon = styled(Fa, {
   height: '1.8em',
   width: '1.8em',
   fontSize: '1em',
+
+  ':hover': {
+    cursor: 'pointer',
+  },
 });
 
 const LeftBarContainer = styled('div', (props: ThemeProps & ClickProps) => ({
@@ -444,6 +501,7 @@ const DisplayContainer = styled('div', (props: ThemeProps & ClickProps) => ({
 }));
 
 
+
 class LeftBar extends React.Component<Props, State> {
 
   private selectedFileRef: React.MutableRefObject<string>;
@@ -453,6 +511,7 @@ class LeftBar extends React.Component<Props, State> {
   isDesktop: boolean = window.innerWidth >= 1450;
   constructor(props: Props) {
     super(props);
+    console.log("terminalAccess:", localStorage.getItem('terminalAccess'));
     this.state = {
       modal: Modal.NONE,
       settings: DEFAULT_SETTINGS,
@@ -465,6 +524,7 @@ class LeftBar extends React.Component<Props, State> {
       isClickFile: false,
       storedTheme: localStorage.getItem('ideEditorDarkMode') === 'true' ? DARK : LIGHT,
       consoleLayout: localStorage.getItem('consoleLayout') === 'vertical' ? 'vertical' : 'horizontal',
+      terminalAccess: localStorage.getItem('terminalAccess') === 'true' || false,
       users: [],
       user: {
         userName: '',
@@ -496,7 +556,10 @@ class LeftBar extends React.Component<Props, State> {
 
     this.isClickedFileRef.current = false;
     this.clickTimeout = null;
+
   }
+
+
 
   async componentDidMount() {
     window.addEventListener('resize', this.handleResize);
@@ -517,6 +580,9 @@ class LeftBar extends React.Component<Props, State> {
   async componentDidUpdate(prevProps: Props, prevState: State) {
     console.log("LeftBar compDidUpdate props:", this.props);
     console.log("LeftBar compDidUpdate state:", this.state);
+
+    const previousSettings = prevState.settings;
+    const currentSettings = this.state.settings;
     this.isMobile = window.innerWidth < 1030;
 
     if (prevState.isMobile !== this.isMobile) {
@@ -532,18 +598,27 @@ class LeftBar extends React.Component<Props, State> {
     if (prevState.sliderSizes !== this.state.sliderSizes) {
       console.log("LeftBar sliderSizes changed from: ", prevState.sliderSizes, " to: ", this.state.sliderSizes);
     }
-    if (this.state.settings !== prevState.settings) {
-      console.log("LeftBar settings changed from: ", prevState.settings, " to: ", this.state.settings);
-      if (this.state.settings.ideEditorDarkMode) {
-        this.setState({ storedTheme: DARK });
-        this.props.onThemeChange(DARK);
-      }
-      else {
-        this.setState({ storedTheme: LIGHT });
-        this.props.onThemeChange(LIGHT);
+
+    if (currentSettings.ideEditorDarkMode !== previousSettings.ideEditorDarkMode) {
+      const theme = currentSettings.ideEditorDarkMode ? DARK : LIGHT;
+      this.props.onThemeChange(theme);
+      this.setState({ storedTheme: theme });
+    }
+
+    if (currentSettings.consoleLayout !== previousSettings.consoleLayout) {
+      this.setState({ consoleLayout: currentSettings.consoleLayout });
+    }
+
+    if (currentSettings.terminalAccess !== previousSettings.terminalAccess) {
+
+      if (currentSettings.terminalAccess == false && prevState.terminalAccess == true) {
+        this.setState({ isPanelVisible: false, panelSelection: '' });
       }
 
+      this.setState({ terminalAccess: currentSettings.terminalAccess });
     }
+
+
 
     if (prevState.user !== this.state.user && (prevState.user !== undefined)) {
 
@@ -1529,8 +1604,13 @@ class LeftBar extends React.Component<Props, State> {
     })
   };
 
+  closeContextMenu = () => {
+    this.setState({ toolTipPosition: null });
+  };
+
   render() {
     const { className, theme } = this.props;
+
 
     const {
       settings,
@@ -1578,8 +1658,12 @@ class LeftBar extends React.Component<Props, State> {
       contextMenuFile,
       contextMenuProject,
       contextMenuUser,
+      terminalAccess
 
     } = this.state;
+
+
+
 
     console.log("LeftBar render state:", this.state);
 
@@ -1835,22 +1919,15 @@ class LeftBar extends React.Component<Props, State> {
         <LeftBarContainer theme={storedTheme} >
 
           <TopButtons theme={storedTheme}>
-            <Item theme={storedTheme} onClick={() => this.selectPanel('fileExplorer')}>
-              <ItemIcon icon={faFolderTree} />
-            </Item>
-            <Item style={{}} theme={storedTheme} onClick={() => this.selectPanel('motor_sensor_servo')}>
-              <ItemIcon icon={faWaveSquare} />
-            </Item>
+            <TooltipIcon theme={storedTheme} icon={faFolderTree} info="File Explorer" onClick={() => this.selectPanel('fileExplorer')} />
+            <TooltipIcon theme={storedTheme} icon={faWaveSquare} info="Motors, Servos, and Sensors" onClick={() => this.selectPanel('motor_sensor_servo')} />
           </TopButtons>
           <div style={{ flexGrow: 1, minHeight: 0 }} />
-
           <BottomButtons theme={storedTheme}>
-            <Item theme={storedTheme} onClick={() => this.selectPanel('terminal')}>
-              <ItemIcon icon={faTerminal} />
-            </Item>
-            <Item theme={storedTheme} onClick={this.onModalClick_(Modal.SETTINGS)}>
-              <ItemIcon icon={faCog} />
-            </Item>
+            {terminalAccess && (
+              <TooltipIcon theme={storedTheme} icon={faTerminal} info="Terminal" onClick={() => this.selectPanel('terminal')} />)}
+
+            <TooltipIcon theme={storedTheme} icon={faCog} info="Settings" onClick={this.onModalClick_(Modal.SETTINGS)} />
           </BottomButtons>
 
 
@@ -1890,6 +1967,61 @@ class LeftBar extends React.Component<Props, State> {
 
     );
   }
+}
+
+function TooltipIcon({ theme, icon, info, onClick }: { theme: Theme; icon: IconDefinition; info: string; onClick?: () => void }) {
+
+  const [toolTipPosition, setToolTipPosition] = useState<{
+    x: number;
+    y: number;
+  } | null>(null);
+
+  const showToolTip = (event: React.MouseEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+
+    const tooltipWidth = 700;
+    const tooltipHeight = 100;
+    const padding = 8;
+
+    const x = Math.min(
+      rect.left,
+      window.innerWidth - tooltipWidth - padding
+    );
+
+    const y = Math.min(
+      rect.bottom + padding,
+      window.innerHeight - tooltipHeight - padding
+    );
+
+    setToolTipPosition({ x, y });
+  };
+
+  const hideToolTip = () => {
+    setToolTipPosition(null);
+  };
+
+  return (
+    <>
+      <IconContainer
+        onMouseEnter={showToolTip}
+        onMouseLeave={hideToolTip}
+        theme={theme}
+        onClick={onClick}
+      >
+        <ItemIcon icon={icon} />
+      </IconContainer>
+
+      {toolTipPosition && (
+        <Tooltip
+          x={toolTipPosition.x + 70}
+          y={toolTipPosition.y}
+          theme={theme}
+        >
+          {info}
+        </Tooltip>
+      )}
+    </>
+  );
 }
 
 export default LeftBarWrapper;
