@@ -7,7 +7,7 @@ import AboutDialog from './AboutDialog';
 import { styled } from 'styletron-react';
 import { StyleProps } from '../style';
 import { ThemeProps } from './theme';
-import { connect } from 'react-redux';
+
 import { State as ReduxState } from 'ivygate/dist/src/state';
 import { Modal } from '../pages/Modal';
 import { DocumentationWindow } from 'ivygate';
@@ -15,7 +15,7 @@ import { DocumentationAction } from 'ivygate/dist/src/state/reducer';
 import DocumentationLocation from 'ivygate/dist/src/state/State/Documentation/DocumentationLocation';
 import { Size } from 'ivygate/dist/src/components/interface/Widget';
 import { DocumentationState } from 'ivygate/dist/src/state/State';
-
+import { legacy_connect as connect } from "react-redux";
 export interface MenuPublicProps extends StyleProps, ThemeProps { }
 
 interface MenuPrivateProps {
