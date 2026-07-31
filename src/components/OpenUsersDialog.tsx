@@ -140,7 +140,7 @@ const ProjectItem = styled('li', (props: ThemeProps & { selected: boolean }) => 
   backgroundColor: props.selected ? props.theme.selectedUserBackground : props.theme.unselectedBackground,
   padding: '10px 20px',
   margin: '5px 0',
-  maxWidth: '30em',
+  width: '20em',
   wordBreak: 'break-word',
   overflowWrap: 'anywhere',
   borderRadius: '5px',
@@ -191,6 +191,7 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
 
   constructor(props: Props) {
     super(props);
+    console.log("OpenUsersDialog constructor called with props:", props);
     this.state = {
       selectedUser: null,
       users: [],
@@ -219,11 +220,9 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
   };
 
   private handleProjectClick = async (project: Project) => {
-    this.setState({
-      selectedProject: project,
-      projectName: project.projectName,
-      activeLanguage: this.state.projects!.find(project => project.projectName === project.projectName)!.projectLanguage
-    });
+
+    this.props.onOpenUserProject(this.state.selectedUser, project, `main.${ProgrammingLanguage.FILE_EXTENSION[project.projectLanguage]}`, project.projectLanguage);
+
   };
 
   private getProjects = async () => {
@@ -263,9 +262,12 @@ class OpenUsersDialog extends React.PureComponent<Props, State> {
     }
 
     return (
-      <div>
-        <ProjectTitle>{LocalizedString.lookup(tr(`Projects for ${this.state.selectedUser.userName}`), this.props.locale)}</ProjectTitle>
-        <ul>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <ProjectTitle>{LocalizedString.lookup(tr(`Projects for ${this.state.selectedUser.userName}`), this.props.locale)}</ProjectTitle>
+          {LocalizedString.lookup(tr('Select project to open - this will open the project\'s main file'), this.props.locale)}
+        </div>
+        <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
           {projects.map((project) => (
             <ProjectItem
               key={project.projectName}

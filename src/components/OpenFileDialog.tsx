@@ -121,6 +121,9 @@ const SectionName = styled('span', (props: ThemeProps & SectionProps) => ({
 
 const SettingsColumn = styled(ScrollArea, {
   flex: '1 1',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
 });
 
 const ProjectTitle = styled('h2', {
@@ -132,6 +135,17 @@ const ProjectTitle = styled('h2', {
   wordBreak: 'break-word',
   overflowWrap: 'anywhere',
 });
+
+const ProjectTitleInfo = styled('h3', {
+  marginTop: '0px',
+  marginBottom: '10px',
+  fontSize: '1.2em',
+  textAlign: 'center',
+  maxWidth: '50em',
+  wordBreak: 'break-word',
+  overflowWrap: 'anywhere',
+});
+
 
 const ProjectFileTitle = styled('h3', {
   marginTop: '0px',
@@ -155,7 +169,7 @@ const ProjectItem = styled('li', (props: ThemeProps & { selected: boolean }) => 
   backgroundColor: props.selected ? props.theme.selectedUserBackground : props.theme.unselectedBackground,
   padding: '10px 20px',
   margin: '5px 0',
-  maxWidth: '30em',
+  width: '20em',
   wordBreak: 'break-word',
   overflowWrap: 'anywhere',
   borderRadius: '5px',
@@ -188,6 +202,7 @@ const ProjectFileItem = styled('li', (props: ThemeProps) => ({
   overflowWrap: 'anywhere',
   paddingBottom: '5px',
   paddingTop: '5px',
+  marginLeft: '15px',
   borderRadius: '5px',
   display: 'flex',
   alignItems: 'center',
@@ -305,21 +320,23 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
     const { theme } = this.props;
 
     if (loading) {
-      return <div>Select User to see projects</div>;
+      return <div>{LocalizedString.lookup(tr('Select User to see projects'), this.props.locale)}</div>;
     }
 
     if (error) {
-      return <div>Error: {error}</div>;
+      return <div>{LocalizedString.lookup(tr('Error'), this.props.locale)}: {error}</div>;
     }
 
     if (!projects || projects.length === 0) {
-      return <div>No projects found.</div>;
+      return <div>{LocalizedString.lookup(tr('No projects found'), this.props.locale)}</div>;
     }
 
     return (
-      <div>
-        <ProjectTitle>Projects for {this.state.selectedUser.userName}</ProjectTitle>
-        <ul>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <ProjectTitle>{LocalizedString.lookup(tr('Projects for'), this.props.locale)} {this.state.selectedUser.userName}</ProjectTitle>
+        {LocalizedString.lookup(tr('Click on a project to see its files'), this.props.locale)}
+
+        <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
           {projects.map((project) => (
             <div key={project.projectName}>
               <ProjectItem
@@ -341,10 +358,13 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
   renderFiles() {
     return (
       <div>
-        <ProjectFileTitle>Files for {this.state.selectedProject.projectName}</ProjectFileTitle>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <ProjectFileTitle>{LocalizedString.lookup(tr('Files for'), this.props.locale)} {this.state.selectedProject.projectName}</ProjectFileTitle>
+          {LocalizedString.lookup(tr('Select file to open'), this.props.locale)}
+        </div>
         {this.state.selectedUser.interfaceMode === InterfaceMode.SIMPLE ? (
-          <ul>
-            <FileTypeHeader>src:</FileTypeHeader>
+          <ul style={{ border: '1px solid #ccc', padding: '10px', borderRadius: '5px' }}>
+            <FileTypeHeader>{LocalizedString.lookup(tr('src:'), this.props.locale)}</FileTypeHeader>
             <ProjectFileContainer theme={this.props.theme} >
               {this.state.selectedProjectFiles?.srcFolderFiles.map((file) => (
                 <ProjectFileItem key={file} theme={this.props.theme} onClick={() => this.handleFileClick(file)}>
@@ -356,7 +376,7 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
                         this.handleButtonClick(file)
                       }}
                       theme={this.props.theme}>
-                      Open File
+                      {LocalizedString.lookup(tr('Open File'), this.props.locale)}
                     </OpenFileButton>
                   )}
                 </ProjectFileItem>
@@ -364,7 +384,7 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
             </ProjectFileContainer>
           </ul>
         ) : this.state.selectedUser.interfaceMode === InterfaceMode.ADVANCED ? (
-          <ul>
+          <ul style={{ border: '1px solid #ccc', padding: '10px', borderRadius: '5px' }}>
             <FileTypeHeader>include:</FileTypeHeader>
 
             <ProjectFileContainer theme={this.props.theme} >
@@ -378,7 +398,7 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
                         this.handleButtonClick(file)
                       }}
                       theme={this.props.theme}>
-                      Open File
+                      {LocalizedString.lookup(tr('Open File'), this.props.locale)}
                     </OpenFileButton>
                   )}
                 </ProjectFileItem>
@@ -397,7 +417,7 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
                         this.handleButtonClick(file)
                       }}
                       theme={this.props.theme}>
-                      Open File
+                      {LocalizedString.lookup(tr('Open File'), this.props.locale)}
                     </OpenFileButton>
                   )}
                 </ProjectFileItem>
@@ -416,7 +436,7 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
                         this.handleButtonClick(file)
                       }}
                       theme={this.props.theme}>
-                      Open File
+                      {LocalizedString.lookup(tr('Open File'), this.props.locale)}
                     </OpenFileButton>
                   )}
                 </ProjectFileItem>
@@ -483,12 +503,14 @@ class OpenFileDialog extends React.PureComponent<Props, State> {
             </SectionsColumn>
           </StyledScrollArea>
           <SettingsColumn theme={theme}>
-            <SettingContainer theme={theme}>
-              <SettingInfoContainer>
-                {this.renderProjects()}
+            <div style={{ flex: '1 0', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+              <SettingContainer theme={theme}>
+                <SettingInfoContainer>
+                  {this.renderProjects()}
 
-              </SettingInfoContainer>
-            </SettingContainer>
+                </SettingInfoContainer>
+              </SettingContainer>
+            </div>
           </SettingsColumn>
         </Container>
       </Dialog>
